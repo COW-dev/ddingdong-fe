@@ -64,7 +64,7 @@ export default function ClubHeading({ name, category, tag }: ClubHeadingProps) {
             <span>4월 1일 ~ 4월 30일</span>
           </div>
         </div>
-        <button className="hidden rounded-xl border-[1.5px] border-gray-100 bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-400 md:ml-5 lg:block lg:w-[25%]">
+        <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-400 lg:block lg:w-[25%]">
           <Link href={'/'} className="inline-block w-full py-3.5">
             지원하기
           </Link>
