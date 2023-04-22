@@ -23,7 +23,7 @@ export default function ClubHeading({ name, category, tag }: ClubHeadingProps) {
     <>
       <div className="flex flex-col">
         <Heading>{name}</Heading>
-        <div className="flex items-center">
+        <div className="flex items-center md:mt-0.5">
           <div
             className={`rounded-lg text-lg font-semibold md:text-xl ${deptCaptionColor[category]}`}
           >

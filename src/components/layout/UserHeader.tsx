@@ -42,7 +42,7 @@ export default function UserHeader() {
                   className={`inline-block p-3 font-semibold transition-colors hover:text-blue-500 ${
                     isNavActive(curPath, item.href)
                       ? 'text-blue-500'
-                      : 'text-gray-500'
+                      : 'text-gray-400'
                   }`}
                 >
                   {item.content}
