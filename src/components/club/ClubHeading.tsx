@@ -28,7 +28,7 @@ export default function ClubHeading({ name, category, tag }: ClubHeadingProps) {
           >
             {category}
           </div>
-          <div className="px-1 text-lg font-medium text-gray-300 md:text-xl">
+          <div className="px-1.5 text-lg font-medium text-gray-300 md:text-xl">
             |
           </div>
           <div className="rounded-lg text-lg font-semibold text-gray-500 md:text-xl">
