@@ -271,7 +271,7 @@ export default function Index({ clubId }: ClubDetailProps) {
           </ul>
         </section>
       </main>
-      <BottomButton href={'/'} content="지원하기" />
+      <BottomButton href={'/'}>지원하기</BottomButton>
     </>
   );
 }
