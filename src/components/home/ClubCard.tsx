@@ -24,7 +24,7 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
   return (
     <li
       key={id}
-      className="box-shadow rounded-xl border border-gray-100 bg-white transition-colors hover:bg-gray-50"
+      className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:bg-gray-50"
     >
       <Link
         href={`/club/${id}`}
