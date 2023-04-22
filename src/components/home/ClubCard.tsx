@@ -28,9 +28,10 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
     >
       <Link
         href={`/club/${id}`}
-        className="flex h-full w-full justify-between px-5 py-5 md:px-6 md:py-6"
+        className="md:py- flex h-full w-full justify-between px-5 py-5 md:px-6"
       >
         <div>
+          <div className="text-lg font-semibold md:text-xl">{name}</div>
           <div className="flex items-center">
             <div
               className={`rounded-lg text-sm font-semibold ${deptCaptionColor[category]}`}
@@ -42,7 +43,6 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
               {tag}
             </div>
           </div>
-          <div className="text-lg font-semibold md:text-xl">{name}</div>
         </div>
         <div className="flex items-center">
           <div
