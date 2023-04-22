@@ -28,7 +28,7 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
     >
       <Link
         href={`/club/${id}`}
-        className="md:py- flex h-full w-full justify-between px-5 py-5 md:px-6"
+        className="flex h-full w-full justify-between p-5 md:p-6"
       >
         <div>
           <div className="text-lg font-semibold md:text-xl">{name}</div>
