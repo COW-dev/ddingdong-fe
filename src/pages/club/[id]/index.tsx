@@ -245,7 +245,12 @@ export default function Index({ clubId }: ClubDetailProps) {
       <Head>
         <title>{`띵동 - ${item.name}`}</title>
       </Head>
-      <ClubHeading name={item.name} category={item.category} tag={item.tag} />
+      <ClubHeading
+        name={item.name}
+        category={item.category}
+        tag={item.tag}
+        href={'/'}
+      />
       <main className="mt-10 md:mt-12">
         <section>
           <div className="text-lg font-bold md:text-xl">
