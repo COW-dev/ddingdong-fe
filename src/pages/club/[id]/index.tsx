@@ -245,6 +245,31 @@ export default function Index({ clubId }: ClubDetailProps) {
         <title>{`띵동 - ${item.name}`}</title>
       </Head>
       <ClubHeading name={item.name} category={item.category} tag={item.tag} />
+      <main className="mt-10 md:mt-12">
+        <section>
+          <div className="text-xl font-bold md:text-2xl">
+            우리 동아리를 소개할게요
+          </div>
+          <div className="mt-0.5 text-base font-medium text-gray-500 md:mt-1 md:text-lg">
+            <p>안녕하세요, 명지대학교 대표 흑인음악 동아리 흑풍입니다.</p>
+            <p>저희는 매주 금요일 합동연습과 회식을 진행해요.</p>
+            <p>
+              흑인음악을 사랑하시는 분들이라면 모두 환영입니다! 많은 관심
+              부탁드려요!
+            </p>
+          </div>
+        </section>
+        <section className="mt-5 md:mt-6">
+          <div className="text-xl font-bold md:text-2xl">
+            이런 분과 함께하고 싶어요
+          </div>
+          <ul className="ml-5 mt-0.5 list-disc text-base font-medium text-gray-500 md:mt-1 md:text-lg">
+            <li>흑인음악을 사랑하시는 분</li>
+            <li>동아리 활동에 적극적으로 참여하실 분</li>
+            <li>매주 금요일 정기모임에 참석이 가능하신 분</li>
+          </ul>
+        </section>
+      </main>
     </>
   );
 }
