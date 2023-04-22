@@ -42,13 +42,11 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
               {tag}
             </div>
           </div>
-          <div className="mt-0.5 text-base font-semibold md:text-lg">
-            {name}
-          </div>
+          <div className="mt-0.5 text-lg font-semibold md:text-xl">{name}</div>
         </div>
         <div className="flex items-center">
           <div
-            className={`rounded-lg px-2 py-1 text-sm font-semibold md:font-bold ${
+            className={`rounded-lg px-2 py-1 text-sm font-semibold ${
               status
                 ? 'bg-green-100 text-green-500'
                 : 'bg-gray-100 text-gray-500'
