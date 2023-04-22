@@ -1,5 +1,6 @@
 import { GetServerSideProps } from 'next/types';
 import Head from 'next/head';
+import Link from 'next/link';
 import ClubHeading from '@/components/club/ClubHeading';
 
 const clubs = [
@@ -270,6 +271,13 @@ export default function Index({ clubId }: ClubDetailProps) {
           </ul>
         </section>
       </main>
+      <div className="fixed bottom-4 left-0 z-10 flex w-full items-center justify-center px-4 lg:hidden">
+        <button className="w-full rounded-xl bg-blue-500 text-base font-bold text-white drop-shadow-xl transition-colors hover:bg-blue-400 md:text-lg">
+          <Link href={'/'} className="inline-block w-full py-4">
+            지원하기
+          </Link>
+        </button>
+      </div>
     </>
   );
 }
