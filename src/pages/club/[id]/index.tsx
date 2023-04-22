@@ -248,7 +248,7 @@ export default function Index({ clubId }: ClubDetailProps) {
       <ClubHeading name={item.name} category={item.category} tag={item.tag} />
       <main className="mt-10 md:mt-12">
         <section>
-          <div className="text-xl font-bold md:text-2xl">
+          <div className="text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
           </div>
           <div className="mt-1 text-base font-medium text-gray-500 md:mt-2 md:text-lg">
@@ -261,7 +261,7 @@ export default function Index({ clubId }: ClubDetailProps) {
           </div>
         </section>
         <section className="mt-5 md:mt-6">
-          <div className="text-xl font-bold md:text-2xl">
+          <div className="text-lg font-bold md:text-xl">
             이런 분과 함께하고 싶어요
           </div>
           <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-2 md:text-lg">
