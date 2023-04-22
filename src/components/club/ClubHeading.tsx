@@ -38,7 +38,7 @@ export default function ClubHeading({ name, category, tag }: ClubHeadingProps) {
       </div>
       <div className="mt-5 flex h-44 w-full flex-col justify-center rounded-xl border-[1.5px] border-gray-100 bg-[rgb(252,252,252)] p-5 text-base font-semibold md:mt-6 md:h-36 md:justify-center md:p-6 md:text-lg">
         <div className="flex w-full flex-col md:flex-row">
-          <div className="mb-0.5 w-88">
+          <div className="mb-0.5 w-full md:w-88">
             <span className="inline-block w-20 text-gray-500">회장</span>
             <span>김보겸</span>
           </div>
@@ -48,7 +48,7 @@ export default function ClubHeading({ name, category, tag }: ClubHeadingProps) {
           </div>
         </div>
         <div className="flex w-full flex-col md:flex-row">
-          <div className="mb-0.5 w-88">
+          <div className="mb-0.5 w-full md:w-88">
             <span className="inline-block w-20 text-gray-500">동아리방</span>
             <span>S4019</span>
           </div>
