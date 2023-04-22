@@ -42,7 +42,9 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
               {tag}
             </div>
           </div>
-          <div className="mt-0.5 text-lg font-semibold md:text-xl">{name}</div>
+          <div className="mt-0.5 text-base font-semibold md:text-lg">
+            {name}
+          </div>
         </div>
         <div className="flex items-center">
           <div

@@ -258,10 +258,10 @@ export default function Home() {
     <>
       <Banner />
       <SearchBar value={keyword} onChange={setKeyword} />
-      <div className="mb-1.5 text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
+      <div className="mb-1 text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
         총 {clubArr.length}개의 동아리
       </div>
-      <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
+      <ul className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
         {clubArr.map((item) => (
           <ClubCard
             key={item.id}
