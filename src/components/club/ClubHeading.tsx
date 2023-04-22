@@ -71,9 +71,9 @@ export default function ClubHeading({
           </div>
         </div>
         <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-400 lg:block lg:w-[25%]">
-          <Link href={href} className="inline-block w-full py-3.5">
+          <a href={href} target="_blank" className="inline-block w-full py-3.5">
             지원하기
-          </Link>
+          </a>
         </button>
       </div>
     </>
