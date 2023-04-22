@@ -26,3 +26,7 @@ html::-webkit-scrollbar {
 .box-shadow {
   box-shadow: 0 0 6px rgba(73, 80, 87, 0.05);
 }
+
+.button-shadow {
+  box-shadow: 0 32px 8px rgba(255, 255, 255, 1);
+}
