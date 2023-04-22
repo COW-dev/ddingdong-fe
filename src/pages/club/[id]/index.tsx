@@ -1,4 +1,5 @@
 import { GetServerSideProps } from 'next/types';
+import Head from 'next/head';
 import ClubHeading from '@/components/club/ClubHeading';
 
 const clubs = [
@@ -239,7 +240,12 @@ type ClubDetailProps = {
 export default function Index({ clubId }: ClubDetailProps) {
   const item = clubs[clubId - 1];
   return (
-    <ClubHeading name={item.name} category={item.category} tag={item.tag} />
+    <>
+      <Head>
+        <title>{`띵동 - ${item.name}`}</title>
+      </Head>
+      <ClubHeading name={item.name} category={item.category} tag={item.tag} />
+    </>
   );
 }
 
