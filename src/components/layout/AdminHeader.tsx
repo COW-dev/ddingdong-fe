@@ -7,7 +7,7 @@ const navItems = [
   {
     id: 1,
     href: '/',
-    content: '홈',
+    content: '관리자 홈',
   },
   {
     id: 2,
