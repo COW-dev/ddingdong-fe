@@ -1,7 +1,7 @@
-import type { GetServerSideProps } from 'next/types';
 import Head from 'next/head';
-import ClubHeading from '@/components/club/ClubHeading';
+import type { GetServerSideProps } from 'next/types';
 import BottomButton from '@/components/club/BottomButton';
+import ClubHeading from '@/components/club/ClubHeading';
 
 const clubs = [
   {
@@ -282,6 +282,7 @@ export default function Index({ clubId }: ClubDetailProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query: any;
 }) => {
   const { id } = context.query;

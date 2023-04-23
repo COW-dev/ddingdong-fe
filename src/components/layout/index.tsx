@@ -1,5 +1,5 @@
-import UserHeader from './UserHeader';
 import Footer from './Footer';
+import UserHeader from './UserHeader';
 
 type LayoutProps = {
   children: React.ReactNode;
