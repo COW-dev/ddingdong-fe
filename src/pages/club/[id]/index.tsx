@@ -1,4 +1,4 @@
-import { GetServerSideProps } from 'next/types';
+import type { GetServerSideProps } from 'next/types';
 import Head from 'next/head';
 import ClubHeading from '@/components/club/ClubHeading';
 import BottomButton from '@/components/club/BottomButton';

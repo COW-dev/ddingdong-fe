@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
 import Banner from '@/components/home/Banner';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
-import { ClubType } from '@/types/type';
-import { useEffect, useState } from 'react';
+import type { ClubType } from '@/types';
 
 const clubs = [
   {

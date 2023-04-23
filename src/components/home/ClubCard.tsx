@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { DeptCaptionColorType } from '@/types/type';
+import type { DeptCaptionColorType } from '@/types';
 
 type ClubProps = {
   id: number;

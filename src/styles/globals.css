@@ -3,10 +3,7 @@
 @tailwind utilities;
 
 html {
-  width: auto;
-  height: auto;
   background-color: rgb(255, 255, 255);
-
   font-family: 'Pretendard Variable', Pretendard, -apple-system,
     BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
     'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji',
@@ -14,13 +11,17 @@ html {
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
 
 html::-webkit-scrollbar {
   display: none;
+}
+
+/* 탭 하이라이트 */
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .box-shadow {

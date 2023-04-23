@@ -1,5 +1,5 @@
-import Heading from '@/components/common/Heading';
 import Head from 'next/head';
+import Heading from '@/components/common/Heading';
 
 export default function Index() {
   return (

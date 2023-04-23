@@ -1,6 +1,5 @@
-import Link from 'next/link';
 import Heading from '@/components/common/Heading';
-import { DeptCaptionColorType } from '@/types/type';
+import type { DeptCaptionColorType } from '@/types';
 
 const deptCaptionColor: DeptCaptionColorType = {
   봉사: 'text-pink-500',
