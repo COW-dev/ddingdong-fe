@@ -3,9 +3,9 @@ import type { NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const subdomain = req.headers.get('host')?.split('.')[0];
-  const newURL = new URL(`/${subdomain}`, req.url);
-  console.log(newURL);
-  return NextResponse.rewrite(newURL);
+  if (subdomain === 'admin') {
+    return NextResponse.rewrite(new URL(`/${subdomain}`, req.url));
+  }
 }
 
 export const config = {
