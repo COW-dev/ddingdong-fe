@@ -43,7 +43,7 @@ export default function ClubHeading({
         </div>
       </div>
       <div className="mt-5 flex items-start md:mt-6">
-        <div className="flex h-44 w-full flex-col justify-center rounded-xl border-[1.5px] border-gray-100 bg-[rgb(252,252,252)] p-5 text-base font-semibold md:h-36 md:justify-center md:p-6 md:text-lg lg:w-[75%]">
+        <div className="flex h-44 w-full flex-col justify-center rounded-xl bg-[rgb(246,247,248)] p-6 text-base font-semibold md:h-36 md:justify-center md:p-10 md:text-lg lg:w-[75%]">
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-0.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">회장</span>
@@ -69,7 +69,7 @@ export default function ClubHeading({
             <span>4월 1일 ~ 4월 30일</span>
           </div>
         </div>
-        <button className="ml-4 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">
+        <button className="ml-5 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">
           <a href={href} target="_blank" className="inline-block w-full py-3.5">
             지원하기
           </a>

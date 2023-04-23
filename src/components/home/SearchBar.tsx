@@ -13,13 +13,13 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
 
   return (
     <div className="mb-5 mt-6 flex w-full items-center justify-center md:mb-3 md:mt-8">
-      <div className="flex w-full rounded-xl border-[1.5px] border-gray-100 bg-[rgb(252,252,252)] p-3 md:w-128">
+      <div className="flex w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 md:w-128">
         <input
           type="text"
           value={value}
           spellCheck={false}
           onChange={handleChange}
-          className="w-full bg-[rgb(252,252,252)] pl-1 pr-2 text-sm font-semibold outline-none md:text-base"
+          className="w-full bg-inherit pl-1 pr-2 text-sm font-semibold outline-none md:text-base"
         />
         <Image
           src="/search.svg"
