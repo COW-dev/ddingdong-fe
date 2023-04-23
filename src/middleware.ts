@@ -6,7 +6,7 @@ export function middleware(req: NextRequest) {
   console.log(subdomain, req.url);
 
   if (subdomain === 'admin') {
-    return NextResponse.rewrite(new URL(`/${subdomain}`, req.url));
+    return NextResponse.rewrite(new URL(`/${subdomain}`, req.nextUrl.pathname));
   }
 }
 
