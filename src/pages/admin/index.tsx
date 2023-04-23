@@ -5,9 +5,9 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>띵동 - 관리자 페이지</title>
+        <title>띵동 - 관리자 홈</title>
       </Head>
-      <AdminHeading></AdminHeading>
+      <AdminHeading clubName={'농어민후생연구회 흙'} />
     </>
   );
 }
