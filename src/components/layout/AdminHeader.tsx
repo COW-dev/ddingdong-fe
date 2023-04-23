@@ -24,7 +24,7 @@ export default function UserHeader() {
   return (
     <header className="fixed z-10 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
       <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
-        <Link href="/" className="-ml-3 inline-block p-3">
+        <Link href={isLoginPage ? '/login' : '/'} className="-ml-3 inline-block p-3">
           <Image
             src={'/logo.png'}
             width={1544}
