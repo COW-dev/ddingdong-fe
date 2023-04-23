@@ -27,14 +27,7 @@
     "import/order": [
       "error",
       {
-        "groups": [
-          "builtin",
-          "external",
-          "internal",
-          "alias",
-          "sibling",
-          "type"
-        ],
+        "groups": ["builtin", "external", "internal"],
         "pathGroups": [
           { "pattern": "react", "group": "builtin", "position": "after" },
           { "pattern": "react/**", "group": "builtin", "position": "after" },
