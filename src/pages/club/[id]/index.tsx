@@ -251,28 +251,41 @@ export default function Index({ clubId }: ClubDetailProps) {
         tag={item.tag}
         href={'/'}
       />
-      <main className="mt-10 md:mt-12">
+      <main className="mt-10 w-full md:mt-12 lg:w-[75%]">
         <section>
           <div className="text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
           </div>
-          <div className="mt-1 text-base font-medium text-gray-500 md:mt-2 md:text-lg">
-            <p>안녕하세요, 명지대학교 대표 흑인음악 동아리 흑풍입니다.</p>
-            <p>저희는 매주 금요일 합동연습과 회식을 진행해요.</p>
+          <div className="mt-1 text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
             <p>
-              흑인음악을 사랑하시는 분들이라면 모두 환영입니다! 많은 관심
-              부탁드려요!
+              안녕하세요, 저희는 2022년에 창립된 명지대학교 인문캠퍼스 중앙
+              흑인음악 동아리 흑풍입니다.
             </p>
+            <p>저희는 주로 힙합과 R&B 장르를 다루고 있습니다.</p>
+            <p>
+              다양한 무대와 사이퍼 제작, 뮤직비디오 촬영, 음악 제작, 비트
+              메이킹, 프로듀싱 등을 함께하고 싶다면?
+            </p>
+            <p> We the Blast!</p>
           </div>
+        </section>
+        <section className="mt-5 md:mt-6">
+          <div className="text-lg font-bold md:text-xl">
+            주로 이런 활동을 해요
+          </div>
+          <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
+            <li>매주 정기모임 및 활동</li>
+            <li>창립제, 정기 공연, 클럽 공연, 학교 축제 공연 등 다양한 무대</li>
+          </ul>
         </section>
         <section className="mt-5 md:mt-6">
           <div className="text-lg font-bold md:text-xl">
             이런 분과 함께하고 싶어요
           </div>
-          <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-2 md:text-lg">
+          <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
             <li>흑인음악을 사랑하시는 분</li>
             <li>동아리 활동에 적극적으로 참여하실 분</li>
-            <li>매주 금요일 정기모임에 참석이 가능하신 분</li>
+            <li>매주 정기모임에 참석이 가능하신 분</li>
           </ul>
         </section>
       </main>
