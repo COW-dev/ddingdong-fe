@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import AdminHeader from './AdminHeader';
 import Footer from './Footer';
 import UserHeader from './UserHeader';
 
@@ -6,13 +8,18 @@ type LayoutProps = {
 };
 
 export default function Layout({ children }: LayoutProps) {
+  const router = useRouter();
+  const curPath = router.pathname;
+  const isAdmin = curPath.startsWith('/admin');
+  const isLogin = curPath.endsWith('/login');
+
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-between text-gray-800">
-      <UserHeader />
+      {isAdmin ? <AdminHeader /> : <UserHeader />}
       <div className="flex w-full max-w-6xl flex-col px-6 pt-22 md:px-16 md:pt-26">
         {children}
       </div>
-      <Footer />
+      {!isLogin && <Footer />}
     </div>
   );
 }
