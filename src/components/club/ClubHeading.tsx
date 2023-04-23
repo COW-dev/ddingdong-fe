@@ -43,7 +43,7 @@ export default function ClubHeading({
         </div>
       </div>
       <div className="mt-5 flex items-start md:mt-6">
-        <div className="flex h-44 w-full flex-col justify-center rounded-xl bg-[rgb(246,247,248)] p-6 text-base font-semibold md:h-36 md:justify-center md:p-10 md:text-lg lg:w-[75%]">
+        <div className="flex h-44 w-full flex-col justify-center rounded-xl bg-[rgb(247,248,249)] p-6 text-base font-semibold md:h-36 md:justify-center md:p-10 md:text-lg lg:w-[75%]">
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-0.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">회장</span>
