@@ -60,8 +60,8 @@ export default function Index() {
         >
           <h2 className="text-xl font-bold md:text-2xl">동아리 관리하기</h2>
           <div className="mt-4 text-sm font-semibold leading-tight text-gray-400 md:text-base md:leading-tight">
-            <p>신규 중앙 동아리를 등록하거나,</p>
-            <p>기존의 동아리를 삭제해요.</p>
+            <p>중앙 동아리를 등록/삭제하거나,</p>
+            <p>동아리 점수를 수정해요.</p>
           </div>
         </Link>
         <Link
