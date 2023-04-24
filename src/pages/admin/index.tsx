@@ -56,25 +56,26 @@ export default function Index() {
       <div className="mt-12 grid w-full max-w-[50rem] grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <Link
           href="/club"
-          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] p-5 hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:p-8"
+          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">동아리 관리하기</h2>
-          <div className="mt-4 text-sm font-semibold leading-tight text-gray-400 md:text-base md:leading-tight">
-            <p>중앙 동아리를 등록/삭제하거나,</p>
-            <p>동아리 점수를 수정해요.</p>
+          <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+            <p>동아리를 등록/삭제하거나,</p>
+            <p>동아리 점수를 입력해요.</p>
           </div>
         </Link>
         <Link
           href="/report"
-          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] p-5 hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:p-8"
+          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">활동보고서 확인하기</h2>
-          <div className="mt-4 text-sm font-semibold leading-tight text-gray-400 md:text-base md:leading-tight">
-            <p>모든 동아리의 활동보고서를 확인해요.</p>
+          <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+            <p>동아리가 제출한</p>
+            <p>활동보고서를 확인해요.</p>
           </div>
         </Link>
       </div>
-      <div className="mt-4 w-full rounded-xl border-[1.5px] p-5 md:mt-8 md:p-8">
+      <div className="mt-4 w-full rounded-xl border-[1.5px] px-6 py-5 md:mt-8 md:px-8 md:py-7">
         <div className="flex w-full items-center justify-between">
           <h2 className="text-xl font-bold md:text-2xl">공지사항 관리하기</h2>
           <Link
