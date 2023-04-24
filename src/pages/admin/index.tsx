@@ -50,13 +50,13 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>띵동 - 관리자 홈</title>
+        <title>띵동 어드민 - 홈</title>
       </Head>
       <AdminHeading clubName={'공:존'} />
       <div className="mt-12 grid w-full max-w-[50rem] grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <Link
-          href="/clubs"
-          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] p-5 hover:border-gray-200 hover:bg-gray-50 md:min-h-[8.5rem] md:p-8"
+          href="/club"
+          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] p-5 hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:p-8"
         >
           <h2 className="text-xl font-bold md:text-2xl">동아리 관리하기</h2>
           <div className="mt-4 text-sm font-semibold leading-tight text-gray-400 md:text-base md:leading-tight">
@@ -65,8 +65,8 @@ export default function Index() {
           </div>
         </Link>
         <Link
-          href="/reports"
-          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] p-5 hover:border-gray-200 hover:bg-gray-50 md:min-h-[8.5rem] md:p-8"
+          href="/report"
+          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] p-5 hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:p-8"
         >
           <h2 className="text-xl font-bold md:text-2xl">활동보고서 확인하기</h2>
           <div className="mt-4 text-sm font-semibold leading-tight text-gray-400 md:text-base md:leading-tight">
@@ -89,7 +89,7 @@ export default function Index() {
             <li key={item.id} className="w-full border-b">
               <Link
                 href={`/notice/${item.id}`}
-                className="flex flex-col justify-between py-5 text-base font-medium transition-opacity hover:opacity-40 md:flex-row md:items-center md:py-5 md:text-lg"
+                className="flex flex-col justify-between py-5 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-center md:py-5 md:text-lg"
               >
                 <div className="block font-semibold sm:hidden">
                   {item.title.length < 20

@@ -7,7 +7,17 @@ const navItems = [
   {
     id: 1,
     href: '/',
-    content: '관리자 홈',
+    content: '홈',
+  },
+  {
+    id: 2,
+    href: '/club',
+    content: '동아리',
+  },
+  {
+    id: 2,
+    href: '/report',
+    content: '활동보고서',
   },
   {
     id: 2,
@@ -38,7 +48,7 @@ export default function UserHeader() {
           />
         </Link>
         {!isLoginPage && (
-          <nav className="-mr-4">
+          <nav className="-mr-4 hidden md:block">
             <ul className="flex">
               {navItems.map((item) => (
                 <li key={item.id} className="mx-1">
