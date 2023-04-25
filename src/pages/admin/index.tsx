@@ -52,11 +52,11 @@ export default function Index() {
       <Head>
         <title>띵동 어드민 - 홈</title>
       </Head>
-      <AdminHeading clubName={'공:존'} />
-      <div className="mt-12 grid w-full max-w-[50rem] grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
+      <AdminHeading clubName={'농어민후생연구회 흙'} clubScore={120} />
+      <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-10">
         <Link
           href="/club"
-          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">동아리 관리하기</h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
@@ -66,7 +66,7 @@ export default function Index() {
         </Link>
         <Link
           href="/report"
-          className="inline-block min-h-[7rem] w-full max-w-sm rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">활동보고서 확인하기</h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
