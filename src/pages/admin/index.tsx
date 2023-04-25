@@ -90,7 +90,7 @@ export default function Index() {
             <li key={item.id} className="w-full border-b">
               <Link
                 href={`/notice/${item.id}`}
-                className="flex flex-col justify-between py-5 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-center md:py-5 md:text-lg"
+                className="flex flex-col justify-between py-5 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-end md:py-5 md:text-lg"
               >
                 <div className="block font-semibold sm:hidden">
                   {item.title.length < 20
