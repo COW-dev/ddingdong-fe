@@ -14,7 +14,7 @@ export default function AdminHeading({
         <span className="text-blue-500">{clubName}</span>
         <span className="ml-1 md:ml-1.5">님</span>
       </div>
-      <div className="rounded-xl border-[1.5px] border-gray-200 p-3 text-lg font-semibold text-blue-500 md:p-4 md:text-xl">
+      <div className="rounded-xl bg-sky-100 px-2.5 py-1.5 text-lg font-bold text-blue-500 md:px-3 md:py-2 md:text-xl">
         {clubScore}점
       </div>
     </div>

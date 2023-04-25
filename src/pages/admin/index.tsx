@@ -80,7 +80,7 @@ export default function Index() {
           <h2 className="text-xl font-bold md:text-2xl">공지사항 관리하기</h2>
           <Link
             href="/notice"
-            className="inline-block p-1 text-sm font-semibold text-gray-400 transition-colors hover:text-blue-500 md:text-base"
+            className="-mr-1 inline-block p-1 text-sm font-semibold text-gray-400 transition-colors hover:text-blue-500 md:text-base"
           >
             더 보기
           </Link>
