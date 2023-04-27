@@ -68,7 +68,7 @@ export default function Index() {
               <div className="hidden text-lg font-semibold sm:block">
                 {notice.title}
               </div>
-              <div className="mb-2 text-sm font-medium text-gray-400 md:text-base">
+              <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
                 {notice.createdAt}
               </div>
             </Link>
