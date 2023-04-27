@@ -61,9 +61,9 @@ export default function Index() {
               className="inline-block py-6 hover:opacity-50"
             >
               <div className="block text-base font-semibold sm:hidden">
-                {notice.title.length < 21
+                {notice.title.length < 25
                   ? notice.title
-                  : notice.title.substring(0, 21) + '..'}
+                  : notice.title.substring(0, 25) + '..'}
               </div>
               <div className="hidden text-lg font-semibold sm:block">
                 {notice.title}
