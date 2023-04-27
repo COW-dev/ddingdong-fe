@@ -37,7 +37,7 @@ export default function Index() {
               value={Pw}
               setValue={setPw}
             />
-            <button className="mt-12 w-full rounded-xl bg-blue-500 py-3.5 font-bold text-white transition-colors hover:bg-blue-600 sm:py-4 sm:text-lg md:mt-16">
+            <button className="mt-10 w-full rounded-xl bg-blue-500 py-3.5 font-bold text-white transition-colors hover:bg-blue-600 sm:py-4 sm:text-lg md:mt-14">
               로그인하기
             </button>
           </form>
