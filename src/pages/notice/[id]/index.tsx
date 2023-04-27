@@ -69,7 +69,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <div className="mt-1 border-b pb-6 text-base font-medium text-gray-400 md:pb-8 md:text-lg">
         {notice.createdAt}
       </div>
-      <div className="py-6 text-base font-medium md:py-8 md:text-lg">
+      <div className="py-8 text-base font-medium md:py-10 md:text-lg">
         {content.map((line, idx) => (
           <div key={idx}>
             <p>{line}</p>
