@@ -86,22 +86,22 @@ export default function Index() {
           </Link>
         </div>
         <ul className="mt-6 w-full">
-          {notices.slice(0, 5).map((item) => (
-            <li key={item.id} className="w-full border-b">
+          {notices.slice(0, 5).map((notice) => (
+            <li key={notice.id} className="w-full border-b">
               <Link
-                href={`/notice/${item.id}`}
+                href={`/notice/${notice.id}`}
                 className="flex flex-col justify-between py-5 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-end md:py-5 md:text-lg"
               >
                 <div className="block font-semibold sm:hidden">
-                  {item.title.length < 21
-                    ? item.title
-                    : item.title.substring(0, 21) + '..'}
+                  {notice.title.length < 21
+                    ? notice.title
+                    : notice.title.substring(0, 21) + '..'}
                 </div>
                 <div className="hidden font-semibold sm:block">
-                  {item.title}
+                  {notice.title}
                 </div>
                 <div className="text-sm text-gray-400 md:text-right md:text-base">
-                  {item.createdAt}
+                  {notice.createdAt}
                 </div>
               </Link>
             </li>

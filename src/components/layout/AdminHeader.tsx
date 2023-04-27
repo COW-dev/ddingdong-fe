@@ -15,12 +15,12 @@ const navItems = [
     content: '동아리',
   },
   {
-    id: 2,
+    id: 3,
     href: '/report',
     content: '활동보고서',
   },
   {
-    id: 2,
+    id: 4,
     href: '/notice',
     content: '공지사항',
   },

@@ -55,10 +55,10 @@ export default function Index() {
       <Heading>공지사항</Heading>
       <ul className="mt-8 w-full md:mt-12">
         {notices.map((notice) => (
-          <li key={notice.id} className="border-b">
+          <li key={notice.id} className="w-full border-b">
             <Link
               href={`/notice/${notice.id}`}
-              className="inline-block py-6 hover:opacity-50"
+              className="inline-block w-full py-6 transition-opacity hover:opacity-50"
             >
               <div className="block text-base font-semibold sm:hidden">
                 {notice.title.length < 25

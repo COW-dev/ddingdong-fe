@@ -80,7 +80,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <div className="mt-4 flex justify-end md:mt-6">
         <Link
           href="/notice"
-          className="inline-block rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-500 hover:bg-gray-200 md:text-base"
+          className="inline-block rounded-xl bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-200 md:text-base"
         >
           목록으로 돌아가기
         </Link>
