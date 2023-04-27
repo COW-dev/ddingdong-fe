@@ -66,7 +66,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <h1 className="mt-7 text-2xl font-bold md:mt-10 md:text-3xl">
         {notice.title}
       </h1>
-      <div className="mt-1 border-b pb-6 text-lg font-medium text-gray-400 md:pb-8">
+      <div className="mt-1 border-b pb-6 text-base font-medium text-gray-400 md:pb-8 md:text-lg">
         {notice.createdAt}
       </div>
       <div className="py-6 text-base font-medium md:py-8 md:text-lg">
