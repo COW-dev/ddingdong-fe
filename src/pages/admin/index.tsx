@@ -52,7 +52,7 @@ export default function Index() {
       <Head>
         <title>띵동 어드민</title>
       </Head>
-      <AdminHeading clubName={'농어민후생연구회 흙'} clubScore={120} />
+      <AdminHeading clubName={'공:존'} clubScore={120} />
       <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <Link
           href="/club"

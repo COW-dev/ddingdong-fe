@@ -7,7 +7,7 @@ export default function AdminHeading({
   clubName,
   clubScore = 0,
 }: AdminHeadingProps) {
-  const isClub = true;
+  const isClub = false;
 
   return (
     <div className="flex w-full items-end justify-between">
