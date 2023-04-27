@@ -11,7 +11,7 @@ type ClubProps = {
 const deptCaptionColor: DeptCaptionColorType = {
   봉사: 'text-pink-500',
   사회연구: 'text-orange-500',
-  언행예술: 'text-yellow-500',
+  연행예술: 'text-yellow-500',
   전시창작: 'text-emerald-500',
   종교: 'text-cyan-500',
   체육: 'text-blue-500',
