@@ -251,7 +251,7 @@ export default function Index({ clubId }: ClubDetailProps) {
         tag={club.tag}
         href={'/'}
       />
-      <main className="w-full lg:w-[75%]">
+      <main className="w-full lg:w-[70%]">
         <section className="mt-6 md:mt-8">
           <div className="text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
@@ -270,9 +270,7 @@ export default function Index({ clubId }: ClubDetailProps) {
           </div>
         </section>
         <section className="mt-6 md:mt-8">
-          <div className="text-lg font-bold md:text-xl">
-            주로 이런 활동을 해요
-          </div>
+          <div className="text-lg font-bold md:text-xl">이런 활동을 해요</div>
           <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
             <li>매주 정기모임 및 활동</li>
             <li>창립제, 정기 공연, 클럽 공연, 학교 축제 공연 등 다양한 무대</li>

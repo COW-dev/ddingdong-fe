@@ -30,19 +30,19 @@ export default function ClubHeading({
         <Heading>{name}</Heading>
         <div className="flex items-center md:mt-0.5">
           <div
-            className={`rounded-lg text-lg font-semibold md:text-xl ${deptCaptionColor[category]}`}
+            className={`rounded-lg text-base font-semibold md:text-lg ${deptCaptionColor[category]}`}
           >
             {category}
           </div>
-          <div className="px-1.5 text-lg font-medium text-gray-300 md:text-xl">
+          <div className="px-1.5 text-base font-medium text-gray-300 md:text-lg">
             |
           </div>
-          <div className="rounded-lg text-lg font-semibold text-gray-500 md:text-xl">
+          <div className="rounded-lg text-base font-semibold text-gray-500 md:text-lg">
             {tag}
           </div>
         </div>
       </div>
-      <div className="mt-5 flex items-start md:mt-6">
+      <div className="mt-4 flex items-start md:mt-6">
         <div className="flex h-44 w-full flex-col justify-center rounded-xl bg-[rgb(247,248,249)] p-6 text-base font-semibold md:h-36 md:justify-center md:p-10 md:text-lg lg:w-[75%]">
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-0.5 w-full max-w-[20rem]">

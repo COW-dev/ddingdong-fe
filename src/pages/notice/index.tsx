@@ -53,12 +53,12 @@ export default function Index() {
         <title>띵동 - 공지사항</title>
       </Head>
       <Heading>공지사항</Heading>
-      <ul className="mt-8 w-full md:mt-12">
+      <ul className="mt-12 w-full md:mt-14">
         {notices.map((notice) => (
-          <li key={notice.id} className="w-full border-b">
+          <li key={notice.id} className="mb-1 w-full border-b">
             <Link
               href={`/notice/${notice.id}`}
-              className="inline-block w-full py-6 transition-opacity hover:opacity-50"
+              className="inline-block w-full pb-4 pt-3 transition-opacity hover:opacity-50 md:pb-5 md:pt-4"
             >
               <div className="block text-base font-semibold sm:hidden">
                 {notice.title.length < 25
@@ -68,7 +68,7 @@ export default function Index() {
               <div className="hidden text-lg font-semibold sm:block">
                 {notice.title}
               </div>
-              <div className="text-sm font-medium text-gray-400 md:text-base">
+              <div className="mb-2 text-sm font-medium text-gray-400 md:text-base">
                 {notice.createdAt}
               </div>
             </Link>
