@@ -1,6 +1,6 @@
 type ClubType = {
   id: number;
-  name: string;
+  clubName: string;
   tag: string;
   category: string;
 };
@@ -12,7 +12,7 @@ type DeptCaptionColorType = {
 type NoticeType = {
   id: number;
   title: string;
-  date: string;
+  createdAt: string;
 };
 
 export type { ClubType, DeptCaptionColorType, NoticeType };
