@@ -10,16 +10,16 @@ type LayoutProps = {
 export default function Layout({ children }: LayoutProps) {
   const router = useRouter();
   const curPath = router.pathname;
-  const isAdmin = curPath.startsWith('/admin');
-  const isLogin = curPath.endsWith('/login');
+  const isAdminPage = curPath.startsWith('/admin');
+  const isLoginPage = curPath.endsWith('/login');
 
   return (
-    <div className="flex min-h-screen w-full flex-col items-center justify-between text-gray-800">
-      {isAdmin ? <AdminHeader /> : <UserHeader />}
+    <div className="flex min-h-screen w-full flex-col items-center justify-between bg-white text-gray-800">
+      {isAdminPage ? <AdminHeader /> : <UserHeader />}
       <div className="flex w-full max-w-6xl flex-col px-6 pt-22 md:px-16 md:pt-26">
         {children}
       </div>
-      {!isLogin && <Footer />}
+      {!isLoginPage && <Footer />}
     </div>
   );
 }

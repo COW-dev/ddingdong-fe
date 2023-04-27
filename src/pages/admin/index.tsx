@@ -75,7 +75,7 @@ export default function Index() {
           </div>
         </Link>
       </div>
-      <div className="mt-4 w-full rounded-xl border-[1.5px] px-6 py-5 md:mt-8 md:px-8 md:py-7">
+      <div className="mt-4 w-full rounded-xl border-[1.5px] p-6 md:mt-8 md:p-8">
         <div className="flex w-full items-center justify-between">
           <h2 className="text-xl font-bold md:text-2xl">공지사항 관리하기</h2>
           <Link
@@ -90,7 +90,7 @@ export default function Index() {
             <li key={notice.id} className="w-full border-b">
               <Link
                 href={`/notice/${notice.id}`}
-                className="flex flex-col justify-between py-5 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-end md:py-5 md:text-lg"
+                className="flex flex-col justify-between py-6 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-end md:text-lg"
               >
                 <div className="block font-semibold sm:hidden">
                   {notice.title.length < 21
