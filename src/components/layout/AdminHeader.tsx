@@ -30,7 +30,6 @@ export default function UserHeader() {
   const router = useRouter();
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
-  const isLogin = true;
 
   return (
     <header className="fixed z-10 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
@@ -65,13 +64,11 @@ export default function UserHeader() {
                   </Link>
                 </li>
               ))}
-              {isLogin && (
-                <li>
-                  <button className="m-1 rounded-xl px-3 py-2 font-semibold text-gray-500 hover:text-blue-500">
-                    로그아웃
-                  </button>
-                </li>
-              )}
+              <li className="mx-1">
+                <button className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500">
+                  로그아웃
+                </button>
+              </li>
             </ul>
           </nav>
         )}
