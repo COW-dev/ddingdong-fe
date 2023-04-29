@@ -60,7 +60,7 @@ export default function NoticeList() {
             <div className="hidden text-lg font-semibold sm:block">
               {notice.title}
             </div>
-            <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
+            <div className="mb-1.5 mt-0.5 text-sm font-medium text-gray-400 md:mb-2 md:text-base">
               {notice.createdAt}
             </div>
           </Link>
