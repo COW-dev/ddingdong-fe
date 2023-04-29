@@ -15,7 +15,7 @@ export default function Index() {
         <Link
           href="/notice/new"
           // eslint-disable-next-line prettier/prettier
-          className="inline-block -mr-1.5 p-1.5 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
+          className="-mb-1.5 -mr-3 inline-block p-3 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
         >
           <Image
             src="/write.svg"
