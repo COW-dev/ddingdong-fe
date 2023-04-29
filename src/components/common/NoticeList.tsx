@@ -50,7 +50,7 @@ export default function NoticeList() {
         <li key={notice.id} className="mb-1 w-full border-b">
           <Link
             href={`/notice/${notice.id}`}
-            className="inline-block w-full pb-4.5 pt-3 transition-opacity hover:opacity-50 md:pb-5 md:pt-3.5"
+            className="inline-block w-full pb-5 pt-3 transition-opacity hover:opacity-50 md:pt-3.5"
           >
             <div className="block text-base font-semibold sm:hidden">
               {notice.title.length < 25
@@ -60,7 +60,7 @@ export default function NoticeList() {
             <div className="hidden text-lg font-semibold sm:block">
               {notice.title}
             </div>
-            <div className="mb-1.5 mt-0.5 text-sm font-medium text-gray-400 md:mb-2 md:text-base">
+            <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
               {notice.createdAt}
             </div>
           </Link>
