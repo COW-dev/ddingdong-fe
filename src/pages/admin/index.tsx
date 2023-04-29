@@ -1,9 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import AdminHeading from '@/components/admin/AdminHeading';
-import { NoticeType } from '@/types';
 
-const notices: Array<NoticeType> = [
+const notices = [
   {
     id: 0,
     title: '숨은 정부지원금 찾기의 알림 서비스 종료 안내',
@@ -85,22 +84,22 @@ export default function Index() {
             더 보기
           </Link>
         </div>
-        <ul className="mt-6 w-full">
+        <ul className="mt-8 w-full md:mt-10">
           {notices.slice(0, 5).map((notice) => (
-            <li key={notice.id} className="w-full border-b">
+            <li key={notice.id} className="mb-1 w-full border-b">
               <Link
                 href={`/notice/${notice.id}`}
-                className="flex flex-col justify-between py-6 text-base font-medium transition-opacity hover:opacity-50 md:flex-row md:items-end md:text-lg"
+                className="inline-block w-full pb-4 pt-3 transition-opacity hover:opacity-50 md:pb-4.5 md:pt-3.5"
               >
-                <div className="block font-semibold sm:hidden">
+                <div className="block text-base font-semibold sm:hidden">
                   {notice.title.length < 21
                     ? notice.title
                     : notice.title.substring(0, 21) + '..'}
                 </div>
-                <div className="hidden font-semibold sm:block">
+                <div className="hidden text-lg font-semibold sm:block">
                   {notice.title}
                 </div>
-                <div className="text-sm text-gray-400 md:text-right md:text-base">
+                <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
                   {notice.createdAt}
                 </div>
               </Link>
