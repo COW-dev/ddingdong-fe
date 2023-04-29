@@ -45,7 +45,7 @@ const notices = [
 
 export default function NoticeList() {
   return (
-    <ul className="mt-12 w-full md:mt-14">
+    <ul className="mt-14 w-full md:mt-16">
       {notices.map((notice) => (
         <li key={notice.id} className="mb-1 w-full border-b">
           <Link
