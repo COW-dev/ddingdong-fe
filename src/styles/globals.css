@@ -19,7 +19,7 @@ html::-webkit-scrollbar {
 }
 
 /* 탭 하이라이트 */
-input {
+* {
   -webkit-tap-highlight-color: transparent;
 }
 
