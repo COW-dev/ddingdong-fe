@@ -16,7 +16,7 @@ export default function Index() {
       <form className="mt-12 w-full md:mt-14">
         <TextareaAutosize
           spellCheck={false}
-          className="w-full resize-none rounded-none border-b pb-2 text-lg font-semibold outline-none placeholder:text-gray-300 md:pb-3 md:text-xl"
+          className="w-full resize-none rounded-none border-b pb-2 text-xl font-semibold outline-none placeholder:text-gray-300 md:pb-3 md:text-2xl"
           placeholder="제목"
         />
         <TextareaAutosize
