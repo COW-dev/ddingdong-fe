@@ -15,7 +15,7 @@ export default function Index() {
         <Link
           href="/notice/new"
           // eslint-disable-next-line prettier/prettier
-          className="-mb-0.5 -mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
+          className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
         >
           <Image
             src="/write.svg"
@@ -23,7 +23,7 @@ export default function Index() {
             height={100}
             priority
             alt="new"
-            className="w-6"
+            className="w-5"
           ></Image>
         </Link>
         <Link
