@@ -13,11 +13,11 @@ export default function Index() {
       <h1 className="mt-7 text-3xl font-bold md:mt-10 md:text-4xl">
         공지사항 작성하기
       </h1>
-      <form className="mt-8 w-full md:mt-11">
+      <form className="mt-12 w-full md:mt-14">
         <TextareaAutosize
           spellCheck={false}
-          className="w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-2xl font-bold outline-none md:p-5 md:text-3xl"
-          placeholder="제목을 입력하세요"
+          className="w-full resize-none rounded-none border-b pb-2 text-lg font-medium outline-none placeholder:text-gray-300 md:pb-3 md:text-xl"
+          placeholder="제목"
         />
         <TextareaAutosize
           minRows={8}
@@ -25,7 +25,7 @@ export default function Index() {
           spellCheck={false}
           placeholder="내용을 입력하세요"
           onChange={(event) => setContent(event.target.value)}
-          className="mt-4 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-6 md:p-5 md:text-lg"
+          className="mt-4 h-auto w-full resize-none overflow-hidden rounded-none border-b pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-6 md:pb-3 md:text-lg"
         />
         <div className="mt-4 flex justify-end md:mt-6">
           <button

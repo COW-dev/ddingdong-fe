@@ -98,7 +98,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         }`}
       >
         {notice.createdAt}
-        <div className="-mr-2 mb-1 flex justify-end text-sm font-semibold">
+        <div className="-mr-2 mb-1 flex justify-end text-sm font-semibold md:text-base">
           {isEditing ? (
             <>
               <button
