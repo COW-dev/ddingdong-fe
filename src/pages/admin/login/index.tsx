@@ -17,7 +17,7 @@ export default function Index() {
         <title>띵동 어드민 - 로그인</title>
       </Head>
       <div className="flex w-full flex-col items-center justify-start">
-        <div className="mt-10 w-[88%] sm:max-w-md md:w-full">
+        <div className="mt-10 w-full px-2 sm:max-w-md md:px-0 ">
           <Heading>띵동 어드민 로그인</Heading>
           <form
             className="mt-12 flex flex-col sm:mt-16"
