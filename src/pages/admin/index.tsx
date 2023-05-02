@@ -55,7 +55,7 @@ export default function Index() {
       <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <Link
           href="/club"
-          className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">동아리 관리하기</h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">

@@ -22,7 +22,7 @@ export default function Input({
     <div className="mb-4 flex flex-col">
       <label
         htmlFor={id}
-        className="mb-0.5 text-sm font-medium text-gray-500 sm:text-base"
+        className="mb-1 text-sm font-semibold text-gray-500 sm:text-base"
       >
         {label}
       </label>
@@ -33,7 +33,7 @@ export default function Input({
         spellCheck={false}
         value={value}
         onChange={handleChange}
-        className="rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-2 text-base font-medium outline-none sm:text-lg"
+        className="rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base font-semibold outline-none sm:text-lg"
       />
     </div>
   );
