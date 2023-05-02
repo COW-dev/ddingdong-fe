@@ -29,7 +29,7 @@ export default function Index() {
         <Link
           href="/notice/new"
           // eslint-disable-next-line prettier/prettier
-          className="-mb-1 hidden rounded-xl bg-gray-100 px-5 py-2.5 text-base font-semibold text-gray-500 transition-colors hover:bg-gray-200 sm:inline-block"
+          className="-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block"
         >
           공지사항 작성하기
         </Link>

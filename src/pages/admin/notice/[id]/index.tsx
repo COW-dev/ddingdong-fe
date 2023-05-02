@@ -79,7 +79,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       {isEditing ? (
         <TextareaAutosize
           spellCheck
-          className="mt-7 resize-none rounded-xl border border-gray-100 bg-gray-50 px-5 py-4 text-2xl font-bold outline-none md:mt-10 md:px-6 md:py-5 md:text-3xl"
+          className="mt-7 resize-none rounded-xl border border-gray-100 bg-gray-50 p-5 text-2xl font-bold outline-none md:mt-10 md:p-6 md:text-3xl"
           value={editedTitle}
           onChange={(event) => setEditedTitle(event.target.value)}
         />
@@ -94,18 +94,18 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         }`}
       >
         {notice.createdAt}
-        <div className="flex justify-end text-sm font-semibold md:text-base">
+        <div className="-mr-2 flex justify-end text-sm font-semibold md:text-base">
           {isEditing ? (
             <>
               <button
                 onClick={handleClickEdit}
-                className="mr-0.5 rounded-xl p-2 text-gray-500 transition-colors hover:text-gray-300"
+                className="mr-0.5 p-2 text-gray-500"
               >
                 취소
               </button>
               <button
                 onClick={handleClickSubmit}
-                className="ml-0.5 rounded-xl p-2 text-blue-500 transition-colors hover:text-blue-300"
+                className="ml-0.5 p-2 text-blue-500"
               >
                 확인
               </button>
@@ -114,13 +114,13 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             <>
               <button
                 onClick={handleClickEdit}
-                className="mr-0.5 rounded-xl p-2 text-gray-500 transition-colors hover:text-gray-300"
+                className="mr-0.5 p-2 text-gray-500"
               >
                 수정
               </button>
               <button
                 onClick={handleClickDelete}
-                className="ml-0.5 rounded-xl p-2 text-red-500 transition-colors hover:text-red-300"
+                className="ml-0.5 p-2 text-red-500"
               >
                 삭제
               </button>
@@ -132,7 +132,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         <TextareaAutosize
           value={editedContent}
           onChange={(event) => setEditedContent(event.target.value)}
-          className="mt-6 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 px-5 py-4 text-base font-medium outline-none md:mt-8 md:px-6 md:py-5 md:text-lg"
+          className="mt-6 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-5 text-base font-medium outline-none md:mt-8 md:p-6 md:text-lg"
         />
       ) : (
         <div className="py-8 text-base font-medium md:py-10 md:text-lg">
