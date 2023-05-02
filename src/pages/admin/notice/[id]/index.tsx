@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Head from 'next/head';
 import { GetServerSideProps } from 'next/types';
 import TextareaAutosize from 'react-textarea-autosize';
 import NeutralButton from '@/components/common/NeutralButton';
@@ -76,10 +77,13 @@ export default function Index({ noticeId }: NoticeDetailProps) {
 
   return (
     <>
+      <Head>
+        <title>띵동 어드민 - 공지사항</title>
+      </Head>
       {isEditing ? (
         <TextareaAutosize
           spellCheck
-          className="mt-7 resize-none rounded-xl border border-gray-100 bg-gray-50 p-5 text-2xl font-bold outline-none md:mt-10 md:p-6 md:text-3xl"
+          className="mt-7 resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-2xl font-bold outline-none md:mt-10 md:p-5 md:text-3xl"
           value={editedTitle}
           onChange={(event) => setEditedTitle(event.target.value)}
         />
@@ -89,23 +93,23 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         </h1>
       )}
       <div
-        className={`mb-1 border-b text-base font-medium text-gray-400 md:text-lg ${
+        className={`border-b text-base font-medium text-gray-400 md:text-lg ${
           isEditing ? 'mt-2 pl-5 md:pl-6' : 'mt-1'
         }`}
       >
         {notice.createdAt}
-        <div className="-mr-2 flex justify-end text-sm font-semibold md:text-base">
+        <div className="-mr-2 mb-1 flex justify-end text-sm font-semibold">
           {isEditing ? (
             <>
               <button
                 onClick={handleClickEdit}
-                className="mr-0.5 p-2 text-gray-500"
+                className="p-2 text-gray-500 md:mr-0.5"
               >
                 취소
               </button>
               <button
                 onClick={handleClickSubmit}
-                className="ml-0.5 p-2 text-blue-500"
+                className="p-2 text-blue-500 md:ml-0.5"
               >
                 확인
               </button>
@@ -114,13 +118,13 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             <>
               <button
                 onClick={handleClickEdit}
-                className="mr-0.5 p-2 text-gray-500"
+                className="p-2 text-gray-500 md:mr-0.5"
               >
                 수정
               </button>
               <button
                 onClick={handleClickDelete}
-                className="ml-0.5 p-2 text-red-500"
+                className="p-2 text-red-500 md:ml-0.5"
               >
                 삭제
               </button>
@@ -132,7 +136,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         <TextareaAutosize
           value={editedContent}
           onChange={(event) => setEditedContent(event.target.value)}
-          className="mt-6 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-5 text-base font-medium outline-none md:mt-8 md:p-6 md:text-lg"
+          className="mt-6 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-8 md:p-5 md:text-lg"
         />
       ) : (
         <div className="py-8 text-base font-medium md:py-10 md:text-lg">
