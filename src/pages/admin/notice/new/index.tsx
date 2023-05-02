@@ -6,10 +6,13 @@ export default function Index() {
 
   return (
     <>
-      <form className="mt-6 w-full md:mt-8">
+      <form className="w-full">
+        <h1 className="mt-7 text-3xl font-bold md:mt-10 md:text-4xl">
+          공지사항 작성하기
+        </h1>
         <TextareaAutosize
           spellCheck={false}
-          className="w-full resize-none rounded-none border-b py-2 text-2xl font-bold outline-none placeholder:font-medium md:py-3 md:text-3xl"
+          className="mt-7 w-full resize-none rounded-none border-b py-1 text-xl font-bold outline-none placeholder:font-medium md:mt-10 md:py-3 md:text-2xl"
           placeholder="제목을 입력해 주세요"
         />
         <TextareaAutosize

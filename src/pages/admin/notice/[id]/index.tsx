@@ -89,8 +89,8 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         </h1>
       )}
       <div
-        className={`mt-2 border-b pb-1 text-base font-medium text-gray-400 md:text-lg ${
-          isEditing ? 'pl-5 md:pl-6' : ''
+        className={`mb-1 border-b text-base font-medium text-gray-400 md:text-lg ${
+          isEditing ? 'mt-2 pl-5 md:pl-6' : 'mt-1'
         }`}
       >
         {notice.createdAt}
