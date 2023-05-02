@@ -16,7 +16,7 @@ export default function Index() {
       <form className="mt-12 w-full md:mt-14">
         <TextareaAutosize
           spellCheck={false}
-          className="w-full resize-none rounded-none border-b pb-2 text-lg font-medium outline-none placeholder:text-gray-300 md:pb-3 md:text-xl"
+          className="w-full resize-none rounded-none border-b pb-2 text-lg font-semibold outline-none placeholder:text-gray-300 md:pb-3 md:text-xl"
           placeholder="제목"
         />
         <TextareaAutosize
@@ -25,7 +25,7 @@ export default function Index() {
           spellCheck={false}
           placeholder="내용을 입력하세요"
           onChange={(event) => setContent(event.target.value)}
-          className="mt-4 h-auto w-full resize-none overflow-hidden rounded-none border-b pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-6 md:pb-3 md:text-lg"
+          className="mt-6 h-auto w-full resize-none overflow-hidden rounded-none border-b pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-8 md:pb-3 md:text-lg"
         />
         <div className="mt-4 flex justify-end md:mt-6">
           <button
