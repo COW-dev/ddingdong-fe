@@ -39,7 +39,7 @@ export default function ClubInfoForm({
             type="text"
             spellCheck={false}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-50'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:w-[70%] md:px-5`}
             value={leaderName}
             onChange={handleChange}
@@ -55,7 +55,7 @@ export default function ClubInfoForm({
             type="text"
             spellCheck={false}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-50'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:w-[70%] md:px-5`}
             value={phoneNumber}
             onChange={handleChange}
@@ -73,7 +73,7 @@ export default function ClubInfoForm({
             type="text"
             spellCheck={false}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-50'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:w-[70%] md:px-5`}
             value={location}
             onChange={handleChange}
@@ -89,7 +89,7 @@ export default function ClubInfoForm({
             type="text"
             spellCheck={false}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-50'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:w-[70%] md:px-5`}
             value={regularMeeting}
             onChange={handleChange}
@@ -107,7 +107,7 @@ export default function ClubInfoForm({
             type="text"
             spellCheck={false}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-50'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:w-[70%] md:px-5 `}
             value={recruitPeriod}
             onChange={handleChange}
