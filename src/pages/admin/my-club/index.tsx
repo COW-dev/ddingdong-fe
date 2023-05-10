@@ -246,6 +246,7 @@ const dummy: ClubDetailType = {
   location: 'S4019',
   recruitPeriod: '상시모집',
   regularMeeting: '매주 월요일 오후 5시',
+  isRecruit: true,
   introduction:
     '안녕하세요, 저희는 2022년에 창립된 명지대학교 인문캠퍼스 중앙 흑인음악 동아리 흑풍입니다.\n저희는 주로 힙합과 R&B 장르를 다루고 있습니다.\n다양한 무대와 사이퍼 제작, 뮤직비디오 촬영, 음악 제작, 비트 메이킹, 프로듀싱 등을 함께하고 싶다면?\nWe the Blast!',
   activities:
@@ -316,8 +317,8 @@ export default function Index() {
             disabled={!isEditing}
             onChange={handleChange}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500'
-            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-lg font-medium outline-none md:mb-6 md:mt-3 md:p-5`}
+              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
           />
           <div className="text-lg font-bold md:text-xl">이런 활동을 해요</div>
           <TextareaAutosize
@@ -327,8 +328,8 @@ export default function Index() {
             disabled={!isEditing}
             onChange={handleChange}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500'
-            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-lg font-medium outline-none md:mb-6 md:mt-3 md:p-5`}
+              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
           />
           <div className="text-lg font-bold md:text-xl">
             이런 분과 함께하고 싶어요
@@ -340,8 +341,8 @@ export default function Index() {
             disabled={!isEditing}
             onChange={handleChange}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500'
-            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-lg font-medium outline-none md:mb-6 md:mt-3 md:p-5`}
+              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
           />
         </div>
       </form>
