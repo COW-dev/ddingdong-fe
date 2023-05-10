@@ -23,13 +23,13 @@ type ClubDetailType = {
   leaderName: string;
   phoneNumber: string;
   location: string;
-  isRecruit?: boolean;
+  isRecruit: boolean;
   recruitPeriod: string;
   regularMeeting: string;
   introduction: string;
   activities: string;
   ideal: string;
-  formUrl?: string;
+  formUrl: string;
 };
 
 export type { ClubType, DeptCaptionColorType, NoticeType, ClubDetailType };

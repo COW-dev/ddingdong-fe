@@ -3,7 +3,7 @@ import Head from 'next/head';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
-import { ClubDetailType, DeptCaptionColorType } from '@/types';
+import { ClubDetailType } from '@/types';
 
 const clubs = [
   {
@@ -244,8 +244,9 @@ const dummy: ClubDetailType = {
   leaderName: '김보겸',
   phoneNumber: '010-0000-0000',
   location: 'S4019',
+  regularMeeting: '매월 두 번째, 네 번째 수요일 오후 6시',
   recruitPeriod: '상시모집',
-  regularMeeting: '매주 월요일 오후 5시',
+  formUrl: 'ww.www.com',
   isRecruit: true,
   introduction:
     '안녕하세요, 저희는 2022년에 창립된 명지대학교 인문캠퍼스 중앙 흑인음악 동아리 흑풍입니다.\n저희는 주로 힙합과 R&B 장르를 다루고 있습니다.\n다양한 무대와 사이퍼 제작, 뮤직비디오 촬영, 음악 제작, 비트 메이킹, 프로듀싱 등을 함께하고 싶다면?\nWe the Blast!',
@@ -276,14 +277,14 @@ export default function Index() {
           tag={clubData.tag}
         />
         {isEditing ? (
-          <div className="-mr-3 mb-2">
+          <div className="-mr-2 mb-2 font-semibold">
             <button
-              className="mr-1 rounded-xl px-2 py-2 font-bold text-gray-500"
+              className="mr-1 rounded-xl px-2 py-2 text-gray-500 transition-colors hover:text-gray-600"
               onClick={() => setIsEditing(false)}
             >
               취소
             </button>
-            <button className="ml-1 rounded-xl px-2 py-2 font-bold text-blue-500">
+            <button className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600">
               확인
             </button>
           </div>
@@ -303,10 +304,11 @@ export default function Index() {
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           recruitPeriod={clubData.recruitPeriod}
+          formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}
         />
-        <div className="mt-4 md:mt-6">
+        <div className="mt-6 md:mt-8">
           <div className="text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
           </div>
@@ -317,7 +319,7 @@ export default function Index() {
             disabled={!isEditing}
             onChange={handleChange}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
           />
           <div className="text-lg font-bold md:text-xl">이런 활동을 해요</div>
@@ -328,7 +330,7 @@ export default function Index() {
             disabled={!isEditing}
             onChange={handleChange}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
           />
           <div className="text-lg font-bold md:text-xl">
@@ -341,7 +343,7 @@ export default function Index() {
             disabled={!isEditing}
             onChange={handleChange}
             className={`${
-              isEditing ? 'text-gray-800' : 'text-gray-500 opacity-80'
+              !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
           />
         </div>
