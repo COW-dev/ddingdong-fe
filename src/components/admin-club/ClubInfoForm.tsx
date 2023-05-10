@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import { ClubDetailType } from '@/types';
-import Toggle from 'react-toggle';
 
 type ClubInfoFormProps = {
   leaderName: string;
