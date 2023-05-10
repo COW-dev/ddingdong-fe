@@ -43,23 +43,23 @@ export default function ClubHeading({
         </div>
       </div>
       <div className="mt-4 flex items-start md:mt-6">
-        <div className="flex h-auto w-full flex-col justify-center rounded-xl bg-[rgb(247,248,249)] p-6 text-base font-semibold md:h-36 md:justify-center md:p-10 md:text-lg lg:w-[75%]">
+        <div className="flex h-auto w-full flex-col justify-center rounded-xl bg-gray-50 p-6 text-base font-semibold md:justify-center md:px-10 md:py-7 md:text-lg lg:w-[75%]">
           <div className="flex w-full flex-col md:flex-row">
-            <div className="mb-0.5 w-full max-w-[20rem]">
+            <div className="mb-1.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">회장</span>
               <span>김보겸</span>
             </div>
-            <div className="mb-0.5">
+            <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">연락처</span>
               <span>010-0000-0000</span>
             </div>
           </div>
           <div className="flex w-full flex-col md:flex-row">
-            <div className="mb-0.5 w-full max-w-[20rem]">
+            <div className="mb-1.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">동아리방</span>
               <span>학생회관 7층 S4019</span>
             </div>
-            <div className="mb-0.5">
+            <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">정기모임</span>
               <span>매주 월요일</span>
             </div>

@@ -15,4 +15,21 @@ type NoticeType = {
   createdAt: string;
 };
 
-export type { ClubType, DeptCaptionColorType, NoticeType };
+type ClubDetailType = {
+  id: number;
+  clubName: string;
+  tag: string;
+  category: string;
+  leaderName: string;
+  phoneNumber: string;
+  location: string;
+  isRecruit?: boolean;
+  recruitPeriod: string;
+  regularMeeting: string;
+  introduction: string;
+  activities: string;
+  ideal: string;
+  formUrl?: string;
+};
+
+export type { ClubType, DeptCaptionColorType, NoticeType, ClubDetailType };

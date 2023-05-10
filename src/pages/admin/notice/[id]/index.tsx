@@ -82,7 +82,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       </Head>
       {isEditing ? (
         <TextareaAutosize
-          spellCheck
+          spellCheck={false}
           className="mt-7 resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-2xl font-bold outline-none md:mt-10 md:p-5 md:text-3xl"
           value={editedTitle}
           onChange={(event) => setEditedTitle(event.target.value)}
@@ -134,6 +134,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       </div>
       {isEditing ? (
         <TextareaAutosize
+          spellCheck={false}
           value={editedContent}
           onChange={(event) => setEditedContent(event.target.value)}
           className="mt-6 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-8 md:p-5 md:text-lg"
