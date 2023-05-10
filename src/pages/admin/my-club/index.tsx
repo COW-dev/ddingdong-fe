@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import Head from 'next/head';
+import toast, { Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
@@ -265,6 +266,14 @@ export default function Index() {
       [event.target.name]: event.target.value,
     }));
   }
+  function handleClickCancel() {
+    setIsEditing(false);
+    setClubData(dummy);
+  }
+  function handleClickSubmit() {
+    setIsEditing(false);
+    toast.success('동아리 정보가 수정됐어요.');
+  }
   return (
     <>
       <Head>
@@ -280,11 +289,14 @@ export default function Index() {
           <div className="-mr-2 mb-2 font-semibold">
             <button
               className="mr-1 rounded-xl px-2 py-2 text-gray-500 transition-colors hover:text-gray-600"
-              onClick={() => setIsEditing(false)}
+              onClick={handleClickCancel}
             >
               취소
             </button>
-            <button className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600">
+            <button
+              className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600"
+              onClick={handleClickSubmit}
+            >
               확인
             </button>
           </div>
@@ -348,6 +360,15 @@ export default function Index() {
           />
         </div>
       </form>
+      <Toaster
+        toastOptions={{
+          style: {
+            fontWeight: 600,
+            padding: '0.75rem 1rem',
+            marginTop: '0.5rem',
+          },
+        }}
+      />
     </>
   );
 }

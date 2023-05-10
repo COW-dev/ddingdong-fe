@@ -133,11 +133,6 @@ export default function ClubInfoForm({
           />
         </div>
       </div>
-      <div className="mb-2 w-full md:mb-3 md:w-[50%]">
-        <label className="inline-block w-20 font-semibold text-gray-500">
-          모집여부
-        </label>
-      </div>
     </div>
   );
 }
