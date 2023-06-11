@@ -19,13 +19,12 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
           value={value}
           spellCheck={false}
           onChange={handleChange}
-          className="w-full bg-inherit pl-1 pr-2 text-sm font-semibold outline-none md:text-base"
+          className="w-full bg-inherit pl-1 pr-2 text-base font-semibold outline-none md:text-lg"
         />
         <Image
           src="/search.svg"
           width={50}
           height={50}
-          priority
           alt="search"
           className="w-5 md:w-6"
         />
