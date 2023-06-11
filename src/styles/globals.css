@@ -23,6 +23,13 @@ html::-webkit-scrollbar {
   -webkit-tap-highlight-color: transparent;
 }
 
+body {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .box-shadow {
   box-shadow: 0 0 6px rgba(73, 80, 87, 0.05);
 }
