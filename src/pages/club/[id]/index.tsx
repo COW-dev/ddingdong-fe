@@ -9,17 +9,15 @@ type ClubDetailProps = {
 };
 
 export default function Index({ clubId }: ClubDetailProps) {
-  const { isLoading, isError, isSuccess, data } = useClubInfo(clubId);
+  const { isError, isSuccess, data } = useClubInfo(clubId);
 
-  if (isLoading) {
-    <div>loading</div>;
-  }
   if (isError) {
     <div>error</div>;
   }
   if (isSuccess) {
     const clubInfo = data.data;
     const { name, introduction, activity, ideal, formUrl } = clubInfo;
+
     return (
       <>
         <Head>

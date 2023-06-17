@@ -2,11 +2,8 @@ import Link from 'next/link';
 import { useAllNotices } from '@/hooks/useAllNotices';
 
 export default function NoticeList() {
-  const { isLoading, isError, data } = useAllNotices();
+  const { isError, data } = useAllNotices();
 
-  if (isLoading) {
-    <div>loading</div>;
-  }
   if (isError) {
     <div>error</div>;
   }

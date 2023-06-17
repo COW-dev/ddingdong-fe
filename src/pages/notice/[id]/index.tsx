@@ -7,18 +7,13 @@ type NoticeDetailProps = {
 };
 
 export default function Index({ noticeId }: NoticeDetailProps) {
-  const { isLoading, isError, isSuccess, data } = useNoticeInfo(noticeId);
+  const { isError, isSuccess, data } = useNoticeInfo(noticeId);
 
-  if (isLoading) {
-    <div>loading</div>;
-  }
   if (isError) {
     <div>error</div>;
   }
   if (isSuccess) {
     const noticeInfo = data.data;
-    console.log(noticeInfo);
-
     const { title, createdAt, content } = noticeInfo;
 
     return (

@@ -1,6 +1,11 @@
 // eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
-import { ClubDetailType, ClubType, NoticeType } from './../types/index';
+import {
+  ClubDetailType,
+  ClubType,
+  NoticeDetailType,
+  NoticeType,
+} from './../types/index';
 
 const api = axios.create({
   baseURL: 'http://localhost:8080/api/',
@@ -35,4 +40,10 @@ export async function getAllNotices(): Promise<
   AxiosResponse<NoticeType[], unknown>
 > {
   return await api.get('/notices');
+}
+
+export async function getNoticeInfo(
+  id: number,
+): Promise<AxiosResponse<NoticeDetailType, unknown>> {
+  return await api.get(`/notices/${id}`);
 }
