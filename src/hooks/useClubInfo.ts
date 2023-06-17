@@ -9,9 +9,9 @@ export function useClubInfo(id: number) {
     unknown,
     AxiosError,
     AxiosResponse<ClubDetailType, unknown>,
-    [string]
+    [string, number]
   >({
-    queryKey: [`club/${id}`],
+    queryKey: ['club', id],
     queryFn: () => getClubInfo(id),
   });
 }

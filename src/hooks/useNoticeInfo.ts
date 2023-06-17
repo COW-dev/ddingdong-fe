@@ -9,9 +9,9 @@ export function useNoticeInfo(id: number) {
     unknown,
     AxiosError,
     AxiosResponse<NoticeDetailType, unknown>,
-    [string]
+    [string, number]
   >({
-    queryKey: [`notice/${id}`],
+    queryKey: ['notice', id],
     queryFn: () => getNoticeInfo(id),
   });
 }
