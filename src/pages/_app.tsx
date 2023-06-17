@@ -6,16 +6,17 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
 import Layout from '@/components/layout';
 
-export default function App({ Component, pageProps }: AppProps) {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: 3,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-      },
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
     },
-  });
+  },
+});
+
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
