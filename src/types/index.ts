@@ -3,6 +3,7 @@ export type ClubType = {
   name: string;
   tag: string;
   category: string;
+  isRecruit: boolean;
 };
 
 export type DeptCaptionColorType = {

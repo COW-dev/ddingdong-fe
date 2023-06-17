@@ -6,6 +6,7 @@ type ClubProps = {
   name: string;
   tag: string;
   category: string;
+  isRecruit: boolean;
 };
 
 const deptCaptionColor: DeptCaptionColorType = {
@@ -18,9 +19,13 @@ const deptCaptionColor: DeptCaptionColorType = {
   학술: 'text-purple-500',
 };
 
-export default function ClubCard({ id, name, tag, category }: ClubProps) {
-  const status = true;
-
+export default function ClubCard({
+  id,
+  name,
+  tag,
+  category,
+  isRecruit,
+}: ClubProps) {
   return (
     <li
       key={id}
@@ -47,12 +52,12 @@ export default function ClubCard({ id, name, tag, category }: ClubProps) {
         <div className="flex items-center">
           <div
             className={`rounded-lg px-2 py-1 text-sm font-semibold ${
-              status
+              isRecruit
                 ? 'bg-green-100 text-green-500'
                 : 'bg-gray-100 text-gray-500'
             }`}
           >
-            {status ? '모집 중' : '모집 마감'}
+            {isRecruit ? '모집 중' : '모집 마감'}
           </div>
         </div>
       </Link>
