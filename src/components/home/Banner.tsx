@@ -1,9 +1,7 @@
 import Image from 'next/image';
-// import Link from 'next/link';
 
 export default function Banner() {
   return (
-    // <Link href="/" className="inline-block">
     <div className="flex h-56 w-full flex-col items-center justify-center rounded-xl bg-sky-100 md:h-48 md:flex-row">
       <Image
         src="/hearts.png"
