@@ -1,23 +1,23 @@
-type ClubType = {
+export type ClubType = {
   id: number;
-  clubName: string;
+  name: string;
   tag: string;
   category: string;
 };
 
-type DeptCaptionColorType = {
+export type DeptCaptionColorType = {
   [name: string]: string;
 };
 
-type NoticeType = {
+export type NoticeType = {
   id: number;
   title: string;
   createdAt: string;
 };
 
-type ClubDetailType = {
+export type ClubDetailType = {
   id: number;
-  clubName: string;
+  name: string;
   tag: string;
   category: string;
   leaderName: string;
@@ -32,4 +32,7 @@ type ClubDetailType = {
   formUrl: string;
 };
 
-export type { ClubType, DeptCaptionColorType, NoticeType, ClubDetailType };
+export type loginResponse = {
+  role: string;
+  token: string;
+};
