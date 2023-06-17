@@ -1,5 +1,5 @@
 import Heading from '@/components/common/Heading';
-import type { DeptCaptionColorType } from '@/types';
+import type { ClubDetailType, DeptCaptionColorType } from '@/types';
 
 const deptCaptionColor: DeptCaptionColorType = {
   봉사: 'text-pink-500',
@@ -12,18 +12,22 @@ const deptCaptionColor: DeptCaptionColorType = {
 };
 
 type ClubHeadingProps = {
-  name: string;
-  category: string;
-  tag: string;
-  href: string;
+  info: ClubDetailType;
 };
 
-export default function ClubHeading({
-  name,
-  category,
-  tag,
-  href,
-}: ClubHeadingProps) {
+export default function ClubHeading({ info }: ClubHeadingProps) {
+  const {
+    name,
+    category,
+    tag,
+    leader,
+    phoneNumber,
+    location,
+    regularMeeting,
+    recruitPeriod,
+    formUrl,
+  } = info;
+
   return (
     <>
       <div className="flex flex-col">
@@ -47,30 +51,34 @@ export default function ClubHeading({
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-1.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">회장</span>
-              <span>김보겸</span>
+              <span>{leader}</span>
             </div>
             <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">연락처</span>
-              <span>010-0000-0000</span>
+              <span>{phoneNumber.number}</span>
             </div>
           </div>
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-1.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">동아리방</span>
-              <span>학생회관 7층 S4019</span>
+              <span>{location}</span>
             </div>
             <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">정기모임</span>
-              <span>매주 월요일</span>
+              <span>{regularMeeting}</span>
             </div>
           </div>
           <div className="w-full">
             <span className="inline-block w-20 text-gray-500">모집기간</span>
-            <span>4월 1일 ~ 4월 30일</span>
+            <span>{recruitPeriod}</span>
           </div>
         </div>
         <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">
-          <a href={href} target="_blank" className="inline-block w-full py-3.5">
+          <a
+            href={formUrl}
+            target="_blank"
+            className="inline-block w-full py-3.5"
+          >
             지원하기
           </a>
         </button>

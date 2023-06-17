@@ -12,22 +12,28 @@ export type DeptCaptionColorType = {
 export type NoticeType = {
   id: number;
   title: string;
+  content: string;
   createdAt: string;
 };
 
+export type NoticeDetailType = {
+  id: number;
+  title: string;
+  createdAt: string;
+};
 export type ClubDetailType = {
   id: number;
   name: string;
   tag: string;
   category: string;
-  leaderName: string;
-  phoneNumber: string;
+  leader: string;
+  phoneNumber: { number: string };
   location: string;
   isRecruit: boolean;
   recruitPeriod: string;
   regularMeeting: string;
   introduction: string;
-  activities: string;
+  activity: string;
   ideal: string;
   formUrl: string;
 };
