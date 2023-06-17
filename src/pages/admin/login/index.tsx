@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AxiosError, AxiosResponse } from 'axios';
+import { useCookies } from 'react-cookie';
 import { login } from '@/apis';
 import Input from '@/components/admin-login/Input';
 import Heading from '@/components/common/Heading';
@@ -12,15 +13,19 @@ export default function Index() {
   const router = useRouter();
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
+  const [cookies, setCookie] = useCookies(['role', 'token']);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     login(id, pw)
       .then((response: AxiosResponse<loginResponse, unknown>) => {
         const { role, token } = response.data;
-        localStorage.setItem('role', role);
-        localStorage.setItem('token', token.split('Bearer ')[1]);
-        router.push('/');
+        setCookie('role', role);
+        setCookie('token', token);
+        if (role === 'ROLE_ADMIN') {
+          return router.push('/');
+        }
+        router.push('/my-club');
       })
       .catch((error: AxiosError) => {
         console.log(error.response?.data);
