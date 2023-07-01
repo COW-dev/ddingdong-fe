@@ -1,4 +1,4 @@
-export type ClubType = {
+export type Club = {
   id: number;
   name: string;
   tag: string;
@@ -6,24 +6,39 @@ export type ClubType = {
   isRecruit: boolean;
 };
 
-export type DeptCaptionColorType = {
+export type DeptCaptionColor = {
   [name: string]: string;
 };
 
-export type NoticeType = {
+export type Notice = {
   id: number;
   title: string;
   createdAt: string;
 };
 
-export type NoticeDetailType = {
+export type NewNotice = {
+  title: string;
+  content: string;
+  token: string;
+};
+
+export type UpdateNotice = NewNotice & {
+  noticeId: number;
+};
+
+export type DeleteNotice = {
+  noticeId: number;
+  token: string;
+};
+
+export type NoticeDetail = {
   id: number;
   title: string;
   content: string;
   createdAt: string;
 };
 
-export type ClubDetailType = {
+export type ClubDetail = {
   id: number;
   name: string;
   tag: string;
@@ -40,7 +55,26 @@ export type ClubDetailType = {
   formUrl: string;
 };
 
-export type loginResponse = {
+export type UpdateClub = {
+  name?: string;
+  tag?: string;
+  category?: string;
+  clubLeader?: string;
+  phoneNumber?: string;
+  location?: string;
+  isRecruit?: boolean;
+  recruitPeriod?: string;
+  regularMeeting?: string;
+  introduction?: string;
+  activity?: string;
+  ideal?: string;
+  formUrl?: string;
+  token: string;
+};
+
+export type LoginResponse = {
   role: string;
   token: string;
 };
+
+export type Auth = Pick<LoginResponse, 'role' | 'token'>;

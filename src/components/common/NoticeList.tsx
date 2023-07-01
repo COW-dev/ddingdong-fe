@@ -2,11 +2,7 @@ import Link from 'next/link';
 import { useAllNotices } from '@/hooks/useAllNotices';
 
 export default function NoticeList() {
-  const { isError, data } = useAllNotices();
-
-  if (isError) {
-    <div>error</div>;
-  }
+  const { data } = useAllNotices();
   const notices = data?.data;
 
   return (

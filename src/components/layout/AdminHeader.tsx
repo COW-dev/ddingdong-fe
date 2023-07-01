@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
+import { useAuthStore } from '@/store/auth';
 import isNavActive from '@/utils/isNavActive';
 
 const navItems = [
@@ -9,11 +11,11 @@ const navItems = [
     href: '/',
     content: '홈',
   },
-  {
-    id: 2,
-    href: '/club',
-    content: '동아리',
-  },
+  // {
+  //   id: 2,
+  //   href: '/club',
+  //   content: '동아리',
+  // },
   // {
   //   id: 3,
   //   href: '/report',
@@ -28,6 +30,9 @@ const navItems = [
 
 export default function UserHeader() {
   const router = useRouter();
+  const { resetAuth } = useAuthStore();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies(['token']);
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
 
@@ -65,7 +70,14 @@ export default function UserHeader() {
                 </li>
               ))}
               <li className="mx-1">
-                <button className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500">
+                <button
+                  className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
+                  onClick={() => {
+                    resetAuth();
+                    removeCookie('token');
+                    router.push('/login');
+                  }}
+                >
                   로그아웃
                 </button>
               </li>

@@ -14,7 +14,6 @@ export default function Index() {
         <Heading>공지사항 관리하기</Heading>
         <Link
           href="/notice/new"
-          // eslint-disable-next-line prettier/prettier
           className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
         >
           <Image
@@ -28,7 +27,6 @@ export default function Index() {
         </Link>
         <Link
           href="/notice/new"
-          // eslint-disable-next-line prettier/prettier
           className="-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
         >
           공지사항 작성하기

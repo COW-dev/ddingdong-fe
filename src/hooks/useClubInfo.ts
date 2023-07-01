@@ -1,14 +1,13 @@
-/* eslint-disable import/named */
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosError, type AxiosResponse } from 'axios';
 import { getClubInfo } from '@/apis';
-import { ClubDetailType } from '@/types';
+import { ClubDetail } from '@/types';
 
 export function useClubInfo(id: number) {
   return useQuery<
     unknown,
     AxiosError,
-    AxiosResponse<ClubDetailType, unknown>,
+    AxiosResponse<ClubDetail, unknown>,
     [string, number]
   >({
     queryKey: ['club', id],

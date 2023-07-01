@@ -1,7 +1,7 @@
 import Heading from '@/components/common/Heading';
-import type { DeptCaptionColorType } from '@/types';
+import type { DeptCaptionColor } from '@/types';
 
-const deptCaptionColor: DeptCaptionColorType = {
+const deptCaptionColor: DeptCaptionColor = {
   봉사: 'text-pink-500',
   사회연구: 'text-orange-500',
   연행예술: 'text-yellow-500',

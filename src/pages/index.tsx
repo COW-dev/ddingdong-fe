@@ -3,12 +3,12 @@ import Banner from '@/components/home/Banner';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import { useAllClubs } from '@/hooks/useAllClubs';
-import type { ClubType } from '@/types';
+import type { Club } from '@/types';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
-  const [clubs, setClubs] = useState<Array<ClubType>>([]);
-  const [filteredClubs, setFilteredClubs] = useState<Array<ClubType>>([]);
+  const [clubs, setClubs] = useState<Array<Club>>([]);
+  const [filteredClubs, setFilteredClubs] = useState<Array<Club>>([]);
   const { isError, data } = useAllClubs();
 
   useEffect(() => {

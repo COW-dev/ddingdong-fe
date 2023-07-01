@@ -1,7 +1,7 @@
 import Heading from '@/components/common/Heading';
-import type { ClubDetailType, DeptCaptionColorType } from '@/types';
+import type { ClubDetail, DeptCaptionColor } from '@/types';
 
-const deptCaptionColor: DeptCaptionColorType = {
+const deptCaptionColor: DeptCaptionColor = {
   봉사: 'text-pink-500',
   사회연구: 'text-orange-500',
   연행예술: 'text-yellow-500',
@@ -12,7 +12,7 @@ const deptCaptionColor: DeptCaptionColorType = {
 };
 
 type ClubHeadingProps = {
-  info: ClubDetailType;
+  info: ClubDetail;
 };
 
 export default function ClubHeading({ info }: ClubHeadingProps) {

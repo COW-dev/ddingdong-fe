@@ -1,19 +1,19 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import { ClubDetailType } from '@/types';
+import { ClubDetail } from '@/types';
 
 type ClubInfoFormProps = {
-  leaderName: string;
+  leader: string;
   phoneNumber: string;
   location: string;
   recruitPeriod: string;
   regularMeeting: string;
   formUrl: string;
-  setValue: Dispatch<SetStateAction<ClubDetailType>>;
+  setValue: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
 };
 
 export default function ClubInfoForm({
-  leaderName,
+  leader,
   phoneNumber,
   location,
   recruitPeriod,
@@ -37,13 +37,13 @@ export default function ClubInfoForm({
             회장
           </label>
           <input
-            name="leaderName"
+            name="leader"
             type="text"
             spellCheck={false}
             className={`${
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
-            value={leaderName}
+            value={leader}
             onChange={handleChange}
             disabled={!isEditing}
           />

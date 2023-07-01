@@ -7,21 +7,25 @@ import { useCookies } from 'react-cookie';
 import { login } from '@/apis';
 import Input from '@/components/admin-login/Input';
 import Heading from '@/components/common/Heading';
-import { loginResponse } from '@/types';
+import { useAuthStore } from '@/store/auth';
+import { LoginResponse } from '@/types';
 
 export default function Index() {
   const router = useRouter();
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
-  const [cookies, setCookie] = useCookies(['role', 'token']);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const { setAuth } = useAuthStore();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     login(id, pw)
-      .then((response: AxiosResponse<loginResponse, unknown>) => {
+      .then((response: AxiosResponse<LoginResponse, unknown>) => {
         const { role, token } = response.data;
-        setCookie('role', role);
-        setCookie('token', token);
+        const authToken = token.split('Bearer ')[1];
+        setCookie('token', authToken);
+        setAuth({ role, token });
         if (role === 'ROLE_ADMIN') {
           return router.push('/');
         }
