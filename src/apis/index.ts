@@ -12,7 +12,7 @@ import {
 } from '@/types';
 
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api/',
+  baseURL: 'http://ddingdong-dev.ap-northeast-2.elasticbeanstalk.com/api/',
   timeout: 3000,
 });
 
