@@ -1,6 +1,6 @@
 export default function isNavActive(curPath: string, href: string): boolean {
   if (href === '/') {
-    return curPath === href;
+    return curPath === '/' || curPath === '/admin';
   }
-  return curPath.startsWith(href);
+  return curPath.startsWith(href) || curPath.startsWith('/admin' + href);
 }
