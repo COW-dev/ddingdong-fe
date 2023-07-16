@@ -9,6 +9,8 @@ import {
   UpdateClub,
   UpdateNotice,
   DeleteNotice,
+  NewClub,
+  AdminClub,
 } from '@/types';
 
 const api = axios.create({
@@ -22,6 +24,16 @@ export async function login(userId: string, password: string) {
 
 export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {
   return await api.get('/clubs');
+}
+
+export async function getAdminAllClubs(
+  token: string,
+): Promise<AxiosResponse<AdminClub[], unknown>> {
+  return await api.get('/admin/clubs', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 
 export async function getClubInfo(
@@ -44,6 +56,13 @@ export async function getNoticeInfo(
 
 export async function createNotice({ token, ...noticeData }: NewNotice) {
   return await api.post('/admin/notices', noticeData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function createClub({ token, ...clubData }: NewClub) {
+  return await api.post('/admin/clubs', clubData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

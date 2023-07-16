@@ -1,9 +1,26 @@
 export type Club = {
   id: number;
   name: string;
-  tag: string;
   category: string;
+  tag: string;
   isRecruit: boolean;
+};
+
+export type AdminClub = {
+  id: number;
+  name: string;
+  category: string;
+  score: number;
+};
+
+export type NewClub = {
+  clubName: string;
+  category: string;
+  tag: string;
+  leaderName: string;
+  userId: string;
+  password: string;
+  token: string;
 };
 
 export type DeptCaptionColor = {

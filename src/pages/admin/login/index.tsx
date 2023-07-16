@@ -26,10 +26,7 @@ export default function Index() {
         const authToken = token.split('Bearer ')[1];
         setCookie('token', authToken);
         setAuth({ role, token });
-        if (role === 'ROLE_ADMIN') {
-          return router.push('/');
-        }
-        router.push('/my-club');
+        return router.push('/');
       })
       .catch((error: AxiosError) => {
         console.log(error.response?.data);
