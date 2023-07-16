@@ -26,7 +26,7 @@ export default function Modal({
       >
         {/* modal*/}
         <div
-          className="z-55 dark:bg- relative max-h-[80%] w-full max-w-lg overflow-scroll rounded-lg bg-white shadow"
+          className="z-55 dark:bg- relative max-h-[80%] w-full max-w-lg rounded-lg bg-white shadow"
           onClick={(e) => e.stopPropagation()}
         >
           {/* modalheader */}
@@ -36,12 +36,9 @@ export default function Modal({
               type="button"
               className="ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 "
               data-modal-hide="medium-modal"
+              onClick={() => setShowModal(false)}
             >
-              <Image
-                src={CancleImg}
-                alt="cancle"
-                onClick={() => setShowModal(false)}
-              />
+              <Image src={CancleImg} alt="cancle" />
             </button>
           </div>
           {/* modalbody*/}

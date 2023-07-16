@@ -5,8 +5,8 @@ import { Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
-import { useMyClub } from '@/hooks/useMyClub';
-import { useUpdateMyClub } from '@/hooks/useUpdateMyClub';
+import { useMyClub } from '@/hooks/api/club/useMyClub';
+import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types';
 
 type MyClubProps = {
@@ -36,7 +36,9 @@ export default function Index({ token }: MyClubProps) {
   const {
     data: { data },
   } = useMyClub(token);
+
   const mutation = useUpdateMyClub();
+  console.log(data);
 
   useEffect(() => {
     if (data) {

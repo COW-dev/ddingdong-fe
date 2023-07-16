@@ -5,19 +5,19 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateMyClub } from '@/apis';
-import { UpdateMyClub } from '@/types';
+import { updateClub } from '@/apis';
+import { UpdateClub } from '@/types';
 
-export function useUpdateMyClub(): UseMutationResult<
+export function useUpdateClub(): UseMutationResult<
   unknown,
   AxiosError,
-  UpdateMyClub
+  UpdateClub
 > {
   const queryClient = useQueryClient();
 
-  return useMutation(updateMyClub, {
+  return useMutation(updateClub, {
     onSuccess() {
-      queryClient.invalidateQueries(['my-club']);
+      queryClient.invalidateQueries(['admin/clubs']);
       toast.success('동아리 정보를 수정했어요.');
     },
     onError(error) {
