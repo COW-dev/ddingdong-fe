@@ -1,6 +1,6 @@
 import { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useNewClub } from '@/hooks/useNewClub';
+import { useNewClub } from '@/hooks/api/club/useNewClub';
 
 type CreateModalProp = {
   setShowModal: (flag: boolean) => void;

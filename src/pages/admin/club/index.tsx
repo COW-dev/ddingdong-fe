@@ -5,7 +5,7 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import CreateModal from '@/components/modal/CreateClub';
 import ModifyModal from '@/components/modal/ModifyClub';
-import { useAdminAllClubs } from '@/hooks/useAdminAllClubs';
+import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import type { AdminClub } from '@/types';
 
 export default function Index() {
