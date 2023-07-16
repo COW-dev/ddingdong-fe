@@ -1,37 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import { useDeleteClub } from '@/hooks/api/club/useDeleteClub';
 import { useUpdateClub } from '@/hooks/api/club/useUpdateClub';
-type ModifyModalProp = {
-  setShowModal: {
-    modify: (flag: boolean) => void;
-    delete: (flag: boolean) => void;
-  };
-  club: {
-    score: number;
-    id: number;
-    name: string;
-  };
-};
+import { AdminClub } from '@/types';
+import { MODAL_TYPE, ModalProp } from '.';
 
-export default function ModifyClub({ club, setShowModal }: ModifyModalProp) {
-  const { id, score } = club;
+export default function ModifyClub({ data, setModal }: ModalProp) {
+  const { id, score } = data;
   const updateMutation = useUpdateClub();
   const [cookies] = useCookies(['token']);
   const [changedScore, setScore] = useState(score);
 
   function handleClickChange() {
     updateMutation.mutate({ id, score: changedScore, token: cookies.token });
-    setShowModal.modify(false);
+    setModal(MODAL_TYPE.null);
   }
 
   function handleClickDelete() {
-    // deleteMutation.mutate({
-    //   clubId: id,
-    //   token: cookies.token,
-    // });
-    setShowModal.modify(false);
-    setShowModal.delete(true);
+    setModal(MODAL_TYPE.null);
+    setModal(MODAL_TYPE.delete);
   }
 
   useEffect(() => {

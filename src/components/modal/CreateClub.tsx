@@ -1,12 +1,9 @@
-import { ChangeEvent, SetStateAction, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
+import { MODAL_TYPE, ModalProp } from '.';
 
-type CreateModalProp = {
-  setShowModal: (flag: boolean) => void;
-};
-
-export default function CreateClub({ setShowModal }: CreateModalProp) {
+export default function CreateClub({ data, setModal }: ModalProp) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
   const [clubData, setClubData] = useState({
@@ -35,7 +32,7 @@ export default function CreateClub({ setShowModal }: CreateModalProp) {
     event.preventDefault();
     mutation.mutate({ ...clubData, token: cookies.token });
     handleReset();
-    setShowModal(false);
+    setModal(MODAL_TYPE.null);
   }
   function handleReset() {
     setClubData({
