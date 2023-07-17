@@ -6,12 +6,12 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateMyClub } from '@/apis';
-import { UpdateClub } from '@/types';
+import { UpdateMyClub } from '@/types';
 
 export function useUpdateMyClub(): UseMutationResult<
   unknown,
   AxiosError,
-  UpdateClub
+  UpdateMyClub
 > {
   const queryClient = useQueryClient();
 

@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import AdminHeading from '@/components/admin/AdminHeading';
-import { useAllNotices } from '@/hooks/useAllNotices';
+import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
 export default function Index() {
   const { data } = useAllNotices();

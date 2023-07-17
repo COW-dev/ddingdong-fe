@@ -25,6 +25,7 @@ export const config = {
     '/login',
     '/notice/:path*',
     '/my-club',
+    '/club',
     '/admin/:path*',
     '/report/:path*',
   ],

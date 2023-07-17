@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next/types';
 import NeutralButton from '@/components/common/NeutralButton';
-import { useNoticeInfo } from '@/hooks/useNoticeInfo';
+import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
 
 type NoticeDetailProps = {
   noticeId: number;
@@ -9,6 +9,8 @@ type NoticeDetailProps = {
 export default function Index({ noticeId }: NoticeDetailProps) {
   const { data } = useNoticeInfo(noticeId);
   const noticeInfo = data.data;
+  //임시 수정
+  if (!noticeInfo) return;
   const { title, content, createdAt } = noticeInfo;
 
   return (

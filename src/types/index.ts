@@ -1,9 +1,27 @@
+import { create } from 'zustand';
 export type Club = {
   id: number;
   name: string;
-  tag: string;
   category: string;
+  tag: string;
   isRecruit: boolean;
+};
+
+export type AdminClub = {
+  id: number;
+  name: string;
+  category: string;
+  score: number;
+};
+
+export type NewClub = {
+  clubName: string;
+  category: string;
+  tag: string;
+  leaderName: string;
+  userId: string;
+  password: string;
+  token: string;
 };
 
 export type DeptCaptionColor = {
@@ -30,7 +48,10 @@ export type DeleteNotice = {
   noticeId: number;
   token: string;
 };
-
+export type DeleteClub = {
+  clubId: number;
+  token: string;
+};
 export type NoticeDetail = {
   id: number;
   title: string;
@@ -55,7 +76,7 @@ export type ClubDetail = {
   formUrl: string;
 };
 
-export type UpdateClub = {
+export type UpdateMyClub = {
   name?: string;
   tag?: string;
   category?: string;
@@ -69,6 +90,12 @@ export type UpdateClub = {
   activity?: string;
   ideal?: string;
   formUrl?: string;
+  token: string;
+};
+
+export type UpdateClub = {
+  id: number;
+  score: number;
   token: string;
 };
 

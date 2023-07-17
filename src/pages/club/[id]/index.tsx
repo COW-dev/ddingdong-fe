@@ -2,7 +2,7 @@ import Head from 'next/head';
 import type { GetServerSideProps } from 'next/types';
 import BottomButton from '@/components/club/BottomButton';
 import ClubHeading from '@/components/club/ClubHeading';
-import { useClubInfo } from '@/hooks/useClubInfo';
+import { useClubInfo } from '@/hooks/api/club/useClubInfo';
 
 type ClubDetailProps = {
   clubId: number;

@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
+// eslint-disable-next-line import/named
 import {
   ClubDetail,
   Club,
@@ -7,8 +7,12 @@ import {
   NoticeDetail,
   Notice,
   UpdateClub,
+  UpdateMyClub,
   UpdateNotice,
   DeleteNotice,
+  NewClub,
+  AdminClub,
+  DeleteClub,
 } from '@/types';
 
 const api = axios.create({
@@ -22,6 +26,16 @@ export async function login(userId: string, password: string) {
 
 export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {
   return await api.get('/clubs');
+}
+
+export async function getAdminAllClubs(
+  token: string,
+): Promise<AxiosResponse<AdminClub[], unknown>> {
+  return await api.get('/admin/clubs', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 
 export async function getClubInfo(
@@ -49,6 +63,13 @@ export async function createNotice({ token, ...noticeData }: NewNotice) {
     },
   });
 }
+export async function createClub({ token, ...clubData }: NewClub) {
+  return await api.post('/admin/clubs', clubData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 
 export async function updateNotice({
   noticeId,
@@ -68,10 +89,23 @@ export async function deleteNotice({ noticeId, token }: DeleteNotice) {
     },
   });
 }
-
+export async function deleteClub({ clubId, token }: DeleteClub) {
+  return await api.delete(`/admin/clubs/${clubId}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 export async function getMyClub(
   token: string,
 ): Promise<AxiosResponse<ClubDetail, unknown>> {
+  console.log(
+    await api.get('/club/my', {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    }),
+  );
   return await api.get('/club/my', {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -79,8 +113,16 @@ export async function getMyClub(
   });
 }
 
-export async function updateMyClub({ token, ...clubData }: UpdateClub) {
+export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
   return await api.patch('/club/my', clubData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function updateClub({ id, score, token }: UpdateClub) {
+  return await api.patch(`/clubs/${id}/score`, score, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

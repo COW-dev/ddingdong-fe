@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
-import { useNewNotice } from '@/hooks/useNewNotice';
+import { useNewNotice } from '@/hooks/api/notice/useNewNotice';
 
 export default function Index() {
   const [title, setTitle] = useState<string>('');

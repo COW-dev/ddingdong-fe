@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { useAllNotices } from '@/hooks/useAllNotices';
+import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
 export default function NoticeList() {
   const { data } = useAllNotices();

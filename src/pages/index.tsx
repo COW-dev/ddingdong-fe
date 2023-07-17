@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Banner from '@/components/home/Banner';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
-import { useAllClubs } from '@/hooks/useAllClubs';
+import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types';
 
 export default function Home() {

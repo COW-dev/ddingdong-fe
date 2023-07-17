@@ -5,9 +5,9 @@ import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import NeutralButton from '@/components/common/NeutralButton';
-import { useDeleteNotice } from '@/hooks/useDeleteNotice';
-import { useNoticeInfo } from '@/hooks/useNoticeInfo';
-import { useUpdateNotice } from '@/hooks/useUpdateNotice';
+import { useDeleteNotice } from '@/hooks/api/notice/useDeleteNotice';
+import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
+import { useUpdateNotice } from '@/hooks/api/notice/useUpdateNotice';
 import { NoticeDetail } from '@/types';
 
 type NoticeDetailProps = {
