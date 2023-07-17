@@ -32,7 +32,7 @@ export default function UserHeader() {
   const router = useRouter();
   const { resetAuth } = useAuthStore();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const [cookie, setCookie, removeCookie] = useCookies(['token', 'role']);
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
 
@@ -73,9 +73,10 @@ export default function UserHeader() {
                 <button
                   className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
                   onClick={() => {
-                    resetAuth();
-                    removeCookie('token');
                     router.push('/login');
+                    removeCookie('token');
+                    removeCookie('role');
+                    resetAuth();
                   }}
                 >
                   로그아웃

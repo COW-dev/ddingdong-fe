@@ -99,13 +99,6 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
 export async function getMyClub(
   token: string,
 ): Promise<AxiosResponse<ClubDetail, unknown>> {
-  console.log(
-    await api.get('/club/my', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    }),
-  );
   return await api.get('/club/my', {
     headers: {
       Authorization: 'Bearer ' + token,

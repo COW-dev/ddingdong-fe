@@ -1,10 +1,15 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import NoticeList from '@/components/common/NoticeList';
+import { ROLE_TYPE } from '@/constants/text';
+import Notice from '@/pages/notice';
 
 export default function Index() {
+  const [cookies] = useCookies(['token', 'role']);
+  const { role } = cookies;
   return (
     <>
       <Head>
@@ -27,7 +32,9 @@ export default function Index() {
         </Link>
         <Link
           href="/notice/new"
-          className="-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+          className={`-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base ${
+            role === ROLE_TYPE.ROLE_CLUB && 'invisible'
+          }`}
         >
           공지사항 작성하기
         </Link>

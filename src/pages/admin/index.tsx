@@ -1,12 +1,23 @@
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
+import { ROLE_TEXT } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
-
 export default function Index() {
+  const [hydrated, setHydrated] = useState(false);
   const { data } = useAllNotices();
   const notices = data?.data;
+  const [cookies] = useCookies(['token', 'role']);
+  const { role } = cookies;
 
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) return null;
+
+  if (!ROLE_TEXT[role]) return;
   return (
     <>
       <Head>
@@ -15,31 +26,35 @@ export default function Index() {
       <AdminHeading clubName={'공:존'} clubScore={120} />
       <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <Link
-          href="/club"
+          href={ROLE_TEXT[role].club.route}
           className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
-          <h2 className="text-xl font-bold md:text-2xl">동아리 관리하기</h2>
+          <h2 className="text-xl font-bold md:text-2xl">
+            {ROLE_TEXT[role].club.title}
+          </h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
-            <p>동아리를 등록/삭제하거나,</p>
-            <p>동아리 점수를 입력해요.</p>
+            <p>{ROLE_TEXT[role].club.subtitle}</p>
           </div>
         </Link>
         <Link
-          href="/report"
+          href={ROLE_TEXT[role].report.route}
           className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
-          <h2 className="text-xl font-bold md:text-2xl">활동보고서 확인하기</h2>
+          <h2 className="text-xl font-bold md:text-2xl">
+            {ROLE_TEXT[role].report.title}
+          </h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
-            <p>동아리가 제출한</p>
-            <p>활동보고서를 확인해요.</p>
+            <p>{ROLE_TEXT[role].report.subtitle}</p>
           </div>
         </Link>
       </div>
       <div className="mt-4 w-full rounded-xl border-[1.5px] p-6 md:mt-8 md:p-8">
         <div className="flex w-full items-center justify-between">
-          <h2 className="text-xl font-bold md:text-2xl">공지사항 관리하기</h2>
+          <h2 className="text-xl font-bold md:text-2xl">
+            {ROLE_TEXT[role].notice.title}
+          </h2>
           <Link
-            href="/notice"
+            href={ROLE_TEXT[role].notice.route}
             // eslint-disable-next-line prettier/prettier
             className="-mr-1 inline-block p-1 text-sm font-semibold text-gray-400 transition-colors hover:text-blue-500 md:text-base"
           >
