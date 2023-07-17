@@ -104,4 +104,18 @@ export type LoginResponse = {
   token: string;
 };
 
+export type StudentInfo = {
+  studentName: string;
+  studentId: string;
+  studentMajor: string;
+};
+
+export type Report = {
+  date: Date;
+  image: string;
+  place: string;
+  content: string;
+  participants : StudentInfo[];
+};
+
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;

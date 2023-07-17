@@ -1,32 +1,76 @@
-import Head from 'next/head';
-
-import Heading from '@/components/common/Heading';
+import Image from 'next/image';
+import { ChangeEvent, useState } from 'react';
+import Arrow from '@/assets/arrow.svg';
+import Accordion from '@/components/common/Accordion';
+import Form from '@/components/report/Form';
+import type { Report } from '@/types';
 
 export default function Index() {
-  return (
-    <>
-      <Head>
-        <title>띵동 어드민 - 활동보고서 관리</title>
-      </Head>
-      <Heading>활동보고서 관리하기</Heading>
-      <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
-        <div className="mb-1.5 text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
-          동아리 생성하기
-        </div>
+  const [reportOne, setReportOne] = useState<Report>({
+    date: new Date,
+    image: '',
+    place: '',
+    content: '',
+    participants: [],
+})
+const [reportTwo, setReportTwo] = useState<Report>({
+  date: new Date,
+  image: '',
+  place: '',
+  content: '',
+  participants: [],
+})
 
-        <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
-          <div className="flex h-full w-full justify-between p-5 md:p-6">
-            <div>
-              <div className="text-lg font-bold md:text-xl">동아리이름</div>
-            </div>
-            <div className="flex items-center">
-              <div className="rounded-lg bg-gray-100 px-2 py-1 text-sm font-semibold text-gray-500">
-                수정하기
-              </div>
+  return (
+    <div className=" flex flex-row ">
+      <div className="w-4/6 m-auto flex flex-col justify-center items-start">
+        <div className=" flex flex-col items-start">
+          <div className="flex flex-row items-end">
+            <h1 className="mt-10 text-3xl font-bold md:mt-12 md:text-4xl">
+              활동 보고서 작성하기
+            </h1>
+            <div className=" ml-10 text-xl font-medium ">
+              <span > 1 회차 </span>
             </div>
           </div>
         </div>
+        <div className='w-full mt-10'>
+          <Accordion title="활동1" >
+            <Form 
+              date={reportOne.date}
+              image={reportOne.image}
+              place={reportOne.place}
+              content={reportOne.content}
+              participants={reportOne.participants}
+              setValue={setReportOne}
+             />
+          </Accordion>
+          <Accordion title="활동2">
+            <Form 
+              date={reportTwo.date}
+              image={reportTwo.image}
+              place={reportTwo.place}
+              content={reportTwo.content}
+              participants={reportTwo.participants}
+              setValue={setReportTwo}
+               />
+          </Accordion>
+          </div>
       </div>
-    </>
+      <div className=" fixed bottom-4 right-4 md:mt-6">
+      <button
+          type="submit"
+          className=" w-20 h-12 rounded-xl mr-2 bg-blue-100 font-bold text-blue-500 transition-colors md:w-auto md:px-2.5 md:py-2.5"
+        >
+          제출하기
+        </button>
+        <button
+          type="submit"
+          className=" w-20 h-12 rounded-xl bg-blue-100 font-bold text-blue-500 transition-colors md:w-auto md:px-2.5 md:py-2.5"
+        >
+          임시저장
+        </button>
+      </div>
+    </div>
   );
 }
