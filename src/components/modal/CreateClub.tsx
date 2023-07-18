@@ -28,12 +28,14 @@ export default function CreateClub({ data, setModal }: ModalProp) {
       [event.target.name]: event.target.value,
     }));
   }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     mutation.mutate({ ...clubData, token: cookies.token });
     handleReset();
     setModal(MODAL_TYPE.null);
   }
+
   function handleReset() {
     setClubData({
       clubName: '',

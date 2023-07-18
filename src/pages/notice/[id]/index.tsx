@@ -9,10 +9,9 @@ type NoticeDetailProps = {
 export default function Index({ noticeId }: NoticeDetailProps) {
   const { data } = useNoticeInfo(noticeId);
   const noticeInfo = data.data;
-  //임시 수정
-  if (!noticeInfo) return;
-  const { title, content, createdAt } = noticeInfo;
 
+  if (!noticeInfo) return null;
+  const { title, content, createdAt } = noticeInfo;
   return (
     <>
       <h1 className="mt-7 text-2xl font-bold md:mt-10 md:text-3xl">{title}</h1>

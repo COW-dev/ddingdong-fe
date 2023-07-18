@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
 // eslint-disable-next-line import/named
 import {
@@ -16,7 +17,7 @@ import {
 } from '@/types';
 
 const api = axios.create({
-  baseURL: 'http://ddingdong-dev.ap-northeast-2.elasticbeanstalk.com/api/',
+  baseURL: '/api/',
   timeout: 3000,
 });
 
@@ -99,13 +100,6 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
 export async function getMyClub(
   token: string,
 ): Promise<AxiosResponse<ClubDetail, unknown>> {
-  console.log(
-    await api.get('/club/my', {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    }),
-  );
   return await api.get('/club/my', {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -122,7 +116,7 @@ export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
 }
 
 export async function updateClub({ id, score, token }: UpdateClub) {
-  return await api.patch(`/clubs/${id}/score`, score, {
+  return await api.patch(`/admin/clubs/${id}/score?score=${score}`, score, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

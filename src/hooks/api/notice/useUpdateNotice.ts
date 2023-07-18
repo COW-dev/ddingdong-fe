@@ -14,7 +14,6 @@ export function useUpdateNotice(): UseMutationResult<
   UpdateNotice
 > {
   const queryClient = useQueryClient();
-
   return useMutation(updateNotice, {
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['notice'] });

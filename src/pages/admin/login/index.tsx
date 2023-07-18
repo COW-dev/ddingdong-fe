@@ -15,7 +15,7 @@ export default function Index() {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const [cookie, setCookie, removeCookie] = useCookies(['token', 'role']);
   const { setAuth } = useAuthStore();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -25,6 +25,7 @@ export default function Index() {
         const { role, token } = response.data;
         const authToken = token.split('Bearer ')[1];
         setCookie('token', authToken);
+        setCookie('role', role);
         setAuth({ role, token });
         return router.push('/');
       })

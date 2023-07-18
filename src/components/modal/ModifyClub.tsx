@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useUpdateClub } from '@/hooks/api/club/useUpdateClub';
-import { AdminClub } from '@/types';
 import { MODAL_TYPE, ModalProp } from '.';
 
 export default function ModifyClub({ data, setModal }: ModalProp) {
@@ -39,10 +38,7 @@ export default function ModifyClub({ data, setModal }: ModalProp) {
             type="number"
             value={changedScore}
             className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
-            onChange={(e) => {
-              setScore(Number(e.target.value));
-              console.log(changedScore);
-            }}
+            onChange={(e) => setScore(Number(e.target.value))}
           />
         </div>
         <button

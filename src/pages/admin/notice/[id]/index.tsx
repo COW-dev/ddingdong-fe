@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import NeutralButton from '@/components/common/NeutralButton';
+import { ROLE_TYPE } from '@/constants/text';
 import { useDeleteNotice } from '@/hooks/api/notice/useDeleteNotice';
 import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
 import { useUpdateNotice } from '@/hooks/api/notice/useUpdateNotice';
@@ -15,7 +16,9 @@ type NoticeDetailProps = {
 };
 
 export default function Index({ noticeId }: NoticeDetailProps) {
-  const [cookie] = useCookies(['token']);
+  const [cookies] = useCookies(['token', 'role']);
+  const { role, token } = cookies;
+
   const [isEditing, setIsEditing] = useState(false);
   const [noticeData, setNoticeData] = useState<NoticeDetail>({
     id: noticeId,
@@ -47,17 +50,17 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   function handleClickDelete() {
     deleteMutation.mutate({
       noticeId,
-      token: cookie.token,
+      token: token,
     });
   }
 
   function handleClickSubmit() {
     setIsEditing(false);
-    updateMutation.mutate({
+    return updateMutation.mutate({
       noticeId,
       title: noticeData.title,
       content: noticeData.content,
-      token: cookie.token,
+      token,
     });
   }
 
@@ -86,7 +89,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         }`}
       >
         {new Date(noticeData.createdAt ?? '').toLocaleString()}
-        <div className="-mr-2 mb-1 flex justify-end text-sm font-semibold md:text-base">
+        <div
+          className={`-mr-2 mb-1 flex justify-end text-sm font-semibold md:text-base ${
+            role === ROLE_TYPE.ROLE_CLUB && 'invisible'
+          }`}
+        >
           {isEditing ? (
             <>
               <button
