@@ -116,7 +116,7 @@ export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
 }
 
 export async function updateClub({ id, score, token }: UpdateClub) {
-  return await api.patch(`/clubs/${id}/score`, score, {
+  return await api.patch(`/admin/clubs/${id}/score?score=${score}`, score, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
