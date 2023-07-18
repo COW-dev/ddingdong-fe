@@ -56,11 +56,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
 
   function handleClickSubmit() {
     setIsEditing(false);
-    updateMutation.mutate({
+    return updateMutation.mutate({
       noticeId,
       title: noticeData.title,
       content: noticeData.content,
-      token: token,
+      token,
     });
   }
 

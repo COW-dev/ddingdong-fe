@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
 // eslint-disable-next-line import/named
 import {
@@ -16,7 +17,7 @@ import {
 } from '@/types';
 
 const api = axios.create({
-  baseURL: 'http://ddingdong-dev.ap-northeast-2.elasticbeanstalk.com/api/',
+  baseURL: '/api/',
   timeout: 3000,
 });
 
