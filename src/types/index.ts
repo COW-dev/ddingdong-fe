@@ -1,3 +1,4 @@
+import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import { create } from 'zustand';
 export type Club = {
   id: number;
@@ -111,11 +112,11 @@ export type StudentInfo = {
 };
 
 export type Report = {
-  date: Date;
+  date: DateRangeType;
   image: string;
   place: string;
   content: string;
-  participants : StudentInfo[];
+  participants: StudentInfo[];
 };
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;

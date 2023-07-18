@@ -5,7 +5,6 @@ import { Toaster } from 'react-hot-toast';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import { MODAL_TYPE } from '@/components/modal';
-
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import type { AdminClub } from '@/types';
 
@@ -53,7 +52,7 @@ export default function Index() {
                         {club.score}
                       </div>
                       <div
-                        className="mx-1 rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500"
+                        className="mx-1 cursor-pointer rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500"
                         onClick={() => {
                           setClub({ ...club });
                           setModal(MODAL_TYPE.modify);
