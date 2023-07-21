@@ -119,4 +119,26 @@ export type Report = {
   participants: StudentInfo[];
 };
 
+export type ReportManagement = {
+  id: number;
+  term: string;
+  submission: string;
+  isSubmit: boolean;
+
+};
+
+export type ReportDetail = {
+  id: number;
+  createdAt: string;
+  name: string;
+  leader: string;
+  leaderDepartment: string;
+  content: string;
+  place: string;
+  startDate: Date;
+  endDate: Date;
+  imageUrl: string;
+  participants: [];
+};
+
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;

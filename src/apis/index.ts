@@ -14,6 +14,8 @@ import {
   NewClub,
   AdminClub,
   DeleteClub,
+  Report,
+  ReportDetail,
 } from '@/types';
 
 const api = axios.create({
@@ -121,4 +123,16 @@ export async function updateClub({ id, score, token }: UpdateClub) {
       Authorization: 'Bearer ' + token,
     },
   });
+}
+export async function createReport({ ...reportData }: Report) {
+  return await api.post('/club/my/activity-reports', reportData, {
+    headers: {
+      Authorization: 'Bearer ',
+    },
+  });
+}
+export async function getReportInfo(
+  reportId: number,
+): Promise<AxiosResponse<ReportDetail, unknown>> {
+  return await api.get(`club/activity-reports?term=${reportId}`);
 }

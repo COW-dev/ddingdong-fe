@@ -11,7 +11,7 @@ export default function Select({ children }: SelectProps) {
       <select
         name="HeadlineAct"
         id="HeadlineAct"
-        className="mt-1.5 w-full rounded-lg border-gray-300 text-lg text-gray-700 sm:text-base"
+        className="mt-1.5 w-full rounded-lg border-gray-300 text-base text-gray-700 md:text-lg"
       >
         {children.map((item) => (
           <option key={item} value={item}>
