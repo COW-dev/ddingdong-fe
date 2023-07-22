@@ -1,20 +1,15 @@
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
+import Heading from '@/components/common/Heading';
 import Select from '@/components/common/Select';
 import Form from '@/components/report/Form';
-import type { Report } from '@/types';
+import { useNewReport } from '@/hooks/api/club/useNewReport';
+import { Report, term } from '@/types';
 
 export default function Index() {
-  const term = [
-    '1회차',
-    '2회차',
-    '3회차',
-    '4회차',
-    '5회차',
-    '6회차',
-    '7회차',
-    '8회차',
-  ];
+  const mutation = useNewReport();
+  const [cookies] = useCookies(['token']);
   const [reportOne, setReportOne] = useState<Report>({
     date: { startDate: new Date(), endDate: new Date() },
     image: '',
@@ -29,21 +24,25 @@ export default function Index() {
     content: '',
     participants: [],
   });
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    return mutation.mutate({
+      ...reportOne,
+      ...reportTwo,
+      token: cookies.token,
+    });
+  }
 
   return (
     <div className=" flex flex-row ">
-      <div className="m-auto flex w-4/6 flex-col items-start justify-center">
-        <div className=" flex flex-col items-start">
-          <div className="flex flex-row items-end">
-            <h1 className="mt-10 text-3xl font-bold md:mt-12 md:text-4xl">
-              활동 보고서 작성하기
-            </h1>
-            <div className=" ml-10 text-xl font-medium ">
-              <Select>{term.map((item) => String(item))}</Select>
-            </div>
+      <div className="flex w-full flex-col">
+        <div className="flex flex-row items-end">
+          <Heading>활동 보고서 작성하기</Heading>
+          <div className=" ml-10 text-xl font-medium ">
+            <Select>{term.map((item) => String(item))}</Select>
           </div>
         </div>
-        <div className="mt-10 w-full">
+        <form className="mt-5 w-full md:mt-10" onSubmit={handleSubmit}>
           <Accordion title="활동1">
             <Form
               date={reportOne.date}
@@ -64,21 +63,15 @@ export default function Index() {
               setValue={setReportTwo}
             />
           </Accordion>
-        </div>
-      </div>
-      <div className=" fixed bottom-4 right-4 md:mt-6">
-        <button
-          type="submit"
-          className="mr-2 h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
-        >
-          제출하기
-        </button>
-        {/* <button
-          type="submit"
-          className=" h-12 w-20 rounded-xl bg-blue-100 font-bold text-blue-500 transition-colors md:w-auto md:px-2.5 md:py-2.5"
-        >
-          임시저장
-        </button> */}
+          <div className=" fixed bottom-4 right-4 md:mt-6">
+            <button
+              type="submit"
+              className="mr-2 h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+            >
+              제출하기
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

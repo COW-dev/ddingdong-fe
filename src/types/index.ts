@@ -107,7 +107,7 @@ export type LoginResponse = {
 
 export type StudentInfo = {
   studentName: string;
-  studentId: string;
+  studentId: number;
   studentMajor: string;
 };
 
@@ -117,6 +117,38 @@ export type Report = {
   place: string;
   content: string;
   participants: StudentInfo[];
+  token?: string;
 };
+
+export type ReportManagement = {
+  id: number;
+  term: string;
+  submission: string;
+  isSubmit: boolean;
+};
+
+export type ReportDetail = {
+  reportId: number;
+  createdAt: string;
+  name: string;
+  leader: string;
+  leaderDepartment: string;
+  content: string;
+  place: string;
+  startDate: Date;
+  endDate: Date;
+  imageUrl: string;
+  participants: StudentInfo[];
+};
+export const term = [
+  '1회차',
+  '2회차',
+  '3회차',
+  '4회차',
+  '5회차',
+  '6회차',
+  '7회차',
+  '8회차',
+];
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;

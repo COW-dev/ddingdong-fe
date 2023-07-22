@@ -7,10 +7,10 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>띵동 어드민 - 활동보고서</title>
+        <title>띵동 일반동아리 - 활동보고서</title>
       </Head>
       <div className="flex flex-row items-end justify-between">
-        <Heading>활동보고서 관리하기</Heading>
+        <Heading>활동 보고서 관리하기</Heading>
         <Link
           href="/notice/new"
           className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
@@ -23,12 +23,6 @@ export default function Index() {
             alt="new"
             className="w-5"
           ></Image> */}
-        </Link>
-        <Link
-          href="/report/new"
-          className="-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
-        >
-          활동보고서 작성하기
         </Link>
       </div>
       <ReportList />
