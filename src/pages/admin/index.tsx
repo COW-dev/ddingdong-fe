@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
-import { ROLE_TEXT } from '@/constants/text';
+import Banner from '@/components/home/Banner';
+import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
@@ -24,6 +26,26 @@ export default function Index() {
         <title>띵동 어드민</title>
       </Head>
       <AdminHeading clubName={'공:존'} clubScore={120} />
+
+      <div className="relative my-5">
+        <Link
+          href="/banner"
+          className={`absolute right-0 -mr-3 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
+            role === ROLE_TYPE.ROLE_CLUB && 'invisible'
+          }`}
+        >
+          <Image
+            src="/write.svg"
+            width={100}
+            height={100}
+            priority
+            alt="new"
+            className="w-5"
+          ></Image>
+        </Link>
+        <Banner />
+      </div>
+
       <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <Link
           href={ROLE_TEXT[role].club.route}

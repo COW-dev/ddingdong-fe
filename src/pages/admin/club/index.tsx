@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
+import New from '@/assets/new.svg';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import { MODAL_TYPE } from '@/components/modal';
@@ -29,36 +31,37 @@ export default function Index() {
       <Head>
         <title>띵동 어드민 - 동아리 관리</title>
       </Head>
-      <Heading>동아리 관리하기</Heading>
-      <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
+      <div className="flex flex-row items-end justify-between">
+        <Heading>동아리 관리하기</Heading>
         <div
-          className="mb-1.5 text-sm font-semibold text-gray-500 md:mb-2 md:text-base"
+          className={`-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base`}
           onClick={() => setModal(MODAL_TYPE.create)}
         >
           동아리 생성하기
         </div>
+      </div>
+
+      <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubs
             .sort((a, b) => b.score - a.score)
             .map((club) => (
               <div key={club.id}>
-                <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
-                  <div className="flex h-full w-full justify-between p-5 md:p-6">
-                    <div className="text-lg font-bold md:text-xl">
-                      {club.name}
-                    </div>
-                    <div className="flex items-center">
-                      <div className="mx-1 rounded-lg  bg-green-100 p-2 text-sm font-semibold text-green-500">
-                        {club.score}
+                <div
+                  className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
+                  onClick={() => {
+                    setClub({ ...club });
+                    setModal(MODAL_TYPE.modify);
+                  }}
+                >
+                  <div className=" flex h-full w-full justify-around p-5 md:p-6">
+                    <Image src={New} width={80} height={80} alt="image" />
+                    <div className="flex flex-col items-center justify-evenly">
+                      <div className="text-lg font-bold md:text-xl">
+                        {club.name}
                       </div>
-                      <div
-                        className="mx-1 cursor-pointer rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500"
-                        onClick={() => {
-                          setClub({ ...club });
-                          setModal(MODAL_TYPE.modify);
-                        }}
-                      >
-                        수정
+                      <div className="mx-1 rounded-lg bg-indigo-100 p-2 px-4 text-sm font-semibold text-indigo-500">
+                        {club.score}
                       </div>
                     </div>
                   </div>

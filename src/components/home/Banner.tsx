@@ -20,6 +20,5 @@ export default function Banner() {
         </p>
       </div>
     </div>
-    // </Link>
   );
 }
