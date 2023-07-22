@@ -1,12 +1,16 @@
-import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
 import Datepicker from 'react-tailwindcss-datepicker';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import { DateValueType } from 'react-tailwindcss-datepicker/dist/types';
 import { StudentInfo, Report } from '@/types';
-import Participants from './Participants';
-
 type ReportProps = {
-  date: DateRangeType;
+  date: DateValueType;
   image: string;
   place: string;
   content: string;
@@ -22,6 +26,11 @@ export default function Form({
   participants,
   setValue,
 }: ReportProps) {
+  const [hydrated, setHydrated] = useState(false);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) return null;
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
@@ -30,11 +39,15 @@ export default function Form({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(selectedDate: DateRangeType) {
+  function handleDateChange(selectedDate: DateValueType) {
     setValue((prev) => ({
       ...prev,
-      date: selectedDate,
+      date: {
+        startDate: selectedDate as unknown as Date,
+        endDate: selectedDate as unknown as Date,
+      },
     }));
+    console.log(selectedDate);
   }
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     if (event.target && event.target.files && event.target.files[0]) {
@@ -72,6 +85,7 @@ export default function Form({
         <div className="flex w-2/3 flex-col">
           <div className="mb-5 flex flex-col items-center md:flex-row">
             <Datepicker
+              value={date}
               datepicker-format="yyyy/mm/dd"
               useRange={false}
               selected={date.startDate}
@@ -102,7 +116,7 @@ export default function Form({
             <textarea
               name="content"
               onChange={handleChange}
-              className='md:text-md" h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base font-medium md:pb-3'
+              className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base font-medium md:pb-3"
             />
           </div>
         </div>

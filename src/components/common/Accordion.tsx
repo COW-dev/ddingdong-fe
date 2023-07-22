@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import arrowDown from '@/assets/arrowDown.svg';
-import arrowUp from '@/assets/arrowUp.svg';
+import ArrowDown from '@/assets/arrowDown.svg';
+import ArrowUp from '@/assets/arrowUp.svg';
 
 type AccordionProps = {
   title: string;
@@ -35,9 +35,9 @@ export default function Accordion({ title, children }: AccordionProps) {
         >
           <span className="text-lg">{title}</span>
           {open ? (
-            <Image src={arrowUp} alt="" />
+            <Image src={ArrowUp} alt="화살표" width={15} height={15} />
           ) : (
-            <Image src={arrowDown} alt="" />
+            <Image src={ArrowDown} alt="화살표" width={15} height={15} />
           )}
         </button>
       </h2>

@@ -5,21 +5,11 @@ import Heading from '@/components/common/Heading';
 import Select from '@/components/common/Select';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import type { Report } from '@/types';
+import { Report, term } from '@/types';
 
 export default function Index() {
   const mutation = useNewReport();
   const [cookies] = useCookies(['token']);
-  const term = [
-    '1회차',
-    '2회차',
-    '3회차',
-    '4회차',
-    '5회차',
-    '6회차',
-    '7회차',
-    '8회차',
-  ];
   const [reportOne, setReportOne] = useState<Report>({
     date: { startDate: new Date(), endDate: new Date() },
     image: '',
@@ -39,6 +29,7 @@ export default function Index() {
     return mutation.mutate({
       ...reportOne,
       ...reportTwo,
+      token: cookies.token,
     });
   }
 
@@ -72,7 +63,6 @@ export default function Index() {
               setValue={setReportTwo}
             />
           </Accordion>
-
           <div className=" fixed bottom-4 right-4 md:mt-6">
             <button
               type="submit"

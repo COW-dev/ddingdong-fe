@@ -133,6 +133,9 @@ export async function createReport({ ...reportData }: Report) {
 }
 export async function getReportInfo(
   reportId: number,
+  name: string,
 ): Promise<AxiosResponse<ReportDetail, unknown>> {
-  return await api.get(`club/activity-reports?term=${reportId}`);
+  return await api.get(
+    `club/activity-reports?term=${reportId}&club_name=${name}`,
+  );
 }

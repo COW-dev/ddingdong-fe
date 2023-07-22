@@ -17,15 +17,15 @@ const initialData = {
   participants: [],
 };
 
-export function useReportInfo(id: number) {
+export function useReportInfo(reportId: number, name: string) {
   return useQuery<
     unknown,
     AxiosError,
     AxiosResponse<ReportDetail, unknown>,
     [string, number]
   >({
-    queryKey: ['activity-reports', id],
-    queryFn: () => getReportInfo(id),
+    queryKey: ['activity-reports', reportId],
+    queryFn: () => getReportInfo(reportId, name),
     initialData,
   });
 }
