@@ -69,7 +69,7 @@ export default function Index({ reportId, name }: ReportDetailProps) {
       <Head>
         <title>띵동 일반 동아리 - 활동보고서 확인하기</title>
       </Head>
-      <div className="flex flex-col md:items-end justify-between md:flex-row">
+      <div className="flex flex-col justify-between md:flex-row md:items-end">
         <Heading>활동 보고서 확인하기</Heading>
         <span className="mt-3 text-sm md:text-base">
           제출일시 {reportData.createdAt}
@@ -109,12 +109,12 @@ export default function Index({ reportId, name }: ReportDetailProps) {
     </>
   );
 }
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   const { id, name } = context.query;
-//   return {
-//     props: {
-//       reportId: id,
-//       name: name,
-//     },
-//   };
-// };
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id, name } = context.query;
+  return {
+    props: {
+      reportId: id,
+      name: name,
+    },
+  };
+};
