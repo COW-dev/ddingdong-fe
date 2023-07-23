@@ -50,7 +50,7 @@ export default function DeleteClub({ data, setModal }: ModalProp) {
           className={`mt-10 w-full rounded-xl py-4 font-bold sm:py-4 sm:text-lg md:mt-14 ${
             value === name
               ? 'bg-red-600 text-white'
-              : 'bg-gray-100 text-gray-400'
+              : 'cursor-not-allowed bg-gray-100 text-gray-400'
           }`}
         >
           동아리 삭제하기

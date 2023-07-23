@@ -48,7 +48,7 @@ export default function ModifyClub({ data, setModal }: ModalProp) {
           동아리 정보 수정하기
         </button>
         <div
-          className="mt-3 text-center text-sm font-medium text-gray-500"
+          className="mt-3 text-center text-sm font-medium text-gray-500 opacity-70 transition-opacity hover:opacity-100 "
           onClick={handleClickDelete}
         >
           동아리를 삭제하시겠습니까?

@@ -35,7 +35,7 @@ export default function Index() {
   const {
     data: { data },
   } = useMyClub(token);
-  console.log(data);
+
   const mutation = useUpdateMyClub();
 
   useEffect(() => {
