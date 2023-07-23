@@ -14,9 +14,9 @@ export default function Banner({ data }: BannerTypeProps) {
         alt="bannerImg"
         className="mx-4 w-28 drop-shadow-sm md:w-40"
       />
-      <div className="mx-4 mb-4 text-center md:mb-0 md:text-left">
+      <div className="mx-4 mb-4 text-center text-white md:mb-0 md:text-left">
         <p className="my-0.5 text-2xl font-bold md:text-4xl">{title}</p>
-        <p className="px-10 text-base font-semibold leading-tight text-gray-600 md:px-0 md:text-xl">
+        <p className="px-10 text-base font-semibold leading-tight  md:px-0 md:text-xl">
           {subTitle}
         </p>
       </div>

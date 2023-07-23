@@ -6,17 +6,29 @@ import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Banner from '@/components/home/Banner';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
+import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
+import { dummy } from './banner/data';
+
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
-  const { data } = useAllNotices();
-  const notices = data?.data;
-  const [cookies] = useCookies(['token', 'role']);
-  const { role } = cookies;
+  const [{ role, token }] = useCookies(['token', 'role']);
+
+  const { data: noticedata } = useAllNotices();
+  const { data: clubData } = useMyClub(token);
+
+  const [clubName, setClubName] = useState<string>('공;존');
+
+  const notices = noticedata?.data;
 
   useEffect(() => {
     setHydrated(true);
   }, []);
+
+  useEffect(() => {
+    if (role === ROLE_TYPE.ROLE_CLUB) setClubName(clubData?.data?.name);
+  }, [clubData]);
+
   if (!hydrated) return null;
 
   if (!ROLE_TEXT[role]) return;
@@ -25,7 +37,7 @@ export default function Index() {
       <Head>
         <title>띵동 어드민</title>
       </Head>
-      <AdminHeading clubName={'공:존'} clubScore={120} />
+      <AdminHeading clubName={clubName} />
 
       <div className="relative my-5">
         <Link
@@ -43,7 +55,7 @@ export default function Index() {
             className="w-5"
           ></Image>
         </Link>
-        <Banner />
+        <Banner data={dummy[1]} />
       </div>
 
       <div className="mt-12 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
