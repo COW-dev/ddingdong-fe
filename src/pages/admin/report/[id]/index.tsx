@@ -16,9 +16,9 @@ export default function Index({ reportId, name }: ReportDetailProps) {
   const [reportData, setReportData] = useState<ReportDetail>({
     reportId: reportId,
     createdAt: '2023.06.23.07:20',
-    name: '동아리이름',
+    name: 'COW',
     leader: '김세빈',
-    leaderDepartment: '융소',
+    leaderDepartment: '융합소프트웨어학부',
     content: '내용',
     place: '장소',
     startDate: new Date(),
@@ -72,7 +72,7 @@ export default function Index({ reportId, name }: ReportDetailProps) {
       </Head>
       <div className="flex flex-col justify-between md:flex-row md:items-end">
         <Heading>활동 보고서 확인하기</Heading>
-        <span className="mt-3 text-sm md:text-base">
+        <span className="md:text-md mt-3 text-base">
           제출일시 {reportData.createdAt}
         </span>
       </div>
@@ -110,12 +110,12 @@ export default function Index({ reportId, name }: ReportDetailProps) {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id, name } = context.query;
-  return {
-    props: {
-      reportId: id,
-      name: name,
-    },
-  };
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { id, name } = context.query;
+//   return {
+//     props: {
+//       reportId: id,
+//       name: name,
+//     },
+//   };
+// };

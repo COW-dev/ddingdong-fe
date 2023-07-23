@@ -21,8 +21,8 @@ export default function Detail({
   participants,
 }: ReportDetailProps) {
   return (
-    <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
-      <div className="mb-5 flex w-2/3 flex-col">
+    <div className=" flex flex-col items-center justify-between md:m-3 md:flex-row">
+      <div className="mb-5 flex flex-col md:w-2/3">
         <div className="flex flex-col items-center md:flex-row">
           <span className=" md:text-md text-basw py-3 font-medium md:pb-3">
             {startDate.toDateString()} ~ {endDate.toDateString()}
@@ -54,10 +54,10 @@ export default function Detail({
           </span>
         </div>
       </div>
-      <div className="flex w-2/3 justify-center md:w-1/2 ">
+      <div className="flex justify-center md:w-1/2 ">
         <Image
           src={Place}
-          className="object-scale-down m-auto"
+          className="m-auto object-scale-down"
           alt="이미지"
           width={250}
           height={250}

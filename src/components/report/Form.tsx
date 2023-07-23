@@ -7,7 +7,10 @@ import {
 } from 'react';
 import Image from 'next/image';
 import Datepicker from 'react-tailwindcss-datepicker';
-import { DateValueType } from 'react-tailwindcss-datepicker/dist/types';
+import {
+  DateRangeType,
+  DateValueType,
+} from 'react-tailwindcss-datepicker/dist/types';
 import { StudentInfo, Report } from '@/types';
 type ReportProps = {
   date: DateValueType;
@@ -39,13 +42,10 @@ export default function Form({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(selectedDate: DateValueType) {
+  function handleDateChange(selectedDate: DateRangeType) {
     setValue((prev) => ({
       ...prev,
-      date: {
-        startDate: selectedDate as unknown as Date,
-        endDate: selectedDate as unknown as Date,
-      },
+      date: selectedDate,
     }));
     console.log(selectedDate);
   }
@@ -69,33 +69,24 @@ export default function Form({
       image: '',
     }));
   }
-  function handleParticipantChange(
-    index: number,
-    updatedParticipant: StudentInfo,
-  ) {
-    setValue((prev) => {
-      const newParticipants = [...prev.participants];
-      newParticipants[index] = updatedParticipant;
-      return { ...prev, participants: newParticipants };
-    });
-  }
   return (
     <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
-      <div className="flex w-2/3 flex-col">
+      <div className="flex w-full flex-col md:w-2/3">
         <div className="mb-5 flex flex-col items-center md:flex-row">
           <Datepicker
             value={date}
             datepicker-format="yyyy/mm/dd"
             useRange={false}
-            selected={date.startDate}
+            minDate={new Date(new Date().getFullYear(), 0, 1)}
+            maxDate={new Date(new Date().getFullYear(), 11, 31)}
             onChange={handleDateChange}
-            inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 font-medium rounded-xl md:pb-3 md:text-md"
+            inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 md:text-sm placeholder:text-sm  outline-none"
           />
           <input
             name="place"
             placeholder="활동 장소"
             onChange={handleChange}
-            className="mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm font-semibold md:ml-3 md:mt-0 md:text-base"
+            className="mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
           />
         </div>
         <div>
@@ -105,7 +96,7 @@ export default function Form({
           <input
             name="participants"
             onChange={handleChange}
-            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base font-medium md:pb-3"
+            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:pb-3"
           />
         </div>
         <div>
@@ -115,16 +106,16 @@ export default function Form({
           <textarea
             name="content"
             onChange={handleChange}
-            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base font-medium md:pb-3"
+            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
           />
         </div>
       </div>
-      <div className="flex w-2/3 justify-center md:w-1/2 ">
+      <div className="flex w-full justify-center md:w-1/2 ">
         {image ? (
           <>
             <Image
               src={image}
-              className="object-scale-down m-auto"
+              className="m-auto object-scale-down"
               alt="이미지"
               width={200}
               height={200}
@@ -138,7 +129,7 @@ export default function Form({
         ) : (
           <label
             htmlFor="image"
-            className="text-md mt-3 flex w-full items-center  justify-center rounded-xl border-2 border-gray-200 bg-white p-3 font-medium text-gray-300 hover:border-blue-700 md:h-80 md:w-2/3"
+            className=" text-md mt-3 flex w-full cursor-pointer items-center justify-center rounded-xl border-2 border-gray-200 bg-white p-3 font-medium text-gray-300 outline-none md:h-80 md:w-2/3"
           >
             Choose File
             <input
