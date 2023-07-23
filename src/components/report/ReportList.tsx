@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { useCookies } from 'react-cookie';
+import { useAllReports } from '@/hooks/api/club/useAllReports';
+import { AllReport } from '@/types';
+
 export const reports = [
   {
     name: 'cow',
@@ -19,6 +23,9 @@ export default function ReportList() {
   const [club, setClub] = useState('cow');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const currentTerm = 5;
+  const [cookies] = useCookies(['token']);
+  const [allReports, setAllReport] = useState<Array<AllReport>>([]);
+  const { data } = useAllReports(cookies.token);
 
   const submitTerms = reports
     .filter((item) => item.name === club)
@@ -32,7 +39,7 @@ export default function ReportList() {
     <>
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-          {termList.map((item, index) => {
+          {termList.map((item) => {
             return (
               <div
                 key={item}

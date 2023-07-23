@@ -134,6 +134,11 @@ export type ReportDetail = {
   participants: StudentInfo[];
 };
 
+export type AllReport = {
+  id: number;
+  term: string;
+};
+
 export const termList = [
   '1회차',
   '2회차',
