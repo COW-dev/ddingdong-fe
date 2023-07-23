@@ -110,12 +110,12 @@ export default function Index({ reportId, name }: ReportDetailProps) {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id, name } = context.query;
-  return {
-    props: {
-      reportId: id,
-      name: name,
-    },
-  };
-};
+// export const getServerSideProps: GetServerSideProps = async (context) => {
+//   const { id, name } = context.query;
+//   return {
+//     props: {
+//       reportId: id,
+//       name: name,
+//     },
+//   };
+// };

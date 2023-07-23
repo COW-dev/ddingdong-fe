@@ -5,7 +5,7 @@ import Heading from '@/components/common/Heading';
 import Select from '@/components/common/Select';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import { Report, term } from '@/types';
+import { Report, termList } from '@/types';
 
 export default function Index() {
   const mutation = useNewReport();
@@ -32,14 +32,14 @@ export default function Index() {
       token: cookies.token,
     });
   }
-
+  const formData = new FormData();
   return (
     <div className=" flex flex-row ">
       <div className="flex w-full flex-col">
         <div className="flex flex-row items-end">
           <Heading>활동 보고서 작성하기</Heading>
           <div className=" ml-10 text-xl font-medium ">
-            <Select>{term.map((item) => String(item))}</Select>
+            <Select>{termList.map((item) => String(item))}</Select>
           </div>
         </div>
         <form className="mt-5 w-full md:mt-10" onSubmit={handleSubmit}>

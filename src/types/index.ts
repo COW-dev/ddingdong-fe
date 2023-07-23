@@ -120,13 +120,6 @@ export type Report = {
   token?: string;
 };
 
-export type ReportManagement = {
-  id: number;
-  term: string;
-  submission: string;
-  isSubmit: boolean;
-};
-
 export type ReportDetail = {
   reportId: number;
   createdAt: string;
@@ -140,7 +133,8 @@ export type ReportDetail = {
   imageUrl: string;
   participants: StudentInfo[];
 };
-export const term = [
+
+export const termList = [
   '1회차',
   '2회차',
   '3회차',
@@ -148,7 +142,6 @@ export const term = [
   '5회차',
   '6회차',
   '7회차',
-  '8회차',
 ];
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;

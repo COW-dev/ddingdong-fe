@@ -3,8 +3,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Heading from '@/components/common/Heading';
 import ReportList from '@/components/common/ReportList';
-import Category from '@/components/report/Category';
-
 export default function Index() {
   const [report, setReport] = useState<number>(1);
   return (
@@ -28,9 +26,7 @@ export default function Index() {
           ></Image> */}
         </Link>
       </div>
-      {/* <Category setReport={setReport} /> */}
-      <Category />
-      {/* <detailReport report={report} />  */}
+      <ReportList />
     </>
   );
 }
