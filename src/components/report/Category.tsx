@@ -12,25 +12,21 @@ const REPORT_TYPE = {
   CLUB: '동아리별',
 };
 
-export default function Category() {
+const Category = () => {
   const currentTerm = 2;
   const [{ token }] = useCookies(['token']);
-  const [active, setAvtice] = useState<string>(REPORT_TYPE.CLUB);
+  const [active, setActive] = useState(REPORT_TYPE.CLUB);
 
-  //filter 기준
-  const [term, setTerm] = useState<number>(1);
-  const [club, setClub] = useState<string>('cow');
-
-  //전체 data
-  const [clubList, setClubList] = useState<Array<string>>();
+  const [term, setTerm] = useState(1);
+  const [club, setClub] = useState('cow');
+  const [clubList, setClubList] = useState<string[]>([]);
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const { data: clubs } = useAdminAllClubs(token);
 
-  //제출 data
-  const submitclub = dummy
+  const submitClubNames = dummy
     .filter((item) => Number(item.term) === term)
     .map((item) => item.name);
-  const submitterm = dummy
+  const submitTerms = dummy
     .filter((item) => item.name === club)
     .map((item) => item.term);
 
@@ -43,8 +39,55 @@ export default function Category() {
   }, [clubs]);
 
   const handleReportType = () => {
-    setAvtice((prevActive) =>
+    setActive((prevActive) =>
       prevActive === REPORT_TYPE.TERM ? REPORT_TYPE.CLUB : REPORT_TYPE.TERM,
+    );
+  };
+
+  const renderClubList = () => {
+    return (
+      <div className="no-scrollbar h-[100%] overflow-y-scroll">
+        {clubList?.map((clubName) => (
+          <div
+            className={`mb-3 ${
+              !submitClubNames.includes(clubName) &&
+              'cursor-not-allowed text-gray-200'
+            }`}
+            key={clubName}
+          >
+            {clubName}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderTermList = () => {
+    return (
+      <div className="no-scrollbar h-[100%] overflow-y-scroll">
+        {termList.map((item, index) => (
+          <div className="flex" key={`category-item-${index}`}>
+            <div
+              className={`mb-3 ${
+                (Number(item) > currentTerm || !submitTerms.includes(item)) &&
+                'cursor-not-allowed text-gray-200'
+              }`}
+              key={item}
+            >
+              {item}회차
+            </div>
+            <Image
+              src={New}
+              width={20}
+              height={20}
+              alt="bannerImg"
+              className={`mx-2 mb-3 ${
+                Number(item) !== currentTerm && 'hidden'
+              }`}
+            />
+          </div>
+        ))}
+      </div>
     );
   };
 
@@ -61,37 +104,9 @@ export default function Category() {
         />
         <div className="text-blue-500">{active}</div>
       </div>
-      <div className=" no-scrollbar h-[100%] overflow-y-scroll">
-        {active === REPORT_TYPE.CLUB
-          ? clubList?.map((item) => (
-              <div className="mb-3" key={item}>
-                {item}
-              </div>
-            ))
-          : termList.map((item, index) => (
-              <div className="flex" key={`category-item-${index}`}>
-                <div
-                  className={`mb-3 ${
-                    (Number(item) > currentTerm ||
-                      submitterm.find((fruit) => fruit === item)) &&
-                    `cursor-not-allowed text-gray-200`
-                  }`}
-                  key={item}
-                >
-                  {item}회차
-                </div>
-                <Image
-                  src={New}
-                  width={20}
-                  height={20}
-                  alt="bannerImg"
-                  className={`mx-2 mb-3 ${
-                    Number(item) !== currentTerm && `hidden`
-                  }`}
-                />
-              </div>
-            ))}
-      </div>
+      {active === REPORT_TYPE.CLUB ? renderClubList() : renderTermList()}
     </div>
   );
-}
+};
+
+export default Category;

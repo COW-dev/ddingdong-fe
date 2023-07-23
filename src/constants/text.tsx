@@ -47,7 +47,7 @@ export const ROLE_TEXT: RoleText = {
     report: {
       title: '활동보고서 관리하기',
       subtitle: '활동보고서를 작성하고, 제출한 보고서를 확인해요.',
-      route: '/my-report',
+      route: '/report',
     },
     notice: {
       title: '공지사항 확인하기',
