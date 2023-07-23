@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
@@ -34,45 +35,46 @@ export default function Index() {
   }
   const formData = new FormData();
   return (
-    <div className=" flex flex-row ">
-      <div className="flex w-full flex-col">
-        <div className="flex flex-row items-end">
-          <Heading>활동 보고서 작성하기</Heading>
-          <div className=" ml-10 text-xl font-medium ">
-            <Select>{termList.map((item) => String(item))}</Select>
-          </div>
+    <>
+      <Head>
+        <title>띵동 일반 동아리 - 활동보고서 작성하기</title>
+      </Head>
+      <div className="flex flex-row items-end ">
+        <Heading>활동 보고서 작성하기</Heading>
+        <div className="ml-auto text-xl font-medium md:ml-10 ">
+          <Select>{termList.map((item) => String(item))}</Select>
         </div>
-        <form className="mt-5 w-full md:mt-10 " onSubmit={handleSubmit}>
-          <Accordion title="활동1">
-            <Form
-              date={reportOne.date}
-              image={reportOne.image}
-              place={reportOne.place}
-              content={reportOne.content}
-              participants={reportOne.participants}
-              setValue={setReportOne}
-            />
-          </Accordion>
-          <Accordion title="활동2">
-            <Form
-              date={reportTwo.date}
-              image={reportTwo.image}
-              place={reportTwo.place}
-              content={reportTwo.content}
-              participants={reportTwo.participants}
-              setValue={setReportTwo}
-            />
-          </Accordion>
-          <div className=" fixed bottom-4 right-4 md:mt-6">
-            <button
-              type="submit"
-              className="mr-2 h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
-            >
-              제출하기
-            </button>
-          </div>
-        </form>
       </div>
-    </div>
+      <form className="mt-5 w-full md:mt-10 " onSubmit={handleSubmit}>
+        <Accordion title="활동1">
+          <Form
+            date={reportOne.date}
+            image={reportOne.image}
+            place={reportOne.place}
+            content={reportOne.content}
+            participants={reportOne.participants}
+            setValue={setReportOne}
+          />
+        </Accordion>
+        <Accordion title="활동2">
+          <Form
+            date={reportTwo.date}
+            image={reportTwo.image}
+            place={reportTwo.place}
+            content={reportTwo.content}
+            participants={reportTwo.participants}
+            setValue={setReportTwo}
+          />
+        </Accordion>
+        <div className=" fixed bottom-4 right-4 md:mt-6">
+          <button
+            type="submit"
+            className="mr-2 h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+          >
+            제출하기
+          </button>
+        </div>
+      </form>
+    </>
   );
 }

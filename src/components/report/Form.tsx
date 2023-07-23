@@ -77,6 +77,8 @@ export default function Form({
             value={date}
             datepicker-format="yyyy/mm/dd"
             useRange={false}
+            minDate={new Date(new Date().getFullYear(), 0, 1)}
+            maxDate={new Date(new Date().getFullYear(), 11, 31)}
             onChange={handleDateChange}
             inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 md:text-sm placeholder:text-sm  outline-none"
           />
@@ -94,7 +96,7 @@ export default function Form({
           <input
             name="participants"
             onChange={handleChange}
-            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base font-medium outline-none md:pb-3"
+            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:pb-3"
           />
         </div>
         <div>
@@ -104,7 +106,7 @@ export default function Form({
           <textarea
             name="content"
             onChange={handleChange}
-            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base font-medium outline-none md:pb-3"
+            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
           />
         </div>
       </div>
