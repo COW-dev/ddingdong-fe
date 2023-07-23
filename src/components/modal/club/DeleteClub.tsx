@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDeleteClub } from '@/hooks/api/club/useDeleteClub';
-import { MODAL_TYPE, ModalProp } from '../modal';
+import { MODAL_TYPE, ModalProp } from '../club';
 
 export default function DeleteClub({ data, setModal }: ModalProp) {
   const { id, name } = data;

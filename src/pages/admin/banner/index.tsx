@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Create from '@/assets/create.svg';
 import Minimenu from '@/assets/minimenu.svg';
 import Heading from '@/components/common/Heading';
 import Banner from '@/components/home/Banner';
@@ -57,12 +58,25 @@ export default function Index() {
       </Head>
       <div className="mb-14 flex flex-row items-end justify-between">
         <Heading>배너 관리하기</Heading>
-        <div className="-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base ">
-          배너 생성하기
+        <div>
+          <div className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
+            <Image
+              src={Create}
+              width={100}
+              height={100}
+              alt="create"
+              className="w-8"
+            ></Image>
+          </div>
+          <div
+            className={`-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base`}
+          >
+            배너 생성하기
+          </div>
         </div>
       </div>
-      {dummy.map((data) => (
-        <div key={data.id} className="m-3">
+      {dummy.map((data, index) => (
+        <div key={`banner-${index}`} className="m-3">
           <div className="group relative">
             <div className="editNum absolute right-5 inline-block w-12 p-2 font-semibold">
               <Image

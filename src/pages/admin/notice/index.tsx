@@ -19,7 +19,9 @@ export default function Index() {
         <Heading>공지사항 관리하기</Heading>
         <Link
           href="/notice/new"
-          className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden"
+          className={`-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden ${
+            role === ROLE_TYPE.ROLE_CLUB && 'invisible'
+          }`}
         >
           <Image
             src="/write.svg"

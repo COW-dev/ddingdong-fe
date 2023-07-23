@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
-import { MODAL_TYPE, ModalProp } from '.';
+import { MODAL_TYPE, ModalProp } from '../club';
 
-export default function CreateClub({ data, setModal }: ModalProp) {
+export default function CreateBanner({ data, setModal }: ModalProp) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
   const [clubData, setClubData] = useState({

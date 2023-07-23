@@ -2,7 +2,7 @@ import Image from 'next/image';
 import CancleImg from '@/assets/cancle.svg';
 import { AdminClub } from '@/types';
 import ModalPortal from './ModalPortal';
-import { MODAL_TYPE, ModalType } from '../modal';
+import { MODAL_TYPE, ModalType } from '../modal/club';
 
 type ModalProps = {
   modal: ModalType;

@@ -1,6 +1,6 @@
-import CreateClub from '@/components/modal/CreateClub';
-import DeleteClub from '@/components/modal/DeleteClub';
-import ModifyClub from '@/components/modal/ModifyClub';
+import CreateClub from '@/components/modal/club/CreateClub';
+import DeleteClub from '@/components/modal/club/DeleteClub';
+import ModifyClub from '@/components/modal/club/ModifyClub';
 import { AdminClub } from '@/types';
 
 export interface ModalType {

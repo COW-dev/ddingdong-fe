@@ -3,10 +3,11 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
+import Create from '@/assets/create.svg';
 import New from '@/assets/new.svg';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
-import { MODAL_TYPE } from '@/components/modal';
+import { MODAL_TYPE } from '@/components/modal/club';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import type { AdminClub } from '@/types';
 
@@ -31,8 +32,21 @@ export default function Index() {
       <Head>
         <title>띵동 어드민 - 동아리 관리</title>
       </Head>
+
       <div className="flex flex-row items-end justify-between">
         <Heading>동아리 관리하기</Heading>
+        <div
+          className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden "
+          onClick={() => setModal(MODAL_TYPE.create)}
+        >
+          <Image
+            src={Create}
+            width={100}
+            height={100}
+            alt="create"
+            className="w-8"
+          ></Image>
+        </div>
         <div
           className={`-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base`}
           onClick={() => setModal(MODAL_TYPE.create)}
@@ -40,7 +54,6 @@ export default function Index() {
           동아리 생성하기
         </div>
       </div>
-
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubs
