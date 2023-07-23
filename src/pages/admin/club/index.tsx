@@ -3,7 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
-import New from '@/assets/new.svg';
+import Admin from '@/assets/admin.jpg';
+import Create from '@/assets/create.svg';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import { MODAL_TYPE } from '@/components/modal';
@@ -31,16 +32,28 @@ export default function Index() {
       <Head>
         <title>띵동 어드민 - 동아리 관리</title>
       </Head>
+
       <div className="flex flex-row items-end justify-between">
         <Heading>동아리 관리하기</Heading>
         <div
+          className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden "
+          onClick={() => setModal(MODAL_TYPE.createClub)}
+        >
+          <Image
+            src={Create}
+            width={100}
+            height={100}
+            alt="create"
+            className="w-8"
+          />
+        </div>
+        <div
           className={`-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base`}
-          onClick={() => setModal(MODAL_TYPE.create)}
+          onClick={() => setModal(MODAL_TYPE.createClub)}
         >
           동아리 생성하기
         </div>
       </div>
-
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubs
@@ -51,11 +64,19 @@ export default function Index() {
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
                   onClick={() => {
                     setClub({ ...club });
-                    setModal(MODAL_TYPE.modify);
+                    setModal(MODAL_TYPE.modifyClub);
                   }}
                 >
                   <div className=" flex h-full w-full justify-around p-5 md:p-6">
-                    <Image src={New} width={80} height={80} alt="image" />
+                    <div className="h-20 w-20  overflow-hidden rounded-full border-[1.5px] border-gray-100">
+                      <Image
+                        src={Admin}
+                        width={80}
+                        height={80}
+                        alt="admin"
+                        className="opacity-50"
+                      />
+                    </div>
                     <div className="flex flex-col items-center justify-evenly">
                       <div className="text-lg font-bold md:text-xl">
                         {club.name}

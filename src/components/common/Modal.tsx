@@ -1,18 +1,19 @@
 import Image from 'next/image';
 import CancleImg from '@/assets/cancle.svg';
+import { BannerType } from '@/pages/admin/banner';
 import { AdminClub } from '@/types';
 import ModalPortal from './ModalPortal';
 import { MODAL_TYPE, ModalType } from '../modal';
 
 type ModalProps = {
   modal: ModalType;
-  data: AdminClub;
+  data: AdminClub | BannerType;
   setModal: (flag: ModalType) => void;
 };
 
 export default function Modal({ modal, data, setModal }: ModalProps) {
   if (modal === MODAL_TYPE.null) return <></>;
-  const Element = modal.content;
+  const Element = modal?.content;
 
   return (
     <ModalPortal>
@@ -23,11 +24,13 @@ export default function Modal({ modal, data, setModal }: ModalProps) {
         onClick={() => setModal(MODAL_TYPE.null)}
       >
         <div
-          className="z-55 dark:bg- relative max-h-[80%] w-full max-w-lg rounded-lg bg-white shadow"
+          className="z-55 dark:bg- no-scrollbar relative max-h-[80%] w-full max-w-lg overflow-y-scroll rounded-lg bg-white shadow"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex items-center justify-between rounded-t border-b p-5 ">
-            <h3 className="text-xl font-bold  text-gray-400 ">{modal.title}</h3>
+            <h3 className="text-xl font-bold  text-gray-400 ">
+              {modal?.title}
+            </h3>
             <button
               type="button"
               className="ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 "

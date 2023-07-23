@@ -1,7 +1,12 @@
-import CreateClub from '@/components/modal/CreateClub';
-import DeleteClub from '@/components/modal/DeleteClub';
-import ModifyClub from '@/components/modal/ModifyClub';
+import CreateBanner from '@/components/modal/banner/CreateBanner';
+import CreateClub from '@/components/modal/club/CreateClub';
+import DeleteClub from '@/components/modal/club/DeleteClub';
+import ModifyClub from '@/components/modal/club/ModifyClub';
+import { BannerType } from '@/pages/admin/banner';
 import { AdminClub } from '@/types';
+import DeleteBanner from './banner/DeleteBanner';
+import ModifyBanner from './banner/ModifyBanner';
+import Participants from './report/Paticipants';
 
 export interface ModalType {
   title: string | null;
@@ -9,22 +14,38 @@ export interface ModalType {
 }
 
 export type ModalProp = {
-  data: AdminClub;
+  data: AdminClub | BannerType;
   setModal: (flag: ModalType) => void;
 };
 
 export const MODAL_TYPE: Record<string, ModalType> = {
-  create: {
+  createClub: {
     title: '동아리 생성하기',
     content: CreateClub,
   },
-  modify: {
+  createBanner: {
+    title: '배너 생성하기',
+    content: CreateBanner,
+  },
+  modifyClub: {
     title: '동아리 수정하기',
     content: ModifyClub,
   },
-  delete: {
+  modifyBanner: {
+    title: '배너 수정하기',
+    content: ModifyBanner,
+  },
+  deleteClub: {
     title: '동아리 삭제하기',
     content: DeleteClub,
+  },
+  deleteBanner: {
+    title: '배너 삭제하기',
+    content: DeleteBanner,
+  },
+  participants: {
+    title: '참여 인원 작성',
+    content: Participants,
   },
   null: {
     title: null,

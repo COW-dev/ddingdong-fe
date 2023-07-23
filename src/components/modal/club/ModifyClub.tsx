@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useUpdateClub } from '@/hooks/api/club/useUpdateClub';
-import { MODAL_TYPE, ModalProp } from '.';
+import { MODAL_TYPE, ModalProp } from '..';
 
 export default function ModifyClub({ data, setModal }: ModalProp) {
   const { id, score } = data;
