@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
-import { MODAL_TYPE, ModalProp } from '../club';
+import { MODAL_TYPE, ModalProp } from '..';
 
 export default function CreateClub({ data, setModal }: ModalProp) {
   const mutation = useNewClub();
@@ -17,9 +17,7 @@ export default function CreateClub({ data, setModal }: ModalProp) {
   const { clubName, category, tag, leaderName, userId, password } = clubData;
 
   useEffect(() => {
-    if (clubData) {
-      setClubData(clubData);
-    }
+    if (clubData) setClubData(clubData);
   }, [clubData]);
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -49,7 +47,7 @@ export default function CreateClub({ data, setModal }: ModalProp) {
 
   return (
     <>
-      <form className="w-full" onSubmit={handleSubmit}>
+      <form className=" w-full" onSubmit={handleSubmit}>
         <div className="mb-3 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">
             동아리명
