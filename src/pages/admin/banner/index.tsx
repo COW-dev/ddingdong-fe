@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Minimenu from '@/assets/minimenu.svg';
-import EditBanner from '@/components/banner/EditBanner';
 import Heading from '@/components/common/Heading';
+import Banner from '@/components/home/Banner';
 import { dummy } from './data';
 
 export type BannerType = {
@@ -14,12 +14,22 @@ export type BannerType = {
   image: string;
 };
 
-const init: BannerType = {
+export type BannerTypeProps = {
+  data: {
+    id: number | boolean;
+    color: string;
+    title: string;
+    subTitle: string;
+    image: string;
+  };
+};
+
+export const init: BannerType = {
   id: 0,
   color: '#c4b5fd',
   title: '',
   subTitle: '',
-  image: '/hearts.png',
+  image: 'https://avatars.githubusercontent.com/u/106325839?v=4',
 };
 
 export default function Index() {
@@ -88,8 +98,7 @@ export default function Index() {
                 </div>
               </div>
             </div>
-
-            <EditBanner value={data} />
+            <Banner data={data} />
           </div>
         </div>
       ))}

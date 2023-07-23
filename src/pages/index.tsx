@@ -4,6 +4,7 @@ import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types';
+import { dummy } from './admin/banner/data';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
@@ -36,7 +37,7 @@ export default function Home() {
 
   return (
     <>
-      <Banner />
+      <Banner data={dummy[1]} />
       <SearchBar value={keyword} onChange={setKeyword} />
       <div className="mb-1.5 text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
         총 {filteredClubs.length}개의 동아리
