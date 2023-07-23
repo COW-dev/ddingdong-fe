@@ -9,7 +9,7 @@ export function middleware(req: NextRequest) {
   const isClub = cookie?.includes(ROLE_TYPE.ROLE_CLUB);
 
   const allowedPaths = {
-    [ROLE_TYPE.ROLE_ADMIN]: ['/club'],
+    [ROLE_TYPE.ROLE_ADMIN]: ['/club', '/report', '/notice/new', '/banner'],
     [ROLE_TYPE.ROLE_CLUB]: ['/my-club', '/my-report'],
   };
 
@@ -40,6 +40,7 @@ export const config = {
     '/my-club',
     '/club',
     '/report',
+    '/banner',
     '/admin/:path*',
     '/report/:path*',
   ],
