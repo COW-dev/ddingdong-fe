@@ -78,13 +78,13 @@ export default function Form({
             datepicker-format="yyyy/mm/dd"
             useRange={false}
             onChange={handleDateChange}
-            inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 md:text-sm placeholder:text-sm"
+            inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 md:text-sm placeholder:text-sm  outline-none"
           />
           <input
             name="place"
             placeholder="활동 장소"
             onChange={handleChange}
-            className="mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
+            className="mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
           />
         </div>
         <div>
@@ -94,7 +94,7 @@ export default function Form({
           <input
             name="participants"
             onChange={handleChange}
-            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base font-medium md:pb-3"
+            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base font-medium outline-none md:pb-3"
           />
         </div>
         <div>
@@ -104,7 +104,7 @@ export default function Form({
           <textarea
             name="content"
             onChange={handleChange}
-            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base font-medium md:pb-3"
+            className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base font-medium outline-none md:pb-3"
           />
         </div>
       </div>
@@ -127,7 +127,7 @@ export default function Form({
         ) : (
           <label
             htmlFor="image"
-            className="text-md mt-3 flex w-full items-center  justify-center rounded-xl border-2 border-gray-200 bg-white p-3 font-medium text-gray-300 hover:border-blue-700 md:h-80 md:w-2/3"
+            className=" text-md mt-3 flex w-full cursor-pointer items-center justify-center rounded-xl border-2 border-gray-200 bg-white p-3 font-medium text-gray-300 outline-none md:h-80 md:w-2/3"
           >
             Choose File
             <input

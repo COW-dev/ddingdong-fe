@@ -11,7 +11,7 @@ export default function Index() {
         <title>띵동 일반동아리 - 활동보고서</title>
       </Head>
       <div className="flex flex-row items-end justify-between">
-        <Heading>활동보고서 관리하기</Heading>
+        <Heading>활동 보고서 관리하기</Heading>
       </div>
       <ReportList />
     </>

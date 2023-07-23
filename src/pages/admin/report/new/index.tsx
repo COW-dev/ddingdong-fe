@@ -42,7 +42,7 @@ export default function Index() {
             <Select>{termList.map((item) => String(item))}</Select>
           </div>
         </div>
-        <form className="mt-5 w-full md:mt-10" onSubmit={handleSubmit}>
+        <form className="mt-5 w-full md:mt-10 " onSubmit={handleSubmit}>
           <Accordion title="활동1">
             <Form
               date={reportOne.date}
