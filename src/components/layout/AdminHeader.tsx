@@ -38,10 +38,10 @@ export default function UserHeader() {
           />
         </Link>
         {!isLoginPage && (
-          <nav className="-mr-4 hidden md:block">
+          <nav className="-mr-4 md:block">
             <ul className="flex">
               {navItems.map((item) => (
-                <li key={item.id} className="mx-1">
+                <li key={item.id} className="invisible mx-1 md:visible">
                   <Link
                     href={item.href}
                     className={`inline-block p-3 font-semibold transition-colors hover:text-blue-500 ${
@@ -56,7 +56,7 @@ export default function UserHeader() {
               ))}
               <li className="mx-1">
                 <button
-                  className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
+                  className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500 "
                   onClick={() => {
                     router.push('/login');
                     removeCookie('token');
