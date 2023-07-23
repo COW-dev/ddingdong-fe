@@ -12,9 +12,9 @@ export default function Banner({ data }: BannerTypeProps) {
         height={1000}
         priority
         alt="bannerImg"
-        className="mx-4 w-28 drop-shadow-sm md:w-40"
+        className="mx-4 w-28 object-scale-down drop-shadow-sm md:h-40 md:w-40 "
       />
-      <div className="mx-4 mb-4 text-center text-white md:mb-0 md:text-left">
+      <div className="mx-4 mb-4 text-center text-white md:mb-0 md:w-[45%] md:text-left">
         <p className="my-0.5 text-2xl font-bold md:text-4xl">{title}</p>
         <p className="px-10 text-base font-semibold leading-tight  md:px-0 md:text-xl">
           {subTitle}

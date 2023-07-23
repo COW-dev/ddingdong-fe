@@ -4,7 +4,7 @@ export const dummy: BannerType[] = [
   {
     id: 1,
     color: '#fed7aa',
-    title: '이디야 수박주스의 계절',
+    title: '이디야는ㅇ 수박주스의',
     subTitle: '세빈언니가 씨까지 뺴서 갈았다고?',
     image: 'https://avatars.githubusercontent.com/u/59856002?v=4',
   },

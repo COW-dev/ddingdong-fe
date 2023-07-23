@@ -30,7 +30,7 @@ export default function Home() {
     }, 300);
     return () => clearTimeout(timeout);
   }, [clubs, keyword]);
-
+  console.log(clubs);
   if (isError) {
     return <div>error</div>;
   }

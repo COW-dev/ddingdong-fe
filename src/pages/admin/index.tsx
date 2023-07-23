@@ -51,7 +51,7 @@ export default function Index() {
             width={100}
             height={100}
             priority
-            alt="new"
+            alt="banner"
             className="w-5"
           ></Image>
         </Link>
