@@ -7,7 +7,10 @@ import {
 } from 'react';
 import Image from 'next/image';
 import Datepicker from 'react-tailwindcss-datepicker';
-import { DateValueType } from 'react-tailwindcss-datepicker/dist/types';
+import {
+  DateRangeType,
+  DateValueType,
+} from 'react-tailwindcss-datepicker/dist/types';
 import { StudentInfo, Report } from '@/types';
 type ReportProps = {
   date: DateValueType;
@@ -39,13 +42,10 @@ export default function Form({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(selectedDate: DateValueType) {
+  function handleDateChange(selectedDate: DateRangeType) {
     setValue((prev) => ({
       ...prev,
-      date: {
-        startDate: selectedDate as unknown as Date,
-        endDate: selectedDate as unknown as Date,
-      },
+      date: selectedDate,
     }));
     console.log(selectedDate);
   }
@@ -69,33 +69,22 @@ export default function Form({
       image: '',
     }));
   }
-  function handleParticipantChange(
-    index: number,
-    updatedParticipant: StudentInfo,
-  ) {
-    setValue((prev) => {
-      const newParticipants = [...prev.participants];
-      newParticipants[index] = updatedParticipant;
-      return { ...prev, participants: newParticipants };
-    });
-  }
   return (
     <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
-      <div className="flex w-2/3 flex-col">
+      <div className="flex w-full flex-col md:w-2/3">
         <div className="mb-5 flex flex-col items-center md:flex-row">
           <Datepicker
             value={date}
             datepicker-format="yyyy/mm/dd"
             useRange={false}
-            selected={date.startDate}
             onChange={handleDateChange}
-            inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 font-medium rounded-xl md:pb-3 md:text-md"
+            inputClassName="h-12 w-full px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 md:text-sm placeholder:text-sm"
           />
           <input
             name="place"
             placeholder="활동 장소"
             onChange={handleChange}
-            className="mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm font-semibold md:ml-3 md:mt-0 md:text-base"
+            className="mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
           />
         </div>
         <div>
@@ -119,12 +108,12 @@ export default function Form({
           />
         </div>
       </div>
-      <div className="flex w-2/3 justify-center md:w-1/2 ">
+      <div className="flex w-full justify-center md:w-1/2 ">
         {image ? (
           <>
             <Image
               src={image}
-              className="object-scale-down m-auto"
+              className="m-auto object-scale-down"
               alt="이미지"
               width={200}
               height={200}
