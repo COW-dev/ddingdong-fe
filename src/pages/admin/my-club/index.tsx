@@ -3,7 +3,11 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
-
+import Datepicker from 'react-tailwindcss-datepicker';
+import {
+  DateRangeType,
+  DateValueType,
+} from 'react-tailwindcss-datepicker/dist/types';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
@@ -19,12 +23,10 @@ export default function Index() {
     tag: '',
     category: '',
     leader: '',
-    phoneNumber: {
-      number: '',
-    },
+    phoneNumber: '',
     location: '',
     isRecruit: false,
-    recruitPeriod: '',
+    recruitPeriod: { startDate: new Date(), endDate: new Date() },
     regularMeeting: '',
     introduction: '',
     activity: '',
@@ -35,7 +37,6 @@ export default function Index() {
   const {
     data: { data },
   } = useMyClub(token);
-
   const mutation = useUpdateMyClub();
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function Index() {
       setClubData(data);
     }
   }, [data]);
+  console.log(data);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setClubData((prev) => ({
@@ -60,11 +62,12 @@ export default function Index() {
     setIsEditing(false);
     mutation.mutate({
       ...clubData,
-      phoneNumber: clubData.phoneNumber.number,
+      phoneNumber: clubData.phoneNumber,
       clubLeader: clubData.leader,
       token,
     });
   }
+  console.log(clubData);
   return (
     <>
       <Head>
@@ -103,7 +106,7 @@ export default function Index() {
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
           leader={clubData.leader}
-          phoneNumber={clubData.phoneNumber.number}
+          phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           recruitPeriod={clubData.recruitPeriod}

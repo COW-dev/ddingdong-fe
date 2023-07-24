@@ -3,10 +3,9 @@ import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import Select from '@/components/common/Select';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import { Report, termList } from '@/types';
+import { Report } from '@/types';
 
 export default function Index() {
   const mutation = useNewReport();
@@ -41,9 +40,7 @@ export default function Index() {
       </Head>
       <div className="flex flex-row items-end ">
         <Heading>활동 보고서 작성하기</Heading>
-        <div className="ml-auto text-xl font-medium md:ml-10 ">
-          <Select>{termList.map((item) => String(item))}</Select>
-        </div>
+        <div className="ml-auto text-xl font-medium md:ml-10 "></div>
       </div>
       <form className="mt-5 w-full md:mt-10 " onSubmit={handleSubmit}>
         <Accordion title="활동1">

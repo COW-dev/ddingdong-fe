@@ -20,7 +20,7 @@ export default function Participants({
     updateParticipant(index, updatedParticipant);
   };
   return (
-    <form className="mt-2 grid w-full grid-flow-row grid-cols-3 gap-2">
+    <div className="mt-2 grid w-full grid-flow-row grid-cols-3 gap-2">
       <input
         name="studentName"
         value={participant.studentName}
@@ -39,6 +39,6 @@ export default function Participants({
         onChange={handleChange}
         className="w-sm h-12 rounded-xl border-2 border-gray-200 p-3"
       />
-    </form>
+    </div>
   );
 }

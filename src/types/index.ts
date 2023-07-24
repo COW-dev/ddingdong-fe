@@ -66,10 +66,10 @@ export type ClubDetail = {
   tag: string;
   category: string;
   leader: string;
-  phoneNumber: { number: string };
+  phoneNumber: string;
   location: string;
   isRecruit: boolean;
-  recruitPeriod: string;
+  recruitPeriod: DateRangeType;
   regularMeeting: string;
   introduction: string;
   activity: string;
@@ -85,7 +85,7 @@ export type UpdateMyClub = {
   phoneNumber?: string;
   location?: string;
   isRecruit?: boolean;
-  recruitPeriod?: string;
+  recruitPeriod?: DateRangeType;
   regularMeeting?: string;
   introduction?: string;
   activity?: string;
