@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import type { ClubDetail, DeptCaptionColor } from '@/types';
 
@@ -31,18 +33,31 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   return (
     <>
       <div className="flex flex-col">
-        <Heading>{name}</Heading>
-        <div className="flex items-center md:mt-0.5">
-          <div
-            className={`rounded-lg text-base font-semibold md:text-lg ${deptCaptionColor[category]}`}
-          >
-            {category}
+        <div className="flex flex-row items-end">
+          <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
+            <Image
+              src={Admin}
+              width={80}
+              height={80}
+              alt="admin"
+              className="opacity-50"
+            />
           </div>
-          <div className="px-1.5 text-base font-medium text-gray-300 md:text-lg">
-            |
-          </div>
-          <div className="rounded-lg text-base font-semibold text-gray-500 md:text-lg">
-            {tag}
+          <div className="ml-3">
+            <Heading>{name}</Heading>
+            <div className="flex items-center md:mt-0.5">
+              <div
+                className={`rounded-lg text-base font-semibold md:text-lg ${deptCaptionColor[category]}`}
+              >
+                {category}
+              </div>
+              <div className="px-1.5 text-base font-medium text-gray-300 md:text-lg">
+                |
+              </div>
+              <div className="rounded-lg text-base font-semibold text-gray-500 md:text-lg">
+                {tag}
+              </div>
+            </div>
           </div>
         </div>
       </div>
