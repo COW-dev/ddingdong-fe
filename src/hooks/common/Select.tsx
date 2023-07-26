@@ -3,7 +3,8 @@ import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import { ItemsType } from '@/constants/color';
-import { NewBannerType, NewClub } from '@/types';
+import { NewBannerType } from '@/types/banner';
+import { NewClub } from '@/types/club';
 
 type SelectProps = {
   name: string;

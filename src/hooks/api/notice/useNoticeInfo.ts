@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getNoticeInfo } from '@/apis';
-import { NoticeDetail } from '@/types';
+import { NoticeDetail } from '@/types/notice';
 
 const initialData = {
   title: '',

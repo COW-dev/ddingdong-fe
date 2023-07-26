@@ -1,26 +1,22 @@
 import axios, { AxiosResponse } from 'axios';
-import { Banner } from '@/components/common/Banner';
-// eslint-disable-next-line import/named
-// eslint-disable-next-line import/named
+import { BannerType, DeleteBanner } from '@/types/banner';
 import {
-  ClubDetail,
   Club,
-  NewNotice,
-  NoticeDetail,
-  Notice,
-  UpdateClub,
+  AdminClub,
+  ClubDetail,
+  NewClub,
+  DeleteClub,
   UpdateMyClub,
+  UpdateClub,
+} from '@/types/club';
+import {
+  Notice,
+  NoticeDetail,
+  NewNotice,
   UpdateNotice,
   DeleteNotice,
-  NewClub,
-  AdminClub,
-  DeleteClub,
-  ReportDetail,
-  AllReport,
-  NewBanner,
-  BannerType,
-  DeleteBanner,
-} from '@/types';
+} from '@/types/notice';
+import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 
 const api = axios.create({
   baseURL: '/api/',

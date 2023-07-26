@@ -13,7 +13,7 @@ import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
-import { ClubDetail } from '@/types';
+import { ClubDetail } from '@/types/club';
 
 export default function Index() {
   const [isEditing, setIsEditing] = useState<boolean>(false);

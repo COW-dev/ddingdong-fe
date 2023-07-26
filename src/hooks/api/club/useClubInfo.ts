@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getClubInfo } from '@/apis';
-import { ClubDetail } from '@/types';
+import { ClubDetail } from '@/types/club';
 
 export function useClubInfo(id: number) {
   return useQuery<

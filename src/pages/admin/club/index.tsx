@@ -9,7 +9,7 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import { MODAL_TYPE } from '@/components/modal';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
-import type { AdminClub } from '@/types';
+import type { AdminClub } from '@/types/club';
 
 export default function Index() {
   const [modal, setModal] = useState(MODAL_TYPE.null);

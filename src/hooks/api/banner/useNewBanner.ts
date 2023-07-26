@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 import { createBanner } from '@/apis';
-import { NewBanner } from '@/types';
+import { NewBanner } from '@/types/banner';
 
 export function useNewBanner(): UseMutationResult<
   unknown,

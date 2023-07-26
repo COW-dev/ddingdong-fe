@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getAllBanners } from '@/apis';
-import { BannerType } from '@/types';
+import { BannerType } from '@/types/banner';
 
 export function useAllBanners() {
   return useQuery<

@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { deleteBanner } from '@/apis';
-import { DeleteBanner } from '@/types';
+import { DeleteBanner } from '@/types/banner';
 
 export function useDeleteBanner(): UseMutationResult<
   unknown,

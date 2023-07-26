@@ -4,11 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
-import Banner from '@/components/common/Banner';
 import Slider from '@/components/home/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
-import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
 export default function Index() {

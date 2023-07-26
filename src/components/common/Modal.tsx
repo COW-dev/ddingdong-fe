@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import CancleImg from '@/assets/cancle.svg';
 import { BannerType } from '@/pages/admin/banner';
-import { AdminClub } from '@/types';
+import { AdminClub } from '@/types/club';
 import ModalPortal from './ModalPortal';
 import { MODAL_TYPE, ModalType } from '../modal';
 

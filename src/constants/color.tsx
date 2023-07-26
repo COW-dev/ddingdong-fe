@@ -1,3 +1,4 @@
+import { DeptCaptionColor } from '@/types';
 export type ItemsType = { title: string; color: string };
 
 export const CatogoryColor: ItemsType[] = [
@@ -18,3 +19,13 @@ export const BannerColor: ItemsType[] = [
   { title: '주황', color: 'orange' },
   { title: '노랑', color: 'yellow' },
 ];
+
+export const deptCaptionColor: DeptCaptionColor = {
+  봉사: 'text-pink-500',
+  사회연구: 'text-orange-500',
+  연행예술: 'text-yellow-500',
+  전시창작: 'text-emerald-500',
+  종교: 'text-cyan-500',
+  체육: 'text-blue-500',
+  학술: 'text-purple-500',
+};

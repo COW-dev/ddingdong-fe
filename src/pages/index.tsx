@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import Banner from '@/components/common/Banner';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import Slider from '@/components/home/Slider';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
-import type { Club } from '@/types';
+import type { Club } from '@/types/club';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
