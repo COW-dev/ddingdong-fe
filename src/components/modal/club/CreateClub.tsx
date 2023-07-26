@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
 import { MODAL_TYPE, ModalProp } from '..';
 
-export default function CreateClub({ data, setModal }: ModalProp) {
+export default function CreateClub({ setModal }: ModalProp) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
   const [clubData, setClubData] = useState({
@@ -11,7 +11,7 @@ export default function CreateClub({ data, setModal }: ModalProp) {
     category: '',
     tag: '',
     leaderName: '',
-    userId: '',
+    userId: 0,
     password: '',
   });
   const { clubName, category, tag, leaderName, userId, password } = clubData;
@@ -40,7 +40,7 @@ export default function CreateClub({ data, setModal }: ModalProp) {
       category: '',
       tag: '',
       leaderName: '',
-      userId: '',
+      userId: 0,
       password: '',
     });
   }

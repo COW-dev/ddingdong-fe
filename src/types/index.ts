@@ -10,9 +10,19 @@ export type Club = {
 
 export type AdminClub = {
   id: number;
-  name: string;
+  name?: string;
   category: string;
-  score: number;
+  score?: number;
+};
+
+export type modalPropType = {
+  id?: number | boolean;
+  name?: string;
+  score?: number;
+  color: string;
+  title: string;
+  subTitle: string;
+  image: string;
 };
 
 export type NewClub = {
@@ -20,7 +30,7 @@ export type NewClub = {
   category: string;
   tag: string;
   leaderName: string;
-  userId: string;
+  userId: number;
   password: string;
   token: string;
 };
@@ -49,8 +59,9 @@ export type DeleteNotice = {
   noticeId: number;
   token: string;
 };
+
 export type DeleteClub = {
-  clubId: number;
+  clubId: number | boolean;
   token: string;
 };
 export type NoticeDetail = {

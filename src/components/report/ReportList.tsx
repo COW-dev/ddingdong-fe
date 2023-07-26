@@ -29,7 +29,7 @@ export default function ReportList() {
   const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
   const { data } = useAllReports(token);
 
-  useEffect(() => setMyReportList(data?.data), [data?.data]);
+  useEffect(() => data && setMyReportList(data?.data), [data?.data]);
 
   console.log(currentTerm);
   const submitTerms = data?.data

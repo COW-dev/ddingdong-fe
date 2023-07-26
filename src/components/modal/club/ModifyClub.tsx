@@ -9,10 +9,10 @@ export default function ModifyClub({ data, setModal }: ModalProp) {
   const [cookies] = useCookies(['token']);
   const [changedScore, setScore] = useState(score);
 
-  function handleClickChange() {
-    updateMutation.mutate({ id, score: changedScore, token: cookies.token });
-    setModal(MODAL_TYPE.null);
-  }
+  // function handleClickChange() {
+  //   updateMutation.mutate({ id, score: changedScore, token: cookies.token });
+  //   setModal(MODAL_TYPE.null);
+  // }
 
   function handleClickDelete() {
     setModal(MODAL_TYPE.null);
@@ -27,7 +27,7 @@ export default function ModifyClub({ data, setModal }: ModalProp) {
     <>
       <form
         className="mx-auto flex w-[90%] flex-col"
-        onSubmit={handleClickChange}
+        // onSubmit={handleClickChange}
       >
         <div className="mb-3 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">
