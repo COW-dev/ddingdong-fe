@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import { useAllReports } from '@/hooks/api/club/useAllReports';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
-import { MyReportList } from '@/types';
+import { MyReportList } from '@/types/report';
 
 // export const reports = [
 //   {

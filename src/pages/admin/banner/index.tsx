@@ -1,41 +1,51 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import toast, { Toaster } from 'react-hot-toast';
 import Create from '@/assets/create.svg';
 import Minimenu from '@/assets/minimenu.svg';
+import Banner from '@/components/common/Banner';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
-import Banner from '@/components/home/Banner';
 import { MODAL_TYPE } from '@/components/modal';
-import { dummy } from './data';
+import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 
 export type BannerType = {
-  id: number | boolean;
-  color: string;
+  id?: number | string;
+  colorCode: string;
   title: string;
   subTitle: string;
-  image: string;
+  imgUrl: string;
 };
 
 export type BannerTypeProps = {
   data: {
-    id: number | boolean;
-    color: string;
+    id?: number | string;
+    colorCode: string;
     title: string;
     subTitle: string;
-    image: string;
+    imgUrl: string;
   };
 };
 
 export const init: BannerType = {
   id: 0,
-  color: '#c4b5fd',
-  title: '',
-  subTitle: '',
-  image: 'https://avatars.githubusercontent.com/u/106325839?v=4',
+  title: '띵동이 탄생했어요!',
+  subTitle: '명지대학교의 모든 동아리를 띵동에서 확인하세요!',
+  colorCode: 'indigo',
+  imgUrl:
+    'https://.ddingdong-file.s3.ap-northeast-2.amazonaws.com/banner-image/241a5dd4-feab-4e45-b2b0-82bcdd1d8c3a.png',
 };
 
 export default function Index() {
+  const { data: bannerData } = useAllBanners();
+  const [banners, setBanners] = useState<BannerType[]>(bannerData?.data);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   const [modal, setModal] = useState(MODAL_TYPE.null);
   const [banner, setBanner] = useState<BannerType>(init);
 
@@ -43,10 +53,14 @@ export default function Index() {
     if (modal === MODAL_TYPE.null) setBanner(init);
   }, [modal]);
 
+  useEffect(() => {
+    if (banners) setBanners(bannerData?.data);
+  }, [bannerData?.data]);
+
   const handleBannerClick = (data: BannerType) => {
     setBanner(data);
   };
-
+  if (!hydrated) return null;
   return (
     <div className="w-full">
       <Head>
@@ -75,7 +89,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {dummy.map((data, index) => (
+      {[...banners]?.reverse().map((data, index) => (
         <div key={`banner-${index}`} className="m-3">
           <div className="group relative">
             <div className="editNum absolute right-5 inline-block w-12 p-2 font-semibold">
@@ -101,7 +115,13 @@ export default function Index() {
                   </div>
                   <div
                     className="block rounded-lg px-4 py-2 text-sm text-red-500 opacity-90 hover:bg-gray-50 hover:font-semibold hover:text-red-700"
-                    onClick={() => setModal(MODAL_TYPE.deleteBanner)}
+                    onClick={() => {
+                      if (banners.length === 1) {
+                        setBanner(init);
+                        return toast.error('배너는 한개 이상 존재해야해요.');
+                      }
+                      setModal(MODAL_TYPE.deleteBanner);
+                    }}
                   >
                     삭제
                   </div>
@@ -119,6 +139,15 @@ export default function Index() {
           </div>
         </div>
       ))}
+      <Toaster
+        toastOptions={{
+          style: {
+            fontWeight: 600,
+            padding: '0.75rem 1rem',
+            marginTop: '0.5rem',
+          },
+        }}
+      />
     </div>
   );
 }

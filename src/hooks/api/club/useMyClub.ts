@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import { getMyClub } from '@/apis';
-import { ClubDetail } from '@/types';
+import { ClubDetail } from '@/types/club';
 
 const initialData = {
   id: 0,

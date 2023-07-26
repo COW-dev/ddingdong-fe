@@ -7,10 +7,10 @@ import {
 } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
-  DateRangeType,
   DateValueType,
+  DateRangeType,
 } from 'react-tailwindcss-datepicker/dist/types';
-import { ClubDetail } from '@/types';
+import { ClubDetail } from '@/types/club';
 
 type ClubInfoFormProps = {
   leader: string;

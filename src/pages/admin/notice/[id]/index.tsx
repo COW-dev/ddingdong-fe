@@ -9,7 +9,7 @@ import { ROLE_TYPE } from '@/constants/text';
 import { useDeleteNotice } from '@/hooks/api/notice/useDeleteNotice';
 import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
 import { useUpdateNotice } from '@/hooks/api/notice/useUpdateNotice';
-import { NoticeDetail } from '@/types';
+import { NoticeDetail } from '@/types/notice';
 
 type NoticeDetailProps = {
   noticeId: number;

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
 import Heading from '@/components/common/Heading';
 import ReportList from '@/components/report/ReportList';
 export default function Index() {

@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import Banner from '@/components/home/Banner';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
+import Slider from '@/components/home/Slider';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
-import type { Club } from '@/types';
-import { dummy } from './admin/banner/data';
+import type { Club } from '@/types/club';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
@@ -28,6 +27,7 @@ export default function Home() {
         ),
       );
     }, 300);
+
     return () => clearTimeout(timeout);
   }, [clubs, keyword]);
   console.log(clubs);
@@ -37,7 +37,9 @@ export default function Home() {
 
   return (
     <>
-      <Banner data={dummy[1]} />
+      <div className="mb-1.5 text-sm font-semibold md:mb-2 md:text-base">
+        <Slider />
+      </div>
       <SearchBar value={keyword} onChange={setKeyword} />
       <div className="mb-1.5 text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
         총 {filteredClubs.length}개의 동아리

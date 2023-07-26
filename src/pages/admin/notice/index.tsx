@@ -5,7 +5,6 @@ import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import NoticeList from '@/components/common/NoticeList';
 import { ROLE_TYPE } from '@/constants/text';
-import Notice from '@/pages/notice';
 
 export default function Index() {
   const [cookies] = useCookies(['token', 'role']);

@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import type { StudentInfo } from '@/types';
+import type { StudentInfo } from '@/types/report';
 
 type ParticipantsProps = {
   index: number;
