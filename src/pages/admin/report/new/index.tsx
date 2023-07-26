@@ -1,39 +1,104 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import Select from '@/components/common/Select';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import { Report, termList } from '@/types';
+import { NewReport } from '@/types';
 
 export default function Index() {
   const mutation = useNewReport();
-  const [cookies] = useCookies(['token']);
-  const [reportOne, setReportOne] = useState<Report>({
+  const [{ token }] = useCookies();
+  const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
+  const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
+  const [reportOne, setReportOne] = useState<NewReport>({
+    term: '2',
     date: { startDate: new Date(), endDate: new Date() },
-    image: '',
+    place: '',
+    uploadFiles: uploadFileOne,
+    content: '',
+    participants: [
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+    ],
+  });
+  const [reportTwo, setReportTwo] = useState<NewReport>({
+    term: '2',
+    date: { startDate: new Date(), endDate: new Date() },
     place: '',
     content: '',
-    participants: [],
+    uploadFiles: uploadFileTwo,
+    participants: [
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융소',
+      },
+    ],
   });
-  const [reportTwo, setReportTwo] = useState<Report>({
-    date: { startDate: new Date(), endDate: new Date() },
-    image: '',
-    place: '',
-    content: '',
-    participants: [],
-  });
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    return mutation.mutate({
-      ...reportOne,
-      ...reportTwo,
-      token: cookies.token,
-    });
+    const formData = new FormData();
+    const reportData = [reportOne, reportTwo];
+    formData.append('reportData', JSON.stringify(reportData));
+    if (reportOne.uploadFiles) {
+      formData.append('uploadFiles', reportOne.uploadFiles);
+    }
+    if (reportTwo.uploadFiles) {
+      formData.append('uploadFiles', reportTwo.uploadFiles);
+    }
+
+    formData.append('token', token);
+    console.log(reportData);
+    console.log('uploadFileOne', reportOne.uploadFiles);
+    console.log('파일', reportTwo.uploadFiles);
+    return mutation.mutate(formData);
   }
-  const formData = new FormData();
   return (
     <>
       <Head>
@@ -41,15 +106,13 @@ export default function Index() {
       </Head>
       <div className="flex flex-row items-end ">
         <Heading>활동 보고서 작성하기</Heading>
-        <div className="ml-auto text-xl font-medium md:ml-10 ">
-          <Select>{termList.map((item) => String(item))}</Select>
-        </div>
+        <div className="ml-auto text-xl font-medium md:ml-10 "></div>
       </div>
       <form className="mt-5 w-full md:mt-10 " onSubmit={handleSubmit}>
         <Accordion title="활동1">
           <Form
             date={reportOne.date}
-            image={reportOne.image}
+            uploadFiles={reportOne.uploadFiles}
             place={reportOne.place}
             content={reportOne.content}
             participants={reportOne.participants}
@@ -59,7 +122,7 @@ export default function Index() {
         <Accordion title="활동2">
           <Form
             date={reportTwo.date}
-            image={reportTwo.image}
+            uploadFiles={reportTwo.uploadFiles}
             place={reportTwo.place}
             content={reportTwo.content}
             participants={reportTwo.participants}

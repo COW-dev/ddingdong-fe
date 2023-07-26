@@ -66,10 +66,10 @@ export type ClubDetail = {
   tag: string;
   category: string;
   leader: string;
-  phoneNumber: { number: string };
+  phoneNumber: string;
   location: string;
   isRecruit: boolean;
-  recruitPeriod: string;
+  recruitPeriod: DateRangeType;
   regularMeeting: string;
   introduction: string;
   activity: string;
@@ -85,7 +85,7 @@ export type UpdateMyClub = {
   phoneNumber?: string;
   location?: string;
   isRecruit?: boolean;
-  recruitPeriod?: string;
+  recruitPeriod?: DateRangeType;
   regularMeeting?: string;
   introduction?: string;
   activity?: string;
@@ -111,9 +111,10 @@ export type StudentInfo = {
   studentMajor: string;
 };
 
-export type Report = {
+export type NewReport = {
+  term: string;
+  uploadFiles: File | null;
   date: DateRangeType;
-  image: string;
   place: string;
   content: string;
   participants: StudentInfo[];
@@ -134,9 +135,13 @@ export type ReportDetail = {
   participants: StudentInfo[];
 };
 
-export type AllReport = {
-  id: number;
+export type MyReportList = {
+  name: string;
   term: string;
+};
+
+export type CurrentReport = {
+  currentTerm: string;
 };
 
 export const termList = [

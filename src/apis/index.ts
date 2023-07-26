@@ -14,9 +14,9 @@ import {
   NewClub,
   AdminClub,
   DeleteClub,
-  Report,
   ReportDetail,
-  AllReport,
+  CurrentReport,
+  MyReportList,
 } from '@/types';
 
 const api = axios.create({
@@ -125,10 +125,15 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport({ token, ...reportData }: Report) {
+export async function createReport(
+  reportData: FormData,
+): Promise<AxiosResponse> {
+  const token = reportData.get('token');
+
   return await api.post('/club/my/activity-reports', reportData, {
     headers: {
       Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
     },
   });
 }
@@ -140,10 +145,19 @@ export async function getReportInfo(
     `/club/activity-reports?term=${reportId}&club_name=${name}`,
   );
 }
-export async function getAllReports(
+export async function getMyReportLists(
   token: string,
-): Promise<AxiosResponse<AllReport[], unknown>> {
+): Promise<AxiosResponse<MyReportList[], unknown>> {
   return await api.get('/club/my/activity-reports', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getCurrentReports(
+  token: string,
+): Promise<AxiosResponse<CurrentReport, unknown>> {
+  return await api.get('/club/activity-reports/current-term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
