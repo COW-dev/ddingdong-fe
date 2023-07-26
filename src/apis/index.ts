@@ -64,7 +64,9 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
-export async function createNotice({ token, ...noticeData }: NewNotice) {
+export async function createNotice(noticeData: FormData) {
+  const token = noticeData.get('token');
+
   return await api.post('/admin/notices', noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
