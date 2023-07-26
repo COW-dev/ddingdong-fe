@@ -7,35 +7,46 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import Banner from '@/components/home/Banner';
 import { MODAL_TYPE } from '@/components/modal';
-import { dummy } from './data';
+import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 
 export type BannerType = {
-  id: number | boolean;
-  color: string;
+  id?: number | string;
+  colorCode: string;
   title: string;
   subTitle: string;
-  image: string;
+  imgUrl: string;
 };
 
 export type BannerTypeProps = {
   data: {
-    id: number | boolean;
-    color: string;
+    id?: number | string;
+    colorCode: string;
     title: string;
     subTitle: string;
-    image: string;
+    imgUrl: string;
   };
 };
 
 export const init: BannerType = {
   id: 0,
-  color: '#c4b5fd',
+  colorCode: '#c4b5fd',
   title: '',
   subTitle: '',
-  image: 'https://avatars.githubusercontent.com/u/106325839?v=4',
+  imgUrl:
+    'https://.ddingdong-file.s3.ap-northeast-2.amazonaws.com/banner-image/504881c5-4acd-45fe-a947-0c7e7aa1bc02.png',
 };
 
 export default function Index() {
+  const { data: bannerData } = useAllBanners();
+  const [banners, setBanners] = useState<BannerType[] | undefined>(
+    bannerData?.data,
+  );
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
   const [modal, setModal] = useState(MODAL_TYPE.null);
   const [banner, setBanner] = useState<BannerType>(init);
 
@@ -43,10 +54,14 @@ export default function Index() {
     if (modal === MODAL_TYPE.null) setBanner(init);
   }, [modal]);
 
+  useEffect(() => {
+    if (banners) setBanners(bannerData?.data);
+  }, [bannerData?.data]);
+
   const handleBannerClick = (data: BannerType) => {
     setBanner(data);
   };
-
+  if (!hydrated) return null;
   return (
     <div className="w-full">
       <Head>
@@ -75,7 +90,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {dummy.map((data, index) => (
+      {banners?.map((data, index) => (
         <div key={`banner-${index}`} className="m-3">
           <div className="group relative">
             <div className="editNum absolute right-5 inline-block w-12 p-2 font-semibold">

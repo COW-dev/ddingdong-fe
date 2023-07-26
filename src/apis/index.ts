@@ -1,5 +1,6 @@
-// eslint-disable-next-line import/named
 import axios, { AxiosResponse } from 'axios';
+import { Banner } from '@/components/home/Banner';
+// eslint-disable-next-line import/named
 // eslint-disable-next-line import/named
 import {
   ClubDetail,
@@ -17,6 +18,9 @@ import {
   Report,
   ReportDetail,
   AllReport,
+  NewBanner,
+  BannerType,
+  DeleteBanner,
 } from '@/types';
 
 const api = axios.create({
@@ -32,6 +36,11 @@ export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {
   return await api.get('/clubs');
 }
 
+export async function getAllBanners(): Promise<
+  AxiosResponse<BannerType[], unknown>
+> {
+  return await api.get('/banners');
+}
 export async function getAdminAllClubs(
   token: string,
 ): Promise<AxiosResponse<AdminClub[], unknown>> {
@@ -74,6 +83,15 @@ export async function createClub({ token, ...clubData }: NewClub) {
     },
   });
 }
+export async function createBanner({ token, formData }: any) {
+  console.log(formData.get('uploadFiles'));
+  return await api.post('/admin/banners', formData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
 
 export async function updateNotice({
   noticeId,
@@ -95,6 +113,13 @@ export async function deleteNotice({ noticeId, token }: DeleteNotice) {
 }
 export async function deleteClub({ clubId, token }: DeleteClub) {
   return await api.delete(`/admin/clubs/${clubId}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function deleteBanner({ bannerId, token }: DeleteBanner) {
+  return await api.delete(`/admin/banners/${bannerId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
