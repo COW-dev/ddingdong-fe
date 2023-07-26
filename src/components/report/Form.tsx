@@ -59,8 +59,7 @@ export default function Form({
   function handleDateChange(selectedDate: DateRangeType) {
     setValue((prev) => ({
       ...prev,
-      startDate: selectedDate.startDate,
-      endDate: selectedDate.endDate,
+      date: selectedDate,
     }));
     console.log(selectedDate);
   }

@@ -13,7 +13,7 @@ export default function Index() {
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
   const [reportOne, setReportOne] = useState<NewReport>({
-    term: '1',
+    term: '2',
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     uploadFiles: uploadFileOne,
@@ -47,7 +47,7 @@ export default function Index() {
     ],
   });
   const [reportTwo, setReportTwo] = useState<NewReport>({
-    term: '1',
+    term: '2',
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     content: '',
@@ -111,7 +111,7 @@ export default function Index() {
       <form className="mt-5 w-full md:mt-10 " onSubmit={handleSubmit}>
         <Accordion title="활동1">
           <Form
-            date={reportTwo.date}
+            date={reportOne.date}
             uploadFiles={reportOne.uploadFiles}
             place={reportOne.place}
             content={reportOne.content}
