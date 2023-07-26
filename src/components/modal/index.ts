@@ -2,8 +2,7 @@ import CreateBanner from '@/components/modal/banner/CreateBanner';
 import CreateClub from '@/components/modal/club/CreateClub';
 import DeleteClub from '@/components/modal/club/DeleteClub';
 import ModifyClub from '@/components/modal/club/ModifyClub';
-import { BannerType } from '@/pages/admin/banner';
-import { AdminClub } from '@/types';
+import { modalPropType } from '@/types';
 import DeleteBanner from './banner/DeleteBanner';
 import ModifyBanner from './banner/ModifyBanner';
 import Participants from './report/Paticipants';
@@ -12,9 +11,8 @@ export interface ModalType {
   title: string | null;
   content: (({ data, setModal }: ModalProp) => React.ReactNode) | null;
 }
-
 export type ModalProp = {
-  data: AdminClub | BannerType;
+  data: modalPropType;
   setModal: (flag: ModalType) => void;
 };
 

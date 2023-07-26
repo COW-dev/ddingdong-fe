@@ -33,8 +33,8 @@ const Category = () => {
   useEffect(() => {
     if (clubs) {
       const clubsData: AdminClub[] = clubs.data;
-      const clubNames: string[] = clubsData.map((club: AdminClub) => club.name);
-      setClubList(clubNames);
+      // const clubNames: string[] = clubsData.map((club: AdminClub) => club.name);
+      // setClubList(clubNames);
     }
   }, [clubs]);
 

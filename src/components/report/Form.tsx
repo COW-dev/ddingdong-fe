@@ -13,7 +13,7 @@ import {
 } from 'react-tailwindcss-datepicker/dist/types';
 import { StudentInfo, NewReport } from '@/types';
 type ReportProps = {
-  date: DateValueType;
+  date: DateRangeType;
   uploadFiles: File | null;
   place: string;
   content: string;
@@ -56,10 +56,10 @@ export default function Form({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(selectedDate: DateRangeType) {
+  function handleDateChange(selectedDate: DateValueType) {
     setValue((prev) => ({
       ...prev,
-      date: selectedDate,
+      date: selectedDate as DateRangeType,
     }));
     console.log(selectedDate);
   }

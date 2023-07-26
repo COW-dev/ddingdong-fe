@@ -29,7 +29,7 @@ export default function Participants({ data, setModal }: ModalProp) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    mutation.mutate({ ...clubData, token: cookies.token });
+    // mutation.mutate({ ...clubData, token: cookies.token });
     handleReset();
     setModal(MODAL_TYPE.null);
   }

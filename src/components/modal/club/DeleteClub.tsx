@@ -10,6 +10,7 @@ export default function DeleteClub({ data, setModal }: ModalProp) {
   const [value, setValue] = useState('');
 
   function handleClickDelete() {
+    if (!id) return;
     deleteMutation.mutate({
       clubId: id,
       token: cookies.token,
@@ -20,7 +21,7 @@ export default function DeleteClub({ data, setModal }: ModalProp) {
 
   useEffect(() => {
     setValue('');
-  }, [name]);
+  }, []);
 
   return (
     <>

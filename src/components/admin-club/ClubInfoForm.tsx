@@ -45,10 +45,10 @@ export default function ClubInfoForm({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(selectedDate: DateRangeType) {
+  function handleDateChange(selectedDate: DateValueType) {
     setValue((prev) => ({
       ...prev,
-      recruitPeriod: selectedDate,
+      recruitPeriod: selectedDate as DateRangeType,
     }));
   }
 
