@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
 import type { StudentInfo } from '@/types';
 
 type ParticipantsProps = {

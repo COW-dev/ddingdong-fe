@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import CancleImg from '@/assets/cancle.svg';
 import { BannerType } from '@/pages/admin/banner';
-import { AdminClub } from '@/types';
+import { AdminClub, StudentInfo } from '@/types';
 import ModalPortal from './ModalPortal';
 import { MODAL_TYPE, ModalType } from '../modal';
 
 type ModalProps = {
   modal: ModalType;
-  data: AdminClub | BannerType;
+  data: AdminClub | BannerType | StudentInfo[];
   setModal: (flag: ModalType) => void;
 };
 

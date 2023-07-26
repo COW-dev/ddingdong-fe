@@ -5,38 +5,30 @@ import { useAllReports } from '@/hooks/api/club/useAllReports';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { MyReportList } from '@/types';
 
-// export const reports = [
-//   {
-//     name: 'cow',
-//     term: '1',
-//   },
-//   {
-//     name: 'cow',
-//     term: '2',
-//   },
-//   {
-//     name: 'cow',
-//     term: '4',
-//   },
-// ];
+export const reports = [
+  {
+    name: 'cow',
+    term: '1',
+  },
+];
 
 export default function ReportList() {
   const [club, setClub] = useState('cow');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
-  const currentTerm = 2;
+  const currentTerm = 3;
 
   const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
   const { data } = useAllReports(token);
 
-  useEffect(() => data && setMyReportList(data?.data), [data?.data]);
+  useEffect(() => data && setMyReportList(reports), [reports]);
 
   console.log(currentTerm);
-  const submitTerms = data?.data
+  const submitTerms = reports
     .filter((item) => item.name === club)
     .map((item) => item.term);
 
-  const isReports = data?.data
+  const isReports = reports
     .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => item.term);
 
