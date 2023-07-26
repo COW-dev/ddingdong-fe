@@ -3,13 +3,12 @@ import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import { ItemsType } from '@/constants/color';
-import { BannerType } from '@/pages/admin/banner';
-import { NewClub } from '@/types';
+import { NewBannerType, NewClub } from '@/types';
 
 type SelectProps = {
   name: string;
   setData:
-    | Dispatch<SetStateAction<BannerType>>
+    | Dispatch<SetStateAction<NewBannerType>>
     | Dispatch<SetStateAction<NewClub>>;
   list: ItemsType[];
 };
@@ -23,7 +22,7 @@ export default function Select({ name, setData, list }: SelectProps) {
   }, [value]);
 
   return (
-    <div className="y-full relative w-full  border-gray-100">
+    <div className="y-full relative w-full border-gray-100  bg-gray-50">
       <div className="inline-flex  w-full items-center overflow-hidden rounded-md  px-4 py-2 ">
         <div className={`w-full border-e text-sm/none text-${value.color}-500`}>
           {value.title}
