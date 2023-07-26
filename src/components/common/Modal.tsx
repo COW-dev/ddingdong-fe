@@ -41,7 +41,7 @@ export default function Modal({ modal, data, setModal }: ModalProps) {
             </button>
           </div>
           <div className="space-y-6 p-6">
-            {/* <Element data={data} setModal={setModal} /> */}
+            <Element data={data} setModal={setModal} />
           </div>
         </div>
       </div>
