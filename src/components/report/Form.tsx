@@ -11,29 +11,43 @@ import {
   DateRangeType,
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
-import { StudentInfo, Report } from '@/types';
+import { StudentInfo, NewReport } from '@/types';
 type ReportProps = {
   date: DateValueType;
-  image: string;
+  uploadFiles: File | null;
   place: string;
   content: string;
   participants: StudentInfo[];
-  setValue: Dispatch<SetStateAction<Report>>;
+  setValue: Dispatch<SetStateAction<NewReport>>;
 };
 
 export default function Form({
   date,
-  image,
+  uploadFiles,
   place,
   content,
   participants,
   setValue,
 }: ReportProps) {
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
+
+  // useEffect(() => {
+  //   setHydrated(true);
+  // }, []);
+  // if (!hydrated) return null;
+
   useEffect(() => {
-    setHydrated(true);
-  }, []);
-  if (!hydrated) return null;
+    if (uploadFiles) {
+      const imageUrl = URL.createObjectURL(uploadFiles);
+      setPreviewImageUrl(imageUrl);
+      return () => {
+        URL.revokeObjectURL(imageUrl);
+      };
+    } else {
+      setPreviewImageUrl(null);
+    }
+  }, [uploadFiles]);
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
@@ -45,30 +59,24 @@ export default function Form({
   function handleDateChange(selectedDate: DateRangeType) {
     setValue((prev) => ({
       ...prev,
-      date: selectedDate,
+      startDate: selectedDate.startDate,
+      endDate: selectedDate.endDate,
     }));
     console.log(selectedDate);
   }
-  function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
-    if (event.target && event.target.files && event.target.files[0]) {
-      const reader = new FileReader();
-
-      reader.onload = (event) => {
-        setValue((prev) => ({
-          ...prev,
-          image: event.target?.result as string,
-        }));
-      };
-      reader.readAsDataURL(event.target.files[0]);
-      console.log(reader);
+  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      setValue((prev) => ({ ...prev, uploadFiles: file }));
     }
   }
   function handleImageReset() {
     setValue((prev) => ({
       ...prev,
-      image: '',
+      uploadFiles: null,
     }));
   }
+
   return (
     <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
       <div className="flex w-full flex-col md:w-2/3">
@@ -111,10 +119,10 @@ export default function Form({
         </div>
       </div>
       <div className="flex w-full justify-center md:w-1/2 ">
-        {image ? (
+        {uploadFiles ? (
           <>
             <Image
-              src={image}
+              src={previewImageUrl || ''}
               className="m-auto object-scale-down"
               alt="이미지"
               width={200}
@@ -128,17 +136,17 @@ export default function Form({
           </>
         ) : (
           <label
-            htmlFor="image"
+            htmlFor="uploadFiles"
             className=" text-md mt-3 flex w-full cursor-pointer items-center justify-center rounded-xl border-2 border-gray-200 bg-white p-3 font-medium text-gray-300 outline-none md:h-80 md:w-2/3"
           >
             Choose File
             <input
-              id="image"
-              name="image"
+              id="uploadFiles"
+              name="uploadFiles"
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={handleFileChange}
+              onChange={handleImageChange}
             />
           </label>
         )}

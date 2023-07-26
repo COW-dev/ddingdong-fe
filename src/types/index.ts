@@ -111,9 +111,10 @@ export type StudentInfo = {
   studentMajor: string;
 };
 
-export type Report = {
+export type NewReport = {
+  term: string;
+  uploadFiles: File | null;
   date: DateRangeType;
-  image: string;
   place: string;
   content: string;
   participants: StudentInfo[];
@@ -134,9 +135,13 @@ export type ReportDetail = {
   participants: StudentInfo[];
 };
 
-export type AllReport = {
-  id: number;
+export type MyReportList = {
+  name: string;
   term: string;
+};
+
+export type CurrentReport = {
+  currentTerm: string;
 };
 
 export const termList = [
