@@ -1,53 +1,33 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import { useNewClub } from '@/hooks/api/club/useNewClub';
+import { StudentInfo } from '@/types';
 import { MODAL_TYPE, ModalProp } from '..';
+type ParticipantsProps = {
+  index: number;
+  participant: StudentInfo;
+};
+export default function Participants({
+  index,
+  participant,
+}: ParticipantsProps) {
+  // useEffect(() => {
+  //   if (clubData) setClubData(clubData);
+  // }, [clubData]);
 
-export default function Participants({ data, setModal }: ModalProp) {
-  const mutation = useNewClub();
-  const [cookies] = useCookies(['token']);
-  const [clubData, setClubData] = useState({
-    clubName: '',
-    category: '',
-    tag: '',
-    leaderName: '',
-    userId: '',
-    password: '',
-  });
-  const { clubName, category, tag, leaderName, userId, password } = clubData;
-
-  useEffect(() => {
-    if (clubData) setClubData(clubData);
-  }, [clubData]);
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setClubData((prev) => ({
-      ...prev,
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const updatedParticipant = {
+      ...participant,
       [event.target.name]: event.target.value,
-    }));
-  }
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // mutation.mutate({ ...clubData, token: cookies.token });
-    handleReset();
-    setModal(MODAL_TYPE.null);
-  }
-
-  function handleReset() {
-    setClubData({
-      clubName: '',
-      category: '',
-      tag: '',
-      leaderName: '',
-      userId: '',
-      password: '',
-    });
-  }
+    };
+  };
+  // function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault();
+  //   // mutation.mutate({ ...clubData, token: cookies.token });
+  //   setModal(MODAL_TYPE.null);
+  // }
 
   return (
     <>
-      <form className="w-full" onSubmit={handleSubmit}>
+      <div className="w-full">
         <div className="grid grid-cols-3  rounded-xl text-gray-500">
           <label className="inline-block px-4 pb-2 font-semibold">이름</label>
           <label className="inline-block px-4 pb-2 font-semibold">학번</label>
@@ -55,26 +35,78 @@ export default function Participants({ data, setModal }: ModalProp) {
         </div>
         <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
           <input
-            name="clubName"
+            name="studentName"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentName}
+            className="w-full bg-gray-50 px-4 outline-none"
+            onChange={handleChange}
+          />
+          <input
+            name="studentId"
+            type="text"
+            spellCheck={false}
+            value={participant?.studentId}
+            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
+            onChange={handleChange}
+          />
+          <input
+            name="studentMajor"
+            type="text"
+            spellCheck={false}
+            value={participant?.studentMajor}
+            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
+          <input
+            name="studentName"
+            type="text"
+            spellCheck={false}
+            value={participant?.studentName}
             className="w-full bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
           <input
-            name="clubName"
+            name="studentId"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentId}
             className="w-full border-l-2 bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
           <input
-            name="clubName"
+            name="studentMajor"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentMajor}
+            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+        <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
+          <input
+            name="studentName"
+            type="text"
+            spellCheck={false}
+            value={participant?.studentName}
+            className="w-full bg-gray-50 px-4 outline-none"
+            onChange={(e) => handleChange(e)}
+          />
+          <input
+            name="studentId"
+            type="text"
+            spellCheck={false}
+            value={participant?.studentId}
+            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
+            onChange={(e) => handleChange(e)}
+          />
+          <input
+            name="studentMajor"
+            type="text"
+            spellCheck={false}
+            value={participant?.studentMajor}
             className="w-full border-l-2 bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
@@ -82,52 +114,26 @@ export default function Participants({ data, setModal }: ModalProp) {
 
         <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
           <input
-            name="clubName"
+            name="studentName"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentName}
             className="w-full bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
           <input
-            name="clubName"
+            name="studentId"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentId}
             className="w-full border-l-2 bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
           <input
-            name="clubName"
+            name="studentMajor"
             type="text"
             spellCheck={false}
-            value={clubName}
-            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-        <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
-          <input
-            name="clubName"
-            type="text"
-            spellCheck={false}
-            value={clubName}
-            className="w-full bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e)}
-          />
-          <input
-            name="clubName"
-            type="text"
-            spellCheck={false}
-            value={clubName}
-            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e)}
-          />
-          <input
-            name="clubName"
-            type="text"
-            spellCheck={false}
-            value={clubName}
+            value={participant?.studentMajor}
             className="w-full border-l-2 bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
@@ -135,53 +141,26 @@ export default function Participants({ data, setModal }: ModalProp) {
 
         <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
           <input
-            name="clubName"
+            name="studentName"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentName}
             className="w-full bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
           <input
-            name="clubName"
+            name="studentId"
             type="text"
             spellCheck={false}
-            value={clubName}
+            value={participant?.studentId}
             className="w-full border-l-2 bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
           <input
-            name="clubName"
+            name="studentMajor"
             type="text"
             spellCheck={false}
-            value={clubName}
-            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e)}
-          />
-        </div>
-
-        <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
-          <input
-            name="clubName"
-            type="text"
-            spellCheck={false}
-            value={clubName}
-            className="w-full bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e)}
-          />
-          <input
-            name="clubName"
-            type="text"
-            spellCheck={false}
-            value={clubName}
-            className="w-full border-l-2 bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e)}
-          />
-          <input
-            name="clubName"
-            type="text"
-            spellCheck={false}
-            value={clubName}
+            value={participant?.studentMajor}
             className="w-full border-l-2 bg-gray-50 px-4 outline-none"
             onChange={(e) => handleChange(e)}
           />
@@ -193,7 +172,7 @@ export default function Participants({ data, setModal }: ModalProp) {
         >
           등록하기
         </button>
-      </form>
+      </div>
     </>
   );
 }

@@ -19,33 +19,7 @@ export default function Index() {
     place: '',
     uploadFiles: uploadFileOne,
     content: '',
-    participants: [
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-    ],
+    participants: [],
   });
   const [reportTwo, setReportTwo] = useState<NewReport>({
     term: '2',
@@ -53,33 +27,7 @@ export default function Index() {
     place: '',
     content: '',
     uploadFiles: uploadFileTwo,
-    participants: [
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-      {
-        studentName: '김세빈',
-        studentId: 60211904,
-        studentMajor: '융소',
-      },
-    ],
+    participants: [],
   });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

@@ -14,9 +14,9 @@ export default function NoticeList() {
             className="inline-block w-full pb-5 pt-3 transition-opacity hover:opacity-50 md:pt-3.5"
           >
             <div className="block text-base font-semibold sm:hidden">
-              {notice.title.length < 25
+              {notice.title && notice.title.length < 25
                 ? notice.title
-                : notice.title.substring(0, 25) + '..'}
+                : notice.title?.substring(0, 25) + '..'}
             </div>
             <div className="hidden text-xl font-semibold sm:block">
               {notice.title}
