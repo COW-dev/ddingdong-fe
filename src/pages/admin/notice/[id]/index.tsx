@@ -29,6 +29,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   const {
     data: { data },
   } = useNoticeInfo(noticeId);
+  console.log(data);
   const updateMutation = useUpdateNotice();
   const deleteMutation = useDeleteNotice();
 
@@ -138,7 +139,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         />
       ) : (
         <div className="py-8 text-base font-medium md:py-10 md:text-lg">
-          {noticeData.content.split('\n').map((line, idx) => (
+          {noticeData.content?.split('\n').map((line, idx) => (
             <div key={idx}>
               <p>{line}</p>
               <br />

@@ -103,9 +103,9 @@ export default function Index() {
                 className="inline-block w-full pb-4 pt-3 transition-opacity hover:opacity-50 md:pb-4.5 md:pt-3.5"
               >
                 <div className="block text-base font-semibold sm:hidden">
-                  {notice.title.length < 21
-                    ? notice.title
-                    : notice.title.substring(0, 21) + '..'}
+                  {notice.title?.length < 21
+                    ? notice?.title
+                    : notice.title?.substring(0, 21) + '..'}
                 </div>
                 <div className="hidden text-lg font-semibold sm:block">
                   {notice.title}

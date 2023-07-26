@@ -12,7 +12,11 @@ export default function Index() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    return mutation.mutate({ title, content, token: cookies.token });
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('content', content);
+    formData.append('token', cookies.token);
+    return mutation.mutate(formData);
   }
 
   return (
