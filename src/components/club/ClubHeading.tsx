@@ -86,8 +86,8 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           <div className="w-full">
             <span className="inline-block w-20 text-gray-500">모집기간</span>
             <span>
-              {recruitPeriod.startDate?.toString()} ~{' '}
-              {recruitPeriod.endDate?.toString()}
+              {recruitPeriod?.startDate?.toString()} ~{' '}
+              {recruitPeriod?.endDate?.toString()}
             </span>
           </div>
         </div>
