@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import Select from '@/components/common/Select';
+import Select from '@/hooks/common/Select';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { Report, termList } from '@/types';

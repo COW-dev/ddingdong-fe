@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Banner } from '@/components/home/Banner';
+import { Banner } from '@/components/common/Banner';
 // eslint-disable-next-line import/named
 // eslint-disable-next-line import/named
 import {

@@ -19,7 +19,7 @@ export default function Banner({ data }: BannerTypeProps) {
       />
       <div className="mx-4 mb-4 text-center md:mb-0 md:w-[45%] md:text-left">
         <p className="my-0.5 text-2xl font-bold md:text-4xl">{title}</p>
-        <p className="px-10 text-base font-semibold leading-tight  md:px-0 md:text-xl">
+        <p className="px-10 text-base font-semibold leading-tight opacity-70 md:px-0 md:text-xl">
           {subTitle}
         </p>
       </div>

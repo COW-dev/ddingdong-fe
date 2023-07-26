@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import toast, { Toaster } from 'react-hot-toast';
 import Create from '@/assets/create.svg';
 import Minimenu from '@/assets/minimenu.svg';
+import Banner from '@/components/common/Banner';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
-import Banner from '@/components/home/Banner';
 import { MODAL_TYPE } from '@/components/modal';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 
@@ -29,18 +30,16 @@ export type BannerTypeProps = {
 
 export const init: BannerType = {
   id: 0,
-  colorCode: '#c4b5fd',
-  title: '',
-  subTitle: '',
+  title: '띵동이 탄생했어요!',
+  subTitle: '명지대학교의 모든 동아리를 띵동에서 확인하세요!',
+  colorCode: 'indigo',
   imgUrl:
-    'https://.ddingdong-file.s3.ap-northeast-2.amazonaws.com/banner-image/504881c5-4acd-45fe-a947-0c7e7aa1bc02.png',
+    'https://.ddingdong-file.s3.ap-northeast-2.amazonaws.com/banner-image/241a5dd4-feab-4e45-b2b0-82bcdd1d8c3a.png',
 };
 
 export default function Index() {
   const { data: bannerData } = useAllBanners();
-  const [banners, setBanners] = useState<BannerType[] | undefined>(
-    bannerData?.data,
-  );
+  const [banners, setBanners] = useState<BannerType[]>(bannerData?.data);
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
@@ -90,7 +89,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {banners?.map((data, index) => (
+      {[...banners]?.reverse().map((data, index) => (
         <div key={`banner-${index}`} className="m-3">
           <div className="group relative">
             <div className="editNum absolute right-5 inline-block w-12 p-2 font-semibold">
@@ -116,7 +115,13 @@ export default function Index() {
                   </div>
                   <div
                     className="block rounded-lg px-4 py-2 text-sm text-red-500 opacity-90 hover:bg-gray-50 hover:font-semibold hover:text-red-700"
-                    onClick={() => setModal(MODAL_TYPE.deleteBanner)}
+                    onClick={() => {
+                      if (banners.length === 1) {
+                        setBanner(init);
+                        return toast.error('배너는 한개 이상 존재해야해요.');
+                      }
+                      setModal(MODAL_TYPE.deleteBanner);
+                    }}
                   >
                     삭제
                   </div>
@@ -134,6 +139,15 @@ export default function Index() {
           </div>
         </div>
       ))}
+      <Toaster
+        toastOptions={{
+          style: {
+            fontWeight: 600,
+            padding: '0.75rem 1rem',
+            marginTop: '0.5rem',
+          },
+        }}
+      />
     </div>
   );
 }

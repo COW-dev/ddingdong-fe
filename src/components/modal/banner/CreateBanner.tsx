@@ -31,6 +31,7 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
       [event.target.name]: event.target.value,
     }));
   }
+
   function handleFormData() {
     formData.append('title', title);
     formData.append('subTitle', subTitle);
@@ -67,6 +68,7 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
       imgUrl: '',
     });
   }
+
   return (
     <>
       <form className="w-full" onSubmit={handleSubmit}>

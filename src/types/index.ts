@@ -22,7 +22,20 @@ export type NewClub = {
   leaderName: string;
   userId: string;
   password: string;
+  token?: string;
+};
+
+export type NewBanner = {
   token: string;
+  formData: FormData;
+};
+
+export type BannerType = {
+  id?: string;
+  title: string;
+  subTitle: string;
+  colorCode: string;
+  imgUrl: string;
 };
 
 export type DeptCaptionColor = {
@@ -51,6 +64,10 @@ export type DeleteNotice = {
 };
 export type DeleteClub = {
   clubId: number;
+  token: string;
+};
+export type DeleteBanner = {
+  bannerId: number | string;
   token: string;
 };
 export type NoticeDetail = {
