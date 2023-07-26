@@ -1,16 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
-import { getAllReports } from '@/apis';
-import { AllReport } from '@/types';
+import { getMyReportLists } from '@/apis';
+import { MyReportList } from '@/types';
 
 export function useAllReports(token: string) {
   return useQuery<
     unknown,
     AxiosError,
-    AxiosResponse<AllReport[], unknown>,
+    AxiosResponse<MyReportList[], unknown>,
     [string]
   >({
     queryKey: ['my/activity-reports'],
-    queryFn: () => getAllReports(token),
+    queryFn: () => getMyReportLists(token),
   });
 }

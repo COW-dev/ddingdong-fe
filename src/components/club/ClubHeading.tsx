@@ -1,3 +1,5 @@
+import Image from 'next/image';
+import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import type { ClubDetail, DeptCaptionColor } from '@/types';
 
@@ -31,18 +33,31 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   return (
     <>
       <div className="flex flex-col">
-        <Heading>{name}</Heading>
-        <div className="flex items-center md:mt-0.5">
-          <div
-            className={`rounded-lg text-base font-semibold md:text-lg ${deptCaptionColor[category]}`}
-          >
-            {category}
+        <div className="flex flex-row items-end">
+          <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
+            <Image
+              src={Admin}
+              width={80}
+              height={80}
+              alt="admin"
+              className="opacity-50"
+            />
           </div>
-          <div className="px-1.5 text-base font-medium text-gray-300 md:text-lg">
-            |
-          </div>
-          <div className="rounded-lg text-base font-semibold text-gray-500 md:text-lg">
-            {tag}
+          <div className="ml-3">
+            <Heading>{name}</Heading>
+            <div className="flex items-center md:mt-0.5">
+              <div
+                className={`rounded-lg text-base font-semibold md:text-lg ${deptCaptionColor[category]}`}
+              >
+                {category}
+              </div>
+              <div className="px-1.5 text-base font-medium text-gray-300 md:text-lg">
+                |
+              </div>
+              <div className="rounded-lg text-base font-semibold text-gray-500 md:text-lg">
+                {tag}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -55,7 +70,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
             </div>
             <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">연락처</span>
-              <span>{phoneNumber.number}</span>
+              <span>{phoneNumber}</span>
             </div>
           </div>
           <div className="flex w-full flex-col md:flex-row">
@@ -70,7 +85,10 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
           <div className="w-full">
             <span className="inline-block w-20 text-gray-500">모집기간</span>
-            <span>{recruitPeriod}</span>
+            <span>
+              {recruitPeriod.startDate?.toString()} ~{' '}
+              {recruitPeriod.endDate?.toString()}
+            </span>
           </div>
         </div>
         <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">

@@ -1,38 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import { useAllReports } from '@/hooks/api/club/useAllReports';
-import { AllReport } from '@/types';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
+import { MyReportList } from '@/types';
 
-export const reports = [
-  {
-    name: 'cow',
-    term: '1',
-  },
-  {
-    name: 'cow',
-    term: '2',
-  },
-  {
-    name: 'cow',
-    term: '4',
-  },
-];
+// export const reports = [
+//   {
+//     name: 'cow',
+//     term: '1',
+//   },
+//   {
+//     name: 'cow',
+//     term: '2',
+//   },
+//   {
+//     name: 'cow',
+//     term: '4',
+//   },
+// ];
 
 export default function ReportList() {
   const [club, setClub] = useState('cow');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
-  const currentTerm = 5;
-  const [cookies] = useCookies(['token']);
-  const [allReports, setAllReport] = useState<Array<AllReport>>([]);
-  const { data } = useAllReports(cookies.token);
+  const [{ token }] = useCookies(['token']);
+  const currentTerm = 2;
 
-  const submitTerms = reports
+  const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
+  const { data } = useAllReports(token);
+
+  useEffect(() => setMyReportList(data?.data), [data?.data]);
+
+  console.log(currentTerm);
+  const submitTerms = data?.data
     .filter((item) => item.name === club)
     .map((item) => item.term);
 
-  const isReports = reports
-    .filter((item) => Number(item.term) <= currentTerm)
+  const isReports = data?.data
+    .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => item.term);
 
   return (
@@ -44,12 +49,13 @@ export default function ReportList() {
               <div
                 key={item}
                 className={`mb-3 ${
-                  Number(item) > currentTerm && !submitTerms.includes(item)
+                  Number(item) > Number(currentTerm) &&
+                  !submitTerms?.includes(item)
                     ? 'pointer-events-none cursor-not-allowed text-gray-200'
                     : ''
                 }`}
               >
-                {isReports.includes(item) ? (
+                {isReports?.includes(item) ? (
                   <Link href={`/report/${item}`}>
                     <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                       <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
@@ -69,8 +75,8 @@ export default function ReportList() {
                     href="/report/new"
                     data-item={item}
                     className={`${
-                      Number(item) === currentTerm &&
-                      !submitTerms.includes(item)
+                      Number(item) === Number(currentTerm) &&
+                      !submitTerms?.includes(item)
                         ? 'cursor-pointer'
                         : 'pointer-events-none cursor-not-allowed'
                     }`}
@@ -81,8 +87,8 @@ export default function ReportList() {
                           {item}회차
                         </span>
                         <div className="flex items-center">
-                          {Number(item) >= currentTerm &&
-                          !submitTerms.includes(item) ? (
+                          {Number(item) >= Number(currentTerm) &&
+                          !submitTerms?.includes(item) ? (
                             <div className="mx-1 rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500">
                               제출하기
                             </div>
