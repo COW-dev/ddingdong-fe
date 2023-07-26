@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { createNotice } from '@/apis';
-import { NewNotice } from '@/types';
+import { NewNotice } from '@/types/notice';
 
 export function useNewNotice(): UseMutationResult<
   unknown,

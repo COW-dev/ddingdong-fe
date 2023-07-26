@@ -7,7 +7,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { deleteNotice } from '@/apis';
-import { DeleteNotice } from '@/types';
+import { DeleteNotice } from '@/types/notice';
 
 export function useDeleteNotice(): UseMutationResult<
   unknown,

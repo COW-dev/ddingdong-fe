@@ -5,7 +5,7 @@ import New from '@/assets/new.svg';
 import switchImg from '@/assets/switch.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import { dummy } from '@/pages/admin/report/data';
-import { AdminClub } from '@/types';
+import { AdminClub } from '@/types/club';
 
 const REPORT_TYPE = {
   TERM: '주차별',

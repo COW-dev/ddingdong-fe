@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { deleteClub } from '@/apis';
-import { DeleteClub } from '@/types';
+import { DeleteClub } from '@/types/club';
 
 export function useDeleteClub(): UseMutationResult<
   unknown,

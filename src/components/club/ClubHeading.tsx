@@ -1,17 +1,8 @@
 import Image from 'next/image';
 import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
-import type { ClubDetail, DeptCaptionColor } from '@/types';
-
-const deptCaptionColor: DeptCaptionColor = {
-  봉사: 'text-pink-500',
-  사회연구: 'text-orange-500',
-  연행예술: 'text-yellow-500',
-  전시창작: 'text-emerald-500',
-  종교: 'text-cyan-500',
-  체육: 'text-blue-500',
-  학술: 'text-purple-500',
-};
+import { deptCaptionColor } from '@/constants/color';
+import { ClubDetail } from '@/types/club';
 
 type ClubHeadingProps = {
   info: ClubDetail;

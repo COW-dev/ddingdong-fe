@@ -1,6 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
+import Select from '@/hooks/common/Select';
 import { MODAL_TYPE, ModalProp } from '..';
 
 export default function CreateClub({ setModal }: ModalProp) {
@@ -80,13 +82,10 @@ export default function CreateClub({ setModal }: ModalProp) {
             <label className="inline-block w-20 font-semibold text-gray-500">
               카테고리
             </label>
-            <input
-              name="category"
-              type="text"
-              spellCheck={false}
-              className="w-[90%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5"
-              value={category}
-              onChange={(e) => handleChange(e)}
+            <Select
+              name={'category'}
+              setData={setClubData}
+              list={CatogoryColor}
             />
           </div>
           <div className="mb-2 w-full">

@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from 'next/image';
 import Place from '@/assets/place.svg';
-import { StudentInfo } from '@/types';
+import { StudentInfo } from '@/types/report';
 type ReportDetailProps = {
   reportId: number;
   content: string;

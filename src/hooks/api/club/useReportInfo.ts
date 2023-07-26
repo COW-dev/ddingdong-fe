@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getReportInfo } from '@/apis';
-import { ReportDetail } from '@/types';
+import { ReportDetail } from '@/types/report';
 
 const initialData = {
   id: '',

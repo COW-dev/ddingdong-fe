@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 import { createClub } from '@/apis';
-import { NewClub } from '@/types';
+import { NewClub } from '@/types/club';
 
 export function useNewClub(): UseMutationResult<unknown, AxiosError, NewClub> {
   const queryClient = useQueryClient();

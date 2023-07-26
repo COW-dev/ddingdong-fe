@@ -2,6 +2,7 @@ import Image from 'next/image';
 import CancleImg from '@/assets/cancle.svg';
 import { BannerType } from '@/pages/admin/banner';
 import { AdminClub, StudentInfo } from '@/types';
+
 import ModalPortal from './ModalPortal';
 import { MODAL_TYPE, ModalType } from '../modal';
 
@@ -24,10 +25,10 @@ export default function Modal({ modal, data, setModal }: ModalProps) {
         onClick={() => setModal(MODAL_TYPE.null)}
       >
         <div
-          className="z-55 dark:bg- no-scrollbar relative max-h-[80%] w-full max-w-lg overflow-y-scroll rounded-lg bg-white shadow"
+          className="z-55 dark:bg- relative max-h-[80%] w-full max-w-lg  overflow-y-scroll  overscroll-y-contain rounded-lg  bg-white shadow md:overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center justify-between rounded-t border-b p-5 ">
+          <div className="flex items-center justify-between rounded-t  border-b p-5 ">
             <h3 className="text-xl font-bold  text-gray-400 ">
               {modal?.title}
             </h3>
@@ -40,7 +41,7 @@ export default function Modal({ modal, data, setModal }: ModalProps) {
               <Image src={CancleImg} alt="cancle" />
             </button>
           </div>
-          <div className="space-y-6 p-6">
+          <div className="space-y-6 p-6 ">
             <Element data={data} setModal={setModal} />
           </div>
         </div>

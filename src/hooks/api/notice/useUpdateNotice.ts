@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateNotice } from '@/apis';
-import { UpdateNotice } from '@/types';
+import { UpdateNotice } from '@/types/notice';
 
 export function useUpdateNotice(): UseMutationResult<
   unknown,

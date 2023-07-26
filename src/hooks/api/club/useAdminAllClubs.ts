@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getAdminAllClubs } from '@/apis';
-import { AdminClub } from '@/types';
+import { AdminClub } from '@/types/club';
 
 export function useAdminAllClubs(token: string) {
   return useQuery<

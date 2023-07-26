@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['avatars.githubusercontent.com'],
+    domains: ['ddingdong-file.s3.ap-northeast-2.amazonaws.com'],
   },
   reactStrictMode: true,
   async rewrites() {
