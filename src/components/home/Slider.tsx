@@ -1,4 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
+import LeftArrow from '@/assets/leftArrow.svg';
+import RightArrow from '@/assets/rightArrow.svg';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import Banner from '../common/Banner';
 
@@ -21,8 +24,7 @@ export default function Index() {
   };
 
   useEffect(() => {
-    // Set up automatic scrolling to the right
-    const autoScroll = setInterval(moveNext, 5000); // Adjust the interval as needed (3000ms = 3 seconds)
+    const autoScroll = setInterval(moveNext, 5000);
 
     return () => {
       // Clean up the interval on component unmount
@@ -44,61 +46,41 @@ export default function Index() {
   }, [bannerData]);
 
   return (
-    <div className="carousel mx-auto my-12">
-      <div className="relative overflow-hidden">
-        <div className="top left absolute flex h-full w-full justify-between">
-          <button
+    <div className="carousel relative my-2 overflow-hidden">
+      <div className="top left absolute flex h-full w-full justify-between">
+        <div className="flex h-full flex-col items-center justify-center">
+          <Image
+            src={LeftArrow}
+            width={50}
+            height={50}
+            alt="leftButton"
             onClick={movePrev}
-            className="z-10 m-0 h-full w-10 p-0 text-center text-white opacity-75 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="-ml-5 h-12 w-20"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
+            className="z-10 mx-2 w-10  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+          />
+        </div>
+        <div className="flex h-full flex-col items-center  justify-center">
+          <Image
+            src={RightArrow}
+            width={50}
+            height={50}
+            alt="rightButton"
             onClick={moveNext}
-            className="z-10 m-0 h-full w-10 p-0 text-center text-white opacity-75 transition-all duration-300 ease-in-out  hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+            className="z-10 mx-2 w-10  items-end p-0 text-center text-white opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+          />
+        </div>
+      </div>
+      <div
+        ref={carousel}
+        className="carousel-container relative z-0 flex w-full touch-pan-x snap-x snap-mandatory gap-1 overflow-hidden scroll-smooth"
+      >
+        {bannerData?.data.map((resource, index) => (
+          <div
+            key={index}
+            className="carousel-item relative min-w-full snap-start"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="-ml-5 h-12 w-20"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
-        <div
-          ref={carousel}
-          className="carousel-container relative z-0 flex w-full touch-pan-x snap-x snap-mandatory gap-1 overflow-hidden scroll-smooth"
-        >
-          {bannerData?.data.map((resource, index) => (
-            <div
-              key={index}
-              className="carousel-item relative min-w-[100vw] snap-start"
-            >
-              <Banner data={resource} />
-            </div>
-          ))}
-        </div>
+            <Banner data={resource} />
+          </div>
+        ))}
       </div>
     </div>
   );

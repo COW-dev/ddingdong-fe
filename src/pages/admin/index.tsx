@@ -6,17 +6,12 @@ import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Slider from '@/components/home/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
-import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
   const [{ role, token }] = useCookies(['token', 'role']);
-
   const { data: noticedata } = useAllNotices();
-  // const { data: clubData } = useMyClub(token) ?? null;
-  const { data: bannerData } = useAllBanners();
-
   const [clubName, setClubName] = useState<string>('공;존');
 
   const notices = noticedata?.data;
@@ -39,10 +34,10 @@ export default function Index() {
       </Head>
       <AdminHeading clubName={clubName} />
 
-      <div className="relative mt-5">
+      <div className="relative mt-7">
         <Link
           href="/banner"
-          className={`absolute right-0 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
+          className={`absolute right-0 top-2 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
             role === ROLE_TYPE.ROLE_CLUB && 'invisible'
           }`}
         >
@@ -58,7 +53,7 @@ export default function Index() {
         <Slider />
       </div>
 
-      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
+      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-6 md:gap-8">
         <Link
           href={ROLE_TEXT[role].club.route}
           className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"

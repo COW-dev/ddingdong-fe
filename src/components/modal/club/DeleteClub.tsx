@@ -10,7 +10,6 @@ export default function DeleteClub({ data, setModal }: ModalProp) {
   const [value, setValue] = useState('');
 
   function handleClickDelete() {
-    if (!id) return;
     deleteMutation.mutate({
       clubId: id,
       token: cookies.token,
@@ -27,7 +26,7 @@ export default function DeleteClub({ data, setModal }: ModalProp) {
     <>
       <form
         className="m-auto flex w-[90%] flex-col"
-        onSubmit={(e) => handleClickDelete()}
+        onSubmit={handleClickDelete}
       >
         <div className="mb-3 w-full">
           <label className="inline-block font-semibold text-gray-500">

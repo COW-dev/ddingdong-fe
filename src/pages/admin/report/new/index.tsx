@@ -6,13 +6,14 @@ import Heading from '@/components/common/Heading';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import Select from '@/hooks/common/Select';
-import { NewReport } from '@/types';
+import { NewReport } from '@/types/report';
 
 export default function Index() {
-  const mutation = useNewReport();
+  const [temp, setTemp] = useState({});
   const [{ token }] = useCookies();
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
+  const mutation = useNewReport();
   const [reportOne, setReportOne] = useState<NewReport>({
     term: '2',
     date: { startDate: new Date(), endDate: new Date() },
@@ -34,19 +35,27 @@ export default function Index() {
     event.preventDefault();
     const formData = new FormData();
     const reportData = [reportOne, reportTwo];
-    formData.append('reportData', JSON.stringify(reportData));
-    if (reportOne.uploadFiles) {
-      formData.append('uploadFiles', reportOne.uploadFiles);
-    }
-    if (reportTwo.uploadFiles) {
-      formData.append('uploadFiles', reportTwo.uploadFiles);
-    }
+    // console.log(reportOne);
+    setTemp({
+      ...reportOne,
+      endDate: reportOne.date.endDate,
+      startDate: reportOne.date.startDate,
+    });
+    console.log(temp);
+    const blob = new Blob([JSON.stringify(reportData)], {
+      type: 'application/json',
+    });
+    formData.append('reportData', blob);
+    formData.append('uploadFiles', [
+      reportOne.uploadFiles,
+      reportTwo.uploadFiles,
+    ]);
+    // formData.append('token', token);
 
-    formData.append('token', token);
-    console.log(reportData);
-    console.log('uploadFileOne', reportOne.uploadFiles);
-    console.log('파일', reportTwo.uploadFiles);
-    return mutation.mutate(formData);
+    console.log(formData.get('reportData'));
+    console.log(formData.get('uploadFiles'));
+
+    // return mutation.mutate({ formData, token });
   }
   return (
     <>

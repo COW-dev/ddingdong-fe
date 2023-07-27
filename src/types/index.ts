@@ -16,9 +16,8 @@ export type AdminClub = {
   score?: number;
 };
 
-
 export type modalPropType = {
-  id?: number | boolean;
+  id: number | boolean;
   name?: string;
   score?: number;
   color: string;
@@ -84,6 +83,5 @@ export const termList = [
   '6회차',
   '7회차',
 ];
-
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
