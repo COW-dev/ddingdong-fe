@@ -5,7 +5,7 @@ import ImageInput from '@/assets/imageInput.svg';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
 import Select from '@/hooks/common/Select';
-import { BannerType } from '@/types';
+import { BannerType, NewBannerType } from '@/types/banner';
 import { MODAL_TYPE, ModalProp } from '..';
 
 export default function CreateBanner({ data, setModal }: ModalProp) {
@@ -13,13 +13,12 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
   const formData = new FormData();
   const [cookies] = useCookies(['token']);
   const [temp, setTemp] = useState<any>(null);
-  const [bannerData, setBannerData] = useState<BannerType>({
+  const [bannerData, setBannerData] = useState<NewBannerType>({
     title: '',
     subTitle: '',
     colorCode: BannerColor[1].color,
-    imgUrl: '',
   });
-  const { title, subTitle, colorCode, imgUrl } = bannerData;
+  const { title, subTitle, colorCode } = bannerData;
 
   useEffect(() => {
     if (bannerData) setBannerData(bannerData);
@@ -65,7 +64,6 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
       title: '',
       subTitle: '',
       colorCode: BannerColor[1].color,
-      imgUrl: '',
     });
   }
 
@@ -131,7 +129,6 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
                 className="hidden"
                 onChange={(e) => uploadImg(e)}
               />
-              <div>{imgUrl}</div>
             </label>
           </div>
         </div>

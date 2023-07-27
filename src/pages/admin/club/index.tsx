@@ -57,13 +57,13 @@ export default function Index() {
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubs
-            // .sort((a, b) => b.score - a.score)
+            .sort((a, b) => b.score - a.score)
             .map((club) => (
               <div key={club.id}>
                 <div
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
                   onClick={() => {
-                    // setClub(club);
+                    setClub(club);
                     setModal(MODAL_TYPE.modifyClub);
                   }}
                 >

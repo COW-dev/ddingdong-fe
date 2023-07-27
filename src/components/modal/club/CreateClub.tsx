@@ -77,9 +77,9 @@ export default function CreateClub({ setModal }: ModalProp) {
           />
         </div>
 
-        <div className="flex flex-row">
+        <div className="mr-3  flex flex-row">
           <div className="mb-2 w-full ">
-            <label className="inline-block w-20 font-semibold text-gray-500">
+            <label className="inline-block w-20  font-semibold text-gray-500">
               카테고리
             </label>
             <Select
@@ -88,7 +88,7 @@ export default function CreateClub({ setModal }: ModalProp) {
               list={CatogoryColor}
             />
           </div>
-          <div className="mb-2 w-full">
+          <div className="mb-2 ml-3 w-full">
             <label className="inline-block w-20 font-semibold text-gray-500">
               태그
             </label>

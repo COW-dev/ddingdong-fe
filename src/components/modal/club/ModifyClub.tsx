@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useUpdateClub } from '@/hooks/api/club/useUpdateClub';
-import { MODAL_TYPE, ModalProp } from '..';
+import { MODAL_TYPE } from '..';
 
-export default function ModifyClub({ data, setModal }: ModalProp) {
+export default function ModifyClub({ data, setModal }: any) {
   const { id, score } = data;
   const updateMutation = useUpdateClub();
   const [cookies] = useCookies(['token']);
   const [changedScore, setScore] = useState(score);
 
-  // function handleClickChange() {
-  //   updateMutation.mutate({ id, score: changedScore, token: cookies.token });
-  //   setModal(MODAL_TYPE.null);
-  // }
+  function handleClickChange() {
+    updateMutation.mutate({ id, score: changedScore, token: cookies.token });
+    setModal(MODAL_TYPE.null);
+  }
 
   function handleClickDelete() {
     setModal(MODAL_TYPE.null);
-    setModal(MODAL_TYPE.delete);
+    setModal(MODAL_TYPE.deleteClub);
   }
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ModifyClub({ data, setModal }: ModalProp) {
     <>
       <form
         className="mx-auto flex w-[90%] flex-col"
-        // onSubmit={handleClickChange}
+        onSubmit={handleClickChange}
       >
         <div className="mb-3 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">

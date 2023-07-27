@@ -2,12 +2,12 @@ import { useCookies } from 'react-cookie';
 import { useDeleteBanner } from '@/hooks/api/banner/useDeleteBanner';
 import { MODAL_TYPE, ModalProp } from '..';
 
-export default function DeleteBanner({ data, setModal }: ModalProp) {
+export default function DeleteBanner({ data, setModal }: any) {
   const { id } = data;
   const deleteMutation = useDeleteBanner();
   const [cookies] = useCookies(['token']);
 
-  function handleClickDelete(event: React.FormEvent<HTMLFormElement>) {
+  function handleClickDelete() {
     id &&
       deleteMutation.mutate({
         bannerId: id,
@@ -24,7 +24,7 @@ export default function DeleteBanner({ data, setModal }: ModalProp) {
         </label>
         <button
           className="mx-5 w-[40%] rounded-xl bg-red-400 py-4 font-bold text-white transition-colors hover:bg-red-500 sm:mt-5 sm:py-4 sm:text-lg "
-          onClick={(e) => handleClickDelete(e)}
+          onClick={handleClickDelete}
         >
           확인
         </button>
