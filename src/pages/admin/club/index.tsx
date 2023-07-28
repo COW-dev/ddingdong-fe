@@ -92,15 +92,6 @@ export default function Index() {
         </ul>
       </div>
       <Modal modal={modal} data={club} setModal={setModal} />
-      <Toaster
-        toastOptions={{
-          style: {
-            fontWeight: 600,
-            padding: '0.75rem 1rem',
-            marginTop: '0.5rem',
-          },
-        }}
-      />
     </>
   );
 }

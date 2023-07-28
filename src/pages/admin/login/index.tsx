@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AxiosError, AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import { login } from '@/apis';
 import Input from '@/components/admin-login/Input';
 import Heading from '@/components/common/Heading';
@@ -33,7 +34,7 @@ export default function Index() {
         router.push('/my-club');
       })
       .catch((error: AxiosError) => {
-        console.log(error.response?.data);
+        toast.error(error.response?.data?.message); //모달로 변경
       });
   }
 

@@ -12,7 +12,6 @@ import {
 import {
   Notice,
   NoticeDetail,
-  NewNotice,
   UpdateNotice,
   DeleteNotice,
 } from '@/types/notice';

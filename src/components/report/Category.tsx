@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import New from '@/assets/new.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import { dummy } from '@/pages/admin/report/data';
@@ -136,15 +136,6 @@ const Category = () => {
         </div>
         {active === REPORT_TYPE.CLUB ? renderClubList() : renderTermList()}
       </div>
-      <Toaster
-        toastOptions={{
-          style: {
-            fontWeight: 600,
-            padding: '0.75rem 1rem',
-            marginTop: '0.5rem',
-          },
-        }}
-      />
     </>
   );
 };

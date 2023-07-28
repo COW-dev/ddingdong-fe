@@ -5,7 +5,7 @@ import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/Detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { ReportDetail } from '@/types';
+import { ReportDetail } from '@/types/report';
 import { dummy } from './data';
 
 type ReportDetailProps = {

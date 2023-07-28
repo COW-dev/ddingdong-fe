@@ -154,15 +154,6 @@ export default function Index() {
           />
         </div>
       </form>
-      <Toaster
-        toastOptions={{
-          style: {
-            fontWeight: 600,
-            padding: '0.75rem 1rem',
-            marginTop: '0.5rem',
-          },
-        }}
-      />
     </>
   );
 }

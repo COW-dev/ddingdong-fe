@@ -14,6 +14,7 @@ export default function Index({ clubId }: ClubDetailProps) {
   if (isError) {
     <div>error</div>;
   }
+
   if (isSuccess) {
     const clubInfo = data.data;
     const { name, introduction, activity, ideal, formUrl } = clubInfo;
