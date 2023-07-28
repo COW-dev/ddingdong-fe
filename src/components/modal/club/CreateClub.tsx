@@ -4,23 +4,19 @@ import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
 import Select from '@/hooks/common/Select';
 import { MODAL_TYPE, ModalProp } from '..';
-
+const init = {
+  clubName: '',
+  category: '',
+  tag: '',
+  leaderName: '',
+  userId: '',
+  password: '',
+};
 export default function CreateClub({ setModal }: ModalProp) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
-  const [clubData, setClubData] = useState({
-    clubName: '',
-    category: '',
-    tag: '',
-    leaderName: '',
-    userId: 0,
-    password: '',
-  });
-  const { clubName, category, tag, leaderName, userId, password } = clubData;
-
-  useEffect(() => {
-    if (clubData) setClubData(clubData);
-  }, [clubData]);
+  const [clubData, setClubData] = useState(init);
+  const { clubName, tag, leaderName, userId, password } = clubData;
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setClubData((prev) => ({
@@ -37,15 +33,12 @@ export default function CreateClub({ setModal }: ModalProp) {
   }
 
   function handleReset() {
-    setClubData({
-      clubName: '',
-      category: '',
-      tag: '',
-      leaderName: '',
-      userId: 0,
-      password: '',
-    });
+    setClubData(init);
   }
+
+  useEffect(() => {
+    if (clubData) setClubData(clubData);
+  }, [clubData]);
 
   return (
     <>
