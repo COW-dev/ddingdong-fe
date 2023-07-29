@@ -85,3 +85,5 @@ export const termList = [
 ];
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
+
+export type ModalType = { title: string; content: React.ReactNode };

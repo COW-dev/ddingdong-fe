@@ -3,7 +3,6 @@ import { useCookies } from 'react-cookie';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
 import Select from '@/hooks/common/Select';
-import { MODAL_TYPE, ModalProp } from '..';
 const init = {
   clubName: '',
   category: '',
@@ -12,7 +11,10 @@ const init = {
   userId: '',
   password: '',
 };
-export default function CreateClub({ setModal }: ModalProp) {
+type Prop = {
+  closeModal: () => void;
+};
+export default function CreateClub({ closeModal }: Prop) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
   const [clubData, setClubData] = useState(init);
@@ -29,7 +31,7 @@ export default function CreateClub({ setModal }: ModalProp) {
     event.preventDefault();
     mutation.mutate({ ...clubData, token: cookies.token });
     handleReset();
-    setModal(MODAL_TYPE.null);
+    closeModal();
   }
 
   function handleReset() {

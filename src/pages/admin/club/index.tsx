@@ -2,17 +2,23 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import { Toaster } from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
 import Create from '@/assets/create.svg';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
-import { MODAL_TYPE } from '@/components/modal';
+import CreateClub from '@/components/modal/club/CreateClub';
+import ModifyClub from '@/components/modal/club/ModifyClub';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
+import useModal from '@/hooks/common/useModal';
+import { ModalType } from '@/types';
 import type { AdminClub } from '@/types/club';
 
 export default function Index() {
-  const [modal, setModal] = useState(MODAL_TYPE.null);
+  const { openModal, visible, closeModal, modalRef } = useModal();
+  const [modal, setModal] = useState<ModalType>({
+    title: '',
+    content: <></>,
+  });
   const [club, setClub] = useState({
     id: 0,
     name: '',
@@ -27,6 +33,11 @@ export default function Index() {
     setAdminClubs(data?.data ?? []);
   }, [data]);
 
+  function handleModal(data: ModalType) {
+    setModal(data);
+    openModal();
+  }
+
   return (
     <>
       <Head>
@@ -36,22 +47,25 @@ export default function Index() {
       <div className="flex flex-row items-end justify-between">
         <Heading>동아리 관리하기</Heading>
         <div
-          className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden "
-          onClick={() => setModal(MODAL_TYPE.createClub)}
+          onClick={() =>
+            handleModal({
+              title: '동아리 생성하기',
+              content: <CreateClub closeModal={closeModal} />,
+            })
+          }
         >
-          <Image
-            src={Create}
-            width={100}
-            height={100}
-            alt="create"
-            className="w-8"
-          />
-        </div>
-        <div
-          className={`-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base`}
-          onClick={() => setModal(MODAL_TYPE.createClub)}
-        >
-          동아리 생성하기
+          <div className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
+            <Image
+              src={Create}
+              width={100}
+              height={100}
+              alt="create"
+              className="w-8"
+            />
+          </div>
+          <div className="-mb-0.5 hidden rounded-xl bg-blue-100 px-4 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base">
+            동아리 생성하기
+          </div>
         </div>
       </div>
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
@@ -64,7 +78,18 @@ export default function Index() {
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
                   onClick={() => {
                     setClub(club);
-                    setModal(MODAL_TYPE.modifyClub);
+                    handleModal({
+                      title: '모달 수정하기',
+                      content: (
+                        <ModifyClub
+                          id={club.id}
+                          score={club.score}
+                          name={club.name}
+                          closeModal={closeModal}
+                          handleModal={handleModal}
+                        />
+                      ),
+                    });
                   }}
                 >
                   <div className=" flex h-full w-full justify-around p-5 md:p-6">
@@ -91,7 +116,14 @@ export default function Index() {
             ))}
         </ul>
       </div>
-      <Modal modal={modal} data={club} setModal={setModal} />
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={modal.title}
+        closeModal={closeModal}
+      >
+        {modal.content}
+      </Modal>
     </>
   );
 }

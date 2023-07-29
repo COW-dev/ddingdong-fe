@@ -21,16 +21,6 @@ type RoleText = {
   };
 };
 
-export const termList: string[] = [
-  '1회차',
-  '2회차',
-  '3회차',
-  '4회차',
-  '5회차',
-  '6회차',
-  '7회차',
-];
-
 export const ROLE_TEXT: RoleText = {
   [ROLE_TYPE.ROLE_ADMIN]: {
     club: {

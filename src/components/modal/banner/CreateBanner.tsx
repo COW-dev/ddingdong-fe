@@ -6,17 +6,16 @@ import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
 import Select from '@/hooks/common/Select';
 import { NewBannerType } from '@/types/banner';
-import { MODAL_TYPE, ModalProp } from '..';
 const init = {
   title: '',
   subTitle: '',
   colorCode: BannerColor[1].color,
 };
-export default function CreateBanner({ setModal }: ModalProp) {
+export default function CreateBanner() {
   const mutation = useNewBanner();
   const formData = new FormData();
   const [cookies] = useCookies(['token']);
-  const [temp, setTemp] = useState<any>(null);
+  const [temp, setTemp] = useState<any>();
   const [bannerData, setBannerData] = useState<NewBannerType>(init);
   const { title, subTitle, colorCode } = bannerData;
 
@@ -42,7 +41,6 @@ export default function CreateBanner({ setModal }: ModalProp) {
       token: cookies.token,
     });
     handleReset();
-    setModal(MODAL_TYPE.null);
   }
 
   function uploadImg(e: ChangeEvent<HTMLInputElement>) {

@@ -10,9 +10,9 @@ export type Club = {
 
 export type AdminClub = {
   id: number;
-  name?: string;
+  name: string;
   category: string;
-  score?: number;
+  score: number;
 };
 
 export type NewClub = {
