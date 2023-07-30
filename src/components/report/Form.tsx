@@ -13,8 +13,6 @@ import {
 } from 'react-tailwindcss-datepicker/dist/types';
 import { StudentInfo } from '@/types';
 import { NewReport } from '@/types/report';
-import Modal from '../common/Modal';
-import { MODAL_TYPE } from '../modal';
 
 type ReportProps = {
   date: DateRangeType;

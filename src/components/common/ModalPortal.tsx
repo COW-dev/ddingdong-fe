@@ -5,6 +5,10 @@ type ModalPortalProps = {
 };
 
 export default function ModalPortal({ children }: ModalPortalProps) {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
   const modalRoot = document.getElementById('modal-root') as HTMLElement;
   return ReactDom.createPortal(children, modalRoot);
 }
