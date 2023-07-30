@@ -7,31 +7,16 @@ import { NewBannerType } from '@/types/banner';
 import { NewClub } from '@/types/club';
 
 type SelectProps = {
-  name?: string;
+  name: string;
   setData:
     | Dispatch<SetStateAction<NewBannerType>>
-    | Dispatch<SetStateAction<NewClub>>
-    | Dispatch<SetStateAction<string>>;
-  list: ItemsType[] | string[];
+    | Dispatch<SetStateAction<NewClub>>;
+  list: ItemsType[];
 };
 
 export default function Select({ name, setData, list }: SelectProps) {
-  const init =
-    typeof list[0] === 'string' ? { title: list[0], color: 'black' } : list[0];
-  const [filterList, setFilterList] = useState<ItemsType[]>([init]);
-
-  useEffect(() => {
-    if (typeof list[0] === 'string') {
-      const temp = list.map((item) => ({
-        title: String(item),
-        color: 'black',
-      }));
-      setFilterList(temp);
-    }
-  }, [list]);
-
   const [show, setShow] = useState<boolean>(false);
-  const [value, setValue] = useState<ItemsType>(filterList[0]);
+  const [value, setValue] = useState<ItemsType>(list[0]);
 
   useEffect(() => {
     setShow(false);
@@ -63,14 +48,13 @@ export default function Select({ name, setData, list }: SelectProps) {
         role="menu"
       >
         <div className=" p-2">
-          {filterList?.map((item, index) => (
-            // eslint-disable-next-line react/jsx-key
+          {list?.map((item, index) => (
             <div
               key={`option-${index}`}
               className={`block rounded-lg px-4 py-2 text-sm hover:bg-gray-50  text-${item.color}-500`}
               onClick={(e) => {
                 setValue(item);
-                setData((prev) => ({
+                setData((prev: any) => ({
                   ...prev,
                   [name]: item.title,
                 }));

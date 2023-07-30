@@ -7,7 +7,7 @@ import Select from '@/hooks/common/useSelect';
 import { validator } from '@/utils/validator';
 const init = {
   clubName: '',
-  category: '',
+  category: CatogoryColor[0].title,
   tag: '',
   leaderName: '',
   userId: '',

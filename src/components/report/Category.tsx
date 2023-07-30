@@ -6,9 +6,8 @@ import LeftArrow from '@/assets/leftArrow.svg';
 
 import New from '@/assets/new.svg';
 import RightArrow from '@/assets/rightArrow.svg';
-import Searchumg from '@/assets/Search.svg';
+import SearchImg from '@/assets/Search.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
-import Select from '@/hooks/common/useSelect';
 import { dummy } from '@/pages/admin/report/data';
 import { AdminClub } from '@/types/club';
 
@@ -137,7 +136,7 @@ const Category = () => {
             <div className="flex text-sm font-normal">
               {club}
               <Image
-                src={Searchumg}
+                src={SearchImg}
                 width={15}
                 height={15}
                 alt="leftArrow"
