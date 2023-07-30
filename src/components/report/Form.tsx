@@ -158,7 +158,7 @@ export default function Form({
           )}
         </div>
       </div>
-      <Modal modal={modal} data={participants} setModal={setModal} />
+      {/* <Modal modal={modal} data={participants} setModal={setModal} /> */}
     </>
   );
 }
