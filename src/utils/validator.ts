@@ -12,3 +12,14 @@ interface Props {
 export function validator(props: Props) {
   return Boolean(props.value.match(type[props.type]));
 }
+
+export function isMissingData(data: { [x: string]: any }) {
+  console.log(data);
+  for (const key in data) {
+    // eslint-disable-next-line no-prototype-builtins
+    if (data.hasOwnProperty(key) && String(data[key]).trim() === '') {
+      return true;
+    }
+  }
+  return false;
+}

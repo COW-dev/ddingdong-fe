@@ -1,11 +1,11 @@
 import { useCookies } from 'react-cookie';
 import { useDeleteBanner } from '@/hooks/api/banner/useDeleteBanner';
 
-type Prop = {
+type Props = {
   id: number;
   closeModal: () => void;
 };
-export default function DeleteBanner({ id, closeModal }: Prop) {
+export default function DeleteBanner({ id, closeModal }: Props) {
   const deleteMutation = useDeleteBanner();
   const [cookies] = useCookies(['token']);
 

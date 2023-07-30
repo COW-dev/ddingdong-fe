@@ -37,6 +37,7 @@ export default function ClubInfoForm({
 }: ClubInfoFormProps) {
   const [hydrated, setHydrated] = useState(false);
   const [error, setError] = useState<boolean>(false);
+
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -55,7 +56,7 @@ export default function ClubInfoForm({
     }));
   }
 
-  function handleValidate(object: { type: string; value: string }) {
+  function handleValueValidate(object: { type: string; value: string }) {
     if (object.value && !validator(object)) {
       toast.error('형식에 맞춰 재입력해주세요.');
       setValue((prev) => ({
@@ -87,7 +88,7 @@ export default function ClubInfoForm({
         <div
           className="mb-2 w-full md:mb-3 md:w-[50%]"
           onBlur={() =>
-            handleValidate({ type: 'phoneNumber', value: phoneNumber })
+            handleValueValidate({ type: 'phoneNumber', value: phoneNumber })
           }
         >
           <label className="inline-block w-20 font-semibold text-gray-500">
@@ -110,7 +111,9 @@ export default function ClubInfoForm({
       <div className="flex flex-col md:flex-row">
         <div
           className="mb-2 w-full md:mb-3 md:w-[50%]"
-          onBlur={() => handleValidate({ type: 'location', value: location })}
+          onBlur={() =>
+            handleValueValidate({ type: 'location', value: location })
+          }
         >
           <label className="inline-block w-20 font-semibold text-gray-500">
             동아리방

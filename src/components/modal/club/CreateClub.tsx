@@ -4,7 +4,7 @@ import toast from 'react-hot-toast';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
 import Select from '@/hooks/common/useSelect';
-import { validator } from '@/utils/validator';
+import { isMissingData, validator } from '@/utils/validator';
 const init = {
   clubName: '',
   category: CatogoryColor[0].title,
@@ -33,13 +33,10 @@ export default function CreateClub({ closeModal }: Prop) {
   }
 
   function handleValidate(clubData: { [x: string]: string }) {
-    for (const key in clubData) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (clubData.hasOwnProperty(key) && clubData[key].trim() === '') {
-        return true;
-      }
-    }
-    return false || !validator({ type: 'password', value: password });
+    return (
+      isMissingData(clubData) ||
+      !validator({ type: 'password', value: password })
+    );
   }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {

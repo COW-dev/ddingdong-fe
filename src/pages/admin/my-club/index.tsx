@@ -2,18 +2,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { Toaster, toast } from 'react-hot-toast';
-import Datepicker from 'react-tailwindcss-datepicker';
-import {
-  DateRangeType,
-  DateValueType,
-} from 'react-tailwindcss-datepicker/dist/types';
+import { toast } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
+import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -58,18 +54,8 @@ export default function Index() {
     setClubData(data);
   }
 
-  function handleValidate(clubData: { [x: string]: any }) {
-    for (const key in clubData) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (clubData.hasOwnProperty(key) && String(clubData[key]).trim() === '') {
-        return true;
-      }
-    }
-    return false;
-  }
-
   function handleClickSubmit() {
-    if (handleValidate(clubData))
+    if (isMissingData(clubData))
       return toast.error('모든 항목을 입력해주세요.');
     setIsEditing(false);
     mutation.mutate({
@@ -79,7 +65,6 @@ export default function Index() {
       token,
     });
   }
-  console.log(clubData);
   return (
     <>
       <Head>
@@ -101,7 +86,7 @@ export default function Index() {
             </button>
             <button
               className={`ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600  ${
-                handleValidate(clubData) && `cursor-not-allowed  opacity-50`
+                isMissingData(clubData) && `cursor-not-allowed  opacity-50`
               }`}
               onClick={handleClickSubmit}
             >
