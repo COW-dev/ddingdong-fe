@@ -8,7 +8,10 @@ import { NewClub } from '@/types/club';
 
 type SelectProps = {
   name?: string;
-  setData: Dispatch<SetStateAction<NewBannerType | NewClub | string>>;
+  setData:
+    | Dispatch<SetStateAction<NewBannerType>>
+    | Dispatch<SetStateAction<NewClub>>
+    | Dispatch<SetStateAction<string>>;
   list: ItemsType[] | string[];
 };
 

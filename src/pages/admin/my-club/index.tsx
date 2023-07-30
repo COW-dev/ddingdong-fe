@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
@@ -58,7 +58,19 @@ export default function Index() {
     setClubData(data);
   }
 
+  function handleValidate(clubData: { [x: string]: any }) {
+    for (const key in clubData) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (clubData.hasOwnProperty(key) && String(clubData[key]).trim() === '') {
+        return true;
+      }
+    }
+    return false;
+  }
+
   function handleClickSubmit() {
+    if (handleValidate(clubData))
+      return toast.error('모든 항목을 입력해주세요.');
     setIsEditing(false);
     mutation.mutate({
       ...clubData,
@@ -88,7 +100,9 @@ export default function Index() {
               취소
             </button>
             <button
-              className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600"
+              className={`ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600  ${
+                handleValidate(clubData) && `cursor-not-allowed  opacity-50`
+              }`}
               onClick={handleClickSubmit}
             >
               확인

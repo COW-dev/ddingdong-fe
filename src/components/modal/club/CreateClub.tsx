@@ -1,8 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
 import Select from '@/hooks/common/useSelect';
+import { validator } from '@/utils/validator';
 const init = {
   clubName: '',
   category: '',
@@ -20,6 +22,26 @@ export default function CreateClub({ closeModal }: Prop) {
   const [clubData, setClubData] = useState(init);
   const { clubName, tag, leaderName, userId, password } = clubData;
 
+  function handlePasswordValidate(object: { type: string; value: string }) {
+    if (object.value && !validator(object)) {
+      toast.error('형식에 맞춰 재입력해주세요.');
+      setClubData((prev) => ({
+        ...prev,
+        [object.type]: '',
+      }));
+    }
+  }
+
+  function handleValidate(clubData: { [x: string]: string }) {
+    for (const key in clubData) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (clubData.hasOwnProperty(key) && clubData[key].trim() === '') {
+        return true;
+      }
+    }
+    return false || !validator({ type: 'password', value: password });
+  }
+
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setClubData((prev) => ({
       ...prev,
@@ -27,8 +49,7 @@ export default function CreateClub({ closeModal }: Prop) {
     }));
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  function handleSubmit() {
     mutation.mutate({ ...clubData, token: cookies.token });
     handleReset();
     closeModal();
@@ -110,13 +131,19 @@ export default function CreateClub({ closeModal }: Prop) {
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="mb-2 w-full ">
+        <div
+          className="mb-2 w-full "
+          onBlur={() =>
+            handlePasswordValidate({ type: 'password', value: password })
+          }
+        >
           <label className="inline-block w-20 font-semibold text-gray-500">
             비밀번호
           </label>
           <input
             name="password"
             type="password"
+            placeholder="영어/숫자 조합 8자리 이상"
             spellCheck={false}
             className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5"
             value={password}
@@ -125,7 +152,11 @@ export default function CreateClub({ closeModal }: Prop) {
         </div>
         <button
           type="submit"
-          className="w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg "
+          disabled={handleValidate(clubData)}
+          className={` w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors  hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg ${
+            handleValidate(clubData) &&
+            `cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200`
+          }`}
         >
           동아리 생성하기
         </button>
