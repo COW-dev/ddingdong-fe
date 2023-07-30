@@ -1,22 +1,38 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useUpdateClub } from '@/hooks/api/club/useUpdateClub';
-import { MODAL_TYPE } from '..';
+import { ModalType } from '@/types';
+import DeleteClub from './DeleteClub';
 
-export default function ModifyClub({ data, setModal }: any) {
-  const { id, score } = data;
+type Prop = {
+  id: number;
+  score: number;
+  name: string;
+  closeModal: () => void;
+  handleModal: ({ title, content }: ModalType) => void;
+};
+
+export default function ModifyClub({
+  id,
+  score,
+  name,
+  closeModal,
+  handleModal,
+}: Prop) {
   const updateMutation = useUpdateClub();
   const [cookies] = useCookies(['token']);
   const [changedScore, setScore] = useState(score);
 
   function handleClickChange() {
     updateMutation.mutate({ id, score: changedScore, token: cookies.token });
-    setModal(MODAL_TYPE.null);
+    closeModal();
   }
 
   function handleClickDelete() {
-    setModal(MODAL_TYPE.null);
-    setModal(MODAL_TYPE.deleteClub);
+    handleModal({
+      title: '동아리 삭제하기',
+      content: <DeleteClub id={id} name={name} closeModal={closeModal} />,
+    });
   }
 
   useEffect(() => {

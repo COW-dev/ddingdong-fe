@@ -73,7 +73,7 @@ export default function Index() {
         ref={carousel}
         className="carousel-container relative z-0 flex w-full touch-pan-x snap-x snap-mandatory gap-1 overflow-hidden scroll-smooth"
       >
-        {bannerData?.data.map((resource, index) => (
+        {bannerData?.data?.map((resource, index) => (
           <div
             key={index}
             className="carousel-item relative min-w-full snap-start"

@@ -19,7 +19,7 @@ export function useNewClub(): UseMutationResult<unknown, AxiosError, NewClub> {
     },
     onError(error) {
       console.log(error);
-      toast.error('동아리 생성을 실패했어요');
+      toast.error('동아리 생성에 실패하였어요.');
     },
   });
 }

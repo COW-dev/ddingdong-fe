@@ -1,6 +1,6 @@
 import { MODAL_TYPE, ModalProp } from '..';
 
-export default function CreateBanner({ data, setModal }: ModalProp) {
+export default function ModifyBanner({ setModal }: ModalProp) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setModal(MODAL_TYPE.null);

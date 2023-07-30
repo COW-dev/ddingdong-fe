@@ -12,28 +12,37 @@ export default function Index() {
   const [hydrated, setHydrated] = useState(false);
   const [{ role, token }] = useCookies(['token', 'role']);
   const { data: noticedata } = useAllNotices();
-  const [clubName, setClubName] = useState<string>('공;존');
+  const [infoElement, setInfoElement] = useState(<></>);
 
   const notices = noticedata?.data;
 
   useEffect(() => {
     setHydrated(true);
+    handleInfoElement();
   }, []);
 
-  // useEffect(() => {
-  //   if (role === ROLE_TYPE.ROLE_CLUB) setClubName(clubData?.data?.name);
-  // }, [clubData]);
-
   if (!hydrated) return null;
-
   if (!ROLE_TEXT[role]) return;
+
+  function handleInfoElement() {
+    if (token === ROLE_TYPE.ROLE_ADMIN) {
+      setInfoElement(
+        <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
+          <div className="md:mr-1.5">안녕하세요,</div>
+          <span className="text-blue-500">공;존</span>
+          <span className="ml-1 md:ml-1.5">님</span>
+        </div>,
+      );
+    } else {
+      setInfoElement(<AdminHeading />);
+    }
+  }
   return (
     <>
       <Head>
         <title>띵동 어드민</title>
       </Head>
-      <AdminHeading clubName={clubName} />
-
+      {infoElement}
       <div className="relative mt-7">
         <Link
           href="/banner"

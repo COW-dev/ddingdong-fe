@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { StudentInfo } from '@/types';
-import { MODAL_TYPE, ModalProp } from '..';
 type ParticipantsProps = {
   index: number;
   participant: StudentInfo;

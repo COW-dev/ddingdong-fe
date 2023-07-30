@@ -4,20 +4,19 @@ import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
-import Select from '@/hooks/common/Select';
-import { BannerType, NewBannerType } from '@/types/banner';
-import { MODAL_TYPE, ModalProp } from '..';
-
-export default function CreateBanner({ data, setModal }: ModalProp) {
+import Select from '@/hooks/common/useSelect';
+import { NewBannerType } from '@/types/banner';
+const init = {
+  title: '',
+  subTitle: '',
+  colorCode: BannerColor[1].color,
+};
+export default function CreateBanner() {
   const mutation = useNewBanner();
   const formData = new FormData();
   const [cookies] = useCookies(['token']);
-  const [temp, setTemp] = useState<any>(null);
-  const [bannerData, setBannerData] = useState<NewBannerType>({
-    title: '',
-    subTitle: '',
-    colorCode: BannerColor[1].color,
-  });
+  const [temp, setTemp] = useState<any>();
+  const [bannerData, setBannerData] = useState<NewBannerType>(init);
   const { title, subTitle, colorCode } = bannerData;
 
   useEffect(() => {
@@ -31,25 +30,17 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
     }));
   }
 
-  function handleFormData() {
+  function handleSubmit() {
+    setBannerData(bannerData);
     formData.append('title', title);
     formData.append('subTitle', subTitle);
     formData.append('colorCode', colorCode);
-  }
-
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setBannerData(bannerData);
-    handleFormData();
     formData.append('uploadFiles', temp);
-    console.log(formData.get('uploadFiles'));
     mutation.mutate({
       formData: formData,
       token: cookies.token,
     });
-
     handleReset();
-    setModal(MODAL_TYPE.null);
   }
 
   function uploadImg(e: ChangeEvent<HTMLInputElement>) {
@@ -60,11 +51,7 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
   }
 
   function handleReset() {
-    setBannerData({
-      title: '',
-      subTitle: '',
-      colorCode: BannerColor[1].color,
-    });
+    setBannerData(init);
   }
 
   return (
@@ -80,7 +67,7 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
             spellCheck={false}
             value={title}
             className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
         </div>
         <div className="mb-2 w-full">
@@ -92,7 +79,7 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
             type="text"
             spellCheck={false}
             value={subTitle}
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
             className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5"
           />
         </div>
@@ -127,7 +114,7 @@ export default function CreateBanner({ data, setModal }: ModalProp) {
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={(e) => uploadImg(e)}
+                onChange={uploadImg}
               />
             </label>
           </div>

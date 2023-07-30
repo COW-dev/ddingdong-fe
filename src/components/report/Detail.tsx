@@ -12,7 +12,6 @@ type ReportDetailProps = {
 };
 
 export default function Detail({
-  reportId,
   content,
   place,
   startDate,

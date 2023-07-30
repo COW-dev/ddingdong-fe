@@ -4,7 +4,7 @@ export type NewBanner = {
 };
 
 export type BannerType = {
-  id: string;
+  id: number;
   title: string;
   subTitle: string;
   colorCode: string;
