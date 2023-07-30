@@ -23,11 +23,11 @@ export default function Index({ reportId, name }: ReportDetailProps) {
     <>
       <div>
         <div className="md:flex-end flex flex-col justify-between md:flex-row md:items-end">
-          <div className="text-md mt-3 flex flex-col space-x-2 font-semibold text-gray-500">
+          <div className="text-md mt-3 flex flex-col space-x-2 font-semibold ">
             <div className="m-2 text-xl">
               <span>{reportData[0].name}</span>
             </div>
-            <div className="flex opacity-70">
+            <div className="flex opacity-60">
               <span>{reportData[0].leader}</span>
               <span>|</span>
               <span>{reportData[0].leaderDepartment}</span>

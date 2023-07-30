@@ -80,7 +80,6 @@ export async function createClub({ token, ...clubData }: NewClub) {
   });
 }
 export async function createBanner({ token, formData }: any) {
-  console.log(formData.get('uploadFiles'));
   return await api.post('/admin/banners', formData, {
     headers: {
       Authorization: 'Bearer ' + token,

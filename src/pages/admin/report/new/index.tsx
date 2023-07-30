@@ -5,7 +5,7 @@ import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import Select from '@/hooks/common/Select';
+import Select from '@/hooks/common/useSelect';
 import { NewReport } from '@/types/report';
 
 export default function Index() {

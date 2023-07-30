@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
-import Select from '@/hooks/common/Select';
+import Select from '@/hooks/common/useSelect';
 import { NewBannerType } from '@/types/banner';
 const init = {
   title: '',

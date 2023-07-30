@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
-import Select from '@/hooks/common/Select';
+import Select from '@/hooks/common/useSelect';
 const init = {
   clubName: '',
   category: '',
