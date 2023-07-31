@@ -9,7 +9,6 @@ import Select from '@/hooks/common/useSelect';
 import { NewReport } from '@/types/report';
 
 export default function Index() {
-  const [temp, setTemp] = useState({});
   const [{ token }] = useCookies();
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
@@ -18,6 +17,8 @@ export default function Index() {
     term: '2',
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
+    startTime: '',
+    endTime: '',
     uploadFiles: uploadFileOne,
     content: '',
     participants: [],
@@ -27,35 +28,83 @@ export default function Index() {
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     content: '',
+    startTime: '',
+    endTime: '',
     uploadFiles: uploadFileTwo,
-    participants: [],
+    participants: [
+      {
+        studentName: '김세빈',
+        studentId: 60211904,
+        studentMajor: '융합소프트웨어학부',
+      },
+      {
+        studentName: '김보겸',
+        studentId: 60211614,
+        studentMajor: '융합소프트웨어학부',
+      },
+      {
+        studentName: '모유경',
+        studentId: 60201034,
+        studentMajor: '융합소프트웨어학부',
+      },
+      {
+        studentName: '유원준',
+        studentId: 60201664,
+        studentMajor: '융합소프트웨어학부',
+      },
+      {
+        studentName: '박수환',
+        studentId: 60202904,
+        studentMajor: '융합소프트웨어학부',
+      },
+    ],
   });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const reportData = [
+      {
+        term: reportOne.term,
+        date:
+          reportOne.date.startDate +
+          ' ' +
+          reportOne.startTime.toString() +
+          ' ' +
+          reportOne.endTime.toString(), // Convert date to ISO string
+        place: reportOne.place,
+        content: reportOne.content,
+        participants: reportOne.participants,
+      },
+      {
+        term: reportTwo.term,
+        date:
+          reportTwo.date.startDate +
+          ' ' +
+          reportTwo.startTime.toString() +
+          ' ' +
+          reportTwo.endTime.toString(), // Convert date to ISO string
+        place: reportTwo.place,
+        content: reportTwo.content,
+        participants: reportTwo.participants,
+      },
+    ];
     const formData = new FormData();
-    const reportData = [reportOne, reportTwo];
-    // console.log(reportOne);
-    setTemp({
-      ...reportOne,
-      endDate: reportOne.date.endDate,
-      startDate: reportOne.date.startDate,
-    });
-    console.log(temp);
+    console.log(reportData);
     const blob = new Blob([JSON.stringify(reportData)], {
       type: 'application/json',
     });
     formData.append('reportData', blob);
-    formData.append('uploadFiles', [
-      reportOne.uploadFiles,
-      reportTwo.uploadFiles,
-    ]);
-    // formData.append('token', token);
+    if (reportOne.uploadFiles !== undefined) {
+      formData.append('uploadFiles', reportOne.uploadFiles as File);
+    }
+    if (reportTwo.uploadFiles !== undefined) {
+      formData.append('uploadFiles', reportTwo.uploadFiles as File);
+    }
+    formData.append('token', token);
+    console.log(formData);
 
-    console.log(formData.get('reportData'));
-    console.log(formData.get('uploadFiles'));
-
-    // return mutation.mutate({ formData, token });
+    return mutation.mutate(formData);
   }
   return (
     <>
@@ -72,6 +121,8 @@ export default function Index() {
             date={reportOne.date}
             uploadFiles={reportOne.uploadFiles}
             place={reportOne.place}
+            startTime={reportOne.startTime}
+            endTime={reportOne.endTime}
             content={reportOne.content}
             participants={reportOne.participants}
             setValue={setReportOne}
@@ -82,6 +133,8 @@ export default function Index() {
             date={reportTwo.date}
             uploadFiles={reportTwo.uploadFiles}
             place={reportTwo.place}
+            startTime={reportTwo.startTime}
+            endTime={reportTwo.endTime}
             content={reportTwo.content}
             participants={reportTwo.participants}
             setValue={setReportTwo}

@@ -47,12 +47,14 @@ export type NewReport = {
   date: DateRangeType;
   place: string;
   content: string;
+  startTime: string;
+  endTime: string;
   participants: StudentInfo[];
   token?: string;
 };
 
 export type ReportDetail = {
-  reportId: number;
+  id: number;
   createdAt: string;
   name: string;
   leader: string;
@@ -61,7 +63,9 @@ export type ReportDetail = {
   place: string;
   startDate: Date;
   endDate: Date;
-  imageUrl: StaticImageData;
+  startTime: string;
+  endTime: string;
+  imageUrls: string | string[];
   participants: StudentInfo[];
 };
 

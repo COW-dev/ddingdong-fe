@@ -29,7 +29,7 @@ export type ClubDetail = {
   name: string;
   tag: string;
   category: string;
-  leader: string;
+  clubLeader: string;
   phoneNumber: string;
   location: string;
   isRecruit: boolean;
@@ -38,7 +38,9 @@ export type ClubDetail = {
   introduction: string;
   activity: string;
   ideal: string;
-  formUrl: string;
+  uploadFiles: File | null;
+  token: string;
+  // formUrl: string;
 };
 
 export type UpdateMyClub = {

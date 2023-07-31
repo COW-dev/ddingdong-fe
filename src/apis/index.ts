@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AxiosResponse } from 'axios';
 import { BannerType, DeleteBanner } from '@/types/banner';
 import {
   Club,
@@ -6,9 +7,9 @@ import {
   ClubDetail,
   NewClub,
   DeleteClub,
-  UpdateMyClub,
   UpdateClub,
 } from '@/types/club';
+
 import {
   Notice,
   NoticeDetail,
@@ -88,11 +89,9 @@ export async function createBanner({ token, formData }: any) {
   });
 }
 
-export async function updateNotice({
-  noticeId,
-  token,
-  ...noticeData
-}: UpdateNotice) {
+export async function updateNotice(noticeId: number, noticeData: FormData) {
+  const token = noticeData.get('token');
+
   return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -130,7 +129,9 @@ export async function getMyClub(
   });
 }
 
-export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
+export async function updateMyClub(clubData: FormData) {
+  const token = clubData.get('token');
+
   return await api.patch('/club/my', clubData, {
     headers: {
       Authorization: 'Bearer ' + token,
