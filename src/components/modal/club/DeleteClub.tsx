@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useDeleteClub } from '@/hooks/api/club/useDeleteClub';
-import { MODAL_TYPE, ModalProp } from '..';
 
-export default function DeleteClub({ data, setModal }: ModalProp) {
-  const { id, name } = data;
+type Prop = {
+  id: number;
+  name: string;
+  closeModal: () => void;
+};
+export default function DeleteClub({ id, name, closeModal }: Prop) {
   const deleteMutation = useDeleteClub();
   const [cookies] = useCookies(['token']);
   const [value, setValue] = useState('');
@@ -14,8 +17,8 @@ export default function DeleteClub({ data, setModal }: ModalProp) {
       clubId: id,
       token: cookies.token,
     });
-    setModal(MODAL_TYPE.null);
     setValue('');
+    closeModal();
   }
 
   useEffect(() => {

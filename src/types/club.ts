@@ -10,9 +10,9 @@ export type Club = {
 
 export type AdminClub = {
   id: number;
-  name?: string;
+  name: string;
   category: string;
-  score?: number;
+  score: number;
 };
 
 export type NewClub = {
@@ -20,7 +20,7 @@ export type NewClub = {
   category: string;
   tag: string;
   leaderName: string;
-  userId: number;
+  userId: string;
   password: string;
   token?: string;
 };

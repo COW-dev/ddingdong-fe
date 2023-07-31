@@ -9,7 +9,13 @@ import {
   DeleteClub,
   UpdateClub,
 } from '@/types/club';
-import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
+
+import {
+  Notice,
+  NoticeDetail,
+  UpdateNotice,
+  DeleteNotice,
+} from '@/types/notice';
 import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 
 const api = axios.create({
@@ -75,7 +81,6 @@ export async function createClub({ token, ...clubData }: NewClub) {
   });
 }
 export async function createBanner({ token, formData }: any) {
-  console.log(formData.get('uploadFiles'));
   return await api.post('/admin/banners', formData, {
     headers: {
       Authorization: 'Bearer ' + token,

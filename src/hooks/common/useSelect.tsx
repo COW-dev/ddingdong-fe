@@ -1,38 +1,43 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
+import { ItemsType } from '@/constants/color';
+import { NewBannerType } from '@/types/banner';
+import { NewClub } from '@/types/club';
 
-type ItemsType = { title: string; color: string };
+type SelectProps = {
+  name?: string;
+  setData: Dispatch<SetStateAction<NewBannerType | NewClub | string>>;
+  list: ItemsType[] | string[];
+};
 
-export default function useSelect() {
+export default function Select({ name, setData, list }: SelectProps) {
+  const init =
+    typeof list[0] === 'string' ? { title: list[0], color: 'black' } : list[0];
+  const [filterList, setFilterList] = useState<ItemsType[]>([init]);
+
+  useEffect(() => {
+    if (typeof list[0] === 'string') {
+      const temp = list.map((item) => ({
+        title: String(item),
+        color: 'black',
+      }));
+      setFilterList(temp);
+    }
+  }, [list]);
+
   const [show, setShow] = useState<boolean>(false);
-  const [value, setValue] = useState<ItemsType>({
-    title: '봉사',
-    color: 'text-pink-500',
-  });
-
-  //dummy
-  const items: ItemsType[] = [
-    { title: '봉사', color: 'text-pink-500' },
-    { title: '사회연구', color: 'text-orange-500' },
-    { title: '연행예술', color: 'text-yellow-500' },
-    { title: '전시창작', color: 'text-emerald-500' },
-    { title: '종교', color: 'text-cyan-500' },
-    { title: '체육', color: 'text-blue-500' },
-    { title: '학술', color: 'text-purple-500' },
-  ];
+  const [value, setValue] = useState<ItemsType>(filterList[0]);
 
   useEffect(() => {
     setShow(false);
   }, [value]);
 
   return (
-    <div className="relative w-full">
-      <div className="inline-flex items-center overflow-hidden rounded-md border ">
-        <div
-          className={`w-full border-e px-4 py-2 text-sm/none ${value.color}`}
-        >
+    <div className="y-full relative w-full border-gray-100  bg-gray-50">
+      <div className="inline-flex  w-full items-center overflow-hidden rounded-md  px-4 py-2 ">
+        <div className={`w-full border-e text-sm/none text-${value.color}-500`}>
           {value.title}
         </div>
         <div
@@ -49,17 +54,24 @@ export default function useSelect() {
       </div>
 
       <div
-        className={`absolute z-10 mt-2 w-56 rounded-md border border-gray-100 bg-white shadow-lg ${
+        className={`fixed z-10 mt-2 h-[25%] w-56 overflow-scroll rounded-md border border-gray-100 bg-white shadow-lg ${
           !show && `hidden`
         }`}
         role="menu"
       >
-        <div className="p-2">
-          {items.map((item) => (
+        <div className=" p-2">
+          {filterList?.map((item, index) => (
             // eslint-disable-next-line react/jsx-key
             <div
-              className={`block rounded-lg px-4 py-2 text-sm hover:bg-gray-50 ${item.color}`}
-              onClick={() => setValue(item)}
+              key={`option-${index}`}
+              className={`block rounded-lg px-4 py-2 text-sm hover:bg-gray-50  text-${item.color}-500`}
+              onClick={(e) => {
+                setValue(item);
+                setData((prev) => ({
+                  ...prev,
+                  [name]: item.title,
+                }));
+              }}
             >
               {item.title}
             </div>

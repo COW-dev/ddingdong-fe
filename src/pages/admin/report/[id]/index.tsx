@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/Detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { ReportDetail } from '@/types';
+import { ReportDetail } from '@/types/report';
+import { dummy } from './data';
 
 type ReportDetailProps = {
   id: number;

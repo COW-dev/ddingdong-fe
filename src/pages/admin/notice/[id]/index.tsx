@@ -154,15 +154,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <div className="mt-6 flex justify-end md:mt-8">
         <NeutralButton href="/notice">목록으로 돌아가기</NeutralButton>
       </div>
-      <Toaster
-        toastOptions={{
-          style: {
-            fontWeight: 600,
-            padding: '0.75rem 1rem',
-            marginTop: '0.5rem',
-          },
-        }}
-      />
     </>
   );
 }

@@ -1,6 +1,17 @@
 import { ChangeEvent, useState } from 'react';
 import { StudentInfo } from '@/types';
-import { MODAL_TYPE, ModalProp } from '..';
+
+type ParticipantsProps = {
+  index: number;
+  participant: StudentInfo;
+};
+export default function Participants({
+  index,
+  participant,
+}: ParticipantsProps) {
+  // useEffect(() => {
+  //   if (clubData) setClubData(clubData);
+  // }, [clubData]);
 
 export default function Participants({ data, setModal }: ModalProp) {
   const [participants, setParticipants] = useState<Array<StudentInfo>>([

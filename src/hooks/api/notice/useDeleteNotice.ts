@@ -20,9 +20,11 @@ export function useDeleteNotice(): UseMutationResult<
     onSuccess() {
       queryClient.invalidateQueries(['notices']);
       router.push('/notice');
+      toast.success('공지를 성공적으로 삭제했어요.');
     },
     onError(error) {
       console.log(error);
+      toast.error('공지 삭제에 실패했어요.');
     },
   });
 }

@@ -5,6 +5,7 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
+import toast from 'react-hot-toast';
 import { createNotice } from '@/apis';
 
 export function useNewNotice(): UseMutationResult<
@@ -19,9 +20,10 @@ export function useNewNotice(): UseMutationResult<
     onSuccess() {
       queryClient.invalidateQueries(['notices']);
       router.push('/notice');
+      toast.success('공지를 성공적으로 등록했어요.');
     },
     onError(error) {
-      console.log(error);
+      toast.error('공지 등록을 실패했어요.');
     },
   });
 }

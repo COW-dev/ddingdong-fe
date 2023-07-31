@@ -2,25 +2,23 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
-import Select from '@/hooks/common/Select';
-import { MODAL_TYPE, ModalProp } from '..';
-
-export default function CreateClub({ setModal }: ModalProp) {
+import Select from '@/hooks/common/useSelect';
+const init = {
+  clubName: '',
+  category: '',
+  tag: '',
+  leaderName: '',
+  userId: '',
+  password: '',
+};
+type Prop = {
+  closeModal: () => void;
+};
+export default function CreateClub({ closeModal }: Prop) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
-  const [clubData, setClubData] = useState({
-    clubName: '',
-    category: '',
-    tag: '',
-    leaderName: '',
-    userId: 0,
-    password: '',
-  });
-  const { clubName, category, tag, leaderName, userId, password } = clubData;
-
-  useEffect(() => {
-    if (clubData) setClubData(clubData);
-  }, [clubData]);
+  const [clubData, setClubData] = useState(init);
+  const { clubName, tag, leaderName, userId, password } = clubData;
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setClubData((prev) => ({
@@ -33,19 +31,16 @@ export default function CreateClub({ setModal }: ModalProp) {
     event.preventDefault();
     mutation.mutate({ ...clubData, token: cookies.token });
     handleReset();
-    setModal(MODAL_TYPE.null);
+    closeModal();
   }
 
   function handleReset() {
-    setClubData({
-      clubName: '',
-      category: '',
-      tag: '',
-      leaderName: '',
-      userId: 0,
-      password: '',
-    });
+    setClubData(init);
   }
+
+  useEffect(() => {
+    if (clubData) setClubData(clubData);
+  }, [clubData]);
 
   return (
     <>
