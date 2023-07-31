@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
-import Slider from '@/components/home/Slider';
+import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
@@ -25,7 +25,7 @@ export default function Index() {
   if (!ROLE_TEXT[role]) return;
 
   function handleInfoElement() {
-    if (token === ROLE_TYPE.ROLE_ADMIN) {
+    if (role === ROLE_TYPE.ROLE_ADMIN) {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
           <div className="md:mr-1.5">안녕하세요,</div>

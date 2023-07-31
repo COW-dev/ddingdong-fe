@@ -2,13 +2,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { Toaster } from 'react-hot-toast';
+import { toast, Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
+import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
@@ -68,6 +69,8 @@ export default function Index() {
   }
 
   function handleClickSubmit() {
+    if (isMissingData(clubData))
+      return toast.error('모든 항목을 입력해주세요.');
     setIsEditing(false);
     // const formData = new FormData();
     // formData.append('name', clubData.name);
@@ -85,7 +88,6 @@ export default function Index() {
     const formData = createFormData(clubData);
     mutation.mutate(formData);
   }
-  console.log(clubData);
   return (
     <>
       <Head>
@@ -108,7 +110,9 @@ export default function Index() {
               취소
             </button>
             <button
-              className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600"
+              className={`ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600  ${
+                isMissingData(clubData) && `cursor-not-allowed  opacity-50`
+              }`}
               onClick={handleClickSubmit}
             >
               확인

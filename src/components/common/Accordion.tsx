@@ -25,7 +25,7 @@ export default function Accordion({ title, children }: AccordionProps) {
         <button
           type="button"
           data-te-collapse-init
-          className={`flex w-full items-center justify-between border-b border-gray-200 py-5 text-left font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400 ${
+          className={`flex w-full items-center justify-between border-b border-gray-200 p-4 text-left font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400 ${
             open ? 'active' : ''
           }`}
           data-accordion-target="#accordion-flush-body-1"
@@ -33,7 +33,7 @@ export default function Accordion({ title, children }: AccordionProps) {
           aria-controls="accordion-flush-body-1"
           onClick={handleOpen}
         >
-          <span className="text-lg">{title}</span>
+          <span className=" text-lg text-black opacity-70 ">{title}</span>
           {open ? (
             <Image src={ArrowUp} alt="화살표" width={15} height={15} />
           ) : (
@@ -46,7 +46,7 @@ export default function Accordion({ title, children }: AccordionProps) {
         className={`${open ? 'active' : 'hidden'}`}
         aria-labelledby="accordion-flush-heading-1"
       >
-        <div className="border-b border-gray-200 py-5 dark:border-gray-700">
+        <div className="mx-2 border-b border-gray-200 py-5 dark:border-gray-700">
           {children}
         </div>
       </div>

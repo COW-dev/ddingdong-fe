@@ -35,7 +35,6 @@ export default function Form({
   content,
   setValue,
 }: ReportProps) {
-  const [modal, setModal] = useState(MODAL_TYPE.null);
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
@@ -130,7 +129,6 @@ export default function Form({
             </p>
             <input
               name="participants"
-              onClick={() => setModal(MODAL_TYPE.participants)}
               // onChange={handleChange}
               className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:pb-3"
             />

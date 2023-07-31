@@ -5,12 +5,14 @@ import {
   useEffect,
   useState,
 } from 'react';
+import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateValueType,
   DateRangeType,
 } from 'react-tailwindcss-datepicker/dist/types';
 import { ClubDetail } from '@/types/club';
+import { validator } from '@/utils/validator';
 
 type ClubInfoFormProps = {
   clubLeader: string;
@@ -34,6 +36,8 @@ export default function ClubInfoForm({
   isEditing,
 }: ClubInfoFormProps) {
   const [hydrated, setHydrated] = useState(false);
+  const [error, setError] = useState<boolean>(false);
+
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -50,6 +54,16 @@ export default function ClubInfoForm({
       ...prev,
       recruitPeriod: selectedDate as DateRangeType,
     }));
+  }
+
+  function handleValueValidate(object: { type: string; value: string }) {
+    if (object.value && !validator(object)) {
+      toast.error('형식에 맞춰 재입력해주세요.');
+      setValue((prev) => ({
+        ...prev,
+        [object.type]: '',
+      }));
+    }
   }
 
   return (
@@ -71,12 +85,18 @@ export default function ClubInfoForm({
             disabled={!isEditing}
           />
         </div>
-        <div className="mb-2 w-full md:mb-3 md:w-[50%]">
+        <div
+          className="mb-2 w-full md:mb-3 md:w-[50%]"
+          onBlur={() =>
+            handleValueValidate({ type: 'phoneNumber', value: phoneNumber })
+          }
+        >
           <label className="inline-block w-20 font-semibold text-gray-500">
             연락처
           </label>
           <input
             name="phoneNumber"
+            placeholder="ex) 010-1234-1234"
             type="text"
             spellCheck={false}
             className={`${
@@ -89,12 +109,18 @@ export default function ClubInfoForm({
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
-        <div className="mb-2 w-full md:mb-3 md:w-[50%]">
+        <div
+          className="mb-2 w-full md:mb-3 md:w-[50%]"
+          onBlur={() =>
+            handleValueValidate({ type: 'location', value: location })
+          }
+        >
           <label className="inline-block w-20 font-semibold text-gray-500">
             동아리방
           </label>
           <input
             name="location"
+            placeholder="ex) S0000"
             type="text"
             spellCheck={false}
             className={`${
