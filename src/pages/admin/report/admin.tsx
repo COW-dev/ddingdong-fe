@@ -5,7 +5,7 @@ import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Report from '@/components//report/[id]';
 import Heading from '@/components/common/Heading';
-import Category from '@/components/report/Category';
+import Category from '@/components/report/category';
 export default function Index() {
   const [visible, setVisible] = useState<boolean>(true);
   return (

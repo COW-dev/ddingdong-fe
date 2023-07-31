@@ -3,7 +3,7 @@ import Image from 'next/image';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
-import Banner from '../common/Banner';
+import Banner from './Banner';
 interface CarouselRef {
   current: HTMLElement | null;
   scrollLeft?: number;

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { GetServerSideProps } from 'next/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import Detail from '@/components/report/Detail';
+import Detail from '@/components/report/detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
 import { dummy } from './data';

@@ -7,9 +7,9 @@ import RightArrow from '@/assets/rightArrow.svg';
 import SearchImg from '@/assets/search.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import { AdminClub } from '@/types/club';
-import ClubList from './catogory/ClubList';
-import TermList from './catogory/TermList';
-import ModalPortal from '../common/ModalPortal';
+import ClubList from './ClubList';
+import TermList from './TermList';
+import ModalPortal from '../../common/ModalPortal';
 
 const REPORT_TYPE = {
   TERM: '주차별',
@@ -34,7 +34,7 @@ const Category = ({ visible, setVisible }: any) => {
     }
   }, [clubs]);
 
-  const test = () => {
+  const element = () => {
     return (
       <div>
         <div className="flex justify-between">
@@ -107,9 +107,12 @@ const Category = ({ visible, setVisible }: any) => {
   return (
     <>
       <div className="hidden md:inline-block">
+        {/* sm */}
         <div className="hidden h-[30%] w-56 text-lg font-semibold text-gray-400 sm:block lg:left-[5%]">
-          {test()}
+          {element()}
         </div>
+        {/* sm 끗*/}
+        {/* md */}
         <div className="md:hidden">
           {!visible && (
             <ModalPortal>
@@ -122,17 +125,18 @@ const Category = ({ visible, setVisible }: any) => {
                 }}
               >
                 <div
-                  className={`fixed bottom-0 h-[70%] w-full overflow-hidden rounded-2xl bg-white text-lg  font-semibold text-gray-400  md:hidden   `}
+                  className={`fixed bottom-0 h-[70%] w-full overflow-hidden rounded-2xl bg-white text-lg  font-semibold text-gray-400  md:hidden`}
                   onClick={() => {
                     setVisible((visible: boolean) => !visible);
                   }}
                 >
-                  {test()}
+                  {element()}
                 </div>
               </div>
             </ModalPortal>
           )}
         </div>
+        {/* md 끗*/}
       </div>
     </>
   );

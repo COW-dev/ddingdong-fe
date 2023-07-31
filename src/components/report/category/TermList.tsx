@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import New from '@/assets/new.svg';
 import { dummy } from '../[id]/data';
 
-export default function TermList({ club, setTerm }) {
+export default function TermList({ club, setTerm }: any) {
   const currentTerm = 2;
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
 

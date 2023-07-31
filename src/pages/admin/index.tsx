@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import AdminHeading from '@/components/admin/AdminHeading';
-import Slider from '@/components/home/Slider';
+import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 

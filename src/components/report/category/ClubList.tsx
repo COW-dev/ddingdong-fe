@@ -1,4 +1,4 @@
-export default function ClubList({ setClub }) {
+export default function ClubList({ setClub }: any) {
   // const submitClubNames = dummy
   //   .filter((item) => item.term === String(term))
   //   .map((item) => item.name);
@@ -9,8 +9,7 @@ export default function ClubList({ setClub }) {
         <div className="my-2 text-gray-500">제출 동아리</div>
         {submitClubNames?.map((clubName) => (
           <div
-            className="rounded-xl px-5 py-1
-            hover:bg-gray-100"
+            className="rounded-xl px-5 py-1 hover:bg-gray-100"
             key={clubName}
             onClick={setClub(clubName)}
           >
@@ -21,7 +20,7 @@ export default function ClubList({ setClub }) {
         {/* {clubList?.map((clubName) => ( */}
         {['명지서법', '너나들이']?.map((clubName) => (
           <div
-            className="rounded-xl px-5 py-1  text-gray-300 "
+            className="rounded-xl px-5 py-1 text-gray-300 "
             key={clubName}
             onClick={setClub(clubName)}
           >
