@@ -10,6 +10,7 @@ export type StudentInfo = {
 export type MyReportList = {
   name: string;
   term: string;
+  activityReports: [number, number];
 };
 
 export type CurrentReport = {
@@ -21,13 +22,15 @@ export type NewReport = {
   uploadFiles: File | null;
   date: DateRangeType;
   place: string;
+  startTime: string;
+  endTime: string;
   content: string;
   participants: StudentInfo[];
   token?: string;
 };
 
 export type ReportDetail = {
-  reportId: number;
+  id: number;
   createdAt: string;
   name: string;
   leader: string;
@@ -36,6 +39,9 @@ export type ReportDetail = {
   place: string;
   startDate: Date;
   endDate: Date;
-  imageUrl: StaticImageData;
+  startTime: string;
+  endTime: string;
+  imageUrls: string[];
+
   participants: StudentInfo[];
 };

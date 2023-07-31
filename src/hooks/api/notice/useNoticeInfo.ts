@@ -4,6 +4,7 @@ import { getNoticeInfo } from '@/apis';
 import { NoticeDetail } from '@/types/notice';
 
 const initialData = {
+  id: 0,
   title: '',
   content: '',
   createdAt: '',

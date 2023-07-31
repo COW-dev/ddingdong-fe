@@ -6,8 +6,9 @@ type ReportDetailProps = {
   content: string;
   place: string;
   startDate: Date;
-  endDate: Date;
-  imageUrl: StaticImageData;
+  startTime: string;
+  endTime: string;
+  imageUrls: string;
   participants: StudentInfo[];
 };
 
@@ -15,20 +16,25 @@ export default function Detail({
   content,
   place,
   startDate,
-  endDate,
-  imageUrl,
+  startTime,
+  endTime,
+  imageUrls,
   participants,
 }: ReportDetailProps) {
   return (
-    <div className="flex flex-col items-center md:m-3 md:flex-row">
+    <div className="flex flex-col  md:m-3 md:flex-row">
       <div className="mb-5 flex flex-col md:w-2/3">
         <div className="flex flex-col items-center md:flex-row">
-          <span className=" md:text-md text-basw py-3 font-medium opacity-70 md:pb-3">
-            {startDate?.toDateString()} ~ {endDate?.toDateString()}
+          <span className=" md:text-md py-3 text-base font-medium opacity-70 md:pb-3">
+            {startDate?.toDateString()}
           </span>
-          <div className="my-2  flex h-10 flex-row items-center rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 text-sm font-semibold md:mx-3 md:mt-0 md:text-base">
+          <span className="md:ml-3">
+            {' '}
+            {startTime?.toString()} 23:30 ~ 14:00 {endTime?.toString()}
+          </span>
+          <div className="mt-2 flex h-11 w-1/2 flex-row items-center rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 text-sm font-semibold md:ml-3 md:mt-0 md:text-base">
             <Image src={Place} alt="장소" width={25} height={25} />
-            <span className="mx-2 pr-2 text-sm text-gray-400">{place}</span>
+            <span className="mx-2  pr-2 text-sm text-gray-400">{place}</span>
           </div>
         </div>
         <div>
@@ -55,7 +61,7 @@ export default function Detail({
       </div>
       <div className="flex justify-center md:w-1/2 ">
         <Image
-          src={imageUrl}
+          src={imageUrls}
           className="m-auto object-scale-down"
           alt="이미지"
           width={380}

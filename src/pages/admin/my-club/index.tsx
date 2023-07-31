@@ -3,11 +3,6 @@ import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
-import Datepicker from 'react-tailwindcss-datepicker';
-import {
-  DateRangeType,
-  DateValueType,
-} from 'react-tailwindcss-datepicker/dist/types';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
@@ -16,13 +11,15 @@ import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
 
 export default function Index() {
+  const [{ token }] = useCookies();
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clubData, setClubData] = useState<ClubDetail>({
     id: 0,
     name: '',
     tag: '',
     category: '',
-    leader: '',
+    clubLeader: '',
     phoneNumber: '',
     location: '',
     isRecruit: false,
@@ -31,9 +28,10 @@ export default function Index() {
     introduction: '',
     activity: '',
     ideal: '',
-    formUrl: '',
+    uploadFiles: uploadFile,
+    token: token,
+    // formUrl: '',
   });
-  const [{ token }] = useCookies();
   const {
     data: { data },
   } = useMyClub(token);
@@ -57,15 +55,35 @@ export default function Index() {
     setIsEditing(false);
     setClubData(data);
   }
+  function createFormData(data: ClubDetail) {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value !== null && key === 'recruitPeriod') {
+        formData.set('recruitPeriod', value.toString());
+      } else if (value !== null) {
+        formData.set(key, value.toString());
+      }
+    });
+    return formData;
+  }
 
   function handleClickSubmit() {
     setIsEditing(false);
-    mutation.mutate({
-      ...clubData,
-      phoneNumber: clubData.phoneNumber,
-      clubLeader: clubData.leader,
-      token,
-    });
+    // const formData = new FormData();
+    // formData.append('name', clubData.name);
+    // formData.append('category', clubData.category);
+    // formData.append('tag', clubData.tag);
+    // formData.append('clubLeader', clubData.leader);
+    // formData.append('phoneNumber', clubData.phoneNumber);
+    // formData.append('location', clubData.location);
+    // formData.append('recruitPeriod', clubData.recruitPeriod.toString());
+    // formData.append('regularMeeting', clubData.regularMeeting);
+    // formData.append('introduction', clubData.introduction);
+    // formData.append('ideal', clubData.ideal);
+    // formData.append('activity', clubData.activity);
+    // formData.append('token', token);
+    const formData = createFormData(clubData);
+    mutation.mutate(formData);
   }
   console.log(clubData);
   return (
@@ -73,11 +91,13 @@ export default function Index() {
       <Head>
         <title>{`띵동 어드민 - ${clubData.name}`}</title>
       </Head>
-      <div className="flex items-end justify-between">
+      <div className=" flex items-end justify-between">
         <AdminClubHeading
           clubName={clubData.name}
           category={clubData.category}
           tag={clubData.tag}
+          uploadFiles={clubData.uploadFiles}
+          setValue={setClubData}
         />
         {isEditing ? (
           <div className="-mr-2 mb-2 font-semibold">
@@ -96,7 +116,7 @@ export default function Index() {
           </div>
         ) : (
           <button
-            className="mb-2 min-w-fit rounded-xl bg-blue-100 px-3.5 py-2 text-base font-bold text-blue-500 transition-colors hover:bg-blue-200 md:px-4 md:py-2.5"
+            className="mb-4 min-w-fit rounded-xl bg-blue-100 px-3.5 py-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base"
             onClick={() => setIsEditing(true)}
           >
             정보 수정하기
@@ -105,12 +125,12 @@ export default function Index() {
       </div>
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
-          leader={clubData.leader}
+          clubLeader={clubData.clubLeader}
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           recruitPeriod={clubData.recruitPeriod}
-          formUrl={clubData.formUrl}
+          // formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}
         />

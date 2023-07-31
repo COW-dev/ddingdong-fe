@@ -13,12 +13,12 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     name,
     category,
     tag,
-    leader,
+    clubLeader,
     phoneNumber,
     location,
     regularMeeting,
     recruitPeriod,
-    formUrl,
+    // formUrl,
   } = info;
 
   return (
@@ -57,7 +57,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-1.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">회장</span>
-              <span>{leader}</span>
+              <span>{clubLeader}</span>
             </div>
             <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">연락처</span>

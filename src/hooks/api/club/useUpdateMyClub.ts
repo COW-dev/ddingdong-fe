@@ -6,12 +6,11 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateMyClub } from '@/apis';
-import { UpdateMyClub } from '@/types/club';
 
 export function useUpdateMyClub(): UseMutationResult<
   unknown,
   AxiosError,
-  UpdateMyClub
+  FormData
 > {
   const queryClient = useQueryClient();
 

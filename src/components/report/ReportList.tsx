@@ -5,30 +5,24 @@ import { useAllReports } from '@/hooks/api/club/useAllReports';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { MyReportList } from '@/types/report';
 
-export const reports = [
-  {
-    name: 'cow',
-    term: '1',
-  },
-];
-
 export default function ReportList() {
   const [club, setClub] = useState('cow');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
-  const currentTerm = 3;
+  const currentTerm = 1;
 
   const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
+
   const { data } = useAllReports(token);
 
-  useEffect(() => data && setMyReportList(reports), [reports]);
+  useEffect(() => data && setMyReportList(data?.data), [data]);
 
-  console.log(currentTerm);
-  const submitTerms = reports
+  //console.log('현재 기간', currentTerm.data);
+  const submitTerms = data?.data
     .filter((item) => item.name === club)
     .map((item) => item.term);
 
-  const isReports = reports
+  const isReports = data?.data
     .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => item.term);
 

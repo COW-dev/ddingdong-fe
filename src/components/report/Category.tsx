@@ -8,6 +8,7 @@ import New from '@/assets/new.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import Searchumg from '@/assets/Search.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import Select from '@/hooks/common/useSelect';
 import { dummy } from '@/pages/admin/report/data';
 import { AdminClub } from '@/types/club';
@@ -18,8 +19,9 @@ const REPORT_TYPE = {
 };
 
 const Category = () => {
-  const currentTerm = 2;
   const [{ token }] = useCookies(['token']);
+  const currentTerm = useCurrentReports(token);
+
   const [active, setActive] = useState(REPORT_TYPE.CLUB);
 
   const [term, setTerm] = useState(currentTerm);
@@ -98,10 +100,15 @@ const Category = () => {
             key={`category-item-${index}`}
           >
             <div
-              className={`mb-3  pt-3 `}
+              className={`mb-3  ${
+                (Number(item) > Number(currentTerm) ||
+                  !submitTerms.includes(item)) &&
+                'text-gray-200'
+              }`}
+
               key={item}
               onClick={() => {
-                if (Number(item) > currentTerm)
+                if (Number(item) > Number(currentTerm))
                   return toast.error('해당 회차의 열람기간이 아닙니다.');
                 setTerm(item);
               }}
@@ -114,7 +121,7 @@ const Category = () => {
               height={20}
               alt="bannerImg"
               className={`mx-2 mb-3 ${
-                Number(item) !== currentTerm && 'hidden'
+                Number(item) !== Number(currentTerm) && 'hidden'
               }`}
             />
           </div>
