@@ -117,9 +117,8 @@ const Category = ({ visible, setVisible }: any) => {
           {!visible && (
             <ModalPortal>
               <div
-                className={`fixed left-0 top-0 h-[100vh] w-screen ${
-                  !visible && `bg-black bg-opacity-10 md:bg-opacity-0`
-                }`}
+                className={`fixed left-0 top-0 h-[100vh] w-screen 
+                ${!visible && `bg-black bg-opacity-10 md:bg-opacity-0`}`}
                 onClick={() => {
                   setVisible((visible: boolean) => !visible);
                 }}

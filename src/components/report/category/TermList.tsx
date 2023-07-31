@@ -32,17 +32,17 @@ export default function TermList({ club, setTerm }: any) {
                 setTerm(Number(item));
               }}
             >
-              <div> {item}회차</div>
+              <div>
+                {item}회차
+                <span
+                  className={`mx-2 mb-3 text-xs text-blue-500 ${
+                    Number(item) !== currentTerm && 'hidden'
+                  }`}
+                >
+                  NEW
+                </span>
+              </div>
             </div>
-            <Image
-              src={New}
-              width={20}
-              height={20}
-              alt="bannerImg"
-              className={`mx-2 mb-3 ${
-                Number(item) !== currentTerm && 'hidden'
-              }`}
-            />
           </div>
         ))}
       </div>
