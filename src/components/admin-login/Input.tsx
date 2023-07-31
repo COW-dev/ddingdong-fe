@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 type InputProps = {
   label: string;
   id: string;
-  type: 'text' | 'password';
+  type: 'text' | 'password' | 'time';
   value: string;
   setValue: Dispatch<SetStateAction<string>>;
 };

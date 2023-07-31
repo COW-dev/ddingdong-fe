@@ -6,24 +6,54 @@ import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/Detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types';
-import { dummy } from './data';
 
 type ReportDetailProps = {
-  reportId: number;
+  id: number;
   name: string;
 };
 
-export default function Index({ reportId, name }: ReportDetailProps) {
-  const [reportData, setReportData] = useState<Array<ReportDetail>>(dummy);
+export default function Index({ id, name }: ReportDetailProps) {
+  const [reportData, setReportData] = useState<ReportDetail[]>([
+    {
+      id: id,
+      createdAt: '',
+      name: '',
+      content: '',
+      place: '',
+      leader: '',
+      startTime: '',
+      endTime: '',
+      leaderDepartment: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      imageUrls: [],
+      participants: [],
+    },
+    {
+      id: id,
+      createdAt: '',
+      name: '',
+      content: '',
+      place: '',
+      leader: '',
+      startTime: '',
+      endTime: '',
+      leaderDepartment: '',
+      startDate: new Date(),
+      endDate: new Date(),
+      imageUrls: [],
+      participants: [],
+    },
+  ]);
   const {
     data: { data },
-  } = useReportInfo(reportId, name);
+  } = useReportInfo(id, name);
 
-  // useEffect(() => {
-  //   if (data) {
-  //     setReportData(data);
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (data) {
+      setReportData([data]);
+    }
+  }, [data]);
 
   // function handleClickCancel() {
   //   setReportData(data);
@@ -49,23 +79,27 @@ export default function Index({ reportId, name }: ReportDetailProps) {
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
           <Detail
-            reportId={reportData[0].reportId}
+            reportId={reportData[0].id}
             content={reportData[0].content}
             place={reportData[0].place}
             startDate={reportData[0].startDate}
             endDate={reportData[0].endDate}
-            imageUrl={reportData[0].imageUrl}
+            startTime={reportData[0].startTime}
+            endTime={reportData[0].endTime}
+            imageUrls={reportData[0].imageUrls}
             participants={reportData[0].participants}
           />
         </Accordion>
         <Accordion title="활동2">
           <Detail
-            reportId={reportData[1].reportId}
+            reportId={reportData[1].id}
             content={reportData[1].content}
             place={reportData[1].place}
             startDate={reportData[1].startDate}
             endDate={reportData[1].endDate}
-            imageUrl={reportData[1].imageUrl}
+            startTime={reportData[1].startTime}
+            endTime={reportData[1].endTime}
+            imageUrls={reportData[1].imageUrls}
             participants={reportData[1].participants}
           />
         </Accordion>
@@ -77,7 +111,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   return {
     props: {
-      reportId: id,
+      id: id,
     },
   };
 };

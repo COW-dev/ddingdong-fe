@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import toast, { Toaster } from 'react-hot-toast';
 import New from '@/assets/new.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { dummy } from '@/pages/admin/report/data';
 import { AdminClub } from '@/types/club';
 
@@ -13,8 +14,9 @@ const REPORT_TYPE = {
 };
 
 const Category = () => {
-  const currentTerm = 2;
   const [{ token }] = useCookies(['token']);
+  const currentTerm = useCurrentReports(token);
+
   const [active, setActive] = useState(REPORT_TYPE.CLUB);
 
   const [term, setTerm] = useState('1');
@@ -84,12 +86,13 @@ const Category = () => {
           >
             <div
               className={`mb-3  ${
-                (Number(item) > currentTerm || !submitTerms.includes(item)) &&
+                (Number(item) > Number(currentTerm) ||
+                  !submitTerms.includes(item)) &&
                 'text-gray-200'
               }`}
               key={item}
               onClick={() => {
-                if (Number(item) > currentTerm)
+                if (Number(item) > Number(currentTerm))
                   return toast.error('해당 회차의 열람기간이 아닙니다.');
                 setTerm(item);
               }}
@@ -102,7 +105,7 @@ const Category = () => {
               height={20}
               alt="bannerImg"
               className={`mx-2 mb-3 ${
-                Number(item) !== currentTerm && 'hidden'
+                Number(item) !== Number(currentTerm) && 'hidden'
               }`}
             />
           </div>

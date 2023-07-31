@@ -13,23 +13,23 @@ import {
 import { ClubDetail } from '@/types/club';
 
 type ClubInfoFormProps = {
-  leader: string;
+  clubLeader: string;
   phoneNumber: string;
   location: string;
   recruitPeriod: DateValueType;
   regularMeeting: string;
-  formUrl: string;
+  // formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
 };
 
 export default function ClubInfoForm({
-  leader,
+  clubLeader,
   phoneNumber,
   location,
   recruitPeriod,
   regularMeeting,
-  formUrl,
+  // formUrl,
   setValue,
   isEditing,
 }: ClubInfoFormProps) {
@@ -60,13 +60,13 @@ export default function ClubInfoForm({
             회장
           </label>
           <input
-            name="leader"
+            name="clubLeader"
             type="text"
             spellCheck={false}
             className={`${
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
-            value={leader}
+            value={clubLeader}
             onChange={handleChange}
             disabled={!isEditing}
           />
@@ -153,7 +153,7 @@ export default function ClubInfoForm({
             className={`${
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
-            value={formUrl}
+            // value={formUrl}
             onChange={handleChange}
             disabled={!isEditing}
           />

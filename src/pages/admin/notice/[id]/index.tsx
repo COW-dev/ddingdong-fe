@@ -30,7 +30,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     data: { data },
   } = useNoticeInfo(noticeId);
   console.log(data);
-  const updateMutation = useUpdateNotice();
+  const updateMutation = useUpdateNotice(noticeId);
   const deleteMutation = useDeleteNotice();
 
   useEffect(() => {
@@ -57,12 +57,16 @@ export default function Index({ noticeId }: NoticeDetailProps) {
 
   function handleClickSubmit() {
     setIsEditing(false);
-    return updateMutation.mutate({
+    const formData = new FormData();
+    formData.set('title', noticeData.title);
+    formData.set('content', noticeData.content);
+    formData.set('token', token);
+    console.log({
       noticeId,
-      title: noticeData.title,
-      content: noticeData.content,
-      token,
+      formData,
     });
+
+    return updateMutation.mutate(formData);
   }
 
   return (
