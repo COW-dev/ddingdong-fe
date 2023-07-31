@@ -1,8 +1,15 @@
 import Image from 'next/image';
-import { BannerTypeProps, init } from '@/pages/admin/banner';
+import { BannerType } from '@/types/banner';
 
-export default function Banner({ data }: BannerTypeProps) {
-  if (!data) data = init;
+export default function Banner({ data }: { data: BannerType }) {
+  if (!data)
+    data = {
+      id: 0,
+      title: 'title',
+      subTitle: 'subTitle',
+      colorCode: '하늘',
+      imgUrl: 'imgUrl',
+    };
   const { imgUrl, title, subTitle, id, colorCode } = data;
   const parsedImgUrl = imgUrl.slice(0, 8) + imgUrl.slice(9);
   return (

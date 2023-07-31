@@ -4,22 +4,33 @@ import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import Banner from '../common/Banner';
-
+interface CarouselRef {
+  current: HTMLElement | null;
+  scrollLeft?: number;
+  offsetWidth?: number;
+}
+interface MaxScrollWidthRef {
+  current: number;
+}
 export default function Index() {
-  const maxScrollWidth = useRef(0);
+  const carousel = useRef<CarouselRef>(null);
+  const maxScrollWidth = useRef<MaxScrollWidthRef>({ current: 0 });
   const [currentIndex, setCurrentIndex] = useState(0);
-  const carousel = useRef(null);
   const { data: bannerData } = useAllBanners();
 
   const movePrev = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? bannerData?.data.length - 1 : prevIndex - 1,
+      bannerData && prevIndex === 0
+        ? bannerData?.data.length - 1
+        : prevIndex - 1,
     );
   };
 
   const moveNext = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === bannerData?.data.length - 1 ? 0 : prevIndex + 1,
+      bannerData && prevIndex === bannerData?.data.length - 1
+        ? 0
+        : prevIndex + 1,
     );
   };
 
@@ -27,23 +38,21 @@ export default function Index() {
     const autoScroll = setInterval(moveNext, 5000);
 
     return () => {
-      // Clean up the interval on component unmount
       clearInterval(autoScroll);
     };
   }, []);
 
-  useEffect(() => {
-    // Move the carousel to the right (increasing x)
-    if (carousel.current) {
-      carousel.current.scrollLeft = carousel.current.offsetWidth * currentIndex;
-    }
-  }, [currentIndex]);
+  // useEffect(() => {
+  //   if (carousel.current) {
+  //     carousel.current.scrollLeft = carousel.current.offsetWidth * currentIndex;
+  //   }
+  // }, [currentIndex]);
 
-  useEffect(() => {
-    maxScrollWidth.current = carousel.current
-      ? carousel.current.scrollWidth - carousel.current.offsetWidth
-      : 0;
-  }, [bannerData]);
+  // useEffect(() => {
+  //   maxScrollWidth.current = carousel.current
+  //     ? carousel.current.scrollWidth - carousel.current.offsetWidth
+  //     : 0;
+  // }, [bannerData]);
 
   return (
     <div className="carousel relative my-2 overflow-hidden">
@@ -70,7 +79,7 @@ export default function Index() {
         </div>
       </div>
       <div
-        ref={carousel}
+        // ref={carousel}
         className="carousel-container relative z-0 flex w-full touch-pan-x snap-x snap-mandatory gap-1 overflow-hidden scroll-smooth"
       >
         {bannerData?.data?.map((resource, index) => (
