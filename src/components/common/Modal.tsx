@@ -24,7 +24,7 @@ export default function Modal({
         className={`fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center  bg-black bg-opacity-10   `}
       >
         <div
-          className="z-55 dark:bg- relative max-h-[80%] w-full max-w-lg  overflow-y-scroll  overscroll-y-contain rounded-lg  bg-white shadow md:overflow-y-auto"
+          className="z-60 dark:bg- relative max-h-[80%] w-full max-w-lg  overflow-y-scroll  overscroll-y-contain rounded-lg  bg-white shadow md:overflow-y-auto"
           ref={modalRef}
         >
           <div className="flex items-center justify-between rounded-t  border-b p-5 ">

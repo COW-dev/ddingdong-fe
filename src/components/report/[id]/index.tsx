@@ -15,9 +15,9 @@ type ReportDetailProps = {
 
 export default function Index({ reportId, name }: ReportDetailProps) {
   const [reportData, setReportData] = useState<Array<ReportDetail>>(dummy);
-  const {
-    data: { data },
-  } = useReportInfo(reportId, name);
+  // const {
+  //   data: { data },
+  // } = useReportInfo(reportId, name);
 
   return (
     <>

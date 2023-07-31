@@ -108,16 +108,11 @@ const Category = ({ visible, setVisible }: any) => {
     <>
       <div className="hidden md:inline-block">
         {/* sm */}
-        <div className="hidden h-[30%] w-56 text-lg font-semibold text-gray-400 sm:block lg:left-[5%]">
-          {element()}
-        </div>
-        {/* sm 끗*/}
-        {/* md */}
-        <div className="md:hidden">
+        <div className=" md:hidden ">
           {!visible && (
             <ModalPortal>
               <div
-                className={`fixed left-0 top-0 h-[100vh] w-screen 
+                className={`fixed left-0 top-0 z-20 h-[100vh] w-screen 
                 ${!visible && `bg-black bg-opacity-10 md:bg-opacity-0`}`}
                 onClick={() => {
                   setVisible((visible: boolean) => !visible);
@@ -135,8 +130,13 @@ const Category = ({ visible, setVisible }: any) => {
             </ModalPortal>
           )}
         </div>
-        {/* md 끗*/}
+        {/* sm 끗*/}
       </div>
+      {/* md */}
+      <div className="hidden h-[30%] w-56 text-lg font-semibold text-gray-400 sm:block lg:left-[5%]">
+        {element()}
+      </div>
+      {/* md 끗*/}
     </>
   );
 };

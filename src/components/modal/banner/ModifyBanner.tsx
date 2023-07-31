@@ -35,7 +35,7 @@ export default function ModifyBanner({ data, closeModal }: Props) {
   }
 
   function moveItemToFrontByColor(color: string) {
-    const index = BannerColor.findIndex((item) => item.title === color);
+    const index = BannerColor.findIndex((item) => item.color === color);
     if (index !== -1 && index !== 0) {
       const item = BannerColor.splice(index, 1)[0];
       BannerColor.splice(0, 0, item);

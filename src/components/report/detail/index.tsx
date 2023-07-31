@@ -30,7 +30,7 @@ export default function Index({
       <div className="mb-5 flex flex-col">
         {/* sm */}
         <div className="mb-4 inline-block shadow-xl md:hidden">
-          <div className="flex w-full  flex-col items-center overflow-hidden rounded-xl ">
+          <div className="z-10 flex w-full flex-col items-center overflow-hidden rounded-xl ">
             <div className="relative">
               <Image
                 src={imageUrl}
@@ -40,7 +40,7 @@ export default function Index({
               <div
                 className={`absolute right-2 ${
                   info ? `top-[11vh]` : `top-[1vh]`
-                } z-20`}
+                } z-10`}
               >
                 <Image
                   src={info ? ArrowUp : ArrowDown}

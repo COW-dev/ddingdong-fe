@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+import Write from '@/assets/write.svg';
 import Heading from '@/components/common/Heading';
 import NoticeList from '@/components/common/NoticeList';
 import { ROLE_TYPE } from '@/constants/text';
@@ -23,7 +24,7 @@ export default function Index() {
           }`}
         >
           <Image
-            src="/write.svg"
+            src={Write}
             width={100}
             height={100}
             priority

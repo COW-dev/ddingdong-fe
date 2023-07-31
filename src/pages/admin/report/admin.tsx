@@ -26,7 +26,7 @@ export default function Index() {
         </div>
       </div>
       <div className="mt-14 flex gap-4">
-        {/* <Category visible={visible} setVisible={setVisible} /> */}
+        <Category visible={visible} setVisible={setVisible} />
         <div className="inline-block  w-full ">
           <Report reportId={1} name={'너나들이'} />
         </div>

@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
@@ -51,7 +52,7 @@ export default function Index() {
           }`}
         >
           <Image
-            src="/write.svg"
+            src={Write}
             width={100}
             height={100}
             priority
