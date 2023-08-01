@@ -139,6 +139,16 @@ export async function updateMyClub(clubData: FormData) {
   });
 }
 
+export async function updateBanner(BannerData: FormData) {
+  // const token = clubData.get('token');
+
+  return await api.patch('/club/my', BannerData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
 export async function updateClub({ id, score, token }: UpdateClub) {
   return await api.patch(`/admin/clubs/${id}/score?score=${score}`, score, {
     headers: {
@@ -159,13 +169,20 @@ export async function createReport(
   });
 }
 export async function getReportInfo(
-  reportId: number,
+  term: number,
   name: string,
+  token: string,
 ): Promise<AxiosResponse<ReportDetail, unknown>> {
   return await api.get(
-    `/club/activity-reports?term=${reportId}&club_name=${name}`,
+    `/club/activity-reports?term=${term}&club_name=${name}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
   );
 }
+
 export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {

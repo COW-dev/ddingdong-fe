@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
@@ -7,17 +8,13 @@ import Detail from '@/components/report/detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
 import { dummy } from './data';
-
 type ReportDetailProps = {
-  reportId: number;
-  name: string;
+  term: number;
+  club: string;
 };
 
-export default function Index({ reportId, name }: ReportDetailProps) {
+export default function Index({ term, club }: ReportDetailProps) {
   const [reportData, setReportData] = useState<Array<ReportDetail>>(dummy);
-  // const {
-  //   data: { data },
-  // } = useReportInfo(reportId, name);
 
   return (
     <>
@@ -69,10 +66,13 @@ export default function Index({ reportId, name }: ReportDetailProps) {
   );
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { id, item, name } = context.query;
+  console.log(id, item, name);
   return {
     props: {
-      reportId: id,
+      id: id,
+      item: item,
+      name: name,
     },
   };
 };

@@ -56,7 +56,7 @@ export default function Select({ name, setData, list }: SelectProps) {
                 setValue(item);
                 setData((prev: any) => ({
                   ...prev,
-                  [name]: item.color,
+                  [name]: item.title,
                 }));
               }}
             >

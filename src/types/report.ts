@@ -29,19 +29,29 @@ export type NewReport = {
   token?: string;
 };
 
+// export type ReportDetail = {
+//   id: number;
+//   createdAt: string;
+//   name: string;
+//   leader: string;
+//   leaderDepartment: string;
+//   content: string;
+//   place: string;
+//   startDate: string;
+//   endDate: Date;
+//   startTime: string;
+//   endTime: string;
+//   imageUrls: string[];
+//   participants: StudentInfo[];
+// };
+
 export type ReportDetail = {
   id: number;
   createdAt: string;
   name: string;
-  leader: string;
-  leaderDepartment: string;
   content: string;
   place: string;
-  startDate: Date;
-  endDate: Date;
-  startTime: string;
-  endTime: string;
+  startDate: string;
   imageUrls: string[];
-
   participants: StudentInfo[];
 };

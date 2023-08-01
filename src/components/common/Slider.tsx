@@ -6,8 +6,7 @@ import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import Banner from './Banner';
 interface CarouselRef {
   current: HTMLElement | null;
-  scrollLeft?: number;
-  offsetWidth?: number;
+  offsetWidth: number;
 }
 interface MaxScrollWidthRef {
   current: number;
@@ -42,17 +41,12 @@ export default function Index() {
     };
   }, []);
 
-  // useEffect(() => {
-  //   if (carousel.current) {
-  //     carousel.current.scrollLeft = carousel.current.offsetWidth * currentIndex;
-  //   }
-  // }, [currentIndex]);
-
-  // useEffect(() => {
-  //   maxScrollWidth.current = carousel.current
-  //     ? carousel.current.scrollWidth - carousel.current.offsetWidth
-  //     : 0;
-  // }, [bannerData]);
+  useEffect(() => {
+    if (carousel.current) {
+      carousel.current.scrollLeft =
+        carousel.current?.offsetWidth * currentIndex;
+    }
+  }, [currentIndex]);
 
   return (
     <div className="carousel relative my-2 overflow-hidden">
@@ -79,7 +73,7 @@ export default function Index() {
         </div>
       </div>
       <div
-        // ref={carousel}
+        ref={carousel}
         className="carousel-container relative z-0 flex w-full touch-pan-x snap-x snap-mandatory gap-1 overflow-hidden scroll-smooth"
       >
         {bannerData?.data?.map((resource, index) => (

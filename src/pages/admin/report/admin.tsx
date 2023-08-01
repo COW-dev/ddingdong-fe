@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
-import Report from '@/components//report/[id]';
+import Report from '@/components//report/[id]/[name]';
 import Heading from '@/components/common/Heading';
 import Category from '@/components/report/category';
 export default function Index() {

@@ -6,7 +6,6 @@ export default function AdminHeading() {
   const {
     data: { data },
   } = useMyClub(token);
-  console.log(data);
   return (
     <div className="flex w-full items-end justify-between">
       <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">

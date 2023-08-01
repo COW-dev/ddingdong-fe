@@ -16,16 +16,14 @@ const initialData = {
   imageUrl: '',
   participants: [],
 };
-
-export function useReportInfo(reportId: number, name: string) {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<ReportDetail, unknown>,
-    [string, number]
-  >({
-    queryKey: ['activity-reports', reportId],
-    queryFn: () => getReportInfo(reportId, name),
-    initialData,
+type Prop = {
+  term: number;
+  name: string;
+  token: string;
+};
+export function useReportInfo({ term, name, token }: Prop) {
+  return useQuery<AxiosResponse<ReportDetail, unknown>, AxiosError>({
+    queryKey: ['activity-reports', term, name],
+    queryFn: () => getReportInfo(term, name, token),
   });
 }
