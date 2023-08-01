@@ -14,7 +14,9 @@ export const dummy: any[] = [
     place: 'S1353',
     startDate: '2023-07-06',
     endDate: new Date('2023-07-06'),
-    imageUrl: Image1,
+    startTime: '14:30',
+    endTime: '16:30',
+    imageUrls: Image1,
     participants: [
       {
         name: '김세빈',
@@ -53,7 +55,9 @@ export const dummy: any[] = [
     place: 'S1350',
     startDate: new Date(),
     endDate: new Date(),
-    imageUrl: Image2,
+    startTime: '14:30',
+    endTime: '16:30',
+    imageUrls: Image2,
     participants: [
       {
         studentName: '김세빈',

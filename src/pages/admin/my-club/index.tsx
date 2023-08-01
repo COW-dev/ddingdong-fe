@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import { toast, Toaster } from 'react-hot-toast';
@@ -13,14 +12,14 @@ import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [uploadFile, setUploadFile] = useState<File[] | string[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clubData, setClubData] = useState<ClubDetail>({
-    id: 0,
     name: '',
     tag: '',
     category: '',
     leader: '',
+    content: 'test',
     phoneNumber: '',
     location: '',
     isRecruit: false,
@@ -29,21 +28,22 @@ export default function Index() {
     introduction: '',
     activity: '',
     ideal: '',
-    uploadFiles: uploadFile,
+    imageUrls: uploadFile,
+    formUrl: '',
     token: token,
-    // formUrl: '',
   });
   const {
     data: { data },
   } = useMyClub(token);
+
   const mutation = useUpdateMyClub();
 
   useEffect(() => {
     if (data) {
       setClubData(data);
+      console.log('데이터2', data);
     }
   }, [data]);
-  console.log(data);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setClubData((prev) => ({
@@ -56,38 +56,27 @@ export default function Index() {
     setIsEditing(false);
     setClubData(data);
   }
-  function createFormData(data: ClubDetail) {
+  function handleClickSubmit() {
+    setIsEditing(false);
+    setClubData({
+      ...clubData,
+      isRecruit: false,
+    });
     const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      if (value !== null && key === 'recruitPeriod') {
-        formData.set('recruitPeriod', value.toString());
-      } else if (value !== null) {
-        formData.set(key, value.toString());
+
+    Object.entries(clubData).forEach(([key, value]) => {
+      if (key !== 'uploadFiles' && key !== 'recruitPeriod') {
+        formData.append(key, value.toString());
+      } else if (clubData.imageUrls !== undefined) {
+        formData.append('uploadFiles', clubData.imageUrls.toString());
       }
     });
-    return formData;
+    const recruitPeriod = `${clubData.recruitPeriod.startDate}~${clubData.recruitPeriod.endDate}`;
+    formData.append('recruitPeriod', recruitPeriod);
+    formData.append('token', token);
+    return mutation.mutate(formData);
   }
 
-  function handleClickSubmit() {
-    if (isMissingData(clubData))
-      return toast.error('모든 항목을 입력해주세요.');
-    setIsEditing(false);
-    // const formData = new FormData();
-    // formData.append('name', clubData.name);
-    // formData.append('category', clubData.category);
-    // formData.append('tag', clubData.tag);
-    // formData.append('clubLeader', clubData.leader);
-    // formData.append('phoneNumber', clubData.phoneNumber);
-    // formData.append('location', clubData.location);
-    // formData.append('recruitPeriod', clubData.recruitPeriod.toString());
-    // formData.append('regularMeeting', clubData.regularMeeting);
-    // formData.append('introduction', clubData.introduction);
-    // formData.append('ideal', clubData.ideal);
-    // formData.append('activity', clubData.activity);
-    // formData.append('token', token);
-    const formData = createFormData(clubData);
-    mutation.mutate(formData);
-  }
   return (
     <>
       <Head>
@@ -98,8 +87,9 @@ export default function Index() {
           clubName={clubData.name}
           category={clubData.category}
           tag={clubData.tag}
-          uploadFiles={clubData.uploadFiles}
+          imageUrls={clubData.imageUrls}
           setValue={setClubData}
+          isEditing={isEditing}
         />
         {isEditing ? (
           <div className="-mr-2 mb-2 font-semibold">
@@ -129,12 +119,12 @@ export default function Index() {
       </div>
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
-          clubLeader={clubData.leader}
+          clubLeader={clubData.clubLeader}
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           recruitPeriod={clubData.recruitPeriod}
-          // formUrl={clubData.formUrl}
+          formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}
         />
@@ -147,7 +137,7 @@ export default function Index() {
             minRows={4}
             value={clubData.introduction}
             disabled={!isEditing}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             className={`${
               !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
@@ -158,7 +148,7 @@ export default function Index() {
             minRows={2}
             value={clubData.activity}
             disabled={!isEditing}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             className={`${
               !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
@@ -171,7 +161,7 @@ export default function Index() {
             minRows={2}
             value={clubData.ideal}
             disabled={!isEditing}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             className={`${
               !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
@@ -181,13 +171,3 @@ export default function Index() {
     </>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const cookies = context.req.headers.cookie;
-  const token = cookies?.split('token=')[1];
-  return {
-    props: {
-      token,
-    },
-  };
-};

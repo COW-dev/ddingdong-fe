@@ -3,7 +3,7 @@ import Image from 'next/image';
 import ImageInput from '@/assets/imageInput.svg';
 import Write from '@/assets/write.svg';
 import type { DeptCaptionColor } from '@/types';
-import { ClubDetail } from '@/types/club';
+import { ClubDetail, UpdateClub } from '@/types/club';
 
 const deptCaptionColor: DeptCaptionColor = {
   봉사: 'text-pink-500',
@@ -19,7 +19,8 @@ type AdminClubHeadingProps = {
   clubName: string;
   category: string;
   tag: string;
-  uploadFiles: File | null;
+  imageUrls: File[] | string[];
+  isEditing: boolean;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
 };
 
@@ -27,27 +28,34 @@ export default function AdminClubHeading({
   clubName,
   category,
   tag,
-  uploadFiles,
+  imageUrls,
+  isEditing,
   setValue,
 }: AdminClubHeadingProps) {
-  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string[]>([]);
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setValue((prev) => ({ ...prev, uploadFiles: file }));
     }
   }
-  useEffect(() => {
-    if (uploadFiles) {
-      const imageUrl = URL.createObjectURL(uploadFiles);
-      setPreviewImageUrl(imageUrl);
-      return () => {
-        URL.revokeObjectURL(imageUrl);
-      };
-    } else {
-      setPreviewImageUrl(null);
-    }
-  }, [uploadFiles]);
+  const parsedImgUrl =
+    imageUrls && imageUrls.length > 0
+      ? imageUrls[0].toString().slice(0, 8) + imageUrls[0].toString().slice(9)
+      : '';
+
+  // useEffect(() => {
+  //   if (imageUrls && imageUrls.length > 0) {
+  //     const imageUrl = window.URL.createObjectURL(parsedImgUrl);
+  //     setPreviewImageUrl(imageUrl);
+  //     return () => {
+  //       URL.revokeObjectURL(imageUrl);
+  //     };
+  //   } else {
+  //     setPreviewImageUrl('');
+  //   }
+  // }, [imageUrls]);
+
   function handleImageReset() {
     setValue((prev) => ({
       ...prev,
@@ -57,14 +65,14 @@ export default function AdminClubHeading({
   return (
     <>
       <div className=" relative flex flex-row items-center">
-        {uploadFiles ? (
+        {imageUrls[0] ? (
           <>
             <Image
-              src={previewImageUrl || ''}
+              src={previewImageUrl[0]}
               width={100}
               height={100}
               alt="image"
-              className="m-auto rounded-full object-cover md:h-24 md:w-24"
+              className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
             />
             <div className="absolute start-20 top-0.5">
               <Image
@@ -97,19 +105,19 @@ export default function AdminClubHeading({
         )}
         <div className=" ml-4 text-base">
           <div className="rounded-lg text-xl font-semibold md:text-3xl">
-            {clubName} 이름
+            {clubName}
           </div>
           <div className="flex items-center md:mt-0.5">
             <div
               className={`rounded-lg text-sm font-semibold md:text-lg ${deptCaptionColor[category]}`}
             >
-              {category} 카ㅔㅌ고리
+              {category}
             </div>
             <div className="px-1.5 text-sm font-medium text-gray-300 md:text-lg">
               |
             </div>
             <div className="rounded-lg text-sm font-semibold text-gray-500 md:text-lg">
-              {tag} 태그
+              {tag}
             </div>
           </div>
         </div>
