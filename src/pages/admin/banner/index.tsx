@@ -94,7 +94,7 @@ export default function Index() {
             <div className={`relative ${banner === data ? `block` : `hidden`}`}>
               <div className="absolute end-0 right-2 z-10 mt-2 w-24 rounded-md border border-gray-100 bg-white  shadow-lg ">
                 <div className=" p-2">
-                  <div
+                  {/* <div
                     className="block rounded-lg px-4 py-2 text-sm text-blue-500 opacity-90 hover:bg-gray-50 hover:font-semibold hover:text-blue-700"
                     onClick={() => {
                       handleModal({
@@ -106,7 +106,7 @@ export default function Index() {
                     }}
                   >
                     수정
-                  </div>
+                  </div> */}
                   <div
                     className="block rounded-lg px-4 py-2 text-sm text-red-500 opacity-90 hover:bg-gray-50 hover:font-semibold hover:text-red-700"
                     onClick={() => {

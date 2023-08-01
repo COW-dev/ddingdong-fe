@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import toast from 'react-hot-toast';
 import ImageInput from '@/assets/imageInput.svg';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
@@ -11,7 +10,7 @@ import { isMissingData } from '@/utils/validator';
 const init = {
   title: '',
   subTitle: '',
-  colorCode: BannerColor[1].color,
+  colorCode: BannerColor[0].title,
 };
 type Prop = {
   closeModal: () => void;
