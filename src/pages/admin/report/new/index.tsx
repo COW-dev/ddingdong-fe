@@ -9,8 +9,8 @@ import { NewReport } from '@/types/report';
 
 export default function Index() {
   const [{ token }] = useCookies();
-  const [uploadFileOne, setUploadFileOne] = useState<File>();
-  const [uploadFileTwo, setUploadFileTwo] = useState<File>();
+  const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
+  const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
   const mutation = useNewReport();
   const [reportOne, setReportOne] = useState<NewReport>({
     term: '1',

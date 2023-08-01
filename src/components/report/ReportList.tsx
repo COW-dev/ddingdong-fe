@@ -10,7 +10,10 @@ import { dummy } from './test';
 export default function ReportList() {
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
-  const currentTerm = useCurrentReports(token).data?.data?.term;
+  // const currentTermData = useCurrentReports(token).data?.data;
+  // const [currentTerm, setCurrentTerm] = useState<number>(currentTermData?.term);
+  // console.log(currentTermData);
+  const currentTerm = 1;
   const {
     data: { data: clubData },
   } = useMyClub(token);

@@ -140,8 +140,7 @@ export async function updateMyClub(clubData: FormData) {
 }
 
 export async function updateBanner(BannerData: FormData) {
-  // const token = clubData.get('token');
-
+  const token = BannerData.get('token');
   return await api.patch('/club/my', BannerData, {
     headers: {
       Authorization: 'Bearer ' + token,

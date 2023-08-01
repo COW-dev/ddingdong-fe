@@ -17,7 +17,7 @@ export default function Index({ clubId }: ClubDetailProps) {
 
   if (isSuccess) {
     const clubInfo = data.data;
-    const { name, introduction, activity, ideal, formUrl } = clubInfo;
+    const { name, introduction, activity, ideal } = clubInfo;
 
     return (
       <>
@@ -55,7 +55,7 @@ export default function Index({ clubId }: ClubDetailProps) {
             </ul>
           </section>
         </main>
-        <BottomButton href={formUrl}>지원하기</BottomButton>
+        <BottomButton href="#">지원하기</BottomButton>
       </>
     );
   }

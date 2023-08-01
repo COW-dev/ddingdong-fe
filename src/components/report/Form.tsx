@@ -21,9 +21,9 @@ type ReportProps = {
   content: string;
   startTime: string;
   endTime: string;
-  participants: StudentInfo[];
+  // participants: StudentInfo[];
   setValue: Dispatch<SetStateAction<NewReport>>;
-  setImage: Dispatch<SetStateAction<File>>;
+  setImage: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function Form({
@@ -69,7 +69,7 @@ export default function Form({
     }
   }
   function handleImageReset() {
-    setValue((prev) => ({
+    setValue((prev: any) => ({
       ...prev,
       uploadFiles: null,
     }));

@@ -13,7 +13,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     name,
     category,
     tag,
-    clubLeader,
+    leader,
     phoneNumber,
     location,
     regularMeeting,
@@ -57,7 +57,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           <div className="flex w-full flex-col md:flex-row">
             <div className="mb-1.5 w-full max-w-[20rem]">
               <span className="inline-block w-20 text-gray-500">회장</span>
-              <span>{clubLeader}</span>
+              <span>{leader}</span>
             </div>
             <div className="mb-1.5">
               <span className="inline-block w-20 text-gray-500">연락처</span>
@@ -83,11 +83,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
         </div>
         <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">
-          <a
-            href={formUrl}
-            target="_blank"
-            className="inline-block w-full py-3.5"
-          >
+          <a href="#" target="_blank" className="inline-block w-full py-3.5">
             지원하기
           </a>
         </button>

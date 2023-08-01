@@ -14,12 +14,13 @@ export type MyReportList = {
 };
 
 export type CurrentReport = {
+  term: CurrentReport | undefined;
   currentTerm: string;
 };
 
 export type NewReport = {
   term: string;
-  uploadFiles: File | undefined;
+  uploadFiles: File | null;
   date: DateRangeType;
   place: string;
   startTime: string;
@@ -29,24 +30,24 @@ export type NewReport = {
   token?: string;
 };
 
-// export type ReportDetail = {
-//   id: number;
-//   createdAt: string;
-//   name: string;
-//   leader: string;
-//   leaderDepartment: string;
-//   content: string;
-//   place: string;
-//   startDate: string;
-//   endDate: Date;
-//   startTime: string;
-//   endTime: string;
-//   imageUrls: string[];
-//   participants: StudentInfo[];
-// };
+export type ReportDataType = {
+  reportId: number;
+  createdAt: string;
+  name: string;
+  leader: string;
+  leaderDepartment: string;
+  content: string;
+  place: string;
+  startDate: string;
+  endDate: Date;
+  startTime: string;
+  endTime: string;
+  imageUrls: string[];
+  participants: StudentInfo[];
+};
 
 export type ReportDetail = {
-  id: number;
+  reportId: number;
   createdAt: string;
   name: string;
   content: string;

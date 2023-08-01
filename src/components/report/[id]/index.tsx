@@ -6,7 +6,7 @@ import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { ReportDetail } from '@/types/report';
+import { ReportDataType, ReportDetail } from '@/types/report';
 import { dummy } from './data';
 type ReportDetailProps = {
   term: number;
@@ -14,7 +14,7 @@ type ReportDetailProps = {
 };
 
 export default function Index({ term, club }: ReportDetailProps) {
-  const [reportData, setReportData] = useState<Array<ReportDetail>>(dummy);
+  const [reportData, setReportData] = useState<Array<ReportDataType>>(dummy);
 
   return (
     <>
@@ -39,7 +39,7 @@ export default function Index({ term, club }: ReportDetailProps) {
 
         <div className="mt-5 w-full md:mt-10">
           <Accordion title="활동 1">
-            <Detail
+            {/* <Detail
               reportId={reportData[0].reportId}
               content={reportData[0].content}
               place={reportData[0].place}
@@ -47,10 +47,10 @@ export default function Index({ term, club }: ReportDetailProps) {
               endDate={reportData[0].endDate}
               imageUrl={reportData[0].imageUrl}
               participants={reportData[0].participants}
-            />
+            /> */}
           </Accordion>
           <Accordion title="활동 2">
-            <Detail
+            {/* <Detail
               reportId={reportData[1].reportId}
               content={reportData[1].content}
               place={reportData[1].place}
@@ -58,7 +58,7 @@ export default function Index({ term, club }: ReportDetailProps) {
               endDate={reportData[1].endDate}
               imageUrl={reportData[1].imageUrl}
               participants={reportData[1].participants}
-            />
+            /> */}
           </Accordion>
         </div>
       </div>

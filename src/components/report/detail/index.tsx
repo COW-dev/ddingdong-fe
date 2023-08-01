@@ -3,7 +3,7 @@ import Image, { StaticImageData } from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Place from '@/assets/place.svg';
-import { ReportDetail, StudentInfo } from '@/types/report';
+import { ReportDataType, ReportDetail, StudentInfo } from '@/types/report';
 import ActiveDate from './ActiveDate';
 import Time from './Time';
 
@@ -11,8 +11,9 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
   console.log('reportData', reportData);
   const { content, place, startDate, imageUrls, participants } =
     reportData ?? {};
-  const parsedImgUrl = imageUrls[0].slice(0, 8) + imageUrls[0].slice(9);
-  console.log('parsedImgUrl', parsedImgUrl);
+
+  // const parsedImgUrl = imageUrls[0].slice(0, 8) + imageUrls[0].slice(9);
+  // console.log('parsedImgUrl', parsedImgUrl);
 
   const [info, setInfo] = useState<boolean>(true);
   return (
@@ -22,13 +23,13 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
         <div className="mb-4 inline-block shadow-xl md:hidden">
           <div className="z-10 flex w-full flex-col items-center overflow-hidden rounded-xl ">
             <div className="relative">
-              <Image
+              {/* <Image
                 src={parsedImgUrl}
                 className="over m-auto object-scale-down "
                 alt="reportImage"
                 width={100}
                 height={100}
-              />
+              /> */}
               <div
                 className={`absolute right-2 ${
                   info ? `top-[11vh]` : `top-[1vh]`
@@ -71,14 +72,14 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
           <p className="my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 참여 인원
           </p>
-          <ul className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 lg:grid-cols-2">
+          {/* <ul className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 lg:grid-cols-2">
             {participants?.map((participant) => (
               <li key={participant.studentId}>
                 {participant.studentName} | {participant.studentId} |{' '}
                 {participant.studentMajor}
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
 
         <div className="p-3 md:p-0">
@@ -91,13 +92,13 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
         </div>
       </div>
       <div className="flex hidden justify-center overflow-hidden rounded-xl shadow-xl md:inline-block md:w-1/2 lg:w-2/5">
-        <Image
+        {/* <Image
           src={parsedImgUrl}
           width={100}
           height={100}
           className="over m-auto object-scale-down"
           alt="reportImage"
-        />
+        /> */}
       </div>
     </div>
   );
