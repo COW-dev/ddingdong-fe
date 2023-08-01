@@ -1,26 +1,32 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import { useAllReports } from '@/hooks/api/club/useAllReports';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
+import { useMyAllReports } from '@/hooks/api/club/useMyAllReports';
+import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { MyReportList } from '@/types/report';
 import { dummy } from './test';
 
 export default function ReportList() {
-  const [club, setClub] = useState('COW');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
-  const currentTerm = 1;
-
-  const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
-  const data = dummy;
-  // const { data } = useAllReports(token);
-  useEffect(() => data && setMyReportList(data?.data), [data]);
-
-  const submitTerms = data?.data
+  const currentTerm = useCurrentReports(token).data?.data?.term;
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
+  const [club, setClub] = useState(clubData?.name);
+  const { data: reportData } = useMyAllReports(token);
+  const [myReportList, setMyReportList] = useState<Array<MyReportList>>(
+    reportData?.data ?? [],
+  );
+  useEffect(() => {
+    reportData && setMyReportList(reportData?.data);
+    setClub(clubData?.name);
+  }, [reportData]);
+  const submitTerms = myReportList
     .filter((item) => item.name === club)
     .map((item) => item.term);
-  const isReports = data?.data
+  const isReports = myReportList
     .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => item.term);
 

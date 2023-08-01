@@ -19,7 +19,7 @@ export type CurrentReport = {
 
 export type NewReport = {
   term: string;
-  uploadFiles: File | null;
+  uploadFiles: File | undefined;
   date: DateRangeType;
   place: string;
   startTime: string;

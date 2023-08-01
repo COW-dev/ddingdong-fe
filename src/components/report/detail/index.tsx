@@ -11,6 +11,8 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
   console.log('reportData', reportData);
   const { content, place, startDate, imageUrls, participants } =
     reportData ?? {};
+  const parsedImgUrl = imageUrls[0].slice(0, 8) + imageUrls[0].slice(9);
+  console.log('parsedImgUrl', parsedImgUrl);
 
   const [info, setInfo] = useState<boolean>(true);
   return (
@@ -21,9 +23,11 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
           <div className="z-10 flex w-full flex-col items-center overflow-hidden rounded-xl ">
             <div className="relative">
               <Image
-                src={imageUrls && imageUrls[0]}
+                src={parsedImgUrl}
                 className="over m-auto object-scale-down "
                 alt="reportImage"
+                width={100}
+                height={100}
               />
               <div
                 className={`absolute right-2 ${
@@ -88,7 +92,9 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
       </div>
       <div className="flex hidden justify-center overflow-hidden rounded-xl shadow-xl md:inline-block md:w-1/2 lg:w-2/5">
         <Image
-          src={imageUrls && imageUrls[0]}
+          src={parsedImgUrl}
+          width={100}
+          height={100}
           className="over m-auto object-scale-down"
           alt="reportImage"
         />

@@ -5,13 +5,12 @@ import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import Select from '@/hooks/common/useSelect';
 import { NewReport } from '@/types/report';
 
 export default function Index() {
   const [{ token }] = useCookies();
-  const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
-  const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
+  const [uploadFileOne, setUploadFileOne] = useState<File>();
+  const [uploadFileTwo, setUploadFileTwo] = useState<File>();
   const mutation = useNewReport();
   const [reportOne, setReportOne] = useState<NewReport>({
     term: '1',
@@ -66,10 +65,6 @@ export default function Index() {
       {
         term: reportOne.term,
         date: reportOne.date,
-        // ' ' +
-        // reportOne.startTime.toString() +
-        // ' ' +
-        // reportOne.endTime.toString(), // Convert date to ISO string
         place: reportOne.place,
         content: reportOne.content,
         participants: reportTwo.participants,
@@ -77,39 +72,20 @@ export default function Index() {
       {
         term: reportTwo.term,
         date: reportTwo.date,
-        // reportTwo.date.startDate +
-        // ' ' +
-        // reportTwo.startTime.toString() +
-        // ' ' +
-        // reportTwo.endTime.toString(), // Convert date to ISO string
         place: reportTwo.place,
         content: reportTwo.content,
         participants: reportTwo.participants,
       },
     ];
     const formData = new FormData();
-    // const blob = new Blob([JSON.stringify(reportData)], {
-    //   type: 'application/json',
-    // });
-    console.log(uploadFileOne);
     formData.append(
       'reportData',
       new Blob([JSON.stringify(reportData)], { type: 'application/json' }),
     );
-    // console.log(formData.get('reportData'));
-    // formData.append('reportData', blob);
-
     uploadFileOne &&
       formData.append('uploadFiles', uploadFileOne, `uploadFiles`);
     uploadFileTwo &&
       formData.append('uploadFiles', uploadFileTwo, `uploadFiles`);
-    // const fileExtension = uploadFiles.blob.type.replace('image/', '');
-    // if (reportOne.uploadFiles !== undefined) {
-    //   formData.append('uploadFiles', reportOne.uploadFiles as File);
-    // }
-    // if (reportTwo.uploadFiles !== undefined) {
-    //   formData.append('uploadFiles', reportTwo.uploadFiles as File);
-    // }
     formData.append('token', token);
 
     return mutation.mutate(formData);
@@ -132,7 +108,7 @@ export default function Index() {
             startTime={reportOne.startTime}
             endTime={reportOne.endTime}
             content={reportOne.content}
-            participants={reportOne.participants}
+            // participants={reportOne.participants}
             setValue={setReportOne}
             setImage={setUploadFileOne}
           />
@@ -145,7 +121,7 @@ export default function Index() {
             startTime={reportTwo.startTime}
             endTime={reportTwo.endTime}
             content={reportTwo.content}
-            participants={reportTwo.participants}
+            // participants={reportTwo.participants}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
           />
