@@ -156,12 +156,9 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(
-  reportData: FormData,
-): Promise<AxiosResponse> {
-  const token = reportData.get('token');
-
-  return await api.post('/club/my/activity-reports', reportData, {
+export async function createReport(formdata: FormData): Promise<AxiosResponse> {
+  const token = formdata.get('token');
+  return await api.post('/club/my/activity-reports', formdata, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',

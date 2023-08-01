@@ -23,6 +23,7 @@ type ReportProps = {
   endTime: string;
   participants: StudentInfo[];
   setValue: Dispatch<SetStateAction<NewReport>>;
+  setImage: Dispatch<SetStateAction<File>>;
 };
 
 export default function Form({
@@ -34,6 +35,7 @@ export default function Form({
   participants,
   content,
   setValue,
+  setImage,
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
@@ -45,6 +47,7 @@ export default function Form({
 
   useEffect(() => {
     if (uploadFiles) {
+      setImage(uploadFiles);
       const imageUrl = URL.createObjectURL(uploadFiles);
       setPreviewImageUrl(imageUrl);
       return () => {
@@ -172,7 +175,11 @@ export default function Form({
                 type="file"
                 accept="image/*"
                 className="hidden"
-                onChange={handleImageChange}
+                onChange={(e) => {
+                  handleImageChange(e);
+                  if (e.target.files && e.target.files.length > 0)
+                    setImage(e.target.files[0]);
+                }}
               />
             </label>
           )}

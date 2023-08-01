@@ -2,9 +2,9 @@ import { StaticImageData } from 'next/image';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
 export type StudentInfo = {
-  studentName: string;
+  name: string;
   studentId: number;
-  studentMajor: string;
+  department: string;
 };
 
 export type MyReportList = {

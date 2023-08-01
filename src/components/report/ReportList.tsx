@@ -10,14 +10,13 @@ export default function ReportList() {
   const [club, setClub] = useState('COW');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
-  const currentTerm = 6;
+  const currentTerm = 1;
 
   const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
   const data = dummy;
   // const { data } = useAllReports(token);
   useEffect(() => data && setMyReportList(data?.data), [data]);
 
-  //console.log('현재 기간', currentTerm.data);
   const submitTerms = data?.data
     .filter((item) => item.name === club)
     .map((item) => item.term);
