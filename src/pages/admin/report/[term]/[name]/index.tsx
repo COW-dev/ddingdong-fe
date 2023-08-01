@@ -22,13 +22,13 @@ export default function Index({ term, name }: ReportDetailProps) {
 
   const reportDataList = useReportInfo({ term, name, token }).data;
   const [reportData, setReportData] = useState<ReportDetail[]>([
-    // reportDataList?.data[0],
-    // reportDataList?.data[1],
+    reportDataList?.data[0],
+    reportDataList?.data[1],
   ]);
 
   useEffect(() => {
     if (reportDataList?.data) {
-      // setReportData([reportDataList.data[0], reportDataList.data[1]]);
+      setReportData([reportDataList.data[0], reportDataList.data[1]]);
     }
   }, [reportDataList?.data]);
 
