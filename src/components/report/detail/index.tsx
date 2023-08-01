@@ -3,44 +3,37 @@ import Image, { StaticImageData } from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Place from '@/assets/place.svg';
-import { StudentInfo } from '@/types/report';
-import Date from './Date';
+import { ReportDataType, ReportDetail, StudentInfo } from '@/types/report';
+import ActiveDate from './ActiveDate';
 import Time from './Time';
-type ReportDetailProps = {
-  reportId: number;
-  content: string;
-  place: string;
-  startDate: Date;
-  endDate: Date;
-  imageUrl: StaticImageData;
-  participants: StudentInfo[];
-};
 
-export default function Index({
-  content,
-  place,
-  startDate,
-  endDate,
-  imageUrl,
-  participants,
-}: ReportDetailProps) {
+export default function Index({ reportData }: { reportData: ReportDetail }) {
+  console.log('reportData', reportData);
+  const { content, place, startDate, imageUrls, participants } =
+    reportData ?? {};
+
+  // const parsedImgUrl = imageUrls[0].slice(0, 8) + imageUrls[0].slice(9);
+  // console.log('parsedImgUrl', parsedImgUrl);
+
   const [info, setInfo] = useState<boolean>(true);
   return (
     <div className="flex flex-col items-center truncate md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
       <div className="mb-5 flex flex-col">
         {/* sm */}
         <div className="mb-4 inline-block shadow-xl md:hidden">
-          <div className="flex w-full  flex-col items-center overflow-hidden rounded-xl ">
+          <div className="z-10 flex w-full flex-col items-center overflow-hidden rounded-xl ">
             <div className="relative">
-              <Image
-                src={imageUrl}
+              {/* <Image
+                src={parsedImgUrl}
                 className="over m-auto object-scale-down "
                 alt="reportImage"
-              />
+                width={100}
+                height={100}
+              /> */}
               <div
                 className={`absolute right-2 ${
                   info ? `top-[11vh]` : `top-[1vh]`
-                } z-20`}
+                } z-10`}
               >
                 <Image
                   src={info ? ArrowUp : ArrowDown}
@@ -56,7 +49,7 @@ export default function Index({
                 <div className="absolute flex h-[15vh] w-full flex-1 justify-between bg-white bg-opacity-70 px-[10%] text-gray-500">
                   <div className="p-3">
                     <div className="text-xl font-semibold">1 회차</div>
-                    <Date startDate={startDate} />
+                    <ActiveDate startDate={startDate} />
                   </div>
                   <Time place={place} />
                 </div>
@@ -69,7 +62,7 @@ export default function Index({
         {/* md */}
         <div className="hidden md:inline-block">
           <div className="flex flex-col items-center md:flex-row">
-            <Date startDate={startDate} />
+            <ActiveDate startDate={startDate} />
             <Time place={place} />
           </div>
         </div>
@@ -79,14 +72,14 @@ export default function Index({
           <p className="my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 참여 인원
           </p>
-          <ul className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 lg:grid-cols-2">
+          {/* <ul className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 lg:grid-cols-2">
             {participants?.map((participant) => (
               <li key={participant.studentId}>
                 {participant.studentName} | {participant.studentId} |{' '}
                 {participant.studentMajor}
               </li>
             ))}
-          </ul>
+          </ul> */}
         </div>
 
         <div className="p-3 md:p-0">
@@ -99,11 +92,13 @@ export default function Index({
         </div>
       </div>
       <div className="flex hidden justify-center overflow-hidden rounded-xl shadow-xl md:inline-block md:w-1/2 lg:w-2/5">
-        <Image
-          src={imageUrl}
+        {/* <Image
+          src={parsedImgUrl}
+          width={100}
+          height={100}
           className="over m-auto object-scale-down"
           alt="reportImage"
-        />
+        /> */}
       </div>
     </div>
   );

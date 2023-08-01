@@ -13,6 +13,7 @@ type Props = {
 export default function ModifyBanner({ data, closeModal }: Props) {
   const { id, title, subTitle, colorCode, imgUrl } = data;
   const [image, setImage] = useState<File | string>(imgUrl);
+  // const updateMutation = useUpdateClub();
 
   const [changedBanner, setBanner] = useState<NewBannerType>({
     title,
@@ -45,6 +46,7 @@ export default function ModifyBanner({ data, closeModal }: Props) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // updateMutation.mutate({ id, token: cookies.token });
     closeModal();
   }
 

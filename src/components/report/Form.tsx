@@ -21,30 +21,22 @@ type ReportProps = {
   content: string;
   startTime: string;
   endTime: string;
-  participants: StudentInfo[];
+  // participants: StudentInfo[];
   setValue: Dispatch<SetStateAction<NewReport>>;
+  setImage: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function Form({
   date,
   uploadFiles,
-  place,
-  startTime,
-  endTime,
-  participants,
-  content,
   setValue,
+  setImage,
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
-  const [hydrated, setHydrated] = useState(false);
-
-  // useEffect(() => {
-  //   setHydrated(true);
-  // }, []);
-  // if (!hydrated) return null;
 
   useEffect(() => {
     if (uploadFiles) {
+      setImage(uploadFiles);
       const imageUrl = URL.createObjectURL(uploadFiles);
       setPreviewImageUrl(imageUrl);
       return () => {
@@ -54,6 +46,7 @@ export default function Form({
       setPreviewImageUrl(null);
     }
   }, [uploadFiles]);
+
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
@@ -61,23 +54,22 @@ export default function Form({
       ...prev,
       [event.target.name]: event.target.value,
     }));
-    console.log(event.target.value.toString());
   }
   function handleDateChange(selectedDate: DateValueType) {
     setValue((prev) => ({
       ...prev,
       date: selectedDate as DateRangeType,
     }));
-    console.log(selectedDate);
   }
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setValue((prev) => ({ ...prev, uploadFiles: file }));
+      setImage(file);
     }
   }
   function handleImageReset() {
-    setValue((prev) => ({
+    setValue((prev: any) => ({
       ...prev,
       uploadFiles: null,
     }));
@@ -178,7 +170,6 @@ export default function Form({
           )}
         </div>
       </div>
-      {/* <Modal modal={modal} data={participants} setModal={setModal} /> */}
     </>
   );
 }

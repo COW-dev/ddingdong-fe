@@ -29,7 +29,7 @@ export type ClubDetail = {
   name: string;
   tag: string;
   category: string;
-  clubLeader: string;
+  leader: string;
   phoneNumber: string;
   location: string;
   isRecruit: boolean;

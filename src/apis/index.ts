@@ -139,6 +139,15 @@ export async function updateMyClub(clubData: FormData) {
   });
 }
 
+export async function updateBanner(BannerData: FormData) {
+  const token = BannerData.get('token');
+  return await api.patch('/club/my', BannerData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
 export async function updateClub({ id, score, token }: UpdateClub) {
   return await api.patch(`/admin/clubs/${id}/score?score=${score}`, score, {
     headers: {
@@ -146,12 +155,9 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(
-  reportData: FormData,
-): Promise<AxiosResponse> {
-  const token = reportData.get('token');
-
-  return await api.post('/club/my/activity-reports', reportData, {
+export async function createReport(formdata: FormData): Promise<AxiosResponse> {
+  const token = formdata.get('token');
+  return await api.post('/club/my/activity-reports', formdata, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
@@ -159,13 +165,20 @@ export async function createReport(
   });
 }
 export async function getReportInfo(
-  reportId: number,
+  term: number,
   name: string,
+  token: string,
 ): Promise<AxiosResponse<ReportDetail, unknown>> {
   return await api.get(
-    `/club/activity-reports?term=${reportId}&club_name=${name}`,
+    `/club/activity-reports?term=${term}&club_name=${name}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
   );
 }
+
 export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {
@@ -175,6 +188,7 @@ export async function getMyReportLists(
     },
   });
 }
+
 export async function getCurrentReports(
   token: string,
 ): Promise<AxiosResponse<CurrentReport, unknown>> {

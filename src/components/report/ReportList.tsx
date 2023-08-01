@@ -1,28 +1,35 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import { useAllReports } from '@/hooks/api/club/useAllReports';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
+import { useMyAllReports } from '@/hooks/api/club/useMyAllReports';
+import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { MyReportList } from '@/types/report';
+import { dummy } from './test';
 
 export default function ReportList() {
-  const [club, setClub] = useState('cow');
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
+  // const currentTermData = useCurrentReports(token).data?.data;
+  // const [currentTerm, setCurrentTerm] = useState<number>(currentTermData?.term);
+  // console.log(currentTermData);
   const currentTerm = 1;
-
-  const [myReportList, setMyReportList] = useState<Array<MyReportList>>([]);
-
-  const { data } = useAllReports(token);
-
-  useEffect(() => data && setMyReportList(data?.data), [data]);
-
-  //console.log('현재 기간', currentTerm.data);
-  const submitTerms = data?.data
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
+  const [club, setClub] = useState(clubData?.name);
+  const { data: reportData } = useMyAllReports(token);
+  const [myReportList, setMyReportList] = useState<Array<MyReportList>>(
+    reportData?.data ?? [],
+  );
+  useEffect(() => {
+    reportData && setMyReportList(reportData?.data);
+    setClub(clubData?.name);
+  }, [reportData]);
+  const submitTerms = myReportList
     .filter((item) => item.name === club)
     .map((item) => item.term);
-
-  const isReports = data?.data
+  const isReports = myReportList
     .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => item.term);
 
@@ -42,7 +49,7 @@ export default function ReportList() {
                 }`}
               >
                 {isReports?.includes(item) ? (
-                  <Link href={`/report/${item}`}>
+                  <Link href={`/report/${item}/${club}`}>
                     <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                       <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
                         <span className="text-lg font-bold md:text-xl">

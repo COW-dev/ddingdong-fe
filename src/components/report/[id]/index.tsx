@@ -1,23 +1,20 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { ReportDetail } from '@/types/report';
+import { ReportDataType, ReportDetail } from '@/types/report';
 import { dummy } from './data';
-
 type ReportDetailProps = {
-  reportId: number;
-  name: string;
+  term: number;
+  club: string;
 };
 
-export default function Index({ reportId, name }: ReportDetailProps) {
-  const [reportData, setReportData] = useState<Array<ReportDetail>>(dummy);
-  const {
-    data: { data },
-  } = useReportInfo(reportId, name);
+export default function Index({ term, club }: ReportDetailProps) {
+  const [reportData, setReportData] = useState<Array<ReportDataType>>(dummy);
 
   return (
     <>
@@ -42,7 +39,7 @@ export default function Index({ reportId, name }: ReportDetailProps) {
 
         <div className="mt-5 w-full md:mt-10">
           <Accordion title="활동 1">
-            <Detail
+            {/* <Detail
               reportId={reportData[0].reportId}
               content={reportData[0].content}
               place={reportData[0].place}
@@ -50,10 +47,10 @@ export default function Index({ reportId, name }: ReportDetailProps) {
               endDate={reportData[0].endDate}
               imageUrl={reportData[0].imageUrl}
               participants={reportData[0].participants}
-            />
+            /> */}
           </Accordion>
           <Accordion title="활동 2">
-            <Detail
+            {/* <Detail
               reportId={reportData[1].reportId}
               content={reportData[1].content}
               place={reportData[1].place}
@@ -61,7 +58,7 @@ export default function Index({ reportId, name }: ReportDetailProps) {
               endDate={reportData[1].endDate}
               imageUrl={reportData[1].imageUrl}
               participants={reportData[1].participants}
-            />
+            /> */}
           </Accordion>
         </div>
       </div>
@@ -69,10 +66,13 @@ export default function Index({ reportId, name }: ReportDetailProps) {
   );
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
+  const { id, item, name } = context.query;
+  console.log(id, item, name);
   return {
     props: {
-      reportId: id,
+      id: id,
+      item: item,
+      name: name,
     },
   };
 };

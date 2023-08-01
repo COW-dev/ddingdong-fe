@@ -5,15 +5,8 @@ type ParticipantsProps = {
   index: number;
   participant: StudentInfo;
 };
-export default function Participants({
-  index,
-  participant,
-}: ParticipantsProps) {
-  // useEffect(() => {
-  //   if (clubData) setClubData(clubData);
-  // }, [clubData]);
 
-export default function Participants({ data, setModal }: ModalProp) {
+export default function Participants() {
   const [participants, setParticipants] = useState<Array<StudentInfo>>([
     {
       studentName: '',
@@ -50,7 +43,6 @@ export default function Participants({ data, setModal }: ModalProp) {
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setModal(MODAL_TYPE.null);
   }
 
   return (
@@ -60,11 +52,8 @@ export default function Participants({ data, setModal }: ModalProp) {
         <label className="inline-block px-4 pb-2 font-semibold">학번</label>
         <label className="inline-block px-4 pb-2 font-semibold">학과</label>
       </div>
-      {participants.map((index) => (
-        <div
-          key={index}
-          className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 "
-        >
+      {/* {participants.map((index) => (
+        <div className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 ">
           <input
             name="studentName"
             type="text"
@@ -87,7 +76,7 @@ export default function Participants({ data, setModal }: ModalProp) {
             onChange={(e) => handleChange(e)}
           />
         </div>
-      ))}
+      ))} */}
       <button
         type="submit"
         className="mt-6 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg "

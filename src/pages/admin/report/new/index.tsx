@@ -5,7 +5,6 @@ import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Form from '@/components/report/Form';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import Select from '@/hooks/common/useSelect';
 import { NewReport } from '@/types/report';
 
 export default function Index() {
@@ -14,7 +13,7 @@ export default function Index() {
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
   const mutation = useNewReport();
   const [reportOne, setReportOne] = useState<NewReport>({
-    term: '2',
+    term: '1',
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     startTime: '',
@@ -24,7 +23,7 @@ export default function Index() {
     participants: [],
   });
   const [reportTwo, setReportTwo] = useState<NewReport>({
-    term: '2',
+    term: '1',
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     content: '',
@@ -33,76 +32,61 @@ export default function Index() {
     uploadFiles: uploadFileTwo,
     participants: [
       {
-        studentName: '김세빈',
+        name: '김세빈',
         studentId: 60211904,
-        studentMajor: '융합소프트웨어학부',
+        department: '융합소프트웨어학부',
       },
       {
-        studentName: '김보겸',
+        name: '김보겸',
         studentId: 60211614,
-        studentMajor: '융합소프트웨어학부',
+        department: '융합소프트웨어학부',
       },
       {
-        studentName: '모유경',
+        name: '모유경',
         studentId: 60201034,
-        studentMajor: '융합소프트웨어학부',
+        department: '융합소프트웨어학부',
       },
       {
-        studentName: '유원준',
+        name: '유원준',
         studentId: 60201664,
-        studentMajor: '융합소프트웨어학부',
+        department: '융합소프트웨어학부',
       },
       {
-        studentName: '박수환',
+        name: '박수환',
         studentId: 60202904,
-        studentMajor: '융합소프트웨어학부',
+        department: '융합소프트웨어학부',
       },
     ],
   });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
     const reportData = [
       {
         term: reportOne.term,
-        date:
-          reportOne.date.startDate +
-          ' ' +
-          reportOne.startTime.toString() +
-          ' ' +
-          reportOne.endTime.toString(), // Convert date to ISO string
+        date: reportOne.date,
         place: reportOne.place,
         content: reportOne.content,
-        participants: reportOne.participants,
+        participants: reportTwo.participants,
       },
       {
         term: reportTwo.term,
-        date:
-          reportTwo.date.startDate +
-          ' ' +
-          reportTwo.startTime.toString() +
-          ' ' +
-          reportTwo.endTime.toString(), // Convert date to ISO string
+        date: reportTwo.date,
         place: reportTwo.place,
         content: reportTwo.content,
         participants: reportTwo.participants,
       },
     ];
     const formData = new FormData();
-    console.log(reportData);
-    const blob = new Blob([JSON.stringify(reportData)], {
-      type: 'application/json',
-    });
-    formData.append('reportData', blob);
-    if (reportOne.uploadFiles !== undefined) {
-      formData.append('uploadFiles', reportOne.uploadFiles as File);
-    }
-    if (reportTwo.uploadFiles !== undefined) {
-      formData.append('uploadFiles', reportTwo.uploadFiles as File);
-    }
+    formData.append(
+      'reportData',
+      new Blob([JSON.stringify(reportData)], { type: 'application/json' }),
+    );
+    uploadFileOne &&
+      formData.append('uploadFiles', uploadFileOne, `uploadFiles`);
+    uploadFileTwo &&
+      formData.append('uploadFiles', uploadFileTwo, `uploadFiles`);
     formData.append('token', token);
-    console.log(formData);
 
     return mutation.mutate(formData);
   }
@@ -124,8 +108,9 @@ export default function Index() {
             startTime={reportOne.startTime}
             endTime={reportOne.endTime}
             content={reportOne.content}
-            participants={reportOne.participants}
+            // participants={reportOne.participants}
             setValue={setReportOne}
+            setImage={setUploadFileOne}
           />
         </Accordion>
         <Accordion title="활동2">
@@ -136,8 +121,9 @@ export default function Index() {
             startTime={reportTwo.startTime}
             endTime={reportTwo.endTime}
             content={reportTwo.content}
-            participants={reportTwo.participants}
+            // participants={reportTwo.participants}
             setValue={setReportTwo}
+            setImage={setUploadFileTwo}
           />
         </Accordion>
         <div className=" fixed bottom-4 right-4 md:mt-6">
