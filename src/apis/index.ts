@@ -8,6 +8,7 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
+  UpdateMyClub,
 } from '@/types/club';
 
 import {
@@ -131,10 +132,10 @@ export async function getMyClub(
 
 export async function updateMyClub(clubData: FormData) {
   const token = clubData.get('token');
-
   return await api.patch('/club/my', clubData, {
     headers: {
       Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
     },
   });
 }

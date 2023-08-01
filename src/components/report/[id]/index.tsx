@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import Head from 'next/head';
 import { GetServerSideProps } from 'next/types';
 import Accordion from '@/components/common/Accordion';
-import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/Detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
@@ -46,7 +44,9 @@ export default function Index({ reportId, name }: ReportDetailProps) {
               place={reportData[0].place}
               startDate={reportData[0].startDate}
               endDate={reportData[0].endDate}
-              imageUrl={reportData[0].imageUrl}
+              startTime={reportData[0].startTime}
+              endTime={reportData[0].endTime}
+              imageUrls={reportData[0].imageUrls}
               participants={reportData[0].participants}
             />
           </Accordion>
@@ -57,7 +57,9 @@ export default function Index({ reportId, name }: ReportDetailProps) {
               place={reportData[1].place}
               startDate={reportData[1].startDate}
               endDate={reportData[1].endDate}
-              imageUrl={reportData[1].imageUrl}
+              startTime={reportData[1].startTime}
+              endTime={reportData[1].endTime}
+              imageUrls={reportData[1].imageUrls}
               participants={reportData[1].participants}
             />
           </Accordion>

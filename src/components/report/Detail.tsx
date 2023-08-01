@@ -6,6 +6,7 @@ type ReportDetailProps = {
   content: string;
   place: string;
   startDate: Date;
+  endDate: Date;
   startTime: string;
   endTime: string;
   imageUrls: string;
@@ -13,6 +14,7 @@ type ReportDetailProps = {
 };
 
 export default function Detail({
+  reportId,
   content,
   place,
   startDate,

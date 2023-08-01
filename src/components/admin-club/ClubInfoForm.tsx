@@ -10,26 +10,26 @@ import {
   DateValueType,
   DateRangeType,
 } from 'react-tailwindcss-datepicker/dist/types';
-import { ClubDetail } from '@/types/club';
+import { ClubDetail, UpdateClub } from '@/types/club';
 
 type ClubInfoFormProps = {
-  clubLeader: string;
+  leader: string;
   phoneNumber: string;
   location: string;
-  recruitPeriod: DateValueType;
   regularMeeting: string;
-  // formUrl: string;
+  recruitPeriod: DateRangeType;
+  formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
 };
 
 export default function ClubInfoForm({
-  clubLeader,
+  leader,
   phoneNumber,
   location,
-  recruitPeriod,
   regularMeeting,
-  // formUrl,
+  recruitPeriod,
+  formUrl,
   setValue,
   isEditing,
 }: ClubInfoFormProps) {
@@ -45,10 +45,11 @@ export default function ClubInfoForm({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(selectedDate: DateValueType) {
+  function handleDateChange(event: DateValueType) {
+    const { startDate, endDate } = event as DateRangeType;
     setValue((prev) => ({
       ...prev,
-      recruitPeriod: selectedDate as DateRangeType,
+      recruitPeriod: { startDate, endDate },
     }));
   }
 
@@ -60,15 +61,15 @@ export default function ClubInfoForm({
             회장
           </label>
           <input
-            name="clubLeader"
+            name="leader"
             type="text"
             spellCheck={false}
             className={`${
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
-            value={clubLeader}
-            onChange={handleChange}
-            disabled={!isEditing}
+            value={leader}
+            onChange={(e) => handleChange(e)}
+            disabled
           />
         </div>
         <div className="mb-2 w-full md:mb-3 md:w-[50%]">
@@ -83,7 +84,7 @@ export default function ClubInfoForm({
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
             value={phoneNumber}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             disabled={!isEditing}
           />
         </div>
@@ -101,7 +102,7 @@ export default function ClubInfoForm({
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
             value={location}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             disabled={!isEditing}
           />
         </div>
@@ -117,7 +118,7 @@ export default function ClubInfoForm({
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
             value={regularMeeting}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             disabled={!isEditing}
           />
         </div>
@@ -130,12 +131,11 @@ export default function ClubInfoForm({
           <div className="w-[75%]">
             <Datepicker
               value={recruitPeriod}
-              datepicker-format="yyyy/mm/dd"
               useRange={false}
               disabled={!isEditing}
               minDate={new Date(new Date().getFullYear(), 0, 1)}
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
-              onChange={handleDateChange}
+              onChange={(e) => handleDateChange(e)}
               inputClassName={`${
                 !isEditing && 'opacity-60'
               } w-full placeholder:text-sm md:placeholder:text-md rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md: md:px-5 `}
@@ -149,12 +149,13 @@ export default function ClubInfoForm({
           <input
             name="formUrl"
             type="text"
+            value={formUrl}
             spellCheck={false}
             className={`${
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
             // value={formUrl}
-            onChange={handleChange}
+            onChange={(e) => handleChange(e)}
             disabled={!isEditing}
           />
         </div>

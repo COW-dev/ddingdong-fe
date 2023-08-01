@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import { StaticImageData } from 'next/image';
 import { GetServerSideProps } from 'next/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/Detail';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
-import { dummy } from './data';
 
 type ReportDetailProps = {
   id: number;
@@ -16,7 +16,7 @@ type ReportDetailProps = {
 export default function Index({ id, name }: ReportDetailProps) {
   const [reportData, setReportData] = useState<ReportDetail[]>([
     {
-      id: id,
+      reportId: id,
       createdAt: '',
       name: '',
       content: '',
@@ -27,11 +27,11 @@ export default function Index({ id, name }: ReportDetailProps) {
       leaderDepartment: '',
       startDate: new Date(),
       endDate: new Date(),
-      imageUrls: [],
+      imageUrls: '',
       participants: [],
     },
     {
-      id: id,
+      reportId: id,
       createdAt: '',
       name: '',
       content: '',
@@ -42,7 +42,7 @@ export default function Index({ id, name }: ReportDetailProps) {
       leaderDepartment: '',
       startDate: new Date(),
       endDate: new Date(),
-      imageUrls: [],
+      imageUrls: '',
       participants: [],
     },
   ]);
@@ -80,7 +80,7 @@ export default function Index({ id, name }: ReportDetailProps) {
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
           <Detail
-            reportId={reportData[0].id}
+            reportId={reportData[0].reportId}
             content={reportData[0].content}
             place={reportData[0].place}
             startDate={reportData[0].startDate}
@@ -93,7 +93,7 @@ export default function Index({ id, name }: ReportDetailProps) {
         </Accordion>
         <Accordion title="활동2">
           <Detail
-            reportId={reportData[1].id}
+            reportId={reportData[1].reportId}
             content={reportData[1].content}
             place={reportData[1].place}
             startDate={reportData[1].startDate}
