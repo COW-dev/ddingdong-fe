@@ -1,13 +1,22 @@
 import Image from 'next/image';
-import { BannerTypeProps, init } from '@/pages/admin/banner';
+import { BannerColor } from '@/constants/color';
+import { BannerType } from '@/types/banner';
 
-export default function Banner({ data }: BannerTypeProps) {
-  if (!data) data = init;
+export default function Banner({ data }: { data: BannerType }) {
+  if (!data)
+    data = {
+      id: 0,
+      title: 'title',
+      subTitle: 'subTitle',
+      colorCode: '하늘',
+      imgUrl: 'imgUrl',
+    };
   const { imgUrl, title, subTitle, id, colorCode } = data;
+  const color = BannerColor.find((item) => item.title === colorCode)?.color;
   const parsedImgUrl = imgUrl.slice(0, 8) + imgUrl.slice(9);
   return (
     <div
-      className={`flex h-56 w-full flex-col items-center justify-center rounded-xl  md:h-48 md:flex-row bg-${colorCode}-100`}
+      className={`flex h-56 w-full flex-col items-center justify-center rounded-xl  md:h-48 md:flex-row bg-${color}-100`}
     >
       <Image
         src={parsedImgUrl}

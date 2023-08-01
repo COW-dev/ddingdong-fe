@@ -1,12 +1,14 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
+import { toast, Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
+import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
@@ -98,7 +100,9 @@ export default function Index() {
               취소
             </button>
             <button
-              className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600"
+              className={`ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600  ${
+                isMissingData(clubData) && `cursor-not-allowed  opacity-50`
+              }`}
               onClick={handleClickSubmit}
             >
               확인
@@ -115,7 +119,7 @@ export default function Index() {
       </div>
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
-          leader={clubData.leader}
+          clubLeader={clubData.clubLeader}
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}

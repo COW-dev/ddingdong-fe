@@ -3,7 +3,7 @@ import { AxiosError, type AxiosResponse } from 'axios';
 import { getMyReportLists } from '@/apis';
 import { MyReportList } from '@/types/report';
 
-export function useAllReports(token: string) {
+export function useMyAllReports(token: string) {
   return useQuery<
     unknown,
     AxiosError,

@@ -2,9 +2,9 @@ import { StaticImageData } from 'next/image';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
 export type StudentInfo = {
-  studentName: string;
+  name: string;
   studentId: number;
-  studentMajor: string;
+  department: string;
 };
 
 export type MyReportList = {
@@ -14,6 +14,7 @@ export type MyReportList = {
 };
 
 export type CurrentReport = {
+  term: CurrentReport | undefined;
   currentTerm: string;
 };
 
@@ -29,7 +30,7 @@ export type NewReport = {
   token?: string;
 };
 
-export type ReportDetail = {
+export type ReportDataType = {
   reportId: number;
   createdAt: string;
   name: string;
@@ -37,10 +38,21 @@ export type ReportDetail = {
   leaderDepartment: string;
   content: string;
   place: string;
-  startDate: Date;
+  startDate: string;
   endDate: Date;
   startTime: string;
   endTime: string;
-  imageUrls: string;
+  imageUrls: string[];
+  participants: StudentInfo[];
+};
+
+export type ReportDetail = {
+  reportId: number;
+  createdAt: string;
+  name: string;
+  content: string;
+  place: string;
+  startDate: string;
+  imageUrls: string[];
   participants: StudentInfo[];
 };

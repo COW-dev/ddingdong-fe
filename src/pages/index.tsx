@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
-import Slider from '@/components/home/Slider';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
 

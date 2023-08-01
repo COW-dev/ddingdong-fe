@@ -1,24 +1,28 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import ImageInput from '@/assets/imageInput.svg';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
 import Select from '@/hooks/common/useSelect';
 import { NewBannerType } from '@/types/banner';
+import { isMissingData } from '@/utils/validator';
 const init = {
   title: '',
   subTitle: '',
   colorCode: BannerColor[1].color,
 };
-export default function CreateBanner() {
+type Prop = {
+  closeModal: () => void;
+};
+export default function CreateBanner({ closeModal }: Prop) {
   const mutation = useNewBanner();
   const formData = new FormData();
   const [cookies] = useCookies(['token']);
-  const [temp, setTemp] = useState<any>();
+  const [image, setImage] = useState<File | string>('');
   const [bannerData, setBannerData] = useState<NewBannerType>(init);
   const { title, subTitle, colorCode } = bannerData;
-
   useEffect(() => {
     if (bannerData) setBannerData(bannerData);
   }, [bannerData]);
@@ -31,32 +35,31 @@ export default function CreateBanner() {
   }
 
   function handleSubmit() {
-    setBannerData(bannerData);
     formData.append('title', title);
     formData.append('subTitle', subTitle);
     formData.append('colorCode', colorCode);
-    formData.append('uploadFiles', temp);
+    formData.append('uploadFiles', image);
     mutation.mutate({
       formData: formData,
       token: cookies.token,
     });
     handleReset();
+    closeModal();
   }
 
   function uploadImg(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0];
-      setTemp(file);
+      setImage(file);
     }
   }
 
   function handleReset() {
     setBannerData(init);
   }
-
   return (
     <>
-      <form className="w-full" onSubmit={handleSubmit}>
+      <form className="w-full">
         <div className="mb-3 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">
             제목
@@ -121,8 +124,12 @@ export default function CreateBanner() {
         </div>
 
         <button
-          type="submit"
-          className="mt-5 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg "
+          onClick={handleSubmit}
+          disabled={isMissingData({ ...bannerData, image })}
+          className={`mt-5 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg ${
+            isMissingData({ ...bannerData, image }) &&
+            `cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200`
+          }`}
         >
           배너 생성하기
         </button>

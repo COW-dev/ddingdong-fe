@@ -34,7 +34,7 @@ export default function Index() {
         router.push('/my-club');
       })
       .catch((error: AxiosError) => {
-        toast.error(error.response?.data?.message); //모달로 변경
+        toast.error('로그인에 실패하였습니다.'); //모달로 변경
       });
   }
 
