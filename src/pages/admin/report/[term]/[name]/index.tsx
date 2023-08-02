@@ -21,10 +21,7 @@ export default function Index({ term, name }: ReportDetailProps) {
   } = useMyClub(token);
 
   const reportDataList = useReportInfo({ term, name, token }).data;
-  const [reportData, setReportData] = useState<ReportDetail[]>([
-    reportDataList?.data[0],
-    reportDataList?.data[1],
-  ]);
+  const [reportData, setReportData] = useState<ReportDetail[]>([]);
 
   useEffect(() => {
     if (reportDataList?.data) {

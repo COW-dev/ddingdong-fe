@@ -86,8 +86,8 @@ export default function Index({
           <ul className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 lg:grid-cols-2">
             {participants?.map((participant) => (
               <li key={participant.studentId}>
-                {participant.studentName} | {participant.studentId} |{' '}
-                {participant.studentMajor}
+                {participant.name} | {participant.studentId} |
+                {participant.department}
               </li>
             ))}
           </ul>

@@ -28,7 +28,7 @@ export default function TermList({ term, club, setTerm }: Props) {
         {termList.map((item, index) => (
           <div
             className={`flex rounded-xl px-2 hover:bg-gray-100 ${
-              (Number(item) > currentTerm || !submitTerms.includes(item)) &&
+              // (Number(item) > currentTerm || !submitTerms.includes(item)) &&
               'text-gray-200 hover:bg-opacity-0'
             }`}
             key={`category-item-${index}`}

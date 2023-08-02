@@ -6,7 +6,7 @@ type Props = {
   club: string;
   setClub: Dispatch<SetStateAction<string>>;
 };
-export default function ClubList({ club, setClub, term }: Props) {
+export default function ClubList({ setClub, club, term }: Props) {
   const [{ token }] = useCookies(['token']);
   const { data: allReports } = useAdminAllReports(token);
   console.log(allReports?.data);
@@ -23,7 +23,7 @@ export default function ClubList({ club, setClub, term }: Props) {
           <div
             className="rounded-xl px-5 py-1 hover:bg-gray-100"
             key={clubName}
-            onClick={setClub(clubName)}
+            onClick={() => setClub(clubName)}
           >
             {clubName}
           </div>
@@ -34,7 +34,7 @@ export default function ClubList({ club, setClub, term }: Props) {
           <div
             className="rounded-xl px-5 py-1 text-gray-300 "
             key={clubName}
-            onClick={setClub(clubName)}
+            onClick={() => setClub(clubName)}
           >
             {clubName}
           </div>
