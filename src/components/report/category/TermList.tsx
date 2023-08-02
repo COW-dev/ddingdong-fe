@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import New from '@/assets/new.svg';
 import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 type Props = {
   term: number;
   club: string;
@@ -13,22 +14,21 @@ type Props = {
 export default function TermList({ term, club, setTerm }: Props) {
   const [{ token }] = useCookies(['token', 'role']);
 
-  const currentTerm = 2;
-  const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
+  const currentTerm = useCurrentReports(token).data?.data.term ?? 1;
+  const termList = Array.from({ length: 7 }, (_, i) => i + 1);
   const { data } = useAdminAllReports(token);
 
   const submitTerms = data?.data
     .filter((item) => item.name === club)
     .map((item) => item.term);
 
-  const submitClubNames = ['띵동', 'COW'];
   return (
     <>
       <div className="no-scrollbar mt-4 h-[100%] overflow-y-scroll">
         {termList.map((item, index) => (
           <div
             className={`flex rounded-xl px-2 hover:bg-gray-100 ${
-              // (Number(item) > currentTerm || !submitTerms.includes(item)) &&
+              (item > currentTerm || !submitTerms?.includes(item)) &&
               'text-gray-200 hover:bg-opacity-0'
             }`}
             key={`category-item-${index}`}
@@ -37,7 +37,7 @@ export default function TermList({ term, club, setTerm }: Props) {
               className={`mb-3  pt-3 `}
               key={item}
               onClick={() => {
-                if (Number(item) > currentTerm)
+                if (item > currentTerm)
                   return toast.error('해당 회차의 열람기간이 아닙니다.');
                 setTerm(Number(item));
               }}
@@ -46,7 +46,7 @@ export default function TermList({ term, club, setTerm }: Props) {
                 {item}회차
                 <span
                   className={`mx-2 mb-3 text-xs text-blue-500 ${
-                    Number(item) !== currentTerm && 'hidden'
+                    item !== Number(currentTerm) && 'hidden'
                   }`}
                 >
                   NEW

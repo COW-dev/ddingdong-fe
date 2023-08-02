@@ -60,7 +60,7 @@ const Category = ({ visible, setVisible }: Props) => {
                 height={15}
                 alt="leftArrow"
                 className="ml-1"
-                onClick={() => setTerm(term - 1)}
+                // onClick={() => setTerm(term - 1)}
               />
             </div>
           </div>

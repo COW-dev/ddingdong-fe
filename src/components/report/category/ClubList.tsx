@@ -1,20 +1,26 @@
 import { Dispatch, SetStateAction } from 'react';
 import { useCookies } from 'react-cookie';
 import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
+import { useAllClubs } from '@/hooks/api/club/useAllClubs';
+import { Club } from '@/types';
+import { ClubDetail } from '@/types/club';
 type Props = {
   term: number;
   club: string;
   setClub: Dispatch<SetStateAction<string>>;
 };
 export default function ClubList({ setClub, club, term }: Props) {
+  const { data: allClub } = useAllClubs();
+  const clubList = allClub?.data.map((club: Club) => club.name);
   const [{ token }] = useCookies(['token']);
   const { data: allReports } = useAdminAllReports(token);
-  console.log(allReports?.data);
   const submitClubNames = allReports?.data
-    .filter((item) => item.term === term)
+    .filter((item) => item.term === String(term))
     .map((item) => item.name);
+  const unSubmitClubNames = clubList?.filter(
+    (club) => !submitClubNames?.includes(club),
+  );
 
-  // const submitClubNames = ['띵동', 'COW'];
   return (
     <>
       <div className="no-scrollbar mt-4 h-[70%] overflow-y-scroll ">
@@ -29,8 +35,7 @@ export default function ClubList({ setClub, club, term }: Props) {
           </div>
         ))}
         <div className="my-2 text-gray-500">미제출 동아리</div>
-        {/* {clubList?.map((clubName) => ( */}
-        {['명지서법', '너나들이']?.map((clubName) => (
+        {unSubmitClubNames?.map((clubName) => (
           <div
             className="rounded-xl px-5 py-1 text-gray-300 "
             key={clubName}
