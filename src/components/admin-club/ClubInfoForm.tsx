@@ -50,10 +50,10 @@ export default function ClubInfoForm({
     }));
   }
   function handleDateChange(event: DateValueType) {
-    const { startDate, endDate } = event as DateRangeType;
+    console.log(event as DateRangeType);
     setValue((prev) => ({
       ...prev,
-      recruitPeriod: { startDate, endDate },
+      recruitPeriod: event as DateRangeType,
     }));
   }
 
@@ -155,17 +155,29 @@ export default function ClubInfoForm({
             모집기간
           </label>
           <div className="w-[75%]">
-            <Datepicker
-              value={recruitPeriod}
-              useRange={false}
-              disabled={!isEditing}
-              minDate={new Date(new Date().getFullYear(), 0, 1)}
-              maxDate={new Date(new Date().getFullYear(), 11, 31)}
-              onChange={(e) => handleDateChange(e)}
-              inputClassName={`${
-                !isEditing && 'opacity-60'
-              } w-full placeholder:text-sm md:placeholder:text-md rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md: md:px-5 `}
-            />
+            {isEditing ? (
+              <Datepicker
+                value={recruitPeriod}
+                useRange={false}
+                disabled={!isEditing}
+                minDate={new Date(new Date().getFullYear(), 0, 1)}
+                maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                onChange={(e) => handleDateChange(e)}
+                inputClassName={`${
+                  !isEditing && 'opacity-60'
+                } w-full placeholder:text-sm md:placeholder:text-md rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md: md:px-5 `}
+              />
+            ) : (
+              <div
+                className={`${
+                  !isEditing && 'opacity-60'
+                } w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
+              >
+                {recruitPeriod.startDate && recruitPeriod.endDate
+                  ? `${recruitPeriod.startDate} ~ ${recruitPeriod.endDate}`
+                  : `${recruitPeriod}`}
+              </div>
+            )}
           </div>
         </div>
         <div className="mb-2 w-full md:mb-3 md:w-[50%]">
