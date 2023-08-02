@@ -20,27 +20,27 @@ export const dummy: ReportDataType[] = [
     participants: [
       {
         name: '김세빈',
-        studentId: 60211904,
+        studentId: '60211904',
         department: '융합소프트웨어학부',
       },
       {
         name: '김보겸',
-        studentId: 60211614,
+        studentId: '60211614',
         department: '융합소프트웨어학부',
       },
       {
         name: '모유경',
-        studentId: 60201034,
+        studentId: '60201034',
         department: '융합소프트웨어학부',
       },
       {
         name: '유원준',
-        studentId: 60201664,
+        studentId: '60201664',
         department: '융합소프트웨어학부',
       },
       {
         name: '박수환',
-        studentId: 60202904,
+        studentId: '60202904',
         department: '융합소프트웨어학부',
       },
     ],
@@ -61,27 +61,27 @@ export const dummy: ReportDataType[] = [
     participants: [
       {
         name: '김세빈',
-        studentId: 60211904,
+        studentId: '60211904',
         department: '융합소프트웨어학부',
       },
       {
         name: '김보겸',
-        studentId: 60211614,
+        studentId: '60211614',
         department: '융합소프트웨어학부',
       },
       {
         name: '모유경',
-        studentId: 60201034,
+        studentId: '60201034',
         department: '융합소프트웨어학부',
       },
       {
         name: '유원준',
-        studentId: 60201664,
+        studentId: '60201664',
         department: '융합소프트웨어학부',
       },
       {
         name: '박수환',
-        studentId: 60202904,
+        studentId: '60202904',
         department: '융합소프트웨어학부',
       },
     ],
