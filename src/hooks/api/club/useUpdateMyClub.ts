@@ -6,17 +6,21 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateMyClub } from '@/apis';
+import { ClubDetail } from '@/types/club';
 
 export function useUpdateMyClub(): UseMutationResult<
   unknown,
   AxiosError,
-  FormData
+  FormData,
+  [string]
 > {
   const queryClient = useQueryClient();
 
   return useMutation(updateMyClub, {
     onSuccess() {
-      queryClient.invalidateQueries(['my-club']);
+      queryClient.invalidateQueries({
+        queryKey: ['club/my'],
+      });
       toast.success('동아리 정보를 수정했어요.');
     },
     onError(error) {

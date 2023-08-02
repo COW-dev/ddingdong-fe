@@ -25,12 +25,12 @@ export type NewClub = {
   token?: string;
 };
 export type ClubDetail = {
-  id: number;
   name: string;
   tag: string;
   category: string;
   leader: string;
   phoneNumber: string;
+  content: string;
   location: string;
   isRecruit: boolean;
   recruitPeriod: DateRangeType;
@@ -38,25 +38,27 @@ export type ClubDetail = {
   introduction: string;
   activity: string;
   ideal: string;
-  uploadFiles: File | null;
+  imageUrls: File[] | string[];
   token: string;
-  // formUrl: string;
+  formUrl: string;
 };
 
 export type UpdateMyClub = {
-  name?: string;
-  tag?: string;
-  category?: string;
-  clubLeader?: string;
-  phoneNumber?: string;
-  location?: string;
-  isRecruit?: boolean;
-  recruitPeriod?: DateRangeType;
-  regularMeeting?: string;
-  introduction?: string;
-  activity?: string;
-  ideal?: string;
-  formUrl?: string;
+  name: string;
+  tag: string;
+  category: string;
+  clubLeader: string;
+  content: string;
+  phoneNumber: string;
+  location: string;
+  isRecruit: boolean;
+  recruitPeriod: DateRangeType;
+  regularMeeting: string;
+  imageUrls: File[] | string[];
+  introduction: string;
+  activity: string;
+  ideal: string;
+  formUrl: string;
   token: string;
 };
 

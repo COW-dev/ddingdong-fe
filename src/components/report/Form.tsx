@@ -98,7 +98,7 @@ export default function Form({
               name="place"
               type="text"
               placeholder="활동장소"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
             />
           </div>
@@ -109,13 +109,13 @@ export default function Form({
             <input
               name="startTime"
               type="time"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
             />
             <input
               name="endTime"
               type="time"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
             />
           </div>
@@ -145,7 +145,7 @@ export default function Form({
             </p>
             <textarea
               name="content"
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
               className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
             />
           </div>

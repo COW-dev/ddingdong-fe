@@ -61,10 +61,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     formData.set('title', noticeData.title);
     formData.set('content', noticeData.content);
     formData.set('token', token);
-    console.log({
-      noticeId,
-      formData,
-    });
 
     return updateMutation.mutate(formData);
   }
