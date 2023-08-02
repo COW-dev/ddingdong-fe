@@ -216,12 +216,16 @@ api.interceptors.response.use(
     const cookies = new Cookies();
     cookies.getAll();
     if (
-      err.response.status === 401 &&
-      err.response.status.message == '유효하지 않은 토큰입니다.'
+      err.response.data.code === 401 &&
+      err.response.data.message == '유효하지 않은 토큰입니다.'
     ) {
       removeToken();
       window.location.href = '/login';
       return toast.error(err.response.status.message);
+    }
+    if (err.response.data.code === 401) {
+      removeToken();
+      window.location.href = '/login';
     }
     return Promise.reject(err);
   },
