@@ -53,6 +53,7 @@ export type ReportDetail = {
   content: string;
   place: string;
   startDate: string;
+  endDate: string;
   imageUrls: string[];
   participants: StudentInfo[];
 };

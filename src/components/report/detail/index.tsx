@@ -11,7 +11,7 @@ export default function Index({
 }: {
   reportData: ReportDetail;
 }): JSX.Element {
-  const { content, place, startDate, imageUrls, participants } =
+  const { content, place, startDate, endDate, imageUrls, participants } =
     reportData ?? {};
 
   const [data, setData] = useState(reportData);
@@ -60,7 +60,7 @@ export default function Index({
                 <div className="absolute flex h-[15vh] w-full flex-1 justify-between bg-white bg-opacity-70 px-[10%] text-gray-500">
                   <div className="p-3">
                     <div className="text-xl font-semibold">1 회차</div>
-                    <ActiveDate startDate={startDate} />
+                    <ActiveDate startDate={startDate} endDate={endDate} />
                   </div>
                   <Time place={place} />
                 </div>
@@ -73,7 +73,7 @@ export default function Index({
         {/* md */}
         <div className="hidden md:inline-block">
           <div className="flex flex-col items-center md:flex-row">
-            <ActiveDate startDate={startDate} />
+            <ActiveDate startDate={startDate} endDate={endDate} />
             <Time place={place} />
           </div>
         </div>
@@ -85,9 +85,9 @@ export default function Index({
           </p>
           <ul className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 lg:grid-cols-2">
             {participants?.map((participant) => (
-              <li key={participant.name}>
-                {participant.name} | {participant.studentId} |{' '}
-                {participant.department}
+              <li key={participant.studentId}>
+                {participant.studentName} | {participant.studentId} |{' '}
+                {participant.studentMajor}
               </li>
             ))}
           </ul>
