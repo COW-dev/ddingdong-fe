@@ -3,7 +3,7 @@ import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
 export type StudentInfo = {
   name: string;
-  studentId: number;
+  studentId: string;
   department: string;
 };
 
@@ -14,18 +14,18 @@ export type MyReportList = {
 };
 
 export type CurrentReport = {
-  term: CurrentReport | undefined;
+  term: number;
   currentTerm: string;
 };
 
 export type NewReport = {
-  term: string;
-  uploadFiles: File | null;
+  term: number;
   date: DateRangeType;
   place: string;
   startTime: string;
   endTime: string;
   content: string;
+  uploadFiles: File | null;
   participants: StudentInfo[];
   token?: string;
 };

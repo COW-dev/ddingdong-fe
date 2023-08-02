@@ -56,6 +56,8 @@ export default function Index() {
     setClubData(data);
   }
   function handleClickSubmit() {
+    if (isMissingData(clubData))
+      return toast.error('모든 항목을 입력해주세요.');
     setIsEditing(false);
     setClubData({
       ...clubData,

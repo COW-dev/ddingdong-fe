@@ -3,7 +3,7 @@ import CancleImg from '@/assets/cancle.svg';
 import ModalPortal from './ModalPortal';
 type Props = {
   visible: boolean;
-  title: string;
+  title?: string;
   children: React.ReactNode;
   modalRef: React.RefObject<HTMLDivElement>;
   closeModal: () => void;
@@ -27,7 +27,11 @@ export default function Modal({
           className="z-60 dark:bg- relative max-h-[80%] w-full max-w-lg  overflow-y-scroll  overscroll-y-contain rounded-lg  bg-white shadow md:overflow-y-auto"
           ref={modalRef}
         >
-          <div className="flex items-center justify-between rounded-t  border-b p-5 ">
+          <div
+            className={`flex items-center justify-between rounded-t p-5 ${
+              title && `border-b`
+            }`}
+          >
             <h3 className="text-xl font-bold  text-gray-400 ">{title}</h3>
             <button
               type="button"
@@ -38,6 +42,7 @@ export default function Modal({
               <Image src={CancleImg} alt="cancle" />
             </button>
           </div>
+
           <div className="space-y-6 p-6 "> {children}</div>
         </div>
       </div>

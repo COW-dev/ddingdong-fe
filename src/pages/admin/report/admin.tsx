@@ -5,8 +5,12 @@ import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Heading from '@/components/common/Heading';
 import Category from '@/components/report/category';
+import ReportItem from '@/components/report/ReportItem';
+
 export default function Index() {
   const [visible, setVisible] = useState<boolean>(true);
+  const [club, setClub] = useState<string>('COW');
+  const [term, setTerm] = useState<number>(1);
   return (
     <>
       <Head>
@@ -25,9 +29,16 @@ export default function Index() {
         </div>
       </div>
       <div className="mt-14 flex gap-4">
-        <Category visible={visible} setVisible={setVisible} />
+        <Category
+          visible={visible}
+          setVisible={setVisible}
+          club={club}
+          setClub={setClub}
+          term={term}
+          setTerm={setTerm}
+        />
         <div className="inline-block  w-full ">
-          {/* <Report reportId={1} name={'너나들이'} /> */}
+          <ReportItem term={term} name={club} />
         </div>
       </div>
     </>

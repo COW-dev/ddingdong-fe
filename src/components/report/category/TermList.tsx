@@ -1,13 +1,23 @@
+import { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import New from '@/assets/new.svg';
-import { dummy } from '../[id]/data';
+import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
+type Props = {
+  term: number;
+  club: string;
+  setTerm: Dispatch<SetStateAction<number>>;
+};
 
-export default function TermList({ club, setTerm }: any) {
+export default function TermList({ term, club, setTerm }: Props) {
+  const [{ token }] = useCookies(['token', 'role']);
+
   const currentTerm = 2;
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
+  const { data } = useAdminAllReports(token);
 
-  const submitTerms = dummy
+  const submitTerms = data?.data
     .filter((item) => item.name === club)
     .map((item) => item.term);
 

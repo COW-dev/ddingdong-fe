@@ -5,7 +5,7 @@ import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useMyAllReports } from '@/hooks/api/club/useMyAllReports';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { MyReportList } from '@/types/report';
-import { dummy } from './test';
+import { dummy } from '../../components/report/data2';
 
 export default function ReportList() {
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);

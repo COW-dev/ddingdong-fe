@@ -11,8 +11,10 @@ import {
   DateRangeType,
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
-import { StudentInfo } from '@/types';
-import { NewReport } from '@/types/report';
+import useModal from '@/hooks/common/useModal';
+import { NewReport, StudentInfo } from '@/types/report';
+import Modal from '../common/Modal';
+import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
   date: DateRangeType;
@@ -21,7 +23,7 @@ type ReportProps = {
   content: string;
   startTime: string;
   endTime: string;
-  // participants: StudentInfo[];
+  participants: StudentInfo[];
   setValue: Dispatch<SetStateAction<NewReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
 };
@@ -29,10 +31,12 @@ type ReportProps = {
 export default function Form({
   date,
   uploadFiles,
+  participants,
   setValue,
   setImage,
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+  const { openModal, visible, closeModal, modalRef } = useModal();
 
   useEffect(() => {
     if (uploadFiles) {
@@ -115,15 +119,25 @@ export default function Form({
               className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
             />
           </div>
-          <div>
+          <div onClick={openModal}>
             <p className="text-md mb-3 font-semibold text-blue-500 md:my-2 md:text-lg">
               활동 참여 인원
             </p>
-            <input
-              name="participants"
-              // onChange={handleChange}
-              className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:pb-3"
-            />
+            <div
+              className="md:text-md min-h-[10vh] 
+               w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4
+               py-3 text-base outline-none md:pb-3"
+            >
+              {participants.map((participant, index) => (
+                <div
+                  key={`participant-${index}`}
+                  className={`${participant.name === `` && `hidden`} `}
+                >
+                  {participant.name} | {participant.department} |
+                  {participant.studentId}
+                </div>
+              ))}
+            </div>
           </div>
           <div>
             <p className="text-md my-3 font-semibold text-blue-500 md:text-lg">
@@ -170,6 +184,18 @@ export default function Form({
           )}
         </div>
       </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'활동 명단 작성하기'}
+        closeModal={closeModal}
+      >
+        <Participants
+          data={participants}
+          setData={setValue}
+          closeModal={closeModal}
+        />
+      </Modal>
     </>
   );
 }
