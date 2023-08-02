@@ -17,7 +17,12 @@ import {
   UpdateNotice,
   DeleteNotice,
 } from '@/types/notice';
-import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
+import {
+  ReportDetail,
+  MyReportList,
+  CurrentReport,
+  ReportDataType,
+} from '@/types/report';
 
 const api = axios.create({
   baseURL: '/api/',
@@ -169,7 +174,7 @@ export async function getReportInfo(
   term: number,
   name: string,
   token: string,
-): Promise<AxiosResponse<ReportDetail, unknown>> {
+): Promise<AxiosResponse<ReportDetail[], unknown>> {
   return await api.get(
     `/club/activity-reports?term=${term}&club_name=${name}`,
     {
@@ -194,6 +199,16 @@ export async function getCurrentReports(
   token: string,
 ): Promise<AxiosResponse<CurrentReport, unknown>> {
   return await api.get('/club/activity-reports/current-term', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getAdminAllReports(
+  token: string,
+): Promise<AxiosResponse<any[], unknown>> {
+  return await api.get('/admin/activity-reports', {
     headers: {
       Authorization: 'Bearer ' + token,
     },

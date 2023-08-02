@@ -1,8 +1,20 @@
-export default function ClubList({ setClub }: any) {
-  // const submitClubNames = dummy
-  //   .filter((item) => item.term === String(term))
-  //   .map((item) => item.name);
-  const submitClubNames = ['띵동', 'COW'];
+import { Dispatch, SetStateAction } from 'react';
+import { useCookies } from 'react-cookie';
+import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
+type Props = {
+  term: number;
+  club: string;
+  setClub: Dispatch<SetStateAction<string>>;
+};
+export default function ClubList({ club, setClub, term }: Props) {
+  const [{ token }] = useCookies(['token']);
+  const { data: allReports } = useAdminAllReports(token);
+  console.log(allReports?.data);
+  const submitClubNames = allReports?.data
+    .filter((item) => item.term === term)
+    .map((item) => item.name);
+
+  // const submitClubNames = ['띵동', 'COW'];
   return (
     <>
       <div className="no-scrollbar mt-4 h-[70%] overflow-y-scroll ">

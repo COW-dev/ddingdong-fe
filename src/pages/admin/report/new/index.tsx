@@ -7,7 +7,6 @@ import Modal from '@/components/common/Modal';
 import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
-import useModal from '@/hooks/common/useModal';
 import { NewReport } from '@/types/report';
 
 export default function Index() {
@@ -21,8 +20,8 @@ export default function Index() {
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     startTime: '',
-    uploadFiles: null,
     endTime: '',
+    uploadFiles: null,
     content: '',
     participants: [
       {
@@ -63,7 +62,7 @@ export default function Index() {
         date: reportOne.date,
         place: reportOne.place,
         content: reportOne.content,
-        participants: reportTwo.participants,
+        participants: reportOne.participants,
       },
       {
         term: reportTwo.term,

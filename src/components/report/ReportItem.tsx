@@ -1,38 +1,25 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
-import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
 
-type ReportDetailProps = {
-  term: number;
+type Props = {
   name: string;
+  term: number;
 };
-
-export default function Index({ term, name }: ReportDetailProps) {
+export default function ReportItem({ name, term }: Props) {
   const [{ token }] = useCookies(['token']);
-  const {
-    data: { data: clubData },
-  } = useMyClub(token);
-
-  const reportDataList = useReportInfo({ term, name, token }).data;
-  const [reportData, setReportData] = useState<ReportDetail[]>([
-    reportDataList?.data[0],
-    reportDataList?.data[1],
-  ]);
-
+  const reportDataList = useReportInfo({ name, term, token }).data;
+  const [reportData, setReportData] = useState<ReportDetail[]>([]);
   useEffect(() => {
     if (reportDataList?.data) {
-      setReportData([reportDataList.data[0], reportDataList.data[1]]);
+      setReportData(reportDataList.data);
     }
   }, [reportDataList?.data]);
-
-  if (reportData.length === 0) return;
 
   return (
     <>
@@ -45,11 +32,9 @@ export default function Index({ term, name }: ReportDetailProps) {
           제출일시 {reportData[0]?.createdAt}
         </span>
       </div>
-      <div className="mt-3 flex flex-row space-x-2 text-base font-semibold text-gray-500">
+      {/* <div className="mt-3 flex flex-row space-x-2 text-base font-semibold text-gray-500">
         <span>{name}</span>
-        <span>|</span>
-        <span>{clubData?.leader}</span>
-      </div>
+      </div> */}
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
           <Detail reportData={reportData[0]} />
@@ -61,12 +46,3 @@ export default function Index({ term, name }: ReportDetailProps) {
     </>
   );
 }
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { term, name } = context.query;
-  return {
-    props: {
-      term: term,
-      name: name,
-    },
-  };
-};

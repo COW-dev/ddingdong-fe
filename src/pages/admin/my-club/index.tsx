@@ -57,6 +57,8 @@ export default function Index() {
     setClubData(data);
   }
   function handleClickSubmit() {
+    if (isMissingData(clubData))
+      return toast.error('모든 항목을 입력해주세요.');
     setIsEditing(false);
     setClubData({
       ...clubData,
@@ -119,7 +121,7 @@ export default function Index() {
       </div>
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
-          clubLeader={clubData.clubLeader}
+          leader={clubData.leader}
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}

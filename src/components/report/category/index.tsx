@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
@@ -15,14 +15,21 @@ const REPORT_TYPE = {
   TERM: '주차별',
   CLUB: '동아리별',
 };
-
-const Category = ({ visible, setVisible }: any) => {
-  const currentTerm = 2;
+type Props = {
+  visible: boolean;
+  club: string;
+  term: number;
+  setClub: Dispatch<SetStateAction<string>>;
+  setVisible: Dispatch<SetStateAction<boolean>>;
+  setTerm: Dispatch<SetStateAction<number>>;
+};
+const Category = ({ visible, setVisible }: Props) => {
+  const currentTerm = 1;
   const [{ token }] = useCookies(['token']);
   const [active, setActive] = useState<string>(REPORT_TYPE.CLUB);
 
   const [term, setTerm] = useState(currentTerm);
-  const [club, setClub] = useState('너나들이');
+  const [club, setClub] = useState('COW');
   const [clubList, setClubList] = useState<string[]>([]);
   const { data: clubs } = useAdminAllClubs(token);
 
@@ -95,9 +102,9 @@ const Category = ({ visible, setVisible }: any) => {
         </div>
         <div className="m-5">
           {active === REPORT_TYPE.CLUB ? (
-            <ClubList setClub={setClub} />
+            <ClubList term={term} club={club} setClub={setClub} />
           ) : (
-            <TermList club={club} setTerm={setTerm} />
+            <TermList term={term} club={club} setTerm={setTerm} />
           )}
         </div>
       </div>

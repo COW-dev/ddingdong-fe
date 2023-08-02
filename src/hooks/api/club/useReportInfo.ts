@@ -22,7 +22,7 @@ type Prop = {
   token: string;
 };
 export function useReportInfo({ term, name, token }: Prop) {
-  return useQuery<AxiosResponse<ReportDetail, unknown>, AxiosError>({
+  return useQuery<AxiosResponse<ReportDetail[], unknown>, AxiosError>({
     queryKey: ['activity-reports', term, name],
     queryFn: () => getReportInfo(term, name, token),
   });
