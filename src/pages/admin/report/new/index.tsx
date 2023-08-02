@@ -3,61 +3,57 @@ import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
+import Modal from '@/components/common/Modal';
 import Form from '@/components/report/Form';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
+import useModal from '@/hooks/common/useModal';
 import { NewReport } from '@/types/report';
 
 export default function Index() {
   const [{ token }] = useCookies();
+  const currentTerm: number = useCurrentReports(token).data?.data.term ?? 1;
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
   const mutation = useNewReport();
-  const [reportOne, setReportOne] = useState<NewReport>({
-    term: '1',
+  const init = {
+    term: currentTerm,
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
     startTime: '',
+    uploadFiles: null,
     endTime: '',
-    uploadFiles: uploadFileOne,
     content: '',
-    participants: [],
-  });
-  const [reportTwo, setReportTwo] = useState<NewReport>({
-    term: '1',
-    date: { startDate: new Date(), endDate: new Date() },
-    place: '',
-    content: '',
-    startTime: '',
-    endTime: '',
-    uploadFiles: uploadFileTwo,
     participants: [
       {
-        name: '김세빈',
-        studentId: 60211904,
+        name: '',
+        studentId: '60201111',
         department: '융합소프트웨어학부',
       },
       {
-        name: '김보겸',
-        studentId: 60211614,
+        name: '',
+        studentId: '60201111',
+        department: '철학과',
+      },
+      {
+        name: '',
+        studentId: '60201111',
         department: '융합소프트웨어학부',
       },
       {
-        name: '모유경',
-        studentId: 60201034,
-        department: '융합소프트웨어학부',
+        name: '',
+        studentId: '60201111',
+        department: '경영학과',
       },
       {
-        name: '유원준',
-        studentId: 60201664,
-        department: '융합소프트웨어학부',
-      },
-      {
-        name: '박수환',
-        studentId: 60202904,
-        department: '융합소프트웨어학부',
+        name: '',
+        studentId: '60201111',
+        department: '중어중문학과',
       },
     ],
-  });
+  };
+  const [reportOne, setReportOne] = useState<NewReport>(init);
+  const [reportTwo, setReportTwo] = useState<NewReport>(init);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -72,7 +68,7 @@ export default function Index() {
       {
         term: reportTwo.term,
         date: reportTwo.date,
-        place: reportTwo.place,
+        place: reportOne.place,
         content: reportTwo.content,
         participants: reportTwo.participants,
       },
@@ -87,7 +83,7 @@ export default function Index() {
     uploadFileTwo &&
       formData.append('uploadFiles', uploadFileTwo, `uploadFiles`);
     formData.append('token', token);
-
+    console.log(reportData);
     return mutation.mutate(formData);
   }
   return (
@@ -108,7 +104,7 @@ export default function Index() {
             startTime={reportOne.startTime}
             endTime={reportOne.endTime}
             content={reportOne.content}
-            // participants={reportOne.participants}
+            participants={reportOne.participants}
             setValue={setReportOne}
             setImage={setUploadFileOne}
           />
@@ -121,7 +117,7 @@ export default function Index() {
             startTime={reportTwo.startTime}
             endTime={reportTwo.endTime}
             content={reportTwo.content}
-            // participants={reportTwo.participants}
+            participants={reportTwo.participants}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
           />

@@ -36,21 +36,9 @@ export type LoginResponse = {
 };
 
 export type StudentInfo = {
-  studentName: string;
-  studentId: number;
-  studentMajor: string;
-};
-
-export type NewReport = {
-  term: string;
-  uploadFiles: File | null;
-  date: DateRangeType;
-  place: string;
-  content: string;
-  startTime: string;
-  endTime: string;
-  participants: StudentInfo[];
-  token?: string;
+  name: string;
+  studentId: string;
+  department: string;
 };
 
 export type ReportDetail = {

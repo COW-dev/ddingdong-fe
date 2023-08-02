@@ -21,7 +21,7 @@ export default function Participants({
   };
   return (
     <div className="mt-2 grid w-full grid-flow-row grid-cols-3 gap-2">
-      {/* <input
+      <input
         name="studentName"
         value={participant.studentName}
         onChange={handleChange}
@@ -38,7 +38,7 @@ export default function Participants({
         value={participant.studentMajor}
         onChange={handleChange}
         className="w-sm h-12 rounded-xl border-2 border-gray-200 p-3"
-      /> */}
+      />
     </div>
   );
 }
