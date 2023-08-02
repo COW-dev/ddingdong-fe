@@ -1,5 +1,8 @@
 import axios from 'axios';
 import type { AxiosResponse } from 'axios';
+import { Cookies } from 'react-cookie';
+import { toast } from 'react-hot-toast';
+import { useAuthStore } from '@/store/auth';
 import { BannerType, DeleteBanner } from '@/types/banner';
 import {
   Club,
@@ -23,8 +26,13 @@ const api = axios.create({
   baseURL: '/api/',
   timeout: 3000,
 });
-
+export function removeToken() {
+  const cookies = new Cookies();
+  cookies.remove('token');
+  cookies.remove('role');
+}
 export async function login(userId: string, password: string) {
+  removeToken();
   return await api.post('/auth/sign-in', { userId, password });
 }
 
@@ -199,3 +207,26 @@ export async function getCurrentReports(
     },
   });
 }
+
+api.interceptors.response.use(
+  (res) => {
+    return res;
+  },
+  async (err) => {
+    const cookies = new Cookies();
+    cookies.getAll();
+    if (
+      err.response.data.code === 401 &&
+      err.response.data.message == '유효하지 않은 토큰입니다.'
+    ) {
+      removeToken();
+      window.location.href = '/login';
+      return toast.error(err.response.status.message);
+    }
+    if (err.response.data.code === 401) {
+      removeToken();
+      window.location.href = '/login';
+    }
+    return Promise.reject(err);
+  },
+);

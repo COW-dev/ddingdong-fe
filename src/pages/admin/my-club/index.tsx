@@ -41,7 +41,6 @@ export default function Index() {
   useEffect(() => {
     if (data) {
       setClubData(data);
-      console.log('데이터2', data);
     }
   }, [data]);
 
@@ -71,7 +70,7 @@ export default function Index() {
         formData.append('uploadFiles', clubData.imageUrls.toString());
       }
     });
-    const recruitPeriod = `${clubData.recruitPeriod.startDate}~${clubData.recruitPeriod.endDate}`;
+    const recruitPeriod = `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`;
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
     return mutation.mutate(formData);
@@ -119,7 +118,7 @@ export default function Index() {
       </div>
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
-          clubLeader={clubData.clubLeader}
+          leader={clubData.leader}
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
