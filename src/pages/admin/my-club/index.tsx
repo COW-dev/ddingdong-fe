@@ -119,7 +119,7 @@ export default function Index() {
       </div>
       <form className="mt-6 md:mt-8">
         <ClubInfoForm
-          clubLeader={clubData.clubLeader}
+          leader={clubData.leader}
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
