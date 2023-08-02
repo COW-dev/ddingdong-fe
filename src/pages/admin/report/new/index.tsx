@@ -64,14 +64,16 @@ export default function Index() {
     const reportData = [
       {
         term: reportOne.term,
-        date: reportOne.date,
+        startDate: reportOne.date.startDate + reportOne.startTime.toString(),
+        endDate: reportOne.date.startDate + reportOne.endTime.toString(),
         place: reportOne.place,
         content: reportOne.content,
         participants: reportTwo.participants,
       },
       {
         term: reportTwo.term,
-        date: reportTwo.date,
+        startDate: reportTwo.date.startDate + reportTwo.startTime.toString(),
+        endDate: reportTwo.date.startDate + reportTwo.endTime.toString(),
         place: reportTwo.place,
         content: reportTwo.content,
         participants: reportTwo.participants,

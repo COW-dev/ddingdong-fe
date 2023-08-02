@@ -9,7 +9,7 @@ import Time from './Time';
 
 export default function Index({ reportData }: { reportData: ReportDetail }) {
   console.log('reportData', reportData);
-  const { content, place, startDate, imageUrls, participants } =
+  const { content, place, startDate, endDate, imageUrls, participants } =
     reportData ?? {};
 
   const parsedImgUrl = imageUrls[0].slice(0, 8) + imageUrls[0].slice(9);
@@ -49,7 +49,7 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
                 <div className="absolute flex h-[15vh] w-full flex-1 justify-between bg-white bg-opacity-70 px-[10%] text-gray-500">
                   <div className="p-3">
                     <div className="text-xl font-semibold">1 회차</div>
-                    <ActiveDate startDate={startDate} />
+                    <ActiveDate startDate={startDate} endDate={endDate} />
                   </div>
                   <Time place={place} />
                 </div>
@@ -62,7 +62,7 @@ export default function Index({ reportData }: { reportData: ReportDetail }) {
         {/* md */}
         <div className="hidden md:inline-block">
           <div className="flex flex-col items-center md:flex-row">
-            <ActiveDate startDate={startDate} />
+            <ActiveDate startDate={startDate} endDate={endDate} />
             <Time place={place} />
           </div>
         </div>
