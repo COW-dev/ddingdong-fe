@@ -12,7 +12,7 @@ import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
-  const [uploadFile, setUploadFile] = useState<File[] | string[]>([]);
+  const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clubData, setClubData] = useState<ClubDetail>({
     name: '',
@@ -26,9 +26,10 @@ export default function Index() {
     recruitPeriod: { startDate: new Date(), endDate: new Date() },
     regularMeeting: '',
     introduction: '',
+    imageUrls: [''],
     activity: '',
     ideal: '',
-    imageUrls: uploadFile,
+    uploadFiles: null,
     formUrl: '',
     token: token,
   });
@@ -56,8 +57,8 @@ export default function Index() {
     setClubData(data);
   }
   function handleClickSubmit() {
-    if (isMissingData(clubData))
-      return toast.error('모든 항목을 입력해주세요.');
+    // if (isMissingData(clubData))
+    //   return toast.error('모든 항목을 입력해주세요.');
     setIsEditing(false);
     setClubData({
       ...clubData,
@@ -67,14 +68,15 @@ export default function Index() {
 
     Object.entries(clubData).forEach(([key, value]) => {
       if (key !== 'uploadFiles' && key !== 'recruitPeriod') {
-        formData.append(key, value.toString());
-      } else if (clubData.imageUrls !== undefined) {
-        formData.append('uploadFiles', clubData.imageUrls.toString());
+        formData.append(key, value?.toString());
       }
     });
     const recruitPeriod = `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`;
+    formData.append('uploadFiles', uploadFile, `uploadFiles`);
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
+    formData.append('clubLeader', clubData.leader);
+    console.log(uploadFile);
     return mutation.mutate(formData);
   }
 
@@ -88,8 +90,9 @@ export default function Index() {
           clubName={clubData.name}
           category={clubData.category}
           tag={clubData.tag}
-          imageUrls={clubData.imageUrls}
+          uploadFiles={clubData.uploadFiles}
           setValue={setClubData}
+          setUploadFile={setUploadFile}
           isEditing={isEditing}
         />
         {isEditing ? (

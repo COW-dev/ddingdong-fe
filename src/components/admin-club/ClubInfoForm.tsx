@@ -50,7 +50,6 @@ export default function ClubInfoForm({
     }));
   }
   function handleDateChange(event: DateValueType) {
-    console.log(event as DateRangeType);
     setValue((prev) => ({
       ...prev,
       recruitPeriod: event as DateRangeType,
@@ -83,7 +82,6 @@ export default function ClubInfoForm({
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
             value={leader}
             onChange={(e) => handleChange(e)}
-            disabled
           />
         </div>
         <div

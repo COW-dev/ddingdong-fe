@@ -19,42 +19,39 @@ type AdminClubHeadingProps = {
   clubName: string;
   category: string;
   tag: string;
-  imageUrls: File[] | string[];
+  uploadFiles: File | null;
   isEditing: boolean;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
+  setUploadFile: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function AdminClubHeading({
   clubName,
   category,
   tag,
-  imageUrls,
+  uploadFiles,
   isEditing,
   setValue,
+  setUploadFile,
 }: AdminClubHeadingProps) {
-  const [previewImageUrl, setPreviewImageUrl] = useState<string[]>([]);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
+
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setValue((prev) => ({ ...prev, uploadFiles: file }));
+      setUploadFile(file);
+      const imageUrl = window.URL.createObjectURL(file);
+      setPreviewImageUrl(imageUrl);
     }
   }
-  const parsedImgUrl =
-    imageUrls && imageUrls.length > 0
-      ? imageUrls[0].toString().slice(0, 8) + imageUrls[0].toString().slice(9)
-      : '';
-
-  // useEffect(() => {
-  //   if (imageUrls && imageUrls.length > 0) {
-  //     const imageUrl = window.URL.createObjectURL(parsedImgUrl);
-  //     setPreviewImageUrl(imageUrl);
-  //     return () => {
-  //       URL.revokeObjectURL(imageUrl);
-  //     };
-  //   } else {
-  //     setPreviewImageUrl('');
-  //   }
-  // }, [imageUrls]);
+  useEffect(() => {
+    if (uploadFiles) {
+      const imageUrl = window.URL.createObjectURL(uploadFiles);
+      setPreviewImageUrl(imageUrl);
+    } else {
+      setPreviewImageUrl('');
+    }
+  }, [uploadFiles]);
 
   function handleImageReset() {
     setValue((prev) => ({
@@ -65,16 +62,18 @@ export default function AdminClubHeading({
   return (
     <>
       <div className=" relative flex flex-row items-center">
-        {imageUrls[0] ? (
+        {uploadFiles ? (
           <>
-            <Image
-              src={previewImageUrl[0]}
-              width={100}
-              height={100}
-              alt="image"
-              className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
-            />
-            <div className="absolute start-20 top-0.5">
+            {uploadFiles && (
+              <Image
+                src={previewImageUrl}
+                width={100}
+                height={100}
+                alt="image"
+                className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
+              />
+            )}
+            <div className="absolute start-16 top-0.5 md:start-18">
               <Image
                 src={Write}
                 width={20}
@@ -100,6 +99,7 @@ export default function AdminClubHeading({
               accept="image/*"
               className="hidden"
               onChange={handleImageChange}
+              disabled={!isEditing}
             />
           </label>
         )}

@@ -38,7 +38,8 @@ export type ClubDetail = {
   introduction: string;
   activity: string;
   ideal: string;
-  imageUrls: File[] | string[];
+  uploadFiles: File | null;
+  imageUrls: string[];
   token: string;
   formUrl: string;
 };
@@ -54,7 +55,7 @@ export type UpdateMyClub = {
   isRecruit: boolean;
   recruitPeriod: DateRangeType;
   regularMeeting: string;
-  imageUrls: File[] | string[];
+  imageUrls: File | string;
   introduction: string;
   activity: string;
   ideal: string;
