@@ -29,7 +29,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   const {
     data: { data },
   } = useNoticeInfo(noticeId);
-  console.log(data);
   const updateMutation = useUpdateNotice(noticeId);
   const deleteMutation = useDeleteNotice();
 

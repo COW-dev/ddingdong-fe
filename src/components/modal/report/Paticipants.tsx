@@ -14,7 +14,6 @@ type Props = {
   closeModal: () => void;
 };
 export default function Participants({ data, setData, closeModal }: Props) {
-  console.log(data);
   const [participants, setParticipants] = useState<Array<StudentInfo>>(
     data ?? [
       {
@@ -55,7 +54,6 @@ export default function Participants({ data, setData, closeModal }: Props) {
       };
       return updatedParticipants;
     });
-    console.log(participants);
   }
 
   function handleSubmit() {

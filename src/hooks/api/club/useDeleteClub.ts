@@ -21,7 +21,6 @@ export function useDeleteClub(): UseMutationResult<
       toast.success('동아리를 성공적으로 삭제했어요.');
     },
     onError(error) {
-      console.log(error);
       toast.error('동아리 삭제를 실패했어요');
     },
   });

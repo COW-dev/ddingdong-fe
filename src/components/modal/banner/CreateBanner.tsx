@@ -19,7 +19,7 @@ export default function CreateBanner({ closeModal }: Prop) {
   const mutation = useNewBanner();
   const formData = new FormData();
   const [cookies] = useCookies(['token']);
-  const [image, setImage] = useState<File | string>('');
+  const [image, setImage] = useState<File | null>(null);
   const [bannerData, setBannerData] = useState<NewBannerType>(init);
   const { title, subTitle, colorCode } = bannerData;
   useEffect(() => {
@@ -37,7 +37,7 @@ export default function CreateBanner({ closeModal }: Prop) {
     formData.append('title', title);
     formData.append('subTitle', subTitle);
     formData.append('colorCode', colorCode);
-    formData.append('uploadFiles', image);
+    image && formData.append('uploadFiles', image);
     mutation.mutate({
       formData: formData,
       token: cookies.token,
@@ -104,12 +104,15 @@ export default function CreateBanner({ closeModal }: Prop) {
             <label className="font-semibold text-gray-500">
               이미지
               <div className="flex w-[100%] flex-col items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5">
-                <Image
-                  src={ImageInput}
-                  width={25}
-                  height={25}
-                  alt="사진 선택"
-                />
+                <div className="flex">
+                  <Image
+                    src={ImageInput}
+                    width={25}
+                    height={25}
+                    alt="사진 선택"
+                  />
+                  {image && image.name}
+                </div>
               </div>
               <input
                 name="imgUrl"

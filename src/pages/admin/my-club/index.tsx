@@ -57,8 +57,9 @@ export default function Index() {
     setClubData(data);
   }
   function handleClickSubmit() {
-    // if (isMissingData(clubData))
-    //   return toast.error('모든 항목을 입력해주세요.');
+    if (!clubData.recruitPeriod.startDate)
+      return toast.error('모집기간을 입력해주세요.');
+
     setIsEditing(false);
     setClubData({
       ...clubData,
@@ -68,7 +69,7 @@ export default function Index() {
 
     Object.entries(clubData).forEach(([key, value]) => {
       if (key !== 'uploadFiles' && key !== 'recruitPeriod') {
-        formData.append(key, value?.toString());
+        formData.append(key, String(value));
       }
     });
     const recruitPeriod = `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`;
@@ -76,7 +77,6 @@ export default function Index() {
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
-    console.log(uploadFile);
     return mutation.mutate(formData);
   }
 
@@ -105,9 +105,7 @@ export default function Index() {
               취소
             </button>
             <button
-              className={`ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600  ${
-                isMissingData(clubData) && `cursor-not-allowed  opacity-50`
-              }`}
+              className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600"
               onClick={handleClickSubmit}
             >
               확인

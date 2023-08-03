@@ -21,7 +21,6 @@ export function useDeleteBanner(): UseMutationResult<
       toast.success('배너를 성공적으로 삭제했어요.');
     },
     onError(error) {
-      console.log(error);
       toast.error('배너 삭제를 실패했어요');
     },
   });

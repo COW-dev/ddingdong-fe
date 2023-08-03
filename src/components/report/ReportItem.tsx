@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
@@ -21,20 +23,20 @@ export default function ReportItem({ name, term }: Props) {
     }
   }, [reportDataList?.data]);
 
+  if (reportData.length === 0)
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center">
+        <Image src={ErrorImg} width={100} height={100} alt="error" />
+        <span className="mt-10 opacity-80">활동보고서를 제출하지 않았어요</span>
+      </div>
+    );
   return (
     <>
-      <Head>
-        <title>띵동 일반 동아리 - 활동보고서 확인하기</title>
-      </Head>
-      <div className="flex flex-col justify-between md:flex-row md:items-end">
-        <Heading>활동 보고서 확인하기</Heading>
+      <div className="flex flex-1  justify-end">
         <span className="md:text-md mt-3 text-base">
           제출일시 {reportData[0]?.createdAt}
         </span>
       </div>
-      {/* <div className="mt-3 flex flex-row space-x-2 text-base font-semibold text-gray-500">
-        <span>{name}</span>
-      </div> */}
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
           <Detail reportData={reportData[0]} />
