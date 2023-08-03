@@ -15,6 +15,7 @@ const initialData = {
   isRecruit: false,
   recruitPeriod: { startDate: new Date(), endDate: new Date() },
   regularMeeting: '',
+  imageUrls: [],
   introduction: '',
   activity: '',
   ideal: '',
