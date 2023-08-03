@@ -137,7 +137,6 @@ export default function AdminClubHeading({
             <div className="rounded-lg text-sm font-semibold text-gray-500 md:text-lg">
               {tag}
             </div>
-            ㅜ
           </div>
         </div>
       </div>
