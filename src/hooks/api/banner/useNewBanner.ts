@@ -22,7 +22,6 @@ export function useNewBanner(): UseMutationResult<
       toast.success('배너를 성공적으로 생성했어요.');
     },
     onError(error) {
-      console.log(error);
       toast.error('배너 생성을 실패했어요');
     },
   });

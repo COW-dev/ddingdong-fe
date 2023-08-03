@@ -23,7 +23,6 @@ export function useNewReport(): UseMutationResult<
       router.push('/report');
     },
     onError(error) {
-      console.log(error);
       toast.error('활동 보고서 작성에 실패했어요.');
     },
   });

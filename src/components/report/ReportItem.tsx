@@ -14,7 +14,6 @@ type Props = {
   term: number;
 };
 export default function ReportItem({ name, term }: Props) {
-  console.log(name, term);
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ name, term, token }).data;
   const [reportData, setReportData] = useState<ReportDetail[]>([]);
@@ -22,7 +21,7 @@ export default function ReportItem({ name, term }: Props) {
     if (reportDataList?.data) {
       setReportData(reportDataList.data);
     }
-  }, [reportDataList?.data, name, term]);
+  }, [reportDataList?.data]);
 
   if (reportData.length === 0)
     return (

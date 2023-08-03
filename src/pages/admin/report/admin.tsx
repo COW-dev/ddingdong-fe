@@ -11,11 +11,7 @@ export default function Index() {
   const [visible, setVisible] = useState<boolean>(true);
   const [club, setClub] = useState<string>('너나들이');
   const [term, setTerm] = useState<number>(1);
-  useEffect(() => {
-    setClub(club);
-    setTerm(term);
-    console.log(club, term);
-  }, [club, term]);
+
   return (
     <>
       <Head>
