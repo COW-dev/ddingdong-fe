@@ -72,7 +72,7 @@ export default function Index() {
       }
     });
     const recruitPeriod = `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`;
-    formData.append('uploadFiles', uploadFile, `uploadFiles`);
+    uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
@@ -91,6 +91,7 @@ export default function Index() {
           category={clubData.category}
           tag={clubData.tag}
           uploadFiles={clubData.uploadFiles}
+          imageUrls={clubData.imageUrls}
           setValue={setClubData}
           setUploadFile={setUploadFile}
           isEditing={isEditing}
