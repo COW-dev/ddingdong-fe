@@ -24,12 +24,17 @@ type Props = {
   setVisible: Dispatch<SetStateAction<boolean>>;
   setTerm: Dispatch<SetStateAction<number>>;
 };
-const Category = ({ visible, setVisible }: Props) => {
+const Category = ({
+  term,
+  setTerm,
+  club,
+  setClub,
+  visible,
+  setVisible,
+}: Props) => {
   const [{ token }] = useCookies(['token']);
   const currentTerm = useCurrentReports(token).data?.data.term ?? 1;
   const [active, setActive] = useState<string>(REPORT_TYPE.CLUB);
-  const [term, setTerm] = useState(currentTerm);
-  const [club, setClub] = useState('COW'); //default
   const [clubList, setClubList] = useState<string[]>([]);
   const { data: clubs } = useAdminAllClubs(token);
 
@@ -44,7 +49,7 @@ const Category = ({ visible, setVisible }: Props) => {
   const element = () => {
     return (
       <>
-        <div className="flex justify-between  overflow-y-scroll md:mt-8">
+        <div className="flex justify-between  overflow-y-scroll ">
           <div
             className={`m-1 flex w-[50%] flex-col items-center rounded-xl p-3 ${
               active === REPORT_TYPE.TERM && `bg-gray-100 text-gray-500`
@@ -60,7 +65,14 @@ const Category = ({ visible, setVisible }: Props) => {
                 height={15}
                 alt="search"
                 className=""
-                // onClick={() => setTerm(term - 1)}
+                onClick={() =>
+                  toast(
+                    '동아리 이름으로 검색하기가 곧 업데이트 될 예정입니다',
+                    {
+                      icon: '💡',
+                    },
+                  )
+                }
               />
             </div>
           </div>

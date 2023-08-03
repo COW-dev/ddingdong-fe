@@ -24,7 +24,7 @@ export default function Home() {
           (club) =>
             chosungIncludes(club.name, keyword) ||
             hangulIncludes(club.name, keyword) ||
-            club.name.includes(keyword.toUpperCase()) || //영어를 위해 남겨둠
+            club.name.includes(keyword.toUpperCase()) ||
             club.tag.includes(keyword) ||
             club.category === keyword,
         ),

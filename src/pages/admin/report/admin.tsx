@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
@@ -9,8 +9,13 @@ import ReportItem from '@/components/report/ReportItem';
 
 export default function Index() {
   const [visible, setVisible] = useState<boolean>(true);
-  const [club, setClub] = useState<string>('COW');
+  const [club, setClub] = useState<string>('너나들이');
   const [term, setTerm] = useState<number>(1);
+  useEffect(() => {
+    setClub(club);
+    setTerm(term);
+    console.log(club, term);
+  }, [club, term]);
   return (
     <>
       <Head>
@@ -28,7 +33,7 @@ export default function Index() {
           />
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className="flex gap-4 md:mt-18">
         <div className="hidden max-h-[70vh] md:flex">
           <Category
             visible={visible}
@@ -40,7 +45,7 @@ export default function Index() {
           />
         </div>
 
-        <div className="max-h-[70vh] min-w-[85%] flex-1 overflow-scroll">
+        <div className="max-h-[75vh] flex-1 overflow-scroll">
           <ReportItem term={term} name={club} />
         </div>
       </div>

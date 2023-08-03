@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
@@ -12,6 +14,7 @@ type Props = {
   term: number;
 };
 export default function ReportItem({ name, term }: Props) {
+  console.log(name, term);
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ name, term, token }).data;
   const [reportData, setReportData] = useState<ReportDetail[]>([]);
@@ -19,8 +22,15 @@ export default function ReportItem({ name, term }: Props) {
     if (reportDataList?.data) {
       setReportData(reportDataList.data);
     }
-  }, [reportDataList?.data]);
+  }, [reportDataList?.data, name, term]);
 
+  if (reportData.length === 0)
+    return (
+      <div className="flex h-full w-full flex-col items-center justify-center">
+        <Image src={ErrorImg} width={100} height={100} alt="error" />
+        <span className="mt-10 opacity-80">활동보고서를 제출하지 않았어요</span>
+      </div>
+    );
   return (
     <>
       <div className="flex flex-1  justify-end">
