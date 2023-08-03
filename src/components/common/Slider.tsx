@@ -28,7 +28,7 @@ export default function Index() {
   };
 
   useEffect(() => {
-    const autoScroll = setInterval(moveNext, 5000);
+    const autoScroll = setInterval(moveNext, 4000);
 
     return () => {
       clearInterval(autoScroll);

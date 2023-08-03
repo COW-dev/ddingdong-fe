@@ -84,7 +84,6 @@ export default function Index() {
     uploadFileTwo &&
       formData.append('uploadFiles', uploadFileTwo, `uploadFiles`);
     formData.append('token', token);
-    console.log(reportData);
     return mutation.mutate(formData);
   }
   return (

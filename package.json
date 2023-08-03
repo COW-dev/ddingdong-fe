@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^4.29.14",
     "@tanstack/react-query-devtools": "^4.29.14",
+    "@toss/hangul": "^1.5.0",
     "@types/axios": "^0.14.0",
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",

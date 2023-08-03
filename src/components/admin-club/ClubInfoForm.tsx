@@ -50,7 +50,6 @@ export default function ClubInfoForm({
     }));
   }
   function handleDateChange(event: DateValueType) {
-    console.log(event as DateRangeType);
     setValue((prev) => ({
       ...prev,
       recruitPeriod: event as DateRangeType,

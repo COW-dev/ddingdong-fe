@@ -24,7 +24,6 @@ export function useUpdateMyClub(): UseMutationResult<
       toast.success('동아리 정보를 수정했어요.');
     },
     onError(error) {
-      console.log(error);
       toast.error('동아리 정보 수정을 실패했어요');
     },
   });
