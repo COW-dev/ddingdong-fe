@@ -6,6 +6,7 @@ import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import SearchImg from '@/assets/search.svg';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { AdminClub } from '@/types/club';
 import ClubList from './ClubList';
 import TermList from './TermList';
@@ -24,12 +25,11 @@ type Props = {
   setTerm: Dispatch<SetStateAction<number>>;
 };
 const Category = ({ visible, setVisible }: Props) => {
-  const currentTerm = 1;
   const [{ token }] = useCookies(['token']);
+  const currentTerm = useCurrentReports(token).data?.data.term ?? 1;
   const [active, setActive] = useState<string>(REPORT_TYPE.CLUB);
-
   const [term, setTerm] = useState(currentTerm);
-  const [club, setClub] = useState('COW');
+  const [club, setClub] = useState('COW'); //default
   const [clubList, setClubList] = useState<string[]>([]);
   const { data: clubs } = useAdminAllClubs(token);
 
@@ -43,8 +43,8 @@ const Category = ({ visible, setVisible }: Props) => {
 
   const element = () => {
     return (
-      <div>
-        <div className="flex justify-between">
+      <>
+        <div className="flex justify-between  overflow-y-scroll md:mt-8">
           <div
             className={`m-1 flex w-[50%] flex-col items-center rounded-xl p-3 ${
               active === REPORT_TYPE.TERM && `bg-gray-100 text-gray-500`
@@ -53,13 +53,13 @@ const Category = ({ visible, setVisible }: Props) => {
           >
             동아리
             <div className="flex text-sm font-normal">
-              {club}
+              <div className="max-w-[90%] truncate"> {club}</div>
               <Image
                 src={SearchImg}
                 width={15}
                 height={15}
-                alt="leftArrow"
-                className="ml-1"
+                alt="search"
+                className=""
                 // onClick={() => setTerm(term - 1)}
               />
             </div>
@@ -70,7 +70,7 @@ const Category = ({ visible, setVisible }: Props) => {
             }`}
             onClick={() => setActive(REPORT_TYPE.CLUB)}
           >
-            회차
+            {term}회차
             <div className="flex justify-center text-sm font-normal">
               <div className="flex">
                 <Image
@@ -79,9 +79,9 @@ const Category = ({ visible, setVisible }: Props) => {
                   height={10}
                   alt="leftArrow"
                   onClick={() => {
-                    if (term === 1)
+                    if (Number(term) === 1)
                       return toast.error('이전 회차가 존재하지 않습니다.');
-                    setTerm(term - 1);
+                    setTerm(term && term - 1);
                   }}
                 />
                 <div className="mx-2"> {term}회차</div>
@@ -91,9 +91,9 @@ const Category = ({ visible, setVisible }: Props) => {
                   height={10}
                   alt="rightArrow"
                   onClick={() => {
-                    if (term === currentTerm)
+                    if (Number(term) === Number(currentTerm))
                       return toast.error('다음 회차가 열리지 않습니다.');
-                    setTerm(term + 1);
+                    setTerm(term && term + 1);
                   }}
                 />
               </div>
@@ -107,7 +107,7 @@ const Category = ({ visible, setVisible }: Props) => {
             <TermList term={term} club={club} setTerm={setTerm} />
           )}
         </div>
-      </div>
+      </>
     );
   };
 

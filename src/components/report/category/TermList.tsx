@@ -21,14 +21,13 @@ export default function TermList({ term, club, setTerm }: Props) {
   const submitTerms = data?.data
     .filter((item) => item.name === club)
     .map((item) => item.term);
-
   return (
     <>
       <div className="no-scrollbar mt-4 h-[100%] overflow-y-scroll">
         {termList.map((item, index) => (
           <div
             className={`flex rounded-xl px-2 hover:bg-gray-100 ${
-              (item > currentTerm || !submitTerms?.includes(item)) &&
+              (item > currentTerm || !submitTerms?.includes(String(item))) &&
               'text-gray-200 hover:bg-opacity-0'
             }`}
             key={`category-item-${index}`}

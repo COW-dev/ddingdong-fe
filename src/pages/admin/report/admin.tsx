@@ -28,16 +28,19 @@ export default function Index() {
           />
         </div>
       </div>
-      <div className="mt-14 flex gap-4">
-        <Category
-          visible={visible}
-          setVisible={setVisible}
-          club={club}
-          setClub={setClub}
-          term={term}
-          setTerm={setTerm}
-        />
-        <div className="inline-block  w-full ">
+      <div className="flex gap-4">
+        <div className="hidden max-h-[70vh] md:flex">
+          <Category
+            visible={visible}
+            setVisible={setVisible}
+            club={club}
+            setClub={setClub}
+            term={term}
+            setTerm={setTerm}
+          />
+        </div>
+
+        <div className="max-h-[70vh] min-w-[85%] flex-1 overflow-scroll">
           <ReportItem term={term} name={club} />
         </div>
       </div>
