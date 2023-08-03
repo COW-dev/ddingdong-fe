@@ -5,6 +5,10 @@ import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
+declare module '@toss/hangul' {
+  export function chosungIncludes(str: string, search: string): boolean;
+  export function hangulIncludes(str: string, search: string): boolean;
+}
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
