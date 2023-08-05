@@ -57,6 +57,16 @@ export default function Index() {
     setClubData(data);
   }
   function handleClickSubmit() {
+    const missingTest = {
+      ...clubData,
+      content: 'temporary value',
+      imageUrls: 'temporary value',
+    };
+    //content, imageUrls임시적용
+
+    if (isMissingData(missingTest))
+      return toast.error('입력하지 않은 정보가 존재합니다.');
+
     if (!clubData.recruitPeriod.startDate)
       return toast.error('모집기간을 입력해주세요.');
 
