@@ -41,6 +41,15 @@ export default function Home() {
     return <div>error</div>;
   }
 
+  //가나다 순으로 정렬
+  const sortClubsByCategory = (clubs: Club[]) => {
+    return clubs.sort(
+      (a, b) =>
+        a.category.localeCompare(b.category) || a.name.localeCompare(b.name),
+    );
+  };
+  const sortedClubs = sortClubsByCategory(filteredClubs);
+
   return (
     <>
       <div className="mb-1.5 text-sm font-semibold md:mb-2 md:text-base">
@@ -48,10 +57,10 @@ export default function Home() {
       </div>
       <SearchBar value={keyword} onChange={setKeyword} />
       <div className="mb-1.5 text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
-        총 {filteredClubs.length}개의 동아리
+        총 {sortedClubs.length}개의 동아리
       </div>
       <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-        {filteredClubs.map((club) => (
+        {sortedClubs.map((club) => (
           <ClubCard
             key={club.id}
             id={club.id}
