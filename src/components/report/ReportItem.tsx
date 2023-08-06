@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
-import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
@@ -25,7 +23,7 @@ export default function ReportItem({ name, term }: Props) {
 
   if (reportData.length === 0)
     return (
-      <div className="flex h-full w-full flex-col items-center justify-center">
+      <div className="flex h-full w-full flex-col items-center justify-center pt-14 md:pt-0">
         <Image src={ErrorImg} width={100} height={100} alt="error" />
         <span className="mt-10 opacity-80">활동보고서를 제출하지 않았어요</span>
       </div>

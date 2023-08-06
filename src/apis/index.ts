@@ -228,10 +228,10 @@ api.interceptors.response.use(
       window.location.href = '/login';
       return toast.error(err.response.status.message);
     }
-    if (err.response.data.code === 401) {
-      removeToken();
-      window.location.href = '/login';
-    }
+    // if (err.response.data.code === 401) {
+    //   removeToken();
+    //   window.location.href = '/login';
+    // }
     return Promise.reject(err);
   },
 );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
+import { toast } from 'react-hot-toast';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
@@ -8,6 +9,7 @@ import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
+import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
@@ -69,11 +71,24 @@ export default function Index() {
         term: reportTwo.term,
         startDate: reportTwo.date.startDate + reportTwo.startTime.toString(),
         endDate: reportTwo.date.startDate + reportTwo.endTime.toString(),
-        place: reportOne.place,
+        place: reportTwo.place,
         content: reportTwo.content,
         participants: reportTwo.participants,
       },
     ];
+
+    if (
+      isMissingData({
+        ...reportData[0],
+      }) ||
+      isMissingData({
+        ...reportData[1],
+      }) ||
+      !uploadFileOne ||
+      !uploadFileTwo
+    )
+      return toast.error('작성하지 않은 항목이 존재합니다.');
+
     const formData = new FormData();
     formData.append(
       'reportData',
@@ -99,7 +114,7 @@ export default function Index() {
         <Accordion title="활동1">
           <Form
             date={reportOne.date}
-            uploadFiles={reportOne.uploadFiles}
+            uploadFiles={uploadFileOne}
             place={reportOne.place}
             startTime={reportOne.startTime}
             endTime={reportOne.endTime}
@@ -112,7 +127,7 @@ export default function Index() {
         <Accordion title="활동2">
           <Form
             date={reportTwo.date}
-            uploadFiles={reportTwo.uploadFiles}
+            uploadFiles={uploadFileTwo}
             place={reportTwo.place}
             startTime={reportTwo.startTime}
             endTime={reportTwo.endTime}

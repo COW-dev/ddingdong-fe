@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
@@ -30,7 +31,7 @@ export default function Index() {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
           <div className="md:mr-1.5">안녕하세요,</div>
-          <span className="text-blue-500">공;존</span>
+          <span className="text-blue-500">공:존</span>
           <span className="ml-1 md:ml-1.5">님</span>
         </div>,
       );
