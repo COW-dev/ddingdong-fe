@@ -11,12 +11,15 @@ type Props = {
 };
 export default function ClubList({ setClub, club, term }: Props) {
   const { data: allClub } = useAllClubs();
-  const clubList = allClub?.data.map((club: Club) => club.name);
+  const clubList = allClub?.data
+    .map((club: Club) => club.name)
+    .sort((a, b) => a.localeCompare(b));
   const [{ token }] = useCookies(['token']);
   const { data: allReports } = useAdminAllReports(token);
   const submitClubNames = allReports?.data
     .filter((item) => item.term === String(term))
     .map((item) => item.name);
+
   const unSubmitClubNames = clubList?.filter(
     (club) => !submitClubNames?.includes(club),
   );

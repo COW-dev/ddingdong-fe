@@ -73,6 +73,7 @@ export default function Form({
     }
   }
   function handleImageReset() {
+    setImage(null);
     setValue((prev: any) => ({
       ...prev,
       uploadFiles: null,
