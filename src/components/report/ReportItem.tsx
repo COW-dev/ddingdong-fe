@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
-import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';

@@ -60,8 +60,8 @@ export default function UserHeader() {
                   className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500 "
                   onClick={() => {
                     removeToken();
-                    router.push('/login');
                     resetAuth();
+                    router.push('/login');
                   }}
                 >
                   로그아웃
