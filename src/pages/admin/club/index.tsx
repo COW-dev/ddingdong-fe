@@ -23,6 +23,7 @@ export default function Index() {
     id: 0,
     name: '',
     category: '',
+    image: '',
     score: 0,
   });
   const [cookies] = useCookies(['token']);
@@ -93,16 +94,16 @@ export default function Index() {
                   }}
                 >
                   <div className=" flex h-full w-full justify-around p-5 md:p-6">
-                    <div className="h-20 w-20  overflow-hidden rounded-full border-[1.5px] border-gray-100">
+                    <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                       <Image
-                        src={Admin}
+                        src={club.image ?? Admin}
                         width={80}
                         height={80}
-                        alt="admin"
+                        alt="clubImage"
                         className="opacity-50"
                       />
                     </div>
-                    <div className="flex flex-col items-center justify-evenly">
+                    <div className="flex w-[60%] flex-col items-center justify-evenly">
                       <div className="text-lg font-bold md:text-xl">
                         {club.name}
                       </div>

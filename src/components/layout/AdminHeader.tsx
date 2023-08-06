@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
 import isNavActive from '@/utils/isNavActive';
 
@@ -58,9 +59,8 @@ export default function UserHeader() {
                 <button
                   className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500 "
                   onClick={() => {
+                    removeToken();
                     router.push('/login');
-                    removeCookie('token');
-                    removeCookie('role');
                     resetAuth();
                   }}
                 >

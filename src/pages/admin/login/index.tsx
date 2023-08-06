@@ -28,13 +28,10 @@ export default function Index() {
         setCookie('token', authToken);
         setCookie('role', role);
         setAuth({ role, token });
-        if (role === 'ROLE_ADMIN') {
-          return router.push('/');
-        }
-        router.push('/my-club');
+        return router.push('/');
       })
       .catch((error: AxiosError) => {
-        toast.error('로그인에 실패하였습니다.'); //모달로 변경
+        toast.error('로그인에 실패하였습니다.');
       });
   }
 
