@@ -20,6 +20,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     recruitPeriod,
     // formUrl,
   } = info;
+  console.log(info);
 
   return (
     <>
@@ -76,10 +77,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
           <div className="w-full">
             <span className="inline-block w-20 text-gray-500">모집기간</span>
-            <span>
-              {recruitPeriod?.startDate?.toString()} ~{' '}
-              {recruitPeriod?.endDate?.toString()}
-            </span>
+            <span>{recruitPeriod?.toString()}</span>
           </div>
         </div>
         <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">
