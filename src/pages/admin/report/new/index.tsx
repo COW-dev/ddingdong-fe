@@ -59,8 +59,10 @@ export default function Index() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const reportOnedate = parseDateToString(reportOne.date.startDate) + ' ';
-    const reportTwodate = parseDateToString(reportTwo.date.startDate) + ' ';
+    const reportOnedate =
+      parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
+    const reportTwodate =
+      parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
     const reportData = [
       {
         term: reportOne.term,
