@@ -20,7 +20,7 @@ export function useUpdateClub(): UseMutationResult<
       queryClient.invalidateQueries(['admin/clubs']);
       toast.success('동아리 정보를 수정했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('동아리 정보 수정을 실패했어요');
     },
   });

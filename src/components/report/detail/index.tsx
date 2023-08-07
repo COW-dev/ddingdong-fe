@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import Admin from '@/assets/admin.jpg';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import ReportNoticeModal from '@/components/modal/reportNoticeModal';

@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
 import type { DeptCaptionColor } from '@/types';
-import { ClubDetail, UpdateClub } from '@/types/club';
+import { ClubDetail } from '@/types/club';
 
 const deptCaptionColor: DeptCaptionColor = {
   봉사: 'text-pink-500',

@@ -2,7 +2,6 @@ import axios from 'axios';
 import type { AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import { useAuthStore } from '@/store/auth';
 import { BannerType, DeleteBanner } from '@/types/banner';
 import {
   Club,
@@ -11,21 +10,10 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  UpdateMyClub,
 } from '@/types/club';
 
-import {
-  Notice,
-  NoticeDetail,
-  UpdateNotice,
-  DeleteNotice,
-} from '@/types/notice';
-import {
-  ReportDetail,
-  MyReportList,
-  CurrentReport,
-  ReportDataType,
-} from '@/types/report';
+import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
+import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 
 const api = axios.create({
   baseURL: '/api/',

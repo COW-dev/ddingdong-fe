@@ -3,13 +3,11 @@ import { useCookies } from 'react-cookie';
 import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { Club } from '@/types';
-import { ClubDetail } from '@/types/club';
 type Props = {
   term: number;
-  club: string;
   setClub: Dispatch<SetStateAction<string>>;
 };
-export default function ClubList({ setClub, club, term }: Props) {
+export default function ClubList({ setClub, term }: Props) {
   const { data: allClub } = useAllClubs();
   const clubList = allClub?.data
     .map((club: Club) => club.name)

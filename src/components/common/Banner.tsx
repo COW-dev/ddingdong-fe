@@ -11,7 +11,7 @@ export default function Banner({ data }: { data: BannerType }) {
       colorCode: '하늘',
       imgUrl: 'imgUrl',
     };
-  const { imgUrl, title, subTitle, id, colorCode } = data;
+  const { imgUrl, title, subTitle, colorCode } = data;
   const color = BannerColor.find((item) => item.title === colorCode)?.color;
   const parsedImgUrl = imgUrl.slice(0, 8) + imgUrl.slice(9);
   return (

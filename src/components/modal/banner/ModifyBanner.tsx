@@ -11,7 +11,7 @@ type Props = {
   closeModal: () => void;
 };
 export default function ModifyBanner({ data, closeModal }: Props) {
-  const { id, title, subTitle, colorCode, imgUrl } = data;
+  const { title, subTitle, colorCode, imgUrl } = data;
   const [image, setImage] = useState<File | string>(imgUrl);
   // const updateMutation = useUpdateClub();
 

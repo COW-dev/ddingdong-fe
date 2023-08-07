@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 type Prop = {
   startDate: string;
   endDate: string;
