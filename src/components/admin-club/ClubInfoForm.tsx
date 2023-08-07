@@ -11,7 +11,7 @@ import {
   DateValueType,
   DateRangeType,
 } from 'react-tailwindcss-datepicker/dist/types';
-import { ClubDetail, UpdateClub } from '@/types/club';
+import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
 
 type ClubInfoFormProps = {
@@ -36,7 +36,6 @@ export default function ClubInfoForm({
   isEditing,
 }: ClubInfoFormProps) {
   const [hydrated, setHydrated] = useState(false);
-  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
     setHydrated(true);

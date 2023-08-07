@@ -20,7 +20,7 @@ export function useDeleteBanner(): UseMutationResult<
       queryClient.invalidateQueries(['banners']);
       toast.success('배너를 성공적으로 삭제했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('배너 삭제를 실패했어요');
     },
   });

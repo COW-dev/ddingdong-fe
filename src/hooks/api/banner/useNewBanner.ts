@@ -21,7 +21,7 @@ export function useNewBanner(): UseMutationResult<
       queryClient.invalidateQueries(['banners']);
       toast.success('배너를 성공적으로 생성했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('배너 생성을 실패했어요');
     },
   });

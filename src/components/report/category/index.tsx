@@ -114,9 +114,9 @@ const Category = ({
         </div>
         <div className="m-5">
           {active === REPORT_TYPE.CLUB ? (
-            <ClubList term={term} club={club} setClub={setClub} />
+            <ClubList term={term} setClub={setClub} />
           ) : (
-            <TermList term={term} club={club} setTerm={setTerm} />
+            <TermList club={club} setTerm={setTerm} />
           )}
         </div>
       </>

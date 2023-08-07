@@ -9,6 +9,7 @@ import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
+import { parseDateToString } from '@/utils/parseDate';
 import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
@@ -58,19 +59,23 @@ export default function Index() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const reportOnedate =
+      parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
+    const reportTwodate =
+      parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
     const reportData = [
       {
         term: reportOne.term,
-        startDate: reportOne.date.startDate + reportOne.startTime.toString(),
-        endDate: reportOne.date.startDate + reportOne.endTime.toString(),
+        startDate: reportOnedate + reportOne.startTime,
+        endDate: reportOnedate + reportOne.endTime,
         place: reportOne.place,
         content: reportOne.content,
         participants: reportOne.participants,
       },
       {
         term: reportTwo.term,
-        startDate: reportTwo.date.startDate + reportTwo.startTime.toString(),
-        endDate: reportTwo.date.startDate + reportTwo.endTime.toString(),
+        startDate: reportTwodate + reportTwo.startTime,
+        endDate: reportTwodate + reportTwo.endTime,
         place: reportTwo.place,
         content: reportTwo.content,
         participants: reportTwo.participants,
@@ -88,7 +93,7 @@ export default function Index() {
       !uploadFileTwo
     )
       return toast.error('작성하지 않은 항목이 존재합니다.');
-
+    console.log(reportData);
     const formData = new FormData();
     formData.append(
       'reportData',

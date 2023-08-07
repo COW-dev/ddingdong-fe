@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, RefObject } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
@@ -7,7 +7,6 @@ import Banner from './Banner';
 
 export default function Index() {
   const carousel = useRef<HTMLDivElement>(null);
-  const maxScrollWidth = useRef<number>(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { data: bannerData } = useAllBanners();
 
