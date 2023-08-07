@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
+import ReportNoticeModal from '@/components/modal/reportNoticeModal';
 import { ROLE_TYPE } from '@/constants/text';
 import { ReportDetail } from '@/types/report';
 import ActiveDate from './ActiveDate';
@@ -121,6 +122,7 @@ export default function Index({
           />
         )}
       </div>
+      <ReportNoticeModal />
     </div>
   );
 }
