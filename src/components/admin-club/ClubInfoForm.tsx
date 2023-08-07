@@ -163,13 +163,13 @@ export default function ClubInfoForm({
                 onChange={(e) => handleDateChange(e)}
                 inputClassName={`${
                   !isEditing && 'opacity-60'
-                } w-full placeholder:text-sm md:placeholder:text-md rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md: md:px-5 `}
+                } w-full h-12 placeholder:text-sm md:placeholder:text-md rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md: md:px-5 `}
               />
             ) : (
               <div
                 className={`${
                   !isEditing && 'opacity-60'
-                } w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
+                } h-12 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
               >
                 {recruitPeriod?.startDate && recruitPeriod?.endDate
                   ? `${recruitPeriod.startDate} ~ ${recruitPeriod.endDate}`

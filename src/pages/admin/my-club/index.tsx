@@ -93,7 +93,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>{`띵동 어드민 - ${clubData.name}`}</title>
+        <title>{`띵동 어드민 - ${clubData?.name}`}</title>
       </Head>
       <div className=" flex items-end justify-between">
         <AdminClubHeading
