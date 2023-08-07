@@ -62,6 +62,7 @@ export default function AdminClubHeading({
     imageUrls && imageUrls[0]?.slice(0, 8) + imageUrls[0]?.slice(9);
 
   function handleImageReset() {
+    setPreviewImageUrl('');
     setValue((prev) => ({
       ...prev,
       imageUrls: [],
@@ -72,30 +73,20 @@ export default function AdminClubHeading({
       <div className=" relative flex flex-row items-center">
         {parsedImg || previewImageUrl ? (
           <>
-            {parsedImg ? (
-              <Image
-                src={parsedImg}
-                width={100}
-                height={100}
-                alt="image"
-                className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
-              />
-            ) : (
-              <Image
-                src={previewImageUrl}
-                width={100}
-                height={100}
-                alt="image"
-                className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
-              />
-            )}
+            <Image
+              src={parsedImg ? parsedImg : previewImageUrl}
+              width={100}
+              height={100}
+              alt="image"
+              className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
+            />
             {isEditing && (
               <div className="absolute start-16 top-0.5 md:start-18">
                 <Image
                   src={Camera}
                   width={20}
                   height={20}
-                  className=" cursor-pointer opacity-40"
+                  className="cursor-pointer opacity-40"
                   onClick={handleImageReset}
                   alt="재사용"
                 />

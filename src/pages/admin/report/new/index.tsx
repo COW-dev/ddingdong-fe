@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import Modal from '@/components/common/Modal';
 import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
