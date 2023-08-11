@@ -1,14 +1,12 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { toast, Toaster } from 'react-hot-toast';
 import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
-import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
@@ -56,20 +54,9 @@ export default function Index() {
     setIsEditing(false);
     setClubData(data);
   }
+
   function handleClickSubmit() {
-    const missingTest = {
-      ...clubData,
-      content: 'temporary value',
-      imageUrls: 'temporary value',
-    };
-    //content, imageUrls임시적용
-
-    // if (isMissingData(missingTest))
-    //   return toast.error('입력하지 않은 정보가 존재합니다.');
-
-    // if (!clubData.recruitPeriod.startDate)
-    //   return toast.error('모집기간을 입력해주세요.');
-
+    console.log(clubData);
     setIsEditing(false);
     setClubData({
       ...clubData,
@@ -78,11 +65,18 @@ export default function Index() {
     const formData = new FormData();
 
     Object.entries(clubData).forEach(([key, value]) => {
-      if (key !== 'uploadFiles' && key !== 'recruitPeriod') {
+      if (
+        key !== 'uploadFiles' &&
+        key !== 'recruitPeriod' &&
+        key !== 'imageUrls'
+      ) {
+        if (value === null) value = '';
         formData.append(key, String(value));
       }
     });
-    const recruitPeriod = `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`;
+    const recruitPeriod = clubData.recruitPeriod
+      ? `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`
+      : '';
     uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
