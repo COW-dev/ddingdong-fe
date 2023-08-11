@@ -92,9 +92,9 @@ export default function Index() {
       }
     });
     const recruitPeriod =
-      clubData.parsedRecruitPeriod.startDate === null
+      clubData === null || clubData?.parsedRecruitPeriod?.startDate === null
         ? ``
-        : `${clubData.parsedRecruitPeriod.startDate}~${clubData.parsedRecruitPeriod.endDate}`;
+        : `${clubData?.parsedRecruitPeriod?.startDate}~${clubData?.parsedRecruitPeriod?.endDate}`;
 
     uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
     clubData.imageUrls.length === 0 && formData.append('uploadFiles', '');
@@ -150,7 +150,7 @@ export default function Index() {
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
-          parsedRecruitPeriod={clubData.parsedRecruitPeriod}
+          parsedRecruitPeriod={clubData?.parsedRecruitPeriod}
           recruitPeriod={clubData.recruitPeriod}
           formUrl={clubData.formUrl}
           setValue={setClubData}
