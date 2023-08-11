@@ -8,7 +8,10 @@ import {
 import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import {
+  DateRangeType,
+  DateValueType,
+} from 'react-tailwindcss-datepicker/dist/types';
 import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
 
@@ -17,7 +20,7 @@ type ClubInfoFormProps = {
   phoneNumber: string;
   location: string;
   regularMeeting: string;
-  parsedRecruitPeriod: DateRangeType;
+  parsedRecruitPeriod: DateRangeType | null;
   recruitPeriod: string;
   formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
@@ -51,7 +54,7 @@ export default function ClubInfoForm({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(event: DateRangeType) {
+  function handleDateChange(event: null | DateRangeType) {
     setValue((prev) => ({
       ...prev,
       parsedRecruitPeriod: event,
@@ -173,10 +176,10 @@ export default function ClubInfoForm({
                   !isEditing && 'opacity-60'
                 } h-12 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
               >
-                {parsedRecruitPeriod.startDate === null ||
-                parsedRecruitPeriod.startDate === ''
+                {parsedRecruitPeriod?.startDate === null ||
+                parsedRecruitPeriod?.startDate === ''
                   ? ''
-                  : `${parsedRecruitPeriod.startDate} ~ ${parsedRecruitPeriod.endDate}`}
+                  : `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`}
               </div>
             )}
           </div>
