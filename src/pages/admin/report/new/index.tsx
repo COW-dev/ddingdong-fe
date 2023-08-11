@@ -8,7 +8,7 @@ import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
-import { parseDateToString } from '@/utils/parseDate';
+import { parseDateToString } from '@/utils/parse';
 import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
@@ -92,7 +92,6 @@ export default function Index() {
       !uploadFileTwo
     )
       return toast.error('작성하지 않은 항목이 존재합니다.');
-    console.log(reportData);
     const formData = new FormData();
     formData.append(
       'reportData',

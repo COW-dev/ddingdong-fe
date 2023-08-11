@@ -2,18 +2,8 @@ import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
-import type { DeptCaptionColor } from '@/types';
+import { deptCaptionColor } from '@/constants/color';
 import { ClubDetail } from '@/types/club';
-
-const deptCaptionColor: DeptCaptionColor = {
-  봉사: 'text-pink-500',
-  사회연구: 'text-orange-500',
-  연행예술: 'text-yellow-500',
-  전시창작: 'text-emerald-500',
-  종교: 'text-cyan-500',
-  체육: 'text-blue-500',
-  학술: 'text-purple-500',
-};
 
 type AdminClubHeadingProps = {
   clubName: string;

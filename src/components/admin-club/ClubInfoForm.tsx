@@ -7,10 +7,8 @@ import {
 } from 'react';
 import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
-import {
-  DateValueType,
-  DateRangeType,
-} from 'react-tailwindcss-datepicker/dist/types';
+
+import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
 
@@ -19,7 +17,8 @@ type ClubInfoFormProps = {
   phoneNumber: string;
   location: string;
   regularMeeting: string;
-  recruitPeriod: DateRangeType;
+  parsedRecruitPeriod: DateRangeType;
+  recruitPeriod: string;
   formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
@@ -30,7 +29,7 @@ export default function ClubInfoForm({
   phoneNumber,
   location,
   regularMeeting,
-  recruitPeriod,
+  parsedRecruitPeriod,
   formUrl,
   setValue,
   isEditing,
@@ -39,7 +38,11 @@ export default function ClubInfoForm({
 
   useEffect(() => {
     setHydrated(true);
+    setValue((prev) => ({
+      ...prev,
+    }));
   }, []);
+
   if (!hydrated) return null;
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -48,10 +51,10 @@ export default function ClubInfoForm({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleDateChange(event: DateValueType) {
+  function handleDateChange(event: DateRangeType) {
     setValue((prev) => ({
       ...prev,
-      recruitPeriod: event as DateRangeType,
+      parsedRecruitPeriod: event,
     }));
   }
 
@@ -154,7 +157,7 @@ export default function ClubInfoForm({
           <div className="w-[75%]">
             {isEditing ? (
               <Datepicker
-                value={recruitPeriod}
+                value={parsedRecruitPeriod}
                 useRange={false}
                 disabled={!isEditing}
                 minDate={new Date(new Date().getFullYear(), 0, 1)}
@@ -170,10 +173,10 @@ export default function ClubInfoForm({
                   !isEditing && 'opacity-60'
                 } h-12 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
               >
-                {recruitPeriod?.startDate && recruitPeriod?.endDate
-                  ? `${recruitPeriod.startDate} ~ ${recruitPeriod.endDate}`
-                  : `${recruitPeriod === null ? '' : recruitPeriod}`}
-                {/* `${recruitPeriod ?? ``}`} */}
+                {parsedRecruitPeriod.startDate === null ||
+                parsedRecruitPeriod.startDate === ''
+                  ? ''
+                  : `${parsedRecruitPeriod.startDate} ~ ${parsedRecruitPeriod.endDate}`}
               </div>
             )}
           </div>

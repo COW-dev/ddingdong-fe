@@ -9,6 +9,7 @@ export const CatogoryColor: ItemsType[] = [
   { title: '종교', color: 'cyan' },
   { title: '체육', color: 'blue' },
   { title: '학술', color: 'purple' },
+  { title: '준동아리', color: 'zinc' },
 ];
 
 export const BannerColor: ItemsType[] = [
@@ -28,4 +29,5 @@ export const deptCaptionColor: DeptCaptionColor = {
   종교: 'text-cyan-500',
   체육: 'text-blue-500',
   학술: 'text-purple-500',
+  준동아리: 'text-zinc-500',
 };

@@ -12,6 +12,7 @@ import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
 import type { AdminClub } from '@/types/club';
+import { parseImgUrl } from '@/utils/parse';
 
 export default function Index() {
   const { openModal, visible, closeModal, modalRef } = useModal();
@@ -19,13 +20,7 @@ export default function Index() {
     title: '',
     content: <></>,
   });
-  const [club, setClub] = useState({
-    id: 0,
-    name: '',
-    category: '',
-    image: '',
-    score: 0,
-  });
+  const [club, setClub] = useState({});
   const [cookies] = useCookies(['token']);
   const [clubs, setAdminClubs] = useState<Array<AdminClub>>([]);
   const { data } = useAdminAllClubs(cookies.token);
@@ -37,6 +32,11 @@ export default function Index() {
   function handleModal(data: ModalType) {
     setModal(data);
     openModal();
+  }
+
+  function handleImage(data: Array<string>) {
+    if (data.length === 0) return Admin;
+    return parseImgUrl(data[0]);
   }
 
   return (
@@ -73,7 +73,7 @@ export default function Index() {
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubs
             .sort((a, b) => b.score - a.score)
-            .map((club) => (
+            .map((club: AdminClub) => (
               <div key={club.id}>
                 <div
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
@@ -96,7 +96,7 @@ export default function Index() {
                   <div className=" flex h-full w-full justify-around p-5 md:p-6">
                     <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                       <Image
-                        src={club.image ?? Admin}
+                        src={handleImage(club.imageUrls)}
                         width={80}
                         height={80}
                         alt="clubImage"

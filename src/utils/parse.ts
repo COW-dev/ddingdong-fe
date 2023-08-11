@@ -5,3 +5,7 @@ export function parseDateToString(date: Date): string {
 
   return `${year}-${month}-${day}`;
 }
+
+export function parseImgUrl(url: string): string {
+  return url.slice(0, 8) + url.slice(9);
+}

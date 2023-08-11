@@ -12,7 +12,7 @@ export type AdminClub = {
   id: number;
   name: string;
   category: string;
-  image: string;
+  imageUrls: Array<string>;
   score: number;
 };
 
@@ -34,7 +34,8 @@ export type ClubDetail = {
   content: string;
   location: string;
   isRecruit: boolean;
-  recruitPeriod: DateRangeType;
+  parsedRecruitPeriod: { startDate: string; endDate: string };
+  recruitPeriod: string;
   regularMeeting: string;
   introduction: string;
   activity: string;
