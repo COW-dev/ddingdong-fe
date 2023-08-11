@@ -3,6 +3,7 @@ import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';
 import { ClubDetail } from '@/types/club';
+import { parseImgUrl } from '@/utils/parse';
 
 type ClubHeadingProps = {
   info: ClubDetail;
@@ -17,18 +18,19 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     phoneNumber,
     location,
     regularMeeting,
+    imageUrls,
     recruitPeriod,
     // formUrl,
   } = info;
-  console.log(info);
 
+  const imageSrc = imageUrls.length > 0 ? parseImgUrl(imageUrls[0]) : Admin;
   return (
     <>
       <div className="flex flex-col">
         <div className="flex flex-row items-end">
           <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
             <Image
-              src={Admin}
+              src={imageSrc}
               width={80}
               height={80}
               alt="admin"

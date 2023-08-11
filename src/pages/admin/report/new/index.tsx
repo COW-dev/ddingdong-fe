@@ -8,7 +8,7 @@ import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
-import { parseDateToString } from '@/utils/parseDate';
+import { parseDateToString } from '@/utils/parse';
 import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
