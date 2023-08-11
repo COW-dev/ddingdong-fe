@@ -34,7 +34,8 @@ export type ClubDetail = {
   content: string;
   location: string;
   isRecruit: boolean;
-  recruitPeriod: DateRangeType;
+  parsedRecruitPeriod: { startDate: string; endDate: string };
+  recruitPeriod: string;
   regularMeeting: string;
   introduction: string;
   activity: string;

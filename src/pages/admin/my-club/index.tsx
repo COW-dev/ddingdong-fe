@@ -9,6 +9,7 @@ import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
 
 export default function Index() {
+  const [init, setInit] = useState(true);
   const [{ token }] = useCookies();
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -21,7 +22,8 @@ export default function Index() {
     phoneNumber: '',
     location: '',
     isRecruit: false,
-    recruitPeriod: { startDate: new Date(), endDate: new Date() },
+    recruitPeriod: '',
+    parsedRecruitPeriod: { startDate: '2023-00-00', endDate: '2023-00-00' },
     regularMeeting: '',
     introduction: '',
     imageUrls: [''],
@@ -36,12 +38,28 @@ export default function Index() {
   } = useMyClub(token);
 
   const mutation = useUpdateMyClub();
+  const parsed = {
+    startDate: clubData.recruitPeriod.split(`~`)[0],
+    endDate: clubData.recruitPeriod.split(`~`)[1] ?? '',
+  };
 
   useEffect(() => {
     if (data) {
-      setClubData(data);
+      setClubData({
+        ...data,
+      });
+      setInit(false);
     }
-  }, [data]);
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      setClubData({
+        ...data,
+        parsedRecruitPeriod: parsed,
+      });
+    }
+  }, [init]);
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setClubData((prev) => ({
@@ -56,7 +74,6 @@ export default function Index() {
   }
 
   function handleClickSubmit() {
-    console.log(clubData);
     setIsEditing(false);
     setClubData({
       ...clubData,
@@ -74,10 +91,13 @@ export default function Index() {
         formData.append(key, String(value));
       }
     });
-    const recruitPeriod = clubData.recruitPeriod
-      ? `${clubData.recruitPeriod.startDate?.toString()}~${clubData.recruitPeriod.endDate?.toString()}`
-      : '';
+    const recruitPeriod =
+      clubData.parsedRecruitPeriod.startDate === null
+        ? ``
+        : `${clubData.parsedRecruitPeriod.startDate}~${clubData.parsedRecruitPeriod.endDate}`;
+
     uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
+    clubData.imageUrls.length === 0 && formData.append('uploadFiles', '');
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
@@ -130,6 +150,7 @@ export default function Index() {
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
+          parsedRecruitPeriod={clubData.parsedRecruitPeriod}
           recruitPeriod={clubData.recruitPeriod}
           formUrl={clubData.formUrl}
           setValue={setClubData}
