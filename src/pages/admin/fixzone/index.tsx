@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import FixAdminList from '@/components/fixzone/FixAdminList';
 import FixClubList from '@/components/fixzone/FixClubList';

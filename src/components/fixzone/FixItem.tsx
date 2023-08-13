@@ -13,12 +13,12 @@ export default function FixItem({ data }: { data: Fix }) {
     <li key={id} className="mb-2 flex w-full border border-gray-100 pl-4 pt-2">
       <Link
         href={`/fixzone/${id}`}
-        className="inline-block w-full pb-5 pt-3 transition-opacity hover:opacity-50 md:pt-3.5"
+        className="inline-block w-full py-2 transition-opacity hover:opacity-50 md:pt-3.5"
       >
         <div className="block text-base font-semibold sm:hidden">
           {title && title.length < 15 ? title : title?.substring(0, 15) + '..'}
         </div>
-        <div className="hidden text-xl font-semibold sm:block">{title}</div>
+        <div className="hidden text-lg font-semibold sm:block">{title}</div>
         <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
           {new Date(createdAt).toLocaleDateString()} | {club}
         </div>

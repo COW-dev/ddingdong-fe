@@ -12,7 +12,7 @@ export default function Layout({ children }: LayoutProps) {
   const curPath = router.pathname;
   const isAdminPage = curPath.startsWith('/admin');
   const isLoginPage = curPath.endsWith('/login');
-  const isFixzonePage = curPath.endsWith('/fixzone');
+  const isFixzonePage = curPath.includes('/fixzone');
 
   return (
     <>

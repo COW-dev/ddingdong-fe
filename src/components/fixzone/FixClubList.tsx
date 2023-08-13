@@ -8,7 +8,7 @@ export default function FixClubList() {
 
   return (
     <div>
-      <ul className="mt-14 w-full md:mt-16">
+      <ul className="mt-14 h-[80vh] w-full overflow-y-scroll md:mt-16">
         {data?.data.map((fix, index) => (
           <div key={`fix__club-${index}`}>
             <FixItem data={fix} />
