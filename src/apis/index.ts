@@ -12,7 +12,7 @@ import {
   UpdateClub,
 } from '@/types/club';
 
-import { Fix } from '@/types/fixzone';
+import { Fix, FixAdminDetailType, FixClubDetailType } from '@/types/fixzone';
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 
@@ -72,6 +72,34 @@ export async function getClubAllFix(
     },
   );
 }
+
+export async function getAdminFixInfo(
+  token: string,
+  id: number,
+): Promise<AxiosResponse<FixAdminDetailType, unknown>> {
+  return await api.get(
+    `https://1ac0b6b3-f19b-43ce-81de-dc7189deace4.mock.pstmn.io/api/admin/fix/${id}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+export async function getClubFixInfo(
+  token: string,
+  id: number,
+): Promise<AxiosResponse<FixClubDetailType, unknown>> {
+  return await api.get(
+    `https://1ac0b6b3-f19b-43ce-81de-dc7189deace4.mock.pstmn.io/api/club/fix/${id}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
 export async function getClubInfo(
   clubId: number,
 ): Promise<AxiosResponse<ClubDetail, unknown>> {
