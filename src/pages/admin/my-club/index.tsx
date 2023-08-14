@@ -19,8 +19,8 @@ export default function Index() {
     category: '',
     leader: '',
     content: 'test',
-    phoneNumber: '',
-    location: '',
+    phoneNumber: '010-1234-1234',
+    location: 'S0000',
     isRecruit: false,
     recruitPeriod: '',
     parsedRecruitPeriod: { startDate: '2023-00-00', endDate: '2023-00-00' },
@@ -39,8 +39,8 @@ export default function Index() {
 
   const mutation = useUpdateMyClub();
   const parsed = {
-    startDate: clubData.recruitPeriod.split(`~`)[0],
-    endDate: clubData.recruitPeriod.split(`~`)[1] ?? '',
+    startDate: clubData.recruitPeriod?.split(`~`)[0],
+    endDate: clubData.recruitPeriod?.split(`~`)[1] ?? '',
   };
 
   useEffect(() => {
@@ -85,7 +85,9 @@ export default function Index() {
       if (
         key !== 'uploadFiles' &&
         key !== 'recruitPeriod' &&
-        key !== 'imageUrls'
+        key !== 'imageUrls' &&
+        key !== 'location' &&
+        key !== 'phoneNumber'
       ) {
         if (value === null) value = '';
         formData.append(key, String(value));
