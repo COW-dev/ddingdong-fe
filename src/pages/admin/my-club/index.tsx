@@ -80,7 +80,7 @@ export default function Index() {
       isRecruit: false,
     });
     const formData = new FormData();
-
+    console.log(clubData);
     Object.entries(clubData).forEach(([key, value]) => {
       if (
         key !== 'uploadFiles' &&
@@ -99,7 +99,9 @@ export default function Index() {
         : `${clubData?.parsedRecruitPeriod?.startDate}~${clubData?.parsedRecruitPeriod?.endDate}`;
 
     uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
-    clubData.imageUrls.length === 0 && formData.append('uploadFiles', '');
+    clubData.imageUrls.length === 0
+      ? formData.append('imageUrls', '')
+      : formData.append('imageUrls', clubData.imageUrls[0]);
     formData.append('recruitPeriod', recruitPeriod);
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
