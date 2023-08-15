@@ -13,6 +13,7 @@ import {
 } from '@/types/club';
 
 import { Fix, FixAdminDetailType, FixClubDetailType } from '@/types/fixzone';
+import { Member } from '@/types/member';
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 
@@ -53,6 +54,18 @@ export async function getAdminAllFix(
 ): Promise<AxiosResponse<Fix[], unknown>> {
   return await api.get(
     'https://1ac0b6b3-f19b-43ce-81de-dc7189deace4.mock.pstmn.io/api/admin/fix',
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+export async function getMembers(
+  token: string,
+): Promise<AxiosResponse<Member[], unknown>> {
+  return await api.get(
+    'https://1ac0b6b3-f19b-43ce-81de-dc7189deace4.mock.pstmn.io/api/member',
     {
       headers: {
         Authorization: 'Bearer ' + token,
