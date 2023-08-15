@@ -51,8 +51,8 @@ export default function Index() {
       setClubData((prevClubData) => ({
         ...prevClubData,
         parsedRecruitPeriod: {
-          startDate: prevClubData.recruitPeriod.split('~')[0],
-          endDate: prevClubData.recruitPeriod.split('~')[1] || '',
+          startDate: prevClubData.recruitPeriod?.split('~')[0],
+          endDate: prevClubData.recruitPeriod?.split('~')[1] || '',
         },
         token: token,
       }));
@@ -80,23 +80,11 @@ export default function Index() {
 
   function createFormData() {
     const formData = new FormData();
-    console.log(clubData);
     Object.entries(clubData).forEach(([key, value]) => {
-      if (
-        key !== 'uploadFiles' &&
-        key !== 'recruitPeriod' &&
-        key !== 'imageUrls' &&
-        key !== 'location' &&
-        key !== 'phoneNumber'
-      ) {
-        if (value === null) value = '';
-        formData.append(key, String(value));
+      if (!excludedKeys.includes(key)) {
+        formData.append(key, value === null ? '' : String(value));
       }
     });
-
-    if (uploadFile || clubData.imageUrls.length === 0) {
-      formData.append('uploadFiles', uploadFile || '');
-    }
 
     uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
     formData.append(
@@ -124,6 +112,8 @@ export default function Index() {
     'recruitPeriod',
     'imageUrls',
     'parsedRecruitPeriod',
+    'location',
+    'phoneNumber',
   ];
   return (
     <>

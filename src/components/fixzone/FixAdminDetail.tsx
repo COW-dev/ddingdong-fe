@@ -18,6 +18,7 @@ const init = {
   location: '',
   title: '',
 };
+
 export default function FixAdminDetail({ id }: Prop) {
   const [{ token }] = useCookies(['token']);
   const { data: response } = useAdminFixInfo({ token, id });
@@ -27,6 +28,7 @@ export default function FixAdminDetail({ id }: Prop) {
   }, [response]);
   const { club, content, createdAt, imageUrls, isCompleted, location, title } =
     data;
+
   return (
     <div className="max-w-[650px] p-5">
       <div className="mt-7 flex justify-between text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
