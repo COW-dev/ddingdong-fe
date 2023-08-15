@@ -48,13 +48,20 @@ export default function MemberInfo({
     id === 0 ? handleCreateMember() : handleDeleteMember();
   }
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (id === 0 && event.key === 'Enter') {
+    if (
+      id === 0 &&
+      event.key === 'Enter' &&
+      event.nativeEvent.isComposing === false
+    ) {
       handleCreateMember();
     }
   }
 
   function handleCreateMember() {
-    setMembers([...members, { ...value, id: members.length + 1 }]);
+    setMembers([
+      ...members,
+      { ...value, id: members[members.length - 1].id + 1 },
+    ]);
     setValue({ id: 0, name: '', studentId: '', department: '' });
   }
   function handleDeleteMember() {
@@ -94,7 +101,6 @@ export default function MemberInfo({
           placeholder="이름 입력"
           className="text-md bg-inherit font-semibold outline-none"
           onChange={(e) => handleChange(e)}
-          autoFocus
           disabled={!isEditing}
         />
         <div className="flex items-center text-sm  text-gray-500">
