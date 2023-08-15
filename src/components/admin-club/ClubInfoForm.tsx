@@ -176,7 +176,8 @@ export default function ClubInfoForm({
                   !isEditing && 'opacity-60'
                 } h-12 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
               >
-                {parsedRecruitPeriod?.startDate === null ||
+                {parsedRecruitPeriod?.startDate === undefined ||
+                parsedRecruitPeriod?.startDate === null ||
                 parsedRecruitPeriod?.startDate === ''
                   ? ''
                   : `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`}

@@ -13,8 +13,8 @@ const initialClubData: ClubDetail = {
   category: '',
   leader: '',
   content: 'test',
-  phoneNumber: '',
-  location: '',
+  phoneNumber: '010-1234-1234',
+  location: 'S0000',
   isRecruit: false,
   recruitPeriod: '',
   parsedRecruitPeriod: { startDate: '', endDate: '' },
@@ -80,16 +80,29 @@ export default function Index() {
 
   function createFormData() {
     const formData = new FormData();
-
+    console.log(clubData);
     Object.entries(clubData).forEach(([key, value]) => {
-      if (!excludedKeys.includes(key)) {
-        formData.append(key, value === null ? '' : String(value));
+      if (
+        key !== 'uploadFiles' &&
+        key !== 'recruitPeriod' &&
+        key !== 'imageUrls' &&
+        key !== 'location' &&
+        key !== 'phoneNumber'
+      ) {
+        if (value === null) value = '';
+        formData.append(key, String(value));
       }
     });
 
     if (uploadFile || clubData.imageUrls.length === 0) {
       formData.append('uploadFiles', uploadFile || '');
     }
+
+    uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
+    formData.append(
+      'imgUrls',
+      clubData.imageUrls.length === 0 ? '' : clubData.imageUrls[0],
+    );
 
     formData.append('recruitPeriod', generateRecruitPeriodString());
     formData.append('token', token);
