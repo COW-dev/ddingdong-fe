@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { GetServerSideProps } from 'next/types';
@@ -48,6 +48,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   }, [data]);
   console.log(data);
 
+  function checkUrl(strUrl: string) {
+    const expUrl = /^http[s]?:\/\/([\S]{3,})/i;
+    return expUrl.test(strUrl);
+  }
+
   function handleClickCancel() {
     setIsEditing(false);
     setNoticeData(data);
@@ -62,6 +67,14 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       noticeId,
       token: token,
     });
+  }
+  function handleChange(
+    event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
+  ) {
+    setNoticeData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   function cleanFileUrl(url: string): string {
@@ -93,12 +106,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       </Head>
       {isEditing ? (
         <TextareaAutosize
+          name="title"
           spellCheck={false}
           className="mt-7 resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-2xl font-bold outline-none md:mt-10 md:p-5 md:text-3xl"
           value={noticeData?.title}
-          onChange={(event) =>
-            setNoticeData((prev) => ({ ...prev, title: event.target.value }))
-          }
+          onChange={(e) => handleChange(e)}
         />
       ) : (
         <h1 className="mt-7 text-2xl font-bold md:mt-10 md:text-3xl">
@@ -155,15 +167,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             <UploadImage image={parsedImgUrl} setImage={setImage} />
           </span>
           <TextareaAutosize
+            name="content"
             spellCheck={false}
             value={noticeData?.content}
             className="mt-5 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-3 md:p-5 md:text-lg"
-            onChange={(event) =>
-              setNoticeData((prev) => ({
-                ...prev,
-                content: event.target.value,
-              }))
-            }
+            onChange={(e) => handleChange(e)}
           />
         </>
       ) : (
@@ -182,7 +190,18 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           <div className="py-8 text-base font-medium md:py-10 md:text-lg">
             {noticeData.content?.split('\n').map((line, idx) => (
               <div key={idx}>
-                <p>{line}</p>
+                {checkUrl(line) ? (
+                  <a
+                    href={line}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-1"
+                  >
+                    {line}
+                  </a>
+                ) : (
+                  <p>{line}</p>
+                )}
                 <br />
               </div>
             ))}
