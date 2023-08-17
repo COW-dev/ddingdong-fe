@@ -8,10 +8,7 @@ import {
 import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import {
-  DateRangeType,
-  DateValueType,
-} from 'react-tailwindcss-datepicker/dist/types';
+import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
 
@@ -38,7 +35,6 @@ export default function ClubInfoForm({
   isEditing,
 }: ClubInfoFormProps) {
   const [hydrated, setHydrated] = useState(false);
-
   useEffect(() => {
     setHydrated(true);
     setValue((prev) => ({
@@ -87,6 +83,7 @@ export default function ClubInfoForm({
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
             value={leader}
             onChange={(e) => handleChange(e)}
+            disabled={!isEditing}
           />
         </div>
         <div
@@ -176,11 +173,12 @@ export default function ClubInfoForm({
                   !isEditing && 'opacity-60'
                 } h-12 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
               >
-                {parsedRecruitPeriod?.startDate === undefined ||
-                parsedRecruitPeriod?.startDate === null ||
-                parsedRecruitPeriod?.startDate === ''
-                  ? ''
-                  : `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`}
+                {validator({
+                  type: 'date',
+                  value: String(parsedRecruitPeriod?.startDate),
+                })
+                  ? `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`
+                  : ''}
               </div>
             )}
           </div>
@@ -197,7 +195,6 @@ export default function ClubInfoForm({
             className={`${
               !isEditing && 'opacity-60'
             } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
-            // value={formUrl}
             onChange={(e) => handleChange(e)}
             disabled={!isEditing}
           />

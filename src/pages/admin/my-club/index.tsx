@@ -7,6 +7,7 @@ import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
+import { validator } from '@/utils/validator';
 const initialClubData: ClubDetail = {
   name: '',
   tag: '',
@@ -91,20 +92,29 @@ export default function Index() {
       'imgUrls',
       clubData.imageUrls.length === 0 ? '' : clubData.imageUrls[0],
     );
-
     formData.append('recruitPeriod', generateRecruitPeriodString());
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
-
+    formData.append(
+      'phoneNumber',
+      clubData.phoneNumber === '' ? '010-0000-0000' : clubData.phoneNumber,
+    );
+    formData.append(
+      'location',
+      clubData.location === '' ? 'S0000' : clubData.location,
+    );
     return formData;
   }
 
   //formdata생성을 위한 함수
   function generateRecruitPeriodString() {
     const { parsedRecruitPeriod } = clubData;
-    return parsedRecruitPeriod?.startDate === ('' || null)
-      ? ''
-      : `${parsedRecruitPeriod?.startDate}~${parsedRecruitPeriod?.endDate}`;
+    return validator({
+      type: 'date',
+      value: String(parsedRecruitPeriod?.startDate),
+    })
+      ? `${parsedRecruitPeriod?.startDate}~${parsedRecruitPeriod?.endDate}`
+      : '';
   }
 
   const excludedKeys = [
