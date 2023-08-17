@@ -7,64 +7,64 @@ import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
-
+import { validator } from '@/utils/validator';
+const initialClubData: ClubDetail = {
+  name: '',
+  tag: '',
+  category: '',
+  leader: '',
+  content: 'test',
+  phoneNumber: '010-1234-1234',
+  location: 'S0000',
+  isRecruit: false,
+  recruitPeriod: '',
+  parsedRecruitPeriod: { startDate: '', endDate: '' },
+  regularMeeting: '',
+  introduction: '',
+  imageUrls: [''],
+  activity: '',
+  ideal: '',
+  uploadFiles: null,
+  formUrl: '',
+  token: '',
+};
 export default function Index() {
-  const [init, setInit] = useState(true);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [{ token }] = useCookies();
   const [uploadFile, setUploadFile] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [clubData, setClubData] = useState<ClubDetail>({
-    name: '',
-    tag: '',
-    category: '',
-    leader: '',
-    content: 'test',
-    phoneNumber: '010-1234-1234',
-    location: 'S0000',
-    isRecruit: false,
-    recruitPeriod: '',
-    parsedRecruitPeriod: { startDate: '2023-00-00', endDate: '2023-00-00' },
-    regularMeeting: '',
-    introduction: '',
-    imageUrls: [''],
-    activity: '',
-    ideal: '',
-    uploadFiles: null,
-    formUrl: '',
-    token: token,
-  });
+  const [clubData, setClubData] = useState<ClubDetail>(initialClubData);
   const {
     data: { data },
   } = useMyClub(token);
-
   const mutation = useUpdateMyClub();
-  const parsed = {
-    startDate: clubData.recruitPeriod?.split(`~`)[0],
-    endDate: clubData.recruitPeriod?.split(`~`)[1] ?? '',
-  };
 
   useEffect(() => {
     if (data) {
-      setClubData({
-        ...data,
-      });
-      setInit(false);
+      setClubData({ ...data });
+      setIsInitialLoad(false);
     }
   }, []);
 
+  //datapicker형식에 맞도록 변환
   useEffect(() => {
     if (data) {
-      setClubData({
-        ...data,
-        parsedRecruitPeriod: parsed,
-      });
+      setClubData((prevClubData) => ({
+        ...prevClubData,
+        parsedRecruitPeriod: {
+          startDate: prevClubData.recruitPeriod?.split('~')[0],
+          endDate: prevClubData.recruitPeriod?.split('~')[1] || '',
+        },
+        token: token,
+      }));
     }
-  }, [init]);
+  }, [isInitialLoad]);
 
-  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
-    setClubData((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
+  function handleTextareaChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    const { name, value } = event.target;
+    setClubData((prevClubData) => ({
+      ...prevClubData,
+      [name]: value,
     }));
   }
 
@@ -75,39 +75,56 @@ export default function Index() {
 
   function handleClickSubmit() {
     setIsEditing(false);
-    setClubData({
-      ...clubData,
-      isRecruit: false,
-    });
+    const formData = createFormData();
+    return mutation.mutate(formData);
+  }
+
+  function createFormData() {
     const formData = new FormData();
-    console.log(clubData);
     Object.entries(clubData).forEach(([key, value]) => {
-      if (
-        key !== 'uploadFiles' &&
-        key !== 'recruitPeriod' &&
-        key !== 'imageUrls' &&
-        key !== 'location' &&
-        key !== 'phoneNumber'
-      ) {
-        if (value === null) value = '';
-        formData.append(key, String(value));
+      if (!excludedKeys.includes(key)) {
+        formData.append(key, value === null ? '' : String(value));
       }
     });
-    const recruitPeriod =
-      clubData === null || clubData?.parsedRecruitPeriod?.startDate === null
-        ? ``
-        : `${clubData?.parsedRecruitPeriod?.startDate}~${clubData?.parsedRecruitPeriod?.endDate}`;
 
     uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
     formData.append(
       'imgUrls',
       clubData.imageUrls.length === 0 ? '' : clubData.imageUrls[0],
     );
-    formData.append('recruitPeriod', recruitPeriod);
+    formData.append('recruitPeriod', generateRecruitPeriodString());
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
-    return mutation.mutate(formData);
+    formData.append(
+      'phoneNumber',
+      clubData.phoneNumber === '' ? '010-0000-0000' : clubData.phoneNumber,
+    );
+    formData.append(
+      'location',
+      clubData.location === '' ? 'S0000' : clubData.location,
+    );
+    return formData;
   }
+
+  //formdata생성을 위한 함수
+  function generateRecruitPeriodString() {
+    const { parsedRecruitPeriod } = clubData;
+    return validator({
+      type: 'date',
+      value: String(parsedRecruitPeriod?.startDate),
+    })
+      ? `${parsedRecruitPeriod?.startDate}~${parsedRecruitPeriod?.endDate}`
+      : '';
+  }
+
+  const excludedKeys = [
+    'uploadFiles',
+    'recruitPeriod',
+    'imageUrls',
+    'parsedRecruitPeriod',
+    'location',
+    'phoneNumber',
+  ];
 
   return (
     <>
@@ -170,7 +187,7 @@ export default function Index() {
             minRows={4}
             value={clubData.introduction}
             disabled={!isEditing}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleTextareaChange(e)}
             className={`${
               !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
@@ -181,7 +198,7 @@ export default function Index() {
             minRows={2}
             value={clubData.activity}
             disabled={!isEditing}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleTextareaChange(e)}
             className={`${
               !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
@@ -194,7 +211,7 @@ export default function Index() {
             minRows={2}
             value={clubData.ideal}
             disabled={!isEditing}
-            onChange={(e) => handleChange(e)}
+            onChange={(e) => handleTextareaChange(e)}
             className={`${
               !isEditing && 'opacity-60'
             } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
