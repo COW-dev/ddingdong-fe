@@ -68,6 +68,7 @@ export async function getNoticeInfo(
 
 export async function createNotice(noticeData: FormData) {
   const token = noticeData.get('token');
+  console.log('apis', noticeData);
 
   return await api.post('/admin/notices', noticeData, {
     headers: {
