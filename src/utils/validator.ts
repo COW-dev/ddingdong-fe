@@ -1,7 +1,8 @@
 const type: Record<string, RegExp> = {
   phoneNumber: /^010-\d{4}-\d{4}$/,
-  password: /^[a-zA-Z0-9]{8,}$/,
+  password: /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/,
   location: /^S\d{4,}$/,
+  date: /\d{4}-\d{2}-\d{2}/,
 };
 
 interface Props {

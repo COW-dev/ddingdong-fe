@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';
@@ -20,7 +21,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     regularMeeting,
     imageUrls,
     recruitPeriod,
-    // formUrl,
+    formUrl,
   } = info;
 
   const imageSrc = imageUrls.length > 0 ? parseImgUrl(imageUrls[0]) : Admin;
@@ -82,8 +83,21 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
             <span>{recruitPeriod?.toString()}</span>
           </div>
         </div>
-        <button className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]">
-          <a href="#" target="_blank" className="inline-block w-full py-3.5">
+
+        <button
+          className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]"
+          onClick={() =>
+            !formUrl &&
+            toast('지원링크가 존재하지 않습니다.', {
+              icon: '💡',
+            })
+          }
+        >
+          <a
+            href={formUrl}
+            target="_blank"
+            className="inline-block w-full py-3.5"
+          >
             지원하기
           </a>
         </button>
