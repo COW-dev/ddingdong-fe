@@ -13,11 +13,9 @@ html {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-
-html::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
 }
-
 /* 탭 하이라이트 */
 * {
   -webkit-tap-highlight-color: transparent;

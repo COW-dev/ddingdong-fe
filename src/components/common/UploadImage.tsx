@@ -2,12 +2,21 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancle.svg';
+import { NoticeDetail } from '@/types/notice';
+import { parseImgUrl } from '@/utils/parse';
 type UploadImageProps = {
-  image: File | string | null;
-  setImage: Dispatch<SetStateAction<File | string | null>>;
+  image: File | null;
+  setImage: Dispatch<SetStateAction<File | null>>;
+  imageUrls?: string[];
+  setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
 };
 
-export default function UploadImage({ image, setImage }: UploadImageProps) {
+export default function UploadImage({
+  image,
+  setImage,
+  imageUrls,
+  setNoticeData,
+}: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
   useEffect(() => {
     if (image) {
@@ -19,10 +28,11 @@ export default function UploadImage({ image, setImage }: UploadImageProps) {
         setPreviewImageUrl(image as string);
       }
     } else {
-      setPreviewImageUrl('');
+      imageUrls?.length === 1
+        ? setPreviewImageUrl(parseImgUrl(imageUrls[0]))
+        : setPreviewImageUrl('');
     }
   }, [image]);
-
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -31,11 +41,13 @@ export default function UploadImage({ image, setImage }: UploadImageProps) {
   }
   function handleImageReset() {
     setImage(null);
+    setPreviewImageUrl('');
+    setNoticeData && setNoticeData((prev) => ({ ...prev, imageUrls: [] }));
   }
 
   return (
-    <div className="flex w-full justify-center">
-      {image ? (
+    <div className="flex w-full justify-center p-6">
+      {image || previewImageUrl ? (
         <>
           <Image
             src={previewImageUrl}
@@ -53,16 +65,13 @@ export default function UploadImage({ image, setImage }: UploadImageProps) {
       ) : (
         <label
           htmlFor="dropzone-file"
-          className=" flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          className=" dar flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
         >
-          <div className="flex flex-col items-center justify-center pb-6 pt-5">
+          <div className="flex flex-col items-center justify-center pb-6 pt-5 text-gray-400">
             <Image src={Camera} width={30} height={30} alt="upload" />
-            <p className="mb-2 text-sm text-gray-300 ">
-              <span className="font-semibold">Click to upload</span> or drag and
-              drop
-            </p>
-            <p className="text-xs text-gray-300">
-              SVG, PNG, JPG or GIF (MAX. 800x400px)
+            <p className="m-2 text-sm  ">Click to ImageUpload</p>
+            <p className=" text-xs text-gray-400">
+              SVG, PNG, JPG (MAX. 800x400px)
             </p>
           </div>
           <input
