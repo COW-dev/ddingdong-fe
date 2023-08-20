@@ -12,7 +12,7 @@ export type AdminClub = {
   id: number;
   name: string;
   category: string;
-  imageUrls: Array<string>;
+  profileImageUrls: Array<string>;
   score: number;
 };
 

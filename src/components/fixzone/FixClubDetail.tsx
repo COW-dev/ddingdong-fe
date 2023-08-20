@@ -1,8 +1,7 @@
-import { useState, useEffect, ChangeEvent } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import TextareaAutosize from 'react-textarea-autosize';
 
 import Data from '@/assets/image1.jpeg';
 import LeftArrow from '@/assets/leftArrow.svg';

@@ -6,7 +6,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 
 import LeftArrow from '@/assets/leftArrow.svg';
 import NeutralButton from '@/components/common/NeutralButton';
-import UploadImage from '@/components/common/UploadImage';
+import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewFix } from '@/hooks/api/fixzone/useNewFix';
 export default function Index() {
   const mutation = useNewFix();
@@ -14,12 +14,14 @@ export default function Index() {
 
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File[]>([]);
   function handleSubmit() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    image && formData.append('images', image);
+    for (let i = 0; i < image.length; i++) {
+      formData.append('images', image[i]);
+    }
     mutation.mutate({
       formData: formData,
       token: token,
@@ -29,7 +31,7 @@ export default function Index() {
   function handleReset() {
     setTitle('');
     setContent('');
-    setImage(null);
+    setImage([]);
   }
   return (
     <div className="m-auto max-w-[650px] bg-gray-100 p-10">
@@ -61,7 +63,7 @@ export default function Index() {
       {/* 내용 */}
       <div className="relative my-7 flex items-center justify-center">
         <div className="w-full rounded-xl bg-white">
-          <UploadImage image={image} setImage={setImage} />
+          <UploadMultipleImage image={image} setImage={setImage} />
         </div>
       </div>
 

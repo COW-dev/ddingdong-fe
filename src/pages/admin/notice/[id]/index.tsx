@@ -5,7 +5,6 @@ import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import ClipIcon from '@/assets/clipIcon.svg';
-import File from '@/assets/file.svg';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadFile from '@/components/common/UploadFile';
 import UploadImage from '@/components/common/UploadImage';
