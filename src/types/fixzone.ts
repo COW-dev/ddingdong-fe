@@ -23,3 +23,14 @@ export type FixClubDetailType = {
   content: string;
   imageUrls: string[];
 };
+
+export type FixComplete = {
+  id: number;
+  isCompleted: boolean;
+  token: string;
+};
+
+export type NewFix = {
+  token: string;
+  formData: FormData;
+};

@@ -8,7 +8,6 @@ type Props = {
 };
 export default function Index({ fixId }: Props) {
   const [{ role }] = useCookies(['role']);
-
   return role === ROLE_TYPE.ROLE_ADMIN ? (
     <FixAdminDetail id={fixId} />
   ) : (

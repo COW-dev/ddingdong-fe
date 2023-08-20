@@ -183,7 +183,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         <>
           <div
             className={`m-auto mt-5 w-3/4 justify-center overflow-hidden rounded-xl p-5 shadow-xl md:flex ${
-              !image && imageUrls.length === 0 && `hidden`
+              !image && imageUrls.length === 0 && `hidden md:hidden`
             }`}
           >
             <Image

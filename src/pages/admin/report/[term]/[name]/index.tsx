@@ -4,7 +4,6 @@ import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import ReportNoticeModal from '@/components/modal/reportNoticeModal';
 import Detail from '@/components/report/detail/index';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';

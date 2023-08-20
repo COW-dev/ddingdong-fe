@@ -9,8 +9,8 @@ import { useNewNotice } from '@/hooks/api/notice/useNewNotice';
 export default function Index() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [file, setFile] = useState<File | string | null>(null);
-  const [image, setImage] = useState<File | string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [image, setImage] = useState<File | null>(null);
   const mutation = useNewNotice();
   const [cookies] = useCookies(['token']);
 

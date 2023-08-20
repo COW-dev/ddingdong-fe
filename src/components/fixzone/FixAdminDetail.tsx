@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+
 import Data from '@/assets/image1.jpeg';
-import NeutralButton from '@/components/common/NeutralButton';
+import LeftArrow from '@/assets/leftArrow.svg';
+import RightArrow from '@/assets/rightArrow.svg';
 import { useAdminFixInfo } from '@/hooks/api/fixzone/useAdminFixInfo';
+import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
+import useModal from '@/hooks/common/useModal';
 import { FixAdminDetailType } from '@/types/fixzone';
+import FixItemInfo from './FixItemInfo';
+import Modal from '../common/Modal';
+import ConfirmModal from '../modal/ConfirmModal';
 type Prop = {
   id: number;
 };
@@ -21,6 +29,7 @@ const init = {
 
 export default function FixAdminDetail({ id }: Prop) {
   const [{ token }] = useCookies(['token']);
+  const { openModal, visible, closeModal, modalRef } = useModal();
   const { data: response } = useAdminFixInfo({ token, id });
   const [data, setData] = useState<FixAdminDetailType>(init);
   useEffect(() => {
@@ -28,37 +37,77 @@ export default function FixAdminDetail({ id }: Prop) {
   }, [response]);
   const { club, content, createdAt, imageUrls, isCompleted, location, title } =
     data;
+  const mutation = useUpdateComplete();
+
+  function handleCompleted() {
+    mutation.mutate({ id, isCompleted: true, token });
+    setData((prev) => ({ ...prev, isCompleted: true }));
+  }
 
   return (
-    <div className="max-w-[650px] p-5">
-      <div className="mt-7 flex justify-between text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
-        <div className="mb-14">Fix:Zone 동아리방 시설보수</div>
+    <div className="m-auto max-w-[650px] bg-gray-100 p-10">
+      <div className="flex justify-between">
+        <Link href="/fixzone">
+          <Image src={LeftArrow} alt="back" width={25} height={25} />
+        </Link>
+        <div>동아리방 시설 보수</div>
+        <div></div>
       </div>
-      <div className=" m-auto w-[550px] overflow-hidden rounded-lg bg-gray-100 bg-opacity-90 shadow-xl ">
-        <div className="p-3 px-5">
-          <div className="py-2 text-xl  font-semibold">{title}</div>
-          <div>{content}</div>
-        </div>
-        <div className="mt-7 border-t border-gray-200 p-3 text-end text-xs text-gray-500">
-          <div>{club}</div>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          <Image
-            src={Data}
-            width={550}
-            height={500}
-            alt="fixImage"
-            className=" overflow-hidden rounded-md"
-          />
-        </div>
-        <div className="mt-7 border-gray-500 p-3 text-end text-xs text-gray-500">
-          <div>제출일자 :{createdAt}</div>
-          <div>동아리방 : {location}</div>
-        </div>
+      <div className="flex justify-end">
+        <button
+          disabled={isCompleted}
+          onClick={openModal}
+          className={`mb-3 mt-7 rounded-xl border border-gray-300 px-4 py-2  text-gray-500  ${
+            !isCompleted
+              ? ` hover:border-green-300 hover:text-green-500`
+              : `border-green-300 text-green-500`
+          } md:mr-0.5`}
+        >
+          {isCompleted ? `처리 완료` : `처리 마치기`}
+        </button>
       </div>
-      <div className="mt-6 flex justify-end md:mt-8">
-        <NeutralButton href="/fixzone">목록으로 돌아가기</NeutralButton>
+      {/* 정보 */}
+      <div className="mb-7 rounded-xl bg-white p-5 shadow-xl">
+        <div className="py-2 text-xl font-bold">{title}</div>
+        <div className="font-semibold">{content}</div>
       </div>
+      <FixItemInfo club={club} createdAt={createdAt} location={location} />
+      {/* 내용 */}
+      <div className="relative my-7 flex items-center justify-center">
+        <Image
+          src={LeftArrow}
+          width={30}
+          height={30}
+          alt="leftButton"
+          className="absolute left-2 z-10 mx-2 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+        />
+        <Image
+          src={Data}
+          width={550}
+          height={500}
+          alt="fixImage"
+          className=" overflow-hidden rounded-md"
+        />
+        <Image
+          src={RightArrow}
+          width={30}
+          height={30}
+          alt="leftButton"
+          className="absolute right-2 z-10 mx-2  rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+        />
+      </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'Fix:Zone 완료 설정'}
+        closeModal={closeModal}
+      >
+        <ConfirmModal
+          title=""
+          callback={handleCompleted}
+          closeModal={closeModal}
+        />
+      </Modal>
     </div>
   );
 }
