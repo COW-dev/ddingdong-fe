@@ -1,10 +1,10 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import { StudentInfo } from '@/types';
-import { NewReport } from '@/types/report';
+import { NewReport, ReportDetail } from '@/types/report';
 
 type Props = {
   data: StudentInfo[];
-  setData: Dispatch<SetStateAction<NewReport>>;
+  setData: Dispatch<SetStateAction<NewReport | ReportDetail[]>>;
   closeModal: () => void;
 };
 export default function Participants({ data, setData, closeModal }: Props) {
