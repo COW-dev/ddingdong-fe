@@ -44,7 +44,7 @@ export type ClubDetail = {
   activity: string;
   ideal: string;
   uploadFiles: File | null;
-  imageUrls: string[];
+  profileImageUrls: string[];
   token: string;
   formUrl: string;
 };
