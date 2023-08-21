@@ -11,7 +11,7 @@ type AdminClubHeadingProps = {
   tag: string;
   uploadFiles: File | null;
   isEditing: boolean;
-  imageUrls: string[];
+  profileImageUrls: string[];
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   setUploadFile: Dispatch<SetStateAction<File | null>>;
 };
@@ -22,7 +22,7 @@ export default function AdminClubHeading({
   tag,
   uploadFiles,
   isEditing,
-  imageUrls,
+  profileImageUrls,
   setValue,
   setUploadFile,
 }: AdminClubHeadingProps) {
@@ -49,13 +49,14 @@ export default function AdminClubHeading({
   }, [uploadFiles]);
 
   const parsedImg =
-    imageUrls && imageUrls[0]?.slice(0, 8) + imageUrls[0]?.slice(9);
+    profileImageUrls &&
+    profileImageUrls[0]?.slice(0, 8) + profileImageUrls[0]?.slice(9);
 
   function handleImageReset() {
     setPreviewImageUrl('');
     setValue((prev) => ({
       ...prev,
-      imageUrls: [],
+      profileImageUrls: [],
     }));
   }
   return (
