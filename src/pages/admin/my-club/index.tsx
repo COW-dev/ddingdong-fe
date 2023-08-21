@@ -90,9 +90,10 @@ export default function Index() {
     uploadFile && formData.append('profileImage', uploadFile, `profileImage`);
     formData.append(
       'profileImageUrls',
-      clubData.profileImageUrls.length === 0
+      clubData?.profileImageUrls?.length === 0
         ? ''
-        : clubData.profileImageUrls[0],
+        : clubData?.profileImageUrls[0],
+
     );
     formData.append('introduceImageUrls', '');
     formData.append('recruitPeriod', generateRecruitPeriodString());
