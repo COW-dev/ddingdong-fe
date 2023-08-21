@@ -15,7 +15,7 @@ export type AdminClub = {
   id: number;
   name: string;
   category: string;
-  imageUrls: Array<string>;
+  profileImageUrls: Array<string>;
   score: number;
 };
 
@@ -44,7 +44,7 @@ export type ClubDetail = {
   activity: string;
   ideal: string;
   uploadFiles: File | null;
-  imageUrls: string[];
+  profileImageUrls: string[];
   token: string;
   formUrl: string;
 };
