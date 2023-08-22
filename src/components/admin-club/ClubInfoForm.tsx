@@ -18,7 +18,8 @@ type ClubInfoFormProps = {
   location: string;
   regularMeeting: string;
   parsedRecruitPeriod: DateRangeType | null;
-  recruitPeriod: string;
+  startRecruitPeriod: string;
+  endRecruitPeriod: string;
   formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
@@ -30,6 +31,8 @@ export default function ClubInfoForm({
   location,
   regularMeeting,
   parsedRecruitPeriod,
+  startRecruitPeriod,
+  endRecruitPeriod,
   formUrl,
   setValue,
   isEditing,
@@ -177,7 +180,9 @@ export default function ClubInfoForm({
                   type: 'date',
                   value: String(parsedRecruitPeriod?.startDate),
                 })
-                  ? `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`
+                  ? `${startRecruitPeriod.split(' ')[0]} ~ ${
+                      endRecruitPeriod.split(' ')[0]
+                    }`
                   : ''}
               </div>
             )}
