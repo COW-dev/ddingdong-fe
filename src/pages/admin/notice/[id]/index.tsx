@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react';
+import { GetServerSideProps } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import ClipIcon from '@/assets/clipIcon.svg';
@@ -18,7 +18,6 @@ import { parseImgUrl } from '@/utils/parse';
 type NoticeDetailProps = {
   noticeId: number;
 };
-
 export default function Index({ noticeId }: NoticeDetailProps) {
   const [cookies] = useCookies(['token', 'role']);
   const { role, token } = cookies;
@@ -43,15 +42,8 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   useEffect(() => {
     if (data) {
       setNoticeData(data);
-      setImage(data.imageUrls[0]);
-      setFileUrl(data.fileUrls[0]);
     }
   }, [data]);
-
-  function checkUrl(strUrl: string) {
-    const expUrl = /^http[s]?:\/\/([\S]{3,})/i;
-    return expUrl.test(strUrl);
-  }
 
   function checkUrl(strUrl: string) {
     const expUrl = /https?:\/\/[^\s"]/;
@@ -99,20 +91,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       token: token,
     });
   }
-  function handleChange(
-    event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
-  ) {
-    setNoticeData((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  }
-
-  function cleanFileUrl(url: string): string {
-    return url.replace('https://.', 'https://');
-  }
-
-  const parsedImgUrl = image && image.slice(0, 8) + image.slice(9);
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
@@ -126,8 +104,8 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   function parseFileUrl() {
     let newFile = '';
     for (let i = 0; i < fileUrls.length; i++) {
-      if (i !== 0) newFile += ', ';
       newFile += fileUrls[i].fileUrl;
+      if (i !== 0) newFile += ',';
     }
     return newFile;
   }
