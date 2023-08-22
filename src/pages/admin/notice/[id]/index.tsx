@@ -6,8 +6,8 @@ import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import ClipIcon from '@/assets/clipIcon.svg';
 import NeutralButton from '@/components/common/NeutralButton';
-import UploadFile from '@/components/common/UploadFile';
 import UploadImage from '@/components/common/UploadImage';
+import UploadMultipleFile from '@/components/common/UploadMultipleFiles';
 import { ROLE_TYPE } from '@/constants/text';
 import { useDeleteNotice } from '@/hooks/api/notice/useDeleteNotice';
 import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
@@ -32,7 +32,8 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     imageUrls: [''],
   });
   const [image, setImage] = useState<File | null>(null);
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File[]>([]);
+
   const {
     data: { data },
   } = useNoticeInfo(noticeId);
@@ -92,6 +93,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       token: token,
     });
   }
+
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
@@ -101,17 +103,28 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     }));
   }
 
+  function parseFileUrl() {
+    let newFile = '';
+    for (let i = 0; i < fileUrls.length; i++) {
+      newFile += fileUrls[i].fileUrl;
+      if (i !== 0) newFile += ',';
+    }
+    return newFile;
+  }
+
   function handleClickSubmit() {
     setIsEditing(false);
     const formData = new FormData();
     formData.set('title', noticeData.title);
     formData.set('content', noticeData.content);
     image && formData.append('thumbnailImages', image);
-    file && formData.append('uploadFiles', file);
+    for (let i = 0; i < file.length; i++) {
+      formData.append('uploadFiles', file[i]);
+    }
     const imgUrls = imageUrls.length === 1 ? imageUrls[0] : '';
-    const fileUrl = fileUrls.length === 1 ? fileUrls[0].fileUrl : '';
     formData.append('imgUrls', imgUrls);
-    formData.append('fileUrls', fileUrl);
+    const fileUrlsData = parseFileUrl();
+    formData.append('fileUrls', fileUrlsData);
     formData.set('token', token);
     return updateMutation.mutate(formData);
   }
@@ -206,7 +219,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       )}
       <hr className="mt-3" />
       {isEditing ? (
-        <UploadFile
+        <UploadMultipleFile
           file={file}
           setFile={setFile}
           fileUrls={fileUrls}
@@ -224,12 +237,14 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                   </a>
                 </div>
               ))}
-            {file && (
-              <div className="flex gap-3">
-                <Image src={ClipIcon} width={10} height={10} alt="file" />
-                {file.name}
-              </div>
-            )}
+            {file.map((item) => (
+              <>
+                <div className="flex gap-3">
+                  <Image src={ClipIcon} width={10} height={10} alt="file" />
+                  {item.name}
+                </div>
+              </>
+            ))}
           </div>
         </>
       )}

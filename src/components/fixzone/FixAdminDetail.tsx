@@ -10,7 +10,9 @@ import { useAdminFixInfo } from '@/hooks/api/fixzone/useAdminFixInfo';
 import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
 import { FixAdminDetailType } from '@/types/fixzone';
+import { parseImgUrl } from '@/utils/parse';
 import FixItemInfo from './FixItemInfo';
+import IndexDot from '../common/IndexDot';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
 type Prop = {
@@ -32,6 +34,8 @@ export default function FixAdminDetail({ id }: Prop) {
   const { openModal, visible, closeModal, modalRef } = useModal();
   const { data: response } = useAdminFixInfo({ token, id });
   const [data, setData] = useState<FixAdminDetailType>(init);
+  const [presentIndex, setPresentIndex] = useState<number>(0);
+
   useEffect(() => {
     if (response?.data) setData(response?.data);
   }, [response]);
@@ -79,21 +83,31 @@ export default function FixAdminDetail({ id }: Prop) {
           width={30}
           height={30}
           alt="leftButton"
-          className="absolute left-2 z-10 mx-2 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+          onClick={() => {
+            setPresentIndex(presentIndex - 1);
+          }}
+          className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
+            presentIndex === 0 && `hidden`
+          }`}
         />
         <Image
-          src={Data}
+          src={parseImgUrl(imageUrls[presentIndex])}
           width={550}
           height={500}
           alt="fixImage"
-          className=" overflow-hidden rounded-md"
+          className="h-[60vh] w-full overflow-hidden object-scale-down "
         />
         <Image
           src={RightArrow}
           width={30}
           height={30}
           alt="leftButton"
-          className="absolute right-2 z-10 mx-2  rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+          onClick={() => {
+            setPresentIndex(presentIndex + 1);
+          }}
+          className={`absolute right-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
+            presentIndex === imageUrls.length - 1 && `hidden`
+          }`}
         />
       </div>
       <Modal

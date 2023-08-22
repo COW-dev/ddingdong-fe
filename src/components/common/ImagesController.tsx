@@ -28,19 +28,20 @@ export default function ImagesController({
         }`}
       >
         <div className="flex w-full justify-between">
-          <div className="flex w-full min-w-[70%] overflow-y-hidden overflow-x-scroll">
+          <div className="flex w-full  min-w-[70%] overflow-y-hidden overflow-x-scroll">
             {image?.map((item, index) => (
               <div
                 key={`upload-imges` + index}
-                className={`relative mx-3 my-6 h-fit max-h-[60%] min-w-[12vh] overflow-hidden ${
-                  presentIndex === index && `border-2 border-black`
+                className={`relative mx-3 my-6 h-20 min-w-[12vh] overflow-hidden rounded-xl  ${
+                  presentIndex === index && `border-2 border-white`
                 }`}
               >
                 <Image
                   src={URL.createObjectURL(item)}
-                  width={80}
-                  height={80}
+                  width={100}
+                  height={100}
                   alt="image"
+                  className="h-20 w-[12vh] object-cover "
                   onClick={() => setPresentIndex(index)}
                 />
                 <Image
@@ -63,6 +64,7 @@ export default function ImagesController({
                 type="file"
                 className="hidden"
                 accept="image/*"
+                multiple
                 onChange={handleImageAdd}
               />
               <Image src={Camera} width={40} height={40} alt="image" />

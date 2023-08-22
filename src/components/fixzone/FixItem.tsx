@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCookies } from 'react-cookie';
 import Check from '@/assets/check.svg';
 import Progress from '@/assets/progress.svg';
-import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
 import { Fix } from '@/types/fixzone';
 
 export default function FixItem({ data }: { data: Fix }) {

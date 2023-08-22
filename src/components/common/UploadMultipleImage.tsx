@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
-
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancle.svg';
+import LeftArrow from '@/assets/leftArrow.svg';
+import RightArrow from '@/assets/rightArrow.svg';
 import ImagesController from './ImagesController';
 type UploadImageProps = {
   image: File[];
@@ -17,15 +18,16 @@ export default function UploadMultipleImage({
 
   function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      image?.push(file);
+      for (let i = 0; i < event.target.files.length; i++) {
+        const file = event.target.files[i];
+        image?.push(file);
+      }
       setImage([...image]);
     }
   }
 
   function handleImageDelete() {
     image.splice(presentIndex, 1);
-    console.log(image.length, presentIndex);
     if (presentIndex === image.length) setPresentIndex(0);
     setImage([...image]);
   }
@@ -36,12 +38,29 @@ export default function UploadMultipleImage({
           <div className="relative">
             <div className="flex">
               <Image
+                src={LeftArrow}
+                height={20}
+                width={20}
+                alt="left"
+                onClick={() => setPresentIndex(presentIndex - 1)}
+                className={`${presentIndex === 0 && `hidden`}`}
+              />
+              <Image
                 src={URL.createObjectURL(image[presentIndex])}
-                className="m-auto h-72 object-scale-down"
+                className="m-auto h-72 overflow-hidden object-scale-down p-3"
                 alt="이미지"
                 width={1000}
                 height={200}
               />
+              <Image
+                src={RightArrow}
+                height={20}
+                width={20}
+                alt="right"
+                onClick={() => setPresentIndex(presentIndex + 1)}
+                className={`${presentIndex === image.length - 1 && `hidden`}`}
+              />
+
               <div className="mr-3 mt-5" onClick={handleImageDelete}>
                 <Image src={Cancel} height={20} width={20} alt="cancel" />
               </div>
@@ -71,6 +90,7 @@ export default function UploadMultipleImage({
             id="dropzone-file"
             type="file"
             className="hidden"
+            multiple
             accept="image/*"
             onChange={handleImageAdd}
           />

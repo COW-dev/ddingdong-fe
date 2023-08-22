@@ -3,11 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
-import Data from '@/assets/image1.jpeg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useClubFixInfo } from '@/hooks/api/fixzone/useClubFixInfo';
 import { FixClubDetailType } from '@/types/fixzone';
+import { parseImgUrl } from '@/utils/parse';
 import ClearButton from './Clearbutton';
 type Prop = {
   id: number;
@@ -24,6 +24,7 @@ export default function FixClubDetail({ id }: Prop) {
   const [{ token }] = useCookies(['token']);
   const { data: response } = useClubFixInfo({ token, id });
   const [data, setData] = useState<FixClubDetailType>(init);
+  const [presentIndex, setPresentIndex] = useState<number>(0);
 
   useEffect(() => {
     if (response?.data) setData(response?.data);
@@ -59,21 +60,31 @@ export default function FixClubDetail({ id }: Prop) {
           width={30}
           height={30}
           alt="leftButton"
-          className="absolute left-2 z-10 mx-2 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+          onClick={() => {
+            setPresentIndex(presentIndex - 1);
+          }}
+          className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
+            presentIndex === 0 && `hidden`
+          }`}
         />
         <Image
-          src={Data}
+          src={parseImgUrl(imageUrls[presentIndex])}
           width={550}
           height={500}
           alt="fixImage"
-          className=" overflow-hidden rounded-md"
+          className="h-[60vh] overflow-hidden object-scale-down"
         />
         <Image
           src={RightArrow}
           width={30}
           height={30}
           alt="leftButton"
-          className="absolute right-2 z-10 mx-2  rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25"
+          onClick={() => {
+            setPresentIndex(presentIndex + 1);
+          }}
+          className={`absolute right-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
+            presentIndex === imageUrls.length - 1 && `hidden`
+          }`}
         />
       </div>
     </div>
