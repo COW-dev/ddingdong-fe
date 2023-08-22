@@ -126,8 +126,8 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   function parseFileUrl() {
     let newFile = '';
     for (let i = 0; i < fileUrls.length; i++) {
+      if (i !== 0) newFile += ', ';
       newFile += fileUrls[i].fileUrl;
-      if (i !== 0) newFile += ',';
     }
     return newFile;
   }
@@ -253,7 +253,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                 <div key={idx} className="flex gap-3">
                   <Image src={ClipIcon} width={10} height={10} alt="file" />
                   <a href={parseImgUrl(item.fileUrl)} download target="_blank">
-
                     {item.name}
                   </a>
                 </div>
