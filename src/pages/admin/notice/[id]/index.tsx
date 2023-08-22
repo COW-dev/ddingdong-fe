@@ -33,7 +33,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   });
   const [image, setImage] = useState<File | null>(null);
   const [file, setFile] = useState<File[]>([]);
-
   const {
     data: { data },
   } = useNoticeInfo(noticeId);
@@ -44,8 +43,15 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   useEffect(() => {
     if (data) {
       setNoticeData(data);
+      setImage(data.imageUrls[0]);
+      setFileUrl(data.fileUrls[0]);
     }
   }, [data]);
+
+  function checkUrl(strUrl: string) {
+    const expUrl = /^http[s]?:\/\/([\S]{3,})/i;
+    return expUrl.test(strUrl);
+  }
 
   function checkUrl(strUrl: string) {
     const expUrl = /https?:\/\/[^\s"]/;
@@ -93,6 +99,20 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       token: token,
     });
   }
+  function handleChange(
+    event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
+  ) {
+    setNoticeData((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  function cleanFileUrl(url: string): string {
+    return url.replace('https://.', 'https://');
+  }
+
+  const parsedImgUrl = image && image.slice(0, 8) + image.slice(9);
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
@@ -233,6 +253,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                 <div key={idx} className="flex gap-3">
                   <Image src={ClipIcon} width={10} height={10} alt="file" />
                   <a href={parseImgUrl(item.fileUrl)} download target="_blank">
+
                     {item.name}
                   </a>
                 </div>

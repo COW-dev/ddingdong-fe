@@ -33,6 +33,7 @@ export default function UploadImage({
         : setPreviewImageUrl('');
     }
   }, [image]);
+
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];

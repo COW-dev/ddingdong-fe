@@ -19,6 +19,7 @@ export default function UploadFile({
   const [fileName, setFileName] = useState<string | null>(
     (fileUrls && fileUrls[0]?.name) ?? null,
   );
+
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
@@ -48,6 +49,7 @@ export default function UploadFile({
         {file || fileName ? (
           <>
             <span className="ml-3">{fileName}</span>
+
             <button
               type="button"
               className="ml-auto mr-3 cursor-pointer"
@@ -60,7 +62,7 @@ export default function UploadFile({
           <>
             <span className="ml-2 cursor-pointer">파일을 선택해주세요.</span>
             <input
-              className="hidden"
+              className=" hidden"
               id="file_input"
               name="uploadFile"
               type="file"

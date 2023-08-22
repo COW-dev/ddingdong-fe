@@ -276,6 +276,15 @@ export async function getCurrentReports(
     },
   });
 }
+export async function updateReports(term: number, updateData: FormData) {
+  const token = updateData.get('token');
+
+  return await api.patch(`/club/my/activity-reports?term=${term}`, updateData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 
 api.interceptors.response.use(
   (res) => {

@@ -44,6 +44,7 @@ export const config = {
     '/member',
     '/fixzone',
     '/fixzone/:path*',
+    '/club/:path*',
     '/report',
     '/banner',
     '/admin/:path*',
