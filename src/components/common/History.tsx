@@ -37,8 +37,8 @@ export default function History() {
     <>
       <div className="m-auto mt-5 p-5">
         <div className=" mb-2 flex flex-row justify-between ">
-          <span className=" ml-2 text-xl font-semibold">내역</span>
-          <span className=" text-3xl font-bold text-purple-500 opacity-70">
+          <span className="ml-2 text-lg font-semibold lg:text-xl">내역</span>
+          <span className="text-2xl font-bold text-purple-500 lg:text-3xl">
             총점 : 100점{' '}
           </span>
         </div>
@@ -47,8 +47,8 @@ export default function History() {
             dummy.length > 3 ? ' h-64 overflow-y-scroll' : ''
           } shadow-md sm:rounded-lg`}
         >
-          <table className="text-md w-full text-left text-gray-500">
-            <thead className="bg-gray-50 text-lg text-gray-700">
+          <table className="text-md w-full  text-left text-gray-500 md:text-lg">
+            <thead className="text-md bg-gray-50 text-gray-700 md:text-lg">
               <tr>
                 <th scope="col" className="px-6 py-3 ">
                   날짜

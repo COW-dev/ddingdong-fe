@@ -21,7 +21,7 @@ const initialClubData: ClubDetail = {
   parsedRecruitPeriod: { startDate: '', endDate: '' },
   regularMeeting: '',
   introduction: '',
-  imageUrls: [''],
+  profileImageUrls: [''],
   activity: '',
   ideal: '',
   uploadFiles: null,
@@ -87,11 +87,14 @@ export default function Index() {
       }
     });
 
-    uploadFile && formData.append('uploadFiles', uploadFile, `uploadFiles`);
+    uploadFile && formData.append('profileImage', uploadFile, `profileImage`);
     formData.append(
-      'imgUrls',
-      clubData.imageUrls.length === 0 ? '' : clubData.imageUrls[0],
+      'profileImageUrls',
+      clubData.profileImageUrls.length === 0
+        ? ''
+        : clubData.profileImageUrls[0],
     );
+    formData.append('introduceImageUrls', '');
     formData.append('recruitPeriod', generateRecruitPeriodString());
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
@@ -137,7 +140,7 @@ export default function Index() {
           category={clubData.category}
           tag={clubData.tag}
           uploadFiles={clubData.uploadFiles}
-          imageUrls={clubData.imageUrls}
+          imageUrls={clubData.profileImageUrls}
           setValue={setClubData}
           setUploadFile={setUploadFile}
           isEditing={isEditing}
