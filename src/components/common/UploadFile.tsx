@@ -1,21 +1,36 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import File from '@/assets/file.svg';
+import { NoticeDetail } from '@/types/notice';
 
 type UploadFileProps = {
-  file: File | string | null;
-  setFile: Dispatch<SetStateAction<File | string | null>>;
+  file: File | null;
+  setFile: Dispatch<SetStateAction<File | null>>;
+  fileUrls?: { fileUrl: string; name: string }[];
+  setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
 };
 
-export default function UploadFile({ file, setFile }: UploadFileProps) {
+export default function UploadFile({
+  file,
+  setFile,
+  fileUrls,
+  setNoticeData,
+}: UploadFileProps) {
+  const [fileName, setFileName] = useState<string | null>(
+    (fileUrls && fileUrls[0]?.name) ?? null,
+  );
+
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setFile(file);
+      setFileName(file.name);
     }
   }
   function handelCancle() {
     setFile(null);
+    setFileName(null);
+    setNoticeData && setNoticeData((prev) => ({ ...prev, fileUrls: [] }));
   }
 
   return (
@@ -31,9 +46,10 @@ export default function UploadFile({ file, setFile }: UploadFileProps) {
           alt="file"
           className="my-2 ml-3 cursor-pointer"
         />
-        {file ? (
+        {file || fileName ? (
           <>
-            <span className="ml-3">{file.name}</span>
+            <span className="ml-3">{fileName}</span>
+
             <button
               type="button"
               className="ml-auto mr-3 cursor-pointer"

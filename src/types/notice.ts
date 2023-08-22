@@ -3,8 +3,8 @@ export type NoticeDetail = {
   title: string;
   content: string;
   createdAt: string;
-  fileUrls: string;
-  imageUrls: string;
+  fileUrls: { fileUrl: string; name: string }[];
+  imageUrls: string[];
 };
 
 export type Notice = {

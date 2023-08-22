@@ -137,7 +137,6 @@ export default function Index() {
     'location',
     'phoneNumber',
   ];
-
   return (
     <>
       <Head>
