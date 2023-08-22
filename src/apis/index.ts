@@ -68,6 +68,7 @@ export async function getNoticeInfo(
 
 export async function createNotice(noticeData: FormData) {
   const token = noticeData.get('token');
+  console.log('apis', noticeData);
 
   return await api.post('/admin/notices', noticeData, {
     headers: {
@@ -195,6 +196,15 @@ export async function getCurrentReports(
   token: string,
 ): Promise<AxiosResponse<CurrentReport, unknown>> {
   return await api.get('/club/activity-reports/current-term', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function updateReports(term: number, updateData: FormData) {
+  const token = updateData.get('token');
+
+  return await api.patch(`/club/my/activity-reports?term=${term}`, updateData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
