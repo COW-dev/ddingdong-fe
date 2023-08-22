@@ -40,7 +40,7 @@ export const config = {
     '/login',
     '/notice/:path*',
     '/my-club',
-    '/club',
+    '/club/:path*',
     '/report',
     '/banner',
     '/admin/:path*',

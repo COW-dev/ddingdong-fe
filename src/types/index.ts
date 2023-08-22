@@ -41,22 +41,6 @@ export type StudentInfo = {
   department: string;
 };
 
-export type ReportDetail = {
-  id: number;
-  createdAt: string;
-  name: string;
-  leader: string;
-  leaderDepartment: string;
-  content: string;
-  place: string;
-  startDate: Date;
-  endDate: Date;
-  startTime: string;
-  endTime: string;
-  imageUrls: string | string[];
-  participants: StudentInfo[];
-};
-
 export type MyReportList = {
   name: string;
   term: string;
@@ -65,16 +49,6 @@ export type MyReportList = {
 export type CurrentReport = {
   currentTerm: string;
 };
-
-export const termList = [
-  '1회차',
-  '2회차',
-  '3회차',
-  '4회차',
-  '5회차',
-  '6회차',
-  '7회차',
-];
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 

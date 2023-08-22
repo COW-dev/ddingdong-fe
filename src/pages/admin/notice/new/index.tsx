@@ -2,11 +2,15 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
+import UploadFile from '@/components/common/UploadFile';
+import UploadImage from '@/components/common/UploadImage';
 import { useNewNotice } from '@/hooks/api/notice/useNewNotice';
 
 export default function Index() {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [file, setFile] = useState<File | string | null>(null);
+  const [image, setImage] = useState<File | string | null>(null);
   const mutation = useNewNotice();
   const [cookies] = useCookies(['token']);
 
@@ -15,10 +19,11 @@ export default function Index() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
+    file && formData.append('uploadFiles', file);
+    image && formData.append('thumbnailImages', image);
     formData.append('token', cookies.token);
     return mutation.mutate(formData);
   }
-
   return (
     <>
       <Head>
@@ -35,6 +40,7 @@ export default function Index() {
           placeholder="제목"
           onChange={(event) => setTitle(event.target.value)}
         />
+        <UploadImage image={image} setImage={setImage} />
         <TextareaAutosize
           minRows={8}
           value={content}
@@ -43,6 +49,7 @@ export default function Index() {
           onChange={(event) => setContent(event.target.value)}
           className="mt-6 h-auto w-full resize-none overflow-hidden rounded-none border-b pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-8 md:pb-3 md:text-lg"
         />
+        <UploadFile file={file} setFile={setFile} />
         <div className="mt-4 flex justify-end md:mt-6">
           <button
             type="submit"

@@ -1,21 +1,51 @@
-import { useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import Datepicker from 'react-tailwindcss-datepicker';
+import {
+  DateRangeType,
+  DateValueType,
+} from 'react-tailwindcss-datepicker/dist/types';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
+import Modal from '@/components/common/Modal';
+import Participants from '@/components/modal/report/Paticipants';
 import ReportNoticeModal from '@/components/modal/reportNoticeModal';
 import { ROLE_TYPE } from '@/constants/text';
+import useModal from '@/hooks/common/useModal';
 import { ReportDetail } from '@/types/report';
 import ActiveDate from './ActiveDate';
-
 import Time from './Time';
+
+type Props = {
+  reportData: ReportDetail;
+  isEditing: boolean;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
+  setReportData: Dispatch<SetStateAction<ReportDetail[]>>;
+};
+
 export default function Index({
   reportData,
-}: {
-  reportData: ReportDetail;
-}): JSX.Element {
-  const { content, place, startDate, endDate, imageUrls, participants } =
-    reportData ?? {};
+  isEditing,
+  setIsEditing,
+  setReportData,
+}: Props) {
+  const {
+    reportId,
+    content,
+    place,
+    startDate,
+    endDate,
+    imageUrls,
+    participants,
+  } = reportData ?? {};
+  console.log('report', reportData);
 
   const [data, setData] = useState(reportData);
   const [image, setImage] = useState<string>();
@@ -28,57 +58,173 @@ export default function Index({
   const parsedImgUrl = image && image.slice(0, 8) + image.slice(9);
 
   const [info, setInfo] = useState<boolean>(true);
-  return (
-    <div className="flex flex-col items-center truncate md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
-      <div className="mb-5 flex flex-col">
-        {/* sm */}
-        <div className="mb-4 inline-block shadow-xl md:hidden">
-          <div className="z-10 flex flex-col items-center overflow-hidden rounded-xl ">
-            <div className="relative">
-              {parsedImgUrl && (
-                <Image
-                  src={parsedImgUrl}
-                  className="bg-gray-50 object-cover"
-                  alt="reportImage"
-                  width={500}
-                  height={500}
-                />
-              )}
-              <div
-                className={`absolute right-2 ${
-                  info ? `top-[11vh]` : `top-[1vh]`
-                } z-30`}
-              >
-                <Image
-                  src={info ? ArrowUp : ArrowDown}
-                  width={20}
-                  height={20}
-                  alt="show"
-                  onClick={() => setInfo(!info)}
-                />
-              </div>
+  const { openModal, visible, closeModal, modalRef } = useModal();
 
-              {info && (
-                <>
-                  <div className="absolute top-0 z-20 flex w-full flex-1 justify-between bg-white bg-opacity-70 text-gray-500">
-                    <div className="m-3">
-                      <div className="text-xl font-semibold">1 회차</div>
-                      <ActiveDate startDate={startDate} endDate={endDate} />
+  function handleChange(
+    event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
+    key: string,
+    id: number,
+  ) {
+    setReportData((prev) => {
+      const updatedReportData = prev.map((report) =>
+        report.reportId === id
+          ? { ...report, [key]: event.target.value }
+          : report,
+      );
+      return updatedReportData;
+    });
+  }
+  function handleDateChange(
+    selectedDate: DateValueType,
+    key: string,
+    id: number,
+  ) {
+    setReportData((prev) => ({
+      ...prev,
+      date: selectedDate as DateRangeType,
+    }));
+  }
+  return (
+    <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
+      <div className="mb-2 flex flex-col">
+        {/* sm */}
+        <div className="mb-4 inline-block md:hidden">
+          <div className="z-10 flex w-full flex-col items-center rounded-xl ">
+            {isEditing ? (
+              <>
+                <div className="flex items-center md:flex-row">
+                  <Datepicker
+                    value={startDate}
+                    datepicker-format="yyyy/mm/dd"
+                    useRange={false}
+                    asSingle
+                    minDate={new Date(new Date().getFullYear(), 0, 1)}
+                    maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                    onChange={(e) => handleDateChange(e, 'startDate', reportId)}
+                    inputClassName="w-full h-12 px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
+                  />
+                  <input
+                    name="place"
+                    type="text"
+                    placeholder="활동장소"
+                    value={place}
+                    onChange={(e) => handleChange(e, 'place', reportId)}
+                    className="md:text-md ml-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
+                  />
+                </div>
+                <div className="my-3 flex w-full items-center md:flex-row">
+                  <input
+                    name="startTime"
+                    type="time"
+                    onChange={(e) => handleChange(e, 'startTime', reportId)}
+                    className=" h-12 w-1/2 rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
+                  />
+                  <input
+                    name="endTime"
+                    type="time"
+                    onChange={(e) => handleChange(e, 'endTime', reportId)}
+                    className=" ml-3 h-12 w-1/2 rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
+                  />
+                </div>
+                <div>
+                  {parsedImgUrl && (
+                    <Image
+                      src={parsedImgUrl}
+                      className="bg-gray-50 object-cover"
+                      alt="reportImage"
+                      width={200}
+                      height={200}
+                    />
+                  )}
+                </div>
+              </>
+            ) : (
+              <div className="relative">
+                {parsedImgUrl && (
+                  <Image
+                    src={parsedImgUrl}
+                    className="bg-gray-50 object-cover"
+                    alt="reportImage"
+                    width={500}
+                    height={500}
+                  />
+                )}
+                <div
+                  className={`absolute right-2 ${
+                    info ? `top-[11vh]` : `top-[1vh]`
+                  } z-30`}
+                >
+                  <Image
+                    src={info ? ArrowUp : ArrowDown}
+                    width={20}
+                    height={20}
+                    alt="show"
+                    onClick={() => setInfo(!info)}
+                  />
+                </div>
+                {info && (
+                  <>
+                    <div className="absolute top-0 z-20 flex w-full flex-1 justify-between bg-white bg-opacity-70 text-gray-500">
+                      <div className="m-3">
+                        <div className="text-xl font-semibold">1 회차</div>
+                        <ActiveDate startDate={startDate} endDate={endDate} />
+                      </div>
+                      <Time place={place} />
                     </div>
-                    <Time place={place} />
-                  </div>
-                </>
-              )}
-            </div>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </div>
         {/* sm끗 */}
 
         {/* md */}
         <div className="hidden md:inline-block">
-          <div className="flex w-full flex-col items-center md:flex-row md:justify-between">
-            <ActiveDate startDate={startDate} endDate={endDate} />
-            <Time place={place} />
+          <div className="flex flex-col items-center md:flex-row md:justify-between">
+            {isEditing ? (
+              <div className="flex flex-col">
+                <div className="mb-3 flex items-center md:flex-row">
+                  <Datepicker
+                    value={date}
+                    datepicker-format="yyyy/mm/dd"
+                    useRange={false}
+                    asSingle
+                    minDate={new Date(new Date().getFullYear(), 0, 1)}
+                    maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                    onChange={(e) => handleDateChange(e, 'startDate', reportId)}
+                    inputClassName=" w-full h-12  px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
+                  />
+                  <input
+                    name="place"
+                    type="text"
+                    placeholder="활동장소"
+                    value={place}
+                    onChange={(e) => handleChange(e, 'place', reportId)}
+                    className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
+                  />
+                </div>
+                <div className="mb-3 flex w-full flex-col items-center md:flex-row">
+                  <input
+                    name="startTime"
+                    type="time"
+                    onChange={(e) => handleChange(e, 'startTime', reportId)}
+                    className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
+                  />
+                  <input
+                    name="endTime"
+                    type="time"
+                    onChange={(e) => handleChange(e, 'endTime', reportId)}
+                    className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
+                  />
+                </div>
+              </div>
+            ) : (
+              <>
+                <ActiveDate startDate={startDate} endDate={endDate} />
+                <Time place={place} />
+              </>
+            )}
           </div>
         </div>
         {/* md끗 */}
@@ -87,27 +233,54 @@ export default function Index({
           <p className="my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 참여 인원
           </p>
-          <ul
-            className={`md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 ${
-              role === ROLE_TYPE.ROLE_CLUB && `lg:grid-cols-2`
-            }`}
-          >
-            {participants?.map((participant) => (
-              <li key={participant.name}>
-                {participant.name} | {participant.studentId} |
-                {participant.department}
-              </li>
-            ))}
-          </ul>
+          {isEditing ? (
+            <div
+              className="md:text-md min-h-[10vh] 
+             w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4
+             py-3 text-base outline-none md:pb-3"
+            >
+              {participants.map((participant, index) => (
+                <div
+                  onClick={openModal}
+                  key={`participant-${index}`}
+                  className={`${participant.name === `` && `hidden`} `}
+                >
+                  {participant.name} | {participant.department} |
+                  {participant.studentId}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <ul
+              className={`md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 ${
+                role === ROLE_TYPE.ROLE_CLUB && `lg:grid-cols-2`
+              }`}
+            >
+              {participants?.map((participant) => (
+                <li key={participant.name}>
+                  {participant.name} | {participant.studentId} |
+                  {participant.department}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
-
         <div className="p-3 md:p-0">
           <p className=" my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 내용
           </p>
-          <span className="md:text-md h-24 w-full rounded-xl text-base font-medium opacity-70 md:pb-3">
-            {content}
-          </span>
+          {isEditing ? (
+            <textarea
+              name="content"
+              value={content}
+              onChange={(e) => handleChange(e, 'content', reportId)}
+              className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
+            />
+          ) : (
+            <span className="md:text-md h-24 w-full rounded-xl text-base font-medium opacity-70 md:pb-3">
+              {content}
+            </span>
+          )}
         </div>
       </div>
       <div className="hidden w-2/5 justify-center overflow-hidden rounded-xl shadow-xl md:flex md:w-1/2 lg:w-2/5 ">
@@ -122,6 +295,18 @@ export default function Index({
         )}
       </div>
       <ReportNoticeModal />
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'활동 명단 작성하기'}
+        closeModal={closeModal}
+      >
+        <Participants
+          data={participants}
+          setData={setReportData}
+          closeModal={closeModal}
+        />
+      </Modal>
     </div>
   );
 }
