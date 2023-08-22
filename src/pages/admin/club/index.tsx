@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import Create from '@/assets/create.svg';
@@ -74,7 +75,7 @@ export default function Index() {
           {clubs
             .sort((a, b) => b.score - a.score)
             .map((club: AdminClub) => (
-              <div key={club.id}>
+              <Link key={club.id} href={`/club/${club.name}/score`}>
                 <div
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
                   onClick={() => {
@@ -113,7 +114,7 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </ul>
       </div>

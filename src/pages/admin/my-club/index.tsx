@@ -8,6 +8,7 @@ import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
+
 const initialClubData: ClubDetail = {
   name: '',
   tag: '',
@@ -29,6 +30,7 @@ const initialClubData: ClubDetail = {
   formUrl: '',
   token: '',
 };
+
 export default function Index() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [{ token }] = useCookies();
@@ -46,7 +48,6 @@ export default function Index() {
       setIsInitialLoad(false);
     }
   }, []);
-
   //datapicker형식에 맞도록 변환
   useEffect(() => {
     if (data) {
@@ -129,9 +130,9 @@ export default function Index() {
   // }
 
   const excludedKeys = [
-    'uploadFiles',
+    'profileImage',
     'recruitPeriod',
-    'imageUrls',
+    'profileImageUrls',
     'parsedRecruitPeriod',
     'location',
     'phoneNumber',
@@ -148,7 +149,7 @@ export default function Index() {
           category={clubData.category}
           tag={clubData.tag}
           uploadFiles={clubData.uploadFiles}
-          imageUrls={clubData.imageUrls}
+          profileImageUrls={clubData.profileImageUrls}
           setValue={setClubData}
           setUploadFile={setUploadFile}
           isEditing={isEditing}
