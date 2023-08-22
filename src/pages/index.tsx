@@ -40,7 +40,7 @@ export default function Home() {
   if (isError) {
     return <div>error</div>;
   }
-
+console.log('데이터', data);
   //가나다 순으로 정렬
   const sortClubsByCategory = (clubs: Club[]) => {
     return clubs.sort(
@@ -67,7 +67,7 @@ export default function Home() {
             name={club.name}
             category={club.category}
             tag={club.tag}
-            isRecruit={club.isRecruit}
+            recruit={club.recruit}
           />
         ))}
       </ul>

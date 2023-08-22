@@ -7,7 +7,6 @@ import {
 } from 'react';
 import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
-
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
@@ -17,8 +16,9 @@ type ClubInfoFormProps = {
   phoneNumber: string;
   location: string;
   regularMeeting: string;
+  startRecruitPeriod: string;
+  endRecruitPeriod: string;
   parsedRecruitPeriod: DateRangeType | null;
-  recruitPeriod: string;
   formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
@@ -29,6 +29,8 @@ export default function ClubInfoForm({
   phoneNumber,
   location,
   regularMeeting,
+  startRecruitPeriod,
+  endRecruitPeriod,
   parsedRecruitPeriod,
   formUrl,
   setValue,
@@ -177,7 +179,9 @@ export default function ClubInfoForm({
                   type: 'date',
                   value: String(parsedRecruitPeriod?.startDate),
                 })
-                  ? `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`
+                  ? `${startRecruitPeriod.split(' ')[0]} ~ ${
+                      endRecruitPeriod.split(' ')[0]
+                    }`
                   : ''}
               </div>
             )}
