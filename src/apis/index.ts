@@ -2,7 +2,7 @@ import axios from 'axios';
 import type { AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import { BannerType, DeleteBanner } from '@/types/banner';
+import { BannerType, DeleteBanner, NewBanner } from '@/types/banner';
 import {
   Club,
   AdminClub,
@@ -12,6 +12,14 @@ import {
   UpdateClub,
 } from '@/types/club';
 
+import {
+  Fix,
+  FixAdminDetailType,
+  FixClubDetailType,
+  FixComplete,
+  NewFix,
+} from '@/types/fixzone';
+import { Member } from '@/types/member';
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 
@@ -42,6 +50,54 @@ export async function getAdminAllClubs(
   token: string,
 ): Promise<AxiosResponse<AdminClub[], unknown>> {
   return await api.get('/admin/clubs', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getAdminAllFix(
+  token: string,
+): Promise<AxiosResponse<Fix[], unknown>> {
+  return await api.get('/admin/fix', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getMembers(
+  token: string,
+): Promise<AxiosResponse<Member[], unknown>> {
+  return await api.get('/member', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getClubAllFix(
+  token: string,
+): Promise<AxiosResponse<Fix[], unknown>> {
+  return await api.get('/club/fix', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getAdminFixInfo(
+  token: string,
+  id: number,
+): Promise<AxiosResponse<FixAdminDetailType, unknown>> {
+  return await api.get(`/admin/fix/${id}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getClubFixInfo(
+  token: string,
+  id: number,
+): Promise<AxiosResponse<FixClubDetailType, unknown>> {
+  return await api.get(`/club/fix/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -83,8 +139,16 @@ export async function createClub({ token, ...clubData }: NewClub) {
     },
   });
 }
-export async function createBanner({ token, formData }: any) {
+export async function createBanner({ token, formData }: NewBanner) {
   return await api.post('/admin/banners', formData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+export async function createFix({ token, formData }: NewFix) {
+  return await api.post('/club/fix', formData, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
@@ -138,6 +202,17 @@ export async function updateMyClub(clubData: FormData) {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+export async function updateFixComplete({
+  id,
+  isCompleted,
+  token,
+}: FixComplete) {
+  return await api.patch(`/admin/fix/${id}`, isCompleted, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
   });
 }

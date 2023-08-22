@@ -7,5 +7,5 @@ export function parseDateToString(date: Date): string {
 }
 
 export function parseImgUrl(url: string): string {
-  return url.slice(0, 8) + url.slice(9);
+  return url?.slice(0, 8) + url?.slice(9);
 }
