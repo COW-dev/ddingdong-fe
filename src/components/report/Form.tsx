@@ -14,6 +14,7 @@ import {
 import useModal from '@/hooks/common/useModal';
 import { NewReport, StudentInfo } from '@/types/report';
 import Modal from '../common/Modal';
+import UploadImage from '../common/UploadImage';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
@@ -151,38 +152,8 @@ export default function Form({
             />
           </div>
         </div>
-        <div className="flex w-full justify-center md:w-1/2 ">
-          {uploadFiles ? (
-            <>
-              <Image
-                src={previewImageUrl || ''}
-                className="m-auto object-scale-down"
-                alt="이미지"
-                width={200}
-                height={200}
-              />
-              <div>
-                <button type="button" onClick={handleImageReset}>
-                  X
-                </button>
-              </div>
-            </>
-          ) : (
-            <label
-              htmlFor="uploadFiles"
-              className=" text-md mt-3 flex w-full cursor-pointer items-center justify-center rounded-xl border-2 border-gray-200 bg-white p-3 font-medium text-gray-300 outline-none md:h-80 md:w-2/3"
-            >
-              Choose File
-              <input
-                id="uploadFiles"
-                name="uploadFiles"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </label>
-          )}
+        <div className="h-1/2 w-full  md:ml-2 md:w-1/2">
+          <UploadImage image={uploadFiles} setImage={setImage} />
         </div>
       </div>
       <Modal

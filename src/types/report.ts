@@ -50,10 +50,14 @@ export type ReportDetail = {
   reportId: number;
   createdAt: string;
   name: string;
+  leader: string;
+  leaderDepartment: string;
   content: string;
   place: string;
   startDate: string;
   endDate: string;
-  imageUrls: string[];
+  startTime: string;
+  endTime: string;
+  imageUrls: string | string[];
   participants: StudentInfo[];
 };

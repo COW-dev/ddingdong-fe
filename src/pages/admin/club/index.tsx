@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import Create from '@/assets/create.svg';
@@ -35,7 +36,7 @@ export default function Index() {
   }
 
   function handleImage(data: Array<string>) {
-    if (data.length === 0) return Admin;
+    if (data?.length === 0) return Admin;
     return parseImgUrl(data[0]);
   }
 
@@ -74,7 +75,7 @@ export default function Index() {
           {clubs
             .sort((a, b) => b.score - a.score)
             .map((club: AdminClub) => (
-              <div key={club.id}>
+              <Link key={club.id} href={`/club/${club.name}/score`}>
                 <div
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
                   onClick={() => {
@@ -96,7 +97,7 @@ export default function Index() {
                   <div className=" flex h-full w-full justify-around p-5 md:p-6">
                     <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                       <Image
-                        src={handleImage(club.imageUrls)}
+                        src={handleImage(club.profileImageUrls)}
                         width={80}
                         height={80}
                         alt="clubImage"
@@ -113,7 +114,7 @@ export default function Index() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
         </ul>
       </div>

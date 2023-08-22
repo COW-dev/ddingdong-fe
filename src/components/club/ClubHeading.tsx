@@ -19,12 +19,13 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     phoneNumber,
     location,
     regularMeeting,
-    imageUrls,
+    profileImageUrls,
     recruitPeriod,
     formUrl,
   } = info;
 
-  const imageSrc = imageUrls.length > 0 ? parseImgUrl(imageUrls[0]) : Admin;
+  const imageSrc =
+    profileImageUrls.length > 0 ? parseImgUrl(profileImageUrls[0]) : Admin;
   return (
     <>
       <div className="flex flex-col">
