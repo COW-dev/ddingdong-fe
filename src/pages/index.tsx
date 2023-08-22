@@ -67,7 +67,7 @@ export default function Home() {
             name={club.name}
             category={club.category}
             tag={club.tag}
-            isRecruit={club.isRecruit}
+            recruit={club.recruit}
           />
         ))}
       </ul>

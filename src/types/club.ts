@@ -8,7 +8,7 @@ export type Club = {
   name: string;
   category: string;
   tag: string;
-  isRecruit: boolean;
+  recruit: boolean;
 };
 
 export type AdminClub = {
@@ -38,7 +38,8 @@ export type ClubDetail = {
   location: string;
   isRecruit: boolean;
   parsedRecruitPeriod: DateRangeType | null;
-  recruitPeriod: string;
+  startRecruitPeriod: string;
+  endRecruitPeriod: string;
   regularMeeting: string;
   introduction: string;
   activity: string;
