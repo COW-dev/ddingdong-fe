@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-
-import Data from '@/assets/image1.jpeg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useAdminFixInfo } from '@/hooks/api/fixzone/useAdminFixInfo';
@@ -12,7 +10,6 @@ import useModal from '@/hooks/common/useModal';
 import { FixAdminDetailType } from '@/types/fixzone';
 import { parseImgUrl } from '@/utils/parse';
 import FixItemInfo from './FixItemInfo';
-import IndexDot from '../common/IndexDot';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
 type Prop = {

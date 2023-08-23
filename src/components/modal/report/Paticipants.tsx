@@ -4,7 +4,10 @@ import { NewReport, ReportDetail } from '@/types/report';
 
 type Props = {
   data: StudentInfo[];
-  setData: Dispatch<SetStateAction<NewReport | ReportDetail[]>>;
+  setData:
+    | Dispatch<SetStateAction<ReportDetail[]>>
+    | Dispatch<SetStateAction<NewReport>>
+    | undefined;
   closeModal: () => void;
 };
 export default function Participants({ data, setData, closeModal }: Props) {
@@ -52,7 +55,7 @@ export default function Participants({ data, setData, closeModal }: Props) {
 
   function handleSubmit() {
     setParticipants(participants);
-    setData((prev) => ({ ...prev, participants }));
+    setData && setData((prev: any) => ({ ...prev, participants }));
     closeModal();
   }
 

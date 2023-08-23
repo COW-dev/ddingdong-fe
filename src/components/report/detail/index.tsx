@@ -7,7 +7,6 @@ import {
 } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
   DateValueType,
@@ -25,17 +24,11 @@ import Time from './Time';
 
 type Props = {
   reportData: ReportDetail;
-  isEditing: boolean;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
-  setReportData: Dispatch<SetStateAction<ReportDetail[]>>;
+  isEditing?: boolean;
+  setReportData?: Dispatch<SetStateAction<ReportDetail[]>>;
 };
 
-export default function Index({
-  reportData,
-  isEditing,
-  setIsEditing,
-  setReportData,
-}: Props) {
+export default function Index({ reportData, isEditing, setReportData }: Props) {
   const {
     reportId,
     content,
@@ -45,7 +38,6 @@ export default function Index({
     imageUrls,
     participants,
   } = reportData ?? {};
-  console.log('report', reportData);
 
   const [data, setData] = useState(reportData);
   const [image, setImage] = useState<string>();
@@ -65,25 +57,22 @@ export default function Index({
     key: string,
     id: number,
   ) {
-    setReportData((prev) => {
-      const updatedReportData = prev.map((report) =>
-        report.reportId === id
-          ? { ...report, [key]: event.target.value }
-          : report,
-      );
-      return updatedReportData;
-    });
+    setReportData &&
+      setReportData((prev) => {
+        const updatedReportData = prev.map((report) =>
+          report.reportId === id
+            ? { ...report, [key]: event.target.value }
+            : report,
+        );
+        return updatedReportData;
+      });
   }
-  function handleDateChange(
-    selectedDate: DateValueType,
-    key: string,
-    id: number,
-  ) {
-    setReportData((prev) => ({
-      ...prev,
-      date: selectedDate as DateRangeType,
-    }));
-  }
+  // function handleDateChange(selectedDate: DateValueType) {
+  //   setReportData((prev) => ({
+  //     ...prev,
+  //     date: selectedDate as DateRangeType,
+  //   }));
+  // }
   return (
     <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
       <div className="mb-2 flex flex-col">
@@ -93,16 +82,6 @@ export default function Index({
             {isEditing ? (
               <>
                 <div className="flex items-center md:flex-row">
-                  <Datepicker
-                    value={startDate}
-                    datepicker-format="yyyy/mm/dd"
-                    useRange={false}
-                    asSingle
-                    minDate={new Date(new Date().getFullYear(), 0, 1)}
-                    maxDate={new Date(new Date().getFullYear(), 11, 31)}
-                    onChange={(e) => handleDateChange(e, 'startDate', reportId)}
-                    inputClassName="w-full h-12 px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
-                  />
                   <input
                     name="place"
                     type="text"
@@ -185,16 +164,6 @@ export default function Index({
             {isEditing ? (
               <div className="flex flex-col">
                 <div className="mb-3 flex items-center md:flex-row">
-                  <Datepicker
-                    value={date}
-                    datepicker-format="yyyy/mm/dd"
-                    useRange={false}
-                    asSingle
-                    minDate={new Date(new Date().getFullYear(), 0, 1)}
-                    maxDate={new Date(new Date().getFullYear(), 11, 31)}
-                    onChange={(e) => handleDateChange(e, 'startDate', reportId)}
-                    inputClassName=" w-full h-12  px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
-                  />
                   <input
                     name="place"
                     type="text"
