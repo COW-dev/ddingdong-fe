@@ -75,7 +75,7 @@ export default function Index() {
           {clubs
             .sort((a, b) => b.score - a.score)
             .map((club: AdminClub) => (
-              <Link key={club.id} href={`/club/${club.name}/score`}>
+              <Link key={club.id} href={`/club/${club.id}/score`}>
                 <div
                   className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
                   onClick={() => {

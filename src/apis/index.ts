@@ -14,6 +14,7 @@ import {
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
+import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
   baseURL: '/api/',
@@ -211,6 +212,42 @@ export async function updateReports(term: number, updateData: FormData) {
   });
 }
 
+export async function getAdminAllReports(
+  token: string,
+): Promise<AxiosResponse<any[], unknown>> {
+  return await api.get('/admin/activity-reports', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getNewScores(
+  token: string,
+  id: number,
+): Promise<AxiosResponse<ScoreDetail, unknown>> {
+  return await api.get(`/admin/${id}/score`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function createScore({ token, clubId, ...scoreData }: Score) {
+  return await api.post(`/admin/${clubId}/score`, scoreData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getAllScores(
+  token: string,
+  clubId: number,
+): Promise<AxiosResponse<ScoreDetail, unknown>> {
+  return await api.get(`/admin/${clubId}/score`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 api.interceptors.response.use(
   (res) => {
     return res;
@@ -233,13 +270,3 @@ api.interceptors.response.use(
     return Promise.reject(err);
   },
 );
-
-export async function getAdminAllReports(
-  token: string,
-): Promise<AxiosResponse<any[], unknown>> {
-  return await api.get('/admin/activity-reports', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
