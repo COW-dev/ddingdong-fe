@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
