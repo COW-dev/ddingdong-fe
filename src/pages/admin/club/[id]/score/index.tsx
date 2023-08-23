@@ -81,36 +81,6 @@ export default function Index({ clubId }: ScoreProps) {
             clubId={clubId}
           />
         ))}
-        {/* <ScoreCategory
-          scoreCategory="청소"
-          icon={Clean}
-          amount={30}
-          clubId={clubId}
-        />
-        <ScoreCategory
-          scoreCategory="동아리 활동 보고서"
-          icon={Report}
-          amount={30}
-          clubId={clubId}
-        />
-        <ScoreCategory
-          scoreCategory="전동대회"
-          icon={People}
-          amount={30}
-          clubId={clubId}
-        />
-        <ScoreCategory
-          scoreCategory="총동연 사업 참여"
-          icon={Report2}
-          amount={30}
-          clubId={clubId}
-        />
-        <ScoreCategory
-          scoreCategory="가산점/감점"
-          icon={Dot}
-          amount={30}
-          clubId={clubId}
-        /> */}
       </div>
     </div>
   );
