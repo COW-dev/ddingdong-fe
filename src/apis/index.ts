@@ -323,6 +323,15 @@ export async function getAllScores(
     },
   });
 }
+export async function getMyScore(
+  token: string,
+): Promise<AxiosResponse<ScoreDetail, unknown>> {
+  return await api.get(`/club/my/score`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 api.interceptors.response.use(
   (res) => {
     return res;

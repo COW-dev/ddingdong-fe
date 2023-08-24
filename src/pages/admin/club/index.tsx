@@ -8,6 +8,7 @@ import Create from '@/assets/create.svg';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import CreateClub from '@/components/modal/club/CreateClub';
+import ManageClub from '@/components/modal/club/ManageClub';
 import ModifyClub from '@/components/modal/club/ModifyClub';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import useModal from '@/hooks/common/useModal';
@@ -75,46 +76,45 @@ export default function Index() {
           {clubs
             .sort((a, b) => b.score - a.score)
             .map((club: AdminClub) => (
-              <Link key={club.id} href={`/club/${club.id}/score`}>
-                <div
-                  className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
-                  onClick={() => {
-                    setClub(club);
-                    handleModal({
-                      title: '모달 수정하기',
-                      content: (
-                        <ModifyClub
-                          id={club.id}
-                          score={club.score}
-                          name={club.name}
-                          closeModal={closeModal}
-                          handleModal={handleModal}
-                        />
-                      ),
-                    });
-                  }}
-                >
-                  <div className=" flex h-full w-full justify-around p-5 md:p-6">
-                    <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
-                      <Image
-                        src={handleImage(club.profileImageUrls)}
-                        width={80}
-                        height={80}
-                        alt="clubImage"
-                        className="opacity-50"
+              <div
+                key={club.id}
+                className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
+                onClick={() => {
+                  setClub(club);
+                  handleModal({
+                    title: '동아리 관리 하기',
+                    content: (
+                      <ManageClub
+                        id={club.id}
+                        score={club.score}
+                        name={club.name}
+                        closeModal={closeModal}
+                        handleModal={handleModal}
                       />
+                    ),
+                  });
+                }}
+              >
+                <div className=" flex h-full w-full justify-around p-5 md:p-6">
+                  <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
+                    <Image
+                      src={handleImage(club.profileImageUrls)}
+                      width={80}
+                      height={80}
+                      alt="clubImage"
+                      className="opacity-50"
+                    />
+                  </div>
+                  <div className="flex w-[60%] flex-col items-center justify-evenly">
+                    <div className="text-lg font-bold md:text-xl">
+                      {club.name}
                     </div>
-                    <div className="flex w-[60%] flex-col items-center justify-evenly">
-                      <div className="text-lg font-bold md:text-xl">
-                        {club.name}
-                      </div>
-                      <div className="mx-1 rounded-lg bg-indigo-100 p-2 px-4 text-sm font-semibold text-indigo-500">
-                        {club.score}
-                      </div>
+                    <div className="mx-1 rounded-lg bg-indigo-100 p-2 px-4 text-sm font-semibold text-indigo-500">
+                      {club.score}
                     </div>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
         </ul>
       </div>

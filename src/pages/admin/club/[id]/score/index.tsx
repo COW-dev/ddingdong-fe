@@ -11,6 +11,7 @@ import History from '@/components/common/History';
 import ScoreCategory from '@/components/common/ScoreCategory';
 import { ROLE_TYPE } from '@/constants/text';
 import { useAllScore } from '@/hooks/api/score/useAllScore';
+import { useMyScore } from '@/hooks/api/score/useMyScore';
 import { ScoreDetail } from '@/types/score';
 
 type ScoreProps = {
@@ -25,7 +26,6 @@ export default function Index({ clubId }: ScoreProps) {
     { icon: Dot, category: '가산점/감점' },
   ];
   const parseList = [];
-  const initialValue = 0;
   const [{ role, token }] = useCookies(['token', 'role']);
   const [scoreData, setScoreData] = useState<ScoreDetail[]>([
     {
@@ -36,17 +36,28 @@ export default function Index({ clubId }: ScoreProps) {
       remainingScore: 0,
     },
   ]);
+  const [myScoreData, setMyScoreData] = useState<ScoreDetail[]>([]);
+  const [mergedScoreData, setMergedScoreData] = useState<ScoreDetail[]>([]);
+
   const {
-    data: { data },
+    data: { data: allData },
   } = useAllScore(token, clubId);
 
+  const {
+    data: { data: myData },
+  } = useMyScore(token);
+  console.log('allData', allData);
+
+  console.log('myData', myData);
   useEffect(() => {
-    if (data) {
-      data.reverse();
-      setScoreData(data);
-      console.log('데이터', scoreData);
+    if (allData) {
+      allData.reverse();
+      setScoreData(allData);
+    } else if (myData) {
+      myData.reverse();
+      setScoreData(myData);
     }
-  }, [data]);
+  }, [allData, myData]);
 
   function Category(categoryName: string) {
     const category: ScoreDetail[] = [];
@@ -71,7 +82,7 @@ export default function Index({ clubId }: ScoreProps) {
         <Heading>동아리 점수 확인하기</Heading>
       )}
       <History scoreData={scoreData} />
-      <div className="mb-3 flex w-full flex-col items-center justify-between p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
+      <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
         {key.map(({ icon, category }) => (
           <ScoreCategory
             key={category}
@@ -79,6 +90,7 @@ export default function Index({ clubId }: ScoreProps) {
             icon={icon}
             amount={totalScore(Category(category))}
             clubId={clubId}
+            parseList={Category(category)}
           />
         ))}
       </div>

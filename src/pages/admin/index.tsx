@@ -53,14 +53,26 @@ export default function Index() {
       <Head>
         <title>띵동 어드민</title>
       </Head>
-      <div className="flex flex-row items-end justify-between">
+      <div
+        className={`flex flex-row items-end justify-between ${
+          role === ROLE_TYPE.ROLE_CLUB ? 'space-x-3' : ''
+        }`}
+      >
         {infoElement}
         <div
-          className="rounded-xl px-3 py-1 text-lg font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500"
+          className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
           onClick={openFixZone}
         >
           Fix:Zone
         </div>
+        {role === ROLE_TYPE.ROLE_CLUB && (
+          <Link
+            href="/club/my/score"
+            className="text-md whitespace-nowrap rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500 md:px-4 md:text-lg"
+          >
+            <div>동아리 점수 확인</div>
+          </Link>
+        )}
       </div>
       <div className="relative mt-7">
         <Link

@@ -4,9 +4,11 @@ import Modal from '@/components/common/Modal';
 import CreateScore from '@/components/modal/score/CreateScore';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
+import { ScoreDetail } from '@/types/score';
 type ScoreProps = {
   scoreCategory: string;
   icon: string;
+  parseList: ScoreDetail[];
   amount: number;
   clubId: number;
 };
@@ -14,6 +16,7 @@ export default function ScoreCategory({
   scoreCategory,
   icon,
   amount,
+  parseList,
   clubId,
 }: ScoreProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
@@ -27,7 +30,7 @@ export default function ScoreCategory({
   }
   return (
     <div
-      className=" mb-5 flex h-full w-full cursor-pointer flex-row justify-between rounded-lg border-2 shadow-md md:max-w-[18%] "
+      className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row "
       onClick={() =>
         handleModal({
           title: scoreCategory,
@@ -35,6 +38,7 @@ export default function ScoreCategory({
             <CreateScore
               clubId={clubId}
               scoreCategory={scoreCategory}
+              parseList={parseList}
               closeModal={closeModal}
             />
           ),
@@ -46,10 +50,10 @@ export default function ScoreCategory({
         width={50}
         height={50}
         alt="이미지"
-        className="ml-4 md:mb-auto md:mt-2"
+        className="mb-2 ml-4 md:mb-auto md:mt-2"
       />
-      <div className="mx-1 mr-2 flex w-36 flex-col text-right md:mb-5 md:justify-end ">
-        <span className="mr-2 text-sm font-bold text-purple-500 md:text-xl">
+      <div className="my-2 mb-2 flex w-36 flex-col justify-end text-right md:mx-1 md:mb-5  ">
+        <span className=" text-md mr-2 font-bold text-purple-500 lg:text-xl">
           {scoreCategory}
         </span>
         <span className="text-md mr-2 font-bold md:text-xl">{amount}점</span>
