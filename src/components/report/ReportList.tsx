@@ -1,18 +1,15 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useMyAllReports } from '@/hooks/api/club/useMyAllReports';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { MyReportList } from '@/types/report';
-import { dummy } from '../../components/report/data2';
 
 export default function ReportList() {
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
   // const currentTermData = useCurrentReports(token).data?.data;
   // const [currentTerm, setCurrentTerm] = useState<number>(currentTermData?.term);
-  // console.log(currentTermData);
   const currentTerm = 1;
   const {
     data: { data: clubData },

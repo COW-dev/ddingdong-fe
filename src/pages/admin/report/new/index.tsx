@@ -92,7 +92,6 @@ export default function Index() {
       !uploadFileTwo
     )
       return toast.error('작성하지 않은 항목이 존재합니다.');
-    console.log(reportData);
     const formData = new FormData();
     formData.append(
       'reportData',

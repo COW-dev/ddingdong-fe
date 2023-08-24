@@ -1,7 +1,4 @@
-import {
-  DateRangeType,
-  DateType,
-} from 'react-tailwindcss-datepicker/dist/types';
+import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
 export type Club = {
   id: number;

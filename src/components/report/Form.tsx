@@ -5,7 +5,6 @@ import {
   useEffect,
   useState,
 } from 'react';
-import Image from 'next/image';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
@@ -64,20 +63,6 @@ export default function Form({
     setValue((prev) => ({
       ...prev,
       date: selectedDate as DateRangeType,
-    }));
-  }
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0];
-      setValue((prev) => ({ ...prev, uploadFiles: file }));
-      setImage(file);
-    }
-  }
-  function handleImageReset() {
-    setImage(null);
-    setValue((prev: any) => ({
-      ...prev,
-      uploadFiles: null,
     }));
   }
 

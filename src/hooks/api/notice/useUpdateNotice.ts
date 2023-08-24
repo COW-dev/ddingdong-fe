@@ -19,7 +19,7 @@ export function useUpdateNotice(
       });
       toast.success('공지사항을 수정했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('공지사항 수정을 실패했어요');
     },
   });

@@ -8,6 +8,7 @@ import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
+import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
 export default function Index() {
@@ -39,12 +40,28 @@ export default function Index() {
       setInfoElement(<AdminHeading />);
     }
   }
+  function openFixZone() {
+    const windowOptions = 'width=650,height=650,scrollbars,resizable=no';
+    const fixZoneWindow = window.open('fixzone', 'fixzone', windowOptions);
+    if (!fixZoneWindow) {
+      alert('팝업 차단이 활성화되어 있습니다. 팝업 차단을 해제해주세요.');
+    }
+  }
+
   return (
     <>
       <Head>
         <title>띵동 어드민</title>
       </Head>
-      {infoElement}
+      <div className="flex flex-row items-end justify-between">
+        {infoElement}
+        <div
+          className="rounded-xl px-3 py-1 text-lg font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500"
+          onClick={openFixZone}
+        >
+          Fix:Zone
+        </div>
+      </div>
       <div className="relative mt-7">
         <Link
           href="/banner"

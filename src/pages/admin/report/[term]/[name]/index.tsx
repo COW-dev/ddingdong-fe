@@ -38,7 +38,8 @@ export default function Index({ term, name }: ReportDetailProps) {
 
   function handleClickCancel() {
     setIsEditing(false);
-    setReportData([reportDataList.data[0], reportDataList.data[1]]);
+    reportDataList &&
+      setReportData([reportDataList.data[0], reportDataList.data[1]]);
   }
   console.log('report', reportDataList?.data);
   function handleClickSubmit() {
@@ -76,7 +77,6 @@ export default function Index({ term, name }: ReportDetailProps) {
             reportData={reportData[0]}
             setReportData={setReportData}
             isEditing={isEditing}
-            setIsEditing={setIsEditing}
           />
         </Accordion>
         <Accordion title="활동2">
@@ -84,7 +84,6 @@ export default function Index({ term, name }: ReportDetailProps) {
             reportData={reportData[1]}
             setReportData={setReportData}
             isEditing={isEditing}
-            setIsEditing={setIsEditing}
           />
         </Accordion>
       </div>
