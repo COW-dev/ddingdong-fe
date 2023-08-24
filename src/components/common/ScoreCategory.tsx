@@ -27,7 +27,7 @@ export default function ScoreCategory({
   }
   return (
     <div
-      className=" mb-5 flex h-full w-full flex-row justify-between rounded-lg border-2 shadow-md md:max-w-[18%] "
+      className=" mb-5 flex h-full w-full cursor-pointer flex-row justify-between rounded-lg border-2 shadow-md md:max-w-[18%] "
       onClick={() =>
         handleModal({
           title: scoreCategory,
