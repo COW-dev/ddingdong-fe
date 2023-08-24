@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next/types';
+import toast from 'react-hot-toast';
 import BottomButton from '@/components/club/BottomButton';
 import ClubHeading from '@/components/club/ClubHeading';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
@@ -55,7 +56,16 @@ export default function Index({ clubId }: ClubDetailProps) {
             </ul>
           </section>
         </main>
-        <BottomButton href="#">지원하기</BottomButton>
+        <div
+          onClick={() =>
+            !clubInfo.formUrl &&
+            toast('지원링크가 존재하지 않습니다.', {
+              icon: '💡',
+            })
+          }
+        >
+          <BottomButton href={clubInfo.formUrl}>지원하기</BottomButton>
+        </div>
       </>
     );
   }

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { toast } from 'react-hot-toast';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Form from '@/components/report/Form';

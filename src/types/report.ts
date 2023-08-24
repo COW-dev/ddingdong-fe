@@ -47,7 +47,7 @@ export type ReportDataType = {
 };
 
 export type ReportDetail = {
-  reportId: number;
+  id: number;
   createdAt: string;
   name: string;
   leader: string;
@@ -58,6 +58,6 @@ export type ReportDetail = {
   endDate: string;
   startTime: string;
   endTime: string;
-  imageUrls: string | string[];
+  imageUrls: string[];
   participants: StudentInfo[];
 };
