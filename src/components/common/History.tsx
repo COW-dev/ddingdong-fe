@@ -11,7 +11,7 @@ export default function History({ scoreData }: Prop) {
         <div className=" mb-2 flex flex-row justify-between ">
           <span className="ml-2 text-lg font-semibold lg:text-xl">내역</span>
           <span className="text-lg font-bold text-purple-500 lg:text-xl">
-            총점 : {scoreData[scoreData.length - 1]?.remainingScore}점
+            총점 : {scoreData[0]?.remainingScore}점
           </span>
         </div>
         <div
