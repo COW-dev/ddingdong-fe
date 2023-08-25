@@ -41,7 +41,7 @@ export default function Index() {
     data: { data },
   } = useMyClub(token);
   const mutation = useUpdateMyClub();
-
+  console.log('데이터', clubData);
   useEffect(() => {
     if (data) {
       setClubData({ ...data });
@@ -119,15 +119,17 @@ export default function Index() {
   }
 
   //formdata생성을 위한 함수
-  // function generateRecruitPeriodString() {
-  //   const { parsedRecruitPeriod } = clubData;
-  //   return validator({
-  //     type: 'date',
-  //     value: String(parsedRecruitPeriod?.startDate),
-  //   })
-  //     ? `${parsedRecruitPeriod?.startDate}~${parsedRecruitPeriod?.endDate}`
-  //     : '';
-  // }
+  function generateRecruitPeriodString() {
+    const { parsedRecruitPeriod } = clubData;
+    return validator({
+      type: 'date',
+      value: String(parsedRecruitPeriod?.startDate),
+    })
+      ? `${parsedRecruitPeriod?.startDate + '00:00'}~${
+          parsedRecruitPeriod?.endDate + '23:59'
+        }`
+      : '';
+  }
 
   const excludedKeys = [
     'profileImage',

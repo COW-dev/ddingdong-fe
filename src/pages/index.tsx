@@ -40,7 +40,6 @@ export default function Home() {
   if (isError) {
     return <div>error</div>;
   }
-
   //가나다 순으로 정렬
   const sortClubsByCategory = (clubs: Club[]) => {
     return clubs.sort(
