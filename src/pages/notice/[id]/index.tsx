@@ -12,6 +12,37 @@ export default function Index({ noticeId }: NoticeDetailProps) {
 
   if (!noticeInfo) return null;
   const { title, content, createdAt } = noticeInfo;
+
+  function checkUrl(strUrl: string) {
+    const expUrl = /https?:\/\/[^\s"]/;
+    return expUrl.test(strUrl);
+  }
+
+  function parseUrl(line: string) {
+    if (checkUrl(line)) {
+      const words = line.split(' ');
+      const elements = words.map((word, index) => {
+        return checkUrl(word) ? (
+          <a
+            key={`urlWord${index}`}
+            href={word}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="truncate whitespace-pre-line pr-1 underline underline-offset-1"
+          >
+            {word}
+          </a>
+        ) : (
+          <span key={`urlWord${index}`} className="pr-1">
+            {word}
+          </span>
+        );
+      });
+      return <div className="flex">{elements}</div>;
+    } else {
+      return <p>{line}</p>;
+    }
+  }
   return (
     <>
       <h1 className="mt-7 text-2xl font-bold md:mt-10 md:text-3xl">{title}</h1>
@@ -21,7 +52,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <div className="py-8 text-base font-medium md:py-10 md:text-lg">
         {content.split('\n').map((line, idx) => (
           <div key={line + idx}>
-            <p>{line}</p>
+            <p>{parseUrl(line)}</p>
             <br />
           </div>
         ))}
