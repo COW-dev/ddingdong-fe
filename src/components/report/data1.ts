@@ -1,7 +1,4 @@
-import Image1 from '@/assets/image1.jpeg';
-import Image2 from '@/assets/image2.jpeg';
-
-import { ReportDataType, ReportDetail } from '@/types/report';
+import { ReportDataType } from '@/types/report';
 
 export const dummy: ReportDataType[] = [
   {

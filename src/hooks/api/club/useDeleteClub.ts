@@ -20,7 +20,7 @@ export function useDeleteClub(): UseMutationResult<
       queryClient.invalidateQueries(['admin/clubs']);
       toast.success('동아리를 성공적으로 삭제했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('동아리 삭제를 실패했어요');
     },
   });

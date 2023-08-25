@@ -22,7 +22,7 @@ export function useNewNotice(): UseMutationResult<
       router.push('/notice');
       toast.success('공지를 성공적으로 등록했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('공지 등록을 실패했어요.');
     },
   });

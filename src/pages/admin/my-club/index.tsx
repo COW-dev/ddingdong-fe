@@ -7,7 +7,6 @@ import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
-import { validator } from '@/utils/validator';
 
 const initialClubData: ClubDetail = {
   name: '',

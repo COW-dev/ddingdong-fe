@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
 export type StudentInfo = {

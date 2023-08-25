@@ -65,7 +65,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   query: any;
 }) => {
   const { id } = context.query;
