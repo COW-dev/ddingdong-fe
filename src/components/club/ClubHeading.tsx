@@ -99,7 +99,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           }
         >
           <a
-            href={formUrl}
+            href={formUrl ? formUrl : void 0}
             target="_blank"
             className="inline-block w-full py-3.5"
           >

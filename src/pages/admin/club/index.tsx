@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import Create from '@/assets/create.svg';
@@ -9,7 +8,6 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import CreateClub from '@/components/modal/club/CreateClub';
 import ManageClub from '@/components/modal/club/ManageClub';
-import ModifyClub from '@/components/modal/club/ModifyClub';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
@@ -98,7 +96,7 @@ export default function Index() {
                 <div className=" flex h-full w-full justify-around p-5 md:p-6">
                   <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                     <Image
-                      src={handleImage(club.profileImageUrls)}
+                      src={handleImage(club.imageUrls)}
                       width={80}
                       height={80}
                       alt="clubImage"

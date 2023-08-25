@@ -3,32 +3,21 @@ import Image from 'next/image';
 import Add from '@/assets/add.svg';
 import Cancle from '@/assets/cancle-red.svg';
 
-import { Member } from '@/types/member';
+import { Member } from '@/types/club';
 
 type Props = {
-  name: string;
-  studentId: string;
-  members: Member[];
-  id: number;
-  department: string;
+  member: Member;
   isEditing: boolean;
+  members: Member[];
   setMembers: Dispatch<SetStateAction<Member[]>>;
 };
 export default function MemberInfo({
-  department,
-  studentId,
-  name,
-  id,
+  member,
   isEditing,
   members,
   setMembers,
 }: Props) {
-  const [value, setValue] = useState<Member>({
-    id,
-    name,
-    studentId,
-    department,
-  });
+  const [value, setValue] = useState<Member>(member);
   const [isEditItem, setisEditItem] = useState<boolean>(false);
   function handleEditable() {
     setisEditItem(true);
@@ -45,11 +34,11 @@ export default function MemberInfo({
     }));
   }
   function handleMember() {
-    id === 0 ? handleCreateMember() : handleDeleteMember();
+    member.id === 0 ? handleCreateMember() : handleDeleteMember();
   }
   function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
     if (
-      id === 0 &&
+      member.id === 0 &&
       event.key === 'Enter' &&
       event.nativeEvent.isComposing === false
     ) {
@@ -62,24 +51,33 @@ export default function MemberInfo({
       ...members,
       { ...value, id: members[members.length - 1].id + 1 },
     ]);
-    setValue({ id: 0, name: '', studentId: '', department: '' });
+    setValue({
+      id: 0,
+      name: '',
+      studentNumber: '',
+      department: '',
+      phoneNumber: '',
+      position: '',
+    });
   }
   function handleDeleteMember() {
     const newMembers = [...members];
-    const index = newMembers.findIndex((member) => member.id === id);
+    const index = newMembers.findIndex(
+      (newMember) => newMember.id === member.id,
+    );
     newMembers.splice(index, 1);
     setMembers(newMembers);
   }
   function handleModifyMember() {
-    const index = members.findIndex((member) => member.id === id);
+    const index = members.findIndex((newMember) => newMember.id === member.id);
     if (
       members[index]?.department === value.department &&
-      members[index]?.studentId === value.studentId &&
+      members[index]?.studentNumber === value.studentNumber &&
       members[index]?.name === value.name
     )
       return;
-    const newMembers = members.map((member) =>
-      member.id === id ? value : member,
+    const newMembers = members.map((newMember) =>
+      newMember.id === member.id ? value : newMember,
     );
     setMembers(newMembers);
   }
@@ -87,39 +85,60 @@ export default function MemberInfo({
   return (
     <li className="border-t border-gray-200 p-1 ">
       <div
-        className={`relative rounded-xl  p-2 py-3 transition-colors hover:border-gray-200  ${
+        className={`relative flex flex-col items-center justify-center rounded-xl p-2 py-3 transition-colors hover:border-gray-200  ${
           isEditItem && `bg-gray-100`
         }`}
-        key={`member-${id}`}
+        key={`member-${member.id}`}
         onMouseEnter={handleEditable}
         onMouseLeave={handleUneditable}
       >
         <input
           type="text"
-          value={value.name}
+          value={value?.name}
           name="name"
           placeholder="이름 입력"
-          className="text-md bg-inherit font-semibold outline-none"
+          className="text-md bg-inherit text-center font-semibold outline-none"
           onChange={(e) => handleChange(e)}
           disabled={!isEditing}
         />
-        <div className="flex items-center text-sm  text-gray-500">
-          <div className={`flex rounded-lg font-semibold `}>
+        <div className="text-sm text-gray-500">
+          <div className={`flex justify-center rounded-lg font-semibold `}>
             <input
               type="text"
-              name="studentId"
+              name="studentNumber"
               placeholder="학번"
-              value={value.studentId}
-              className="text-md w-18  bg-inherit font-semibold outline-none"
+              value={value?.studentNumber}
+              className="text-md bg-inherit text-end font-semibold outline-none"
               onChange={(e) => handleChange(e)}
               disabled={!isEditing}
             />
-            |
+            <div className="mx-3">|</div>
             <input
               type="text"
               name="department"
               placeholder="학과"
-              value={value.department}
+              value={value?.department}
+              className="text-md ml-1  bg-inherit font-semibold outline-none"
+              onChange={(e) => handleChange(e)}
+              disabled={!isEditing}
+            />
+          </div>
+          <div className={`flex justify-center rounded-lg font-semibold `}>
+            <input
+              type="text"
+              name="phoneNumber"
+              placeholder="전화번호"
+              value={value?.phoneNumber}
+              className="text-md bg-inherit text-end font-semibold outline-none"
+              onChange={(e) => handleChange(e)}
+              disabled={!isEditing}
+            />
+            <div className="mx-3">|</div>
+            <input
+              type="text"
+              name="position"
+              placeholder="역할"
+              value={value?.position}
               className="text-md ml-1  bg-inherit font-semibold outline-none"
               onChange={(e) => handleChange(e)}
               onKeyDown={(e) => handleKeyDown(e)}
@@ -129,7 +148,7 @@ export default function MemberInfo({
         </div>
         {isEditing && (
           <Image
-            src={id === 0 ? Add : Cancle}
+            src={member.id === 0 ? Add : Cancle}
             width={10}
             height={10}
             alt="delete"

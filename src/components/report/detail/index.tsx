@@ -7,18 +7,18 @@ import {
 } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import {
-  DateRangeType,
-  DateValueType,
-} from 'react-tailwindcss-datepicker/dist/types';
+import Datepicker from 'react-tailwindcss-datepicker';
+
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Modal from '@/components/common/Modal';
+import UploadImage from '@/components/common/UploadImage';
 import Participants from '@/components/modal/report/Paticipants';
 import ReportNoticeModal from '@/components/modal/reportNoticeModal';
 import { ROLE_TYPE } from '@/constants/text';
 import useModal from '@/hooks/common/useModal';
 import { ReportDetail } from '@/types/report';
+import { parseImgUrl } from '@/utils/parse';
 import ActiveDate from './ActiveDate';
 import Time from './Time';
 
@@ -26,28 +26,35 @@ type Props = {
   reportData: ReportDetail;
   isEditing?: boolean;
   setReportData?: Dispatch<SetStateAction<ReportDetail[]>>;
+  image?: File | null;
+  setImage?: Dispatch<SetStateAction<File | null>>;
 };
 
-export default function Index({ reportData, isEditing, setReportData }: Props) {
+export default function Index({
+  image,
+  setImage,
+  reportData,
+  isEditing,
+  setReportData,
+}: Props) {
   const {
-    reportId,
+    id,
     content,
     place,
     startDate,
     endDate,
     imageUrls,
+    startTime,
+    endTime,
     participants,
   } = reportData ?? {};
 
   const [data, setData] = useState(reportData);
-  const [image, setImage] = useState<string>();
   const [{ role }] = useCookies(['role']);
+
   useEffect(() => {
     setData(data);
-    setImage(imageUrls && imageUrls[0]);
-  }, [imageUrls]);
-
-  const parsedImgUrl = image && image.slice(0, 8) + image.slice(9);
+  }, [imageUrls, data]);
 
   const [info, setInfo] = useState<boolean>(true);
   const { openModal, visible, closeModal, modalRef } = useModal();
@@ -60,19 +67,22 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
     setReportData &&
       setReportData((prev) => {
         const updatedReportData = prev.map((report) =>
-          report.reportId === id
-            ? { ...report, [key]: event.target.value }
-            : report,
+          report.id === id ? { ...report, [key]: event.target.value } : report,
         );
         return updatedReportData;
       });
   }
-  // function handleDateChange(selectedDate: DateValueType) {
-  //   setReportData((prev) => ({
-  //     ...prev,
-  //     date: selectedDate as DateRangeType,
-  //   }));
-  // }
+  function handleDateChange(startdate: string, key: string, id: number) {
+    setReportData &&
+      setReportData((prev) => {
+        const updatedReportData = prev.map((report) =>
+          report.id === id ? { ...report, [key]: startdate } : report,
+        );
+        return updatedReportData;
+      });
+    console.log(reportData);
+  }
+
   return (
     <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
       <div className="mb-2 flex flex-col">
@@ -82,12 +92,24 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
             {isEditing ? (
               <>
                 <div className="flex items-center md:flex-row">
+                  <Datepicker
+                    value={{ startDate: startDate, endDate: startDate }}
+                    datepicker-format="yyyy/mm/dd"
+                    useRange={false}
+                    asSingle
+                    minDate={new Date(new Date().getFullYear(), 0, 1)}
+                    maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                    onChange={(e) =>
+                      handleDateChange(String(e?.endDate), 'startDate', id)
+                    }
+                    inputClassName="w-full h-12 px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
+                  />
                   <input
                     name="place"
                     type="text"
                     placeholder="활동장소"
                     value={place}
-                    onChange={(e) => handleChange(e, 'place', reportId)}
+                    onChange={(e) => handleChange(e, 'place', id)}
                     className="md:text-md ml-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
                   />
                 </div>
@@ -95,39 +117,35 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
                   <input
                     name="startTime"
                     type="time"
-                    onChange={(e) => handleChange(e, 'startTime', reportId)}
+                    value={startTime}
+                    onChange={(e) => handleChange(e, 'startTime', id)}
                     className=" h-12 w-1/2 rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
                   />
                   <input
                     name="endTime"
                     type="time"
-                    onChange={(e) => handleChange(e, 'endTime', reportId)}
+                    value={endTime}
+                    onChange={(e) => handleChange(e, 'endTime', id)}
                     className=" ml-3 h-12 w-1/2 rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
                   />
                 </div>
                 <div>
-                  {parsedImgUrl && (
-                    <Image
-                      src={parsedImgUrl}
-                      className="bg-gray-50 object-cover"
-                      alt="reportImage"
-                      width={200}
-                      height={200}
-                    />
-                  )}
+                  <UploadImage
+                    image={image}
+                    setImage={setImage}
+                    imageUrls={imageUrls}
+                  />
                 </div>
               </>
             ) : (
               <div className="relative">
-                {parsedImgUrl && (
-                  <Image
-                    src={parsedImgUrl}
-                    className="bg-gray-50 object-cover"
-                    alt="reportImage"
-                    width={500}
-                    height={500}
-                  />
-                )}
+                <Image
+                  src={parseImgUrl(imageUrls[0])}
+                  className="bg-gray-50 object-cover"
+                  alt="reportImage"
+                  width={200}
+                  height={200}
+                />
                 <div
                   className={`absolute right-2 ${
                     info ? `top-[11vh]` : `top-[1vh]`
@@ -163,13 +181,25 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
           <div className="flex flex-col items-center md:flex-row md:justify-between">
             {isEditing ? (
               <div className="flex flex-col">
+                <Datepicker
+                  value={{ startDate: startDate, endDate: startDate }}
+                  datepicker-format="yyyy/mm/dd"
+                  useRange={false}
+                  asSingle
+                  minDate={new Date(new Date().getFullYear(), 0, 1)}
+                  maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                  onChange={(e) =>
+                    handleDateChange(String(e?.endDate), 'startDate', id)
+                  }
+                  inputClassName="w-full h-12 px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
+                />
                 <div className="mb-3 flex items-center md:flex-row">
                   <input
                     name="place"
                     type="text"
                     placeholder="활동장소"
                     value={place}
-                    onChange={(e) => handleChange(e, 'place', reportId)}
+                    onChange={(e) => handleChange(e, 'place', id)}
                     className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
                   />
                 </div>
@@ -177,13 +207,15 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
                   <input
                     name="startTime"
                     type="time"
-                    onChange={(e) => handleChange(e, 'startTime', reportId)}
+                    value={startTime}
+                    onChange={(e) => handleChange(e, 'startTime', id)}
                     className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
                   />
                   <input
                     name="endTime"
                     type="time"
-                    onChange={(e) => handleChange(e, 'endTime', reportId)}
+                    value={endTime}
+                    onChange={(e) => handleChange(e, 'endTime', id)}
                     className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
                   />
                 </div>
@@ -242,7 +274,7 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
             <textarea
               name="content"
               value={content}
-              onChange={(e) => handleChange(e, 'content', reportId)}
+              onChange={(e) => handleChange(e, 'content', id)}
               className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
             />
           ) : (
@@ -252,16 +284,8 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
           )}
         </div>
       </div>
-      <div className="hidden w-2/5 justify-center overflow-hidden rounded-xl shadow-xl md:flex md:w-1/2 lg:w-2/5 ">
-        {parsedImgUrl && (
-          <Image
-            src={parsedImgUrl}
-            width={600}
-            height={600}
-            className="over m-auto "
-            alt="reportImage"
-          />
-        )}
+      <div className="hidden md:block">
+        <UploadImage image={image} setImage={setImage} imageUrls={imageUrls} />
       </div>
       <ReportNoticeModal />
       <Modal

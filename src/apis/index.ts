@@ -10,6 +10,7 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
+  UpdateMembers,
 } from '@/types/club';
 
 import {
@@ -19,7 +20,7 @@ import {
   FixComplete,
   NewFix,
 } from '@/types/fixzone';
-import { Member } from '@/types/member';
+
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
@@ -65,15 +66,7 @@ export async function getAdminAllFix(
     },
   });
 }
-export async function getMembers(
-  token: string,
-): Promise<AxiosResponse<Member[], unknown>> {
-  return await api.get('/member', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
+
 export async function getClubAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
@@ -165,6 +158,17 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
       Authorization: 'Bearer ' + token,
     },
   });
+}
+export async function updateMembers({ members, token }: UpdateMembers) {
+  return await api.put(
+    `/club/my/club-members`,
+    { clubMemberList: members },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
 }
 export async function deleteNotice({ noticeId, token }: DeleteNotice) {
   return await api.delete(`/admin/notices/${noticeId}`, {

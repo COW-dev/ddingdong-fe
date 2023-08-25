@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
@@ -27,13 +26,13 @@ export default function Index({ term, name }: ReportDetailProps) {
   const [reportData, setReportData] = useState<ReportDetail[]>([]);
   const [updateFileOne, setUpdateFileOne] = useState<File | null>(null);
   const [updateFileTwo, setUpdateFileTwo] = useState<File | null>(null);
-
   useEffect(() => {
     if (reportDataList?.data) {
       setReportData([reportDataList.data[0], reportDataList.data[1]]);
+      parseTime(reportData[0]?.id);
+      parseTime(reportData[1]?.id);
     }
-  }, [reportDataList?.data]);
-  console.log('reportdata1', setReportData);
+  }, [reportDataList]);
   if (reportData.length === 0) return;
 
   function handleClickCancel() {
@@ -41,17 +40,58 @@ export default function Index({ term, name }: ReportDetailProps) {
     reportDataList &&
       setReportData([reportDataList.data[0], reportDataList.data[1]]);
   }
-  console.log('report', reportDataList?.data);
+  function parseTime(index: number) {
+    setReportData((prev) => {
+      const updatedReportData = prev?.map((report) =>
+        report.id === index
+          ? {
+              ...report,
+              startTime: report.startDate.split(' ')[1],
+              endTime: report.endDate.split(' ')[1],
+              startDate: report.startDate.split(' ')[0],
+              endDate: report.endDate.split(' ')[0],
+            }
+          : report,
+      );
+      console.log('updatedReportData2324', updatedReportData);
+      return updatedReportData;
+    });
+  }
+
   function handleClickSubmit() {
     setIsEditing(false);
     const formData = new FormData();
-    formData.set(
+    const newReportData = [
+      {
+        term: 1,
+        date: {
+          startDate: reportData[0].startDate + ' ' + reportData[0].startTime,
+          endDate: reportData[0].endDate + ' ' + reportData[0].endTime,
+        },
+        place: reportData[0].place,
+        content: reportData[0].content,
+        participants: reportData[0].participants,
+      },
+      {
+        term: 1,
+        date: {
+          startDate: reportData[1].startDate + ' ' + reportData[1].startTime,
+          endDate: reportData[1].endDate + ' ' + reportData[1].startTime,
+        },
+        place: reportData[0].place,
+        content: reportData[0].content,
+        participants: reportData[0].participants,
+      },
+    ];
+    formData.append(
       'reportData',
-      new Blob([JSON.stringify(reportData)], { type: 'application/json' }),
+      new Blob([JSON.stringify(newReportData)], { type: 'application/json' }),
     );
-    updateFileOne && formData.set('uploadFiles', updateFileOne, `uploadFiles`);
-    updateFileTwo && formData.set('uploadFiles', updateFileTwo, `uploadFiles`);
-    formData.set('token', token);
+    updateFileOne &&
+      formData.append('uploadFiles', updateFileOne, `uploadFiles`);
+    updateFileTwo &&
+      formData.append('uploadFiles', updateFileTwo, `uploadFiles`);
+    formData.append('token', token);
     return updateMutation.mutate(formData);
   }
 
@@ -74,16 +114,24 @@ export default function Index({ term, name }: ReportDetailProps) {
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
           <Detail
-            reportData={reportData[0]}
+            reportData={{
+              ...reportData[0],
+            }}
             setReportData={setReportData}
             isEditing={isEditing}
+            image={updateFileOne}
+            setImage={setUpdateFileOne}
           />
         </Accordion>
         <Accordion title="활동2">
           <Detail
-            reportData={reportData[1]}
+            reportData={{
+              ...reportData[1],
+            }}
             setReportData={setReportData}
             isEditing={isEditing}
+            image={updateFileTwo}
+            setImage={setUpdateFileTwo}
           />
         </Accordion>
       </div>

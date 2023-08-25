@@ -45,6 +45,16 @@ export type ClubDetail = {
   profileImageUrls: string[];
   token: string;
   formUrl: string;
+  clubMembers: Member[];
+};
+
+export type Member = {
+  id: number;
+  name: string;
+  studentNumber: string;
+  phoneNumber: string;
+  position: string;
+  department: string;
 };
 
 export type UpdateMyClub = {
@@ -74,5 +84,10 @@ export type UpdateClub = {
 
 export type DeleteClub = {
   clubId: number | boolean;
+  token: string;
+};
+
+export type UpdateMembers = {
+  members: Member[];
   token: string;
 };

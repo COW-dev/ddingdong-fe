@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { toast } from 'react-hot-toast';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Form from '@/components/report/Form';
@@ -9,7 +8,6 @@ import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
 import { parseDateToString } from '@/utils/parse';
-import { isMissingData } from '@/utils/validator';
 
 export default function Index() {
   const [{ token }] = useCookies();
@@ -81,27 +79,20 @@ export default function Index() {
       },
     ];
 
-    if (
-      isMissingData({
-        ...reportData[0],
-      }) ||
-      isMissingData({
-        ...reportData[1],
-      }) ||
-      !uploadFileOne ||
-      !uploadFileTwo
-    )
-      return toast.error('작성하지 않은 항목이 존재합니다.');
     const formData = new FormData();
     formData.append(
       'reportData',
       new Blob([JSON.stringify(reportData)], { type: 'application/json' }),
     );
-    uploadFileOne &&
-      formData.append('uploadFiles', uploadFileOne, `uploadFiles`);
-    uploadFileTwo &&
-      formData.append('uploadFiles', uploadFileTwo, `uploadFiles`);
+    uploadFileOne
+      ? formData.append('uploadFiles', uploadFileOne, `uploadFiles`)
+      : formData.append('uploadFiles', '');
+    uploadFileTwo
+      ? formData.append('uploadFiles', uploadFileTwo, `uploadFiles`)
+      : formData.append('uploadFiles', '');
+
     formData.append('token', token);
+
     return mutation.mutate(formData);
   }
   return (
