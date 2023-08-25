@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { chosungIncludes, hangulIncludes } from '@toss/hangul';
+// import { chosungIncludes, hangulIncludes } from '@toss/hangul';
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
@@ -22,8 +22,8 @@ export default function Home() {
       setFilteredClubs(
         clubs.filter(
           (club) =>
-            chosungIncludes(club.name, keyword) ||
-            hangulIncludes(club.name, keyword) ||
+            // chosungIncludes(club.name, keyword) ||
+            // hangulIncludes(club.name, keyword) ||
             club.name.includes(keyword.toUpperCase()) ||
             club.tag.includes(keyword) ||
             club.category === keyword,
