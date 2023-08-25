@@ -26,8 +26,8 @@ type Props = {
   reportData: ReportDetail;
   isEditing?: boolean;
   setReportData?: Dispatch<SetStateAction<ReportDetail[]>>;
-  image: File | null;
-  setImage: Dispatch<SetStateAction<File | null>>;
+  image?: File | null;
+  setImage?: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function Index({
@@ -69,7 +69,6 @@ export default function Index({
         const updatedReportData = prev.map((report) =>
           report.id === id ? { ...report, [key]: event.target.value } : report,
         );
-        console.log('updatedReportData', updatedReportData);
         return updatedReportData;
       });
   }

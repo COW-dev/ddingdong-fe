@@ -5,8 +5,8 @@ import Cancel from '@/assets/cancle.svg';
 import { NoticeDetail } from '@/types/notice';
 import { parseImgUrl } from '@/utils/parse';
 type UploadImageProps = {
-  image: File | null;
-  setImage: Dispatch<SetStateAction<File | null>>;
+  image?: File | null;
+  setImage?: Dispatch<SetStateAction<File | null>>;
   imageUrls?: string[];
   setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
 };
@@ -21,7 +21,7 @@ export default function UploadImage({
   useEffect(() => {
     if (image) {
       if (image instanceof File) {
-        setImage(image);
+        setImage && setImage(image);
         const imageUrl = URL.createObjectURL(image);
         setPreviewImageUrl(imageUrl);
       } else {
@@ -37,11 +37,11 @@ export default function UploadImage({
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setImage(file);
+      setImage && setImage(file);
     }
   }
   function handleImageReset() {
-    setImage(null);
+    setImage && setImage(null);
     setPreviewImageUrl('');
     setNoticeData && setNoticeData((prev) => ({ ...prev, imageUrls: [] }));
   }

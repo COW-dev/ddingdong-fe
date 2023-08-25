@@ -29,6 +29,7 @@ const initialClubData: ClubDetail = {
   uploadFiles: null,
   formUrl: '',
   token: '',
+  clubMembers: [],
 };
 
 export default function Index() {
@@ -118,19 +119,6 @@ export default function Index() {
     return formData;
   }
 
-  //formdata생성을 위한 함수
-  function generateRecruitPeriodString() {
-    const { parsedRecruitPeriod } = clubData;
-    return validator({
-      type: 'date',
-      value: String(parsedRecruitPeriod?.startDate),
-    })
-      ? `${parsedRecruitPeriod?.startDate + '00:00'}~${
-          parsedRecruitPeriod?.endDate + '23:59'
-        }`
-      : '';
-  }
-
   const excludedKeys = [
     'profileImage',
     'recruitPeriod',
@@ -193,7 +181,7 @@ export default function Index() {
           isEditing={isEditing}
         />
         <div className="mt-6 md:mt-8">
-          <div className="text-lg font-bold md:text-xl">
+          <div className=" text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
           </div>
           <TextareaAutosize
