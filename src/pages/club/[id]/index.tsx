@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next/types';
 import toast from 'react-hot-toast';
+import TextareaAutosize from 'react-textarea-autosize';
 import BottomButton from '@/components/club/BottomButton';
 import ClubHeading from '@/components/club/ClubHeading';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
@@ -11,7 +12,36 @@ type ClubDetailProps = {
 
 export default function Index({ clubId }: ClubDetailProps) {
   const { isError, isSuccess, data } = useClubInfo(clubId);
+  function checkUrl(strUrl: string) {
+    const expUrl = /https?:\/\/[^\s"]/;
+    return expUrl.test(strUrl);
+  }
 
+  function parseUrl(line: string) {
+    if (checkUrl(line)) {
+      const words = line.split(' ');
+      const elements = words.map((word, index) => {
+        return checkUrl(word) ? (
+          <a
+            key={`urlWord${index}`}
+            href={word}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="truncate whitespace-pre-line pr-1 underline underline-offset-1"
+          >
+            {word}
+          </a>
+        ) : (
+          <span key={`urlWord${index}`} className="pr-1">
+            {word}
+          </span>
+        );
+      });
+      return <div className="flex">{elements}</div>;
+    } else {
+      return <p>{line}</p>;
+    }
+  }
   if (isError) {
     <div>error</div>;
   }
@@ -31,9 +61,9 @@ export default function Index({ clubId }: ClubDetailProps) {
             <div className="text-lg font-bold md:text-xl">
               우리 동아리를 소개할게요
             </div>
-            <div className="mt-1 text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
+            <div className="mt-1 bg-white text-base font-medium text-gray-500 md:mt-2 md:text-lg">
               {introduction?.split('\n').map((line) => (
-                <p key={line}>{line}</p>
+                <p key={line}>{parseUrl(line)}</p>
               ))}
             </div>
           </section>

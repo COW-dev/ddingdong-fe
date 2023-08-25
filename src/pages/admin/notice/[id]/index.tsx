@@ -60,7 +60,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             href={word}
             target="_blank"
             rel="noopener noreferrer"
-            className="truncate whitespace-pre-line pr-1 text-blue-400"
+            className="truncate whitespace-pre-line pr-1 underline underline-offset-1"
           >
             {word}
           </a>
