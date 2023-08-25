@@ -1,12 +1,9 @@
-import { StaticImageData } from 'next/image';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
-import { create } from 'zustand';
 export type Club = {
   id: number;
   name: string;
   category: string;
   tag: string;
-  isRecruit: boolean;
+  recruit: boolean;
 };
 
 export type AdminClub = {

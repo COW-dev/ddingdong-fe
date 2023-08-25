@@ -18,7 +18,8 @@ const initialClubData: ClubDetail = {
   phoneNumber: '010-1234-1234',
   location: 'S0000',
   isRecruit: false,
-  recruitPeriod: '',
+  startRecruitPeriod: '',
+  endRecruitPeriod: '',
   parsedRecruitPeriod: { startDate: '', endDate: '' },
   regularMeeting: '',
   introduction: '',
@@ -40,7 +41,7 @@ export default function Index() {
     data: { data },
   } = useMyClub(token);
   const mutation = useUpdateMyClub();
-
+  console.log('데이터', clubData);
   useEffect(() => {
     if (data) {
       setClubData({ ...data });
@@ -53,8 +54,8 @@ export default function Index() {
       setClubData((prevClubData) => ({
         ...prevClubData,
         parsedRecruitPeriod: {
-          startDate: prevClubData.recruitPeriod?.split('~')[0],
-          endDate: prevClubData.recruitPeriod?.split('~')[1] || '',
+          startDate: prevClubData.startRecruitPeriod?.split('~')[0],
+          endDate: prevClubData.endRecruitPeriod?.split('~')[1] || '',
         },
         token: token,
       }));
@@ -96,7 +97,14 @@ export default function Index() {
         : clubData?.profileImageUrls[0],
     );
     formData.append('introduceImageUrls', '');
-    formData.append('recruitPeriod', generateRecruitPeriodString());
+    formData.append(
+      'startRecruitPeriod',
+      clubData.parsedRecruitPeriod?.startDate + ' 00:00',
+    );
+    formData.append(
+      'endRecruitPeriod',
+      clubData.parsedRecruitPeriod?.endDate + ' 23:59',
+    );
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
     formData.append(
@@ -117,7 +125,9 @@ export default function Index() {
       type: 'date',
       value: String(parsedRecruitPeriod?.startDate),
     })
-      ? `${parsedRecruitPeriod?.startDate}~${parsedRecruitPeriod?.endDate}`
+      ? `${parsedRecruitPeriod?.startDate + '00:00'}~${
+          parsedRecruitPeriod?.endDate + '23:59'
+        }`
       : '';
   }
 
@@ -176,7 +186,8 @@ export default function Index() {
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           parsedRecruitPeriod={clubData?.parsedRecruitPeriod}
-          recruitPeriod={clubData.recruitPeriod}
+          startRecruitPeriod={clubData.startRecruitPeriod}
+          endRecruitPeriod={clubData.endRecruitPeriod}
           formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}

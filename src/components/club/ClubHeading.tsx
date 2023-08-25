@@ -20,7 +20,8 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     location,
     regularMeeting,
     profileImageUrls,
-    recruitPeriod,
+    startRecruitPeriod,
+    endRecruitPeriod,
     formUrl,
   } = info;
 
@@ -81,7 +82,10 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
           <div className="w-full">
             <span className="inline-block w-20 text-gray-500">모집기간</span>
-            <span>{recruitPeriod?.toString()}</span>
+            <span>
+              {startRecruitPeriod?.split(' ')[0]}~
+              {endRecruitPeriod?.split(' ')[0]}
+            </span>
           </div>
         </div>
 
