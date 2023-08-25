@@ -2,18 +2,16 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
-import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
-  const [{ role, token }] = useCookies(['token', 'role']);
+  const [{ role }] = useCookies(['token', 'role']);
   const { data: noticedata } = useAllNotices();
   const [infoElement, setInfoElement] = useState(<></>);
 

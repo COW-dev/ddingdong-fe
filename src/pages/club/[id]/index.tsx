@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next/types';
 import toast from 'react-hot-toast';
-import TextareaAutosize from 'react-textarea-autosize';
 import BottomButton from '@/components/club/BottomButton';
 import ClubHeading from '@/components/club/ClubHeading';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';

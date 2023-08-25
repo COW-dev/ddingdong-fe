@@ -3,7 +3,6 @@ import { useCookies } from 'react-cookie';
 import ScoreList from '@/components/common/ScoreList';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewScore } from '@/hooks/api/score/useNewScore';
-import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
 
 type Prop = {

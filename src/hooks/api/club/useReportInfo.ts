@@ -3,19 +3,6 @@ import { AxiosError, type AxiosResponse } from 'axios';
 import { getReportInfo } from '@/apis';
 import { ReportDetail } from '@/types/report';
 
-const initialData = {
-  id: '',
-  createdAt: '',
-  name: '',
-  leader: '',
-  leaderDepartment: '',
-  content: '',
-  place: '',
-  startDate: new Date(),
-  endDate: new Date(),
-  imageUrl: '',
-  participants: [],
-};
 type Prop = {
   term: number;
   name: string;

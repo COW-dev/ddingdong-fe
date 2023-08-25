@@ -15,7 +15,6 @@ export function middleware(req: NextRequest) {
 
   const unablePath =
     allowedPaths[isClub ? ROLE_TYPE.ROLE_ADMIN : ROLE_TYPE.ROLE_CLUB];
-
   if (subdomain === 'admin') {
     if (hasToken && req.nextUrl.pathname === '/login')
       return NextResponse.redirect(new URL('/', req.nextUrl.origin));
@@ -28,7 +27,11 @@ export function middleware(req: NextRequest) {
     return NextResponse.rewrite(
       new URL(`/admin${req.nextUrl.pathname}`, req.nextUrl.origin),
     );
+  } else {
+    if (req.nextUrl.pathname === '/login')
+      return NextResponse.redirect(new URL('/', req.nextUrl.origin));
   }
+
   if (req.nextUrl.pathname.startsWith('/admin')) {
     return NextResponse.redirect(new URL(req.nextUrl.origin));
   }
