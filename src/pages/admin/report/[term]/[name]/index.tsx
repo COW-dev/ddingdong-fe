@@ -53,7 +53,6 @@ export default function Index({ term, name }: ReportDetailProps) {
             }
           : report,
       );
-      console.log('updatedReportData2324', updatedReportData);
       return updatedReportData;
     });
   }

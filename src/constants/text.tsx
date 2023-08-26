@@ -55,3 +55,14 @@ export const ROLE_TEXT: RoleText = {
     },
   },
 };
+
+export type PositionType = {
+  동아리원: string;
+  임원: string;
+  회장: string;
+};
+export const Position: PositionType = {
+  동아리원: 'MEMBER',
+  임원: 'EXECUTIVE',
+  회장: 'LEADER',
+};

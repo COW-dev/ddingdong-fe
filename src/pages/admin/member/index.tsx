@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import SearchBar from '@/components/home/SearchBar';
 import MemberInfo from '@/components/member/MemberInfo';
+import { Position } from '@/constants/text';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
 import { Member } from '@/types/club';
@@ -23,8 +24,20 @@ export default function Index() {
     setIsEditing(!isEditing);
   }
   function handleSubmit() {
-    mutation.mutate({ members, token });
+    const parsedMember = parsePosition();
+    mutation.mutate({ members: parsedMember, token });
+
     setIsEditing(!isEditing);
+  }
+  function parsePosition() {
+    const parsedMember: Member[] = [];
+    members.map((member) => {
+      parsedMember.push({
+        ...member,
+        position: Position[member.position],
+      });
+    });
+    return parsedMember;
   }
   useEffect(() => {
     setMembers(data?.clubMembers ?? []);
@@ -38,7 +51,9 @@ export default function Index() {
           (member) =>
             member.name.includes(keyword) ||
             member.studentNumber.includes(keyword) ||
-            member.department.includes(keyword),
+            member.department.includes(keyword) ||
+            member.phoneNumber.includes(keyword) ||
+            member.position.includes(keyword),
         ),
       );
     }, 300);
@@ -91,7 +106,7 @@ export default function Index() {
                 id: 0,
                 name: '',
                 department: '',
-                position: '',
+                position: '동아리원',
                 phoneNumber: '',
                 studentNumber: '',
               }}

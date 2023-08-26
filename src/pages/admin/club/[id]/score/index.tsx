@@ -46,9 +46,7 @@ export default function Index({ clubId }: ScoreProps) {
   const {
     data: { data: myData },
   } = useMyScore(token);
-  console.log('allData', allData);
 
-  console.log('myData', myData);
   useEffect(() => {
     if (allData) {
       allData.reverse();

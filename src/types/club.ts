@@ -1,4 +1,5 @@
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import { Position } from './../constants/text';
 
 export type Club = {
   id: number;
@@ -49,7 +50,7 @@ export type ClubDetail = {
 };
 
 export type Member = {
-  id: number;
+  id?: number;
   name: string;
   studentNumber: string;
   phoneNumber: string;

@@ -36,7 +36,6 @@ export default function Index() {
 
   function handleImage(data: Array<string>) {
     if (data?.length === 0) return Admin;
-    console.log(data);
     return parseImgUrl(data[0]);
   }
 
