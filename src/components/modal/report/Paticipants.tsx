@@ -1,4 +1,13 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
+import { useCookies } from 'react-cookie';
+import SearchSelect from '@/components/SearchSelect';
+import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { StudentInfo } from '@/types';
 import { NewReport, ReportDetail } from '@/types/report';
 
@@ -11,47 +20,42 @@ type Props = {
   closeModal: () => void;
 };
 export default function Participants({ data, setData, closeModal }: Props) {
+  const [{ token }] = useCookies(['token']);
+  const [name, setName] = useState<string>('');
+
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
+
   const [participants, setParticipants] = useState<Array<StudentInfo>>(
     data ?? [
       {
         name: '',
-        studentId: '60201111',
-        department: '융합소프트웨어학부',
+        studentId: '',
+        department: '',
       },
       {
         name: '',
-        studentId: '60201111',
-        department: '철학과',
+        studentId: '',
+        department: '',
       },
       {
         name: '',
-        studentId: '60201111',
-        department: '융합소프트웨어학부',
+        studentId: '',
+        department: '',
       },
       {
         name: '',
-        studentId: '60201111',
-        department: '경영학과',
+        studentId: '',
+        department: '',
       },
       {
         name: '',
-        studentId: '60201111',
-        department: '중어중문학과',
+        studentId: '',
+        department: '',
       },
     ],
   );
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>, index: number) {
-    const { name, value } = event.target;
-    setParticipants((prev) => {
-      const updatedParticipants = [...prev];
-      updatedParticipants[index] = {
-        ...updatedParticipants[index],
-        [name]: value,
-      };
-      return updatedParticipants;
-    });
-  }
 
   function handleSubmit() {
     setParticipants(participants);
@@ -64,18 +68,17 @@ export default function Participants({ data, setData, closeModal }: Props) {
       <div className="grid grid-cols-3  rounded-xl text-gray-500">
         <label className="inline-block px-4 pb-2 font-semibold">이름</label>
       </div>
+
       {participants.map((participant, index) => (
         <div
           key={`report-participants-${index}`}
           className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 "
         >
-          <input
-            name="name"
-            type="text"
-            value={participant.name}
-            spellCheck={false}
-            className="w-full bg-gray-50 px-4 outline-none"
-            onChange={(e) => handleChange(e, index)}
+          <SearchSelect
+            name={participant.name}
+            setData={setParticipants}
+            list={clubData?.clubMembers}
+            id={index}
           />
         </div>
       ))}
