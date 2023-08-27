@@ -41,7 +41,6 @@ export default function Index() {
     data: { data },
   } = useMyClub(token);
   const mutation = useUpdateMyClub();
-  console.log('데이터', clubData);
   useEffect(() => {
     if (data) {
       setClubData({ ...data });

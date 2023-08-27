@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `http://ddingdong-dev.ap-northeast-2.elasticbeanstalk.com/api/:path*`,
+        destination: `https://eb.ddingdong.club/api/:path*`,
       },
     ];
   },

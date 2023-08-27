@@ -1,8 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import ImageInput from '@/assets/imageInput.svg';
+import ColorSelect from '@/components/common/ColorSelect';
 import { BannerColor } from '@/constants/color';
-import Select from '@/hooks/common/useSelect';
 import { BannerType, NewBannerType } from '@/types/banner';
 import { isMissingData } from '@/utils/validator';
 
@@ -85,7 +85,7 @@ export default function ModifyBanner({ data, closeModal }: Props) {
               배경색
             </label>
             <div className="w-full rounded-xl border border-gray-100 bg-gray-50 outline-none   ">
-              <Select
+              <ColorSelect
                 name={'colorCode'}
                 setData={setBanner}
                 list={moveItemToFrontByColor(colorCode)}
