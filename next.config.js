@@ -7,7 +7,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
+        source: '/server/:path*',
         destination: `https://eb.ddingdong.club/server/:path*`,
       },
     ];
