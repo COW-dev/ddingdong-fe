@@ -60,7 +60,7 @@ export default function MemberInfo({
     setPositionNum(0);
     setMembers([
       ...members,
-      { ...value, id: members[members.length - 1].id + 1 },
+      { ...value, id: members[members?.length - 1].id + 1 },
     ]);
     setValue({
       id: 0,

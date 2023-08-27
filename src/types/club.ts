@@ -50,7 +50,7 @@ export type ClubDetail = {
 };
 
 export type Member = {
-  id?: number;
+  id: number;
   name: string;
   studentNumber: string;
   phoneNumber: string;
