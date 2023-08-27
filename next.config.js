@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `http://eb.ddingdong.club/api/:path*`,
+        destination: `https://eb.ddingdong.club/api/:path*`,
       },
     ];
   },
