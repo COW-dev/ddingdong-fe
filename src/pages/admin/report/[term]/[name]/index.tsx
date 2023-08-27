@@ -87,9 +87,9 @@ export default function Index({ term, name }: ReportDetailProps) {
       new Blob([JSON.stringify(newReportData)], { type: 'application/json' }),
     );
     updateFileOne &&
-      formData.append('uploadFiles', updateFileOne, `uploadFiles`);
+      formData.append('uploadFiles1', updateFileOne, `uploadFiles`);
     updateFileTwo &&
-      formData.append('uploadFiles', updateFileTwo, `uploadFiles`);
+      formData.append('uploadFiles2', updateFileTwo, `uploadFiles`);
     formData.append('token', token);
     return updateMutation.mutate(formData);
   }

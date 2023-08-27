@@ -1,60 +1,31 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import SearchSelect from '@/components/SearchSelect';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { StudentInfo } from '@/types';
 import { NewReport, ReportDetail } from '@/types/report';
-
+const participant = {
+  name: '',
+  studentId: '',
+  department: '',
+};
 type Props = {
   data: StudentInfo[];
   setData:
-    | Dispatch<SetStateAction<ReportDetail[]>>
+    | Dispatch<SetStateAction<ReportDetail>>
     | Dispatch<SetStateAction<NewReport>>
     | undefined;
   closeModal: () => void;
 };
 export default function Participants({ data, setData, closeModal }: Props) {
   const [{ token }] = useCookies(['token']);
-  const [name, setName] = useState<string>('');
 
   const {
     data: { data: clubData },
   } = useMyClub(token);
 
   const [participants, setParticipants] = useState<Array<StudentInfo>>(
-    data ?? [
-      {
-        name: '',
-        studentId: '',
-        department: '',
-      },
-      {
-        name: '',
-        studentId: '',
-        department: '',
-      },
-      {
-        name: '',
-        studentId: '',
-        department: '',
-      },
-      {
-        name: '',
-        studentId: '',
-        department: '',
-      },
-      {
-        name: '',
-        studentId: '',
-        department: '',
-      },
-    ],
+    data ?? [participant, participant, participant, participant, participant],
   );
 
   function handleSubmit() {
