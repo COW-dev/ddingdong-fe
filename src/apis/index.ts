@@ -26,7 +26,7 @@ import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
-  baseURL: '/server/',
+  baseURL: 'https://eb.ddingdong.club/server/',
   timeout: 3000,
 });
 export function removeToken() {
