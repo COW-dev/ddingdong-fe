@@ -60,3 +60,8 @@ export type ReportDetail = {
   imageUrls: string[];
   participants: StudentInfo[];
 };
+
+export type DeleteReport = {
+  term: number;
+  token: string;
+};

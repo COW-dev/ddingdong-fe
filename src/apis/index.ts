@@ -22,7 +22,7 @@ import {
 } from '@/types/fixzone';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
-import { ReportDetail, MyReportList, CurrentReport } from '@/types/report';
+import { ReportDetail, MyReportList, CurrentReport, DeleteReport } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
@@ -295,6 +295,13 @@ export async function getAdminAllReports(
   token: string,
 ): Promise<AxiosResponse<any[], unknown>> {
   return await api.get('/admin/activity-reports', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function deleteReport({ term, token }: DeleteReport) {
+  return await api.delete(`/club/my/activity-reports?term=${term}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
