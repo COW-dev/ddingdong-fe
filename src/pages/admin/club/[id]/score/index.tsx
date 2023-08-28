@@ -6,6 +6,8 @@ import Dot from '@/assets/dot.svg';
 import People from '@/assets/people.svg';
 import Report from '@/assets/report.svg';
 import Report2 from '@/assets/report2.svg';
+import AdminScore from '@/components/common/AdminScore';
+import ClubScore from '@/components/common/ClubScore';
 import Heading from '@/components/common/Heading';
 import History from '@/components/common/History';
 import Modal from '@/components/common/Modal';
@@ -21,107 +23,11 @@ type ScoreProps = {
   clubId: number;
 };
 export default function Index({ clubId }: ScoreProps) {
-  const key = [
-    { icon: Report, category: '동아리 활동 보고서' },
-    { icon: Clean, category: '청소' },
-    { icon: People, category: '전동대회' },
-    { icon: Report2, category: '총동연 사업 참여' },
-    { icon: Dot, category: '가산점/감점' },
-  ];
-  const parseList = [];
-  const [{ role, token }] = useCookies(['role', 'token']);
-  const [scoreData, setScoreData] = useState<ScoreDetail[]>([
-    {
-      scoreCategory: '',
-      reason: '',
-      createdAt: '',
-      amount: 0,
-      remainingScore: 0,
-    },
-  ]);
+  const [{ role }] = useCookies(['role', 'token']);
 
-  const [myScoreData, setMyScoreData] = useState<ScoreDetail[]>([]);
-  const [mergedScoreData, setMergedScoreData] = useState<ScoreDetail[]>([]);
-  const { openModal, visible, closeModal, modalRef } = useModal();
-
-  const {
-    data: { data: allData },
-  } = useAllScore(token, clubId);
-  const [category, setCategory] = useState<string>('');
-  const {
-    data: { data: myData },
-  } = useMyScore(token);
-
-  useEffect(() => {
-    if (allData) {
-      setScoreData(allData);
-    } else if (myData) {
-      setScoreData(myData);
-    }
-  }, []);
-
-  function Category(categoryName: string) {
-    const category: ScoreDetail[] = [];
-    scoreData.map((item) => {
-      if (item.scoreCategory === categoryName) category.push(item);
-    });
-    const score = totalScore(category);
-    parseList.push({ category: category, score: score });
-    return category;
-  }
-  function totalScore(category: Array<ScoreDetail>) {
-    const total = category.reduce((acc, cur) => acc + cur.amount, 0);
-    return total;
-  }
-  function handleOpenModal() {
-    setCategory(category);
-    openModal();
-  }
   const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
-
-  return (
-    <div className="">
-      {isAdmin ? (
-        <Heading>동아리 점수 관리하기</Heading>
-      ) : (
-        <Heading>동아리 점수 확인하기</Heading>
-      )}
-      <History scoreData={scoreData} />
-      <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
-        {key.map(({ icon, category }, index) => (
-          <div
-            className="w-full"
-            key={`category-${index}`}
-            onClick={handleOpenModal}
-          >
-            <ScoreCategory
-              key={category}
-              scoreCategory={category}
-              icon={icon}
-              amount={totalScore(Category(category))}
-              clubId={clubId}
-              parseList={Category(category)}
-            />
-          </div>
-        ))}
-      </div>
-      <Modal
-        visible={visible}
-        modalRef={modalRef}
-        title={category}
-        closeModal={closeModal}
-      >
-        <CreateScore
-          clubId={clubId}
-          scoreCategory={category}
-          parseList={Category(category)}
-          closeModal={closeModal}
-        />
-      </Modal>
-    </div>
-  );
+  return <>{isAdmin ? <AdminScore clubId={clubId} /> : <ClubScore />}</>;
 }
-
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   return {

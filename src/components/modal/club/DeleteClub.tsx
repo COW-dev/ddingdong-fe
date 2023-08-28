@@ -40,7 +40,7 @@ export default function DeleteClub({ id, name, closeModal }: Prop) {
             type="text"
             value={value}
             placeholder={name}
-            className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
+            className="mt-5 w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
             onChange={(e) => {
               setValue(e.target.value);
             }}
@@ -50,7 +50,7 @@ export default function DeleteClub({ id, name, closeModal }: Prop) {
           type="submit"
           disabled={value !== name}
           onClick={handleClickDelete}
-          className={`mt-10 w-full rounded-xl py-4 font-bold sm:py-4 sm:text-lg md:mt-14 ${
+          className={`mt-5 w-full rounded-xl py-4 font-bold sm:py-4 sm:text-lg md:mt-5 ${
             value === name
               ? 'bg-red-600 text-white'
               : 'cursor-not-allowed bg-gray-100 text-gray-400'

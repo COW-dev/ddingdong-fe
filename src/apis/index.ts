@@ -2,6 +2,7 @@ import axios from 'axios';
 import type { AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
+import { ROLE_TYPE } from '@/constants/text';
 import { BannerType, DeleteBanner, NewBanner } from '@/types/banner';
 import {
   Club,
@@ -332,7 +333,7 @@ export async function getAllScores(
   token: string,
   clubId: number,
 ): Promise<AxiosResponse<ScoreDetail, unknown>> {
-  return await api.get(`/club/${clubId}/score`, {
+  return await api.get(`/admin/${clubId}/score`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -341,7 +342,7 @@ export async function getAllScores(
 export async function getMyScore(
   token: string,
 ): Promise<AxiosResponse<ScoreDetail, unknown>> {
-  return await api.get(`/club/my/score`, {
+  return await api.get('/club/my/score', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
