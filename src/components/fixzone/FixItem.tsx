@@ -5,7 +5,7 @@ import Progress from '@/assets/progress.svg';
 import { Fix } from '@/types/fixzone';
 
 export default function FixItem({ data }: { data: Fix }) {
-  const { id, title, createdAt, isCompleted, club } = data;
+  const { id, title, createdAt, completed, club } = data;
 
   return (
     <li key={id} className="mb-2 flex w-full border border-gray-100 pl-4 pt-2">
@@ -23,17 +23,17 @@ export default function FixItem({ data }: { data: Fix }) {
       </Link>
       <div
         className={`mx-1 mb-4 mt-2 flex w-30 flex-col items-center justify-center rounded-lg px-2 text-center text-xs font-semibold ${
-          isCompleted ? ` text-green-500` : `  text-gray-500`
+          completed ? ` text-green-500` : `  text-gray-500`
         }`}
       >
         <Image
-          src={isCompleted ? Check : Progress}
+          src={completed ? Check : Progress}
           width={25}
           height={25}
           alt="isProcess"
           className="my-1"
         />
-        {isCompleted ? `처리 완료` : `처리중`}
+        {completed ? `처리 완료` : `처리중`}
       </div>
     </li>
   );
