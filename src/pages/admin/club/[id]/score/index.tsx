@@ -26,7 +26,7 @@ export default function Index({ clubId }: ScoreProps) {
     { icon: Dot, category: '가산점/감점' },
   ];
   const parseList = [];
-  const [{ role, token }] = useCookies(['token', 'role']);
+  const [{ role, token }] = useCookies(['role', 'token']);
   const [scoreData, setScoreData] = useState<ScoreDetail[]>([
     {
       scoreCategory: '',
@@ -36,8 +36,6 @@ export default function Index({ clubId }: ScoreProps) {
       remainingScore: 0,
     },
   ]);
-  const [myScoreData, setMyScoreData] = useState<ScoreDetail[]>([]);
-  const [mergedScoreData, setMergedScoreData] = useState<ScoreDetail[]>([]);
 
   const {
     data: { data: allData },
@@ -46,18 +44,14 @@ export default function Index({ clubId }: ScoreProps) {
   const {
     data: { data: myData },
   } = useMyScore(token);
-  console.log('allData', allData);
 
-  console.log('myData', myData);
   useEffect(() => {
     if (allData) {
-      allData.reverse();
       setScoreData(allData);
     } else if (myData) {
-      myData.reverse();
       setScoreData(myData);
     }
-  }, [allData, myData]);
+  }, []);
 
   function Category(categoryName: string) {
     const category: ScoreDetail[] = [];
