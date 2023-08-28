@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
+import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
@@ -20,6 +21,7 @@ export default function Index({ term, name }: ReportDetailProps) {
   const {
     data: { data: clubData },
   } = useMyClub(token);
+  const deleteMutation = useDeleteReport();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const updateMutation = useUpdateReports(term);
   const reportDataList = useReportInfo({ term, name, token }).data;
@@ -29,8 +31,8 @@ export default function Index({ term, name }: ReportDetailProps) {
   useEffect(() => {
     if (reportDataList?.data) {
       setReportData([reportDataList.data[0], reportDataList.data[1]]);
-      parseTime(reportData[0]?.id);
-      parseTime(reportData[1]?.id);
+      // parseTime(reportData[0]?.id);
+      // parseTime(reportData[1]?.id);
     }
   }, [reportDataList]);
   if (reportData.length === 0) return;
@@ -40,23 +42,30 @@ export default function Index({ term, name }: ReportDetailProps) {
     reportDataList &&
       setReportData([reportDataList.data[0], reportDataList.data[1]]);
   }
-  function parseTime(index: number) {
-    setReportData((prev) => {
-      const updatedReportData = prev?.map((report) =>
-        report.id === index
-          ? {
-              ...report,
-              startTime: report.startDate.split(' ')[1],
-              endTime: report.endDate.split(' ')[1],
-              startDate: report.startDate.split(' ')[0],
-              endDate: report.endDate.split(' ')[0],
-            }
-          : report,
-      );
-      return updatedReportData;
+  // function parseTime(index: number) {
+  //   setReportData((prev) => {
+  //     const updatedReportData = prev?.map((report) =>
+  //       report.id === index
+  //         ? {
+  //             ...report,
+  //             startTime: report.startDate.split(' ')[1],
+  //             endTime: report.endDate.split(' ')[1],
+  //             startDate: report.startDate.split(' ')[0],
+  //             endDate: report.endDate.split(' ')[0],
+  //           }
+  //         : report,
+  //     );
+  //     console.log('updatedReportData2324', updatedReportData);
+  //     return updatedReportData;
+  //   });
+  // }
+
+  function handleClickDelete() {
+    deleteMutation.mutate({
+      term,
+      token: token,
     });
   }
-
   function handleClickSubmit() {
     setIsEditing(false);
     const formData = new FormData();
@@ -135,29 +144,12 @@ export default function Index({ term, name }: ReportDetailProps) {
         </Accordion>
       </div>
       <div className=" fixed bottom-4 right-4 md:mt-6 ">
-        {isEditing ? (
-          <div className=" font-bold">
-            <button
-              className="mb-2 mr-1 rounded-xl bg-gray-100 px-3.5 py-2 text-sm text-gray-500 transition-colors hover:text-gray-600 md:mb-2 md:px-4 md:py-2.5 md:text-base"
-              onClick={handleClickCancel}
-            >
-              취소
-            </button>
-            <button
-              className="mb-2 ml-1 rounded-xl bg-blue-100 px-3.5 py-2 text-sm text-blue-500 transition-colors hover:text-blue-600 md:mb-2 md:px-4 md:py-2.5 md:text-base"
-              onClick={handleClickSubmit}
-            >
-              확인
-            </button>
-          </div>
-        ) : (
-          <button
-            className="mb-4 min-w-fit rounded-xl bg-blue-100 px-3.5 py-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base"
-            onClick={() => setIsEditing(true)}
-          >
-            보고서 수정하기
-          </button>
-        )}
+        <button
+          className="mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base"
+          onClick={handleClickDelete}
+        >
+          보고서 삭제하기
+        </button>
       </div>
     </>
   );

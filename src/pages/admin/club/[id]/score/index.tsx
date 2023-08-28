@@ -29,7 +29,7 @@ export default function Index({ clubId }: ScoreProps) {
     { icon: Dot, category: '가산점/감점' },
   ];
   const parseList = [];
-  const [{ role, token }] = useCookies(['token', 'role']);
+  const [{ role, token }] = useCookies(['role', 'token']);
   const [scoreData, setScoreData] = useState<ScoreDetail[]>([
     {
       scoreCategory: '',
@@ -39,9 +39,11 @@ export default function Index({ clubId }: ScoreProps) {
       remainingScore: 0,
     },
   ]);
+
   const [myScoreData, setMyScoreData] = useState<ScoreDetail[]>([]);
   const [mergedScoreData, setMergedScoreData] = useState<ScoreDetail[]>([]);
   const { openModal, visible, closeModal, modalRef } = useModal();
+
   const {
     data: { data: allData },
   } = useAllScore(token, clubId);
@@ -52,13 +54,11 @@ export default function Index({ clubId }: ScoreProps) {
 
   useEffect(() => {
     if (allData) {
-      allData.reverse();
       setScoreData(allData);
     } else if (myData) {
-      myData.reverse();
       setScoreData(myData);
     }
-  }, [allData, myData]);
+  }, []);
 
   function Category(categoryName: string) {
     const category: ScoreDetail[] = [];
