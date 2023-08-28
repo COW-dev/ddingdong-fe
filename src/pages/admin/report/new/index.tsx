@@ -89,6 +89,7 @@ export default function Index() {
     uploadFileTwo &&
       formData.append('uploadFiles2', uploadFileTwo, `uploadFiles2`);
 
+    formData.append('token', token);
     return mutation.mutate(formData);
   }
 
