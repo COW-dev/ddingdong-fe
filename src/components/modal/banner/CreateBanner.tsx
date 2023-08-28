@@ -2,9 +2,9 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
+import ColorSelect from '@/components/common/ColorSelect';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
-import Select from '@/hooks/common/useSelect';
 import { NewBannerType } from '@/types/banner';
 import { isMissingData } from '@/utils/validator';
 const init = {
@@ -92,7 +92,7 @@ export default function CreateBanner({ closeModal }: Prop) {
               배경색
             </label>
             <div className="w-full rounded-xl border border-gray-100 bg-gray-50 outline-none   ">
-              <Select
+              <ColorSelect
                 name={'colorCode'}
                 setData={setBannerData}
                 list={BannerColor}

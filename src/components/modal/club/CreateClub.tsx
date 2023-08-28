@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
+import ColorSelect from '@/components/common/ColorSelect';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
-import Select from '@/hooks/common/useSelect';
 import { isMissingData, validator } from '@/utils/validator';
 const init = {
   clubName: '',
@@ -95,7 +95,7 @@ export default function CreateClub({ closeModal }: Prop) {
             <label className="inline-block w-20  font-semibold text-gray-500">
               카테고리
             </label>
-            <Select
+            <ColorSelect
               name={'category'}
               setData={setClubData}
               list={CatogoryColor}

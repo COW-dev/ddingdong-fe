@@ -14,7 +14,7 @@ type SelectProps = {
   list: ItemsType[];
 };
 
-export default function Select({ name, setData, list }: SelectProps) {
+export default function ColorSelect({ name, setData, list }: SelectProps) {
   const [show, setShow] = useState<boolean>(false);
   const [value, setValue] = useState<ItemsType>(list[0]);
 
