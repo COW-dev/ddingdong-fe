@@ -4,14 +4,14 @@ const nextConfig = {
     domains: ['ddingdong-file.s3.ap-northeast-2.amazonaws.com'],
   },
   reactStrictMode: true,
-//   async rewrites() {
-//     return [
-//       {
-//         source: '/api/:path*',
-//         destination: `http://ddingdong-dev.ap-northeast-2.elasticbeanstalk.com/api/:path*`,
-//       },
-//     ];
-//   },
- };
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: '/server/:path*',
+  //       destination: `https://eb.ddingdong.club/server/:path*`,
+  //     },
+  //   ];
+  // },
+};
 
 module.exports = nextConfig;

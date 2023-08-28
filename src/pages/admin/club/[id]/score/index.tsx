@@ -10,10 +10,13 @@ import AdminScore from '@/components/common/AdminScore';
 import ClubScore from '@/components/common/ClubScore';
 import Heading from '@/components/common/Heading';
 import History from '@/components/common/History';
+import Modal from '@/components/common/Modal';
 import ScoreCategory from '@/components/common/ScoreCategory';
+import CreateScore from '@/components/modal/score/CreateScore';
 import { ROLE_TYPE } from '@/constants/text';
 import { useAllScore } from '@/hooks/api/score/useAllScore';
 import { useMyScore } from '@/hooks/api/score/useMyScore';
+import useModal from '@/hooks/common/useModal';
 import { ScoreDetail } from '@/types/score';
 
 type ScoreProps = {
@@ -21,6 +24,7 @@ type ScoreProps = {
 };
 export default function Index({ clubId }: ScoreProps) {
   const [{ role }] = useCookies(['role', 'token']);
+
   const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
   return (
     <>

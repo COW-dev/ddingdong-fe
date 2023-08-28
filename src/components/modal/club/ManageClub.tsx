@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCookies } from 'react-cookie';
 import Bin from '@/assets/bin.svg';
 import Score from '@/assets/score.svg';
 import { ModalType } from '@/types';
