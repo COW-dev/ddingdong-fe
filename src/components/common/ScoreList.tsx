@@ -8,7 +8,7 @@ export default function ScoreList({ parseList }: Props) {
   return (
     <div className="m-auto w-[90%]">
       <label className="inline-block w-20 font-semibold text-gray-500">
-        상세 내역
+        {parseList.length > 0 ? '상세 내역' : ''}
       </label>
       <div className="my-2 text-gray-600">
         {parseList.map((data, index) => (
