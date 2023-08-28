@@ -16,7 +16,7 @@ const init = {
   id: 0,
   content: '',
   imageUrls: [''],
-  isCompleted: false,
+  completed: false,
   title: '',
 };
 
@@ -29,7 +29,7 @@ export default function FixClubDetail({ id }: Prop) {
   useEffect(() => {
     if (response?.data) setData(response?.data);
   }, [response]);
-  const { content, imageUrls, isCompleted, title } = data;
+  const { content, imageUrls, completed, title } = data;
 
   return (
     <div className="m-auto max-w-[650px] bg-gray-100 p-10">
@@ -41,11 +41,11 @@ export default function FixClubDetail({ id }: Prop) {
         <div></div>
       </div>
       <div className="mt-10 flex justify-end text-sm font-semibold md:text-base">
-        <ClearButton isCompleted={isCompleted} />
+        <ClearButton completed={completed} />
       </div>
       <div
         className={`flex justify-end font-medium ${
-          isCompleted ? `text-green-500` : `text-gray-500`
+          completed ? `text-green-500` : `text-gray-500`
         }`}
       ></div>
       {/* 내용 */}

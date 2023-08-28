@@ -21,7 +21,7 @@ const init = {
   content: '',
   createdAt: '',
   imageUrls: [''],
-  isCompleted: false,
+  completed: false,
   location: '',
   title: '',
 };
@@ -36,13 +36,13 @@ export default function FixAdminDetail({ id }: Prop) {
   useEffect(() => {
     if (response?.data) setData(response?.data);
   }, [response]);
-  const { club, content, createdAt, imageUrls, isCompleted, location, title } =
+  const { club, content, createdAt, imageUrls, completed, location, title } =
     data;
   const mutation = useUpdateComplete();
 
   function handleCompleted() {
-    mutation.mutate({ id, isCompleted: true, token });
-    setData((prev) => ({ ...prev, isCompleted: true }));
+    setData((prev) => ({ ...prev, completed: true }));
+    mutation.mutate({ id, completed: true, token });
   }
 
   return (
@@ -56,15 +56,15 @@ export default function FixAdminDetail({ id }: Prop) {
       </div>
       <div className="flex justify-end">
         <button
-          disabled={isCompleted}
+          disabled={completed}
           onClick={openModal}
           className={`mb-3 mt-7 rounded-xl border border-gray-300 px-4 py-2  text-gray-500  ${
-            !isCompleted
+            !completed
               ? ` hover:border-green-300 hover:text-green-500`
               : `border-green-300 text-green-500`
           } md:mr-0.5`}
         >
-          {isCompleted ? `처리 완료` : `처리 마치기`}
+          {completed ? `처리 완료` : `처리 마치기`}
         </button>
       </div>
       {/* 정보 */}

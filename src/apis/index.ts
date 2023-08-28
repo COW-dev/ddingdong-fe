@@ -214,16 +214,16 @@ export async function updateMyClub(clubData: FormData) {
     },
   });
 }
-export async function updateFixComplete({
-  id,
-  isCompleted,
-  token,
-}: FixComplete) {
-  return await api.patch(`/admin/fix/${id}`, isCompleted, {
-    headers: {
-      Authorization: 'Bearer ' + token,
+export async function updateFixComplete({ id, completed, token }: FixComplete) {
+  return await api.patch(
+    `/admin/fix/${id}`,
+    { completed },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
-  });
+  );
 }
 
 export async function updateBanner(BannerData: FormData) {
@@ -242,7 +242,7 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(formdata: FormData): Promise<AxiosResponse> {
+export async function createReport(formdata: FormData) {
   const token = formdata.get('token');
   return await api.post('/club/my/activity-reports', formdata, {
     headers: {
@@ -251,6 +251,7 @@ export async function createReport(formdata: FormData): Promise<AxiosResponse> {
     },
   });
 }
+
 export async function getReportInfo(
   term: number,
   name: string,
