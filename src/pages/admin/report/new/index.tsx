@@ -85,12 +85,13 @@ export default function Index() {
       new Blob([JSON.stringify(reportData)], { type: 'application/json' }),
     );
     uploadFileOne &&
-      formData.append('uploadFiles1', uploadFileOne, `uploadFiles`);
+      formData.append('uploadFiles1', uploadFileOne, `uploadFiles1`);
     uploadFileTwo &&
-      formData.append('uploadFiles2', uploadFileTwo, `uploadFiles`);
+      formData.append('uploadFiles2', uploadFileTwo, `uploadFiles2`);
 
     return mutation.mutate(formData);
   }
+
   return (
     <>
       <Head>
