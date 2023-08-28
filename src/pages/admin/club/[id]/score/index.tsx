@@ -8,10 +8,13 @@ import Report from '@/assets/report.svg';
 import Report2 from '@/assets/report2.svg';
 import Heading from '@/components/common/Heading';
 import History from '@/components/common/History';
+import Modal from '@/components/common/Modal';
 import ScoreCategory from '@/components/common/ScoreCategory';
+import CreateScore from '@/components/modal/score/CreateScore';
 import { ROLE_TYPE } from '@/constants/text';
 import { useAllScore } from '@/hooks/api/score/useAllScore';
 import { useMyScore } from '@/hooks/api/score/useMyScore';
+import useModal from '@/hooks/common/useModal';
 import { ScoreDetail } from '@/types/score';
 
 type ScoreProps = {
@@ -38,11 +41,11 @@ export default function Index({ clubId }: ScoreProps) {
   ]);
   const [myScoreData, setMyScoreData] = useState<ScoreDetail[]>([]);
   const [mergedScoreData, setMergedScoreData] = useState<ScoreDetail[]>([]);
-
+  const { openModal, visible, closeModal, modalRef } = useModal();
   const {
     data: { data: allData },
   } = useAllScore(token, clubId);
-
+  const [category, setCategory] = useState<string>('');
   const {
     data: { data: myData },
   } = useMyScore(token);
@@ -70,6 +73,10 @@ export default function Index({ clubId }: ScoreProps) {
     const total = category.reduce((acc, cur) => acc + cur.amount, 0);
     return total;
   }
+  function handleOpenModal() {
+    setCategory(category);
+    openModal();
+  }
   const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
 
   return (
@@ -81,17 +88,36 @@ export default function Index({ clubId }: ScoreProps) {
       )}
       <History scoreData={scoreData} />
       <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
-        {key.map(({ icon, category }) => (
-          <ScoreCategory
-            key={category}
-            scoreCategory={category}
-            icon={icon}
-            amount={totalScore(Category(category))}
-            clubId={clubId}
-            parseList={Category(category)}
-          />
+        {key.map(({ icon, category }, index) => (
+          <div
+            className="w-full"
+            key={`category-${index}`}
+            onClick={handleOpenModal}
+          >
+            <ScoreCategory
+              key={category}
+              scoreCategory={category}
+              icon={icon}
+              amount={totalScore(Category(category))}
+              clubId={clubId}
+              parseList={Category(category)}
+            />
+          </div>
         ))}
       </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={category}
+        closeModal={closeModal}
+      >
+        <CreateScore
+          clubId={clubId}
+          scoreCategory={category}
+          parseList={Category(category)}
+          closeModal={closeModal}
+        />
+      </Modal>
     </div>
   );
 }
