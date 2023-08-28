@@ -73,7 +73,7 @@ export default function Index({ clubId }: ScoreProps) {
     const total = category.reduce((acc, cur) => acc + cur.amount, 0);
     return total;
   }
-  function handleOpenModal() {
+  function handleOpenModal(category: string) {
     setCategory(category);
     openModal();
   }
@@ -90,9 +90,9 @@ export default function Index({ clubId }: ScoreProps) {
       <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
         {key.map(({ icon, category }, index) => (
           <div
-            className="w-full"
             key={`category-${index}`}
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal(category)}
+            className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
           >
             <ScoreCategory
               key={category}
