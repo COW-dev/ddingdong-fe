@@ -13,7 +13,7 @@ export default function ScoreCategory({
   amount,
 }: ScoreProps) {
   return (
-    <div className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row ">
+    <>
       <Image
         src={icon}
         width={50}
@@ -27,6 +27,6 @@ export default function ScoreCategory({
         </span>
         <span className="text-md mr-2 font-bold md:text-xl">{amount}점</span>
       </div>
-    </div>
+    </>
   );
 }

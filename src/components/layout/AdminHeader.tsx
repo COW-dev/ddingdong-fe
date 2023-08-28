@@ -14,7 +14,7 @@ const navItems = [
   },
 ];
 
-export default function UserHeader() {
+export default function AdminHeader() {
   const router = useRouter();
   const { resetAuth } = useAuthStore();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -59,6 +59,7 @@ export default function UserHeader() {
                 <button
                   className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500 "
                   onClick={() => {
+                    console.log('test를 위함');
                     removeToken();
                     resetAuth();
                     router.push('/login');

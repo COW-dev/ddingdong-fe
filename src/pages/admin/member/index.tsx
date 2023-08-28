@@ -67,7 +67,7 @@ export default function Index() {
       </div>
       <div className="mb-7 flex justify-between">
         <div className="font-bold md:text-xl ">
-          COW의 동아리원은 총
+          {data?.name}의 동아리원은 총
           <span className="text-blue-500">{members.length}명</span>
           입니다.
         </div>
