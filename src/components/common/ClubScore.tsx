@@ -37,12 +37,12 @@ export default function ClubScore() {
   const [scoreData, setScoreData] = useState<ScoreDetail[]>(init);
 
   const {
-    data: { data: myData },
+    data: { data },
   } = useMyScore(token);
 
   useEffect(() => {
-    setScoreData(myData);
-  }, [myData]);
+    if (data) setScoreData(data);
+  }, [data]);
   function Category(categoryName: string) {
     const category: ScoreDetail[] = [];
     {
