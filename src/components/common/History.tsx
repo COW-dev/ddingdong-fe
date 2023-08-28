@@ -10,7 +10,7 @@ export default function History({ scoreData }: Prop) {
         <div className=" mb-2 flex flex-row justify-between ">
           <span className="ml-2 text-lg font-semibold lg:text-xl">내역</span>
           <span className="text-lg font-bold text-purple-500 md:text-2xl">
-            총점 : {scoreData[0]?.remainingScore}점
+            총점 : {scoreData[scoreData.length - 1]?.remainingScore}점
           </span>
         </div>
         <div
@@ -33,7 +33,7 @@ export default function History({ scoreData }: Prop) {
               </tr>
             </thead>
             <tbody>
-              {scoreData.map((data, index) => (
+              {[...scoreData].reverse().map((data, index) => (
                 <tr key={index} className=" border-b bg-white">
                   <td className="px-3 py-2 md:px-6 md:py-4">
                     {data.createdAt.split('T')[0]}

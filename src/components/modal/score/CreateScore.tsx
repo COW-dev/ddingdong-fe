@@ -3,7 +3,6 @@ import { useCookies } from 'react-cookie';
 import ScoreList from '@/components/common/ScoreList';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewScore } from '@/hooks/api/score/useNewScore';
-import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
 
 type Prop = {
@@ -53,11 +52,12 @@ export default function CreateScore({
             <label className="inline-block w-20 font-semibold text-gray-500">
               점수 입력
             </label>
-            <div className="flex space-x-2">
+            <div className="mt-5 flex space-x-2">
               <input
                 name="reason"
                 type="text"
                 value={reason}
+                placeholder="사유를 입력해주세요."
                 className="w-2/3 rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
                 onChange={(e) => setReason(e.target.value)}
               />

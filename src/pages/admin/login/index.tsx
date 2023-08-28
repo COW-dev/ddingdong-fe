@@ -30,7 +30,7 @@ export default function Index() {
         setAuth({ role, token });
         return router.push('/');
       })
-      .catch((error: AxiosError) => {
+      .catch(() => {
         toast.error('로그인에 실패하였습니다.');
       });
   }

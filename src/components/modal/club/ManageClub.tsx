@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import Bin from '@/assets/bin.svg';
 import Score from '@/assets/score.svg';
-import { useDeleteClub } from '@/hooks/api/club/useDeleteClub';
 import { ModalType } from '@/types';
 import DeleteClub from './DeleteClub';
 
@@ -22,7 +20,6 @@ export default function ManageClub({
   closeModal,
   handleModal,
 }: Prop) {
-  const [cookies] = useCookies(['token']);
   function handleClickDelete() {
     handleModal({
       title: '동아리 삭제하기',

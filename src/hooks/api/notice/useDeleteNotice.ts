@@ -22,7 +22,7 @@ export function useDeleteNotice(): UseMutationResult<
       router.push('/notice');
       toast.success('공지를 성공적으로 삭제했어요.');
     },
-    onError(error) {
+    onError() {
       toast.error('공지 삭제에 실패했어요.');
     },
   });

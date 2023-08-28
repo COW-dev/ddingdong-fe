@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
-import { chosungIncludes, hangulIncludes } from '@toss/hangul';
+// import { chosungIncludes, hangulIncludes } from '@toss/hangul';
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
-// declare module '@toss/hangul' {
-//   export function chosungIncludes(str: string, search: string): boolean;
-//   export function hangulIncludes(str: string, search: string): boolean;
-// }
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
@@ -26,8 +22,8 @@ export default function Home() {
       setFilteredClubs(
         clubs.filter(
           (club) =>
-            chosungIncludes(club.name, keyword) ||
-            hangulIncludes(club.name, keyword) ||
+            // chosungIncludes(club.name, keyword) ||
+            // hangulIncludes(club.name, keyword) ||
             club.name.includes(keyword.toUpperCase()) ||
             club.tag.includes(keyword) ||
             club.category === keyword,

@@ -36,6 +36,7 @@ export default function Index() {
 
   function handleImage(data: Array<string>) {
     if (data?.length === 0) return Admin;
+    console.log(data);
     return parseImgUrl(data[0]);
   }
 
@@ -96,7 +97,7 @@ export default function Index() {
                 <div className=" flex h-full w-full justify-around p-5 md:p-6">
                   <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                     <Image
-                      src={handleImage(club.imageUrls)}
+                      src={handleImage(club.profileImageUrls)}
                       width={80}
                       height={80}
                       alt="clubImage"

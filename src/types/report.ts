@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
 export type StudentInfo = {
@@ -60,4 +59,9 @@ export type ReportDetail = {
   endTime: string;
   imageUrls: string[];
   participants: StudentInfo[];
+};
+
+export type DeleteReport = {
+  term: number;
+  token: string;
 };
