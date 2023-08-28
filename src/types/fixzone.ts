@@ -3,7 +3,7 @@ export type Fix = {
   createdAt: string;
   club: string;
   title: string;
-  isCompleted: boolean;
+  completed: boolean;
 };
 
 export type FixAdminDetailType = {
@@ -11,7 +11,7 @@ export type FixAdminDetailType = {
   createdAt: string;
   club: string;
   title: string;
-  isCompleted: boolean;
+  completed: boolean;
   location: string;
   content: string;
   imageUrls: string[];
@@ -19,14 +19,14 @@ export type FixAdminDetailType = {
 export type FixClubDetailType = {
   id: number;
   title: string;
-  isCompleted: boolean;
+  completed: boolean;
   content: string;
   imageUrls: string[];
 };
 
 export type FixComplete = {
   id: number;
-  isCompleted: boolean;
+  completed: boolean;
   token: string;
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
@@ -8,7 +8,11 @@ import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
 import { parseDateToString } from '@/utils/parse';
-
+const participant = {
+  name: '',
+  studentId: '',
+  department: '',
+};
 export default function Index() {
   const [{ token }] = useCookies();
   const currentTerm: number = useCurrentReports(token).data?.data.term ?? 1;
@@ -19,41 +23,23 @@ export default function Index() {
     term: currentTerm,
     date: { startDate: new Date(), endDate: new Date() },
     place: '',
-    startTime: '',
-    endTime: '',
+    startTime: '00:00',
+    endTime: '00:00',
     uploadFiles: null,
     content: '',
     participants: [
-      {
-        name: '',
-        studentId: '60201111',
-        department: '융합소프트웨어학부',
-      },
-      {
-        name: '',
-        studentId: '60201111',
-        department: '철학과',
-      },
-      {
-        name: '',
-        studentId: '60201111',
-        department: '융합소프트웨어학부',
-      },
-      {
-        name: '',
-        studentId: '60201111',
-        department: '경영학과',
-      },
-      {
-        name: '',
-        studentId: '60201111',
-        department: '중어중문학과',
-      },
+      participant,
+      participant,
+      participant,
+      participant,
+      participant,
     ],
   };
   const [reportOne, setReportOne] = useState<NewReport>(init);
   const [reportTwo, setReportTwo] = useState<NewReport>(init);
-
+  useEffect(() => {
+    console.log(reportOne.startTime, reportOne.endTime);
+  }, [reportOne.endTime]);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const reportOnedate =
@@ -89,6 +75,7 @@ export default function Index() {
     uploadFileTwo &&
       formData.append('uploadFiles2', uploadFileTwo, `uploadFiles2`);
 
+    formData.append('token', token);
     return mutation.mutate(formData);
   }
 
