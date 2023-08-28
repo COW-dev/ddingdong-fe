@@ -18,14 +18,14 @@ export default function Accordion({ title, children }: AccordionProps) {
     <div
       id="accordion-flush"
       data-accordion="collapse"
-      data-active-classes=" bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
-      data-inactive-classes="text-gray-500 dark:text-gray-400"
+      data-active-classes=" bg-white dark:bg-gray-900 text-gray-900 "
+      data-inactive-classes="text-gray-500 "
     >
       <h2 id="accordion-flush-heading-1">
         <button
           type="button"
           data-te-collapse-init
-          className={`flex w-full items-center justify-between border-b border-gray-200 p-4 text-left font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400 ${
+          className={`flex w-full items-center justify-between border-b border-gray-200 p-4 text-left font-medium text-gray-500 ${
             open ? 'active' : ''
           }`}
           data-accordion-target="#accordion-flush-body-1"
@@ -46,9 +46,7 @@ export default function Accordion({ title, children }: AccordionProps) {
         className={`${open ? 'active' : 'hidden'}`}
         aria-labelledby="accordion-flush-heading-1"
       >
-        <div className="mx-2 border-b border-gray-200 py-5 dark:border-gray-700">
-          {children}
-        </div>
+        <div className="mx-2 border-b border-gray-200 py-5 ">{children}</div>
       </div>
     </div>
   );
