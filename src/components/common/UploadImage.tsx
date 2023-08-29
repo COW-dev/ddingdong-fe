@@ -43,6 +43,8 @@ export default function UploadImage({
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setImage && setImage(file);
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImageUrl(imageUrl);
     }
   }
   function handleImageReset() {
@@ -60,7 +62,7 @@ export default function UploadImage({
         <>
           <Image
             src={previewImageUrl}
-            className="m-auto h-72 object-scale-down"
+            className="m-auto  h-72 object-scale-down "
             alt="이미지"
             width={1000}
             height={200}

@@ -72,11 +72,11 @@ export default function Index({ clubId }: ClubDetailProps) {
               <Image
                 src={parsedImg}
                 width={1000}
-                height={1000}
+                height={500}
                 alt="동아리 소개 사진"
                 className={`${
                   introduceImageUrls.length === 0 && `hidden`
-                } rounded-2xl`}
+                } max-h-[50vh] rounded-2xl object-scale-down`}
               />
             </div>
 

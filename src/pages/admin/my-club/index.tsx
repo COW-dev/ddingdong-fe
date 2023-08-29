@@ -54,6 +54,7 @@ export default function Index() {
       setIsInitialLoad(false);
     }
   }, []);
+  const [image, setImage] = useState<string>(clubData.introduceImageUrls[0]);
 
   //datapicker형식에 맞도록 변환
   useEffect(() => {
@@ -209,12 +210,12 @@ export default function Index() {
           ) : (
             <Image
               src={
-                clubData.introduceImageUrls[0] === ''
+                clubData.introduceImageUrls.length === 0
                   ? Cry
                   : parseImgUrl(clubData.introduceImageUrls[0])
               }
               width={1000}
-              className="my-4 "
+              className="my-4 max-h-[50vh] object-scale-down"
               height={1000}
               alt="동아리 소개 이미지"
             />
