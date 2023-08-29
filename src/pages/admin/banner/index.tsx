@@ -9,6 +9,7 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import CreateBanner from '@/components/modal/banner/CreateBanner';
 import DeleteBanner from '@/components/modal/banner/DeleteBanner';
+import ModifyBanner from '@/components/modal/banner/ModifyBanner';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
@@ -76,8 +77,8 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {banners?.reverse().map((data, index) => (
-        <div key={`banner-${index}`} className="m-3">
+      {[...banners]?.reverse().map((data, index) => (
+        <div key={`banner-${index}`} className="my-3">
           <div className="group relative">
             <div className="editNum absolute right-5 inline-block w-12 p-2 font-semibold">
               <Image

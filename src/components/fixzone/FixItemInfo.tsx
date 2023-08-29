@@ -18,7 +18,7 @@ export default function FixItemInfo({ club, createdAt, location }: Props) {
           height={35}
           className="my-2"
         />
-        <div className="text-xs leading-none">동아리</div>
+        <div className="pb-1 text-xs leading-none">동아리</div>
         <div className="text-sm leading-none"> {club.toUpperCase()}</div>
       </div>
       <div className="flex flex-col items-center justify-center">
@@ -29,7 +29,7 @@ export default function FixItemInfo({ club, createdAt, location }: Props) {
           height={25}
           className="my-2"
         />
-        <div className="text-xs leading-none">제출시각</div>
+        <div className="pb-1 text-xs leading-none">의뢰일시</div>
         <div className="text-sm leading-none"> {createdAt}</div>
       </div>
       <div className="flex flex-col items-center justify-center">
@@ -40,7 +40,7 @@ export default function FixItemInfo({ club, createdAt, location }: Props) {
           height={25}
           className="my-2"
         />
-        <div className="text-xs leading-none">동아리방</div>
+        <div className="pb-1  text-xs leading-none">동아리방</div>
         <div className="text-sm leading-none"> {location}</div>
       </div>
     </div>

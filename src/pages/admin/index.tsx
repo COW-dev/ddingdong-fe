@@ -58,7 +58,7 @@ export default function Index() {
       >
         {infoElement}
         <div
-          className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
+          className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:cursor-pointer hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
           onClick={openFixZone}
         >
           Fix:Zone

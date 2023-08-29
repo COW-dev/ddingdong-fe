@@ -2,8 +2,12 @@ import axios from 'axios';
 import type { AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import { ROLE_TYPE } from '@/constants/text';
-import { BannerType, DeleteBanner, NewBanner } from '@/types/banner';
+import {
+  BannerType,
+  DeleteBanner,
+  NewBanner,
+  UpdateBanner,
+} from '@/types/banner';
 import {
   Club,
   AdminClub,
@@ -227,9 +231,8 @@ export async function updateFixComplete({ id, completed, token }: FixComplete) {
   );
 }
 
-export async function updateBanner(BannerData: FormData) {
-  const token = BannerData.get('token');
-  return await api.patch('/club/my', BannerData, {
+export async function updateBanner({ id, data, token }: UpdateBanner) {
+  return await api.patch(`/admin/banners/${id}`, data, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

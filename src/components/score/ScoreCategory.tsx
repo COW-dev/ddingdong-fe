@@ -1,4 +1,7 @@
 import Image from 'next/image';
+import CreateScore from '@/components/modal/score/CreateScore';
+import useModal from '@/hooks/common/useModal';
+import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
 type ScoreProps = {
   scoreCategory: string;
@@ -11,6 +14,8 @@ export default function ScoreCategory({
   scoreCategory,
   icon,
   amount,
+  clubId,
+  parseList,
 }: ScoreProps) {
   return (
     <>

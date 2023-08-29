@@ -77,6 +77,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   }
 
   function handleClickCancel() {
+    setImage(null);
     setIsEditing(false);
     setNoticeData(data);
   }
@@ -142,6 +143,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             : `bg-white`
         } `}
         value={noticeData?.title}
+        placeholder={isEditing ? '제목을 입력해주세요.' : ''}
         disabled={!isEditing}
         onChange={(e) => handleChange(e)}
       />
@@ -183,6 +185,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           />
           <TextareaAutosize
             name="content"
+            placeholder={isEditing ? '내용을 입력해주세요.' : ''}
             spellCheck={false}
             value={noticeData?.content}
             className="mt-5 h-auto w-full resize-none overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-3 md:p-5 md:text-lg"

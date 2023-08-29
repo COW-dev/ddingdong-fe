@@ -6,7 +6,7 @@ type Props = {
 
 export default function ScoreList({ parseList }: Props) {
   return (
-    <div className="m-auto w-[90%]">
+    <div className=" m-auto w-[90%]">
       <label className="inline-block w-20 font-semibold text-gray-500">
         {parseList.length > 0 ? '상세 내역' : ''}
       </label>

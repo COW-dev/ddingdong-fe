@@ -20,10 +20,10 @@ export function useUpdateComplete(): UseMutationResult<
       queryClient.invalidateQueries({
         queryKey: ['admin/fix'],
       });
-      toast.success('동아리 정보를 수정했어요.');
+      toast.success('처리완료 처리를 완료했어요.');
     },
     onError() {
-      toast.error('동아리 정보 수정을 실패했어요');
+      toast.error('처리완료 처리를 실패했어요');
     },
   });
 }
