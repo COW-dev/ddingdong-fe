@@ -53,8 +53,7 @@ export default function Index() {
       setClubData({ ...data });
       setIsInitialLoad(false);
     }
-  }, []);
-  const [image, setImage] = useState<string>(clubData.introduceImageUrls[0]);
+  }, [data]);
 
   //datapicker형식에 맞도록 변환
   useEffect(() => {
