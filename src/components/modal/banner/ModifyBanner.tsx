@@ -49,7 +49,7 @@ export default function ModifyBanner({ data, closeModal }: Props) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    updateMutation.mutate({ id, data, token });
+    // updateMutation.mutate({ id, data, token });
     closeModal();
   }
 

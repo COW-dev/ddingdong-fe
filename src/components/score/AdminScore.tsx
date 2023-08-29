@@ -11,11 +11,11 @@ import Modal from '@/components/common/Modal';
 import History from '@/components/score/History';
 import { ROLE_TYPE } from '@/constants/text';
 import { useAllScore } from '@/hooks/api/score/useAllScore';
+import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
 import ScoreCategory from './ScoreCategory';
 import CreateScore from '../modal/score/CreateScore';
-import useModal from '@/hooks/common/useModal';
 
 type ScoreProps = {
   clubId: number;
@@ -81,18 +81,18 @@ export default function AdminScore({ clubId }: ScoreProps) {
       <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
         {key.map(({ icon, category }, index) => (
           <div
-          onClick={() => handleOpenModal(category)}
-          className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
-          key={`category-${index}`}
-            >
-          <ScoreCategory
-            key={category}
-            scoreCategory={category}
-            icon={icon}
-            amount={totalScore(Category(category))}
-            clubId={clubId}
-            parseList={Category(category)}
-          />
+            onClick={() => handleOpenModal(category)}
+            className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
+            key={`category-${index}`}
+          >
+            <ScoreCategory
+              key={category}
+              scoreCategory={category}
+              icon={icon}
+              amount={totalScore(Category(category))}
+              clubId={clubId}
+              parseList={Category(category)}
+            />
           </div>
         ))}
       </div>
