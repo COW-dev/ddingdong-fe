@@ -7,12 +7,19 @@ import People from '@/assets/people.svg';
 import Report from '@/assets/report.svg';
 import Report2 from '@/assets/report2.svg';
 import Heading from '@/components/common/Heading';
-import History from '@/components/common/History';
-import ScoreCategory from '@/components/common/ScoreCategory';
+import Modal from '@/components/common/Modal';
+import History from '@/components/score/History';
 import { ROLE_TYPE } from '@/constants/text';
-import { useMyScore } from '@/hooks/api/score/useMyScore';
+import { useAllScore } from '@/hooks/api/score/useAllScore';
+import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
-import ScoreClubCategory from './ScoreClubCategory';
+import ScoreCategory from './ScoreCategory';
+import CreateScore from '../modal/score/CreateScore';
+import useModal from '@/hooks/common/useModal';
+
+type ScoreProps = {
+  clubId: number;
+};
 const init = [
   {
     scoreCategory: '',
@@ -22,7 +29,7 @@ const init = [
     remainingScore: 0,
   },
 ];
-export default function ClubScore() {
+export default function AdminScore({ clubId }: ScoreProps) {
   const key = [
     { icon: Report, category: '동아리 활동 보고서' },
     { icon: Clean, category: '청소' },
@@ -31,18 +38,25 @@ export default function ClubScore() {
     { icon: Dot, category: '가산점/감점' },
   ];
   const parseList = [];
-  const [{ role, token }] = useCookies(['role', 'token']);
-  const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
-  const isClub = role === ROLE_TYPE.ROLE_CLUB;
+  const [{ token }] = useCookies(['role', 'token']);
   const [scoreData, setScoreData] = useState<ScoreDetail[]>(init);
-
+  const { openModal, visible, closeModal, modalRef } = useModal();
+  const [category, setCategory] = useState<string>('');
   const {
     data: { data },
-  } = useMyScore(token);
+  } = useAllScore(token, clubId);
+
+  function handleOpenModal(category: string) {
+    setCategory(category);
+    openModal();
+  }
 
   useEffect(() => {
-    if (data) setScoreData(data);
+    if (data) {
+      setScoreData(data);
+    }
   }, [data]);
+
   function Category(categoryName: string) {
     const category: ScoreDetail[] = [];
     {
@@ -61,20 +75,48 @@ export default function ClubScore() {
   }
 
   return (
-    <div className="">
-      <Heading>동아리 점수 확인하기</Heading>
+    <div>
+      <Heading>동아리 점수 관리하기</Heading>
       <History scoreData={scoreData} />
       <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
-        {key.map(({ icon, category }) => (
-          <ScoreClubCategory
+        {key.map(({ icon, category }, index) => (
+          <div
+          onClick={() => handleOpenModal(category)}
+          className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
+          key={`category-${index}`}
+            >
+          <ScoreCategory
             key={category}
             scoreCategory={category}
             icon={icon}
             amount={totalScore(Category(category))}
+            clubId={clubId}
             parseList={Category(category)}
           />
+          </div>
         ))}
       </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={category}
+        closeModal={closeModal}
+      >
+        <CreateScore
+          scoreCategory={category}
+          parseList={Category(category)}
+          closeModal={closeModal}
+          clubId={clubId}
+        />
+      </Modal>
     </div>
   );
 }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  return {
+    props: {
+      clubId: id,
+    },
+  };
+};
