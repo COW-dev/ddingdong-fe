@@ -210,15 +210,17 @@ export default function Index() {
               urlsName={`introduceImageUrls`}
             />
           ) : (
-            <Image
-              src={
-                introduceImages ? URL.createObjectURL(introduceImages) : image
-              }
-              width={1000}
-              className="my-4 max-h-[50vh] object-scale-down"
-              height={1000}
-              alt="동아리 소개 이미지"
-            />
+            image && (
+              <Image
+                src={
+                  introduceImages ? URL.createObjectURL(introduceImages) : image
+                }
+                width={1000}
+                className="my-4 max-h-[50vh] object-scale-down"
+                height={1000}
+                alt="동아리 소개 이미지"
+              />
+            )
           )}
 
           <div className=" text-lg font-bold md:text-xl">
