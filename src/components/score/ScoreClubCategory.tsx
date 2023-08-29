@@ -1,9 +1,4 @@
-import { useState } from 'react';
 import Image from 'next/image';
-import Modal from '@/components/common/Modal';
-import CreateScore from '@/components/modal/score/CreateScore';
-import useModal from '@/hooks/common/useModal';
-import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
 type ScoreProps = {
   scoreCategory: string;
@@ -17,17 +12,8 @@ export default function ScoreClubCategory({
   amount,
   parseList,
 }: ScoreProps) {
-  const { openModal, visible, closeModal, modalRef } = useModal();
-  const [modal, setModal] = useState<ModalType>({
-    title: '',
-    content: <></>,
-  });
-  function handleModal(data: ModalType) {
-    setModal(data);
-    openModal();
-  }
   return (
-    <div className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row ">
+    <>
       <Image
         src={icon}
         width={50}
@@ -41,14 +27,6 @@ export default function ScoreClubCategory({
         </span>
         <span className="text-md mr-2 font-bold md:text-xl">{amount}점</span>
       </div>
-      <Modal
-        visible={visible}
-        modalRef={modalRef}
-        title={modal.title}
-        closeModal={closeModal}
-      >
-        {modal.content}
-      </Modal>
-    </div>
+    </>
   );
 }

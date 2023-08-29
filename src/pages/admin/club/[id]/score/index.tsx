@@ -13,7 +13,7 @@ export default function Index({ clubId }: ScoreProps) {
   const [{ role }] = useCookies(['role', 'token']);
 
   const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
-  return <> {isAdmin ? <AdminScore clubId={clubId} /> : <ClubScore />};</>;
+  return <> {isAdmin ? <AdminScore clubId={clubId} /> : <ClubScore />}</>;
 }
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
