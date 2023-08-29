@@ -82,7 +82,7 @@ const Category = ({
             }`}
             onClick={() => setActive(REPORT_TYPE.CLUB)}
           >
-            {term}회차
+            회차
             <div className="flex justify-center text-sm font-normal">
               <div className="flex">
                 <Image

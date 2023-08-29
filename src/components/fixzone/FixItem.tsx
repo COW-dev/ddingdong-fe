@@ -26,13 +26,6 @@ export default function FixItem({ data }: { data: Fix }) {
           completed ? ` text-green-500` : `  text-gray-500`
         }`}
       >
-        <Image
-          src={completed ? Check : Progress}
-          width={25}
-          height={25}
-          alt="isProcess"
-          className="my-1"
-        />
         {completed ? `처리 완료` : `처리중`}
       </div>
     </li>

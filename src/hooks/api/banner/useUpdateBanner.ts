@@ -5,23 +5,23 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateClub } from '@/apis';
-import { UpdateClub } from '@/types/club';
+import { updateBanner } from '@/apis';
+import { UpdateBanner } from '@/types/banner';
 
 export function useUpdateBanner(): UseMutationResult<
   unknown,
   AxiosError,
-  UpdateClub
+  UpdateBanner
 > {
   const queryClient = useQueryClient();
 
-  return useMutation(updateClub, {
+  return useMutation(updateBanner, {
     onSuccess() {
-      queryClient.invalidateQueries(['admin/clubs']);
-      toast.success('동아리 정보를 수정했어요.');
+      queryClient.invalidateQueries(['admin/banners']);
+      toast.success('배너 정보를 수정했어요.');
     },
     onError() {
-      toast.error('동아리 정보 수정을 실패했어요');
+      toast.error('배너 정보 수정을 실패했어요');
     },
   });
 }

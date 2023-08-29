@@ -1,8 +1,10 @@
 import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
 import ColorSelect from '@/components/common/ColorSelect';
 import { BannerColor } from '@/constants/color';
+import { useUpdateBanner } from '@/hooks/api/banner/useUpdateBanner';
 import { BannerType, NewBannerType } from '@/types/banner';
 import { isMissingData } from '@/utils/validator';
 
@@ -13,7 +15,8 @@ type Props = {
 export default function ModifyBanner({ data, closeModal }: Props) {
   const { title, subTitle, colorCode, imgUrl } = data;
   const [image, setImage] = useState<File | string>(imgUrl);
-  // const updateMutation = useUpdateClub();
+  const [{ token }] = useCookies(['token']);
+  const updateMutation = useUpdateBanner();
 
   const [changedBanner, setBanner] = useState<NewBannerType>({
     title,
@@ -46,7 +49,7 @@ export default function ModifyBanner({ data, closeModal }: Props) {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // updateMutation.mutate({ id, token: cookies.token });
+    updateMutation.mutate({ id, data, token });
     closeModal();
   }
 

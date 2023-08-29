@@ -39,7 +39,7 @@ export default function Index() {
         <Link href="/fixzone">
           <Image src={LeftArrow} alt="back" width={25} height={25} />
         </Link>
-        <div>Fix:Zone 요청하기</div>
+        <div className="text-lg font-bold">Fix:Zone 요청하기</div>
         <div></div>
       </div>
 
