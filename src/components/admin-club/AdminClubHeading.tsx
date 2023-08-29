@@ -9,36 +9,36 @@ type AdminClubHeadingProps = {
   clubName: string;
   category: string;
   tag: string;
-  uploadFiles: File | null;
+  profileImage: File | null;
   isEditing: boolean;
   profileImageUrls: string[];
   setValue: Dispatch<SetStateAction<ClubDetail>>;
-  setUploadFile: Dispatch<SetStateAction<File | null>>;
+  setProfileImage: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function AdminClubHeading({
   clubName,
   category,
   tag,
-  uploadFiles,
+  profileImage,
   isEditing,
   profileImageUrls,
   setValue,
-  setUploadFile,
+  setProfileImage,
 }: AdminClubHeadingProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setUploadFile(file);
+      setProfileImage(file);
       const imageUrl = URL.createObjectURL(file);
       setPreviewImageUrl(imageUrl);
     }
   }
   useEffect(() => {
-    if (uploadFiles) {
-      const imageUrl = window.URL.createObjectURL(uploadFiles);
+    if (profileImage) {
+      const imageUrl = window.URL.createObjectURL(profileImage);
       setPreviewImageUrl(imageUrl);
       return () => {
         URL.revokeObjectURL(imageUrl);
@@ -46,7 +46,7 @@ export default function AdminClubHeading({
     } else {
       setPreviewImageUrl('');
     }
-  }, [uploadFiles]);
+  }, [profileImage]);
 
   const parsedImg =
     profileImageUrls &&

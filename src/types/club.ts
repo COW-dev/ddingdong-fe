@@ -42,7 +42,9 @@ export type ClubDetail = {
   introduction: string;
   activity: string;
   ideal: string;
-  uploadFiles: File | null;
+  profileImage: File | null;
+  introduceImages: File | null;
+  introduceImageUrls: string[];
   profileImageUrls: string[];
   token: string;
   formUrl: string;
