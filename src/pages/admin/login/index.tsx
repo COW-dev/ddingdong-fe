@@ -30,8 +30,9 @@ export default function Index() {
         setAuth({ role, token });
         return router.push('/');
       })
-      .catch(() => {
-        toast.error('로그인에 실패하였습니다.');
+      .catch((error) => {
+        const errorMessage = error.response.data.message;
+        toast.error(errorMessage);
       });
   }
 

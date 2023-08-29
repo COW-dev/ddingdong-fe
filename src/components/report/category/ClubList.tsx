@@ -25,7 +25,9 @@ export default function ClubList({ setClub, term }: Props) {
   return (
     <div className=" mt-4 h-[50vh] overflow-y-scroll">
       <div className="min-h-[10vh]">
-        <div className="sticky top-0 my-2 text-gray-500 ">제출 동아리</div>
+        <div className="sticky top-0 my-2 bg-white text-gray-500 ">
+          제출 동아리
+        </div>
         {submitClubNames?.map((clubName) => (
           <div
             className="rounded-xl px-5 py-1 hover:bg-gray-100"
@@ -37,7 +39,9 @@ export default function ClubList({ setClub, term }: Props) {
         ))}
       </div>
       <div className="min-h-[10vh]">
-        <div className="sticky top-0 my-2 text-gray-500 ">미제출 동아리 </div>
+        <div className="sticky top-0 my-2 bg-white text-gray-500 ">
+          미제출 동아리
+        </div>
         {unSubmitClubNames?.map((clubName) => (
           <div
             className="rounded-xl px-5 py-1 text-gray-300 "

@@ -9,10 +9,8 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import History from '@/components/score/History';
 import ScoreClubCategory from '@/components/score/ScoreClubCategory';
-import { ROLE_TYPE } from '@/constants/text';
 import { useMyScore } from '@/hooks/api/score/useMyScore';
 import useModal from '@/hooks/common/useModal';
-import { ModalType } from '@/types';
 import { ScoreDetail } from '@/types/score';
 import ViewScore from '../modal/score/ViewScore';
 const init = [
@@ -73,21 +71,21 @@ export default function ClubScore() {
       <History scoreData={scoreData} />
       <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
         {key.map(({ icon, category }, index) => (
-        <div
-          onClick={() => handleOpenModal(category)}
-          className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
-          key={`category-${index}`}
+          <div
+            onClick={() => handleOpenModal(category)}
+            className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
+            key={`category-${index}`}
           >
-          <ScoreClubCategory
-            key={category}
-            scoreCategory={category}
-            icon={icon}
-            amount={totalScore(Category(category))}
-            parseList={Category(category)}
-          />
+            <ScoreClubCategory
+              key={category}
+              scoreCategory={category}
+              icon={icon}
+              amount={totalScore(Category(category))}
+              parseList={Category(category)}
+            />
           </div>
         ))}
-        </div>
+      </div>
       <Modal
         visible={visible}
         modalRef={modalRef}

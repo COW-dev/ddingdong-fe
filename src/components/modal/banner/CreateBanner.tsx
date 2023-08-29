@@ -19,7 +19,7 @@ export default function CreateBanner({ closeModal }: Prop) {
   const mutation = useNewBanner();
   const formData = new FormData();
   const [cookies] = useCookies(['token']);
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | undefined>(undefined);
   const [bannerData, setBannerData] = useState<NewBannerType>(init);
   const { title, subTitle, colorCode } = bannerData;
   useEffect(() => {
@@ -127,9 +127,9 @@ export default function CreateBanner({ closeModal }: Prop) {
 
         <button
           onClick={handleSubmit}
-          disabled={isMissingData({ ...bannerData, image })}
+          disabled={!image || isMissingData({ ...bannerData })}
           className={`mt-5 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg ${
-            isMissingData({ ...bannerData, image }) &&
+            (!image || isMissingData({ ...bannerData })) &&
             `cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200`
           }`}
         >
