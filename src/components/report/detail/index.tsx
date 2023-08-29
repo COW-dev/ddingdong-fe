@@ -8,9 +8,9 @@ import {
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Datepicker from 'react-tailwindcss-datepicker';
-
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
+import Cry from '@/assets/cry.png';
 import Modal from '@/components/common/Modal';
 import UploadImage from '@/components/common/UploadImage';
 import Participants from '@/components/modal/report/Paticipants';
@@ -51,7 +51,7 @@ export default function Index({
 
   const [data, setData] = useState(reportData);
   const [{ role }] = useCookies(['role']);
-
+  const showImage = imageUrls && imageUrls[0] ? parseImgUrl(imageUrls[0]) : Cry;
   useEffect(() => {
     setData(data);
   }, [imageUrls, data]);
@@ -89,89 +89,42 @@ export default function Index({
         {/* sm */}
         <div className="mb-4 inline-block md:hidden">
           <div className="z-10 flex w-full flex-col items-center rounded-xl ">
-            {isEditing ? (
-              <>
-                <div className="flex items-center md:flex-row">
-                  <Datepicker
-                    value={{ startDate: startDate, endDate: startDate }}
-                    datepicker-format="yyyy/mm/dd"
-                    useRange={false}
-                    asSingle
-                    minDate={new Date(new Date().getFullYear(), 0, 1)}
-                    maxDate={new Date(new Date().getFullYear(), 11, 31)}
-                    onChange={(e) =>
-                      handleDateChange(String(e?.endDate), 'startDate', id)
-                    }
-                    inputClassName="w-full h-12 px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
-                  />
-                  <input
-                    name="place"
-                    type="text"
-                    placeholder="활동장소"
-                    value={place}
-                    onChange={(e) => handleChange(e, 'place', id)}
-                    className="md:text-md ml-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
-                  />
-                </div>
-                <div className="my-3 flex w-full items-center md:flex-row">
-                  <input
-                    name="startTime"
-                    type="time"
-                    value={startTime}
-                    onChange={(e) => handleChange(e, 'startTime', id)}
-                    className=" h-12 w-1/2 rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
-                  />
-                  <input
-                    name="endTime"
-                    type="time"
-                    value={endTime}
-                    onChange={(e) => handleChange(e, 'endTime', id)}
-                    className=" ml-3 h-12 w-1/2 rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
-                  />
-                </div>
-                <div>
-                  <UploadImage
-                    image={image}
-                    setImage={setImage}
-                    imageUrls={imageUrls}
-                  />
-                </div>
-              </>
-            ) : (
-              <div className="relative">
+            <div className="relative">
+              <Image
+                src={showImage}
+                className="bg-gray-50 object-cover"
+                alt="reportImage"
+                width={500}
+                height={500}
+              />
+              <div
+                className={`absolute right-2 ${
+                  info ? `top-[11vh]` : `top-[1vh]`
+                } z-30`}
+              >
                 <Image
-                  src={parseImgUrl(imageUrls[0])}
-                  className="bg-gray-50 object-cover"
-                  alt="reportImage"
-                  width={200}
-                  height={200}
+                  src={info ? ArrowUp : ArrowDown}
+                  width={20}
+                  height={20}
+                  className={`${
+                    !info && `w-10 rounded-full bg-white p-2 opacity-70`
+                  }`}
+                  alt="show"
+                  onClick={() => setInfo(!info)}
                 />
-                <div
-                  className={`absolute right-2 ${
-                    info ? `top-[11vh]` : `top-[1vh]`
-                  } z-30`}
-                >
-                  <Image
-                    src={info ? ArrowUp : ArrowDown}
-                    width={20}
-                    height={20}
-                    alt="show"
-                    onClick={() => setInfo(!info)}
-                  />
-                </div>
-                {info && (
-                  <>
-                    <div className="absolute top-0 z-20 flex w-full flex-1 justify-between bg-white bg-opacity-70 text-gray-500">
-                      <div className="m-3">
-                        <div className="text-xl font-semibold">1 회차</div>
-                        <ActiveDate startDate={startDate} endDate={endDate} />
-                      </div>
-                      <Time place={place} />
-                    </div>
-                  </>
-                )}
               </div>
-            )}
+              {info && (
+                <>
+                  <div className="absolute top-0 z-20 flex w-full flex-1 justify-between bg-white bg-opacity-70 text-gray-500">
+                    <div className="m-3">
+                      <div className="text-xl font-semibold">1 회차</div>
+                      <ActiveDate startDate={startDate} endDate={endDate} />
+                    </div>
+                    <Time place={place} />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
         {/* sm끗 */}
@@ -179,53 +132,10 @@ export default function Index({
         {/* md */}
         <div className="hidden md:inline-block">
           <div className="flex flex-col items-center md:flex-row md:justify-between">
-            {isEditing ? (
-              <div className="flex flex-col">
-                <Datepicker
-                  value={{ startDate: startDate, endDate: startDate }}
-                  datepicker-format="yyyy/mm/dd"
-                  useRange={false}
-                  asSingle
-                  minDate={new Date(new Date().getFullYear(), 0, 1)}
-                  maxDate={new Date(new Date().getFullYear(), 11, 31)}
-                  onChange={(e) =>
-                    handleDateChange(String(e?.endDate), 'startDate', id)
-                  }
-                  inputClassName="w-full h-12 px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
-                />
-                <div className="mb-3 flex items-center md:flex-row">
-                  <input
-                    name="place"
-                    type="text"
-                    placeholder="활동장소"
-                    value={place}
-                    onChange={(e) => handleChange(e, 'place', id)}
-                    className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
-                  />
-                </div>
-                <div className="mb-3 flex w-full flex-col items-center md:flex-row">
-                  <input
-                    name="startTime"
-                    type="time"
-                    value={startTime}
-                    onChange={(e) => handleChange(e, 'startTime', id)}
-                    className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
-                  />
-                  <input
-                    name="endTime"
-                    type="time"
-                    value={endTime}
-                    onChange={(e) => handleChange(e, 'endTime', id)}
-                    className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
-                  />
-                </div>
-              </div>
-            ) : (
-              <>
-                <ActiveDate startDate={startDate} endDate={endDate} />
-                <Time place={place} />
-              </>
-            )}
+            <>
+              <ActiveDate startDate={startDate} endDate={endDate} />
+              <Time place={place} />
+            </>
           </div>
         </div>
         {/* md끗 */}
@@ -253,12 +163,15 @@ export default function Index({
             </div>
           ) : (
             <ul
-              className={`md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 ${
+              className={`md:text-md grid  w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3 ${
                 role === ROLE_TYPE.ROLE_CLUB && `lg:grid-cols-2`
               }`}
             >
               {participants?.map((participant) => (
-                <li key={participant.name}>
+                <li
+                  key={participant.name}
+                  className={`${participant.name === '' && `hidden`}`}
+                >
                   {participant.name} | {participant.studentId} |
                   {participant.department}
                 </li>
@@ -284,8 +197,14 @@ export default function Index({
           )}
         </div>
       </div>
-      <div className="hidden md:block">
-        <UploadImage image={image} setImage={setImage} imageUrls={imageUrls} />
+      <div className={`hidden md:block`}>
+        <Image
+          src={showImage}
+          className={`bg-gray-50 object-cover `}
+          alt="reportImage"
+          width={300}
+          height={300}
+        />
       </div>
       <ReportNoticeModal />
       <Modal

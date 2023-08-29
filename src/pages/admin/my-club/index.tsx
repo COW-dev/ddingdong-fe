@@ -1,12 +1,16 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
+import Cry from '@/assets/cry.png';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
+import UploadImage from '@/components/common/UploadImage';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { ClubDetail } from '@/types/club';
+import { parseImgUrl } from '@/utils/parse';
 
 const initialClubData: ClubDetail = {
   name: '',
@@ -23,9 +27,11 @@ const initialClubData: ClubDetail = {
   regularMeeting: '',
   introduction: '',
   profileImageUrls: [''],
+  introduceImageUrls: [''],
   activity: '',
   ideal: '',
-  uploadFiles: null,
+  profileImage: null,
+  introduceImages: null,
   formUrl: '',
   token: '',
   clubMembers: [],
@@ -34,7 +40,8 @@ const initialClubData: ClubDetail = {
 export default function Index() {
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [{ token }] = useCookies();
-  const [uploadFile, setUploadFile] = useState<File | null>(null);
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [introduceImages, setIntroduceImages] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clubData, setClubData] = useState<ClubDetail>(initialClubData);
   const {
@@ -47,6 +54,7 @@ export default function Index() {
       setIsInitialLoad(false);
     }
   }, []);
+
   //datapicker형식에 맞도록 변환
   useEffect(() => {
     if (data) {
@@ -88,14 +96,22 @@ export default function Index() {
       }
     });
 
-    uploadFile && formData.append('profileImage', uploadFile, `profileImage`);
+    profileImage &&
+      formData.append('profileImage', profileImage, `profileImage`);
+    introduceImages &&
+      formData.append('introduceImages', introduceImages, `introduceImages`);
     formData.append(
       'profileImageUrls',
       clubData?.profileImageUrls?.length === 0
         ? ''
         : clubData?.profileImageUrls[0],
     );
-    formData.append('introduceImageUrls', '');
+    formData.append(
+      'introduceImageUrls',
+      clubData?.introduceImageUrls?.length === 0
+        ? ''
+        : clubData?.introduceImageUrls[0],
+    );
     formData.append(
       'startRecruitPeriod',
       clubData.parsedRecruitPeriod?.startDate + ' 00:00',
@@ -119,8 +135,10 @@ export default function Index() {
 
   const excludedKeys = [
     'profileImage',
+    'introduceImages',
     'recruitPeriod',
     'profileImageUrls',
+    'introduceImageUrls',
     'parsedRecruitPeriod',
     'location',
     'phoneNumber',
@@ -135,10 +153,10 @@ export default function Index() {
           clubName={clubData.name}
           category={clubData.category}
           tag={clubData.tag}
-          uploadFiles={clubData.uploadFiles}
+          profileImage={clubData.profileImage}
           profileImageUrls={clubData.profileImageUrls}
           setValue={setClubData}
-          setUploadFile={setUploadFile}
+          setProfileImage={setProfileImage}
           isEditing={isEditing}
         />
         {isEditing ? (
@@ -179,6 +197,29 @@ export default function Index() {
           isEditing={isEditing}
         />
         <div className="mt-6 md:mt-8">
+          <div className=" text-lg font-bold md:text-xl">동아리 대표 사진</div>
+          {isEditing ? (
+            <UploadImage
+              image={introduceImages}
+              setImage={setIntroduceImages}
+              imageUrls={clubData.introduceImageUrls}
+              setNoticeData={setClubData}
+              urlsName={`introduceImageUrls`}
+            />
+          ) : (
+            <Image
+              src={
+                clubData.introduceImageUrls[0] === ''
+                  ? Cry
+                  : parseImgUrl(clubData.introduceImageUrls[0])
+              }
+              width={1000}
+              className="my-4 "
+              height={1000}
+              alt="동아리 소개 이미지"
+            />
+          )}
+
           <div className=" text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
           </div>
