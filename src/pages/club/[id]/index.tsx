@@ -52,7 +52,6 @@ export default function Index({ clubId }: ClubDetailProps) {
       clubInfo;
 
     const parsedImg = introduceImageUrls && parseImgUrl(introduceImageUrls[0]);
-    console.log(introduceImageUrls.length);
     return (
       <>
         <Head>

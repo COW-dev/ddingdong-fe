@@ -132,7 +132,10 @@ export default function Index() {
     );
     return formData;
   }
-
+  const image =
+    clubData.introduceImageUrls.length === 0
+      ? Cry
+      : parseImgUrl(clubData.introduceImageUrls[0]);
   const excludedKeys = [
     'profileImage',
     'introduceImages',
@@ -209,9 +212,7 @@ export default function Index() {
           ) : (
             <Image
               src={
-                clubData.introduceImageUrls.length === 0
-                  ? Cry
-                  : parseImgUrl(clubData.introduceImageUrls[0])
+                introduceImages ? URL.createObjectURL(introduceImages) : image
               }
               width={1000}
               className="my-4 max-h-[50vh] object-scale-down"
