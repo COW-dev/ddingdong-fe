@@ -1,9 +1,11 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import type { GetServerSideProps } from 'next/types';
 import toast from 'react-hot-toast';
 import BottomButton from '@/components/club/BottomButton';
 import ClubHeading from '@/components/club/ClubHeading';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
+import { parseImgUrl } from '@/utils/parse';
 
 type ClubDetailProps = {
   clubId: number;
@@ -15,7 +17,6 @@ export default function Index({ clubId }: ClubDetailProps) {
     const expUrl = /https?:\/\/[^\s"]/;
     return expUrl.test(strUrl);
   }
-
   function parseUrl(line: string) {
     if (checkUrl(line)) {
       const words = line.split(' ');
@@ -47,7 +48,10 @@ export default function Index({ clubId }: ClubDetailProps) {
 
   if (isSuccess) {
     const clubInfo = data.data;
-    const { name, introduction, activity, ideal } = clubInfo;
+    const { name, introduction, activity, ideal, introduceImageUrls } =
+      clubInfo;
+
+    const parsedImg = introduceImageUrls && parseImgUrl(introduceImageUrls[0]);
 
     return (
       <>
@@ -57,7 +61,24 @@ export default function Index({ clubId }: ClubDetailProps) {
         <ClubHeading info={clubInfo} />
         <main className="w-full lg:w-[70%]">
           <section className="mt-6 md:mt-8">
-            <div className="text-lg font-bold md:text-xl">
+            <div
+              className={`${
+                introduceImageUrls.length === 0 && `hidden`
+              }mt-6 md:mt-8`}
+            >
+              <div className="my-2 text-lg font-bold md:text-xl">
+                동아리 대표 사진
+              </div>
+              <Image
+                src={parsedImg}
+                width={1000}
+                height={1000}
+                alt="동아리 소개 사진"
+                className={`${parsedImg === '' && `hidden`} rounded-2xl`}
+              />
+            </div>
+
+            <div className="mt-6 text-lg font-bold md:mt-8 md:text-xl">
               우리 동아리를 소개할게요
             </div>
             <div className="mt-1 bg-white text-base font-medium text-gray-500 md:mt-2 md:text-lg">
