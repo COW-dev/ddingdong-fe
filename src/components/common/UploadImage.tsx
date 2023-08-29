@@ -54,7 +54,6 @@ export default function UploadImage({
         [urlsName ? `${urlsName}` : `imageUrls`]: [],
       }));
   }
-
   return (
     <div className="flex w-full justify-center p-6">
       {image || previewImageUrl ? (
@@ -66,7 +65,7 @@ export default function UploadImage({
             width={1000}
             height={200}
           />
-          <div className="mt-5">
+          <div className="z-30 mt-5 min-w-[10%]">
             <button type="button" onClick={handleImageReset}>
               <Image src={Cancel} height={15} width={15} alt="cancel" />
             </button>
