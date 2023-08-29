@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
-import ScoreList from '@/components/common/ScoreList';
+import ScoreList from '@/components/score/ScoreList';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewScore } from '@/hooks/api/score/useNewScore';
 import { ScoreDetail } from '@/types/score';
@@ -40,7 +40,7 @@ export default function CreateScore({
   }, [amount]);
 
   return (
-    <>
+    <div>
       {role === ROLE_TYPE.ROLE_ADMIN && (
         <form
           className={`mx-auto flex w-[90%] flex-col ${
@@ -72,13 +72,13 @@ export default function CreateScore({
           </div>
           <button
             type="submit"
-            className="mt-8 w-full rounded-xl bg-purple-400 py-4 font-bold text-white transition-colors hover:bg-purple-500 sm:py-4 sm:text-lg md:mt-5"
+            className="my-8 w-full rounded-xl bg-purple-400 py-4 font-bold text-white transition-colors hover:bg-purple-500 sm:py-4 sm:text-lg md:mt-5"
           >
             동아리 점수 입력하기
           </button>
         </form>
       )}
       <ScoreList parseList={parseList} />
-    </>
+    </div>
   );
 }
