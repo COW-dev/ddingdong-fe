@@ -229,7 +229,7 @@ export default function Index() {
           <TextareaAutosize
             name="introduction"
             minRows={4}
-            value={clubData.introduction}
+            value={clubData?.introduction}
             disabled={!isEditing}
             onChange={(e) => handleTextareaChange(e)}
             className={`${
@@ -240,7 +240,7 @@ export default function Index() {
           <TextareaAutosize
             name="activity"
             minRows={2}
-            value={clubData.activity}
+            value={clubData?.activity}
             disabled={!isEditing}
             onChange={(e) => handleTextareaChange(e)}
             className={`${
@@ -253,7 +253,7 @@ export default function Index() {
           <TextareaAutosize
             name="ideal"
             minRows={2}
-            value={clubData.ideal}
+            value={clubData?.ideal}
             disabled={!isEditing}
             onChange={(e) => handleTextareaChange(e)}
             className={`${
