@@ -132,10 +132,7 @@ export default function Index() {
     );
     return formData;
   }
-  const image =
-    clubData.introduceImageUrls.length === 0
-      ? Cry
-      : parseImgUrl(clubData.introduceImageUrls[0]);
+  const image = parseImgUrl(clubData.introduceImageUrls[0]);
   const excludedKeys = [
     'profileImage',
     'introduceImages',
@@ -200,7 +197,9 @@ export default function Index() {
           isEditing={isEditing}
         />
         <div className="mt-6 md:mt-8">
-          <div className=" text-lg font-bold md:text-xl">동아리 대표 사진</div>
+          <div className=" text-lg font-bold md:text-xl">
+            동아리 소개 이미지
+          </div>
           {isEditing ? (
             <UploadImage
               image={introduceImages}
@@ -209,18 +208,22 @@ export default function Index() {
               setNoticeData={setClubData}
               urlsName={`introduceImageUrls`}
             />
+          ) : introduceImages || image ? (
+            <Image
+              src={
+                introduceImages ? URL.createObjectURL(introduceImages) : image
+              }
+              width={1000}
+              className="my-4 max-h-[50vh] object-scale-down"
+              height={1000}
+              alt="동아리 소개 이미지"
+            />
           ) : (
-            image && (
-              <Image
-                src={
-                  introduceImages ? URL.createObjectURL(introduceImages) : image
-                }
-                width={1000}
-                className="my-4 max-h-[50vh] object-scale-down"
-                height={1000}
-                alt="동아리 소개 이미지"
-              />
-            )
+            <div className="mb-5 mt-2 flex h-30 w-full flex-col items-center justify-center rounded-xl border border-gray-100 bg-gray-50 p-4 outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg">
+              <div className="text-sm text-gray-500">
+                동아리 소개 이미지가 없습니다.
+              </div>
+            </div>
           )}
 
           <div className=" text-lg font-bold md:text-xl">
