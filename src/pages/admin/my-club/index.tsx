@@ -61,8 +61,8 @@ export default function Index() {
       setClubData((prevClubData) => ({
         ...prevClubData,
         parsedRecruitPeriod: {
-          startDate: prevClubData.startRecruitPeriod?.split('~')[0],
-          endDate: prevClubData.endRecruitPeriod?.split('~')[1] || '',
+          startDate: prevClubData.startRecruitPeriod?.split(' ')[0] || '',
+          endDate: prevClubData.endRecruitPeriod?.split(' ')[0] || '',
         },
         token: token,
       }));
@@ -89,7 +89,6 @@ export default function Index() {
   }
 
   function createFormData() {
-    console.log(clubData);
     const formData = new FormData();
     Object.entries(clubData).forEach(([key, value]) => {
       if (!excludedKeys.includes(key)) {
