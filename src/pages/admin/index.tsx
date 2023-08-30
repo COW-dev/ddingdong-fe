@@ -8,6 +8,7 @@ import AdminHeading from '@/components/admin/AdminHeading';
 import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
+import Dropdown from '@/components/common/Dropdown';
 
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
@@ -52,24 +53,19 @@ export default function Index() {
         <title>띵동 어드민</title>
       </Head>
       <div
-        className={`flex flex-row items-end justify-between ${
-          role === ROLE_TYPE.ROLE_CLUB ? 'space-x-3' : ''
-        }`}
+        className="flex flex-row items-end justify-between"
       >
         {infoElement}
+        {role === ROLE_TYPE.ROLE_ADMIN && (
         <div
           className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:cursor-pointer hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
           onClick={openFixZone}
         >
           Fix:Zone
         </div>
+        )}
         {role === ROLE_TYPE.ROLE_CLUB && (
-          <Link
-            href="/club/my/score"
-            className="text-md whitespace-nowrap rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500 md:px-4 md:text-lg"
-          >
-            <div>동아리 점수 확인</div>
-          </Link>
+          <Dropdown />
         )}
       </div>
       <div className="relative mt-7">
