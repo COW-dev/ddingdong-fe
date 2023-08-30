@@ -64,7 +64,6 @@ export default function Dropdown() {
           <Link
             href="/club/my/score"
             className="block px-4 py-2 hover:bg-blue-100 font-semibold"
-            // className="text-md whitespace-nowrap rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500 md:px-4 md:text-lg"
           >
             <div>동아리 점수 확인</div>
           </Link>
