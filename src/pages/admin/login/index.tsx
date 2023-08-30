@@ -31,8 +31,8 @@ export default function Index() {
         return router.push('/');
       })
       .catch((error) => {
-        const errorMessage = error.response.data.message;
-        toast.error(errorMessage);
+        const errorMessage = error.response?.data.message;
+        toast.error(errorMessage ?? '로그인을 다시 시도해주세요.');
       });
   }
 

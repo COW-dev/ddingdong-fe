@@ -61,7 +61,7 @@ export default function Index() {
   }, [members, keyword]);
 
   return (
-    <div className="p-5">
+    <div className="md:p-5">
       <div className="mb-14 mt-7 flex justify-between text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
         동아리원 관리하기
       </div>
