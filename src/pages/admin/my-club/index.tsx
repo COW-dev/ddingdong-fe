@@ -114,11 +114,15 @@ export default function Index() {
     );
     formData.append(
       'startRecruitPeriod',
-      clubData.parsedRecruitPeriod?.startDate + ' 00:00',
+      clubData.parsedRecruitPeriod?.startDate === null
+        ? ''
+        : clubData.parsedRecruitPeriod?.startDate + ' 00:00',
     );
     formData.append(
       'endRecruitPeriod',
-      clubData.parsedRecruitPeriod?.endDate + ' 23:59',
+      clubData.parsedRecruitPeriod?.endDate === null
+        ? ''
+        : clubData.parsedRecruitPeriod?.endDate + ' 23:59',
     );
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
