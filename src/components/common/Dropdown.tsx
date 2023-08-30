@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { useState } from "react";
+import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Dropdown() {
   const [open, setOpen] = useState<boolean>(false);
@@ -15,70 +15,70 @@ export default function Dropdown() {
     }
   }
   return (
-  <>
-    <button
-      id="dropdownHoverButton"
-      data-dropdown-toggle="dropdownHover"
-      data-dropdown-trigger="hover"
-      className={` inline-flex items-center text-blue-500 rounded-xl min-w-fit bg-blue-100 px-5 py-2.5 text-center text-sm md:text-md font-bold hover:bg-blue-200 focus:outline-none ${
-        open ? 'active' : ''
-      } `}
-      type="button"
-      onClick={handleOpen}
-    >
-      동아리 관리하기
-      <svg
-        className="ml-2.5 h-2.5 w-2.5"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 10 6"
+    <>
+      <button
+        id="dropdownHoverButton"
+        data-dropdown-toggle="dropdownHover"
+        data-dropdown-trigger="hover"
+        className={` md:text-md inline-flex min-w-fit items-center rounded-xl bg-blue-100 px-5 py-2.5 text-center text-sm font-bold text-blue-500 hover:bg-blue-200 focus:outline-none ${
+          open ? 'active' : ''
+        } `}
+        type="button"
+        onClick={handleOpen}
       >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="m1 1 4 4 4-4"
-        />
-      </svg>
-    </button>
-    {open && (
-      <div
-        id="dropdownHover"
-        className=' z-20 relative active min-w-fit divide-y divide-gray-100 rounded-lg bg-blue-200 shadow m-auto '
-      >
-        <ul
-          className=" absolute w-36 right-0 mt-12 z-10 py-2 text-sm text-gray-700 rounded-xl bg-white shadow-lg border-[1px]"
-          aria-labelledby="dropdownHoverButton"
+        동아리 관리하기
+        <svg
+          className="ml-2.5 h-2.5 w-2.5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 10 6"
         >
-          <li>
-            <div
-              onClick={openFixZone}
-              className="block px-4 py-2 hover:bg-blue-100 font-semibold"
-            >
-              Fix:Zone
-            </div>
-          </li>
-          <li>
-          <Link
-            href="/club/my/score"
-            className="block px-4 py-2 hover:bg-blue-100 font-semibold"
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 1 4 4 4-4"
+          />
+        </svg>
+      </button>
+      {open && (
+        <div
+          id="dropdownHover"
+          className=" active relative z-20 m-auto min-w-fit divide-y divide-gray-100 rounded-lg bg-blue-200 shadow "
+        >
+          <ul
+            className=" absolute right-0 z-10 mt-12 w-36 rounded-xl border-[1px] bg-white py-2 text-sm text-gray-700 shadow-lg"
+            aria-labelledby="dropdownHoverButton"
           >
-            <div>동아리 점수 확인</div>
-          </Link>
-          </li>
-          <li>
-            <Link
-              href="/member"
-              className="block px-4 py-2 hover:bg-blue-100 font-semibold"
-            >
-              동아리원 수정하기
-            </Link>
-          </li>
-        </ul>
-      </div>
-    )}
-  </>
+            <li>
+              <div
+                onClick={openFixZone}
+                className="block px-4 py-2 font-semibold hover:bg-blue-100"
+              >
+                Fix:Zone
+              </div>
+            </li>
+            <li>
+              <Link
+                href="/club/my/score"
+                className="block px-4 py-2 font-semibold hover:bg-blue-100"
+              >
+                <div>동아리 점수 확인</div>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/member"
+                className="block px-4 py-2 font-semibold hover:bg-blue-100"
+              >
+                동아리원 수정하기
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
+    </>
   );
 }
