@@ -45,7 +45,9 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   }
   return (
     <>
-      <h1 className="mt-7 text-2xl font-bold md:mt-10 md:text-3xl">{title}</h1>
+      <h1 className="mt-7 text-2xl font-bold sm:text-black md:mt-10 md:text-3xl">
+        {title}
+      </h1>
       <div className="mt-1 border-b pb-6 text-base font-medium text-gray-400 md:pb-8 md:text-lg">
         {new Date(createdAt).toLocaleString()}
       </div>

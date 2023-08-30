@@ -66,7 +66,7 @@ export default function Index({ clubId }: ClubDetailProps) {
               } mt-6 md:mt-8`}
             >
               <div className="my-2 text-lg font-bold md:text-xl">
-                동아리 대표 사진
+                동아리 소개 이미지
               </div>
               <Image
                 src={parsedImg}

@@ -1,4 +1,10 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useState,
+  useEffect,
+  ChangeEvent,
+} from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
@@ -51,7 +57,12 @@ export default function AdminClubHeading({
   const parsedImg =
     profileImageUrls &&
     profileImageUrls[0]?.slice(0, 8) + profileImageUrls[0]?.slice(9);
-
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    setValue((prev) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  }
   function handleImageReset() {
     setPreviewImageUrl('');
     setValue((prev) => ({
@@ -117,7 +128,19 @@ export default function AdminClubHeading({
               |
             </div>
             <div className="rounded-lg text-sm font-semibold text-gray-500 md:text-lg">
-              {tag}
+              <input
+                name="tag"
+                type="text"
+                spellCheck={false}
+                className={`rounded-xl ${
+                  isEditing
+                    ? `border border-gray-100 bg-gray-50 px-4 py-2.5 opacity-100 outline-none md:px-5 `
+                    : `bg-white`
+                } w-[50%]  `}
+                value={tag}
+                onChange={(e) => handleChange(e)}
+                disabled={!isEditing}
+              />
             </div>
           </div>
         </div>

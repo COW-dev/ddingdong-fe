@@ -179,9 +179,7 @@ export default function ClubInfoForm({
                   type: 'date',
                   value: String(parsedRecruitPeriod?.startDate),
                 })
-                  ? `${startRecruitPeriod.split(' ')[0]} ~ ${
-                      endRecruitPeriod.split(' ')[0]
-                    }`
+                  ? `${parsedRecruitPeriod?.startDate} ~ ${parsedRecruitPeriod?.endDate}`
                   : ''}
               </div>
             )}
