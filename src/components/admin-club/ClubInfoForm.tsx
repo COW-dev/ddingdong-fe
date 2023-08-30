@@ -16,8 +16,6 @@ type ClubInfoFormProps = {
   phoneNumber: string;
   location: string;
   regularMeeting: string;
-  startRecruitPeriod: string;
-  endRecruitPeriod: string;
   parsedRecruitPeriod: DateRangeType | null;
   formUrl: string;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
@@ -29,8 +27,6 @@ export default function ClubInfoForm({
   phoneNumber,
   location,
   regularMeeting,
-  startRecruitPeriod,
-  endRecruitPeriod,
   parsedRecruitPeriod,
   formUrl,
   setValue,

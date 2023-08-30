@@ -89,6 +89,7 @@ export default function Index() {
   }
 
   function createFormData() {
+    console.log(clubData);
     const formData = new FormData();
     Object.entries(clubData).forEach(([key, value]) => {
       if (!excludedKeys.includes(key)) {
@@ -138,6 +139,8 @@ export default function Index() {
     'introduceImages',
     'recruitPeriod',
     'profileImageUrls',
+    'endRecruitPeriod',
+    'startRecruitPeriod',
     'introduceImageUrls',
     'parsedRecruitPeriod',
     'location',
@@ -190,8 +193,6 @@ export default function Index() {
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           parsedRecruitPeriod={clubData?.parsedRecruitPeriod}
-          startRecruitPeriod={clubData.startRecruitPeriod}
-          endRecruitPeriod={clubData.endRecruitPeriod}
           formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}
