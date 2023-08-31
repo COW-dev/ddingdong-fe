@@ -32,7 +32,7 @@ export default function Index() {
       })
       .catch((error) => {
         const errorMessage = error.response?.data.message;
-        toast.error(errorMessage ?? '로그인을 다시 시도해주세요.');
+        toast.error(errorMessage ?? '잠시 후 다시 시도해주세요.');
       });
   }
 
