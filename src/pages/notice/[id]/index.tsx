@@ -61,7 +61,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       return <p>{line}</p>;
     }
   }
-
   return (
     <>
       <Head>
@@ -100,22 +99,14 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <hr className="mt-3" />
       <div className="py-8 text-sm font-medium text-gray-500 md:py-10 md:text-base">
         {Array.isArray(noticeData.fileUrls) &&
-          noticeData.fileUrls.map((item, idx) => (
-            <div key={idx} className="flex gap-3">
+          fileUrls.map((item, idx) => (
+            <div key={`notice-file-${idx}`} className="flex gap-3">
               <Image src={ClipIcon} width={10} height={10} alt="file" />
               <a href={parseImgUrl(item.fileUrl)} download target="_blank">
                 {item.name}
               </a>
             </div>
           ))}
-        {fileUrls.map((item) => (
-          <>
-            <div className="flex gap-3">
-              <Image src={ClipIcon} width={10} height={10} alt="file" />
-              {item.name}
-            </div>
-          </>
-        ))}
       </div>
       <div className="mt-6 flex justify-end md:mt-8">
         <NeutralButton href="/notice">목록으로 돌아가기</NeutralButton>
