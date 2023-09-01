@@ -11,7 +11,6 @@ export default function Home() {
   const [clubs, setClubs] = useState<Array<Club>>([]);
   const [filteredClubs, setFilteredClubs] = useState<Array<Club>>([]);
   const { isError, data } = useAllClubs();
-
   useEffect(() => {
     setClubs(data?.data ?? []);
     setFilteredClubs(data?.data ?? []);
@@ -62,7 +61,7 @@ export default function Home() {
             name={club.name}
             category={club.category}
             tag={club.tag}
-            recruit={club.recruit}
+            recruitStatus={club.recruitStatus}
           />
         ))}
       </ul>

@@ -6,7 +6,7 @@ type ClubProps = {
   name: string;
   tag: string;
   category: string;
-  recruit: boolean;
+  recruitStatus: string;
 };
 
 export default function ClubCard({
@@ -14,8 +14,9 @@ export default function ClubCard({
   name,
   tag,
   category,
-  recruit,
+  recruitStatus,
 }: ClubProps) {
+  console.log(recruitStatus);
   return (
     <li
       key={id}
@@ -42,12 +43,12 @@ export default function ClubCard({
         <div className="flex items-center">
           <div
             className={`rounded-lg px-2 py-1 text-sm font-semibold ${
-              recruit
+              recruitStatus === '모집중'
                 ? 'bg-green-100 text-green-500'
                 : 'bg-gray-100 text-gray-500'
             }`}
           >
-            {recruit ? '모집 중' : '모집 마감'}
+            {recruitStatus}
           </div>
         </div>
       </Link>
