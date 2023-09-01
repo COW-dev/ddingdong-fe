@@ -43,7 +43,7 @@ export default function ClubCard({
         <div className="flex items-center">
           <div
             className={`rounded-lg px-2 py-1 text-sm font-semibold ${
-              recruitStatus === '모집중'
+              recruitStatus === '모집 중'
                 ? 'bg-green-100 text-green-500'
                 : 'bg-gray-100 text-gray-500'
             }`}
