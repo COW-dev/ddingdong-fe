@@ -36,7 +36,7 @@ export default function ManageClub({
             height={100}
             className=" m-auto"
           />
-          <span className="mt-2 text-xl font-bold text-gray-700">
+          <span className="mt-2 text-sm font-bold text-gray-700 md:text-xl">
             동아리 점수 수정하기
           </span>
         </div>
@@ -52,7 +52,9 @@ export default function ManageClub({
           height={100}
           className=" m-auto"
         />
-        <span className="mt-2 text-xl font-bold">동아리 삭제 하기</span>
+        <span className="mt-2 text-sm font-bold text-gray-700 md:text-xl">
+          동아리 삭제 하기
+        </span>
       </div>
     </div>
   );

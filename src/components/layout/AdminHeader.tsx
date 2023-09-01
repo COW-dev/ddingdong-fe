@@ -59,7 +59,6 @@ export default function AdminHeader() {
                 <button
                   className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500 "
                   onClick={() => {
-                    console.log('test를 위함');
                     removeToken();
                     resetAuth();
                     router.push('/login');

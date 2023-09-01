@@ -66,14 +66,14 @@ export default function ClubScore() {
   }
 
   return (
-    <div>
+    <>
       <Heading>동아리 점수 확인하기</Heading>
       <History scoreData={scoreData} />
-      <div className="mb-3 flex w-full flex-col items-center p-5 md:h-50 md:flex-row md:space-x-5 md:p-4">
+      <div className=" my-4 flex w-full flex-col items-center md:h-44 md:flex-row md:space-x-4 ">
         {key.map(({ icon, category }, index) => (
           <div
             onClick={() => handleOpenModal(category)}
-            className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[18%] lg:flex-row"
+            className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[19%] lg:flex-row"
             key={`category-${index}`}
           >
             <ScoreClubCategory
@@ -98,6 +98,6 @@ export default function ClubScore() {
           closeModal={closeModal}
         />
       </Modal>
-    </div>
+    </>
   );
 }
