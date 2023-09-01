@@ -120,7 +120,10 @@ export default function Form({
                   key={`participant-${index}`}
                   className={`${participant.name === `` && `hidden`} `}
                 >
-                  {participant.name} | {participant.department} |
+                  {participant.name}
+                  <span className="px-1">|</span>
+                  {participant.department}
+                  <span className="px-1">|</span>
                   {participant.studentId}
                 </div>
               ))}

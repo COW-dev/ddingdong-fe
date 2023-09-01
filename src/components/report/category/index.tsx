@@ -1,12 +1,13 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import toast from 'react-hot-toast';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import SearchImg from '@/assets/search.svg';
+import Modal from '@/components/common/Modal';
+import Club from '@/components/modal/report/Club';
 import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
-import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
+import useModal from '@/hooks/common/useModal';
 import { AdminClub } from '@/types/club';
 import ClubList from './ClubList';
 import TermList from './TermList';
@@ -33,10 +34,12 @@ const Category = ({
   setVisible,
 }: Props) => {
   const [{ token }] = useCookies(['token']);
-  const currentTerm = useCurrentReports(token).data?.data.term ?? 1;
+
   const [active, setActive] = useState<string>(REPORT_TYPE.CLUB);
   const [clubList, setClubList] = useState<string[]>([]);
   const { data: clubs } = useAdminAllClubs(token);
+  const [week, setWeek] = useState<number>(term);
+  const { openModal, visible: modalVisible, closeModal, modalRef } = useModal();
 
   useEffect(() => {
     if (clubs) {
@@ -57,23 +60,9 @@ const Category = ({
             onClick={() => setActive(REPORT_TYPE.TERM)}
           >
             동아리
-            <div className="flex text-sm font-normal">
+            <div className="flex text-sm font-normal" onClick={openModal}>
               <div className="max-w-[90%] truncate"> {club}</div>
-              <Image
-                src={SearchImg}
-                width={15}
-                height={15}
-                alt="search"
-                className=""
-                onClick={() =>
-                  toast(
-                    '동아리 이름으로 검색하기가 곧 업데이트 될 예정입니다',
-                    {
-                      icon: '💡',
-                    },
-                  )
-                }
-              />
+              <Image src={SearchImg} width={15} height={15} alt="search" />
             </div>
           </div>
           <div
@@ -83,31 +72,33 @@ const Category = ({
             onClick={() => setActive(REPORT_TYPE.CLUB)}
           >
             회차
-            <div className="flex justify-center text-sm font-normal">
+            <div className="flex justify-evenly text-sm font-normal">
               <div className="flex">
-                <Image
-                  src={LeftArrow}
-                  width={10}
-                  height={10}
-                  alt="leftArrow"
-                  onClick={() => {
-                    if (Number(term) === 1)
-                      return toast.error('이전 회차가 존재하지 않습니다.');
-                    setTerm(term && term - 1);
-                  }}
-                />
-                <div className="mx-2"> {term}회차</div>
-                <Image
-                  src={RightArrow}
-                  width={10}
-                  height={10}
-                  alt="rightArrow"
-                  onClick={() => {
-                    if (Number(term) === Number(currentTerm))
-                      return toast.error('다음 회차가 열리지 않습니다.');
-                    setTerm(term && term + 1);
-                  }}
-                />
+                <div className="flex min-w-[10px] flex-col items-center justify-center">
+                  <Image
+                    src={LeftArrow}
+                    width={10}
+                    height={10}
+                    alt="leftArrow"
+                    className={`${Number(week) === 1 && `hidden`}`}
+                    onClick={() => {
+                      setWeek(week - 1);
+                    }}
+                  />
+                </div>
+                <div className="mx-2"> {week}회차</div>
+                <div className="flex min-w-[10px] flex-col items-center justify-center">
+                  <Image
+                    src={RightArrow}
+                    width={10}
+                    height={10}
+                    alt="rightArrow"
+                    className={`${Number(term) === Number(week) && `hidden`}`}
+                    onClick={() => {
+                      setWeek(week + 1);
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -156,6 +147,15 @@ const Category = ({
         {element()}
       </div>
       {/* md 끗*/}
+
+      <Modal
+        visible={modalVisible}
+        modalRef={modalRef}
+        title={'동아리 검색하기'}
+        closeModal={closeModal}
+      >
+        <Club closeModal={closeModal} setClub={setClub} />
+      </Modal>
     </>
   );
 };

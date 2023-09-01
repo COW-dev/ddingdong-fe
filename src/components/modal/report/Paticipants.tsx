@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import SearchSelect from '@/components/SearchSelect';
+import ParticipantSelect from '@/components/report/ParticipantSelect';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { StudentInfo } from '@/types';
 import { NewReport, ReportDetail } from '@/types/report';
@@ -46,7 +46,7 @@ export default function Participants({ data, setData, closeModal }: Props) {
           key={`report-participants-${index}`}
           className="mb-3 flex overflow-hidden rounded-xl bg-gray-50 py-2.5 text-gray-500 "
         >
-          <SearchSelect
+          <ParticipantSelect
             name={participant.name}
             setData={setParticipants}
             list={clubData?.clubMembers}

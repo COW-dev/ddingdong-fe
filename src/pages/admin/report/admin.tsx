@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Heading from '@/components/common/Heading';
 import Category from '@/components/report/category';
 import ReportItem from '@/components/report/ReportItem';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 
 export default function Index() {
+  const [{ token }] = useCookies(['token']);
   const [visible, setVisible] = useState<boolean>(true);
   const [club, setClub] = useState<string>('너나들이');
-  const [term, setTerm] = useState<number>(1);
+  const currentTerm = useCurrentReports(token).data?.data.term ?? 1;
+  const [term, setTerm] = useState<number>(currentTerm);
 
   return (
     <>

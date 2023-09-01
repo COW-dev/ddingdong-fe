@@ -1,20 +1,27 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Member } from '@/types/club';
+import { StudentInfo } from '@/types/report';
 type SelectProps = {
   name?: string;
-  setData: Dispatch<SetStateAction<any>>;
-  list: Array<any>;
+  setData: Dispatch<SetStateAction<StudentInfo[]>>;
+  list: Array<Member>;
   id: number;
 };
 
-export default function SearchSelect({ name, setData, list, id }: SelectProps) {
+export default function ParticipantSelect({
+  name,
+  setData,
+  list,
+  id,
+}: SelectProps) {
   const [keyword, setKeyword] = useState(name);
   const [filteredList, setFilteredList] = useState(list);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [isoptionEdit, setIsoptionEdit] = useState<boolean>(false);
 
   useEffect(() => {
-    setFilteredList(list?.filter((item) => item.name.includes(keyword)));
+    keyword &&
+      setFilteredList(list?.filter((item) => item.name.includes(keyword)));
   }, [keyword]);
 
   const handleBlur = () => {

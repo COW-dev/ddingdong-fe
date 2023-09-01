@@ -100,7 +100,6 @@ export default function Index() {
                       width={80}
                       height={80}
                       alt="clubImage"
-                      className="opacity-50"
                     />
                   </div>
                   <div className="flex w-[60%] flex-col items-center justify-evenly">
