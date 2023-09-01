@@ -3,7 +3,7 @@ export type Club = {
   name: string;
   category: string;
   tag: string;
-  recruit: string;
+  recruitStatus: string;
 };
 
 export type AdminClub = {
