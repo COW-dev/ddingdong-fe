@@ -23,7 +23,7 @@ export default function AdminHeader() {
   const isLoginPage = curPath.endsWith('login');
 
   return (
-    <header className="fixed z-10 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
+    <header className="fixed z-20 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
       <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
         <Link
           href={isLoginPage ? '/login' : '/'}
