@@ -75,7 +75,7 @@ export default function ClubScore() {
         {key.map(({ icon, category }, index) => (
           <div
             onClick={() => handleOpenModal(category)}
-            className="mb-5 flex w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-30 md:h-full lg:flex-row"
+            className="mb-5 flex w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-30 lg:flex-row"
             key={`category-${index}`}
           >
             <ScoreClubCategory
