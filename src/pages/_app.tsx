@@ -40,7 +40,6 @@ export default function App({ Component, pageProps }: AppProps) {
           <ReactQueryDevtools />
         </QueryClientProvider>
       </CookiesProvider>
-      <Analytics />
       <Toaster
         toastOptions={{
           style: {
