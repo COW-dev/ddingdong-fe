@@ -37,7 +37,7 @@ export default function AdminScore({ clubId }: ScoreProps) {
     { icon: People, category: '전동대회' },
     { icon: Report2, category: '총동연 사업 참여' },
     { icon: PlusMinus, category: '가산점/감점' },
-    { icon: Dot, category: '점수 등록 취소' },
+    { icon: Dot, category: '점수 이월' },
   ];
   const parseList = [];
   const [{ token }] = useCookies(['role', 'token']);
