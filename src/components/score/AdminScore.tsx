@@ -4,6 +4,7 @@ import { useCookies } from 'react-cookie';
 import Clean from '@/assets/clean.svg';
 import Dot from '@/assets/dot.svg';
 import People from '@/assets/people.svg';
+import PlusMinus from '@/assets/plusminus.svg';
 import Report from '@/assets/report.svg';
 import Report2 from '@/assets/report2.svg';
 import Heading from '@/components/common/Heading';
@@ -35,7 +36,8 @@ export default function AdminScore({ clubId }: ScoreProps) {
     { icon: Clean, category: '청소' },
     { icon: People, category: '전동대회' },
     { icon: Report2, category: '총동연 사업 참여' },
-    { icon: Dot, category: '가산점/감점' },
+    { icon: PlusMinus, category: '가산점/감점' },
+    { icon: Dot, category: '점수 등록 취소' },
   ];
   const parseList = [];
   const [{ token }] = useCookies(['role', 'token']);
@@ -78,11 +80,11 @@ export default function AdminScore({ clubId }: ScoreProps) {
     <>
       <Heading>동아리 점수 관리하기</Heading>
       <History scoreData={scoreData} />
-      <div className=" my-4 flex w-full flex-col items-center md:h-44 md:flex-row md:space-x-4 ">
+      <div className=" my-4 flex w-full flex-col items-center md:grid md:h-60 md:grid-cols-3 md:gap-4 ">
         {key.map(({ icon, category }, index) => (
           <div
             onClick={() => handleOpenModal(category)}
-            className="mb-5 flex h-20 w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-full md:max-w-[19%] lg:flex-row"
+            className="mb-5 flex w-full cursor-pointer justify-between rounded-lg border-2 shadow-md md:mb-0 md:h-30 md:h-full lg:flex-row"
             key={`category-${index}`}
           >
             <ScoreCategory
