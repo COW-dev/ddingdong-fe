@@ -36,7 +36,7 @@ import {
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
-  baseURL: 'https://eb.ddingdong.club/server/',
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 3000,
 });
 export function removeToken() {
