@@ -12,7 +12,8 @@ export default function History({ scoreData }: Prop) {
           <span className="text-lg font-bold text-purple-500 md:text-2xl">
             총점 :{' '}
             {scoreData?.length > 0
-              ? scoreData[scoreData?.length - 1]?.remainingScore + '점'
+              ? scoreData[scoreData?.length - 1]?.remainingScore.toFixed(3) +
+                '점'
               : '0점'}
           </span>
         </div>
@@ -46,7 +47,7 @@ export default function History({ scoreData }: Prop) {
                       {data?.scoreCategory}
                     </td>
                     <td className="px-1 py-2 md:px-6 md:py-4">
-                      {data?.amount}점
+                      {data?.amount.toFixed(3)}점
                     </td>
                   </tr>
                 ))
