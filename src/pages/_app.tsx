@@ -38,6 +38,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </Layout>
           <ReactQueryDevtools />
+          <Analytics />
         </QueryClientProvider>
       </CookiesProvider>
       <Toaster
