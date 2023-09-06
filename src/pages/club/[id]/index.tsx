@@ -72,6 +72,7 @@ export default function Index({ clubId }: ClubDetailProps) {
                 src={parsedImg}
                 width={1000}
                 height={500}
+                priority
                 alt="동아리 소개 사진"
                 className={`${
                   introduceImageUrls.length === 0 && `hidden`

@@ -222,6 +222,7 @@ export default function Index() {
                 introduceImages ? URL.createObjectURL(introduceImages) : image
               }
               width={1000}
+              priority
               className="my-4 max-h-[50vh] object-scale-down"
               height={1000}
               alt="동아리 소개 이미지"

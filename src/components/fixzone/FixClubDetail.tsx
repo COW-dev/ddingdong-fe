@@ -72,6 +72,7 @@ export default function FixClubDetail({ id }: Prop) {
             src={parseImgUrl(imageUrls[presentIndex])}
             width={550}
             height={500}
+            priority
             alt="fixImage"
             className="h-[60vh] overflow-hidden object-scale-down"
           />

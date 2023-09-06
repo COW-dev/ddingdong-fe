@@ -90,6 +90,7 @@ export default function Index({
             <div className="relative">
               <Image
                 src={showImage}
+                priority
                 className="bg-gray-50 object-cover"
                 alt="reportImage"
                 width={500}
@@ -200,6 +201,7 @@ export default function Index({
           src={showImage}
           className={`bg-gray-50 object-cover `}
           alt="reportImage"
+          priority
           width={300}
           height={300}
         />

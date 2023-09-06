@@ -204,6 +204,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
               }
               width={1000}
               height={300}
+              priority
               className="m-auto object-cover"
               alt="reportImage"
             />

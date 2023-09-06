@@ -32,7 +32,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
       <div className="flex flex-col">
         <div className="flex flex-row items-end">
           <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
-            <Image src={imageSrc} width={80} height={80} alt="admin" />
+            <Image src={imageSrc} width={80} height={80} priority alt="admin" />
           </div>
           <div className="ml-3">
             <Heading>{name}</Heading>

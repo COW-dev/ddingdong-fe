@@ -14,8 +14,6 @@ export default function ScoreCategory({
   scoreCategory,
   icon,
   amount,
-  clubId,
-  parseList,
 }: ScoreProps) {
   return (
     <>
