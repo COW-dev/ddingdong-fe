@@ -6,10 +6,15 @@ import ArrowUp from '@/assets/arrowUp.svg';
 type AccordionProps = {
   title: string;
   children: React.ReactNode;
+  visible?: boolean;
 };
 
-export default function Accordion({ title, children }: AccordionProps) {
-  const [open, setOpen] = useState<boolean>(true);
+export default function Accordion({
+  title,
+  children,
+  visible,
+}: AccordionProps) {
+  const [open, setOpen] = useState<boolean>(visible ?? true);
 
   const handleOpen = () => {
     setOpen(!open);
@@ -46,7 +51,7 @@ export default function Accordion({ title, children }: AccordionProps) {
         className={`${open ? 'active' : 'hidden'}`}
         aria-labelledby="accordion-flush-heading-1"
       >
-        <div className="mx-2 border-b border-gray-200 py-5 ">{children}</div>
+        <div className="mx-2  py-5 ">{children}</div>
       </div>
     </div>
   );

@@ -16,7 +16,6 @@ export default function ClubCard({
   category,
   recruitStatus,
 }: ClubProps) {
-  console.log(recruitStatus);
   return (
     <li
       key={id}
