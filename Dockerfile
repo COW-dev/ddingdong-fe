@@ -1,5 +1,5 @@
 # node 버전
-FROM node:lts
+FROM node:18.17.0
 
 # 작업 디렉토리
 WORKDIR /usr/src/app
