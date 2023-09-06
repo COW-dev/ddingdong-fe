@@ -40,7 +40,13 @@ export default function App({ Component, pageProps }: AppProps) {
           <ReactQueryDevtools />
         </QueryClientProvider>
       </CookiesProvider>
+
       <Toaster
+        containerStyle={{
+          position: 'fixed',
+          overflow: 'hidden',
+          maxHeight: '5rem',
+        }}
         toastOptions={{
           style: {
             fontWeight: 600,
