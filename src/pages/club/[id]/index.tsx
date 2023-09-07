@@ -108,14 +108,7 @@ export default function Index({ clubId }: ClubDetailProps) {
             </ul>
           </section>
         </main>
-        <div
-          onClick={() =>
-            !clubInfo.formUrl &&
-            toast('지원링크가 존재하지 않습니다.', {
-              icon: '💡',
-            })
-          }
-        >
+        <div className={`${!clubInfo.formUrl && 'hidden'}`}>
           <BottomButton href={clubInfo.formUrl}>지원하기</BottomButton>
         </div>
       </>

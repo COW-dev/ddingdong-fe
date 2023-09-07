@@ -84,13 +84,10 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
         </div>
 
         <button
-          className="ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%]"
-          onClick={() =>
-            !formUrl &&
-            toast('지원링크가 존재하지 않습니다.', {
-              icon: '💡',
-            })
-          }
+          className={`ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
+            !formUrl && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
+          }`}
+          disabled={!formUrl}
         >
           <a
             href={formUrl ? formUrl : void 0}
