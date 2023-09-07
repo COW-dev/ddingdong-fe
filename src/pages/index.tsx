@@ -36,7 +36,7 @@ export default function Home() {
         clubs.filter(
           (club) =>
             club.name.includes(keyword.toUpperCase()) ||
-            club.tag.includes(keyword) ||
+            club.tag.includes(keyword.toUpperCase()) ||
             club.category === keyword,
         ),
       );
