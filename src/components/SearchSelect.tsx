@@ -15,7 +15,7 @@ export default function SearchSelect({ name, setData, list, id }: SelectProps) {
 
   useEffect(() => {
     setFilteredList(list?.filter((item) => item.name.includes(keyword)));
-  }, [keyword]);
+  }, [keyword, list]);
 
   const handleBlur = () => {
     isoptionEdit && setIsEditing(false);

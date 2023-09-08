@@ -1,4 +1,4 @@
-import { Score, ScoreDetail } from '@/types/score';
+import { ScoreDetail } from '@/types/score';
 type Prop = {
   scoreData: ScoreDetail[];
 };

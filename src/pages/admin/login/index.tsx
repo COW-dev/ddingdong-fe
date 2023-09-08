@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { login } from '@/apis';

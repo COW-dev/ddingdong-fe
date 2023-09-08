@@ -38,7 +38,7 @@ export default function ClubInfoForm({
     setValue((prev) => ({
       ...prev,
     }));
-  }, []);
+  }, [setValue]);
 
   if (!hydrated) return null;
 
