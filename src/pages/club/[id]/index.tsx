@@ -52,7 +52,6 @@ export default function Index({ clubId }: ClubDetailProps) {
       clubInfo;
 
     const parsedImg = introduceImageUrls && parseImgUrl(introduceImageUrls[0]);
-
     return (
       <>
         <Head>
@@ -64,17 +63,19 @@ export default function Index({ clubId }: ClubDetailProps) {
             <div
               className={`${
                 introduceImageUrls.length === 0 && `hidden`
-              }mt-6 md:mt-8`}
+              } mt-6 md:mt-8`}
             >
               <div className="my-2 text-lg font-bold md:text-xl">
-                동아리 대표 사진
+                동아리 소개 이미지
               </div>
               <Image
                 src={parsedImg}
                 width={1000}
-                height={1000}
+                height={500}
                 alt="동아리 소개 사진"
-                className={`${parsedImg === '' && `hidden`} rounded-2xl`}
+                className={`${
+                  introduceImageUrls.length === 0 && `hidden`
+                } max-h-[50vh] rounded-2xl object-scale-down`}
               />
             </div>
 

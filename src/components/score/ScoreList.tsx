@@ -7,8 +7,8 @@ type Props = {
 export default function ScoreList({ parseList }: Props) {
   return (
     <div className=" m-auto w-[90%]">
-      <label className="inline-block w-20 font-semibold text-gray-500">
-        {parseList.length > 0 ? '상세 내역' : ''}
+      <label className={`w-20 font-semibold text-gray-500`}>
+        {parseList.length > 0 ? '상세 내역' : '상세 내역이 존재하지 않습니다.'}
       </label>
       <div className="my-2 text-gray-600">
         {parseList.map((data, index) => (
@@ -18,7 +18,7 @@ export default function ScoreList({ parseList }: Props) {
           >
             <div>{data.createdAt.split('T')[0]}</div>
             <div>{data.reason}</div>
-            <div>{data.amount}점</div>
+            <div>{data.amount.toFixed(3)}점</div>
           </div>
         ))}
       </div>

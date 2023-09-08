@@ -18,6 +18,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "postcss.config.js", "next.config.js", "tailwind.config.js", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

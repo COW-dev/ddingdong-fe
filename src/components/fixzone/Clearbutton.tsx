@@ -1,6 +1,3 @@
-import Image from 'next/image';
-import Check from '@/assets/check.svg';
-import Progress from '@/assets/progress.svg';
 type Props = {
   completed: boolean;
 };

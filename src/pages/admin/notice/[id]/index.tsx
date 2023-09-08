@@ -110,7 +110,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     }
     return newFile;
   }
-
   function handleClickSubmit() {
     setIsEditing(false);
     const formData = new FormData();
@@ -231,7 +230,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           <div className="py-8 text-sm font-medium text-gray-500 md:py-10 md:text-base">
             {Array.isArray(noticeData.fileUrls) &&
               noticeData.fileUrls.map((item, idx) => (
-                <div key={idx} className="flex gap-3">
+                <div key={`notice-file-${idx}`} className="flex gap-3">
                   <Image src={ClipIcon} width={10} height={10} alt="file" />
                   <a href={parseImgUrl(item.fileUrl)} download target="_blank">
                     {item.name}

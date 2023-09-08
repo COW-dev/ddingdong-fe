@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
-import Cry from '@/assets/cry.png';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import UploadImage from '@/components/common/UploadImage';
@@ -53,7 +52,7 @@ export default function Index() {
       setClubData({ ...data });
       setIsInitialLoad(false);
     }
-  }, []);
+  }, [data]);
 
   //datapicker형식에 맞도록 변환
   useEffect(() => {
@@ -61,13 +60,13 @@ export default function Index() {
       setClubData((prevClubData) => ({
         ...prevClubData,
         parsedRecruitPeriod: {
-          startDate: prevClubData.startRecruitPeriod?.split('~')[0],
-          endDate: prevClubData.endRecruitPeriod?.split('~')[1] || '',
+          startDate: prevClubData.startRecruitPeriod?.split(' ')[0] || '',
+          endDate: prevClubData.endRecruitPeriod?.split(' ')[0] || '',
         },
         token: token,
       }));
     }
-  }, [isInitialLoad]);
+  }, [data, isInitialLoad, token]);
 
   function handleTextareaChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = event.target;
@@ -114,11 +113,15 @@ export default function Index() {
     );
     formData.append(
       'startRecruitPeriod',
-      clubData.parsedRecruitPeriod?.startDate + ' 00:00',
+      clubData.parsedRecruitPeriod?.startDate === null
+        ? ''
+        : clubData.parsedRecruitPeriod?.startDate + ' 00:00',
     );
     formData.append(
       'endRecruitPeriod',
-      clubData.parsedRecruitPeriod?.endDate + ' 23:59',
+      clubData.parsedRecruitPeriod?.endDate === null
+        ? ''
+        : clubData.parsedRecruitPeriod?.endDate + ' 23:59',
     );
     formData.append('token', token);
     formData.append('clubLeader', clubData.leader);
@@ -132,12 +135,14 @@ export default function Index() {
     );
     return formData;
   }
-
+  const image = parseImgUrl(clubData.introduceImageUrls[0]);
   const excludedKeys = [
     'profileImage',
     'introduceImages',
     'recruitPeriod',
     'profileImageUrls',
+    'endRecruitPeriod',
+    'startRecruitPeriod',
     'introduceImageUrls',
     'parsedRecruitPeriod',
     'location',
@@ -190,14 +195,18 @@ export default function Index() {
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
           parsedRecruitPeriod={clubData?.parsedRecruitPeriod}
-          startRecruitPeriod={clubData.startRecruitPeriod}
-          endRecruitPeriod={clubData.endRecruitPeriod}
           formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}
         />
         <div className="mt-6 md:mt-8">
-          <div className=" text-lg font-bold md:text-xl">동아리 대표 사진</div>
+          <div className="text-lg font-bold md:text-xl">동아리 소개 이미지</div>
+          <div className="text-xs text-gray-400 md:flex">
+            <div> * 동아리 소개사진을 작성하는란 입니다. </div>
+            <div className="px-2">
+              대표사진&#40;로고&#41;은 최상단에서 변경해주세요
+            </div>
+          </div>
           {isEditing ? (
             <UploadImage
               image={introduceImages}
@@ -206,18 +215,22 @@ export default function Index() {
               setNoticeData={setClubData}
               urlsName={`introduceImageUrls`}
             />
-          ) : (
+          ) : introduceImages || image ? (
             <Image
               src={
-                clubData.introduceImageUrls[0] === ''
-                  ? Cry
-                  : parseImgUrl(clubData.introduceImageUrls[0])
+                introduceImages ? URL.createObjectURL(introduceImages) : image
               }
               width={1000}
-              className="my-4 "
+              className="my-4 max-h-[50vh] object-scale-down"
               height={1000}
               alt="동아리 소개 이미지"
             />
+          ) : (
+            <div className="mb-5 mt-2 flex h-30 w-full flex-col items-center justify-center rounded-xl border border-gray-100 bg-gray-50 p-4 outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg">
+              <div className="text-sm text-gray-500">
+                동아리 소개 이미지가 없습니다.
+              </div>
+            </div>
           )}
 
           <div className=" text-lg font-bold md:text-xl">
@@ -226,7 +239,7 @@ export default function Index() {
           <TextareaAutosize
             name="introduction"
             minRows={4}
-            value={clubData.introduction}
+            value={clubData?.introduction}
             disabled={!isEditing}
             onChange={(e) => handleTextareaChange(e)}
             className={`${
@@ -237,7 +250,7 @@ export default function Index() {
           <TextareaAutosize
             name="activity"
             minRows={2}
-            value={clubData.activity}
+            value={clubData?.activity}
             disabled={!isEditing}
             onChange={(e) => handleTextareaChange(e)}
             className={`${
@@ -250,7 +263,7 @@ export default function Index() {
           <TextareaAutosize
             name="ideal"
             minRows={2}
-            value={clubData.ideal}
+            value={clubData?.ideal}
             disabled={!isEditing}
             onChange={(e) => handleTextareaChange(e)}
             className={`${

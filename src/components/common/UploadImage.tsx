@@ -37,12 +37,14 @@ export default function UploadImage({
         ? setPreviewImageUrl(parseImgUrl(imageUrls[0]))
         : setPreviewImageUrl('');
     }
-  }, [image]);
+  }, [image, imageUrls, setImage]);
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
       setImage && setImage(file);
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImageUrl(imageUrl);
     }
   }
   function handleImageReset() {
@@ -54,19 +56,18 @@ export default function UploadImage({
         [urlsName ? `${urlsName}` : `imageUrls`]: [],
       }));
   }
-
   return (
     <div className="flex w-full justify-center p-6">
       {image || previewImageUrl ? (
         <>
           <Image
             src={previewImageUrl}
-            className="m-auto h-72 object-scale-down"
+            className="m-auto  h-72 object-scale-down "
             alt="이미지"
             width={1000}
             height={200}
           />
-          <div className="mt-5">
+          <div className="z-30 mt-5 min-w-[10%]">
             <button type="button" onClick={handleImageReset}>
               <Image src={Cancel} height={15} width={15} alt="cancel" />
             </button>

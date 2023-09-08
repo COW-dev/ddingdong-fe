@@ -1,8 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import ScoreList from '@/components/score/ScoreList';
-import { ROLE_TYPE } from '@/constants/text';
-import { useNewScore } from '@/hooks/api/score/useNewScore';
 import { ScoreDetail } from '@/types/score';
 
 type Prop = {
@@ -11,14 +7,7 @@ type Prop = {
   closeModal: () => void;
 };
 
-export default function CreateScore({
-  scoreCategory,
-  parseList,
-  closeModal,
-}: Prop) {
-  const [cookies] = useCookies(['token', 'role']);
-  const { role } = cookies;
-
+export default function CreateScore({ parseList }: Prop) {
   return (
     <div>
       <ScoreList parseList={parseList} />

@@ -1,14 +1,32 @@
+import { useState } from 'react';
+import Link from 'next/link';
+
 export default function Dropdown() {
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+  function openFixZone() {
+    const windowOptions = 'width=650,height=650,scrollbars,resizable=no';
+    const fixZoneWindow = window.open('fixzone', 'fixzone', windowOptions);
+    if (!fixZoneWindow) {
+      alert('팝업 차단이 활성화되어 있습니다. 팝업 차단을 해제해주세요.');
+    }
+  }
   return (
     <>
       <button
         id="dropdownHoverButton"
         data-dropdown-toggle="dropdownHover"
         data-dropdown-trigger="hover"
-        className="inline-flex items-center rounded-lg bg-blue-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        className={` md:text-md inline-flex min-w-fit items-center rounded-xl bg-blue-100 px-5 py-2.5 text-center text-sm font-bold text-blue-500 hover:bg-blue-200 focus:outline-none ${
+          open ? 'active' : ''
+        } `}
         type="button"
+        onClick={handleOpen}
       >
-        Dropdown hover
+        동아리 관리하기
         <svg
           className="ml-2.5 h-2.5 w-2.5"
           aria-hidden="true"
@@ -25,48 +43,42 @@ export default function Dropdown() {
           />
         </svg>
       </button>
-      <div
-        id="dropdownHover"
-        className="z-10 hidden w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700"
-      >
-        <ul
-          className="py-2 text-sm text-gray-700 dark:text-gray-200"
-          aria-labelledby="dropdownHoverButton"
+      {open && (
+        <div
+          id="dropdownHover"
+          className=" active relative z-20 m-auto min-w-fit divide-y divide-gray-100 rounded-lg bg-blue-200 shadow "
         >
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Settings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Earnings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Sign out
-            </a>
-          </li>
-        </ul>
-      </div>
+          <ul
+            className=" absolute right-0 z-10 mt-12 w-36 rounded-xl border-[1px] bg-white py-2 text-sm text-gray-700 shadow-lg"
+            aria-labelledby="dropdownHoverButton"
+          >
+            <li>
+              <div
+                onClick={openFixZone}
+                className="block px-4 py-2 font-semibold hover:bg-blue-100"
+              >
+                Fix:Zone
+              </div>
+            </li>
+            <li>
+              <Link
+                href="/club/my/score"
+                className="block px-4 py-2 font-semibold hover:bg-blue-100"
+              >
+                <div>동아리 점수 확인</div>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/member"
+                className="block px-4 py-2 font-semibold hover:bg-blue-100"
+              >
+                동아리원 수정하기
+              </Link>
+            </li>
+          </ul>
+        </div>
+      )}
     </>
   );
 }

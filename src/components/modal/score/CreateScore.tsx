@@ -48,11 +48,11 @@ export default function CreateScore({
           }`}
           onSubmit={handleClickChange}
         >
-          <div className="mb-3 w-full">
+          <div className="mb-2 w-full">
             <label className="inline-block w-20 font-semibold text-gray-500">
               점수 입력
             </label>
-            <div className="mt-5 flex space-x-2">
+            <div className="mt-4 flex space-x-2">
               <input
                 name="reason"
                 type="text"
@@ -72,7 +72,7 @@ export default function CreateScore({
           </div>
           <button
             type="submit"
-            className="my-8 w-full rounded-xl bg-purple-400 py-4 font-bold text-white transition-colors hover:bg-purple-500 sm:py-4 sm:text-lg md:mt-5"
+            className="my-5 w-full rounded-xl bg-purple-400 py-4 font-bold text-white transition-colors hover:bg-purple-500 sm:py-4 sm:text-lg md:mt-3"
           >
             동아리 점수 입력하기
           </button>

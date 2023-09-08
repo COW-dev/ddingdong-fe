@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
+import Dropdown from '@/components/common/Dropdown';
 import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
@@ -51,26 +52,17 @@ export default function Index() {
       <Head>
         <title>띵동 어드민</title>
       </Head>
-      <div
-        className={`flex flex-row items-end justify-between ${
-          role === ROLE_TYPE.ROLE_CLUB ? 'space-x-3' : ''
-        }`}
-      >
+      <div className="flex flex-row items-end justify-between">
         {infoElement}
-        <div
-          className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:cursor-pointer hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
-          onClick={openFixZone}
-        >
-          Fix:Zone
-        </div>
-        {role === ROLE_TYPE.ROLE_CLUB && (
-          <Link
-            href="/club/my/score"
-            className="text-md whitespace-nowrap rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:bg-slate-50 hover:text-blue-500 md:px-4 md:text-lg"
+        {role === ROLE_TYPE.ROLE_ADMIN && (
+          <div
+            className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:cursor-pointer hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
+            onClick={openFixZone}
           >
-            <div>동아리 점수 확인</div>
-          </Link>
+            Fix:Zone
+          </div>
         )}
+        {role === ROLE_TYPE.ROLE_CLUB && <Dropdown />}
       </div>
       <div className="relative mt-7">
         <Link
@@ -129,26 +121,30 @@ export default function Index() {
           </Link>
         </div>
         <ul className="mt-8 w-full md:mt-10">
-          {notices?.slice(0, 5).map((notice) => (
-            <li key={notice.id} className="mb-1 w-full border-b">
-              <Link
-                href={`/notice/${notice.id}`}
-                className="inline-block w-full pb-4 pt-3 transition-opacity hover:opacity-50 md:pb-4.5 md:pt-3.5"
-              >
-                <div className="block text-base font-semibold sm:hidden">
-                  {notice.title?.length < 21
-                    ? notice?.title
-                    : notice.title?.substring(0, 21) + '..'}
-                </div>
-                <div className="hidden text-lg font-semibold sm:block">
-                  {notice.title}
-                </div>
-                <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
-                  {new Date(notice.createdAt).toLocaleDateString()}
-                </div>
-              </Link>
-            </li>
-          ))}
+          {notices
+            ?.slice(0, 5)
+            .splice(0)
+            .reverse()
+            .map((notice) => (
+              <li key={notice.id} className="mb-1 w-full border-b">
+                <Link
+                  href={`/notice/${notice.id}`}
+                  className="inline-block w-full pb-4 pt-3 transition-opacity hover:opacity-50 md:pb-4.5 md:pt-3.5"
+                >
+                  <div className="block text-base font-semibold sm:hidden">
+                    {notice.title?.length < 21
+                      ? notice?.title
+                      : notice.title?.substring(0, 21) + '..'}
+                  </div>
+                  <div className="hidden text-lg font-semibold sm:block">
+                    {notice.title}
+                  </div>
+                  <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
+                    {new Date(notice.createdAt).toLocaleDateString()}
+                  </div>
+                </Link>
+              </li>
+            ))}
         </ul>
       </div>
     </>

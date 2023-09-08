@@ -15,7 +15,7 @@ export default function SearchSelect({ name, setData, list, id }: SelectProps) {
 
   useEffect(() => {
     setFilteredList(list?.filter((item) => item.name.includes(keyword)));
-  }, [keyword]);
+  }, [keyword, list]);
 
   const handleBlur = () => {
     isoptionEdit && setIsEditing(false);
@@ -64,7 +64,7 @@ export default function SearchSelect({ name, setData, list, id }: SelectProps) {
       <div
         className={`${
           (!isEditing || keyword === '') && `hidden`
-        } z-10 mt-2 h-fit max-h-[50vh] w-56 overflow-scroll rounded-md border border-gray-100 bg-white shadow-lg`}
+        } fixed z-10 mt-2 h-fit max-h-[50vh] w-56 overflow-scroll rounded-md border border-gray-100 bg-white shadow-lg`}
       >
         <div
           className="p-2"
@@ -75,10 +75,11 @@ export default function SearchSelect({ name, setData, list, id }: SelectProps) {
           {filteredList?.map((item, index) => (
             <div
               key={`option-${index + `-` + item}`}
-              className={`block rounded-lg px-4 py-2 text-sm hover:bg-gray-50 `}
+              className={`flex gap-5 rounded-lg px-4 py-2 text-sm hover:bg-gray-50 `}
               onClick={() => handleChange(item)}
             >
-              {item.name}
+              <div> {item.name}</div>
+              <div className="text-gray-400">{item.studentNumber}</div>
             </div>
           ))}
         </div>

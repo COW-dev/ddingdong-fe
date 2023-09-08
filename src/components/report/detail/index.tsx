@@ -7,14 +7,11 @@ import {
 } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import Datepicker from 'react-tailwindcss-datepicker';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import Cry from '@/assets/cry.png';
 import Modal from '@/components/common/Modal';
-import UploadImage from '@/components/common/UploadImage';
 import Participants from '@/components/modal/report/Paticipants';
-import ReportNoticeModal from '@/components/modal/reportNoticeModal';
 import { ROLE_TYPE } from '@/constants/text';
 import useModal from '@/hooks/common/useModal';
 import { ReportDetail } from '@/types/report';
@@ -30,24 +27,9 @@ type Props = {
   setImage?: Dispatch<SetStateAction<File | null>>;
 };
 
-export default function Index({
-  image,
-  setImage,
-  reportData,
-  isEditing,
-  setReportData,
-}: Props) {
-  const {
-    id,
-    content,
-    place,
-    startDate,
-    endDate,
-    imageUrls,
-    startTime,
-    endTime,
-    participants,
-  } = reportData ?? {};
+export default function Index({ reportData, isEditing, setReportData }: Props) {
+  const { id, content, place, startDate, endDate, imageUrls, participants } =
+    reportData ?? {};
 
   const [data, setData] = useState(reportData);
   const [{ role }] = useCookies(['role']);
@@ -72,16 +54,16 @@ export default function Index({
         return updatedReportData;
       });
   }
-  function handleDateChange(startdate: string, key: string, id: number) {
-    setReportData &&
-      setReportData((prev) => {
-        const updatedReportData = prev.map((report) =>
-          report.id === id ? { ...report, [key]: startdate } : report,
-        );
-        return updatedReportData;
-      });
-    console.log(reportData);
-  }
+  // function handleDateChange(startdate: string, key: string, id: number) {
+  //   setReportData &&
+  //     setReportData((prev) => {
+  //       const updatedReportData = prev.map((report) =>
+  //         report.id === id ? { ...report, [key]: startdate } : report,
+  //       );
+  //       return updatedReportData;
+  //     });
+  //   console.log(reportData);
+  // }
 
   return (
     <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
@@ -146,13 +128,13 @@ export default function Index({
           </p>
           {isEditing ? (
             <div
+              onClick={openModal}
               className="md:text-md min-h-[10vh] 
              w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4
              py-3 text-base outline-none md:pb-3"
             >
               {participants.map((participant, index) => (
                 <div
-                  onClick={openModal}
                   key={`participant-${index}`}
                   className={`${participant.name === `` && `hidden`} `}
                 >
@@ -206,7 +188,6 @@ export default function Index({
           height={300}
         />
       </div>
-      <ReportNoticeModal />
       <Modal
         visible={visible}
         modalRef={modalRef}

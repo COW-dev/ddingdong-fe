@@ -8,7 +8,6 @@ import Detail from '@/components/report/detail/index';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { ReportDetail } from '@/types/report';
 
 type ReportDetailProps = {
@@ -23,7 +22,6 @@ export default function Index({ term, name }: ReportDetailProps) {
   } = useMyClub(token);
   const deleteMutation = useDeleteReport();
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const updateMutation = useUpdateReports(term);
   const reportDataList = useReportInfo({ term, name, token }).data;
   const [reportData, setReportData] = useState<ReportDetail[]>([]);
   const [updateFileOne, setUpdateFileOne] = useState<File | null>(null);
@@ -37,11 +35,11 @@ export default function Index({ term, name }: ReportDetailProps) {
   }, [reportDataList]);
   if (reportData.length === 0) return;
 
-  function handleClickCancel() {
-    setIsEditing(false);
-    reportDataList &&
-      setReportData([reportDataList.data[0], reportDataList.data[1]]);
-  }
+  // function handleClickCancel() {
+  //   setIsEditing(false);
+  //   reportDataList &&
+  //     setReportData([reportDataList.data[0], reportDataList.data[1]]);
+  // }
   // function parseTime(index: number) {
   //   setReportData((prev) => {
   //     const updatedReportData = prev?.map((report) =>
@@ -66,42 +64,42 @@ export default function Index({ term, name }: ReportDetailProps) {
       token: token,
     });
   }
-  function handleClickSubmit() {
-    setIsEditing(false);
-    const formData = new FormData();
-    const newReportData = [
-      {
-        term: 1,
-        date: {
-          startDate: reportData[0].startDate + ' ' + reportData[0].startTime,
-          endDate: reportData[0].endDate + ' ' + reportData[0].endTime,
-        },
-        place: reportData[0].place,
-        content: reportData[0].content,
-        participants: reportData[0].participants,
-      },
-      {
-        term: 1,
-        date: {
-          startDate: reportData[1].startDate + ' ' + reportData[1].startTime,
-          endDate: reportData[1].endDate + ' ' + reportData[1].startTime,
-        },
-        place: reportData[0].place,
-        content: reportData[0].content,
-        participants: reportData[0].participants,
-      },
-    ];
-    formData.append(
-      'reportData',
-      new Blob([JSON.stringify(newReportData)], { type: 'application/json' }),
-    );
-    updateFileOne &&
-      formData.append('uploadFiles1', updateFileOne, `uploadFiles`);
-    updateFileTwo &&
-      formData.append('uploadFiles2', updateFileTwo, `uploadFiles`);
-    formData.append('token', token);
-    return updateMutation.mutate(formData);
-  }
+  // function handleClickSubmit() {
+  //   setIsEditing(false);
+  //   const formData = new FormData();
+  //   const newReportData = [
+  //     {
+  //       term: 1,
+  //       date: {
+  //         startDate: reportData[0].startDate + ' ' + reportData[0].startTime,
+  //         endDate: reportData[0].endDate + ' ' + reportData[0].endTime,
+  //       },
+  //       place: reportData[0].place,
+  //       content: reportData[0].content,
+  //       participants: reportData[0].participants,
+  //     },
+  //     {
+  //       term: 1,
+  //       date: {
+  //         startDate: reportData[1].startDate + ' ' + reportData[1].startTime,
+  //         endDate: reportData[1].endDate + ' ' + reportData[1].startTime,
+  //       },
+  //       place: reportData[0].place,
+  //       content: reportData[0].content,
+  //       participants: reportData[0].participants,
+  //     },
+  //   ];
+  //   formData.append(
+  //     'reportData',
+  //     new Blob([JSON.stringify(newReportData)], { type: 'application/json' }),
+  //   );
+  //   updateFileOne &&
+  //     formData.append('uploadFiles1', updateFileOne, `uploadFiles`);
+  //   updateFileTwo &&
+  //     formData.append('uploadFiles2', updateFileTwo, `uploadFiles`);
+  //   formData.append('token', token);
+  //   return updateMutation.mutate(formData);
+  // }
 
   return (
     <>

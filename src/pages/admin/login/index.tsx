@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { login } from '@/apis';
@@ -31,8 +31,8 @@ export default function Index() {
         return router.push('/');
       })
       .catch((error) => {
-        const errorMessage = error.response.data.message;
-        toast.error(errorMessage);
+        const errorMessage = error.response?.data.message;
+        toast.error(errorMessage ?? '잠시 후 다시 시도해주세요.');
       });
   }
 

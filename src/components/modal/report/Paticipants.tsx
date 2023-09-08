@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import SearchSelect from '@/components/SearchSelect';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
@@ -53,9 +54,18 @@ export default function Participants({ data, setData, closeModal }: Props) {
           />
         </div>
       ))}
+
+      <div className="flex items-center justify-center text-xs text-gray-400 md:pt-2 md:text-sm ">
+        명단이 보여지지 않는다면
+        <Link href="/member" className="pl-2 text-purple-500">
+          동아리원 수정
+        </Link>
+        을 진행해주세요
+      </div>
+
       <button
         onClick={handleSubmit}
-        className="mt-6 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg "
+        className="mt-4 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg "
       >
         등록하기
       </button>

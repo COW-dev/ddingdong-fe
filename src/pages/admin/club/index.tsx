@@ -44,7 +44,6 @@ export default function Index() {
       <Head>
         <title>띵동 어드민 - 동아리 관리</title>
       </Head>
-
       <div className="flex flex-row items-end justify-between">
         <Heading>동아리 관리하기</Heading>
         <div
@@ -55,7 +54,7 @@ export default function Index() {
             })
           }
         >
-          <div className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
+          <div className=" items-end opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
             <Image
               src={Create}
               width={100}

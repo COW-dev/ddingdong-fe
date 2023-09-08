@@ -18,7 +18,7 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": ["tsconfig.json"]
+    "project": ["tsconfig.json", "next.config.js", "tailwind.config.js"]
   },
   "plugins": ["react", "@typescript-eslint", "prettier", "import"],
   "rules": {
