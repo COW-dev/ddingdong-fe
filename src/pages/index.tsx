@@ -26,8 +26,13 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setClubs(data?.data ?? []);
-    setFilteredClubs(data?.data ?? []);
+    const clubList = data?.data ?? [];
+    const sortedClubs = [...clubList].sort(
+      (a, b) =>
+        a.category.localeCompare(b.category) || a.name.localeCompare(b.name),
+    );
+    setClubs(sortedClubs);
+    setFilteredClubs(sortedClubs);
   }, [data]);
 
   useEffect(() => {
@@ -59,7 +64,7 @@ export default function Home() {
           총 {filteredClubs.length}개의 동아리
         </div>
         <div
-          className=" flex items-center gap-1 rounded-xl hover:font-bold hover:text-blue-500"
+          className="flex items-center gap-1 rounded-xl hover:font-bold hover:text-blue-500"
           onClick={() => setIsFilter(!isFilter)}
         >
           <Image src={Filter} width={20} height={20} alt="필터" />

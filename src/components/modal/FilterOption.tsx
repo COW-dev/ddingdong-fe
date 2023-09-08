@@ -32,20 +32,20 @@ export default function FilterOption({
 
   useEffect(() => {
     handleList();
-    const filtered = recruitClubList.filter((item) =>
-      categoryClubList.includes(item),
-    );
-    const sortedClubs = sortClubsByCategory(filtered);
-    setFilteredClubs(sortedClubs);
+    handleFilter();
   }, [category, recruit, sort]);
 
   useEffect(() => {
+    handleFilter();
+  }, [recruitClubList, categoryClubList]);
+
+  function handleFilter() {
     const filtered = recruitClubList.filter((item) =>
       categoryClubList.includes(item),
     );
     const sortedClubs = sortClubsByCategory(filtered);
     setFilteredClubs(sortedClubs);
-  }, [recruitClubList, categoryClubList]);
+  }
 
   function filterRecruitPeriod(item: string) {
     const updatedRecruit = recruit.includes(item)
