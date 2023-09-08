@@ -22,7 +22,7 @@ export default function ParticipantSelect({
   useEffect(() => {
     keyword &&
       setFilteredList(list?.filter((item) => item.name.includes(keyword)));
-  }, [keyword]);
+  }, [keyword, list]);
 
   const handleBlur = () => {
     isoptionEdit && setIsEditing(false);

@@ -12,7 +12,7 @@ export default function ReportNoticeModal() {
       toggleModal();
       localStorage.setItem('reportNoticeModalShown', 'true');
     }
-  }, []);
+  }, [toggleModal]);
 
   return (
     <Modal visible={visible} modalRef={modalRef} closeModal={closeModal}>

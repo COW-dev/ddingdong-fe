@@ -49,7 +49,7 @@ export default function Form({
     } else {
       setPreviewImageUrl(null);
     }
-  }, [uploadFiles]);
+  }, [setImage, uploadFiles]);
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,

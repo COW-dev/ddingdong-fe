@@ -24,7 +24,9 @@ export default function ScoreClubCategory({
         <span className=" text-md mr-2 font-bold text-purple-500 lg:text-xl">
           {scoreCategory}
         </span>
-        <span className="text-md mr-2 font-bold md:text-xl">{amount}점</span>
+        <span className="text-md mr-2 font-bold md:text-xl">
+          {amount.toFixed(3)}점
+        </span>
       </div>
     </>
   );

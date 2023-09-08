@@ -18,7 +18,7 @@ export default function ScoreList({ parseList }: Props) {
           >
             <div>{data.createdAt.split('T')[0]}</div>
             <div>{data.reason}</div>
-            <div>{data.amount}점</div>
+            <div>{data.amount.toFixed(3)}점</div>
           </div>
         ))}
       </div>

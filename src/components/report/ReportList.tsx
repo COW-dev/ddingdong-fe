@@ -23,7 +23,7 @@ export default function ReportList() {
   useEffect(() => {
     reportData && setMyReportList(reportData?.data);
     setClub(clubData?.name);
-  }, [reportData]);
+  }, [clubData?.name, reportData]);
   const submitTerms = myReportList
     .filter((item) => item.name === club)
     .map((item) => item.term);

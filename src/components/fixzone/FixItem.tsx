@@ -1,7 +1,4 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import Check from '@/assets/check.svg';
-import Progress from '@/assets/progress.svg';
 import { Fix } from '@/types/fixzone';
 
 export default function FixItem({ data }: { data: Fix }) {

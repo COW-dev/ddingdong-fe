@@ -39,7 +39,7 @@ export default function Index() {
   const [reportTwo, setReportTwo] = useState<NewReport>(init);
   useEffect(() => {
     console.log(reportOne.startTime, reportOne.endTime);
-  }, [reportOne.endTime]);
+  }, [reportOne.endTime, reportOne.startTime]);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const reportOnedate =
