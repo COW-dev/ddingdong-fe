@@ -1,10 +1,8 @@
 import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
-import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
 import ColorSelect from '@/components/common/ColorSelect';
 import { BannerColor } from '@/constants/color';
-import { useUpdateBanner } from '@/hooks/api/banner/useUpdateBanner';
 import { BannerType, NewBannerType } from '@/types/banner';
 import { isMissingData } from '@/utils/validator';
 
@@ -15,8 +13,6 @@ type Props = {
 export default function ModifyBanner({ data, closeModal }: Props) {
   const { title, subTitle, colorCode, imgUrl } = data;
   const [image, setImage] = useState<File | string>(imgUrl);
-  const [{ token }] = useCookies(['token']);
-  const updateMutation = useUpdateBanner();
 
   const [changedBanner, setBanner] = useState<NewBannerType>({
     title,

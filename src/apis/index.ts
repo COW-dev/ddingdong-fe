@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type { AxiosResponse } from 'axios';
+import type { AxiosError, AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 import {
@@ -34,6 +34,10 @@ import {
   DeleteReport,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
+export interface ErrorType {
+  code: number;
+  message: string;
+}
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -352,25 +356,27 @@ export async function getMyScore(
     },
   });
 }
-api.interceptors.response.use(
-  (res) => {
-    return res;
-  },
-  async (err) => {
-    const cookies = new Cookies();
-    cookies.getAll();
-    if (
-      err.response.data.code === 401 &&
-      err.response.data.message == '유효하지 않은 토큰입니다.'
-    ) {
-      removeToken();
-      window.location.href = '/login';
-      return toast.error(err.response.status.message);
-    }
-    // if (err.response.data.code === 401) {
-    //   removeToken();
-    //   window.location.href = '/login';
-    // }
-    return Promise.reject(err);
-  },
-);
+
+//error handling
+function expirationToken(error: AxiosError<ErrorType>) {
+  // const cookies = new Cookies(); //?
+  // cookies.getAll();  //?
+  removeToken();
+  window.location.href = '/login';
+  toast.error(error.response?.data?.message ?? `로그인 시간이 만료되었어요.`);
+  return Promise.reject(error);
+}
+
+function fullfilledResponse(res: AxiosResponse) {
+  return res;
+}
+function rejectedResponse(error: AxiosError<ErrorType>) {
+  if (
+    error.response?.data?.code === 401 &&
+    error.response?.data?.message == '유효하지 않은 토큰입니다.'
+  )
+    return expirationToken(error);
+  return Promise.reject(error);
+}
+
+api.interceptors.response.use(fullfilledResponse, rejectedResponse);

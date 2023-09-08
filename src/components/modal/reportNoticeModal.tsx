@@ -12,12 +12,18 @@ export default function ReportNoticeModal() {
       toggleModal();
       localStorage.setItem('reportNoticeModalShown', 'true');
     }
-  }, []);
+  }, [toggleModal]);
 
   return (
     <Modal visible={visible} modalRef={modalRef} closeModal={closeModal}>
       <div className="flex flex-col items-center justify-center">
-        <Image src={errorImage} width={100} height={100} alt="noticeImage" />
+        <Image
+          src={errorImage}
+          width={100}
+          height={100}
+          priority
+          alt="noticeImage"
+        />
         <div className="mt-14 w-full text-center">
           <div>
             동아리 회장님들의 편의를 위해 <br />

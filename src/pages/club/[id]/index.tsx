@@ -72,6 +72,7 @@ export default function Index({ clubId }: ClubDetailProps) {
                 src={parsedImg}
                 width={1000}
                 height={500}
+                priority
                 alt="동아리 소개 사진"
                 className={`${
                   introduceImageUrls.length === 0 && `hidden`
@@ -107,14 +108,7 @@ export default function Index({ clubId }: ClubDetailProps) {
             </ul>
           </section>
         </main>
-        <div
-          onClick={() =>
-            !clubInfo.formUrl &&
-            toast('지원링크가 존재하지 않습니다.', {
-              icon: '💡',
-            })
-          }
-        >
+        <div className={`${!clubInfo.formUrl && 'hidden'}`}>
           <BottomButton href={clubInfo.formUrl}>지원하기</BottomButton>
         </div>
       </>

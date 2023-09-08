@@ -6,7 +6,6 @@ import {
   useState,
 } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
@@ -28,24 +27,9 @@ type Props = {
   setImage?: Dispatch<SetStateAction<File | null>>;
 };
 
-export default function Index({
-  image,
-  setImage,
-  reportData,
-  isEditing,
-  setReportData,
-}: Props) {
-  const {
-    id,
-    content,
-    place,
-    startDate,
-    endDate,
-    imageUrls,
-    startTime,
-    endTime,
-    participants,
-  } = reportData ?? {};
+export default function Index({ reportData, isEditing, setReportData }: Props) {
+  const { id, content, place, startDate, endDate, imageUrls, participants } =
+    reportData ?? {};
 
   const [data, setData] = useState(reportData);
   const [{ role }] = useCookies(['role']);
@@ -70,16 +54,16 @@ export default function Index({
         return updatedReportData;
       });
   }
-  function handleDateChange(startdate: string, key: string, id: number) {
-    setReportData &&
-      setReportData((prev) => {
-        const updatedReportData = prev.map((report) =>
-          report.id === id ? { ...report, [key]: startdate } : report,
-        );
-        return updatedReportData;
-      });
-    console.log(reportData);
-  }
+  // function handleDateChange(startdate: string, key: string, id: number) {
+  //   setReportData &&
+  //     setReportData((prev) => {
+  //       const updatedReportData = prev.map((report) =>
+  //         report.id === id ? { ...report, [key]: startdate } : report,
+  //       );
+  //       return updatedReportData;
+  //     });
+  //   console.log(reportData);
+  // }
 
   return (
     <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
@@ -90,6 +74,7 @@ export default function Index({
             <div className="relative">
               <Image
                 src={showImage}
+                priority
                 className="bg-gray-50 object-cover"
                 alt="reportImage"
                 width={500}
@@ -200,6 +185,7 @@ export default function Index({
           src={showImage}
           className={`bg-gray-50 object-cover `}
           alt="reportImage"
+          priority
           width={300}
           height={300}
         />

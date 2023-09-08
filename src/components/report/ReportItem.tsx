@@ -24,7 +24,7 @@ export default function ReportItem({ name, term }: Props) {
   if (reportData.length === 0)
     return (
       <div className="flex h-full w-full flex-col items-center justify-center pt-14 md:pt-0">
-        <Image src={ErrorImg} width={100} height={100} alt="error" />
+        <Image priority src={ErrorImg} width={100} height={100} alt="error" />
         <span className="mt-10 opacity-80">활동보고서를 제출하지 않았어요</span>
       </div>
     );

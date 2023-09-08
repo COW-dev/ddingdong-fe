@@ -3,7 +3,6 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
-import Cry from '@/assets/cry.png';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import UploadImage from '@/components/common/UploadImage';
@@ -67,7 +66,7 @@ export default function Index() {
         token: token,
       }));
     }
-  }, [isInitialLoad]);
+  }, [data, isInitialLoad, token]);
 
   function handleTextareaChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = event.target;
@@ -222,6 +221,7 @@ export default function Index() {
                 introduceImages ? URL.createObjectURL(introduceImages) : image
               }
               width={1000}
+              priority
               className="my-4 max-h-[50vh] object-scale-down"
               height={1000}
               alt="동아리 소개 이미지"

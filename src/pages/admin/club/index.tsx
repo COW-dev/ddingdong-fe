@@ -96,6 +96,7 @@ export default function Index() {
                   <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                     <Image
                       src={handleImage(club.profileImageUrls)}
+                      priority
                       width={80}
                       height={80}
                       alt="clubImage"

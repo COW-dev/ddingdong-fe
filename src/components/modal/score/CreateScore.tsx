@@ -23,7 +23,6 @@ export default function CreateScore({
   const { role } = cookies;
   const [amount, setAmount] = useState(0);
   const [reason, setReason] = useState('');
-
   function handleClickChange() {
     mutation.mutate({
       scoreCategory: scoreCategory,

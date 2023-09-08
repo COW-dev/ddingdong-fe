@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
@@ -18,13 +18,13 @@ export default function Index() {
     );
   };
 
-  const moveNext = () => {
+  const moveNext = useCallback(() => {
     setCurrentIndex((prevIndex) =>
       bannerData && prevIndex === bannerData?.data.length - 1
         ? 0
         : prevIndex + 1,
     );
-  };
+  }, [bannerData]);
 
   useEffect(() => {
     const autoScroll = setInterval(moveNext, 4000);
@@ -32,7 +32,7 @@ export default function Index() {
     return () => {
       clearInterval(autoScroll);
     };
-  }, []);
+  }, [moveNext]);
 
   useEffect(() => {
     if (carousel.current)
