@@ -6,7 +6,14 @@ import { Position } from '@/constants/text';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
 import { Member } from '@/types/club';
-
+const newMember = {
+  id: 0,
+  name: '',
+  department: '',
+  position: '동아리원',
+  phoneNumber: '',
+  studentNumber: '',
+};
 export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
   const [{ token }] = useCookies(['token']);
@@ -26,7 +33,6 @@ export default function Index() {
   function handleSubmit() {
     const parsedMember = parsePosition();
     mutation.mutate({ members: parsedMember, token });
-
     setIsEditing(!isEditing);
   }
   function parsePosition() {
@@ -89,7 +95,7 @@ export default function Index() {
         </div>
       </div>
       <div className=" rounded-xl border-[1.5px] border-gray-100 p-5  ">
-        <SearchBar value={keyword} onChange={setKeyword} />
+        {!isEditing && <SearchBar value={keyword} onChange={setKeyword} />}
         <div className="mb-3 mt-14 text-sm font-semibold text-gray-500 md:text-base">
           <span className="text-blue-500 opacity-70">
             {filteredMembers.length}명
@@ -102,14 +108,7 @@ export default function Index() {
               isEditing={isEditing}
               setMembers={setMembers}
               members={members}
-              member={{
-                id: 0,
-                name: '',
-                department: '',
-                position: '동아리원',
-                phoneNumber: '',
-                studentNumber: '',
-              }}
+              member={newMember}
             />
           )}
           {filteredMembers.map((info) => (

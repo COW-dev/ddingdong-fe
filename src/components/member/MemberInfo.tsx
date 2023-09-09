@@ -1,11 +1,13 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 import Add from '@/assets/add.svg';
 import Cancle from '@/assets/cancle-red.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
 import { Position } from '@/constants/text';
 import { Member } from '@/types/club';
+import { isMissingData } from '@/utils/validator';
 
 type Props = {
   member: Member;
@@ -57,11 +59,11 @@ export default function MemberInfo({
     }));
   }
   function handleCreateMember() {
+    if (isMissingData(value))
+      return toast.error('입력하지 않은 정보가 존재해요.');
     setPositionNum(0);
-    setMembers([
-      ...members,
-      { ...value, id: members[members?.length - 1]?.id + 1 },
-    ]);
+    const id = members.length > 0 ? members[members?.length - 1]?.id + 1 : 1;
+    setMembers([...members, { ...value, id: id }]);
     setValue({
       id: 0,
       name: '',
