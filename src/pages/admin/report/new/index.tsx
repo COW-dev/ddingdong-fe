@@ -45,7 +45,7 @@ export default function Index() {
     const reportOnedate =
       parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
     const reportTwodate =
-      parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
+      parseDateToString(new Date(String(reportTwo.date.startDate))) + ' ';
     const reportData = [
       {
         term: reportOne.term,
