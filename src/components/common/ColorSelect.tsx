@@ -52,7 +52,7 @@ export default function ColorSelect({ name, setData, list }: SelectProps) {
             <div
               key={`option-${index}`}
               className={`block rounded-lg px-4 py-2 text-sm hover:bg-gray-50  text-${item.color}-500`}
-              onClick={(e) => {
+              onClick={() => {
                 setValue(item);
                 setData((prev: any) => ({
                   ...prev,
