@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import type { GetServerSideProps } from 'next/types';
-import toast from 'react-hot-toast';
 import BottomButton from '@/components/club/BottomButton';
 import ClubHeading from '@/components/club/ClubHeading';
+import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
 import { parseImgUrl } from '@/utils/parse';
 
@@ -17,6 +17,7 @@ export default function Index({ clubId }: ClubDetailProps) {
     const expUrl = /https?:\/\/[^\s"]/;
     return expUrl.test(strUrl);
   }
+
   function parseUrl(line: string) {
     if (checkUrl(line)) {
       const words = line.split(' ');
@@ -45,11 +46,16 @@ export default function Index({ clubId }: ClubDetailProps) {
   if (isError) {
     <div>error</div>;
   }
+  const { data: allClubs } = useAllClubs();
 
   if (isSuccess) {
     const clubInfo = data.data;
-    const { name, introduction, activity, ideal, introduceImageUrls } =
+    const { name, introduction, activity, ideal, formUrl, introduceImageUrls } =
       clubInfo;
+
+    const isRecruit =
+      allClubs?.data.find((club) => club.name === name)?.recruitStatus ===
+        '모집 중' && formUrl;
 
     const parsedImg = introduceImageUrls && parseImgUrl(introduceImageUrls[0]);
     return (
@@ -108,7 +114,7 @@ export default function Index({ clubId }: ClubDetailProps) {
             </ul>
           </section>
         </main>
-        <div className={`${!clubInfo.formUrl && 'hidden'}`}>
+        <div className={`${!isRecruit && 'hidden'}`}>
           <BottomButton href={clubInfo.formUrl}>지원하기</BottomButton>
         </div>
       </>

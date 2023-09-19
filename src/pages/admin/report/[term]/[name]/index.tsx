@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
 import Detail from '@/components/report/detail/index';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
@@ -17,6 +18,7 @@ type ReportDetailProps = {
 
 export default function Index({ term, name }: ReportDetailProps) {
   const [{ token }] = useCookies(['token']);
+  const currentTermData = useCurrentReports(token).data?.data.term ?? 1;
   const {
     data: { data: clubData },
   } = useMyClub(token);
@@ -29,34 +31,9 @@ export default function Index({ term, name }: ReportDetailProps) {
   useEffect(() => {
     if (reportDataList?.data) {
       setReportData([reportDataList.data[0], reportDataList.data[1]]);
-      // parseTime(reportData[0]?.id);
-      // parseTime(reportData[1]?.id);
     }
   }, [reportDataList]);
   if (reportData.length === 0) return;
-
-  // function handleClickCancel() {
-  //   setIsEditing(false);
-  //   reportDataList &&
-  //     setReportData([reportDataList.data[0], reportDataList.data[1]]);
-  // }
-  // function parseTime(index: number) {
-  //   setReportData((prev) => {
-  //     const updatedReportData = prev?.map((report) =>
-  //       report.id === index
-  //         ? {
-  //             ...report,
-  //             startTime: report.startDate.split(' ')[1],
-  //             endTime: report.endDate.split(' ')[1],
-  //             startDate: report.startDate.split(' ')[0],
-  //             endDate: report.endDate.split(' ')[0],
-  //           }
-  //         : report,
-  //     );
-  //     console.log('updatedReportData2324', updatedReportData);
-  //     return updatedReportData;
-  //   });
-  // }
 
   function handleClickDelete() {
     deleteMutation.mutate({
@@ -64,43 +41,6 @@ export default function Index({ term, name }: ReportDetailProps) {
       token: token,
     });
   }
-  // function handleClickSubmit() {
-  //   setIsEditing(false);
-  //   const formData = new FormData();
-  //   const newReportData = [
-  //     {
-  //       term: 1,
-  //       date: {
-  //         startDate: reportData[0].startDate + ' ' + reportData[0].startTime,
-  //         endDate: reportData[0].endDate + ' ' + reportData[0].endTime,
-  //       },
-  //       place: reportData[0].place,
-  //       content: reportData[0].content,
-  //       participants: reportData[0].participants,
-  //     },
-  //     {
-  //       term: 1,
-  //       date: {
-  //         startDate: reportData[1].startDate + ' ' + reportData[1].startTime,
-  //         endDate: reportData[1].endDate + ' ' + reportData[1].startTime,
-  //       },
-  //       place: reportData[0].place,
-  //       content: reportData[0].content,
-  //       participants: reportData[0].participants,
-  //     },
-  //   ];
-  //   formData.append(
-  //     'reportData',
-  //     new Blob([JSON.stringify(newReportData)], { type: 'application/json' }),
-  //   );
-  //   updateFileOne &&
-  //     formData.append('uploadFiles1', updateFileOne, `uploadFiles`);
-  //   updateFileTwo &&
-  //     formData.append('uploadFiles2', updateFileTwo, `uploadFiles`);
-  //   formData.append('token', token);
-  //   return updateMutation.mutate(formData);
-  // }
-
   return (
     <>
       <Head>
@@ -143,7 +83,9 @@ export default function Index({ term, name }: ReportDetailProps) {
       </div>
       <div className=" fixed bottom-4 right-4 md:mt-6 ">
         <button
-          className="mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base"
+          className={`mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
+            currentTermData !== term && `hidden`
+          }`}
           onClick={handleClickDelete}
         >
           보고서 삭제하기

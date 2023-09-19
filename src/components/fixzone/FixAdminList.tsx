@@ -1,7 +1,5 @@
-import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
-import { Fix } from '@/types/fixzone';
 import FixItem from './FixItem';
 
 export default function FixAdminList() {

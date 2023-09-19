@@ -54,19 +54,9 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
         return updatedReportData;
       });
   }
-  // function handleDateChange(startdate: string, key: string, id: number) {
-  //   setReportData &&
-  //     setReportData((prev) => {
-  //       const updatedReportData = prev.map((report) =>
-  //         report.id === id ? { ...report, [key]: startdate } : report,
-  //       );
-  //       return updatedReportData;
-  //     });
-  //   console.log(reportData);
-  // }
 
   return (
-    <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between ">
+    <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between">
       <div className="mb-2 flex flex-col">
         {/* sm */}
         <div className="mb-4 inline-block md:hidden">
@@ -150,9 +140,9 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
                 role === ROLE_TYPE.ROLE_CLUB && `lg:grid-cols-2`
               }`}
             >
-              {participants?.map((participant) => (
+              {participants?.map((participant, index) => (
                 <li
-                  key={participant.name}
+                  key={`participant-${index}`}
                   className={`${participant.name === '' && `hidden`}`}
                 >
                   {participant.name} | {participant.studentId} |
