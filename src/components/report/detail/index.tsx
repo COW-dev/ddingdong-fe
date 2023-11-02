@@ -57,7 +57,7 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
 
   return (
     <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between">
-      <div className="mb-2 flex flex-col">
+      <div className="mb-2 flex w-2/3 flex-col">
         {/* sm */}
         <div className="mb-4 inline-block md:hidden">
           <div className="z-10 flex w-full flex-col items-center rounded-xl ">
