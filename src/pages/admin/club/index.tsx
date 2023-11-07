@@ -79,7 +79,7 @@ export default function Index() {
                 onClick={() => {
                   setClub(club);
                   handleModal({
-                    title: '동아리 관리 하기',
+                    title: '동아리 관리하기',
                     content: (
                       <ManageClub
                         id={club.id}

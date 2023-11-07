@@ -57,7 +57,7 @@ export default function Participants({ data, setData, closeModal }: Props) {
 
       <div className="flex items-center justify-center text-xs text-gray-400 md:pt-2 md:text-sm ">
         명단이 보여지지 않는다면
-        <Link href="/member" className="pl-2 text-purple-500">
+        <Link href="/member" className="pl-2 text-blue-500">
           동아리원 수정
         </Link>
         을 진행해주세요
