@@ -32,12 +32,12 @@ export default function ManageClub({
           <Image
             src={Score}
             alt="동아리 점수"
-            width={100}
-            height={100}
+            width={70}
+            height={70}
             className=" m-auto"
           />
-          <span className="mt-2 text-sm font-bold text-gray-700 md:text-xl">
-            동아리 점수 수정하기
+          <span className="mt-4 text-sm font-bold text-gray-700 md:text-xl">
+            동아리 점수 수정
           </span>
         </div>
       </Link>
@@ -48,12 +48,12 @@ export default function ManageClub({
         <Image
           src={Bin}
           alt="동아리 삭제"
-          width={100}
-          height={100}
+          width={68}
+          height={68}
           className=" m-auto"
         />
-        <span className="mt-2 text-sm font-bold text-gray-700 md:text-xl">
-          동아리 삭제 하기
+        <span className="mt-4 text-sm font-bold text-gray-700 md:text-xl">
+          동아리 삭제
         </span>
       </div>
     </div>

@@ -71,7 +71,7 @@ export default function CreateScore({
           </div>
           <button
             type="submit"
-            className="my-5 w-full rounded-xl bg-purple-400 py-4 font-bold text-white transition-colors hover:bg-purple-500 sm:py-4 sm:text-lg md:mt-3"
+            className="my-5 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-500 sm:py-4 sm:text-lg md:mt-3"
           >
             동아리 점수 입력하기
           </button>

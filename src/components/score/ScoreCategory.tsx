@@ -22,7 +22,7 @@ export default function ScoreCategory({
         className="mb-2 ml-2 md:mb-auto md:ml-4 md:mt-2"
       />
       <div className="my-2 mb-2 flex w-36 flex-col justify-end text-right md:mx-1 md:mb-5  ">
-        <span className=" text-md mr-2 font-bold text-purple-500 lg:text-xl">
+        <span className=" text-md mr-2 font-bold text-blue-500 lg:text-xl">
           {scoreCategory}
         </span>
         <span className="text-md mr-2 font-bold md:text-xl">
