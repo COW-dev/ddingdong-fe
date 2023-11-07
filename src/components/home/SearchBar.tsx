@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
+import Search from '@/assets/search.svg';
 
 type SearchBarProps = {
   value: string;
@@ -22,11 +23,11 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
           className="w-full bg-inherit pl-1 pr-2 text-base font-semibold outline-none md:text-lg"
         />
         <Image
-          src="/search.svg"
+          src={Search}
           width={50}
           height={50}
           alt="search"
-          className="w-5 md:w-6"
+          className="w-5 cursor-pointer md:w-6"
         />
       </div>
     </div>

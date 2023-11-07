@@ -87,7 +87,6 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
             </span>
           </div>
         </div>
-
         <button
           className={`ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
             !isRecruit && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
@@ -99,7 +98,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
             target="_blank"
             className="inline-block w-full py-3.5"
           >
-            지원하기
+            {isRecruit ? '지원하기' : '모집 마감'}
           </a>
         </button>
       </div>
