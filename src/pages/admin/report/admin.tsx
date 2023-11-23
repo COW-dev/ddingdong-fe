@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
@@ -13,9 +13,11 @@ export default function Index() {
   const [{ token }] = useCookies(['token']);
   const [visible, setVisible] = useState<boolean>(true);
   const [club, setClub] = useState<string>('너나들이');
-  const currentTerm = useCurrentReports(token).data?.data.term ?? 1;
-  const [term, setTerm] = useState<number>(currentTerm);
-
+  const currentTerm = useCurrentReports(token).data?.data.term;
+  const [term, setTerm] = useState<number>(1);
+  useEffect(() => {
+    if (currentTerm) setTerm(currentTerm);
+  }, [currentTerm]);
   return (
     <>
       <Head>
