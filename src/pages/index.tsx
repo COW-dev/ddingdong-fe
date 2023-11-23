@@ -27,10 +27,15 @@ export default function Home() {
 
   useEffect(() => {
     const clubList = data?.data ?? [];
-    const sortedClubs = [...clubList].sort(
+    let sortedClubs = [...clubList].sort(
       (a, b) =>
         a.category.localeCompare(b.category) || a.name.localeCompare(b.name),
     );
+    const semiClubs = sortedClubs.filter(
+      (club) => club.category === '준동아리',
+    );
+    sortedClubs = sortedClubs.filter((club) => club.category !== '준동아리');
+    sortedClubs = [...sortedClubs, ...semiClubs];
     setClubs(sortedClubs);
     setFilteredClubs(sortedClubs);
   }, [data]);
