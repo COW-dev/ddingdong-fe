@@ -7,17 +7,12 @@ import ArrowUp from '@/assets/arrowUp.svg';
 import Heading from '@/components/common/Heading';
 import Category from '@/components/report/category';
 import ReportItem from '@/components/report/ReportItem';
-import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 
 export default function Index() {
-  const [{ token }] = useCookies(['token']);
   const [visible, setVisible] = useState<boolean>(true);
   const [club, setClub] = useState<string>('너나들이');
-  const currentTerm = useCurrentReports(token).data?.data.term;
   const [term, setTerm] = useState<number>(1);
-  useEffect(() => {
-    if (currentTerm) setTerm(currentTerm);
-  }, [currentTerm]);
+
   return (
     <>
       <Head>
