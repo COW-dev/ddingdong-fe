@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import SearchImg from '@/assets/search.svg';
@@ -10,7 +11,6 @@ import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import useModal from '@/hooks/common/useModal';
 import { AdminClub } from '@/types/club';
 import ClubList from './ClubList';
-import TermList from './TermList';
 import ModalPortal from '../../common/ModalPortal';
 
 const REPORT_TYPE = {
@@ -34,12 +34,12 @@ const Category = ({
   setVisible,
 }: Props) => {
   const [{ token }] = useCookies(['token']);
-
   const [active, setActive] = useState<string>(REPORT_TYPE.CLUB);
   const [clubList, setClubList] = useState<string[]>([]);
   const { data: clubs } = useAdminAllClubs(token);
   const [week, setWeek] = useState<number>(term);
   const { openModal, visible: modalVisible, closeModal, modalRef } = useModal();
+  console.log(term, week);
 
   useEffect(() => {
     if (clubs) {
@@ -80,8 +80,9 @@ const Category = ({
                     width={10}
                     height={10}
                     alt="leftArrow"
-                    className={`${Number(week) === 1 && `hidden`}`}
                     onClick={() => {
+                      if (week === 1)
+                        return toast.error('이전 회차가 존재하지 않습니다.');
                       setWeek(week - 1);
                     }}
                   />
@@ -93,8 +94,9 @@ const Category = ({
                     width={10}
                     height={10}
                     alt="rightArrow"
-                    className={`${Number(term) === Number(week) && `hidden`}`}
                     onClick={() => {
+                      if (week === Number(term))
+                        return toast.error('다음 회차가 열리지 않았습니다.');
                       setWeek(week + 1);
                     }}
                   />
