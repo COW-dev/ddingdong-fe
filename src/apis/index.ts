@@ -172,6 +172,15 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
     },
   });
 }
+export async function uploadMembers(formdata: FormData) {
+  const token = formdata.get('token');
+  return await api.post('/club/my/club-upload', formdata, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
 export async function updateMembers({ members, token }: UpdateMembers) {
   return await api.put(
     `/club/my/club-members`,
