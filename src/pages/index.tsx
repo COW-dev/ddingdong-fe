@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Filter from '@/assets/filter.svg';
+
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import FilterOption from '@/components/modal/FilterOption';
+import { CatogoryColor } from '@/constants/color';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
-  const [hydrated, setHydrated] = useState(false);
   const [clubs, setClubs] = useState<Array<Club>>([]);
-  const [isFilter, setIsFilter] = useState<boolean>(false);
   const [filteredClubs, setFilteredClubs] = useState<Array<Club>>([]);
   const { isError, data } = useAllClubs();
   const [filterOption, setFilterOption] = useState<{
@@ -26,7 +24,6 @@ export default function Home() {
   });
 
   useEffect(() => {
-    setHydrated(true);
     const clubList = data?.data ?? [];
     let sortedClubs = [...clubList].sort(
       (a, b) =>
@@ -58,31 +55,24 @@ export default function Home() {
   if (isError) {
     return <div>error</div>;
   }
-  if (!hydrated) return null;
+
+  function filterCategory(item: string) {
+    const updatedCategory = filterOption.category.includes(item)
+      ? filterOption.category.filter((club) => club !== item)
+      : [...filterOption.category, item];
+    setFilterOption((prev) => ({ ...prev, category: updatedCategory }));
+  }
 
   return (
     <>
       <div className="mb-1.5 text-sm font-semibold md:mb-2 md:text-base">
         <Slider />
       </div>
-      <div className="flex items-center justify-center">
-        <SearchBar value={keyword} onChange={setKeyword} />
-      </div>
+      <SearchBar value={keyword} onChange={setKeyword} />
       <div className="flex justify-between">
         <div className="mb-1.5 flex items-end text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
           총 {filteredClubs.length}개의 동아리
         </div>
-        <div
-          className="flex items-center gap-1 rounded-xl hover:font-bold hover:text-blue-500"
-          onClick={() => setIsFilter(!isFilter)}
-        >
-          <Image src={Filter} width={20} height={20} alt="필터" />
-          <div className="text-sm md:text-base">
-            {isFilter ? `마치기` : `필터`}
-          </div>
-        </div>
-      </div>
-      {isFilter && (
         <FilterOption
           clubs={clubs}
           filteredClubs={filteredClubs}
@@ -90,7 +80,29 @@ export default function Home() {
           option={filterOption}
           setOption={setFilterOption}
         />
-      )}
+      </div>
+
+      <div className="my-2 hidden w-full rounded-xl bg-gray-50 p-2 px-4 font-semibold text-gray-500 md:flex">
+        <span
+          className={`cursor-pointer ${
+            filterOption.category.length === 0 && 'text-blue-500'
+          }`}
+          onClick={() => setFilterOption((prev) => ({ ...prev, category: [] }))}
+        >
+          전체
+        </span>
+        {CatogoryColor.map((category, index) => (
+          <div
+            onClick={() => filterCategory(category.title)}
+            className={`cursor-pointer before:p-2 before:text-gray-300 before:content-['|'] ${
+              filterOption.category.includes(category.title) && 'text-blue-500'
+            }`}
+            key={`category${index}`}
+          >
+            {category.title}
+          </div>
+        ))}
+      </div>
       <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
         {filteredClubs.map((club) => (
           <ClubCard

@@ -87,31 +87,35 @@ export default function FilterOption({
   const [active, setActive] = useState<string>('');
   function handleOption(item: string) {
     setActive(item);
-    item === active && isFilter ? setIsFilter(false) : setIsFilter(true);
+    item === active && isFilter
+      ? (setIsFilter(false), setActive(''))
+      : setIsFilter(true);
   }
 
   return (
     <div
-      className="mb-5 rounded-xl bg-gray-50 px-2 text-sm hover:cursor-pointer md:text-base"
       tabIndex={0}
-      onBlur={() => setIsFilter(false)}
+      onBlur={() => {
+        setIsFilter(false), setActive('');
+      }}
     >
-      <div className="flex flex-row-reverse">
+      <div className="flex flex-row-reverse gap-2">
         {['카테고리', '정렬', '모집기준'].map((item) => (
           <div
             key={`filter-${item}`}
             onClick={() => handleOption(item)}
-            className={`m-2 gap-1 p-1 font-semibold ${
+            onBlur={() => setActive('')}
+            className={`mb-1.5 cursor-pointer font-semibold  md:mb-2 ${
               item === active ? `border-b text-blue-500` : `text-gray-500`
-            }`}
+            } ${item === '카테고리' && 'md:hidden'}`}
           >
-            <span> {item}</span>
+            <span>{item}</span>
           </div>
         ))}
       </div>
       <div className="relative m-auto flex max-w-6xl flex-row-reverse">
         {isFilter && (
-          <div className="absolute w-50  rounded-xl bg-white p-2 shadow-xl">
+          <div className="absolute w-44  rounded-xl bg-white p-2 shadow-xl">
             {active === '모집기준' && (
               <div>
                 <div
@@ -150,7 +154,7 @@ export default function FilterOption({
                   onClick={() =>
                     setOption((prev) => ({ ...prev, sort: false }))
                   }
-                  className={`rounded-xl p-2 px-5  ${
+                  className={`cursor-pointer rounded-xl p-2 px-5  ${
                     option.sort ? `opacity-50` : `bg-gray-100 opacity-100`
                   }`}
                 >
@@ -158,7 +162,7 @@ export default function FilterOption({
                 </div>
                 <div
                   onClick={() => setOption((prev) => ({ ...prev, sort: true }))}
-                  className={`rounded-xl p-2 px-5 ${
+                  className={`cursor-pointer rounded-xl p-2 px-5 ${
                     option.sort ? `bg-gray-100 opacity-100` : `opacity-50`
                   }`}
                 >
@@ -168,7 +172,7 @@ export default function FilterOption({
             )}
 
             {active === '카테고리' && (
-              <div>
+              <div className="md:hidden">
                 <div
                   onClick={() =>
                     setOption((prev) => ({ ...prev, category: [] }))
