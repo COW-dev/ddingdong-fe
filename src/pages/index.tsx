@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
-import FilterCategory from '@/components/home/FilterCategory';
 import SearchBar from '@/components/home/SearchBar';
 import FilterOption from '@/components/modal/FilterOption';
+import { CatogoryColor } from '@/constants/color';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
 
@@ -28,34 +29,38 @@ export default function Home() {
       (a, b) =>
         a.category.localeCompare(b.category) || a.name.localeCompare(b.name),
     );
-    sortedClubs = resortSemiClub(sortedClubs);
-    setClubs(sortedClubs);
-    setFilteredClubs(sortedClubs);
-  }, [data]);
-
-  useEffect(() => {
-    const filterClubs = () => {
-      return clubs.filter((club) =>
-        [club.name, club.tag, club.category].some((property) =>
-          property.includes(keyword.toUpperCase()),
-        ),
-      );
-    };
-
-    setFilteredClubs(filterClubs());
-  }, [clubs, keyword]);
-
-  function resortSemiClub(sortedClubs: Club[]) {
     const semiClubs = sortedClubs.filter(
       (club) => club.category === '준동아리',
     );
     sortedClubs = sortedClubs.filter((club) => club.category !== '준동아리');
     sortedClubs = [...sortedClubs, ...semiClubs];
-    return sortedClubs;
-  }
+    setClubs(sortedClubs);
+    setFilteredClubs(sortedClubs);
+  }, [data]);
 
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setFilteredClubs(
+        clubs.filter(
+          (club) =>
+            club.name.includes(keyword.toUpperCase()) ||
+            club.tag.includes(keyword.toUpperCase()) ||
+            club.category === keyword,
+        ),
+      );
+    }, 300);
+
+    return () => clearTimeout(timeout);
+  }, [clubs, keyword]);
   if (isError) {
     return <div>error</div>;
+  }
+
+  function filterCategory(item: string) {
+    const updatedCategory = filterOption.category.includes(item)
+      ? filterOption.category.filter((club) => club !== item)
+      : [...filterOption.category, item];
+    setFilterOption((prev) => ({ ...prev, category: updatedCategory }));
   }
 
   return (
@@ -76,7 +81,29 @@ export default function Home() {
           setOption={setFilterOption}
         />
       </div>
-      <FilterCategory option={filterOption} setOption={setFilterOption} />
+
+      <div className="my-2 hidden w-full rounded-xl bg-gray-50 p-2 px-4 font-semibold text-gray-500 md:flex">
+        <span
+          className={`cursor-pointer ${
+            filterOption.category.length === 0 && 'text-blue-500'
+          }`}
+          onClick={() => setFilterOption((prev) => ({ ...prev, category: [] }))}
+        >
+          전체
+        </span>
+        {CatogoryColor.map((category, index) => (
+          <div
+            onClick={() => filterCategory(category.title)}
+            className={`cursor-pointer before:p-2 before:text-gray-300 before:content-['|'] ${
+              filterOption.category.includes(category.title) && 'text-blue-500'
+            }`}
+            key={`category${index}`}
+          >
+            {category.title}
+          </div>
+        ))}
+      </div>
+
       <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
         {filteredClubs.map((club) => (
           <ClubCard
