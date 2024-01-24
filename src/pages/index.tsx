@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
-
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
 import SearchBar from '@/components/home/SearchBar';
 import FilterOption from '@/components/modal/FilterOption';
-import { CatogoryColor } from '@/constants/color';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
 
@@ -58,13 +56,6 @@ export default function Home() {
 
   if (isError) {
     return <div>error</div>;
-  }
-
-  function filterCategory(item: string) {
-    const updatedCategory = filterOption.category.includes(item)
-      ? filterOption.category.filter((club) => club !== item)
-      : [...filterOption.category, item];
-    setFilterOption((prev) => ({ ...prev, category: updatedCategory }));
   }
 
   return (
