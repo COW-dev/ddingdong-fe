@@ -119,8 +119,8 @@ export default function FilterOption({
                 option={option}
                 filterOption={filterOption}
               />
-           )}
-          </div>
+            )}
+         </div>
         )}
       </div>
     </div>
