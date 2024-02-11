@@ -1,16 +1,22 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import Filter from '@/assets/filter.svg';
-
+import Modal from '@/components/common/Modal';
 import Slider from '@/components/common/Slider';
+import LocalUserForm from '@/components/event/LocalUserForm';
 import ClubCard from '@/components/home/ClubCard';
 import SearchBar from '@/components/home/SearchBar';
 import FilterOption from '@/components/modal/FilterOption';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
+import useModal from '@/hooks/common/useModal';
 import type { Club } from '@/types/club';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
+  const eventStorage =
+    typeof window !== 'undefined' ? localStorage.getItem('date') : null;
+  const { openModal, visible, closeModal, modalRef } = useModal();
   const [clubs, setClubs] = useState<Array<Club>>([]);
   const [isFilter, setIsFilter] = useState<boolean>(false);
   const [filteredClubs, setFilteredClubs] = useState<Array<Club>>([]);
@@ -24,6 +30,9 @@ export default function Home() {
     recruit: [],
     sort: true,
   });
+  function handleOpenModal() {
+    openModal();
+  }
 
   useEffect(() => {
     const clubList = data?.data ?? [];
@@ -63,7 +72,21 @@ export default function Home() {
       <div className="mb-1.5 text-sm font-semibold md:mb-2 md:text-base">
         <Slider />
       </div>
-      <SearchBar value={keyword} onChange={setKeyword} />
+      <div className="flex items-center justify-center">
+        <SearchBar value={keyword} onChange={setKeyword} />
+        {eventStorage ? (
+          <Link href="/event" className="mb-5 mt-6 md:mb-3 md:mt-8">
+            이벤트
+          </Link>
+        ) : (
+          <h5
+            className="mb-5 mt-6 md:mb-3 md:mt-8"
+            onClick={() => handleOpenModal()}
+          >
+            박람회
+          </h5>
+        )}
+      </div>
       <div className="flex justify-between">
         <div className="mb-1.5 flex items-end text-sm font-semibold text-gray-500 md:mb-2 md:text-base">
           총 {filteredClubs.length}개의 동아리
@@ -99,6 +122,14 @@ export default function Home() {
           />
         ))}
       </ul>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'동아리 박람회 이벤트 참여'}
+        closeModal={closeModal}
+      >
+        <LocalUserForm closeModal={closeModal} />
+      </Modal>
     </>
   );
 }
