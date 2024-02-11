@@ -17,6 +17,7 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
+import { User } from '@/types/event';
 
 import {
   Fix,
@@ -365,7 +366,14 @@ export async function getMyScore(
     },
   });
 }
-
+export async function getMyCollects(
+  studentName: string,
+  studentNumber: number,
+): Promise<AxiosResponse<User, unknown>> {
+  return await api.get(
+    `/qr-stamps/?studentName=${studentName}&studentNumber=${studentNumber}`,
+  );
+}
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
   // const cookies = new Cookies(); //?
