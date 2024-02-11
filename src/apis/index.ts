@@ -174,7 +174,7 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
 }
 export async function uploadMembers(formdata: FormData) {
   const token = formdata.get('token');
-  return await api.post('/club/my/club-upload', formdata, {
+  return await api.put('/club/my/club-members', formdata, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',

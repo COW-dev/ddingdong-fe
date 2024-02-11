@@ -18,7 +18,7 @@ export function useUploadMembers(): UseMutationResult<
 
   return useMutation(uploadMembers, {
     onSuccess() {
-      queryClient.invalidateQueries(['/club/my/club-upload']);
+      queryClient.invalidateQueries(['/club/my/club-members']);
       router.push('/member');
       toast.success('동아리원을 성공적으로 등록했어요.');
     },

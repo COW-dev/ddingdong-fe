@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import UploadExcel from '@/components/common/UploadExcel';
 import { useUploadMembers } from '@/hooks/api/member/useUploadMembers';
-import useModal from '@/hooks/common/useModal';
 
 type Props = {
   closeModal: () => void;
@@ -17,7 +16,7 @@ export default function MemberUpload({ closeModal }: Props) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData();
-    file && formData.append('excel', file);
+    file && formData.append('clubMemberListFile', file);
     formData.append('token', cookies.token);
     return mutation.mutate(formData);
   }
