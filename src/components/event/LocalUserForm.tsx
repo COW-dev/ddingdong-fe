@@ -14,7 +14,7 @@ export default function LocalUserForm({ closeModal }: Props) {
 
   const handleSubmit = () => {
     localStorage.setItem(
-      'date',
+      'data',
       JSON.stringify({
         studentName: user.studentName,
         studentNumber: user.studentNumber,
