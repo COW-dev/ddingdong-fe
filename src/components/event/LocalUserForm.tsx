@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import router from 'next/router';
 import toast from 'react-hot-toast';
 
@@ -8,7 +8,7 @@ type Props = {
 
 export default function LocalUserForm({ closeModal }: Props) {
   const [user, setUser] = useState({
-    studentNumber: '',
+    studentNumber: 0,
     studentName: '',
   });
 
