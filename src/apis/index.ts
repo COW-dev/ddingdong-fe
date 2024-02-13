@@ -17,7 +17,7 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
-import { User } from '@/types/event';
+import { Colletions, User } from '@/types/event';
 
 import {
   Fix,
@@ -369,7 +369,7 @@ export async function getMyScore(
 export async function getMyCollects(
   studentName: string,
   studentNumber: number,
-): Promise<AxiosResponse<User, unknown>> {
+): Promise<AxiosResponse<Colletions, unknown>> {
   return await api.get(
     `/qr-stamps/?studentName=${studentName}&studentNumber=${studentNumber}`,
   );
