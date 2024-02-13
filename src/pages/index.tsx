@@ -14,6 +14,7 @@ import type { Club } from '@/types/club';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
+  const [hydrated, setHydrated] = useState(false);
   const eventStorage =
     typeof window !== 'undefined' ? localStorage.getItem('data') : null;
   const { openModal, visible, closeModal, modalRef } = useModal();
@@ -35,6 +36,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    setHydrated(true);
     const clubList = data?.data ?? [];
     let sortedClubs = [...clubList].sort(
       (a, b) =>
@@ -66,6 +68,7 @@ export default function Home() {
   if (isError) {
     return <div>error</div>;
   }
+  if (!hydrated) return null;
 
   return (
     <>

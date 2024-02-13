@@ -374,6 +374,14 @@ export async function getMyCollects(
     `/qr-stamps/?studentName=${studentName}&studentNumber=${studentNumber}`,
   );
 }
+export async function getMyQrCode(
+  studentName: string,
+  studentNumber: number,
+): Promise<AxiosResponse<User, unknown>> {
+  return await api.get(
+    `event/qr/?studentName=${studentName}&studentNumber=${studentNumber}`,
+  );
+}
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
   // const cookies = new Cookies(); //?

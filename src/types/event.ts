@@ -12,3 +12,7 @@ export type Stamp = {
   stamp: string;
   collectedAt: string;
 };
+
+export type Uri = {
+  uri: string;
+};
