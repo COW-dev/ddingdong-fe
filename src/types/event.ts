@@ -1,6 +1,6 @@
 export type User = {
   studentName: string;
-  studentNumber: number;
+  studentNumber: string;
 };
 
 export type Colletions = {
@@ -11,6 +11,12 @@ export type Colletions = {
 export type Stamp = {
   stamp: string;
   collectedAt: string;
+};
+
+export type CollectStamp = {
+  studentName: string;
+  studentNumber: string;
+  clubCode: string;
 };
 
 export type Uri = {

@@ -17,7 +17,7 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
-import { Colletions, User } from '@/types/event';
+import { CollectStamp, Colletions, User } from '@/types/event';
 
 import {
   Fix,
@@ -381,6 +381,17 @@ export async function getMyQrCode(
   return await api.get(
     `event/qr/?studentName=${studentName}&studentNumber=${studentNumber}`,
   );
+}
+export async function collectStamp({
+  studentName,
+  studentNumber,
+  clubCode,
+}: CollectStamp) {
+  return await api.post('/qr-stamps/collect', {
+    studentName,
+    studentNumber,
+    clubCode,
+  });
 }
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
