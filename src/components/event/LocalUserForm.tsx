@@ -30,6 +30,7 @@ export default function LocalUserForm({ closeModal }: Props) {
       [event.target.name]: event.target.value,
     }));
   }
+
   return (
     <div className="mt-3 flex w-full flex-col justify-center ">
       <div className="mb-3 flex w-full flex-row items-center ">
