@@ -14,7 +14,7 @@ export default function LocalUserForm({ closeModal }: Props) {
 
   const handleSubmit = () => {
     localStorage.setItem(
-      'date',
+      'user',
       JSON.stringify({
         studentName: user.studentName,
         studentNumber: user.studentNumber,
@@ -29,21 +29,6 @@ export default function LocalUserForm({ closeModal }: Props) {
       [event.target.name]: event.target.value,
     }));
   }
-  // useEffect(() => {
-  //   const currentDate = new Date();
-  //   const nextDate = new Date(
-  //     currentDate.getFullYear(),
-  //     currentDate.getMonth(),
-  //     currentDate.getDate() + 1,
-  //   );
-  //   const timeTillMidnight = nextDate.getTime() - currentDate.getTime();
-
-  //   const timerId = setTimeout(() => {
-  //     localStorage.removeItem('date');
-  //   }, timeTillMidnight);
-
-  //   return () => clearTimeout(timerId);
-  // }, []);
 
   return (
     <div className="mt-3 flex w-full flex-col justify-center ">

@@ -16,7 +16,7 @@ export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
   const [hydrated, setHydrated] = useState(false);
   const eventStorage =
-    typeof window !== 'undefined' ? localStorage.getItem('date') : null;
+    typeof window !== 'undefined' ? localStorage.getItem('user') : null;
   const { openModal, visible, closeModal, modalRef } = useModal();
   const [clubs, setClubs] = useState<Array<Club>>([]);
   const [isFilter, setIsFilter] = useState<boolean>(false);

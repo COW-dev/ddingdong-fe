@@ -4,9 +4,11 @@ import { useMyQrCode } from '@/hooks/api/event/useMyQrCode';
 import { Colletions } from '@/types/event';
 
 export default function Index() {
-  const data =
-    typeof window !== 'undefined' ? localStorage.getItem('date') : null;
-  const init = data ? JSON.parse(data) : { studentNumber: 0, studentName: '' };
+  const userInfo =
+    typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+  const init = userInfo
+    ? JSON.parse(userInfo)
+    : { studentNumber: 0, studentName: '' };
   const [user, setUser] = useState(init);
   const [collects, setCollects] = useState<Colletions>({
     isCompleted: false,
@@ -19,7 +21,7 @@ export default function Index() {
   });
   const qrCode = useMyQrCode(user.studentName, user.studentNumber).data;
   const myCollects = useMyCollects(user.studentName, user.studentNumber).data;
-
+  console.log(user);
   function openQrCode() {
     const qrCodeUri = qrCode?.data?.uri;
     window.open(qrCodeUri, 'qr', qrCodeUri);
