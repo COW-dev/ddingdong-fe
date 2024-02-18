@@ -22,6 +22,7 @@
     "axios": "^1.4.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "embla-carousel-autoplay": "^8.0.0-rc22",
     "embla-carousel-react": "^8.0.0-rc22",
     "lucide-react": "^0.331.0",
     "next": "13.2.4",
