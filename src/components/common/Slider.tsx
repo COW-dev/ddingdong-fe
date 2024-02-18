@@ -1,3 +1,4 @@
+import Autoplay from 'embla-carousel-autoplay';
 import {
   Carousel,
   CarouselContent,
@@ -9,13 +10,16 @@ import Banner from './Banner';
 
 export default function Index() {
   const { data: bannerData } = useAllBanners();
-
+  const option = {
+    loop: true,
+  };
+  const plugin = [
+    Autoplay({
+      delay: 5000,
+    }),
+  ];
   return (
-    <Carousel
-      opts={{
-        loop: true,
-      }}
-    >
+    <Carousel opts={option} plugins={plugin}>
       <CarouselContent>
         {bannerData?.data?.map((resource, index) => (
           <div
