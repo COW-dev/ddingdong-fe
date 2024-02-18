@@ -49,4 +49,4 @@ export type CurrentReport = {
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
-export type ModalType = { title: string; content: React.ReactNode };
+export type ModalType = { title: React.ReactNode; content: React.ReactNode };
