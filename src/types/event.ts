@@ -4,8 +4,8 @@ export type User = {
 };
 
 export type Colletions = {
-  isCompleted: boolean;
-  collects: Stamp[];
+  completed: boolean;
+  collections: Stamp[];
 };
 
 export type Stamp = {
