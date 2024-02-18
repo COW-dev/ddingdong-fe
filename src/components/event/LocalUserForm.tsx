@@ -22,6 +22,7 @@ export default function LocalUserForm({ closeModal }: Props) {
     );
     toast.success('도장을 받을 수 있습니다!');
     router.push('/event');
+    closeModal();
   };
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setUser((prev) => ({
@@ -41,7 +42,7 @@ export default function LocalUserForm({ closeModal }: Props) {
           type="text"
           spellCheck={false}
           value={user.studentName}
-          className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
+          className="w-full rounded-xl bg-pink-50 px-4 py-2.5 outline-none"
           onChange={(e) => handleChange(e)}
         />
       </div>
@@ -54,7 +55,7 @@ export default function LocalUserForm({ closeModal }: Props) {
           type="text"
           spellCheck={false}
           value={user.studentNumber}
-          className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
+          className="w-full rounded-xl bg-pink-50 px-4 py-2.5 outline-none"
           onChange={(e) => handleChange(e)}
         />
       </div>
@@ -62,14 +63,14 @@ export default function LocalUserForm({ closeModal }: Props) {
         <button
           type="button"
           onClick={closeModal}
-          className=" cursor-pointer rounded-lg bg-gray-100 px-4 py-2 text-sm font-bold text-gray-500  transition-colors hover:bg-gray-300 md:w-auto md:py-2.5"
+          className=" cursor-pointer rounded-lg bg-gray-100 px-6 py-2.5 text-sm font-bold text-gray-500  transition-colors hover:bg-gray-300 md:w-auto md:py-2.5"
         >
           취소
         </button>
         <button
           onClick={handleSubmit}
           type="submit"
-          className="ml-2 cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-blue-400 md:w-auto md:py-2.5 "
+          className="ml-2 cursor-pointer rounded-lg bg-pink-400 px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-pink-200 md:w-auto md:py-2.5 "
         >
           이벤트 참여하기
         </button>
