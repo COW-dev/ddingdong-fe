@@ -57,12 +57,12 @@ export default function Index() {
           <span className="ml-1 md:ml-1.5">님</span>
         </div>
         <div className="text-center sm:mt-2 md:my-3">
-          <span className="text-gray-500 sm:hidden">
+          <span className="text-sm text-gray-500 sm:hidden">
             하단의 버튼을 눌러 사용자의 QR코드를 생성해주세요.
           </span>
           <button
             onClick={openQrCode}
-            className="sm:text-md mx-auto mt-2 h-10 w-34 rounded-lg bg-pink-400 font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-40 "
+            className="mt-2 h-10 w-34 rounded-lg bg-pink-400 text-sm font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-48 md:text-lg"
           >
             이벤트 QR 생성
           </button>
