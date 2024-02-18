@@ -183,7 +183,7 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
       <Modal
         visible={visible}
         modalRef={modalRef}
-        title={'활동 명단 작성하기'}
+        title="활동 명단 작성하기"
         closeModal={closeModal}
       >
         <Participants
