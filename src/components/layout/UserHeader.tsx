@@ -27,7 +27,12 @@ export default function UserHeader() {
   const { openModal, visible, closeModal, modalRef } = useModal();
   const eventStorage =
     typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-
+  const expoTitle = (
+    <div className="text-[96%] font-semibold">
+      <span className="mr-2 text-pink-400 ">THE CLUB 시즌즈</span>
+      <span className=" text-gray-700">동아리 박람회 이벤트</span>
+    </div>
+  );
   function handleOpenModal() {
     openModal();
   }
@@ -104,7 +109,7 @@ export default function UserHeader() {
       <Modal
         visible={visible}
         modalRef={modalRef}
-        title={'동아리 박람회 이벤트 참여'}
+        title={expoTitle}
         closeModal={closeModal}
       >
         <LocalUserForm closeModal={closeModal} />
