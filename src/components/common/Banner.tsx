@@ -16,7 +16,7 @@ export default function Banner({ data }: { data: BannerType }) {
   const parsedImgUrl = imgUrl.slice(0, 8) + imgUrl.slice(9);
   return (
     <div
-      className={`flex h-56 w-full flex-col items-center justify-center rounded-xl  md:h-48 md:flex-row bg-${color}-100`}
+      className={`ml-4 flex h-56 flex-col items-center justify-center rounded-xl md:h-48 md:flex-row bg-${color}-100`}
     >
       <Image
         src={parsedImgUrl}
