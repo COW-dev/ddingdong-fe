@@ -27,10 +27,16 @@ export default function StampBoard({ completed, collections }: ColletionProps) {
           style={{
             top: `${top}%`,
             left: `${petalPositionsLeft[index]}%`,
+<<<<<<< HEAD
             transform: `rotate(${Math.random() * 360}deg)`,
           }}
           className={` absolute h-5 w-5 md:hidden ${
             index % 2 === 0 ? 'h-5 w-5 ' : ' h-3 w-3'
+=======
+          }}
+          className={` absolute h-5 w-5 md:hidden ${
+            index % 2 === 0 ? 'h-5 w-5' : 'h-3 w-3'
+>>>>>>> 8e1c768 (design : 꽃잎 추가)
           }`}
         />
       ))}
