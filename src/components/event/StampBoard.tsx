@@ -1,17 +1,17 @@
 import Image from 'next/image';
-import CherryFlower from '@/assets/cherryFlower.svg';
-import Flower from '@/assets/flower.svg';
-import Npay from '@/assets/npay.svg';
+import Petal from '@/assets/petal.svg';
 import { Stamp } from '@/types/event';
-import DrawMessage from './DrawMessge';
+import DrawFooter from './DrawFooter';
+import StampDetail from './StampDetail';
 type ColletionProps = {
   completed: boolean;
   collections: Stamp[];
 };
 
 export default function StampBoard({ completed, collections }: ColletionProps) {
-  const defaltStamp = Flower;
-  const reciveStamp = CherryFlower;
+  const petalPositionsTop = [65, 89, 72, 98, 123, 134, 112, 142, 151, 168];
+  const petalPositionsLeft = [2, 88, 51, 12, 2, 64, 43, 91, 2, 70];
+
   return (
     <>
       <div className="my-7 w-full text-center text-xl font-bold leading-tight md:mt-10 md:text-3xl">
@@ -19,54 +19,22 @@ export default function StampBoard({ completed, collections }: ColletionProps) {
         <span className="text-pink-400">10개의 벚꽃</span>
         <span className="md:ml-1.5">을 채워주세요!</span>
       </div>
-      <div className="align-items-center mt-2 grid grid-cols-2 justify-items-center md:mt-10 md:grid-cols-5 ">
-        {[...Array(10)].map((_, index) => {
-          const collection = collections[index];
-          const stamp = collection ? reciveStamp : defaltStamp;
-          return (
-            <div key={index}>
-              <Image
-                key={index}
-                src={stamp}
-                width={25}
-                height={25}
-                alt={`벚꽃 도장 ${index + 1}`}
-                className={
-                  index % 2 === 0
-                    ? 'mb-10 mt-14 h-20 w-20 md:mb-20 md:mt-0'
-                    : 'h-20 w-20'
-                }
-              />
-              {collection && (
-                <div key={index}>
-                  <span>{collection.stamp}</span>
-                  <span>{collection.collectedAt}</span>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-5 flex flex-col items-center text-xl md:flex-row md:justify-between">
-        <div className="mt-4 flex flex-row items-center justify-center">
-          <Image src={Npay} width={130} height={100} alt={'네이버페이'} />
-          <div className="ml-2 flex flex-col text-[85%] font-bold">
-            <span className="font-semibold text-pink-400">추첨경품</span>
-            <span className="">네이버페이</span>
-            <span className="">1만원(100명)</span>
-          </div>
-        </div>
-        <DrawMessage completed={completed} />
-        <button
-          className={`mt-2 h-10 w-22 rounded-lg text-sm font-semibold transition-colors md:mt-4 md:h-12 md:w-48 md:text-lg ${
-            completed
-              ? ' bg-pink-400 text-white '
-              : 'cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-100'
+      {petalPositionsTop.map((top, index) => (
+        <Image
+          key={index}
+          src={Petal}
+          alt="petal"
+          style={{
+            top: `${top}%`,
+            left: `${petalPositionsLeft[index]}%`,
+          }}
+          className={` absolute h-5 w-5 md:hidden ${
+            index % 2 === 0 ? 'h-5 w-5' : 'h-3 w-3'
           }`}
-        >
-          응모하기
-        </button>
-      </div>
+        />
+      ))}
+      <StampDetail collections={collections} />
+      <DrawFooter completed={completed} />
     </>
   );
 }
