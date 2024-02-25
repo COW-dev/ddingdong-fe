@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Event from '@/assets/event.svg';
+import Map from '@/assets/map.svg';
+import BoothPlace from '@/components/event/BoothPlace';
 import StampBoard from '@/components/event/StampBoard';
 import { useMyCollects } from '@/hooks/api/event/useMyCollects';
 import { useMyQrCode } from '@/hooks/api/event/useMyQrCode';
@@ -13,6 +15,7 @@ export default function Index() {
     ? JSON.parse(userInfo)
     : { studentNumber: 0, studentName: '' };
   const [user, setUser] = useState(init);
+  const [place, setPlace] = useState<boolean>(false);
   const [stampBoard, setStampBoard] = useState<Colletions>({
     completed: false,
     collections: [
@@ -55,23 +58,47 @@ export default function Index() {
           <span className="md:mr-1.5">안녕하세요,</span>
           <span className="text-pink-400">{user.studentName}</span>
           <span className="ml-1 md:ml-1.5">님</span>
-        </div>
-        <div className="text-center sm:mt-2 md:my-3">
-          <span className="text-gray-500 sm:hidden">
-            하단의 버튼을 눌러 사용자의 QR코드를 생성해주세요.
-          </span>
-          <button
-            onClick={openQrCode}
-            className="sm:text-md mx-auto mt-2 h-10 w-34 rounded-lg bg-pink-400 font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-40 "
+          <div
+            className={`float-right mt-0.5 flex items-center text-[85%] font-semibold  text-pink-400 ${
+              place ? 'w-20' : 'w-34'
+            }`}
           >
-            이벤트 QR 생성
-          </button>
+            {place ? (
+              <div className=" float-left" onClick={() => setPlace(false)}>
+                돌아가기
+              </div>
+            ) : (
+              <>
+                <Image src={Map} height={18} width={18} alt="map" />
+                <span onClick={() => setPlace(true)} className="ml-2">
+                  동아리부스 지도
+                </span>
+              </>
+            )}
+          </div>
         </div>
       </div>
-      <StampBoard
-        completed={stampBoard.completed}
-        collections={stampBoard.collections}
-      />
+      {place ? (
+        <BoothPlace />
+      ) : (
+        <>
+          <div className="text-center sm:mt-2 md:my-3">
+            <span className="text-gray-500 sm:hidden">
+              하단의 버튼을 눌러 사용자의 QR코드를 생성해주세요.
+            </span>
+            <button
+              onClick={openQrCode}
+              className="sm:text-md mx-auto mt-2 h-10 w-34 rounded-lg bg-pink-400 font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-40 "
+            >
+              이벤트 QR 생성
+            </button>
+          </div>
+          <StampBoard
+            completed={stampBoard.completed}
+            collections={stampBoard.collections}
+          />
+        </>
+      )}
     </>
   );
 }
