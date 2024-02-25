@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Petal from '@/assets/petal.svg';
-import { Stamp } from '@/types/event';
+import { Stamp, User } from '@/types/event';
 import DrawFooter from './DrawFooter';
 import StampDetail from './StampDetail';
 type ColletionProps = {
@@ -27,9 +27,10 @@ export default function StampBoard({ completed, collections }: ColletionProps) {
           style={{
             top: `${top}%`,
             left: `${petalPositionsLeft[index]}%`,
+            transform: `rotate(${Math.random() * 360}deg)`,
           }}
           className={` absolute h-5 w-5 md:hidden ${
-            index % 2 === 0 ? 'h-5 w-5' : 'h-3 w-3'
+            index % 2 === 0 ? 'h-5 w-5 ' : ' h-3 w-3'
           }`}
         />
       ))}
