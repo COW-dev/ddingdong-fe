@@ -8,20 +8,19 @@ import { useMyCollects } from '@/hooks/api/event/useMyCollects';
 import { useMyQrCode } from '@/hooks/api/event/useMyQrCode';
 import { Colletions } from '@/types/event';
 
+const init = {
+  studentNumber: 0,
+  studentName: '',
+};
 export default function Index() {
-  const userInfo =
-    typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-  const init = userInfo
-    ? JSON.parse(userInfo)
-    : { studentNumber: 0, studentName: '' };
   const [user, setUser] = useState(init);
   const [place, setPlace] = useState<boolean>(false);
   const [stampBoard, setStampBoard] = useState<Colletions>({
     completed: false,
     collections: [
       {
-        stamp: '',
-        collectedAt: '',
+        stamp: 'COW',
+        collectedAt: '2023-08-11',
       },
     ],
   });
@@ -34,8 +33,12 @@ export default function Index() {
   }
   useEffect(() => {
     const userInfo = localStorage.getItem('user');
-    const init = userInfo ? JSON.parse(userInfo) : user;
-    setUser(init);
+    if (userInfo) {
+      const init = userInfo
+        ? JSON.parse(userInfo)
+        : { studentNumber: 0, studentName: '' };
+      setUser(init);
+    }
   }, []);
   useEffect(() => {
     if (myCollects) {
@@ -94,8 +97,8 @@ export default function Index() {
             </button>
           </div>
           <StampBoard
-            completed={stampBoard.completed}
-            collections={stampBoard.collections}
+            completed={stampBoard?.completed}
+            collections={stampBoard?.collections}
           />
         </>
       )}
