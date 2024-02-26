@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Event from '@/assets/event.svg';
 import Map from '@/assets/map.svg';
+import LgEvent from '@/assets/md_event.svg';
 import BoothPlace from '@/components/event/BoothPlace';
 import StampBoard from '@/components/event/StampBoard';
 import { useMyCollects } from '@/hooks/api/event/useMyCollects';
@@ -19,8 +20,8 @@ export default function Index() {
     completed: false,
     collections: [
       {
-        stamp: 'COW',
-        collectedAt: '2023-08-11',
+        stamp: '',
+        collectedAt: '',
       },
     ],
   });
@@ -45,7 +46,6 @@ export default function Index() {
       setStampBoard(myCollects.data);
     }
   }, [myCollects]);
-  console.log(myCollects?.data);
 
   return (
     <>
@@ -54,26 +54,39 @@ export default function Index() {
         width={1544}
         height={380}
         alt="동아리 박람회"
-        className="h-54 w-full"
+        className="h-54 w-full md:hidden"
+      />
+      <Image
+        src={LgEvent}
+        width={1440}
+        height={235}
+        alt="동아리 박람회"
+        className="hidden md:block md:w-full"
       />
       <div className="flex w-full flex-col justify-between md:flex-row md:items-end">
-        <div className="my-5 w-full text-xl font-bold leading-tight md:mt-10 md:w-1/3 md:text-3xl">
+        <div className="my-5 w-full text-xl font-bold leading-tight md:mt-10 md:text-3xl">
           <span className="md:mr-1.5">안녕하세요,</span>
           <span className="text-pink-400">{user.studentName}</span>
           <span className="ml-1 md:ml-1.5">님</span>
           <div
-            className={`float-right mt-0.5 flex items-center text-[85%] font-semibold  text-pink-400 ${
+            className={`float-right mt-0.5 flex items-center text-[85%] font-semibold  text-pink-400  ${
               place ? 'w-20' : 'w-34'
             }`}
           >
             {place ? (
-              <div className=" float-left" onClick={() => setPlace(false)}>
+              <div
+                className=" float-left md:text-base"
+                onClick={() => setPlace(false)}
+              >
                 돌아가기
               </div>
             ) : (
               <>
                 <Image src={Map} height={18} width={18} alt="map" />
-                <span onClick={() => setPlace(true)} className="ml-2">
+                <span
+                  onClick={() => setPlace(true)}
+                  className="ml-2 md:text-base"
+                >
                   동아리부스 지도
                 </span>
               </>

@@ -23,7 +23,7 @@ export default function DrawFooter({ completed }: Props) {
 
   return (
     <>
-      <div className="mt-5 flex flex-col items-center text-xl md:flex-row md:justify-between">
+      <div className="mt-5 flex flex-col items-center text-xl">
         <div className="mt-4 flex flex-row items-center justify-center">
           <Image src={Npay} width={130} height={100} alt={'네이버페이'} />
           <div className="ml-2 flex flex-col text-[85%] font-bold">
@@ -36,7 +36,7 @@ export default function DrawFooter({ completed }: Props) {
         <button
           onClick={() => handleOpenModal()}
           //   disabled={!completed}
-          className={`mt-2 h-10 w-22 rounded-lg text-sm font-semibold transition-colors md:mt-4 md:h-12 md:w-48 md:text-lg ${
+          className={`mt-4 h-10 w-22 rounded-lg text-sm font-semibold transition-colors md:mt-8 md:h-12 md:w-48 md:text-lg ${
             completed
               ? ' bg-pink-400 text-white '
               : 'cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-100'

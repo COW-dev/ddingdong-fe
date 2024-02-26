@@ -10,7 +10,7 @@ type Props = {
 export default function StampDetail({ collections }: Props) {
   console.log(collections);
   return (
-    <div className="align-items-center mt-2 grid grid-cols-2 justify-items-center md:mt-10 md:grid-cols-5 ">
+    <div className="align-items-center mt-2 grid grid-cols-2 justify-items-center md:mt-10">
       {[...Array(10)].map((_, index) => {
         const collection = collections[index];
         return (
@@ -21,11 +21,8 @@ export default function StampDetail({ collections }: Props) {
               width={25}
               height={25}
               alt={`벚꽃 도장 ${index + 1}`}
-              className={
-                index % 2 === 0
-                  ? 'mb-5 mt-14 h-20 w-20 md:mb-20 md:mt-0'
-                  : 'h-20 w-20'
-              }
+              className={`h-20 w-20
+                ${index % 2 === 0 && ' mb-5 mt-20'}`}
             />
             {collection && (
               <div

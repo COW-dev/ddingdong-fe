@@ -13,7 +13,7 @@ export default function DrawMessage({ completed }: Props) {
   const message = isCompleted(completed);
   return (
     <>
-      <div className="mt-10 flex flex-col items-center md:mt-5">
+      <div className="mt-10 flex flex-col items-center md:mt-12">
         <span className={completed ? 'text-pink-500' : 'font-bold'}>
           {message.main}
         </span>
