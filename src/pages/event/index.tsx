@@ -23,8 +23,8 @@ export default function Index() {
     completed: false,
     collections: [
       {
-        stamp: 'COW',
-        collectedAt: '2023-08-11',
+        stamp: '',
+        collectedAt: '',
       },
     ],
   });
@@ -74,7 +74,7 @@ export default function Index() {
           <span className="text-pink-400">{user?.studentName}</span>
           <span className="ml-1 md:ml-1.5">님</span>
           <div
-            className={`float-right mt-0.5 flex items-center text-[85%] font-semibold  text-pink-400 ${
+            className={`float-right mt-0.5 flex items-center text-[85%] font-semibold  text-pink-400  ${
               place ? 'w-20' : 'w-34'
             }`}
           >
