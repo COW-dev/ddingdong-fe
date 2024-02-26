@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import router from 'next/router';
 import toast from 'react-hot-toast';
+import { isMissingData } from '@/utils/validator';
 
 type Props = {
   closeModal: () => void;
@@ -8,15 +9,18 @@ type Props = {
 
 export default function LocalUserForm({ closeModal }: Props) {
   const [user, setUser] = useState({
-    studentNumber: 0,
+    studentNumber: '',
+    studentMajor: '',
     studentName: '',
   });
 
   const handleSubmit = () => {
+    if (isMissingData(user)) return toast.error('이름과 학번을 확인해주세요.');
     localStorage.setItem(
       'user',
       JSON.stringify({
         studentName: user.studentName,
+        studentMajor: user.studentMajor,
         studentNumber: user.studentNumber,
       }),
     );
@@ -55,6 +59,19 @@ export default function LocalUserForm({ closeModal }: Props) {
           type="text"
           spellCheck={false}
           value={user.studentNumber}
+          className="w-full rounded-xl bg-pink-50 px-4 py-2.5 outline-none"
+          onChange={(e) => handleChange(e)}
+        />
+      </div>
+      <div className="mb-3 flex w-full flex-row items-center">
+        <label className="inline-block w-20 font-semibold text-gray-500">
+          학과
+        </label>
+        <input
+          name="studentMajor"
+          type="text"
+          spellCheck={false}
+          value={user.studentMajor}
           className="w-full rounded-xl bg-pink-50 px-4 py-2.5 outline-none"
           onChange={(e) => handleChange(e)}
         />

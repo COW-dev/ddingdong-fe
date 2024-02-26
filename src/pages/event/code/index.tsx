@@ -7,8 +7,8 @@ type UserProps = {
   studentNumber: string;
 };
 export default function Index({ studentName, studentNumber }: UserProps) {
-  const [name, setStudentName] = useState(studentName);
-  const [number, setStudentNumber] = useState(studentNumber);
+  const [name, setName] = useState(studentName);
+  const [number, setNumber] = useState(studentNumber);
   const [code, setCode] = useState('');
   const mutation = useCollectStamp();
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -16,7 +16,6 @@ export default function Index({ studentName, studentNumber }: UserProps) {
   }
   function handelSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(name, number);
     mutation.mutate({
       studentName: name,
       studentNumber: number,
@@ -50,7 +49,7 @@ export default function Index({ studentName, studentNumber }: UserProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { studentName, studentNumber } = context.query;
+  const { studentNumber, studentName } = context.query;
   return {
     props: {
       studentNumber: studentNumber,
