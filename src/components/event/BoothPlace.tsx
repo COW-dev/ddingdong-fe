@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Place from '@/assets/clubplace.svg';
-import { ClubPlace, Type } from '@/constants/event';
+import { ClubPlace } from '@/constants/event';
 export default function BoothPlace() {
   return (
     <>
