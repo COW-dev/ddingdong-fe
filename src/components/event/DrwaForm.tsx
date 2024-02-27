@@ -33,7 +33,6 @@ export default function DrawForm({ closeModal }: Props) {
     setHydrated(true);
   }, []);
   if (!hydrated) return null;
-
   return (
     <form
       className="flex w-full flex-col justify-center "
