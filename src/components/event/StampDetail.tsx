@@ -29,7 +29,9 @@ export default function StampDetail({ collections }: Props) {
                 key={index}
                 className={index % 2 === 0 ? 'text-center' : ' m-5'}
               >
-                <span>{collection.stamp}</span>
+                <span className=" font-bold text-pink-400">
+                  {collection.stamp}
+                </span>
               </div>
             )}
           </div>
