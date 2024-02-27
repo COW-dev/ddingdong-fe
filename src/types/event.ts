@@ -3,6 +3,21 @@ export type User = {
   studentNumber: string;
 };
 
+export type Applicant = {
+  id: number;
+  sId: number;
+  major: string;
+  name: string;
+};
+
+export type ApplicantDetail = {
+  id: number;
+  sId: number;
+  major: string;
+  name: string;
+  image: string[];
+};
+
 export type Colletions = {
   completed: boolean;
   collections: Stamp[];
