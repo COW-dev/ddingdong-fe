@@ -83,11 +83,11 @@ export default function Index() {
           <button
             type="submit"
             disabled={!code}
-            className={` mt-2 cursor-pointer rounded-xl bg-pink-400 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-pink-300 md:ml-2 md:mt-0 md:min-w-max md:px-10 md:py-3  ${
+            className={` mt-6 cursor-pointer rounded-lg bg-pink-400 px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-pink-300 md:ml-2 md:mt-0 md:min-w-max md:px-10 md:py-3  ${
               !code && ' cursor-not-allowed bg-gray-50'
             }`}
           >
-            응모 하기
+            체험 인증하기
           </button>
         </div>
       </form>
