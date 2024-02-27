@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { isMissingData } from '@/utils/validator';
 import UploadCertificate from './UploadCertificate';
@@ -7,14 +7,15 @@ type Props = {
 };
 export default function DrawForm({ closeModal }: Props) {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
+  const [hydrated, setHydrated] = useState(false);
   const [image, SetImage] = useState<File | null>(null);
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setPhoneNumber(event.target.value);
   }
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
-    if (isMissingData({ image, phoneNumber }))
-      return toast.error('전화번호와 납입증명서를 확인해주세요.');
     event.preventDefault();
+    if (isMissingData({image, phoneNumber}))
+      return toast.error('전화번호와 납입증명서를 확인해주세요.');
     const user = localStorage.getItem('user');
     const parsedUser = user && JSON.parse(user);
     const formData = new FormData();
@@ -23,6 +24,10 @@ export default function DrawForm({ closeModal }: Props) {
     formData.append('name', parsedUser.studentName);
     formData.append('number', parsedUser.studentNumber);
   }
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) return null;
   return (
     <form
       className="flex w-full flex-col justify-center "
@@ -52,6 +57,9 @@ export default function DrawForm({ closeModal }: Props) {
         </label>
         <UploadCertificate image={image} setImage={SetImage} />
       </div>
+      <div className=' text-[80%] text-center text-gray-500 my-2'>
+        2024년도 1학기 기준 학생회비 미납부자는 응모가 불가합니다.
+      </div>
       <div className="mt-2 flex flex-row justify-center">
         <button
           type="button"
@@ -62,7 +70,9 @@ export default function DrawForm({ closeModal }: Props) {
         </button>
         <button
           type="submit"
-          className=" ml-2 cursor-pointer rounded-lg bg-pink-400 px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-pink-200 md:w-auto md:py-2.5 "
+          disabled={!phoneNumber || !image}
+          className={`ml-2 cursor-pointer rounded-lg px-6 py-2.5 text-sm font-bold transition-colors md:w-auto md:py-2.5 
+          ${(!phoneNumber || image === null) ? 'cursor-not-allowed bg-gray-100 hover:bg-gray-100 text-gray-500' : 'bg-pink-400 text-white hover:bg-pink-200'}`}
         >
           응모하기
         </button>
