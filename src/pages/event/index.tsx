@@ -9,10 +9,6 @@ import { useMyCollects } from '@/hooks/api/event/useMyCollects';
 import { useMyQrCode } from '@/hooks/api/event/useMyQrCode';
 import { Colletions } from '@/types/event';
 
-const init = {
-  studentNumber: 0,
-  studentName: '',
-};
 export default function Index() {
   const local =
     typeof window !== 'undefined' ? localStorage.getItem('user') : null;
