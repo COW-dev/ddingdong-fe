@@ -14,7 +14,7 @@ export default function DrawForm({ closeModal }: Props) {
   }
   function handleSubmit(event: React.ChangeEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (isMissingData({image, phoneNumber}))
+    if (isMissingData({ image, phoneNumber }))
       return toast.error('전화번호와 납입증명서를 확인해주세요.');
     const user = localStorage.getItem('user');
     const parsedUser = user && JSON.parse(user);
@@ -57,7 +57,7 @@ export default function DrawForm({ closeModal }: Props) {
         </label>
         <UploadCertificate image={image} setImage={SetImage} />
       </div>
-      <div className=' text-[80%] text-center text-gray-500 my-2'>
+      <div className=" my-2 text-center text-[80%] text-gray-500">
         2024년도 1학기 기준 학생회비 미납부자는 응모가 불가합니다.
       </div>
       <div className="mt-2 flex flex-row justify-center">
@@ -72,7 +72,11 @@ export default function DrawForm({ closeModal }: Props) {
           type="submit"
           disabled={!phoneNumber || !image}
           className={`ml-2 cursor-pointer rounded-lg px-6 py-2.5 text-sm font-bold transition-colors md:w-auto md:py-2.5 
-          ${(!phoneNumber || image === null) ? 'cursor-not-allowed bg-gray-100 hover:bg-gray-100 text-gray-500' : 'bg-pink-400 text-white hover:bg-pink-200'}`}
+          ${
+            !phoneNumber || image === null
+              ? 'cursor-not-allowed bg-gray-100 text-gray-500 hover:bg-gray-100'
+              : 'bg-pink-400 text-white hover:bg-pink-200'
+          }`}
         >
           응모하기
         </button>
