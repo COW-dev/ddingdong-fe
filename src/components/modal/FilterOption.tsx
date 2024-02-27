@@ -120,7 +120,7 @@ export default function FilterOption({
                 filterOption={filterOption}
               />
             )}
-         </div>
+          </div>
         )}
       </div>
     </div>
