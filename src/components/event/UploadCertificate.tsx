@@ -21,7 +21,7 @@ export default function UploadCertificate({ image, setImage }: Props) {
   }
   return (
     <>
-      <div className="flex mt-2 h-60 w-full justify-center">
+      <div className="mt-2 flex h-60 w-full justify-center">
         {image || preview ? (
           <>
             <Image
@@ -54,7 +54,7 @@ export default function UploadCertificate({ image, setImage }: Props) {
               <input
                 id="image"
                 className=" hidden"
-                name="excel"
+                name="image"
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}

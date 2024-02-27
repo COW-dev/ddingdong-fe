@@ -87,7 +87,7 @@ export default function LocalUserForm({ closeModal }: Props) {
         <button
           onClick={handleSubmit}
           type="submit"
-          className="ml-2 cursor-pointer rounded-lg bg-pink-400 px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-pink-200 md:w-auto md:py-2.5 "
+          className="ml-2 cursor-pointer rounded-lg bg-pink-400 px-6 py-2.5 text-sm font-bold text-white transition-colors hover:bg-pink-300 md:w-auto md:py-2.5 "
         >
           이벤트 참여하기
         </button>

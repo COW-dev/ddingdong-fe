@@ -14,7 +14,7 @@ export default function StampBoard({ completed, collections }: ColletionProps) {
 
   return (
     <>
-      <div className="my-7 w-full text-center text-xl font-bold leading-tight md:mt-10 md:text-3xl">
+      <div className="my-7 w-full text-center text-xl font-bold leading-tight md:mt-5 md:text-2xl">
         <div className="md:mr-1.5">동아리 부스체험하고</div>
         <span className="text-pink-400">10개의 벚꽃</span>
         <span className="md:ml-1.5">을 채워주세요!</span>
