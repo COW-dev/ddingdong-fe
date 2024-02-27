@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Petal from '@/assets/petal.svg';
-import { Stamp, User } from '@/types/event';
+import { Stamp } from '@/types/event';
 import DrawFooter from './DrawFooter';
 import StampDetail from './StampDetail';
 type ColletionProps = {
