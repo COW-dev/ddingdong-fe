@@ -9,12 +9,10 @@ import { useMyCollects } from '@/hooks/api/event/useMyCollects';
 import { useMyQrCode } from '@/hooks/api/event/useMyQrCode';
 import { Colletions } from '@/types/event';
 
-const init = {
-  studentNumber: 0,
-  studentName: '',
-};
 export default function Index() {
-  const [user, setUser] = useState(init);
+  const local =
+    typeof window !== 'undefined' ? localStorage.getItem('user') : null;
+  const [user, setUser] = useState(local && JSON.parse(local));
   const [place, setPlace] = useState<boolean>(false);
   const [stampBoard, setStampBoard] = useState<Colletions>({
     completed: false,
@@ -25,18 +23,17 @@ export default function Index() {
       },
     ],
   });
-  const qrCode = useMyQrCode(user.studentName, user.studentNumber).data;
-  const myCollects = useMyCollects(user.studentName, user.studentNumber).data;
-  console.log(user);
+  const qrCode = useMyQrCode(user?.studentName, user?.studentNumber).data;
+  const myCollects = useMyCollects(user?.studentName, user?.studentNumber).data;
+
   function openQrCode() {
     const qrCodeUri = qrCode?.data?.uri;
     window.open(qrCodeUri, 'qr', qrCodeUri);
   }
   useEffect(() => {
-    const userInfo = localStorage.getItem('user');
-    if (userInfo) {
-      const init = userInfo
-        ? JSON.parse(userInfo)
+    if (local) {
+      const init = local
+        ? JSON.parse(local)
         : { studentNumber: 0, studentName: '' };
       setUser(init);
     }
@@ -66,7 +63,7 @@ export default function Index() {
       <div className="flex w-full flex-col justify-between md:flex-row md:items-end">
         <div className="my-5 w-full text-xl font-bold leading-tight md:mt-10 md:text-3xl">
           <span className="md:mr-1.5">안녕하세요,</span>
-          <span className="text-pink-400">{user.studentName}</span>
+          <span className="text-pink-400">{user?.studentName}</span>
           <span className="ml-1 md:ml-1.5">님</span>
           <div
             className={`float-right mt-0.5 flex items-center text-[85%] font-semibold  text-pink-400  ${
