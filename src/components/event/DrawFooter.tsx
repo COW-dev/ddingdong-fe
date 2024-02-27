@@ -4,6 +4,7 @@ import useModal from '@/hooks/common/useModal';
 import DrawMessage from './DrawMessge';
 import DrawForm from './DrwaForm';
 import Modal from '../common/Modal';
+import { cn } from '../ui/utils';
 
 type Props = {
   completed: boolean;
@@ -34,13 +35,12 @@ export default function DrawFooter({ completed }: Props) {
         </div>
         <DrawMessage completed={completed} />
         <button
-          onClick={() => handleOpenModal()}
-          //   disabled={!completed}
-          className={`mt-4 h-10 w-22 rounded-lg text-sm font-semibold transition-colors md:mt-8 md:h-12 md:w-48 md:text-lg ${
-            completed
-              ? ' bg-pink-400 text-white '
-              : 'cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-100'
-          }`}
+          onClick={handleOpenModal}
+          disabled={!completed}
+          className={cn('mt-4 h-10 w-22 rounded-lg text-sm font-semibold transition-colors md:mt-8 md:h-12 md:w-48 md:text-lg',   
+          completed
+            ? ' bg-pink-400 text-white '
+            : 'cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-100')}
         >
           응모하기
         </button>
