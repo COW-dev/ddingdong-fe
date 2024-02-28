@@ -398,6 +398,9 @@ export async function collectStamp({
     },
   );
 }
+export async function applyDraw(formdata: FormData) {
+  return await api.patch('/events/apply', formdata);
+}
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
   // const cookies = new Cookies(); //?
