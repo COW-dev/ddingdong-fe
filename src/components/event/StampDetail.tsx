@@ -27,7 +27,7 @@ export default function StampDetail({ collections }: Props) {
             {collection && (
               <div
                 key={index}
-                className={index % 2 === 0 ? 'text-center' : ' m-5'}
+                className={`text-center ${index % 2 !== 0 && 'mt-5'}`}
               >
                 <span className=" font-bold text-pink-400">
                   {collection.stamp}
