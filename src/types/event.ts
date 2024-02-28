@@ -3,6 +3,22 @@ export type User = {
   studentNumber: string;
 };
 
+export type Applicant = {
+  id: number;
+  studentName: string;
+  studentNumber: string;
+  department: string;
+};
+
+export type ApplicantDetail = {
+  id: number;
+  studentName: string;
+  studentNumber: string;
+  department: string;
+  collections: Stamp[];
+  certificationImageUrl: string;
+};
+
 export type Colletions = {
   completed: boolean;
   collections: Stamp[];
