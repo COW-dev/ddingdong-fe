@@ -379,7 +379,7 @@ export async function getMyQrCode(
   studentNumber: number,
 ): Promise<AxiosResponse<User, unknown>> {
   return await api.get(
-    `event/qr/?studentName=${studentName}&studentNumber=${studentNumber}`,
+    `events/qr/?studentName=${studentName}&studentNumber=${studentNumber}`,
   );
 }
 export async function collectStamp({

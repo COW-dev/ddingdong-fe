@@ -10,7 +10,7 @@ export function useMyCollects(studentName: string, studentNumber: number) {
     AxiosResponse<Colletions, unknown>,
     [string]
   >({
-    queryKey: ['qr-stamps'],
+    queryKey: ['/events/stamps'],
     queryFn: () => getMyCollects(studentName, studentNumber),
   });
 }

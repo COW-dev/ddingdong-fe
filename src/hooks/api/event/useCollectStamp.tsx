@@ -19,7 +19,7 @@ export function useCollectStamp(): UseMutationResult<
 
   return useMutation(collectStamp, {
     onSuccess() {
-      queryClient.invalidateQueries(['/qr-stamps/collect']);
+      queryClient.invalidateQueries(['/events/stamps']);
       toast.success('도장 수집에 성공하였습니다.');
       router.push('/event');
     },
