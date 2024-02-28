@@ -393,6 +393,7 @@ export async function collectStamp({
   studentName,
   studentNumber,
   department,
+  department,
   clubCode,
 }: CollectStamp) {
   return await api.post(
@@ -404,6 +405,9 @@ export async function collectStamp({
       clubCode,
     },
   );
+}
+export async function applyDraw(formdata: FormData) {
+  return await api.patch('/events/apply', formdata);
 }
 export async function getAllAppliers(
   token: string,
