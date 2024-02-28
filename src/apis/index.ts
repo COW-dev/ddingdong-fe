@@ -17,7 +17,13 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
-import { CollectStamp, Colletions, User } from '@/types/event';
+import {
+  Applicant,
+  ApplicantDetail,
+  CollectStamp,
+  Colletions,
+  User,
+} from '@/types/event';
 
 import {
   Fix,
@@ -397,6 +403,25 @@ export async function collectStamp({
       clubCode,
     },
   );
+}
+export async function getAllAppliers(
+  token: string,
+): Promise<AxiosResponse<Applicant[], unknown>> {
+  return await api.get('/admin/events/applied-users', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getApplier(
+  token: string,
+  id: number,
+): Promise<AxiosResponse<ApplicantDetail, unknown>> {
+  return await api.get(`/admin/events/applied-users/${id}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
