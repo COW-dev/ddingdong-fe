@@ -32,7 +32,6 @@ export default function FilterOption({
   useEffect(() => handleList(), [option]);
   useEffect(() => handleFilter(), [sort, categoryClubList, recruitClubList]);
 
-
   function handleFilter() {
     const filtered = recruitClubList.filter((item) =>
       categoryClubList.includes(item),
