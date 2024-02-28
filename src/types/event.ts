@@ -16,6 +16,7 @@ export type Stamp = {
 export type CollectStamp = {
   studentName: string;
   studentNumber: string;
+  department: string;
   clubCode: string;
 };
 

@@ -10,6 +10,7 @@ import { isMissingData } from '@/utils/validator';
 const init = {
   studentNumber: '',
   studentName: '',
+  department: '',
 };
 export default function Index() {
   const [user, setUser] = useState(init);
@@ -24,6 +25,7 @@ export default function Index() {
     mutation.mutate({
       studentName: user.studentName,
       studentNumber: user.studentNumber,
+      department: user.department,
       clubCode: code,
     });
   }
