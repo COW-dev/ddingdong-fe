@@ -371,7 +371,7 @@ export async function getMyCollects(
   studentNumber: number,
 ): Promise<AxiosResponse<Colletions, unknown>> {
   return await api.get(
-    `/qr-stamps/?studentName=${studentName}&studentNumber=${studentNumber}`,
+    `/events/stamps?studentName=${studentName}&studentNumber=${studentNumber}`,
   );
 }
 export async function getMyQrCode(
@@ -385,13 +385,18 @@ export async function getMyQrCode(
 export async function collectStamp({
   studentName,
   studentNumber,
+  department,
   clubCode,
 }: CollectStamp) {
-  return await api.post('/qr-stamps/collect', {
-    studentName,
-    studentNumber,
-    clubCode,
-  });
+  return await api.post(
+    `/events/stamps?studentName=${studentName}&studentNumber=${studentNumber}`,
+    {
+      studentName,
+      studentNumber,
+      department,
+      clubCode,
+    },
+  );
 }
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
