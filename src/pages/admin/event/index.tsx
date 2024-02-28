@@ -37,7 +37,7 @@ export default function Index() {
       />
       <div className="ml-1 mt-6 text-base font-bold md:text-xl lg:text-3xl">
         <span className="">QR 이벤트 응모내역 (총 응모자</span>
-        <span className="ml-1 text-pink-400">{applicant?.length}명</span>
+        <span className="ml-1 text-pink-400">{applicant.length}명</span>
         <span>)</span>
       </div>
       <ul className=" mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-6 md:gap-5 lg:grid-cols-4 ">

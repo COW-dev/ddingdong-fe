@@ -16,7 +16,7 @@ export type ApplicantDetail = {
   studentNumber: string;
   department: string;
   collections: Stamp[];
-  certificationImageUrl: string[];
+  certificationImageUrl: string;
 };
 
 export type Colletions = {
