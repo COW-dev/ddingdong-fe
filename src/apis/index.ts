@@ -17,6 +17,7 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
+import { CollectStamp, Colletions, User } from '@/types/event';
 
 import {
   Fix,
@@ -169,6 +170,15 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
   return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function uploadMembers(formdata: FormData) {
+  const token = formdata.get('token');
+  return await api.put('/club/my/club-members', formdata, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
     },
   });
 }
@@ -356,7 +366,41 @@ export async function getMyScore(
     },
   });
 }
-
+export async function getMyCollects(
+  studentName: string,
+  studentNumber: number,
+): Promise<AxiosResponse<Colletions, unknown>> {
+  return await api.get(
+    `/events/stamps?studentName=${studentName}&studentNumber=${studentNumber}`,
+  );
+}
+export async function getMyQrCode(
+  studentName: string,
+  studentNumber: number,
+): Promise<AxiosResponse<User, unknown>> {
+  return await api.get(
+    `events/qr/?studentName=${studentName}&studentNumber=${studentNumber}`,
+  );
+}
+export async function collectStamp({
+  studentName,
+  studentNumber,
+  department,
+  clubCode,
+}: CollectStamp) {
+  return await api.post(
+    `/events/stamps?studentName=${studentName}&studentNumber=${studentNumber}`,
+    {
+      studentName,
+      studentNumber,
+      department,
+      clubCode,
+    },
+  );
+}
+export async function applyDraw(formdata: FormData) {
+  return await api.patch('/events/apply', formdata);
+}
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
   // const cookies = new Cookies(); //?
