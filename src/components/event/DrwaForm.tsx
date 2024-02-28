@@ -19,6 +19,7 @@ export default function DrawForm({ closeModal }: Props) {
     if (isMissingData({ image, phoneNumber }))
       return toast.error('전화번호와 납입증명서를 확인해주세요.');
     const user = localStorage.getItem('user');
+    localStorage.setItem('apply', JSON.stringify({ apply: 'true' }));
     const parsedUser = user && JSON.parse(user);
     const formData = new FormData();
     image && formData.append('certificationImage', image);

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 import Npay from '@/assets/npay.svg';
 import useModal from '@/hooks/common/useModal';
 import DrawMessage from './DrawMessge';
@@ -12,6 +13,9 @@ type Props = {
 
 export default function DrawFooter({ completed }: Props) {
   const { openModal, visible, closeModal, modalRef } = useModal();
+  const apply =
+    typeof window !== 'undefined' ? localStorage.getItem('apply') : null;
+  console.log(apply);
   const drawTitle = (
     <div className="text-[96%] font-semibold">
       <span className="mr-2 text-pink-400 ">THE CLUB 시즌즈</span>
@@ -19,6 +23,9 @@ export default function DrawFooter({ completed }: Props) {
     </div>
   );
   function handleOpenModal() {
+    if (apply) {
+      return toast.error('응모 내역이 존재합니다.');
+    }
     openModal();
   }
 
@@ -34,6 +41,7 @@ export default function DrawFooter({ completed }: Props) {
           </div>
         </div>
         <DrawMessage completed={completed} />
+
         <button
           onClick={handleOpenModal}
           disabled={!completed}
@@ -42,9 +50,10 @@ export default function DrawFooter({ completed }: Props) {
             completed
               ? ' bg-pink-400 text-white '
               : 'cursor-not-allowed bg-gray-50 text-gray-500 hover:bg-gray-100',
+            apply && 'focus:cursor-not-allowed ',
           )}
         >
-          응모하기
+          {apply ? '응모완료' : '응모하기'}
         </button>
       </div>
       <Modal

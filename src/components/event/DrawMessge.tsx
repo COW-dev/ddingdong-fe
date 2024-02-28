@@ -18,7 +18,7 @@ export default function DrawMessage({ completed }: Props) {
           {message.main}
         </span>
         <span className="font-bold">{message.sub}</span>
-        <span className="mt-2 text-xs font-medium text-gray-500">
+        <span className="mt-2 text-sm font-medium text-gray-500">
           2024학년도 1학기 학생회비 납부자만 응모 가능
         </span>
       </div>

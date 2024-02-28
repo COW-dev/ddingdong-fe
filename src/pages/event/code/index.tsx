@@ -10,7 +10,7 @@ import { isMissingData } from '@/utils/validator';
 const init = {
   studentNumber: '',
   studentName: '',
-  department: '',
+  studentMajor: '',
 };
 export default function Index() {
   const [user, setUser] = useState(init);
@@ -25,7 +25,7 @@ export default function Index() {
     mutation.mutate({
       studentName: user.studentName,
       studentNumber: user.studentNumber,
-      department: user.department,
+      department: user.studentMajor,
       clubCode: code,
     });
   }
@@ -34,7 +34,7 @@ export default function Index() {
     if (userInfo) {
       const init = userInfo
         ? JSON.parse(userInfo)
-        : { studentNumber: 0, studentName: '' };
+        : { studentNumber: 0, studentName: '', studentMajor: '' };
       setUser(init);
     }
   }, []);
