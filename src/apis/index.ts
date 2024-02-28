@@ -17,7 +17,6 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
-
 import {
   Applicant,
   ApplicantDetail,
