@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function StampDetail({ collections }: Props) {
-  console.log(collections);
   return (
     <div className="align-items-center mt-2 grid grid-cols-2 justify-items-center md:mt-10">
       {[...Array(10)].map((_, index) => {

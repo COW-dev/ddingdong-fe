@@ -15,7 +15,6 @@ export default function DrawFooter({ completed }: Props) {
   const { openModal, visible, closeModal, modalRef } = useModal();
   const apply =
     typeof window !== 'undefined' ? localStorage.getItem('apply') : null;
-  console.log(apply);
   const drawTitle = (
     <div className="text-[96%] font-semibold">
       <span className="mr-2 text-pink-400 ">THE CLUB 시즌즈</span>
