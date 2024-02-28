@@ -51,6 +51,7 @@ export const config = {
     '/report',
     '/banner',
     '/event',
+    '/event/:path*',
     '/admin/:path*',
     '/report/:path*',
   ],
