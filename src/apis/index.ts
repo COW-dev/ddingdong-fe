@@ -392,7 +392,6 @@ export async function collectStamp({
   studentName,
   studentNumber,
   department,
-  department,
   clubCode,
 }: CollectStamp) {
   return await api.post(
@@ -426,9 +425,6 @@ export async function getApplier(
       Authorization: 'Bearer ' + token,
     },
   });
-}
-export async function applyDraw(formdata: FormData) {
-  return await api.patch('/events/apply', formdata);
 }
 
 //error handling
