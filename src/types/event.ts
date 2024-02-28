@@ -5,17 +5,18 @@ export type User = {
 
 export type Applicant = {
   id: number;
-  sId: number;
-  major: string;
-  name: string;
+  studentName: string;
+  studentNumber: string;
+  department: string;
 };
 
 export type ApplicantDetail = {
   id: number;
-  sId: number;
-  major: string;
-  name: string;
-  image: string[];
+  studentName: string;
+  studentNumber: string;
+  department: string;
+  collections: Stamp[];
+  certificationImageUrl: string[];
 };
 
 export type Colletions = {
