@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { useApplyDraw } from '@/hooks/api/event/useApplyDraw';
 import { isMissingData } from '@/utils/validator';
 import UploadCertificate from './UploadCertificate';
 type Props = {
@@ -9,6 +10,7 @@ export default function DrawForm({ closeModal }: Props) {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
   const [hydrated, setHydrated] = useState(false);
   const [image, SetImage] = useState<File | null>(null);
+  const applyMutation = useApplyDraw();
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setPhoneNumber(event.target.value);
   }
@@ -17,17 +19,21 @@ export default function DrawForm({ closeModal }: Props) {
     if (isMissingData({ image, phoneNumber }))
       return toast.error('전화번호와 납입증명서를 확인해주세요.');
     const user = localStorage.getItem('user');
+    localStorage.setItem('apply', JSON.stringify({ apply: 'true' }));
     const parsedUser = user && JSON.parse(user);
     const formData = new FormData();
-    image && formData.append('image', image);
-    formData.append('phoneNumber', phoneNumber);
-    formData.append('name', parsedUser.studentName);
-    formData.append('number', parsedUser.studentNumber);
+    image && formData.append('certificationImage', image);
+    formData.append('telephone', phoneNumber);
+    formData.append('department', parsedUser.studentMajor);
+    formData.append('studentNumber', parsedUser.studentNumber);
+    closeModal();
+    return applyMutation.mutate(formData);
   }
   useEffect(() => {
     setHydrated(true);
   }, []);
   if (!hydrated) return null;
+
   return (
     <form
       className="flex w-full flex-col justify-center "

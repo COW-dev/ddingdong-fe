@@ -14,6 +14,7 @@ export default function Index() {
     typeof window !== 'undefined' ? localStorage.getItem('user') : null;
   const [user, setUser] = useState(local && JSON.parse(local));
   const [place, setPlace] = useState<boolean>(false);
+  const [hydrated, setHydrated] = useState(false);
   const [stampBoard, setStampBoard] = useState<Colletions>({
     completed: false,
     collections: [
@@ -43,6 +44,9 @@ export default function Index() {
       setStampBoard(myCollects.data);
     }
   }, [myCollects]);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
 
   return (
     <>
@@ -95,9 +99,9 @@ export default function Index() {
         <BoothPlace />
       ) : (
         <>
-          <div className="text-center sm:mt-2 md:my-3">
+          <div className="flex flex-col text-center sm:mt-2 md:my-3">
             <span className="text-gray-500 sm:hidden">
-              하단의 버튼을 눌러 사용자의 QR코드를 생성해주세요.
+              하단의 버튼을 눌러 QR코드를 생성해주세요.
             </span>
             <button
               onClick={openQrCode}

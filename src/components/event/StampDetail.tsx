@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function StampDetail({ collections }: Props) {
-  console.log(collections);
   return (
     <div className="align-items-center mt-2 grid grid-cols-2 justify-items-center md:mt-10">
       {[...Array(10)].map((_, index) => {
@@ -27,7 +26,7 @@ export default function StampDetail({ collections }: Props) {
             {collection && (
               <div
                 key={index}
-                className={index % 2 === 0 ? 'text-center' : ' m-5'}
+                className={`text-center ${index % 2 !== 0 && 'mt-5'}`}
               >
                 <span className=" font-bold text-pink-400">
                   {collection.stamp}

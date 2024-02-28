@@ -14,11 +14,11 @@ export default function DrawMessage({ completed }: Props) {
   return (
     <>
       <div className="mt-10 flex flex-col items-center md:mt-12">
-        <span className={completed ? 'text-pink-500' : 'font-bold'}>
+        <span className={`font-bold ${completed && 'font-bold text-pink-400'}`}>
           {message.main}
         </span>
         <span className="font-bold">{message.sub}</span>
-        <span className="mt-2 text-xs font-medium text-gray-500">
+        <span className="mt-2 text-sm font-medium text-gray-500 md:text-base">
           2024학년도 1학기 학생회비 납부자만 응모 가능
         </span>
       </div>
