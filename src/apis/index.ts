@@ -17,6 +17,7 @@ import {
   UpdateClub,
   UpdateMembers,
 } from '@/types/club';
+
 import {
   Applicant,
   ApplicantDetail,
@@ -422,6 +423,8 @@ export async function getApplier(
       Authorization: 'Bearer ' + token,
     },
   });
+export async function applyDraw(formdata: FormData) {
+  return await api.patch('/events/apply', formdata);
 }
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {

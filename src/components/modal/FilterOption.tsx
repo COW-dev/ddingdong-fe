@@ -30,7 +30,8 @@ export default function FilterOption({
   const [active, setActive] = useState<string>('');
 
   useEffect(() => handleList(), [option]);
-  useEffect(() => handleFilter(), [categoryClubList, recruitClubList]);
+  useEffect(() => handleFilter(), [sort, categoryClubList, recruitClubList]);
+
 
   function handleFilter() {
     const filtered = recruitClubList.filter((item) =>
