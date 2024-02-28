@@ -29,10 +29,8 @@ export default function FilterOption({
   const [isFilter, setIsFilter] = useState<boolean>(false);
   const [active, setActive] = useState<string>('');
 
-  useEffect(() => {
-    handleList();
-    handleFilter();
-  });
+  useEffect(() => handleList(), [option]);
+  useEffect(() => handleFilter(), [categoryClubList, recruitClubList]);
 
   function handleFilter() {
     const filtered = recruitClubList.filter((item) =>

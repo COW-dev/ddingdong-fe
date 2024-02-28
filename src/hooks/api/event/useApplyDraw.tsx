@@ -1,30 +1,29 @@
 import { useRouter } from 'next/router';
 import {
   type UseMutationResult,
-  useMutation,
   useQueryClient,
+  useMutation,
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { collectStamp } from '@/apis';
-import { CollectStamp } from '@/types/event';
+import { applyDraw } from '@/apis';
+import useModal from '@/hooks/common/useModal';
 
-export function useCollectStamp(): UseMutationResult<
+export function useApplyDraw(): UseMutationResult<
   unknown,
   AxiosError,
-  CollectStamp
+  FormData
 > {
   const queryClient = useQueryClient();
   const router = useRouter();
-
-  return useMutation(collectStamp, {
+  return useMutation(applyDraw, {
     onSuccess() {
-      queryClient.invalidateQueries(['/events/stamps']);
-      toast.success('도장 수집에 성공하였습니다.');
+      queryClient.invalidateQueries(['events/apply']);
+      toast.success('응모에 성공했습니다.');
       router.push('/event');
     },
     onError() {
-      toast.error('도장 수집에 실패했어요.');
+      toast.error('응모에 실패했습니다.');
     },
   });
 }

@@ -5,7 +5,7 @@ import { Uri } from '@/types/event';
 
 export function useMyQrCode(studentName: string, studentNumber: number) {
   return useQuery<unknown, AxiosError, AxiosResponse<Uri, unknown>, [string]>({
-    queryKey: ['event'],
+    queryKey: ['events/stamps'],
     queryFn: () => getMyQrCode(studentName, studentNumber),
   });
 }

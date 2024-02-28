@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
