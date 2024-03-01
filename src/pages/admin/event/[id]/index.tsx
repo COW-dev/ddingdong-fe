@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Event from '@/assets/event.svg';
 import LgEvent from '@/assets/md_event.svg';
+import NeutralButton from '@/components/common/NeutralButton';
 import StampDetail from '@/components/event/StampDetail';
 import { useApplier } from '@/hooks/api/event/useApplier';
 import { ApplicantDetail } from '@/types/event';
@@ -49,8 +50,9 @@ export default function Index({ eventId }: Props) {
         alt="동아리 박람회"
         className="hidden md:block md:w-full"
       />
-      <div className="ml-2 mt-6 text-xl font-bold md:text-xl lg:text-3xl">
-        QR 이벤트 응모내역
+      <div className=" ml-2 mt-3 flex justify-between text-xl font-bold md:items-end md:text-xl lg:text-3xl">
+        <span className="mt-1.5 md:mt-0">QR 이벤트 응모내역</span>
+        <NeutralButton href="/event">목록으로 돌아가기</NeutralButton>
       </div>
       <div className="my-4 ml-2 flex flex-col text-lg font-medium md:text-xl">
         <span>이름: {applier?.studentName}님</span>
