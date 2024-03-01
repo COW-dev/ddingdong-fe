@@ -49,10 +49,10 @@ export default function Index({ eventId }: Props) {
         alt="동아리 박람회"
         className="hidden md:block md:w-full"
       />
-      <div className="ml-0.5 mt-6 text-lg font-bold md:text-xl lg:text-3xl">
+      <div className="ml-2 mt-6 text-xl font-bold md:text-xl lg:text-3xl">
         QR 이벤트 응모내역
       </div>
-      <div className=" my-2 flex flex-col text-lg font-medium md:my-4 md:text-xl">
+      <div className="my-4 ml-2 flex flex-col text-lg font-medium md:text-xl">
         <span>이름: {applier?.studentName}님</span>
         <span>학과: {applier?.department}</span>
         <span>학번: {applier?.studentNumber}</span>

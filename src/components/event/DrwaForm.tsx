@@ -58,7 +58,7 @@ export default function DrawForm({ closeModal }: Props) {
             학생회비 납부내역 이미지 첨부
           </span>
           <span className="ml-1 text-sm text-gray-400">
-            2024년도 1학기 기준
+            myiweb - 등록 - 납입증명서
           </span>
         </label>
         <UploadCertificate image={image} setImage={SetImage} />

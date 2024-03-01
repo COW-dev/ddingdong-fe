@@ -77,7 +77,7 @@ export default function Index() {
           >
             {place ? (
               <div
-                className=" float-left md:text-base"
+                className=" float-left cursor-pointer md:text-base"
                 onClick={() => setPlace(false)}
               >
                 돌아가기
@@ -87,7 +87,7 @@ export default function Index() {
                 <Image src={Map} height={18} width={18} alt="map" />
                 <span
                   onClick={() => setPlace(true)}
-                  className="ml-2 md:text-base"
+                  className="ml-2 cursor-pointer md:text-base"
                 >
                   동아리부스 지도
                 </span>
