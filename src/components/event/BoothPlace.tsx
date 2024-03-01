@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Place from '@/assets/clubplace.svg';
 import { ClubPlace } from '@/constants/event';
 export default function BoothPlace() {
+  let clubNumber = 1;
   return (
     <>
       <div className="flex flex-col items-center">
@@ -14,8 +15,11 @@ export default function BoothPlace() {
         />
         {ClubPlace.map((item, index) => {
           return (
-            <div key={index} className="h-58 flex flex-col md:w-2/3">
-              <h2 className="mt-3 text-xl font-bold text-pink-400">
+            <div
+              key={index}
+              className="h-58 ml-2 flex flex-col md:ml-28 md:w-4/5"
+            >
+              <h2 className="mt-3 text-xl font-bold text-pink-400 md:text-2xl">
                 {item.place}
               </h2>
               <ul
@@ -24,9 +28,12 @@ export default function BoothPlace() {
                 } `}
               >
                 {item.club.map((club, i) => (
-                  <li key={i} className=" my-0.5 ml-1 w-40 text-start">
+                  <li
+                    key={i}
+                    className=" my-0.5 ml-1 w-40 text-start text-lg font-normal md:font-medium"
+                  >
                     <span>
-                      {i + 1}. {club}
+                      {clubNumber++}. {club}
                     </span>
                   </li>
                 ))}
