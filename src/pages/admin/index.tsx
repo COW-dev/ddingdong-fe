@@ -54,14 +54,6 @@ export default function Index() {
       </Head>
       <div className="flex flex-row items-end justify-between">
         {infoElement}
-        {role === ROLE_TYPE.ROLE_ADMIN && (
-          <div
-            className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:cursor-pointer hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
-            onClick={openFixZone}
-          >
-            Fix:Zone
-          </div>
-        )}
         {role === ROLE_TYPE.ROLE_CLUB && <Dropdown />}
       </div>
       <div className="relative mt-7">
@@ -83,7 +75,7 @@ export default function Index() {
         <Slider />
       </div>
 
-      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-6 md:gap-8">
+      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 md:mt-6 md:gap-8">
         <Link
           href={ROLE_TEXT[role].club.route}
           className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
@@ -104,6 +96,18 @@ export default function Index() {
           </h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
             <p>{ROLE_TEXT[role].report.subtitle}</p>
+          </div>
+        </Link>
+        <Link
+          onClick={openFixZone}
+          href={ROLE_TEXT[role].fixzone.route}
+          className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+        >
+          <h2 className="text-xl font-bold md:text-2xl">
+            {ROLE_TEXT[role].fixzone.title}
+          </h2>
+          <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+            <p>{ROLE_TEXT[role].fixzone.subtitle}</p>
           </div>
         </Link>
       </div>

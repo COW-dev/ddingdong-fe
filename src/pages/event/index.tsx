@@ -47,6 +47,7 @@ export default function Index() {
   useEffect(() => {
     setHydrated(true);
   }, []);
+  if (!hydrated) return null;
 
   return (
     <>

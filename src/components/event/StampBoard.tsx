@@ -9,8 +9,10 @@ type ColletionProps = {
 };
 
 export default function StampBoard({ completed, collections }: ColletionProps) {
-  const petalPositionsTop = [65, 89, 72, 98, 123, 134, 112, 142, 151, 168];
-  const petalPositionsLeft = [2, 88, 51, 12, 2, 64, 43, 91, 2, 70];
+  const petalPositionsTop = [
+    65, 89, 72, 98, 123, 134, 112, 142, 151, 168, 170, 182,
+  ];
+  const petalPositionsLeft = [2, 88, 51, 12, 2, 64, 43, 91, 2, 70, 30, 55];
 
   return (
     <>
