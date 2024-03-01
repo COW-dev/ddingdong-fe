@@ -19,7 +19,7 @@ export default function BoothPlace() {
               key={index}
               className="h-58 ml-2 flex flex-col md:ml-28 md:w-4/5"
             >
-              <h2 className="mt-3 text-xl font-bold text-pink-400 md:text-2xl">
+              <h2 className="mt-6 text-xl font-bold text-pink-400 md:text-2xl">
                 {item.place}
               </h2>
               <ul
@@ -30,10 +30,15 @@ export default function BoothPlace() {
                 {item.club.map((club, i) => (
                   <li
                     key={i}
-                    className=" my-0.5 ml-1 w-40 text-start text-lg font-normal md:font-medium"
+                    className="my-0.5 ml-1 w-44 text-lg font-normal md:font-medium"
                   >
-                    <span>
-                      {clubNumber++}. {club}
+                    {clubNumber++}.
+                    <span
+                      className={` ${
+                        club.length > 5 && 'text-[85%] md:text-lg'
+                      }`}
+                    >
+                      {club}
                     </span>
                   </li>
                 ))}
