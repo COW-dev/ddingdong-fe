@@ -32,7 +32,13 @@ export default function DrawFooter({ completed }: Props) {
     <>
       <div className="mt-5 flex flex-col items-center text-xl">
         <div className="mt-4 flex flex-row items-center justify-center">
-          <Image src={Npay} width={130} height={100} alt={'네이버페이'} />
+          <Image
+            src={Npay}
+            width={130}
+            height={100}
+            alt={'네이버페이'}
+            className=""
+          />
           <div className="ml-2 flex flex-col text-[85%] font-bold">
             <span className="font-semibold text-pink-400">추첨경품</span>
             <span className="">네이버페이</span>
