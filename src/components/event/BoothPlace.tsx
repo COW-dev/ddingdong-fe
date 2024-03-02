@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Place from '@/assets/clubplace.svg';
+import Place from '@/assets/clubplace.png';
 import { ClubPlace } from '@/constants/event';
 export default function BoothPlace() {
   let clubNumber = 1;
