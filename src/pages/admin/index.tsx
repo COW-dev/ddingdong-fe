@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+import MobileBanner from '@/assets/banner_mobile.svg';
+import PcBanner from '@/assets/banner_pc.svg';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Dropdown from '@/components/common/Dropdown';
@@ -30,7 +32,7 @@ export default function Index() {
     if (role === ROLE_TYPE.ROLE_ADMIN) {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
-          <div className="md:mr-1.5">안녕하세요,</div>
+          <span className="md:mr-1.5">안녕하세요, </span>
           <span className="text-blue-500">공:존</span>
           <span className="ml-1 md:ml-1.5">님</span>
         </div>,
@@ -57,7 +59,7 @@ export default function Index() {
         {role === ROLE_TYPE.ROLE_CLUB && <Dropdown />}
       </div>
       <div className="relative mt-7">
-        <Link
+        {/* <Link
           href="/banner"
           className={`absolute right-0 top-2 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
             role === ROLE_TYPE.ROLE_CLUB && 'invisible'
@@ -72,7 +74,21 @@ export default function Index() {
             className="w-5"
           />
         </Link>
-        <Slider />
+        <Slider /> */}
+        <Image
+          src={PcBanner}
+          width={1440}
+          height={300}
+          className="hidden md:block md:w-full"
+          alt="banner"
+        />
+        <Image
+          src={MobileBanner}
+          width={1440}
+          height={300}
+          className="mb-4 h-56 w-full md:hidden md:h-48"
+          alt="banner"
+        />
       </div>
 
       <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 md:mt-6 md:gap-8">

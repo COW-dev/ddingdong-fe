@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import MobileBanner from '@/assets/banner_mobile.svg';
+import PcBanner from '@/assets/banner_pc.svg';
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
@@ -61,7 +64,21 @@ export default function Home() {
   return (
     <>
       <div className="mb-1.5 text-sm font-semibold md:mb-2 md:text-base">
-        <Slider />
+        {/* <Slider /> */}
+        <Image
+          src={PcBanner}
+          width={1440}
+          height={300}
+          className="hidden md:block md:w-full"
+          alt="banner"
+        />
+        <Image
+          src={MobileBanner}
+          width={1440}
+          height={300}
+          className="h-56 w-full md:hidden md:h-48"
+          alt="banner"
+        />
       </div>
       <SearchBar value={keyword} onChange={setKeyword} />
       <div className="flex justify-between">
