@@ -35,7 +35,7 @@ export default function Index() {
         alt="동아리 박람회"
         className="hidden md:block md:w-full"
       />
-      <div className="ml-1 mt-6 text-base font-bold md:text-xl lg:text-3xl">
+      <div className="ml-1 mt-6 text-xl font-bold md:text-xl lg:text-3xl">
         <span className="">QR 이벤트 응모내역 (총 응모자</span>
         <span className="ml-1 text-pink-400">{applicant.length}명</span>
         <span>)</span>

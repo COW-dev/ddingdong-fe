@@ -17,6 +17,7 @@ type RoleText = {
   [K in RoleType[keyof RoleType]]: {
     club: NavBox;
     report: NavBox;
+    fixzone: NavBox;
     notice: NavBox;
   };
 };
@@ -33,6 +34,11 @@ export const ROLE_TEXT: RoleText = {
       subtitle: '동아리가 제출한 활동보고서를 확인해요.',
       route: '/report/admin',
     },
+    fixzone: {
+      title: '동아리 시설보수 확인',
+      subtitle: '각 동아리방 시설보수 신청내역을 확인해요.',
+      route: '/fixzone',
+    },
     notice: {
       title: '공지사항 관리하기',
       route: '/notice',
@@ -48,6 +54,11 @@ export const ROLE_TEXT: RoleText = {
       title: '활동보고서 관리하기',
       subtitle: '활동보고서를 작성하고, 제출한 보고서를 확인해요.',
       route: '/report',
+    },
+    fixzone: {
+      title: '동아리 시설보수 확인',
+      subtitle: '각 동아리방 시설보수 신청내역을 확인해요.',
+      route: '/',
     },
     notice: {
       title: '공지사항 확인하기',

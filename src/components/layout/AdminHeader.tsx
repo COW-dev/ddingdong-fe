@@ -15,7 +15,7 @@ const navItems = [
   {
     id: 2,
     href: '/event',
-    content: '동아리 박람회',
+    content: '동아리박람회',
   },
 ];
 

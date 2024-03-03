@@ -47,6 +47,7 @@ export default function Index() {
   useEffect(() => {
     setHydrated(true);
   }, []);
+  if (!hydrated) return null;
 
   return (
     <>
@@ -76,7 +77,7 @@ export default function Index() {
           >
             {place ? (
               <div
-                className=" float-left md:text-base"
+                className=" float-left cursor-pointer md:text-base"
                 onClick={() => setPlace(false)}
               >
                 돌아가기
@@ -86,7 +87,7 @@ export default function Index() {
                 <Image src={Map} height={18} width={18} alt="map" />
                 <span
                   onClick={() => setPlace(true)}
-                  className="ml-2 md:text-base"
+                  className="ml-2 cursor-pointer md:text-base"
                 >
                   동아리부스 지도
                 </span>
@@ -99,15 +100,15 @@ export default function Index() {
         <BoothPlace />
       ) : (
         <>
-          <div className="flex flex-col text-center sm:mt-2 md:my-3">
+          <div className="mt-4 flex flex-col text-center md:my-4">
             <span className="text-gray-500 sm:hidden">
               하단의 버튼을 눌러 QR코드를 생성해주세요.
             </span>
             <button
               onClick={openQrCode}
-              className="sm:text-md mx-auto mt-2 h-10 w-34 rounded-lg bg-pink-400 font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-40 "
+              className="sm:text-md mx-auto mt-2 h-10 w-36 rounded-lg bg-pink-400 font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-40 "
             >
-              이벤트 QR 생성
+              이벤트 QR 보기
             </button>
           </div>
           <StampBoard

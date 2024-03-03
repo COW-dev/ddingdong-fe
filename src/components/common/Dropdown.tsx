@@ -53,14 +53,6 @@ export default function Dropdown() {
             aria-labelledby="dropdownHoverButton"
           >
             <li>
-              <div
-                onClick={openFixZone}
-                className="block px-4 py-2 font-semibold hover:bg-blue-100"
-              >
-                Fix:Zone
-              </div>
-            </li>
-            <li>
               <Link
                 href="/club/my/score"
                 className="block px-4 py-2 font-semibold hover:bg-blue-100"

@@ -1,8 +1,10 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
+import { cn } from '@/components/ui/utils';
 import { useApplyDraw } from '@/hooks/api/event/useApplyDraw';
 import { isMissingData } from '@/utils/validator';
 import UploadCertificate from './UploadCertificate';
+
 type Props = {
   closeModal: () => void;
 };
@@ -41,7 +43,7 @@ export default function DrawForm({ closeModal }: Props) {
     >
       <div className="mb-3 flex w-full flex-col items-start ">
         <label className="w-full font-semibold text-gray-500">
-          <span className=" text-lg font-semibold text-gray-700">전화번호</span>
+          <span className="text-lg font-semibold text-gray-700">전화번호</span>
           <span className="ml-1 text-sm text-gray-400"> `-`제외하고 입력</span>
         </label>
         <input
@@ -53,12 +55,12 @@ export default function DrawForm({ closeModal }: Props) {
         />
       </div>
       <div className="mb-3 flex w-full flex-col items-center">
-        <label className=" w-full">
-          <span className=" text-lg font-semibold text-gray-700">
+        <label className={cn('w-full', 'max-sm:flex max-sm:flex-col')}>
+          <span className="text-lg font-semibold text-gray-700">
             학생회비 납부내역 이미지 첨부
           </span>
           <span className="ml-1 text-sm text-gray-400">
-            2024년도 1학기 기준
+            myiweb - 등록 - 납입증명서
           </span>
         </label>
         <UploadCertificate image={image} setImage={SetImage} />
