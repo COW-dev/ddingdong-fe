@@ -19,19 +19,5 @@ html {
 
 * {
   -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.box-shadow {
-  box-shadow: 0 0 6px rgba(73, 80, 87, 0.05);
-}
-
-.button-shadow {
-  box-shadow: 0 32px 8px rgba(255, 255, 255, 1);
+    --muted-foreground: 215.4 16.3% 46.9%;
 }

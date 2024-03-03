@@ -12,6 +12,11 @@ const navItems = [
     href: '/',
     content: '홈',
   },
+  {
+    id: 2,
+    href: '/event',
+    content: '동아리박람회',
+  },
 ];
 
 export default function AdminHeader() {
@@ -40,14 +45,17 @@ export default function AdminHeader() {
         </Link>
         {!isLoginPage && (
           <nav className="-mr-4 md:block">
-            <ul className="flex">
+            <ul className="flex items-center">
               {navItems.map((item) => (
-                <li key={item.id} className="invisible mx-1 md:visible">
+                <li
+                  key={item.id}
+                  className={` mx-1 md:visible ${item.id === 1 && 'invisible'}`}
+                >
                   <Link
                     href={item.href}
-                    className={`inline-block p-3 font-semibold transition-colors hover:text-blue-500 ${
+                    className={`font-semibold transition-colors hover:text-pink-300 md:inline-block md:p-3 ${
                       isNavActive(curPath, item.href)
-                        ? 'text-blue-500'
+                        ? 'text-pink-400'
                         : 'text-gray-500'
                     }`}
                   >
@@ -57,7 +65,7 @@ export default function AdminHeader() {
               ))}
               <li className="mx-1">
                 <button
-                  className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500 "
+                  className="rounded-xl p-3 font-semibold text-gray-500 hover:text-pink-300 "
                   onClick={() => {
                     removeToken();
                     resetAuth();

@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import Modal from '@/components/common/Modal';
 import SearchBar from '@/components/home/SearchBar';
 import MemberInfo from '@/components/member/MemberInfo';
+import MemberUpload from '@/components/member/MemberUpload';
 import { Position } from '@/constants/text';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
+import useModal from '@/hooks/common/useModal';
 import { Member } from '@/types/club';
 const newMember = {
   id: 0,
@@ -16,6 +19,7 @@ const newMember = {
 };
 export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
+  const { openModal, visible, closeModal, modalRef } = useModal();
   const [{ token }] = useCookies(['token']);
   const {
     data: { data },
@@ -27,6 +31,9 @@ export default function Index() {
 
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
+  function handleOpenModal() {
+    openModal();
+  }
   function handleEditting() {
     setIsEditing(!isEditing);
   }
@@ -81,7 +88,7 @@ export default function Index() {
           {isEditing && (
             <button
               onClick={handleEditting}
-              className="mr-2 rounded-lg  bg-gray-100 px-4 py-2 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-200 md:w-auto md:py-2.5"
+              className="mr-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-200 md:w-auto md:py-2.5"
             >
               취소
             </button>
@@ -95,8 +102,19 @@ export default function Index() {
         </div>
       </div>
       <div className=" rounded-xl border-[1.5px] border-gray-100 p-5  ">
+        {isEditing && (
+          <div className="flex justify-end ">
+            <span
+              onClick={() => handleOpenModal()}
+              className="mt-2 cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500 transition-colors hover:bg-blue-200 md:w-auto md:py-2.5"
+            >
+              {' '}
+              Excel로 업로드
+            </span>
+          </div>
+        )}
         {!isEditing && <SearchBar value={keyword} onChange={setKeyword} />}
-        <div className="mb-3 mt-14 text-sm font-semibold text-gray-500 md:text-base">
+        <div className="mb-3 mt-5 text-sm font-semibold text-gray-500 md:text-base">
           <span className="text-blue-500 opacity-70">
             {filteredMembers.length}명
           </span>
@@ -123,6 +141,14 @@ export default function Index() {
           ))}
         </ul>
       </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'동아리원 엑셀 업로드'}
+        closeModal={closeModal}
+      >
+        <MemberUpload closeModal={closeModal} />
+      </Modal>
     </div>
   );
 }

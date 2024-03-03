@@ -3,6 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+import MobileBanner from '@/assets/banner_mobile.svg';
+import PcBanner from '@/assets/banner_pc.svg';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Dropdown from '@/components/common/Dropdown';
@@ -30,7 +32,7 @@ export default function Index() {
     if (role === ROLE_TYPE.ROLE_ADMIN) {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
-          <div className="md:mr-1.5">안녕하세요,</div>
+          <span className="md:mr-1.5">안녕하세요, </span>
           <span className="text-blue-500">공:존</span>
           <span className="ml-1 md:ml-1.5">님</span>
         </div>,
@@ -54,18 +56,10 @@ export default function Index() {
       </Head>
       <div className="flex flex-row items-end justify-between">
         {infoElement}
-        {role === ROLE_TYPE.ROLE_ADMIN && (
-          <div
-            className="text-md rounded-xl px-2 py-1 font-bold text-blue-400 transition-colors hover:scale-110 hover:cursor-pointer hover:bg-slate-50 hover:text-blue-500 md:px-3 md:text-lg"
-            onClick={openFixZone}
-          >
-            Fix:Zone
-          </div>
-        )}
         {role === ROLE_TYPE.ROLE_CLUB && <Dropdown />}
       </div>
       <div className="relative mt-7">
-        <Link
+        {/* <Link
           href="/banner"
           className={`absolute right-0 top-2 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
             role === ROLE_TYPE.ROLE_CLUB && 'invisible'
@@ -80,10 +74,26 @@ export default function Index() {
             className="w-5"
           />
         </Link>
-        <Slider />
+        <Slider /> */}
+        <Link href={'/event'}>
+          <Image
+            src={PcBanner}
+            width={1440}
+            height={300}
+            className="hidden md:block md:w-full"
+            alt="banner"
+          />
+          <Image
+            src={MobileBanner}
+            width={1440}
+            height={300}
+            className="mb-4 h-56 w-full md:hidden md:h-48"
+            alt="banner"
+          />
+        </Link>
       </div>
 
-      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:mt-6 md:gap-8">
+      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 md:mt-6 md:gap-8">
         <Link
           href={ROLE_TEXT[role].club.route}
           className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
@@ -104,6 +114,18 @@ export default function Index() {
           </h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
             <p>{ROLE_TEXT[role].report.subtitle}</p>
+          </div>
+        </Link>
+        <Link
+          onClick={openFixZone}
+          href={ROLE_TEXT[role].fixzone.route}
+          className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+        >
+          <h2 className="text-xl font-bold md:text-2xl">
+            {ROLE_TEXT[role].fixzone.title}
+          </h2>
+          <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+            <p>{ROLE_TEXT[role].fixzone.subtitle}</p>
           </div>
         </Link>
       </div>

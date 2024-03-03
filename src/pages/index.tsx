@@ -1,16 +1,28 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import router from 'next/router';
+import MobileBanner from '@/assets/banner_mobile.svg';
+import PcBanner from '@/assets/banner_pc.svg';
+import Modal from '@/components/common/Modal';
 import Slider from '@/components/common/Slider';
+import LocalUserForm from '@/components/event/LocalUserForm';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
 import SearchBar from '@/components/home/SearchBar';
 import FilterOption from '@/components/modal/FilterOption';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
+import useModal from '@/hooks/common/useModal';
 import type { Club } from '@/types/club';
 
 export default function Home() {
   const [keyword, setKeyword] = useState<string>('');
+  const [hydrated, setHydrated] = useState(false);
   const [clubs, setClubs] = useState<Array<Club>>([]);
   const [filteredClubs, setFilteredClubs] = useState<Array<Club>>([]);
+  const { openModal, visible, closeModal, modalRef } = useModal();
+  const eventStorage =
+    typeof window !== 'undefined' ? localStorage.getItem('user') : null;
   const { isError, data } = useAllClubs();
   const [filterOption, setFilterOption] = useState<{
     category: string[];
@@ -21,7 +33,19 @@ export default function Home() {
     recruit: [],
     sort: true,
   });
-
+  const expoTitle = (
+    <div className="text-[96%] font-semibold">
+      <span className="mr-2 text-pink-400 ">THE CLUB 시즌즈</span>
+      <span className=" text-gray-700">동아리 박람회 이벤트</span>
+    </div>
+  );
+  function handleOpen() {
+    if (eventStorage) {
+      router.push('/event');
+    } else {
+      openModal();
+    }
+  }
   useEffect(() => {
     const clubList = data?.data ?? [];
     let sortedClubs = [...clubList].sort(
@@ -44,6 +68,10 @@ export default function Home() {
 
     setFilteredClubs(filterClubs());
   }, [clubs, keyword]);
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+  if (!hydrated) return null;
 
   function resortSemiClub(sortedClubs: Club[]) {
     const semiClubs = sortedClubs.filter(
@@ -60,8 +88,25 @@ export default function Home() {
 
   return (
     <>
-      <div className="mb-1.5 text-sm font-semibold md:mb-2 md:text-base">
-        <Slider />
+      <div
+        className="mb-1.5 cursor-pointer text-sm font-semibold md:mb-2 md:text-base"
+        onClick={handleOpen}
+      >
+        {/* <Slider /> */}
+        <Image
+          src={PcBanner}
+          width={1440}
+          height={300}
+          className="hidden md:block md:w-full"
+          alt="banner"
+        />
+        <Image
+          src={MobileBanner}
+          width={1440}
+          height={300}
+          className="h-56 w-full md:hidden md:h-48"
+          alt="banner"
+        />
       </div>
       <SearchBar value={keyword} onChange={setKeyword} />
       <div className="flex justify-between">
@@ -89,6 +134,14 @@ export default function Home() {
           />
         ))}
       </ul>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={expoTitle}
+        closeModal={closeModal}
+      >
+        <LocalUserForm closeModal={closeModal} />
+      </Modal>
     </>
   );
 }
