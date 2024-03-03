@@ -75,20 +75,22 @@ export default function Index() {
           />
         </Link>
         <Slider /> */}
-        <Image
-          src={PcBanner}
-          width={1440}
-          height={300}
-          className="hidden md:block md:w-full"
-          alt="banner"
-        />
-        <Image
-          src={MobileBanner}
-          width={1440}
-          height={300}
-          className="mb-4 h-56 w-full md:hidden md:h-48"
-          alt="banner"
-        />
+        <Link href={'/event'}>
+          <Image
+            src={PcBanner}
+            width={1440}
+            height={300}
+            className="hidden md:block md:w-full"
+            alt="banner"
+          />
+          <Image
+            src={MobileBanner}
+            width={1440}
+            height={300}
+            className="mb-4 h-56 w-full md:hidden md:h-48"
+            alt="banner"
+          />
+        </Link>
       </div>
 
       <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 md:mt-6 md:gap-8">
