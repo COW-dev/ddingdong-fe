@@ -114,7 +114,7 @@ export default function Index() {
             target="_blank"
             className="mr-3 mt-2 cursor-pointer rounded-lg bg-green-100 px-4 py-2.5 text-sm font-bold text-green-500 transition-colors hover:bg-blue-200 md:w-auto md:py-3"
           >
-            엑셀 양식 다운로드
+            Excel 양식 다운로드
           </a>
           <button
             // onClick={isEditing ? handleSubmit : handleEditting}
