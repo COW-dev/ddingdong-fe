@@ -188,16 +188,14 @@ export async function uploadMembers(formdata: FormData) {
     },
   });
 }
-export async function updateMembers({ members, token }: UpdateMembers) {
-  return await api.put(
-    `/club/my/club-members`,
-    { clubMemberList: members },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+export async function updateMembers(formdata: FormData) {
+  const token = formdata.get('token');
+  return await api.put('/club/my/club-members', formdata, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      // 'Content-Type': 'multipart/form-data',
     },
-  );
+  });
 }
 export async function deleteNotice({ noticeId, token }: DeleteNotice) {
   return await api.delete(`/admin/notices/${noticeId}`, {

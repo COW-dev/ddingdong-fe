@@ -21,6 +21,10 @@ export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
   const { openModal, visible, closeModal, modalRef } = useModal();
   const [{ token }] = useCookies(['token']);
+  const url =
+    'https://ddingdong-file.s3.ap-northeast-2.amazonaws.com/files/excel/동아리원_명단_수정_양식.xlsx';
+  const [file, setFile] = useState<File | null>(null);
+
   const {
     data: { data },
   } = useMyClub(token);
@@ -28,7 +32,7 @@ export default function Index() {
 
   const [members, setMembers] = useState<Member[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
-
+  console.log(members);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   function handleOpenModal() {
@@ -39,8 +43,19 @@ export default function Index() {
   }
   function handleSubmit() {
     const parsedMember = parsePosition();
-    mutation.mutate({ members: parsedMember, token });
+    const formData = new FormData();
+    const member = {
+      clubMemberList: parsedMember,
+    };
+    formData.append(
+      'data',
+      new Blob([JSON.stringify(member)], { type: 'application/json' }),
+    );
+    // formData.append('data', JSON.stringify(member));
+    file && formData.append('file', file);
+    formData.append('token', token);
     setIsEditing(!isEditing);
+    return mutation.mutate(formData);
   }
   function parsePosition() {
     const parsedMember: Member[] = [];
@@ -85,24 +100,33 @@ export default function Index() {
           입니다.
         </div>
         <div>
-          {isEditing && (
+          {/* {isEditing && (
             <button
               onClick={handleEditting}
               className="mr-2 rounded-lg bg-gray-100 px-4 py-2 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-200 md:w-auto md:py-2.5"
             >
               취소
             </button>
-          )}
-          <button
-            onClick={isEditing ? handleSubmit : handleEditting}
-            className="rounded-lg  bg-blue-100 px-4 py-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 md:w-auto md:py-2.5"
+          )} */}
+          <a
+            href={url}
+            download
+            target="_blank"
+            className="mr-3 mt-2 cursor-pointer rounded-lg bg-green-100 px-4 py-2.5 text-sm font-bold text-green-500 transition-colors hover:bg-blue-200 md:w-auto md:py-3"
           >
-            {isEditing ? `변경사항 저장` : `명단 수정하기`}
+            엑셀 양식 다운로드
+          </a>
+          <button
+            // onClick={isEditing ? handleSubmit : handleEditting}
+            onClick={openModal}
+            className="mt-2 cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500 transition-colors hover:bg-blue-200 md:w-auto md:py-2.5"
+          >
+            Excel로 업로드
           </button>
         </div>
       </div>
       <div className=" rounded-xl border-[1.5px] border-gray-100 p-5  ">
-        {isEditing && (
+        {/* {isEditing && (
           <div className="flex justify-end ">
             <span
               onClick={() => handleOpenModal()}
@@ -112,7 +136,7 @@ export default function Index() {
               Excel로 업로드
             </span>
           </div>
-        )}
+        )} */}
         {!isEditing && <SearchBar value={keyword} onChange={setKeyword} />}
         <div className="mb-3 mt-5 text-sm font-semibold text-gray-500 md:text-base">
           <span className="text-blue-500 opacity-70">
@@ -120,6 +144,7 @@ export default function Index() {
           </span>
           의 동아리원이 검색돼요.
         </div>
+
         <ul className="grid w-full grid-cols-1 sm:grid-cols-2  lg:grid-cols-3">
           {isEditing && (
             <MemberInfo
@@ -147,7 +172,7 @@ export default function Index() {
         title={'동아리원 엑셀 업로드'}
         closeModal={closeModal}
       >
-        <MemberUpload closeModal={closeModal} />
+        <MemberUpload closeModal={closeModal} file={file} setFile={setFile} />
       </Modal>
     </div>
   );

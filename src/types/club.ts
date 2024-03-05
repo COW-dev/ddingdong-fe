@@ -91,5 +91,6 @@ export type DeleteClub = {
 
 export type UpdateMembers = {
   members: Member[];
+  file: FormData;
   token: string;
 };
