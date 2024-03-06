@@ -10,14 +10,16 @@ type ColletionProps = {
 
 export default function StampBoard({ completed, collections }: ColletionProps) {
   const top = [
-    70, 89, 72, 88, 90, 123, 134, 112, 125, 142, 151, 156, 168, 170, 189,
+    70, 89, 72, 88, 90, 123, 134, 112, 125, 142, 151, 156, 168, 170, 180,
   ];
-  const left = [32, 18, 71, 55, 82, 20, 64, 80, 50, 81, 25, 45, 70, 30, 55];
+  const left = [32, 18, 71, 45, 82, 20, 64, 80, 50, 81, 25, 45, 70, 30, 55];
 
   const petalPositionsTop = [
-    65, 89, 72, 98, 123, 134, 112, 142, 151, 168, 170, 189,
+    65, 89, 72, 98, 123, 134, 112, 142, 151, 162, 170, 189, 205, 219,
   ];
-  const petalPositionsLeft = [2, 88, 51, 12, 2, 64, 43, 91, 2, 70, 44, 75];
+  const petalPositionsLeft = [
+    2, 88, 51, 12, 2, 64, 43, 91, 2, 70, 44, 75, 34, 66,
+  ];
 
   return (
     <>
@@ -37,7 +39,7 @@ export default function StampBoard({ completed, collections }: ColletionProps) {
             transform: `rotate(${Math.random() * 360}deg)`,
           }}
           className={` absolute h-5 w-5 md:hidden ${
-            index % 2 === 0 ? 'h-5 w-5 ' : ' h-3 w-3'
+            index % 2 === 0 ? 'h-5 w-5 ' : ' h-2 w-2'
           }`}
         />
       ))}
