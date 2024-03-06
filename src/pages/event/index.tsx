@@ -8,6 +8,7 @@ import StampBoard from '@/components/event/StampBoard';
 import { useMyCollects } from '@/hooks/api/event/useMyCollects';
 import { useMyQrCode } from '@/hooks/api/event/useMyQrCode';
 import { Colletions } from '@/types/event';
+import Link from 'next/link';
 
 export default function Index() {
   const local =
@@ -104,12 +105,12 @@ export default function Index() {
             <span className="text-gray-500 sm:hidden">
               하단의 버튼을 눌러 QR코드를 생성해주세요.
             </span>
-            <button
-              onClick={openQrCode}
+            <Link
+              href={`https://ddingdong.club/event/code?studentName=${user?.studentName}&studentNumbe=${user?.studentNumber}`}
               className="sm:text-md mx-auto mt-2 h-10 w-36 rounded-lg bg-pink-400 font-bold text-white transition-colors hover:opacity-80 md:mt-4 md:h-12 md:w-40 "
             >
-              이벤트 QR 보기
-            </button>
+              이벤트 도장 받기
+            </Link>
           </div>
           <StampBoard
             completed={stampBoard?.completed}
