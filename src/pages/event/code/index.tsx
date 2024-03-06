@@ -62,10 +62,6 @@ export default function Index({ studentNumber, studentName }: CodeProps) {
         className="hidden md:block md:w-full"
       />
       <div className="mt-5 flex w-full flex-col items-center text-lg font-bold md:mt-20 md:flex-col md:justify-center md:text-2xl">
-        <div>
-          <span className=" mr-1 text-pink-400">{user.studentName}</span>
-          <span className="mr-2">님</span>
-        </div>
         <span>QR이벤트 인증 페이지입니다.</span>
         <div className="mt-4 text-base font-semibold md:text-lg">
           <div>
