@@ -7,13 +7,18 @@ import LgEvent from '@/assets/md_event.svg';
 import { useCollectStamp } from '@/hooks/api/event/useCollectStamp';
 import { isMissingData } from '@/utils/validator';
 
-const init = {
-  studentNumber: '',
-  studentName: '',
-  studentMajor: '',
-};
-export default function Index() {
-  const [user, setUser] = useState(init);
+// const init = {
+//   studentNumber: '',
+//   studentName: '',
+//   studentMajor: '',
+// };
+interface CodeProps {
+  studentNumber: string;
+  studentName: string;
+}
+
+export default function Index({ studentNumber, studentName }: CodeProps) {
+  // const [user, setUser] = useState(init);
   const [code, setCode] = useState<string>('');
   const mutation = useCollectStamp();
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
@@ -23,21 +28,22 @@ export default function Index() {
     if (isMissingData({ code })) return toast.error('코드를 입력해주세요.');
     event.preventDefault();
     mutation.mutate({
-      studentName: user.studentName,
-      studentNumber: user.studentNumber,
-      department: user.studentMajor,
+      studentName,
+      studentNumber,
+      department: 'user.studentMajor',
       clubCode: code,
     });
   }
-  useEffect(() => {
-    const userInfo = localStorage.getItem('user');
-    if (userInfo) {
-      const init = userInfo
-        ? JSON.parse(userInfo)
-        : { studentNumber: 0, studentName: '', studentMajor: '' };
-      setUser(init);
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   const userInfo = localStorage.getItem('user');
+  //   if (userInfo) {
+  //     const init = userInfo
+  //       ? JSON.parse(userInfo)
+  //       : { studentNumber: 0, studentName: '', studentMajor: '' };
+  //     setUser(init);
+  //   }
+  // }, []);
 
   return (
     <>
