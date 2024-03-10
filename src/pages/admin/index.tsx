@@ -93,7 +93,7 @@ export default function Index() {
         </Link>
       </div>
 
-      <div className="mt-2 grid w-full grid-cols-1 gap-4 sm:grid-cols-3 md:mt-6 md:gap-8">
+      <div className="mt-2 grid w-full grid-cols-1 gap-3 sm:grid-cols-3 md:mt-6 md:gap-5">
         <Link
           href={ROLE_TEXT[role].club.route}
           className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
