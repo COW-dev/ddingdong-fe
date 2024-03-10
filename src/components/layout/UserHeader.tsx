@@ -10,8 +10,8 @@ import isNavActive from '@/utils/isNavActive';
 const navItems = [
   {
     id: 1,
-    href: '/event',
-    content: '동아리박람회',
+    href: '/',
+    content: '홈',
   },
   {
     id: 2,
@@ -24,18 +24,6 @@ export default function UserHeader() {
   const router = useRouter();
   const curPath = router.pathname;
   const [hydrated, setHydrated] = useState(false);
-  const { openModal, visible, closeModal, modalRef } = useModal();
-  const eventStorage =
-    typeof window !== 'undefined' ? localStorage.getItem('user') : null;
-  const expoTitle = (
-    <div className="text-[96%] font-semibold">
-      <span className="mr-2 text-pink-400 ">THE CLUB 시즌즈</span>
-      <span className=" text-gray-700">동아리 박람회 이벤트</span>
-    </div>
-  );
-  function handleOpenModal() {
-    openModal();
-  }
   useEffect(() => {
     setHydrated(true);
   }, []);
@@ -56,40 +44,7 @@ export default function UserHeader() {
         </Link>
         <nav className="-mr-4">
           <ul className="flex">
-            <li key={navItems[0].id} className="mx-1">
-              {eventStorage ? (
-                <Link
-                  href={navItems[0].href}
-                  className={`inline-block p-3 font-semibold transition-colors hover:text-pink-400 ${
-                    isNavActive(curPath, navItems[0].href)
-                      ? 'text-pink-400'
-                      : 'text-gray-500'
-                  }`}
-                >
-                  {navItems[0].content}
-                </Link>
-              ) : (
-                <h5
-                  className="inline-block cursor-pointer p-3 font-semibold text-gray-500 transition-colors  hover:text-pink-400"
-                  onClick={() => handleOpenModal()}
-                >
-                  동아리박람회
-                </h5>
-              )}
-            </li>
-            <li key={navItems[1].id} className="mx-1">
-              <Link
-                href={navItems[1].href}
-                className={`inline-block p-3 font-semibold transition-colors hover:text-pink-500 ${
-                  isNavActive(curPath, navItems[1].href)
-                    ? 'text-pink-400'
-                    : 'text-gray-500'
-                }`}
-              >
-                {navItems[1].content}
-              </Link>
-            </li>
-            {/* {navItems.map((item) => (
+            {navItems.map((item) => (
               <li key={item.id} className="mx-1">
                 <Link
                   href={item.href}
@@ -102,18 +57,10 @@ export default function UserHeader() {
                   {item.content}
                 </Link>
               </li>
-            ))} */}
+            ))}
           </ul>
         </nav>
       </div>
-      <Modal
-        visible={visible}
-        modalRef={modalRef}
-        title={expoTitle}
-        closeModal={closeModal}
-      >
-        <LocalUserForm closeModal={closeModal} />
-      </Modal>
     </header>
   );
 }
