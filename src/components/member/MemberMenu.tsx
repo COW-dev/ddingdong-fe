@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import { toast } from 'react-hot-toast';
 import Modal from '@/components/common/Modal';
 import MemberUpload from '@/components/member/MemberUpload';
 import { Button } from '@/components/ui/button';
@@ -22,6 +23,7 @@ interface MemberMenuProps {
   isEditing: boolean;
   organicMember: Member[];
   setMembers: (members: Member[]) => void;
+  isAdding: boolean;
 }
 
 function MemberMenu({
@@ -30,6 +32,7 @@ function MemberMenu({
   isEditing,
   organicMember,
   setMembers,
+  isAdding,
 }: MemberMenuProps) {
   const mutation = useUpdateMembers();
   const [{ token }] = useCookies(['token']);
@@ -51,6 +54,14 @@ function MemberMenu({
   }
 
   function handleSubmit() {
+    if (isAdding) {
+      return toast.error(`수정중인 작업을 마무리하고 저장해주세요.`);
+    }
+
+    if (members.length === organicMember.length) {
+      return handleEditting();
+    }
+
     const parsedMember = parsePosition();
     const formData = new FormData();
     const member = {

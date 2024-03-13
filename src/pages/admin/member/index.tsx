@@ -16,6 +16,7 @@ const newMember = {
   phoneNumber: '',
   studentNumber: '',
 };
+
 export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
   const [{ token }] = useCookies(['token']);
@@ -29,6 +30,7 @@ export default function Index() {
   const [members, setMembers] = useState<Member[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
   const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [isAdding, setIsAdding] = useState<boolean>(false);
 
   useEffect(() => {
     setMembers(data?.clubMembers ?? []);
@@ -69,6 +71,7 @@ export default function Index() {
             isEditing={isEditing}
             organicMember={data?.clubMembers}
             setMembers={setMembers}
+            isAdding={isAdding}
           />
         </div>
       </div>
@@ -89,6 +92,7 @@ export default function Index() {
               setMembers={setMembers}
               members={members}
               member={newMember}
+              setIsAdding={setIsAdding}
             />
           )}
           {filteredMembers.map((info) => (
