@@ -20,9 +20,17 @@ interface MemberMenuProps {
   handleEditting: () => void;
   members: Member[];
   isEditing: boolean;
+  organicMember: Member[];
+  setMembers: (members: Member[]) => void;
 }
 
-function MemberMenu({ handleEditting, members, isEditing }: MemberMenuProps) {
+function MemberMenu({
+  handleEditting,
+  members,
+  isEditing,
+  organicMember,
+  setMembers,
+}: MemberMenuProps) {
   const mutation = useUpdateMembers();
   const [{ token }] = useCookies(['token']);
 
@@ -35,6 +43,11 @@ function MemberMenu({ handleEditting, members, isEditing }: MemberMenuProps) {
       });
     });
     return parsedMember;
+  }
+
+  function handleClickCancleButton() {
+    setMembers(organicMember);
+    handleEditting();
   }
 
   function handleSubmit() {
@@ -64,7 +77,7 @@ function MemberMenu({ handleEditting, members, isEditing }: MemberMenuProps) {
       <div className="flex gap-2">
         {isEditing ? (
           <button
-            onClick={handleEditting}
+            onClick={handleClickCancleButton}
             className="cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500"
           >
             취소
@@ -92,7 +105,7 @@ function MemberMenu({ handleEditting, members, isEditing }: MemberMenuProps) {
           onClick={isEditing ? handleSubmit : handleEditting}
           className="cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500"
         >
-          {isEditing ? '저장' : '수정'}
+          {isEditing ? '저장' : '직접 수정'}
         </button>
       </div>
       <Modal

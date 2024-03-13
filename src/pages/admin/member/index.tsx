@@ -67,6 +67,8 @@ export default function Index() {
             handleEditting={handleEditting}
             members={members}
             isEditing={isEditing}
+            organicMember={data?.clubMembers}
+            setMembers={setMembers}
           />
         </div>
       </div>
