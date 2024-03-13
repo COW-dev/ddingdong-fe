@@ -1,4 +1,10 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from 'react';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 import Add from '@/assets/add.svg';
@@ -14,16 +20,31 @@ type Props = {
   isEditing: boolean;
   members: Member[];
   setMembers: Dispatch<SetStateAction<Member[]>>;
+  setIsAdding?: (isAdding: boolean) => void;
+};
+const initMember = {
+  id: 0,
+  name: '',
+  studentNumber: '',
+  department: '',
+  phoneNumber: '',
+  position: '동아리원',
 };
 export default function MemberInfo({
   member,
   isEditing,
   members,
   setMembers,
+  setIsAdding,
 }: Props) {
   const [value, setValue] = useState<Member>(member);
   const [isEditItem, setisEditItem] = useState<boolean>(false);
   const [positionNum, setPositionNum] = useState<number>(0);
+
+  useEffect(() => {
+    setIsAdding && setIsAdding(value.name !== '');
+  }, [value.name]);
+
   function handleEditable() {
     setisEditItem(true);
   }
@@ -64,14 +85,7 @@ export default function MemberInfo({
     setPositionNum(0);
     const id = members.length > 0 ? members[members?.length - 1]?.id + 1 : 1;
     setMembers([...members, { ...value, id: id }]);
-    setValue({
-      id: 0,
-      name: '',
-      studentNumber: '',
-      department: '',
-      phoneNumber: '',
-      position: '동아리원',
-    });
+    setValue(initMember);
   }
 
   function handleDeleteMember() {
