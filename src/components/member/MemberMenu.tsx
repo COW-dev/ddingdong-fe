@@ -58,9 +58,9 @@ function MemberMenu({
       return toast.error(`수정중인 작업을 마무리하고 저장해주세요.`);
     }
 
-    if (members.length === organicMember.length) {
-      return handleEditting();
-    }
+    // if (members.length === organicMember.length) {
+    //   return handleEditting();
+    // }
 
     const parsedMember = parsePosition();
     const formData = new FormData();
