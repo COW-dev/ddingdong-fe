@@ -59,7 +59,7 @@ export default function Index() {
         {role === ROLE_TYPE.ROLE_CLUB && <Dropdown />}
       </div>
       <div className="relative mt-7">
-        {/* <Link
+        <Link
           href="/banner"
           className={`absolute right-0 top-2 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
             role === ROLE_TYPE.ROLE_CLUB && 'invisible'
@@ -74,25 +74,8 @@ export default function Index() {
             className="w-5"
           />
         </Link>
-        <Slider /> */}
-        <Link href={'/event'}>
-          <Image
-            src={PcBanner}
-            width={1440}
-            height={300}
-            className="hidden md:block md:w-full"
-            alt="banner"
-          />
-          <Image
-            src={MobileBanner}
-            width={1440}
-            height={300}
-            className="mb-4 h-56 w-full md:hidden md:h-48"
-            alt="banner"
-          />
-        </Link>
+        <Slider />
       </div>
-
       <div className="mt-2 grid w-full grid-cols-1 gap-3 sm:grid-cols-3 md:mt-6 md:gap-5">
         <Link
           href={ROLE_TEXT[role].club.route}
