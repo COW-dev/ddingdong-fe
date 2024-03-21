@@ -1,5 +1,5 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-
+import * as Sentry from '@sentry/react';
 export default function Document() {
   return (
     <Html lang="ko">
@@ -16,9 +16,11 @@ export default function Document() {
         ></meta>
       </Head>
       <body>
-        <Main />
-        <div id="modal-root" />
-        <NextScript />
+        <Sentry.ErrorBoundary>
+          <Main />
+          <div id="modal-root" />
+          <NextScript />
+        </Sentry.ErrorBoundary>
       </body>
     </Html>
   );
