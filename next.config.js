@@ -7,3 +7,22 @@ const nextConfig = {
 };
 
 module.exports = nextConfig;
+
+const { withSentryConfig } = require('@sentry/nextjs');
+
+module.exports = withSentryConfig(
+  module.exports,
+  {
+    silent: true,
+    org: 'ddingdong-ng',
+    project: 'ddingdong-fe',
+  },
+  {
+    widenClientFileUpload: true,
+    transpileClientSDK: true,
+    tunnelRoute: '/monitoring',
+    hideSourceMaps: true,
+    disableLogger: true,
+    automaticVercelMonitors: true,
+  },
+);
