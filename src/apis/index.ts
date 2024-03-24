@@ -1,3 +1,4 @@
+import * as Sentry from '@sentry/react';
 import axios from 'axios';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
@@ -444,6 +445,8 @@ function rejectedResponse(error: AxiosError<ErrorType>) {
     error.response?.data?.message == '유효하지 않은 토큰입니다.'
   )
     return expirationToken(error);
+
+  Sentry.captureException(error);
   return Promise.reject(error);
 }
 

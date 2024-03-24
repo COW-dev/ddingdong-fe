@@ -1,12 +1,5 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import router from 'next/router';
-import MobileBanner from '@/assets/banner_mobile.svg';
-import PcBanner from '@/assets/banner_pc.svg';
-import Modal from '@/components/common/Modal';
 import Slider from '@/components/common/Slider';
-import LocalUserForm from '@/components/event/LocalUserForm';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
 import SearchBar from '@/components/home/SearchBar';
