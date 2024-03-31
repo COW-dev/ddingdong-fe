@@ -76,7 +76,7 @@ export default function AdminScore({ clubId }: ScoreProps) {
 
   return (
     <>
-      <Heading>동아리 점수 관리하기</Heading>
+      <Heading>동아리 점수 관리</Heading>
       <History scoreData={scoreData} />
       <div className=" my-4 flex w-full flex-col items-center md:grid md:h-60 md:grid-cols-3 md:gap-4 ">
         {key.map(({ icon, category }, index) => (

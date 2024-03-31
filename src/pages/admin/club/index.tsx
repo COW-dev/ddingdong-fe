@@ -45,7 +45,7 @@ export default function Index() {
         <title>띵동 어드민 - 동아리 관리</title>
       </Head>
       <div className="flex flex-row items-end justify-between">
-        <Heading>동아리 관리하기</Heading>
+        <Heading>동아리 관리</Heading>
         <div
           onClick={() =>
             handleModal({
