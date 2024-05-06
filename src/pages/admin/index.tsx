@@ -3,11 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import MobileBanner from '@/assets/banner_mobile.svg';
-import PcBanner from '@/assets/banner_pc.svg';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
-import Dropdown from '@/components/common/Dropdown';
 import Slider from '@/components/common/Slider';
 import { ROLE_TEXT, ROLE_TYPE } from '@/constants/text';
 import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
@@ -41,13 +38,13 @@ export default function Index() {
       setInfoElement(<AdminHeading />);
     }
   }
-  function openFixZone() {
-    const windowOptions = 'width=650,height=650,scrollbars,resizable=no';
-    const fixZoneWindow = window.open('fixzone', 'fixzone', windowOptions);
-    if (!fixZoneWindow) {
-      alert('팝업 차단이 활성화되어 있습니다. 팝업 차단을 해제해주세요.');
-    }
-  }
+  // function openFixZone() {
+  //   const windowOptions = 'width=650,height=650,scrollbars,resizable=no';
+  //   const fixZoneWindow = window.open('fixzone', 'fixzone', windowOptions);
+  //   if (!fixZoneWindow) {
+  //     alert('팝업 차단이 활성화되어 있습니다. 팝업 차단을 해제해주세요.');
+  //   }
+  // }
 
   return (
     <>
@@ -56,7 +53,6 @@ export default function Index() {
       </Head>
       <div className="flex flex-row items-end justify-between">
         {infoElement}
-        {role === ROLE_TYPE.ROLE_CLUB && <Dropdown />}
       </div>
       <div className="relative mt-7">
         <Link
@@ -79,7 +75,7 @@ export default function Index() {
       <div className="mt-2 grid w-full grid-cols-1 gap-3 sm:grid-cols-3 md:mt-6 md:gap-5">
         <Link
           href={ROLE_TEXT[role].club.route}
-          className="bg-b inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">
             {ROLE_TEXT[role].club.title}
@@ -88,6 +84,19 @@ export default function Index() {
             <p>{ROLE_TEXT[role].club.subtitle}</p>
           </div>
         </Link>
+        {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role]?.member && (
+          <Link
+            href={ROLE_TEXT[role]?.member?.route ?? ''}
+            className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          >
+            <h2 className="text-xl font-bold md:text-2xl">
+              {ROLE_TEXT[role]?.member?.title ?? ''}
+            </h2>
+            <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+              <p>{ROLE_TEXT[role]?.member?.subtitle ?? ''}</p>
+            </div>
+          </Link>
+        )}
         <Link
           href={ROLE_TEXT[role].report.route}
           className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
@@ -99,16 +108,28 @@ export default function Index() {
             <p>{ROLE_TEXT[role].report.subtitle}</p>
           </div>
         </Link>
+        {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role].member && (
+          <Link
+            href={ROLE_TEXT[role]?.score?.route ?? ''}
+            className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          >
+            <h2 className="text-xl font-bold md:text-2xl">
+              {ROLE_TEXT[role]?.score?.title ?? ''}
+            </h2>
+            <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+              <p>{ROLE_TEXT[role]?.score?.subtitle ?? ''}</p>
+            </div>
+          </Link>
+        )}
         <Link
-          href={'/'}
-          onClick={openFixZone}
+          href={ROLE_TEXT[role].fix.route}
           className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
         >
           <h2 className="text-xl font-bold md:text-2xl">
-            {ROLE_TEXT[role].fixzone.title}
+            {ROLE_TEXT[role].fix.title}
           </h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
-            <p>{ROLE_TEXT[role].fixzone.subtitle}</p>
+            <p>{ROLE_TEXT[role].fix.subtitle}</p>
           </div>
         </Link>
       </div>
