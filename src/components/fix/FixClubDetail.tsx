@@ -36,7 +36,7 @@ export default function FixClubDetail({ id }: Prop) {
   return (
     <>
       <div className=" flex items-center justify-between">
-        <Heading>동아리방 시설보수 확인</Heading>
+        <Heading>동아리방 시설보수 신청</Heading>
         <div className="mt-8">
           <NeutralButton href="/fix">목록으로 돌아가기</NeutralButton>
         </div>

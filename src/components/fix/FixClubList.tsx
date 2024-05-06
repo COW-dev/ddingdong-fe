@@ -6,11 +6,10 @@ export default function FixClubList() {
   const [{ token }] = useCookies(['token']);
   const { data } = useMyFix(token);
   const posts = data?.data ?? [];
-  console.log('posts', posts);
 
   return (
     <div>
-      <ul className="mt-14 h-[80vh] w-full overflow-y-scroll md:mt-16">
+      <ul className="mt-10 h-[80vh] w-full overflow-y-scroll md:mt-14">
         {[...posts].reverse().map((fix, index) => (
           <div key={`fix__club-${index}`}>
             <FixItem data={fix} />
