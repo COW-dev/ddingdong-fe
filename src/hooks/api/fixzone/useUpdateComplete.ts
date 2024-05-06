@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateFixComplete } from '@/apis';
-import { FixComplete } from '@/types/fixzone';
+import { FixComplete } from '@/types/fix';
 
 export function useUpdateComplete(): UseMutationResult<
   unknown,

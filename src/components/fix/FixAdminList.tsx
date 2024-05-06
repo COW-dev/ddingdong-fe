@@ -8,7 +8,7 @@ export default function FixAdminList() {
   const posts = data?.data ?? [];
   return (
     <div>
-      <ul className="mt-14 w-full md:mt-16">
+      <ul className="mt-10 w-full md:mt-14">
         {[...posts].reverse().map((fix, index) => (
           <div key={`fix__admin-${index}`}>
             <FixItem data={fix} />

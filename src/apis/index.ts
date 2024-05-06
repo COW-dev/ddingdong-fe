@@ -32,7 +32,7 @@ import {
   FixClubDetailType,
   FixComplete,
   NewFix,
-} from '@/types/fixzone';
+} from '@/types/fix';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getAdminAllFix } from '@/apis';
-import { Fix } from '@/types/fixzone';
+import { Fix } from '@/types/fix';
 
 export function useAllFix(token: string) {
   return useQuery<unknown, AxiosError, AxiosResponse<Fix[], unknown>, [string]>(
