@@ -17,7 +17,9 @@ type RoleText = {
   [K in RoleType[keyof RoleType]]: {
     club: NavBox;
     report: NavBox;
-    fixzone: NavBox;
+    member?: NavBox;
+    score?: NavBox;
+    fix: NavBox;
     notice: NavBox;
   };
 };
@@ -25,43 +27,53 @@ type RoleText = {
 export const ROLE_TEXT: RoleText = {
   [ROLE_TYPE.ROLE_ADMIN]: {
     club: {
-      title: '동아리 관리하기',
+      title: '동아리 관리',
       subtitle: '동아리를 등록/삭제하거나, 동아리 점수를 입력해요.',
       route: '/club',
     },
     report: {
-      title: '활동보고서 확인하기',
+      title: '활동보고서 확인',
       subtitle: '동아리가 제출한 활동보고서를 확인해요.',
       route: '/report/admin',
     },
-    fixzone: {
+    fix: {
       title: '동아리 시설보수 확인',
       subtitle: '각 동아리방 시설보수 신청내역을 확인해요.',
-      route: '/fixzone',
+      route: '/fix',
     },
     notice: {
-      title: '공지사항 관리하기',
+      title: '공지사항 관리',
       route: '/notice',
     },
   },
   [ROLE_TYPE.ROLE_CLUB]: {
     club: {
-      title: '동아리 정보수정하기',
+      title: '동아리 정보 수정',
       subtitle: '동아리 상세 정보를 입력/수정해요.',
       route: '/my-club',
     },
+    member: {
+      title: '동아리원 명단 관리',
+      subtitle: '동아리원을 추가/수정해요.',
+      route: '/member',
+    },
     report: {
-      title: '활동보고서 관리하기',
+      title: '활동보고서 작성',
       subtitle: '활동보고서를 작성하고, 제출한 보고서를 확인해요.',
       route: '/report',
     },
-    fixzone: {
-      title: '동아리 시설보수 확인',
+    score: {
+      title: '동아리 점수 확인',
+      subtitle: '동아리의 활동 점수를 확인해요.',
+      route: '/club/my/score',
+    },
+    fix: {
+      title: '동아리 시설보수 신청',
       subtitle: '각 동아리방 시설보수 신청내역을 확인해요.',
-      route: '/',
+      route: '/fix',
     },
     notice: {
-      title: '공지사항 확인하기',
+      title: '공지사항',
       route: '/notice',
     },
   },
