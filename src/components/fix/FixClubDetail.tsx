@@ -6,9 +6,11 @@ import { useCookies } from 'react-cookie';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useClubFixInfo } from '@/hooks/api/fixzone/useClubFixInfo';
-import { FixClubDetailType } from '@/types/fixzone';
+import { FixClubDetailType } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
 import ClearButton from './Clearbutton';
+import Heading from '../common/Heading';
+import NeutralButton from '../common/NeutralButton';
 type Prop = {
   id: number;
 };
@@ -25,37 +27,28 @@ export default function FixClubDetail({ id }: Prop) {
   const { data: response } = useClubFixInfo({ token, id });
   const [data, setData] = useState<FixClubDetailType>(init);
   const [presentIndex, setPresentIndex] = useState<number>(0);
-
+  console.log('data', data);
   useEffect(() => {
     if (response?.data) setData(response?.data);
   }, [response]);
   const { content, imageUrls, completed, title } = data;
 
   return (
-    <div className="w-full bg-gray-100">
-      <div className="m-auto max-w-[650px] bg-gray-100 p-10">
-        <div className="flex justify-between">
-          <Link href="/fixzone">
-            <Image src={LeftArrow} alt="back" width={25} height={25} />
-          </Link>
-          <div className="text-lg font-bold">동아리방 시설 보수</div>
-          <div></div>
+    <>
+      <div className=" flex items-center justify-between">
+        <Heading>동아리방 시설보수 확인</Heading>
+        <div className="mt-8">
+          <NeutralButton href="/fix">목록으로 돌아가기</NeutralButton>
         </div>
-        <div className="mt-10 flex justify-end text-sm font-semibold md:text-base">
-          <ClearButton completed={completed} />
-        </div>
-        <div
-          className={`flex justify-end font-medium ${
-            completed ? `text-green-500` : `text-gray-500`
-          }`}
-        ></div>
+      </div>
+      <div className="mt-7 flex w-full flex-col rounded-xl border border-gray-100 p-6 md:mt-14 md:flex-row">
         {/* 내용 */}
-        <div className="mb-7 mt-4 rounded-xl bg-white p-5 text-gray-500 shadow-xl">
-          <div className="py-2 text-xl font-bold">{title}</div>
-          <div className="font-semibold">{content}</div>
+        <div className="mb-5 w-full rounded-xl bg-white md:w-1/2 md:p-3 ">
+          <div className=" py-2 text-xl font-bold md:text-2xl">{title}</div>
+          <div>{content}</div>
         </div>
         {/* 사진 */}
-        <div className="relative my-7 flex items-center justify-center">
+        <div className="relative flex w-full items-center justify-center md:w-1/2">
           <Image
             src={LeftArrow}
             width={30}
@@ -74,7 +67,7 @@ export default function FixClubDetail({ id }: Prop) {
             height={500}
             priority
             alt="fixImage"
-            className="h-[60vh] overflow-hidden object-scale-down"
+            className=" overflow-hidden object-scale-down"
           />
           <Image
             src={RightArrow}
@@ -90,6 +83,6 @@ export default function FixClubDetail({ id }: Prop) {
           />
         </div>
       </div>
-    </div>
+    </>
   );
 }
