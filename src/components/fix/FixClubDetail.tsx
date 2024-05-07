@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
-import LeftArrow from '@/assets/leftArrow.svg';
+import LeftArrow2 from '@/assets/leftArrow2.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useClubFixInfo } from '@/hooks/api/fixzone/useClubFixInfo';
 import { FixClubDetailType } from '@/types/fix';
@@ -50,7 +50,7 @@ export default function FixClubDetail({ id }: Prop) {
         {/* 사진 */}
         <div className="relative flex w-full items-center justify-center md:w-1/2">
           <Image
-            src={LeftArrow}
+            src={LeftArrow2}
             width={30}
             height={30}
             alt="leftButton"

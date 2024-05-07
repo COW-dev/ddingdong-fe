@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
-import LeftArrow from '@/assets/leftArrow.svg';
+import LeftArrow2 from '@/assets/leftArrow2.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { useAdminFixInfo } from '@/hooks/api/fixzone/useAdminFixInfo';
 import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
@@ -51,21 +51,23 @@ export default function FixAdminDetail({ id }: Prop) {
       <Heading>동아리방 시설보수 확인</Heading>
       <div className="mt-14 flex items-center">
         <Link href="/fix">
-          <Image src={LeftArrow} alt="back" width={25} height={25} />
+          <Image src={LeftArrow2} alt="back" width={25} height={25} />
         </Link>
-        <span className="text-xl font-semibold text-gray-600">{title}</span>
+        <span className="ml-2 text-xl font-semibold text-gray-600">
+          {title}
+        </span>
       </div>
 
       <div className="mt-3 flex w-full flex-col rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
         {/* 정보 */}
-        <div className=" w-1/2 rounded-xl bg-white p-3">
+        <div className=" w-full rounded-xl bg-white md:w-1/2 md:p-3">
           <FixItemInfo club={club} createdAt={createdAt} location={location} />
           <div className="mt-4 py-2 pt-4">{content}</div>
         </div>
         {/* 내용 */}
-        <div className="relative flex w-full items-center justify-center p-3 md:w-1/2">
+        <div className="relative flex w-full items-center justify-center md:w-1/2 md:p-3">
           <Image
-            src={LeftArrow}
+            src={LeftArrow2}
             width={30}
             height={30}
             alt="leftButton"
