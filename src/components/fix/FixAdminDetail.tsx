@@ -100,14 +100,12 @@ export default function FixAdminDetail({ id }: Prop) {
           />
         </div>
       </div>
-      <div>
+      <div className="flex justify-center">
         <button
           disabled={completed}
           onClick={openModal}
-          className={`mb-3 mt-7 rounded-xl border border-gray-300 px-4 py-2  text-gray-500  ${
-            !completed
-              ? ` hover:border-green-300 hover:text-green-500`
-              : `border-green-300 text-green-500`
+          className={`mb-3 mt-7 rounded-xl border bg-blue-500 px-10 py-2.5 text-base font-semibold text-white  ${
+            !completed ? `  hover:bg-blue-600` : ` bg-blue-500`
           } md:mr-0.5`}
         >
           {completed ? `처리 완료` : `처리 마치기`}
