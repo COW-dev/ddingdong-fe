@@ -96,10 +96,10 @@ function MemberMenu({
         ) : (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline">Exel</Button>
+              <Button variant="outline">Excel</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 bg-white">
-              <DropdownMenuLabel>Exel로 동아리원 관리</DropdownMenuLabel>
+              <DropdownMenuLabel>Excel로 동아리원 관리</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuCheckboxItem>
                 <a href={URL} download target="_blank">
