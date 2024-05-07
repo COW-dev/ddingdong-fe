@@ -16,6 +16,7 @@ import { Position } from '@/constants/text';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
 import useModal from '@/hooks/common/useModal';
 import { Member } from '@/types/club';
+import Dropdown from '../common/Dropdown';
 
 interface MemberMenuProps {
   handleEditting: () => void;
@@ -76,16 +77,11 @@ function MemberMenu({
     handleEditting();
     return mutation.mutate(formData);
   }
-
-  const { openModal, visible, closeModal, modalRef } = useModal();
   const [file, setFile] = useState<File | null>(null);
-
-  const URL =
-    'https://ddingdong-file.s3.ap-northeast-2.amazonaws.com/files/excel/동아리원_명단_수정_양식.xlsx';
 
   return (
     <>
-      <div className="flex gap-2">
+      <div className="flex">
         {isEditing ? (
           <button
             onClick={handleClickCancleButton}
@@ -94,39 +90,15 @@ function MemberMenu({
             취소
           </button>
         ) : (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline">Excel</Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-white">
-              <DropdownMenuLabel>Excel로 동아리원 관리</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuCheckboxItem>
-                <a href={URL} download target="_blank">
-                  Excel 양식 다운로드
-                </a>
-              </DropdownMenuCheckboxItem>
-              <DropdownMenuCheckboxItem onClick={openModal}>
-                Excel로 업로드
-              </DropdownMenuCheckboxItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Dropdown file={file} setFile={setFile} />
         )}
         <button
           onClick={isEditing ? handleSubmit : handleEditting}
-          className="cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500"
+          className="ml-3 cursor-pointer rounded-lg bg-blue-100 px-4 py-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200"
         >
           {isEditing ? '저장' : '직접 수정'}
         </button>
       </div>
-      <Modal
-        visible={visible}
-        modalRef={modalRef}
-        title={'동아리원 엑셀 업로드'}
-        closeModal={closeModal}
-      >
-        <MemberUpload closeModal={closeModal} file={file} setFile={setFile} />
-      </Modal>
     </>
   );
 }
