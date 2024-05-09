@@ -40,7 +40,7 @@ export default function FixAdminDetail({ id }: Prop) {
   const { club, content, createdAt, imageUrls, completed, location, title } =
     data;
   const mutation = useUpdateComplete();
-  console.log('data', data);
+
   function handleCompleted() {
     setData((prev) => ({ ...prev, completed: true }));
     mutation.mutate({ id, completed: true, token });

@@ -27,7 +27,7 @@ export default function FixClubDetail({ id }: Prop) {
   const { data: response } = useClubFixInfo({ token, id });
   const [data, setData] = useState<FixClubDetailType>(init);
   const [presentIndex, setPresentIndex] = useState<number>(0);
-  console.log('data', data);
+
   useEffect(() => {
     if (response?.data) setData(response?.data);
   }, [response]);

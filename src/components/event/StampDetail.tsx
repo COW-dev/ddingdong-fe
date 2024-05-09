@@ -8,7 +8,6 @@ type Props = {
 };
 
 export default function StampDetail({ collections }: Props) {
-  console.log(collections);
   return (
     <>
       <div className=" mt-2 flex w-full flex-row-reverse flex-wrap md:mt-5 md:hidden">
