@@ -32,30 +32,30 @@ export default function UploadMultipleImage({
     setImage([...image]);
   }
   return (
-    <div className="flex w-full justify-center p-6">
+    <div className="flex h-full w-full justify-center p-6">
       {image.length !== 0 ? (
         <>
-          <div className="relative">
+          <div className="relative h-96">
             <div className="flex">
               <Image
                 src={LeftArrow}
-                height={20}
-                width={20}
+                height={25}
+                width={25}
                 alt="left"
                 onClick={() => setPresentIndex(presentIndex - 1)}
                 className={`${presentIndex === 0 && `hidden`}`}
               />
               <Image
                 src={URL.createObjectURL(image[presentIndex])}
-                className="m-auto h-72 overflow-hidden object-scale-down p-3"
+                className=" m-auto h-96 overflow-hidden rounded-lg object-scale-down"
                 alt="이미지"
-                width={1000}
+                width={800}
                 height={200}
               />
               <Image
                 src={RightArrow}
-                height={20}
-                width={20}
+                height={25}
+                width={25}
                 alt="right"
                 onClick={() => setPresentIndex(presentIndex + 1)}
                 className={`${presentIndex === image.length - 1 && `hidden`}`}
@@ -77,9 +77,9 @@ export default function UploadMultipleImage({
       ) : (
         <label
           htmlFor="dropzone-file"
-          className="flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
+          className=" flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
         >
-          <div className="flex flex-col items-center justify-center pb-6 pt-5 text-gray-400">
+          <div className="flex flex-col items-center justify-center text-gray-400">
             <Image src={Camera} width={30} height={30} alt="upload" />
             <p className="m-2 text-sm  ">Click to ImageUpload</p>
             <p className=" text-xs text-gray-400">

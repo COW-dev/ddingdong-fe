@@ -1,13 +1,15 @@
 import Link from 'next/link';
-import { Fix } from '@/types/fixzone';
+import { Fix } from '@/types/fix';
 
 export default function FixItem({ data }: { data: Fix }) {
   const { id, title, createdAt, completed, club } = data;
-
   return (
-    <li key={id} className="mb-2 flex w-full border border-gray-100 pl-4 pt-2">
+    <li
+      key={id}
+      className="mb-2 flex w-full rounded-md border border-gray-100 pl-4 pt-2"
+    >
       <Link
-        href={`/fixzone/${id}`}
+        href={`/fix/${id}`}
         className="inline-block w-full py-2 transition-opacity hover:opacity-50 md:pt-3.5"
       >
         <div className="block text-base font-semibold sm:hidden">
@@ -19,7 +21,7 @@ export default function FixItem({ data }: { data: Fix }) {
         </div>
       </Link>
       <div
-        className={`mx-1 mb-4 mt-2 flex w-30 flex-col items-center justify-center rounded-lg px-2 text-center text-xs font-semibold ${
+        className={`text-md mx-1 mb-4 mt-2 flex w-30 flex-col items-center justify-center rounded-lg px-2 text-center font-semibold ${
           completed ? ` text-green-500` : `  text-gray-500`
         }`}
       >

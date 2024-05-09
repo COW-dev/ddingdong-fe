@@ -2,9 +2,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Modal from '@/components/common/Modal';
-import LocalUserForm from '@/components/event/LocalUserForm';
-import useModal from '@/hooks/common/useModal';
 import isNavActive from '@/utils/isNavActive';
 
 const navItems = [

@@ -56,7 +56,7 @@ export default function Index() {
   return (
     <div className="md:p-5">
       <div className="mb-14 mt-7 flex justify-between text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
-        동아리원 관리하기
+        동아리원 명단 관리
       </div>
       <div className="mb-7 flex justify-between">
         <div className="font-bold md:text-xl">

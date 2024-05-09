@@ -1,18 +1,16 @@
 import { useCookies } from 'react-cookie';
-import { useMyFix } from '@/hooks/api/fixzone/useMyFix';
+import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
 import FixItem from './FixItem';
 
-export default function FixClubList() {
+export default function FixAdminList() {
   const [{ token }] = useCookies(['token']);
-  const { data } = useMyFix(token);
+  const { data } = useAllFix(token);
   const posts = data?.data ?? [];
-  console.log('posts', posts);
-
   return (
     <div>
-      <ul className="mt-14 h-[80vh] w-full overflow-y-scroll md:mt-16">
+      <ul className="mt-10 w-full md:mt-14">
         {[...posts].reverse().map((fix, index) => (
-          <div key={`fix__club-${index}`}>
+          <div key={`fix__admin-${index}`}>
             <FixItem data={fix} />
           </div>
         ))}

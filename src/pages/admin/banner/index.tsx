@@ -51,7 +51,7 @@ export default function Index() {
         <title>띵동 어드민 - 배너관리</title>
       </Head>
       <div className="mb-14 flex flex-row items-end justify-between">
-        <Heading>배너 관리하기</Heading>
+        <Heading>배너 관리</Heading>
         <div
           onClick={() =>
             handleModal({

@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getAdminFixInfo } from '@/apis';
-import { FixAdminDetailType } from '@/types/fixzone';
+import { FixAdminDetailType } from '@/types/fix';
 type Props = {
   token: string;
   id: number;

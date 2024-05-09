@@ -1,7 +1,7 @@
 import { GetServerSideProps } from 'next';
 import { useCookies } from 'react-cookie';
-import FixAdminDetail from '@/components/fixzone/FixAdminDetail';
-import FixClubDetail from '@/components/fixzone/FixClubDetail';
+import FixAdminDetail from '@/components/fix/FixAdminDetail';
+import FixClubDetail from '@/components/fix/FixClubDetail';
 import { ROLE_TYPE } from '@/constants/text';
 type Props = {
   fixId: number;

@@ -8,7 +8,7 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 import { createFix } from '@/apis';
-import { NewFix } from './../../../types/fixzone';
+import { NewFix } from '../../../types/fix';
 
 export function useNewFix(): UseMutationResult<unknown, AxiosError, NewFix> {
   const queryClient = useQueryClient();
@@ -18,7 +18,7 @@ export function useNewFix(): UseMutationResult<unknown, AxiosError, NewFix> {
     onSuccess() {
       queryClient.invalidateQueries(['banners']);
       toast.success('요청을 성공적으로 보냈어요.');
-      router.push('/fixzone');
+      router.push('/fix');
     },
     onError() {
       toast.error('요청을 전송하는데 실패했어요');
