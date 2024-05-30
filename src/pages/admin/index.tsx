@@ -16,6 +16,9 @@ export default function Index() {
   const [infoElement, setInfoElement] = useState(<></>);
 
   const notices = noticedata?.data;
+  notices?.sort((a, b) => {
+    return b.id - a.id;
+  });
 
   useEffect(() => {
     setHydrated(true);
@@ -38,13 +41,6 @@ export default function Index() {
       setInfoElement(<AdminHeading />);
     }
   }
-  // function openFixZone() {
-  //   const windowOptions = 'width=650,height=650,scrollbars,resizable=no';
-  //   const fixZoneWindow = window.open('fixzone', 'fixzone', windowOptions);
-  //   if (!fixZoneWindow) {
-  //     alert('팝업 차단이 활성화되어 있습니다. 팝업 차단을 해제해주세요.');
-  //   }
-  // }
 
   return (
     <>
@@ -150,7 +146,6 @@ export default function Index() {
           {notices
             ?.slice(0, 5)
             .splice(0)
-            .reverse()
             .map((notice) => (
               <li key={notice.id} className="mb-1 w-full border-b">
                 <Link
