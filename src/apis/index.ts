@@ -51,6 +51,7 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 3000,
 });
+
 export function removeToken() {
   const cookies = new Cookies();
   cookies.remove('token');
@@ -272,6 +273,7 @@ export async function createReport(formdata: FormData) {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
     },
+    timeout: 2000,
   });
 }
 
@@ -436,18 +438,23 @@ function expirationToken(error: AxiosError<ErrorType>) {
   return Promise.reject(error);
 }
 
-function fullfilledResponse(res: AxiosResponse) {
+function fulfilledResponse(res: AxiosResponse) {
   return res;
 }
 function rejectedResponse(error: AxiosError<ErrorType>) {
   if (
     error.response?.data?.code === 401 &&
     error.response?.data?.message == '유효하지 않은 토큰입니다.'
-  )
+  ) {
     return expirationToken(error);
+  }
+  if (error.code === 'ECONNABORTED') {
+    toast.error('네트워크 환경을 확인해주세요.');
+    return Promise.reject(error);
+  }
 
   Sentry.captureException(error);
   return Promise.reject(error);
 }
 
-api.interceptors.response.use(fullfilledResponse, rejectedResponse);
+api.interceptors.response.use(fulfilledResponse, rejectedResponse);
