@@ -273,7 +273,6 @@ export async function createReport(formdata: FormData) {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
     },
-    timeout: 2000,
   });
 }
 
