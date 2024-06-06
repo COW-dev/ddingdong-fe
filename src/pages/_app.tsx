@@ -44,19 +44,6 @@ export default function App({ Component, pageProps }: AppProps) {
       </CookiesProvider>
 
       <ToasterWithMax />
-      {/* <Toaster\
-        containerStyle={{
-          position: 'fixed',
-          // overflow: 'hidden',
-          maxHeight: '0.5rem',
-        }}
-        toastOptions={{
-          duration: 2000,
-          style: {
-            fontWeight: 600,
-            padding: '0.5rem'},
-        }}
-      /> */}
     </>
   );
 }
