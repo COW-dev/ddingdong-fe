@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { CookiesProvider } from 'react-cookie';
 import { Toaster } from 'react-hot-toast';
 import Layout from '@/components/layout';
+import ToasterWithMax from '@/components/toast/ToasterWithMax';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -42,20 +43,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </QueryClientProvider>
       </CookiesProvider>
 
-      <Toaster
-        containerStyle={{
-          position: 'fixed',
-          overflow: 'hidden',
-          maxHeight: '5rem',
-        }}
-        toastOptions={{
-          style: {
-            fontWeight: 600,
-            padding: '0.75rem 1rem',
-            marginTop: '0.5rem',
-          },
-        }}
-      />
+      <ToasterWithMax />
     </>
   );
 }
