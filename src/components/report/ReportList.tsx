@@ -20,13 +20,14 @@ export default function ReportList() {
   const [myReportList, setMyReportList] = useState<Array<MyReportList>>(
     reportData?.data ?? [],
   );
+
   useEffect(() => {
-    reportData && setMyReportList(reportData?.data);
+    if (reportData) setMyReportList(reportData?.data);
     setClub(clubData?.name);
   }, [clubData?.name, reportData]);
-  const submitTerms = myReportList
-    .filter((item) => item.name === club)
-    .map((item) => item.term);
+
+  const submitTermList = myReportList.map((item) => item.term);
+
   const isReports = myReportList
     .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => item.term);
@@ -41,7 +42,7 @@ export default function ReportList() {
                 key={item}
                 className={`mb-3 ${
                   Number(item) > Number(currentTerm) &&
-                  !submitTerms?.includes(item)
+                  !submitTermList?.includes(item)
                     ? 'pointer-events-none cursor-not-allowed text-gray-200'
                     : ''
                 }`}
@@ -67,7 +68,7 @@ export default function ReportList() {
                     data-item={item}
                     className={`${
                       Number(item) === Number(currentTerm) &&
-                      !submitTerms?.includes(item)
+                      !submitTermList?.includes(item)
                         ? 'cursor-pointer'
                         : 'pointer-events-none cursor-not-allowed'
                     }`}
@@ -79,9 +80,9 @@ export default function ReportList() {
                         </span>
                         <div className="flex items-center">
                           {Number(item) >= Number(currentTerm) &&
-                          !submitTerms?.includes(item) ? (
+                          !submitTermList?.includes(item) ? (
                             <div className="mx-1 rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500">
-                              제출하기
+                              제출 전
                             </div>
                           ) : (
                             <div className="mx-1 rounded-lg bg-red-50 p-2 text-sm font-semibold text-red-400">
