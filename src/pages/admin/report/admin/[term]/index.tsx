@@ -1,14 +1,14 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-
 import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
+import ArrowImage from '@/assets/leftArrow.svg';
 import { cn } from '@/components/ui/utils';
 import { deptCaptionColor } from '@/constants/color';
 import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
-
 type ReportPageProps = {
   term: number;
 };
@@ -45,7 +45,13 @@ function Index({ term }: ReportPageProps) {
       <Head>
         <title>활동보고서 관리</title>
       </Head>
-      <div onClick={handleClickBackButton}>{term} 회차</div>
+      <h1
+        onClick={handleClickBackButton}
+        className="mt-7 flex text-2xl font-bold md:mt-10 md:text-4xl"
+      >
+        <Image src={ArrowImage} alt="뒤로가기 화살표" width={40} height={40} />
+        {term}회차
+      </h1>
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubList?.map((item) => {

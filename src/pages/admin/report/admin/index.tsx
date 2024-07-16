@@ -9,7 +9,7 @@ export default function Index() {
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data;
   const currentTerm = currentTermData?.term ?? 1;
-  const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
+  const termList = Array.from({ length: 8 }, (_, i) => `${i + 1}`);
 
   const filterPeriod = (term: number) => {
     if (term >= currentTerm) return BUTTON_TYPE.BEFORE;
