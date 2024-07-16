@@ -223,11 +223,12 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
 export async function getMyClub(
   token: string,
 ): Promise<AxiosResponse<ClubDetail, unknown>> {
-  return await api.get('/club/my', {
+  const response = await api.get('/club/my', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
+  return response.data;
 }
 
 export async function updateMyClub(clubData: FormData) {
@@ -294,11 +295,12 @@ export async function getReportInfo(
 export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {
-  return await api.get('/club/my/activity-reports', {
+  const response = await api.get('/club/my/activity-reports', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
+  return response.data;
 }
 
 export async function getCurrentReports(

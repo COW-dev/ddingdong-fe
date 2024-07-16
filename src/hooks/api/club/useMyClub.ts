@@ -23,12 +23,7 @@ const initialData = {
 };
 
 export function useMyClub(token: string) {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<ClubDetail, unknown>,
-    [string]
-  >({
+  return useQuery<unknown, AxiosError, ClubDetail, [string]>({
     queryKey: ['my-club'],
     queryFn: () => getMyClub(token),
     initialData,
