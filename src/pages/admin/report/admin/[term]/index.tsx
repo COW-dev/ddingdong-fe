@@ -83,7 +83,7 @@ function Index({ term }: ReportPageProps) {
                 className={`rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50`}
               >
                 <Link
-                  href={`/report/admin/${item}`}
+                  href={`/report/admin/${term}/${item.name}`}
                   data-item={item}
                   className="flex"
                 >
