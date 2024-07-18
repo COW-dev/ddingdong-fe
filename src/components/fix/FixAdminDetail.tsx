@@ -9,13 +9,16 @@ import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
 import { FixAdminDetailType } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
+import CommentContainer from './CommentContainer';
 import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
+
 type Prop = {
   id: number;
 };
+
 const init = {
   id: 0,
   club: '',
@@ -111,6 +114,7 @@ export default function FixAdminDetail({ id }: Prop) {
           {completed ? `처리 완료` : `처리 마치기`}
         </button>
       </div>
+      <CommentContainer />
       <Modal
         visible={visible}
         modalRef={modalRef}
