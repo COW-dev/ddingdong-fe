@@ -3,9 +3,7 @@ import { useMyClub } from '@/hooks/api/club/useMyClub';
 
 export default function AdminHeading() {
   const [{ token }] = useCookies(['token']);
-  const {
-    data: { data },
-  } = useMyClub(token);
+  const { data } = useMyClub(token);
 
   return (
     <div className="flex w-full items-end justify-between">
