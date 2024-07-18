@@ -9,7 +9,7 @@ import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
 import { FixAdminDetailType } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
-import CommentContainer from './CommentContainer';
+import CommentContainer from './comment/CommentContainer';
 import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
