@@ -140,6 +140,12 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
+export async function getAllDocuments(): Promise<
+  AxiosResponse<Notice[], unknown>
+> {
+  return await api.get('/documents');
+}
+
 export async function createNotice(noticeData: FormData) {
   const token = noticeData.get('token');
 
