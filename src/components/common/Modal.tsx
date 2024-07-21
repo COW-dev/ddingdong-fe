@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
-import CancleImg from '@/assets/cancle.svg';
+import CancleImg from '@/assets/cancel.svg';
 import ModalPortal from './ModalPortal';
 import { cn } from '../ui/utils';
 type ModalProps = {

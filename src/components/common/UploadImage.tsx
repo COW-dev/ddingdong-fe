@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
-import Cancel from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
 import { parseImgUrl } from '@/utils/parse';
