@@ -178,6 +178,15 @@ export async function createFix({ token, formData }: NewFix) {
     },
   });
 }
+export async function createDocument(documentData: FormData) {
+  const token = documentData.get('token');
+
+  return await api.post('/admin/documents', documentData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 
 export async function updateNotice(noticeId: number, noticeData: FormData) {
   const token = noticeData.get('token');
