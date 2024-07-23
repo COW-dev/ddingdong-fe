@@ -40,6 +40,7 @@ import {
   MyReportList,
   CurrentReport,
   DeleteReport,
+  ActivityReportTerm,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 export interface ErrorType {
@@ -301,6 +302,12 @@ export async function getMyReportLists(
     },
   });
   return response.data;
+}
+
+export async function getReportTerms(): Promise<
+  AxiosResponse<ActivityReportTerm, unknown>
+> {
+  return await api.get('/club/activity-reports/term');
 }
 
 export async function getCurrentReports(
