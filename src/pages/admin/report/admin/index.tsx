@@ -10,14 +10,33 @@ export default function Index() {
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data;
   const currentTerm = currentTermData?.term ?? 1;
-  const termList = useReportTerms().data?.data;
-  // const termList = Array.from({ length: 8 }, (_, i) => `${i + 1}`);
+  // const termList = useReportTerms().data?.data;
+  const termList = [
+    {
+      term: 1, // 1회차
+      startDay: '2024-03-01',
+      endDay: '2024-03-14',
+    },
+    {
+      term: 2, // 2회차
+      startDay: '2024-03-15',
+      endDay: '2024-03-28',
+    }, // 10회차까지 제공(최대 20주 기준)
+  ];
 
   const filterPeriod = (term: number) => {
     if (term >= currentTerm) return BUTTON_TYPE.BEFORE;
     else if (term === currentTerm) return BUTTON_TYPE.NOW;
     else return BUTTON_TYPE.AFTER;
   };
+
+  function formatDate(date: string): string {
+    const year = date.substring(2, 4);
+    const month = date.substring(5, 7);
+    const day = date.substring(8, 10);
+
+    return `${year}.${month}.${day}`;
+  }
 
   const BUTTON_TYPE = {
     BEFORE: {
@@ -56,14 +75,20 @@ export default function Index() {
                   'pointer-events-none cursor-not-allowed text-gray-300'
                 }`}
               >
-                <Link href={`/report/admin/${item}`} data-item={item}>
+                <Link href={`/report/admin/${item.term}`} data-item={item}>
                   <div
                     className={`rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50`}
                   >
                     <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
-                      <span className="text-lg font-bold md:text-xl">
-                        {item.term}회차
-                      </span>
+                      <div>
+                        <span className="text-lg font-bold md:text-xl">
+                          {item.term}회차
+                        </span>
+                        <div className="text-gray-400">
+                          {formatDate(item.startDay)} -{' '}
+                          {formatDate(item.endDay)}
+                        </div>
+                      </div>
                       <div className="flex items-center">
                         <div
                           className={cn(
