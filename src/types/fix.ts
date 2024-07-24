@@ -22,7 +22,7 @@ export type FixDetailInfo = {
   content: string;
   isCompleted: boolean;
   requestedAt: string;
-  imageUrl: string;
+  imageUrl: string[];
   comments: Comment[];
 };
 

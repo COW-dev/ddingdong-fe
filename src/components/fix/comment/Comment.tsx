@@ -1,7 +1,20 @@
 import Image from 'next/image';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import Admin from '@/assets/admin.jpg';
+import { Comment as CommentType } from '@/types/fix';
+import 'dayjs/locale/ko';
 
-function Comment() {
+interface CommentProps {
+  info: CommentType;
+}
+
+function Comment({ info }: CommentProps) {
+  const { content, createdAt } = info;
+
+  dayjs.locale('ko');
+  dayjs.extend(relativeTime);
+
   return (
     <div className="flex w-full gap-4">
       <Image
@@ -14,9 +27,9 @@ function Comment() {
       <div className="w-full">
         <div className="flex gap-2">
           <span className="font-bold">제40대 총동아리연합회 U:th</span>
-          <time className="text-gray-500">4분 전</time>
+          <time className="text-gray-500">{dayjs(createdAt).fromNow()}</time>
         </div>
-        그 부분은 시설보수가 어려운뎅,,,,
+        {content}
       </div>
     </div>
   );

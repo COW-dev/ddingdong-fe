@@ -1,7 +1,12 @@
 import Image from 'next/image';
 import Admin from '@/assets/admin.jpg';
+import { Comment as CommentType } from '@/types/fix';
 import Comment from './Comment';
-function CommentContainer() {
+
+interface CommentContainerProps {
+  comments: CommentType[];
+}
+function CommentContainer({ comments }: CommentContainerProps) {
   const handleClickSendButton = () => {};
 
   return (
@@ -27,8 +32,8 @@ function CommentContainer() {
         </div>
       </div>
       <div className="flex flex-col gap-2 py-6 text-sm">
-        {[1, 2].map((comment, index) => (
-          <Comment key={index} />
+        {comments.map((comment, index) => (
+          <Comment key={index} info={comment} />
         ))}
       </div>
     </>
