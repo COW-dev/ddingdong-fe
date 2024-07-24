@@ -16,7 +16,6 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  UpdateMembers,
 } from '@/types/club';
 import {
   Applicant,
@@ -26,14 +25,7 @@ import {
   User,
 } from '@/types/event';
 
-import {
-  Fix,
-  FixAdminDetailType,
-  FixClubDetailType,
-  FixComplete,
-  FixDetailInfo,
-  NewFix,
-} from '@/types/fix';
+import { Fix, FixComplete, FixDetailInfo, NewFix } from '@/types/fix';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {
@@ -146,6 +138,7 @@ export async function createClub({ token, ...clubData }: NewClub) {
     },
   });
 }
+
 export async function createBanner({ token, formData }: NewBanner) {
   return await api.post('/admin/banners', formData, {
     headers: {
@@ -155,7 +148,7 @@ export async function createBanner({ token, formData }: NewBanner) {
   });
 }
 export async function createFix({ token, formData }: NewFix) {
-  return await api.post('/club/fix', formData, {
+  return await api.post('/club/fix-zones', formData, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
@@ -230,16 +223,12 @@ export async function updateMyClub(clubData: FormData) {
     },
   });
 }
-export async function updateFixComplete({ id, completed, token }: FixComplete) {
-  return await api.patch(
-    `/admin/fix/${id}`,
-    { completed },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+export async function updateFixComplete({ id, token }: FixComplete) {
+  return await api.patch(`/admin/fix-zones/${id}/complete`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
-  );
+  });
 }
 
 export async function updateBanner({ id, data, token }: UpdateBanner) {

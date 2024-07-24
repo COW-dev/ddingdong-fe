@@ -28,7 +28,6 @@ export type FixDetailInfo = {
 
 export type FixComplete = {
   id: number;
-  completed: boolean;
   token: string;
 };
 
