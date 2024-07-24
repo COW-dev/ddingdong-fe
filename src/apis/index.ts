@@ -26,11 +26,13 @@ import {
 } from '@/types/event';
 
 import {
+  DeleteFixComment,
   Fix,
   FixComplete,
   FixDetailInfo,
   NewFix,
   NewFixComment,
+  UpdateFixComment,
 } from '@/types/fix';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
@@ -213,6 +215,38 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
     },
   });
 }
+export async function deleteFixComment({
+  fixZonId,
+  commentId,
+  token,
+}: DeleteFixComment) {
+  return await api.delete(
+    `/admin/fix-zones/${fixZonId}/comments/${commentId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
+export async function updateFixComment({
+  fixZonId,
+  commentId,
+  token,
+  content,
+}: UpdateFixComment) {
+  return await api.patch(
+    `admin/fix-zones/${fixZonId}/comments/${commentId}`,
+    content,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
     headers: {

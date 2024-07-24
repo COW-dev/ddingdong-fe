@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
+import { useDeleteFixComment } from '@/hooks/api/fixzone/useDeleteFixComment';
+import { useUpdateFixComment } from '@/hooks/api/fixzone/useUpdateFixComment';
 import { Comment as CommentType } from '@/types/fix';
+
 import 'dayjs/locale/ko';
 
 interface CommentProps {
@@ -10,10 +14,30 @@ interface CommentProps {
 }
 
 function Comment({ info }: CommentProps) {
+  const [{ token }] = useCookies(['token']);
+
   const { content, createdAt } = info;
+  const updateMutation = useUpdateFixComment();
+  const deleteMutation = useDeleteFixComment();
 
   dayjs.locale('ko');
   dayjs.extend(relativeTime);
+
+  const handleClickDeleteButton = () => {
+    deleteMutation.mutate({
+      fixZonId: '1',
+      commentId: '1',
+      token,
+    });
+  };
+  const handleClickUpdateButton = () => {
+    updateMutation.mutate({
+      fixZonId: '1',
+      commentId: '1',
+      content,
+      token,
+    });
+  };
 
   return (
     <div className="flex w-full gap-4">
@@ -31,6 +55,8 @@ function Comment({ info }: CommentProps) {
         </div>
         {content}
       </div>
+      <div onClick={handleClickDeleteButton}>삭제</div>
+      <div>수정</div>
     </div>
   );
 }

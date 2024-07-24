@@ -40,3 +40,13 @@ export type NewFixComment = {
   token: string;
   content: string;
 };
+
+export type DeleteFixComment = {
+  fixZonId: string;
+  commentId: string;
+  token: string;
+};
+
+export interface UpdateFixComment extends DeleteFixComment {
+  content: string;
+}
