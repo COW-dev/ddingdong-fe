@@ -31,6 +31,7 @@ import {
   FixAdminDetailType,
   FixClubDetailType,
   FixComplete,
+  FixDetailInfo,
   NewFix,
 } from '@/types/fix';
 
@@ -83,7 +84,7 @@ export async function getAdminAllClubs(
 export async function getAdminAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix', {
+  return await api.get('/admin/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -93,28 +94,18 @@ export async function getAdminAllFix(
 export async function getClubAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/club/fix', {
+  return await api.get('/club/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
 
-export async function getAdminFixInfo(
+export async function getFixInfo(
   token: string,
   id: number,
-): Promise<AxiosResponse<FixAdminDetailType, unknown>> {
-  return await api.get(`/admin/fix/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function getClubFixInfo(
-  token: string,
-  id: number,
-): Promise<AxiosResponse<FixClubDetailType, unknown>> {
-  return await api.get(`/club/fix/${id}`, {
+): Promise<AxiosResponse<FixDetailInfo, unknown>> {
+  return await api.get(`/club/fix-zones/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

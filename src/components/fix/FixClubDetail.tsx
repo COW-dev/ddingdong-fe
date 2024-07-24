@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
 import LeftArrow2 from '@/assets/leftArrow2.svg';
 import RightArrow from '@/assets/rightArrow.svg';
-import { useClubFixInfo } from '@/hooks/api/fixzone/useClubFixInfo';
-import { FixClubDetailType } from '@/types/fix';
+import { useFixInfo } from '@/hooks/api/fixzone/useFixInfo';
+import { FixDetailInfo } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
-import ClearButton from './Clearbutton';
 import Heading from '../common/Heading';
 import NeutralButton from '../common/NeutralButton';
+
 type Prop = {
   id: number;
 };
+
 const init = {
   id: 0,
   content: '',
@@ -24,8 +24,8 @@ const init = {
 
 export default function FixClubDetail({ id }: Prop) {
   const [{ token }] = useCookies(['token']);
-  const { data: response } = useClubFixInfo({ token, id });
-  const [data, setData] = useState<FixClubDetailType>(init);
+  const { data: response } = useFixInfo({ token, id });
+  const [data, setData] = useState<FixDetailInfo>(init);
   const [presentIndex, setPresentIndex] = useState<number>(0);
 
   useEffect(() => {

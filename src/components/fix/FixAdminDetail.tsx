@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import LeftArrow2 from '@/assets/leftArrow2.svg';
 import RightArrow from '@/assets/rightArrow.svg';
-import { useAdminFixInfo } from '@/hooks/api/fixzone/useAdminFixInfo';
+import { useFixInfo } from '@/hooks/api/fixzone/useFixInfo';
 import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
-import { FixAdminDetailType } from '@/types/fix';
+import { FixDetailInfo } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
 import CommentContainer from './comment/CommentContainer';
 import FixItemInfo from './FixItemInfo';
@@ -33,8 +33,8 @@ const init = {
 export default function FixAdminDetail({ id }: Prop) {
   const [{ token }] = useCookies(['token']);
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { data: response } = useAdminFixInfo({ token, id });
-  const [data, setData] = useState<FixAdminDetailType>(init);
+  const { data: response } = useFixInfo({ token, id });
+  const [data, setData] = useState<FixDetailInfo>(init);
   const [presentIndex, setPresentIndex] = useState<number>(0);
 
   useEffect(() => {

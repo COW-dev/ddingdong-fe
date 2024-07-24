@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Admin from '@/assets/admin.jpg';
+
 function Comment() {
   return (
     <div className="flex w-full gap-4">
