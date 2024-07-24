@@ -35,3 +35,8 @@ export type NewFix = {
   token: string;
   formData: FormData;
 };
+
+export type NewFixComment = {
+  token: string;
+  content: string;
+};

@@ -25,7 +25,13 @@ import {
   User,
 } from '@/types/event';
 
-import { Fix, FixComplete, FixDetailInfo, NewFix } from '@/types/fix';
+import {
+  Fix,
+  FixComplete,
+  FixDetailInfo,
+  NewFix,
+  NewFixComment,
+} from '@/types/fix';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {
@@ -76,7 +82,8 @@ export async function getAdminAllClubs(
 export async function getAdminAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix-zones', {
+  // return await api.get('/admin/fix-zones', {
+  return await api.get('/admin/fix', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -97,7 +104,7 @@ export async function getFixInfo(
   token: string,
   id: number,
 ): Promise<AxiosResponse<FixDetailInfo, unknown>> {
-  return await api.get(`/club/fix-zones/${id}`, {
+  return await api.get(`/club/fix/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -131,6 +138,7 @@ export async function createNotice(noticeData: FormData) {
     },
   });
 }
+
 export async function createClub({ token, ...clubData }: NewClub) {
   return await api.post('/admin/clubs', clubData, {
     headers: {
@@ -152,6 +160,14 @@ export async function createFix({ token, formData }: NewFix) {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
+export async function createFixComment({ token, content }: NewFixComment) {
+  return await api.post('/club/fix-zones', content, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
   });
 }
