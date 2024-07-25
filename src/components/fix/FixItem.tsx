@@ -17,12 +17,13 @@ export default function FixItem({ data }: { data: Fix }) {
         </div>
         <div className="hidden text-lg font-semibold sm:block">{title}</div>
         <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
-          {new Date(createdAt).toLocaleDateString()} | {club}
+          {new Date(createdAt).toLocaleDateString()}
+          {club && ` | ${club}`}
         </div>
       </Link>
       <div
         className={`text-md mx-1 mb-4 mt-2 flex w-30 flex-col items-center justify-center rounded-lg px-2 text-center font-semibold ${
-          completed ? ` text-green-500` : `  text-gray-500`
+          completed ? ` text-green-500` : ` text-gray-500`
         }`}
       >
         {completed ? `처리 완료` : `처리중`}
