@@ -19,7 +19,9 @@ type ReportDetailProps = {
 export default function Index({ term, name }: ReportDetailProps) {
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data.term ?? 1;
-  const { data: clubData } = useMyClub(token);
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
   const deleteMutation = useDeleteReport();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const reportDataList = useReportInfo({ term, name, token }).data;

@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useMyAllReports } from '@/hooks/api/club/useMyAllReports';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
+import { MyReportList } from '@/types/report';
 
 export default function ReportList() {
   const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
@@ -10,10 +12,24 @@ export default function ReportList() {
   const currentTermData = useCurrentReports(token).data?.data;
   const currentTerm = currentTermData?.term ?? 1;
 
-  const { data: clubData } = useMyClub(token);
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
+  const [club, setClub] = useState(clubData?.name);
   const { data: reportData } = useMyAllReports(token);
-
-  const submitTermList = reportData?.map((item) => item.term);
+  const [myReportList, setMyReportList] = useState<Array<MyReportList>>(
+    reportData?.data ?? [],
+  );
+  useEffect(() => {
+    reportData && setMyReportList(reportData?.data);
+    setClub(clubData?.name);
+  }, [clubData?.name, reportData]);
+  const submitTerms = myReportList
+    .filter((item) => item.name === club)
+    .map((item) => item.term);
+  const isReports = myReportList
+    .filter((item) => Number(item.term) <= Number(currentTerm))
+    .map((item) => item.term);
 
   return (
     <>
@@ -25,14 +41,13 @@ export default function ReportList() {
                 key={item}
                 className={`mb-3 ${
                   Number(item) > Number(currentTerm) &&
-                  'pointer-events-none cursor-not-allowed text-gray-300'
+                  !submitTerms?.includes(item)
+                    ? 'pointer-events-none cursor-not-allowed text-gray-200'
+                    : ''
                 }`}
               >
-                {submitTermList &&
-                submitTermList
-                  .filter((term: string) => Number(term) <= Number(currentTerm))
-                  .includes(item) ? (
-                  <Link href={`/report/${item}/${clubData?.name}`}>
+                {isReports?.includes(item) ? (
+                  <Link href={`/report/${item}/${club}`}>
                     <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                       <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
                         <span className="text-lg font-bold md:text-xl">
@@ -50,12 +65,12 @@ export default function ReportList() {
                   <Link
                     href="/report/new"
                     data-item={item}
-                    className={
+                    className={`${
                       Number(item) === Number(currentTerm) &&
-                      !submitTermList?.includes(item)
+                      !submitTerms?.includes(item)
                         ? 'cursor-pointer'
                         : 'pointer-events-none cursor-not-allowed'
-                    }
+                    }`}
                   >
                     <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                       <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
@@ -64,9 +79,9 @@ export default function ReportList() {
                         </span>
                         <div className="flex items-center">
                           {Number(item) >= Number(currentTerm) &&
-                          !submitTermList?.includes(item) ? (
+                          !submitTerms?.includes(item) ? (
                             <div className="mx-1 rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500">
-                              제출 전
+                              제출하기
                             </div>
                           ) : (
                             <div className="mx-1 rounded-lg bg-red-50 p-2 text-sm font-semibold text-red-400">
