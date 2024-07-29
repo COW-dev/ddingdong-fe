@@ -8,6 +8,7 @@ import RightArrow from '@/assets/rightArrow.svg';
 import { useClubFixInfo } from '@/hooks/api/fixzone/useClubFixInfo';
 import { FixClubDetailType } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
+import ClearButton from './Clearbutton';
 import Heading from '../common/Heading';
 import NeutralButton from '../common/NeutralButton';
 type Prop = {

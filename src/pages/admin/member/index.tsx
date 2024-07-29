@@ -23,7 +23,9 @@ export default function Index() {
   function handleEditting() {
     setIsEditing(!isEditing);
   }
-  const { data } = useMyClub(token);
+  const {
+    data: { data },
+  } = useMyClub(token);
 
   const [members, setMembers] = useState<Member[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);

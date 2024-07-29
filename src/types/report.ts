@@ -17,12 +17,6 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
-export type ActivityReportTerm = {
-  term: number;
-  startDay: string;
-  endDay: string;
-};
-
 export type NewReport = {
   term: number;
   date: DateRangeType;
