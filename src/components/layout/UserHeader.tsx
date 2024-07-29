@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import isNavActive from '@/utils/isNavActive';
-import { MenuBar } from '../common/MenuBar';
 
 const navItems: {
   [key: string]: { id: number; href: string; content?: string }[];

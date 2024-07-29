@@ -65,7 +65,7 @@ export default function UploadMultipleFile({
 
   return (
     <>
-      <div className="mt-3 h-10 w-full rounded-lg  border-gray-100 bg-gray-50 text-gray-900 placeholder:text-gray-300 focus:outline-none">
+      <div className="mt-3 h-12 w-full rounded-lg border border-gray-100 bg-gray-50 text-gray-900 placeholder:text-gray-300 focus:outline-none">
         <label
           className="md:text-md flex h-full items-center text-sm font-medium text-gray-400 "
           htmlFor="file_input"
