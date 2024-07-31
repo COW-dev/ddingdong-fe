@@ -1,12 +1,12 @@
 import Head from 'next/head';
+import { useCookies } from 'react-cookie';
+import Heading from '@/components/common/Heading';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@radix-ui/react-accordion';
-import { useCookies } from 'react-cookie';
-import Heading from '@/components/common/Heading';
+} from '@/components/ui/accordion';
 import { ROLE_TYPE } from '@/constants/text';
 
 export default function Index() {
