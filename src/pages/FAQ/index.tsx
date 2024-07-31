@@ -35,7 +35,7 @@ export default function Index() {
         </button>
       </div>
       <div>
-        <div className="flex flex-col items-center justify-center">
+        <div className="mt-10 flex flex-col items-center justify-center">
           {dummy?.map((item, index) => (
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index}`}>
