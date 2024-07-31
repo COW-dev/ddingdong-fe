@@ -10,6 +10,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.0.2",
     "@sentry/nextjs": "^7.109.0",
