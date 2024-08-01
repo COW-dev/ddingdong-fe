@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import InstaImage from '@/assets/InstaImage.svg';
+import KaKaoImage from '@/assets/kakaoImage.svg';
 
 const navItems: {
-  [key: string]: { id: number; href: string; content?: string }[];
+  [key: string]: {
+    id: number;
+    href: string;
+    image?: string;
+    content?: string;
+  }[];
 } = {
   '총동아리 연합회': [
     {
@@ -23,21 +30,23 @@ const navItems: {
     },
   ],
 
-  '동아리 홍보': [
-    {
-      id: 5,
-      href: '/clubs',
-    },
-  ],
+  // '동아리 홍보': [
+  //   {
+  //     id: 5,
+  //     href: '/clubs',
+  //   },
+  // ],
   SNS: [
     {
       id: 6,
-      href: '/sns',
+      href: 'https://pf.kakao.com/_ExmtkG',
+      image: KaKaoImage,
       content: '카카오톡',
     },
     {
       id: 7,
-      href: '/sns',
+      href: 'https://www.instagram.com/mju_u.th/',
+      image: InstaImage,
       content: '인스타그램',
     },
   ],
@@ -95,13 +104,30 @@ export default function UserHeader() {
                     <ul className="absolute left-1/2 top-full mt-2 min-w-max -translate-x-1/2 transform rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
                       {navItems[category]?.map((item) => (
                         <li key={item.id}>
-                          <Link
+                          <a
                             href={item.href}
-                            className="block px-4 py-2 text-center text-gray-700 hover:rounded-lg hover:bg-gray-100"
+                            target={category === 'SNS' ? '_blank' : '_self'}
+                            rel={
+                              category === 'SNS'
+                                ? 'noopener noreferrer'
+                                : undefined
+                            }
+                            className={`flex px-3 py-2 font-semibold text-gray-500 hover:rounded-lg hover:bg-gray-100 ${
+                              category === '총동아리 연합회' && 'justify-center'
+                            }`}
                             onClick={handleLinkClick}
                           >
+                            {item.image && (
+                              <Image
+                                src={item.image}
+                                width={24}
+                                height={24}
+                                alt="icon"
+                                className="mr-2 h-6 w-6"
+                              />
+                            )}
                             {item.content}
-                          </Link>
+                          </a>
                         </li>
                       ))}
                     </ul>
