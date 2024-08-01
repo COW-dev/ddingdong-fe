@@ -36,8 +36,17 @@ export default function Index() {
           {dummy?.map((item, index) => (
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index + 1}`}>
-                <AccordionTrigger>{item.Q}</AccordionTrigger>
-                <AccordionContent>{item.A}</AccordionContent>
+                <AccordionTrigger>
+                  <span>Q</span>
+                  <span className="text-blue-500">.</span>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  {item.Q}
+                </AccordionTrigger>
+                <AccordionContent>
+                  <span className=" font-bold text-blue-500">A.</span>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  {item.A}
+                </AccordionContent>
               </AccordionItem>
             </Accordion>
           ))}
