@@ -21,6 +21,8 @@ type RoleText = {
     score?: NavBox;
     fix: NavBox;
     notice: NavBox;
+    documents: NavBox;
+    FAQ?: NavBox;
   };
 };
 
@@ -44,6 +46,16 @@ export const ROLE_TEXT: RoleText = {
     notice: {
       title: '공지사항 관리',
       route: '/notice',
+    },
+    documents: {
+      title: '자료실 관리',
+      subtitle: '동아리에게 필요한 자료를 등록/삭제해요.',
+      route: '/documents',
+    },
+    FAQ: {
+      title: '자료실 관리',
+      subtitle: '총동아리연합회 및 동아리에게 자주 물어보는 질문을 관리해요.',
+      route: '/FAQ',
     },
   },
   [ROLE_TYPE.ROLE_CLUB]: {
@@ -75,6 +87,10 @@ export const ROLE_TEXT: RoleText = {
     notice: {
       title: '공지사항',
       route: '/notice',
+    },
+    documents: {
+      title: '자료실',
+      route: '/documents',
     },
   },
 };
