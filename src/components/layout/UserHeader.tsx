@@ -4,6 +4,13 @@ import Link from 'next/link';
 import InstaImage from '@/assets/InstaImage.svg';
 import KaKaoImage from '@/assets/kakaoImage.svg';
 import MenuButton from '@/assets/smMenu.svg';
+import Drawer from '@/components/common/Drawer';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 
 const navItems: {
   [key: string]: {
@@ -15,17 +22,17 @@ const navItems: {
 } = {
   '총동아리 연합회': [
     {
-      id: 2,
+      id: 1,
       href: '/notice',
       content: '공지사항',
     },
     {
-      id: 3,
+      id: 2,
       href: '/documents',
       content: '자료실',
     },
     {
-      id: 4,
+      id: 3,
       href: '/faq',
       content: 'FAQ',
     },
@@ -33,19 +40,19 @@ const navItems: {
 
   // '동아리 홍보': [
   //   {
-  //     id: 5,
+  //     id: 4,
   //     href: '/clubs',
   //   },
   // ],
   SNS: [
     {
-      id: 6,
+      id: 5,
       href: 'https://pf.kakao.com/_ExmtkG',
       image: KaKaoImage,
       content: '카카오톡',
     },
     {
-      id: 7,
+      id: 6,
       href: 'https://www.instagram.com/mju_u.th/',
       image: InstaImage,
       content: '인스타그램',
@@ -55,7 +62,7 @@ const navItems: {
 
 export default function UserHeader() {
   const [hydrated, setHydrated] = useState(false);
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const handleDropdownToggle = (category: string) => {
@@ -67,7 +74,7 @@ export default function UserHeader() {
   };
 
   const handleOpenDrawer = () => {
-    setOpenDrawer(true);
+    setIsOpen(true);
   };
 
   useEffect(() => {
@@ -97,6 +104,49 @@ export default function UserHeader() {
             className="h-5"
           />
         </button>
+        <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
+          <div className="flex flex-col items-start justify-center p-3">
+            {Object.entries(navItems).map(([category, items]) => (
+              <Accordion
+                key={category}
+                type="single"
+                collapsible
+                className="w-full"
+              >
+                <AccordionItem value={`item-${category}`}>
+                  <AccordionTrigger>
+                    <span>{category}</span>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="flex list-none flex-col space-y-2 pl-0">
+                      {items.map((item) => (
+                        <li key={item.id} className="flex-grow">
+                          <a
+                            href={item.href}
+                            target={category === 'SNS' ? '_blank' : '_self'}
+                            rel="noopener noreferrer"
+                            className="text-md flex items-center font-semibold text-gray-500 hover:text-blue-500"
+                          >
+                            {item.image && (
+                              <Image
+                                src={item.image}
+                                width={24}
+                                height={24}
+                                alt="icon"
+                                className="mr-2"
+                              />
+                            )}
+                            {item.content}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
+          </div>
+        </Drawer>
       </div>
     );
   };
@@ -105,7 +155,7 @@ export default function UserHeader() {
       {/* md */}
       <header className=" fixed z-20 hidden h-16 w-full items-center justify-center border-b bg-white md:flex md:h-18">
         <div className="flex w-full max-w-6xl items-center px-6 md:px-16">
-          <Link href="/" className="-ml-3 inline-block p-3 ">
+          <Link href="/" className="-ml-3 inline-block p-3">
             <Image
               src={'/logo.png'}
               width={1544}
