@@ -184,6 +184,7 @@ export async function createDocument(documentData: FormData) {
   return await api.post('/admin/documents', documentData, {
     headers: {
       Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
     },
   });
 }
