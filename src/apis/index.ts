@@ -33,7 +33,12 @@ import {
   NewFix,
 } from '@/types/fix';
 
-import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
+import {
+  Notice,
+  NoticeDetail,
+  DeleteNotice,
+  DeleteDocument,
+} from '@/types/notice';
 import {
   ReportResponse,
   MyReportList,
@@ -146,6 +151,12 @@ export async function getAllDocuments(): Promise<
   return await api.get('/documents');
 }
 
+export async function getDocumentInfo(
+  documentId: number,
+): Promise<AxiosResponse<NoticeDetail, unknown>> {
+  return await api.get(`/documents/${documentId}`);
+}
+
 export async function createNotice(noticeData: FormData) {
   const token = noticeData.get('token');
 
@@ -218,6 +229,13 @@ export async function updateMembers(formdata: FormData) {
 }
 export async function deleteNotice({ noticeId, token }: DeleteNotice) {
   return await api.delete(`/admin/notices/${noticeId}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function deleteDocument({ documentId, token }: DeleteDocument) {
+  return await api.delete(`/admin/documents/${documentId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
