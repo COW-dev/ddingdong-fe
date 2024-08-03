@@ -9,6 +9,7 @@ import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
+import { cn } from '@/lib/utils';
 import { ReportDetail } from '@/types/report';
 
 type ReportDetailProps = {
@@ -39,6 +40,11 @@ export default function Index({ term, name }: ReportDetailProps) {
       token: token,
     });
   }
+
+  function handleClickModify() {
+    // redirect('/report/new');
+  }
+
   return (
     <>
       <Head>
@@ -79,19 +85,32 @@ export default function Index({ term, name }: ReportDetailProps) {
           />
         </Accordion>
       </div>
-      <div className=" fixed bottom-4 right-4 md:mt-6 ">
+      <div className="fixed bottom-4 right-4 flex gap-2 md:mt-6">
         <button
-          className={`mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
-            currentTermData !== term && `hidden`
-          }`}
+          className={cn(
+            `mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors`,
+            'hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
+            6 !== Number(term) && `hidden`,
+          )}
           onClick={handleClickDelete}
         >
-          보고서 삭제하기
+          삭제
+        </button>
+        <button
+          className={cn(
+            `mb-4 min-w-fit rounded-xl bg-orange-50 px-3.5 py-2 text-sm font-bold text-orange-400 transition-colors`,
+            'hover:bg-orange-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
+            6 !== Number(term) && `hidden`,
+          )}
+          onClick={handleClickDelete}
+        >
+          수정
         </button>
       </div>
     </>
   );
 }
+
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { term, name } = context.query;
   return {

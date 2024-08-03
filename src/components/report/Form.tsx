@@ -11,32 +11,27 @@ import {
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
 import useModal from '@/hooks/common/useModal';
-import { NewReport, StudentInfo } from '@/types/report';
+import { NewReport } from '@/types/report';
 import Modal from '../common/Modal';
 import UploadImage from '../common/UploadImage';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
-  date: DateRangeType;
   uploadFiles: File | null;
-  place: string;
-  content: string;
-  startTime: string;
-  endTime: string;
-  participants: StudentInfo[];
-  setValue: Dispatch<SetStateAction<NewReport>>;
+  report: NewReport;
+  setValue: (newReport: NewReport) => void;
   setImage: Dispatch<SetStateAction<File | null>>;
 };
 
 export default function Form({
-  date,
   uploadFiles,
-  participants,
   setValue,
   setImage,
+  report,
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
+  const { date, participants } = report;
 
   useEffect(() => {
     if (uploadFiles) {
@@ -54,16 +49,17 @@ export default function Form({
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
-    setValue((prev) => ({
-      ...prev,
+    setValue({
+      ...report,
       [event.target.name]: event.target.value,
-    }));
+    });
   }
+
   function handleDateChange(selectedDate: DateValueType) {
-    setValue((prev) => ({
-      ...prev,
+    setValue({
+      ...report,
       date: selectedDate as DateRangeType,
-    }));
+    });
   }
 
   return (
@@ -152,6 +148,7 @@ export default function Form({
       >
         <Participants
           data={participants}
+          report={report}
           setData={setValue}
           closeModal={closeModal}
         />
