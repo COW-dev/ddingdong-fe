@@ -19,7 +19,7 @@ import Participants from '../modal/report/Paticipants';
 type ReportProps = {
   uploadFiles: File | null;
   report: NewReport;
-  setValue: (newReport: NewReport) => void;
+  setValue: Dispatch<SetStateAction<NewReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
 };
 
@@ -31,7 +31,8 @@ export default function Form({
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { date, participants } = report;
+  const { date, participants, place, content, startTime, endTime, imageUrls } =
+    report;
 
   useEffect(() => {
     if (uploadFiles) {
@@ -49,17 +50,17 @@ export default function Form({
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
-    setValue({
-      ...report,
+    setValue((prev) => ({
+      ...prev,
       [event.target.name]: event.target.value,
-    });
+    }));
   }
 
   function handleDateChange(selectedDate: DateValueType) {
-    setValue({
-      ...report,
+    setValue((prev) => ({
+      ...prev,
       date: selectedDate as DateRangeType,
-    });
+    }));
   }
 
   return (
@@ -81,6 +82,7 @@ export default function Form({
               name="place"
               type="text"
               placeholder="활동장소"
+              value={place}
               onChange={(e) => handleChange(e)}
               className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
             />
@@ -92,12 +94,14 @@ export default function Form({
             <input
               name="startTime"
               type="time"
+              value={startTime}
               onChange={(e) => handleChange(e)}
               className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
             />
             <input
               name="endTime"
               type="time"
+              value={endTime}
               onChange={(e) => handleChange(e)}
               className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
             />
@@ -131,13 +135,18 @@ export default function Form({
             </p>
             <textarea
               name="content"
+              value={content}
               onChange={(e) => handleChange(e)}
               className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
             />
           </div>
         </div>
         <div className="h-1/2 w-full  md:ml-2 md:w-1/2">
-          <UploadImage image={uploadFiles} setImage={setImage} />
+          <UploadImage
+            image={uploadFiles}
+            setImage={setImage}
+            imageUrls={imageUrls}
+          />
         </div>
       </div>
       <Modal

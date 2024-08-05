@@ -30,7 +30,8 @@ export type NewReport = {
   startTime: string;
   endTime: string;
   content: string;
-  uploadFiles: File | null;
+  imageUrls?: string[];
+  uploadFiles?: File | null;
   participants: StudentInfo[];
   token?: string;
 };

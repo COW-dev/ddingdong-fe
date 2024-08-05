@@ -6,10 +6,10 @@ const participant = {
 
 export const EMPTY_DATA = {
   term: 0,
-  date: { startDate: new Date(), endDate: new Date() },
+  date: { startDate: null, endDate: null },
   place: '',
-  startTime: '00:00',
-  endTime: '00:00',
+  startTime: '',
+  endTime: '',
   uploadFiles: null,
   content: '',
   participants: [
