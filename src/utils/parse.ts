@@ -1,11 +1,11 @@
 import { NewReport, ReportDetail } from '@/types/report';
 
-export function parseDateToString(date: Date): string {
-  const year: number = date.getFullYear();
-  const month: string = String(date.getMonth() + 1).padStart(2, '0');
-  const day: string = String(date.getDate()).padStart(2, '0');
+export function parseDate(date: string): string {
+  const year = date.substring(2, 4);
+  const month = date.substring(5, 7);
+  const day = date.substring(8, 10);
 
-  return `${year}-${month}-${day}`;
+  return `${year}.${month}.${day}`;
 }
 
 export function parseImgUrl(url: string): string {

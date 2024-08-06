@@ -17,7 +17,7 @@ import useModal from '@/hooks/common/useModal';
 import { ReportDetail } from '@/types/report';
 import { parseImgUrl } from '@/utils/parse';
 import ActiveDate from './ActiveDate';
-import Time from './Time';
+import Place from './Place';
 
 type Props = {
   reportData: ReportDetail;
@@ -56,8 +56,8 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
   }
 
   return (
-    <div className=" flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between">
-      <div className="mb-2 flex w-2/3 flex-col">
+    <div className="flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between">
+      <div className="mb-2 flex flex-col">
         {/* sm */}
         <div className="mb-4 inline-block md:hidden">
           <div className="z-10 flex w-full flex-col items-center rounded-xl ">
@@ -87,28 +87,23 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
                 />
               </div>
               {info && (
-                <>
-                  <div className="absolute top-0 z-20 flex w-full flex-1 justify-between bg-white bg-opacity-70 text-gray-500">
-                    <div className="m-3">
-                      <div className="text-xl font-semibold">1 회차</div>
-                      <ActiveDate startDate={startDate} endDate={endDate} />
-                    </div>
-                    <Time place={place} />
+                <div className="absolute top-0 z-20 flex w-full flex-1 justify-between bg-white bg-opacity-70 text-gray-500">
+                  <div className="m-3">
+                    <div className="text-xl font-semibold">1 회차</div>
+                    <ActiveDate startDate={startDate} endDate={endDate} />
                   </div>
-                </>
+                  <Place place={place} />
+                </div>
               )}
             </div>
           </div>
         </div>
         {/* sm끗 */}
-
         {/* md */}
         <div className="hidden md:inline-block">
           <div className="flex flex-col items-center md:flex-row md:justify-between">
-            <>
-              <ActiveDate startDate={startDate} endDate={endDate} />
-              <Time place={place} />
-            </>
+            <ActiveDate startDate={startDate} endDate={endDate} />
+            <Place place={place} />
           </div>
         </div>
         {/* md끗 */}
@@ -153,7 +148,7 @@ export default function Index({ reportData, isEditing, setReportData }: Props) {
           )}
         </div>
         <div className="p-3 md:p-0">
-          <p className=" my-3 text-lg font-semibold text-blue-500 md:text-lg">
+          <p className="my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 내용
           </p>
           {isEditing ? (

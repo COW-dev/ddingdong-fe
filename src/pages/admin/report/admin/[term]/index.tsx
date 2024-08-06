@@ -77,33 +77,30 @@ function Index({ term }: ReportPageProps) {
       <div className="mt-6  w-full gap-4 sm:grid-cols-2 md:mt-8 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {filteredClub?.map((item) => {
+            const { id, name, category, tag } = item;
             return (
               <div
-                key={item.id}
+                key={id}
                 className={`rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50`}
               >
                 <Link
-                  href={`/report/admin/${term}/${item.name}`}
+                  href={`/report/admin/${term}/${name}`}
                   data-item={item}
                   className="flex"
                 >
                   <div className="h-full w-full items-center justify-between p-5 md:p-6">
-                    <div className="text-lg font-bold md:text-xl">
-                      {item.name}
-                    </div>
+                    <div className="text-lg font-bold md:text-xl">{name}</div>
                     <div className="flex items-center">
                       <div
-                        className={`rounded-lg text-sm font-semibold ${
-                          deptCaptionColor[item.category]
-                        }`}
+                        className={`rounded-lg text-sm font-semibold ${deptCaptionColor[category]}`}
                       >
-                        {item.category}
+                        {category}
                       </div>
                       <div className="px-1 text-sm font-medium text-gray-300">
                         |
                       </div>
                       <div className="rounded-lg text-sm font-semibold text-gray-500">
-                        {item.tag}
+                        {tag}
                       </div>
                     </div>
                   </div>

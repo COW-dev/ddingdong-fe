@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import ParticipantSelect from '@/components/report/ParticipantSelect';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { StudentInfo } from '@/types';
-import { NewReport } from '@/types/report';
+import { NewReport, ReportDetail } from '@/types/report';
 
 const participant = {
   name: '',
@@ -14,17 +14,11 @@ const participant = {
 
 type Props = {
   data: StudentInfo[];
-  setData: (report: NewReport) => void;
+  setData: Dispatch<SetStateAction<ReportDetail[]>> | undefined;
   closeModal: () => void;
-  report: NewReport;
 };
 
-export default function Participants({
-  data,
-  setData,
-  closeModal,
-  report,
-}: Props) {
+export default function Participants({ data, setData, closeModal }: Props) {
   const [{ token }] = useCookies(['token']);
 
   const { data: clubData } = useMyClub(token);
@@ -35,7 +29,7 @@ export default function Participants({
 
   function handleSubmit() {
     setParticipants(participants);
-    setData && setData({ ...report, participants });
+    setData && setData((prev) => ({ ...prev, participants }));
     closeModal();
   }
 

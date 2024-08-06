@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
+import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { useReport } from '@/hooks/common/useReport';
 import { EMPTY_DATA } from '@/pages/admin/report/new/data';
 import { NewReport } from '@/types/report';
@@ -8,10 +9,12 @@ import Accordion from '../common/Accordion';
 
 interface ReportEditProps {
   report?: [NewReport, NewReport];
+  term?: number;
 }
 
-function ReportEdit({ report }: ReportEditProps) {
+function ReportEdit({ report, term }: ReportEditProps) {
   const createMutation = useNewReport();
+  const modifyMutation = useUpdateReports(term ?? 0);
 
   const {
     uploadFileOne,
@@ -26,6 +29,7 @@ function ReportEdit({ report }: ReportEditProps) {
 
   const handleClickModifyButton = () => {
     console.log();
+    // return modifyMutation.mutate();
   };
 
   const handleClickCreateButton = (event: React.FormEvent<HTMLFormElement>) => {

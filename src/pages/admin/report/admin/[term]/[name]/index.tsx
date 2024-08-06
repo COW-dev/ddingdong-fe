@@ -27,10 +27,11 @@ function Index({ term, name }: ReportPageProps) {
         className="mt-7 flex text-2xl font-bold md:mt-10 md:text-4xl"
       >
         <Image src={ArrowImage} alt="뒤로가기 화살표" width={40} height={40} />
-        {term}회차 / {name}
+        <span>
+          {term}회차 / {name}
+        </span>
       </h1>
-
-      <div className="mt-6  w-full gap-4 sm:grid-cols-2 md:mt-8 md:gap-8">
+      <div className="mt-6 w-full gap-4 sm:grid-cols-2 md:mt-8 md:gap-8">
         <ReportItem term={term} name={name} />
       </div>
     </>
