@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
-import Detail from '@/components/report/detail/index';
+import Report from '@/components/report/detail/Report';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import { ReportDetail } from '@/types/report';
 
@@ -37,10 +37,10 @@ export default function ReportItem({ name, term }: Props) {
       </div>
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
-          <Detail reportData={reportData[0]} />
+          <Report reportData={reportData[0]} term={term} />
         </Accordion>
         <Accordion title="활동2">
-          <Detail reportData={reportData[1]} />
+          <Report reportData={reportData[1]} term={term} />
         </Accordion>
       </div>
     </>

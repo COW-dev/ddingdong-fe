@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
 import Heading from '@/components/common/Heading';
-import Detail from '@/components/report/detail/index';
+import Report from '@/components/report/detail/Report';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
@@ -29,7 +29,7 @@ export default function Index({ term, name }: ReportDetailProps) {
   }
 
   function handleClickModify() {
-    // redirect('/report/new');
+    // redirect(`/report/`);
   }
 
   return (
@@ -49,10 +49,10 @@ export default function Index({ term, name }: ReportDetailProps) {
       </div>
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
-          <Detail reportData={reportData[0]} />
+          <Report reportData={reportData[0]} term={term} />
         </Accordion>
         <Accordion title="활동2">
-          <Detail reportData={reportData[1]} />
+          <Report reportData={reportData[1]} term={term} />
         </Accordion>
       </div>
 

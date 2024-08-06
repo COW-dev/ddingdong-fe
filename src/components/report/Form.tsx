@@ -157,7 +157,6 @@ export default function Form({
       >
         <Participants
           data={participants}
-          report={report}
           setData={setValue}
           closeModal={closeModal}
         />

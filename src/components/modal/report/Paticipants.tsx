@@ -14,7 +14,7 @@ const participant = {
 
 type Props = {
   data: StudentInfo[];
-  setData: Dispatch<SetStateAction<ReportDetail[]>> | undefined;
+  setData: Dispatch<SetStateAction<NewReport>> | undefined;
   closeModal: () => void;
 };
 
