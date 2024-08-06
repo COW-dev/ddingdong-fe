@@ -1,12 +1,18 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import Accordion from '@/components/common/Accordion';
+import AlertDialog from '@/components/common/AlertDialog';
 import Heading from '@/components/common/Heading';
+import Modal from '@/components/common/Modal';
+import MemberUpload from '@/components/member/MemberUpload';
 import Report from '@/components/report/detail/Report';
+import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
+import useModal from '@/hooks/common/useModal';
 import { cn } from '@/lib/utils';
 
 type ReportDetailProps = {
@@ -15,22 +21,24 @@ type ReportDetailProps = {
 };
 
 export default function Index({ term, name }: ReportDetailProps) {
+  const { openModal, visible, closeModal, modalRef } = useModal();
   const [{ token }] = useCookies(['token']);
+  const currentTermData = useCurrentReports(token).data?.data.term ?? 1;
   const { data: clubData } = useMyClub(token);
   const deleteMutation = useDeleteReport();
   const reportData = useReportInfo({ term, name, token }).data?.data;
   if (!reportData) return;
 
-  function handleClickDelete() {
+  const handleClickDeleteButton = () => {
+    openModal();
+  };
+
+  const onConfirmDelete = () => {
     deleteMutation.mutate({
       term,
       token: token,
     });
-  }
-
-  function handleClickModify() {
-    // redirect(`/report/`);
-  }
+  };
 
   return (
     <>
@@ -55,29 +63,38 @@ export default function Index({ term, name }: ReportDetailProps) {
           <Report reportData={reportData[1]} term={term} />
         </Accordion>
       </div>
-
-      <div className="fixed bottom-4 right-4 flex gap-2 md:mt-6">
+      <div className="m-auto flex gap-2 md:mt-6">
         <button
           className={cn(
             `mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors`,
             'hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
-            6 !== Number(term) && `hidden`,
+            currentTermData !== Number(term) && `hidden`,
           )}
-          onClick={handleClickDelete}
+          onClick={handleClickDeleteButton}
         >
-          삭제
+          삭제하기
         </button>
-        <button
-          className={cn(
-            `mb-4 min-w-fit rounded-xl bg-orange-50 px-3.5 py-2 text-sm font-bold text-orange-400 transition-colors`,
-            'hover:bg-orange-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
-            6 !== Number(term) && `hidden`,
-          )}
-          onClick={handleClickDelete}
-        >
-          수정
-        </button>
+        <Link href={`/report/${term}/${name}/fix`}>
+          <button
+            className={cn(
+              `mb-4 min-w-fit rounded-xl bg-blue-50 px-3.5 py-2 text-sm font-bold text-blue-400 transition-colors`,
+              'hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
+              currentTermData !== Number(term) && `hidden`,
+            )}
+          >
+            수정하기
+          </button>
+        </Link>
       </div>
+
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'활동 보고서 삭제'}
+        closeModal={closeModal}
+      >
+        <AlertDialog onConfirm={onConfirmDelete} onCancle={closeModal} />
+      </Modal>
     </>
   );
 }
