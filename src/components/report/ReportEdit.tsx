@@ -12,9 +12,9 @@ interface ReportEditProps {
   term?: number;
 }
 
-function ReportEdit({ report, term }: ReportEditProps) {
+function ReportEdit({ report, term = 0 }: ReportEditProps) {
   const createMutation = useNewReport();
-  const modifyMutation = useUpdateReports(term ?? 0);
+  const modifyMutation = useUpdateReports(term);
 
   const {
     uploadFileOne,
@@ -25,17 +25,21 @@ function ReportEdit({ report, term }: ReportEditProps) {
     setReportTwo,
     reportOne,
     reportTwo,
+    createFormData,
   } = useReport(report ?? [EMPTY_DATA, EMPTY_DATA]);
 
-  const handleClickModifyButton = () => {
-    console.log();
+  const handleClickModifyButton = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+    createFormData(formData, term);
     // return modifyMutation.mutate();
   };
 
   const handleClickCreateButton = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData();
-    return createMutation.mutate(formData);
+    createFormData(formData, term);
+    // return createMutation.mutate(formData);
   };
 
   return (
@@ -60,10 +64,10 @@ function ReportEdit({ report, term }: ReportEditProps) {
             setImage={setUploadFileTwo}
           />
         </Accordion>
-        <div className="fixed bottom-4 right-4 md:mt-6">
+        <div className="m-auto flex justify-center md:mt-6">
           <button
             type="submit"
-            className="mr-2 h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+            className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
           >
             {report ? '수정하기' : '생성하기'}
           </button>

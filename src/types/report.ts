@@ -23,6 +23,15 @@ export type ActivityReportTerm = {
   endDay: string;
 };
 
+export type Report = {
+  term: number;
+  place: string;
+  startDate: string;
+  endDate: string;
+  content: string;
+  participants: StudentInfo[];
+};
+
 export type NewReport = {
   term: number;
   date: DateRangeType;

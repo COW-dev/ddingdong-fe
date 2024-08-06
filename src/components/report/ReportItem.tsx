@@ -11,6 +11,7 @@ type Props = {
   name: string;
   term: number;
 };
+
 export default function ReportItem({ name, term }: Props) {
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ name, term, token }).data;

@@ -1,4 +1,4 @@
-import { NewReport, ReportDetail } from '@/types/report';
+import { NewReport, ReportDetail, Report } from '@/types/report';
 
 export function parseDate(date: string): string {
   const year = date.substring(2, 4);
@@ -16,6 +16,21 @@ const parseStringDateToRangeDate = (start: string, end: string) => {
   const [startDate, startTime] = start.split(' ');
   const [endDate, endTime] = end.split(' ');
   return { startDate, startTime, endDate, endTime };
+};
+
+export const parseNewReportToReport = (
+  term: number,
+  report: NewReport,
+): Report => {
+  const { date, place, content, participants, startTime, endTime } = report;
+  return {
+    term,
+    startDate: date.startDate + ' ' + startTime,
+    endDate: date.startDate + ' ' + endTime,
+    place,
+    content,
+    participants,
+  };
 };
 
 export const parseReportDetailToEditReport = (
