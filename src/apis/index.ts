@@ -105,12 +105,13 @@ export async function getClubAllFix(
 export async function getFixInfo(
   token: string,
   id: number,
-): Promise<AxiosResponse<FixDetailInfo, unknown>> {
-  return await api.get(`/club/fix/${id}`, {
+): Promise<FixDetailInfo> {
+  const response = await api.get(`/club/fix-zones/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
+  return await response.data;
 }
 
 export async function getClubInfo(

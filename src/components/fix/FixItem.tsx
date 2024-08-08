@@ -2,14 +2,14 @@ import Link from 'next/link';
 import { Fix } from '@/types/fix';
 
 export default function FixItem({ data }: { data: Fix }) {
-  const { id, title, requestedAt, isCompleted, clubName } = data;
+  const { fixZoneId, title, requestedAt, isCompleted, clubName } = data;
   return (
     <li
-      key={id}
+      key={fixZoneId}
       className="mb-2 flex w-full rounded-md border border-gray-100 pl-4 pt-2"
     >
       <Link
-        href={`/fix/${id}`}
+        href={`/fix/${fixZoneId}`}
         className="inline-block w-full py-2 transition-opacity hover:opacity-50 md:pt-3.5"
       >
         <div className="block text-base font-semibold sm:hidden">

@@ -1,5 +1,5 @@
 export type Fix = {
-  id: number;
+  fixZoneId: number;
   clubLocation: string;
   clubName: string;
   title: string;
@@ -16,14 +16,21 @@ export type Comment = {
 };
 
 export type FixDetailInfo = {
-  clubLocation: string;
-  clubName: string;
+  // clubLocation: string;
+  // clubName: string;
+  // title: string;
+  // content: string;
+  // isCompleted: boolean;
+  // requestedAt: string;
+  // imageUrl: string[];
+  // comments: Comment[];
+  comments: Comment[];
   title: string;
   content: string;
+  id: number;
+  imageUrls: string[];
   isCompleted: boolean;
   requestedAt: string;
-  imageUrl: string[];
-  comments: Comment[];
 };
 
 export type FixComplete = {

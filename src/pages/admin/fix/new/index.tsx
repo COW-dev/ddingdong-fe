@@ -13,8 +13,11 @@ export default function Index() {
   const [image, setImage] = useState<File[]>([]);
   function handleSubmit() {
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
+    const request = {
+      title,
+      content,
+    };
+    formData.append('request', JSON.stringify(request));
     for (let i = 0; i < image.length; i++) {
       formData.append('images', image[i]);
     }

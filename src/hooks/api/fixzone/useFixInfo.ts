@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query';
-import { AxiosError, type AxiosResponse } from 'axios';
 import { getFixInfo } from '@/apis';
 import { FixDetailInfo } from '@/types/fix';
 
@@ -9,12 +8,7 @@ type Props = {
 };
 
 export function useFixInfo({ token, id }: Props) {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<FixDetailInfo, unknown>,
-    [string, number]
-  >({
+  return useQuery<FixDetailInfo>({
     queryKey: ['fix', id],
     queryFn: () => getFixInfo(token, id),
   });

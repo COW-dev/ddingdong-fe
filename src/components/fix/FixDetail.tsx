@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import LeftArrow2 from '@/assets/leftArrow2.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { ROLE_TYPE } from '@/constants/text';
+import { useFixInfo } from '@/hooks/api/fixzone/useFixInfo';
 import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
 import { parseImgUrl } from '@/utils/parse';
@@ -25,27 +26,19 @@ export default function FixDetail({ id }: Prop) {
   const [{ token }] = useCookies(['token']);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const { data: response } = useFixInfo({ token, id });
+  const { data } = useFixInfo({ token, id });
   const [presentIndex, setPresentIndex] = useState<number>(0);
-
-  const {
-    clubLocation,
-    clubName,
-    title,
-    content,
-    requestedAt,
-    imageUrl,
-    comments,
-  } = response?.data;
+  const mutation = useUpdateComplete();
 
   const [isCompleted, setIsCompleted] = useState<boolean>(
-    response?.data.isCompleted,
+    data?.isCompleted ?? false,
   );
-  const mutation = useUpdateComplete();
+  if (!data) return;
+  const { requestedAt, imageUrls, comments, id: fixId, title, content } = data;
 
   function handleCompleted() {
     setIsCompleted(true);
-    mutation.mutate({ id, completed: true, token });
+    // mutation.mutate({ id, completed: true, token });
   }
 
   return (
@@ -63,15 +56,20 @@ export default function FixDetail({ id }: Prop) {
       <div className="mt-3 flex w-full flex-col rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
         {/* 정보 */}
         <div className=" w-full rounded-xl bg-white md:w-1/2 md:p-3">
-          <FixItemInfo
+          {/* <FixItemInfo
             club={clubName}
             createdAt={requestedAt}
             location={clubLocation}
-          />
+          /> */}
           <div className="mt-4 py-2 pt-4">{content}</div>
         </div>
         {/* 내용 */}
-        <div className="relative flex w-full items-center justify-center md:w-1/2 md:p-3">
+        <div
+          className={cn(
+            'relative flex w-full items-center justify-center md:w-1/2 md:p-3',
+            imageUrls.length === 0 && 'hidden',
+          )}
+        >
           <Image
             src={LeftArrow2}
             width={30}
@@ -80,12 +78,13 @@ export default function FixDetail({ id }: Prop) {
             onClick={() => {
               setPresentIndex(presentIndex - 1);
             }}
-            className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-              presentIndex === 0 && `hidden`
-            }`}
+            className={cn(
+              'absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25',
+              presentIndex === 0 && `hidden`,
+            )}
           />
           <Image
-            src={parseImgUrl(imageUrl[presentIndex])}
+            src={parseImgUrl(imageUrls[presentIndex])}
             width={550}
             height={500}
             priority
@@ -101,7 +100,7 @@ export default function FixDetail({ id }: Prop) {
               setPresentIndex(presentIndex + 1);
             }}
             className={`absolute right-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-              presentIndex === imageUrl.length - 1 && `hidden`
+              presentIndex === imageUrls.length - 1 && `hidden`
             }`}
           />
         </div>
