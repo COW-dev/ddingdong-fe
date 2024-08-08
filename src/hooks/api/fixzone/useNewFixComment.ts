@@ -1,9 +1,4 @@
-import { useRouter } from 'next/router';
-import {
-  type UseMutationResult,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { type UseMutationResult, useMutation } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 

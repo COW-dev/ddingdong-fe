@@ -10,7 +10,6 @@ import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
 import { parseImgUrl } from '@/utils/parse';
 import CommentContainer from './comment/CommentContainer';
-import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
@@ -33,7 +32,7 @@ export default function FixDetail({ id }: Prop) {
   const [isCompleted, setIsCompleted] = useState<boolean>(
     data?.isCompleted ?? false,
   );
-  if (!data) return;
+  if (!data) return <></>;
   const { requestedAt, imageUrls, comments, id: fixId, title, content } = data;
 
   function handleCompleted() {
@@ -125,7 +124,7 @@ export default function FixDetail({ id }: Prop) {
         </button>
       </div>
       <div className="mt-16">
-        <CommentContainer comments={comments} />
+        <CommentContainer comments={comments} fixZoneId={id} />
       </div>
       <Modal
         visible={visible}

@@ -2,20 +2,24 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
+import { ROLE_TYPE } from '@/constants/text';
 import { useNewFixComment } from '@/hooks/api/fixzone/useNewFixComment';
+import { cn } from '@/lib/utils';
 import { Comment as CommentType } from '@/types/fix';
 import Comment from './Comment';
 
 interface CommentContainerProps {
   comments: CommentType[];
+  fixZoneId: number;
 }
-function CommentContainer({ comments }: CommentContainerProps) {
+function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
+  const [{ role }] = useCookies(['role']);
   const [{ token }] = useCookies(['token']);
   const [content, setContent] = useState<string>('');
   const mutation = useNewFixComment();
 
   const handleSubmit = () => {
-    mutation.mutate({ token, content });
+    mutation.mutate({ token, content, fixZoneId });
   };
 
   const handleChangeMessage = (message: string) => {
@@ -33,7 +37,12 @@ function CommentContainer({ comments }: CommentContainerProps) {
 
   return (
     <>
-      <div className="flex w-full gap-2 text-sm">
+      <div
+        className={cn(
+          'flex w-full gap-2 text-sm',
+          role === ROLE_TYPE.ROLE_CLUB && 'hidden',
+        )}
+      >
         <div>
           <Image
             src={Admin}

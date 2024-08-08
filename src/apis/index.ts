@@ -84,8 +84,7 @@ export async function getAdminAllClubs(
 export async function getAdminAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  // return await api.get('/admin/fix-zones', {
-  return await api.get('/admin/fix', {
+  return await api.get('/admin/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -158,6 +157,7 @@ export async function createBanner({ token, formData }: NewBanner) {
     },
   });
 }
+
 export async function createFix({ token, formData }: NewFix) {
   return await api.post('/club/fix-zones', formData, {
     headers: {
@@ -167,8 +167,12 @@ export async function createFix({ token, formData }: NewFix) {
   });
 }
 
-export async function createFixComment({ token, content }: NewFixComment) {
-  return await api.post('/club/fix-zones', content, {
+export async function createFixComment({
+  fixZoneId,
+  token,
+  content,
+}: NewFixComment) {
+  return await api.post(`/admin/fix-zones/${fixZoneId}/comments`, content, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
