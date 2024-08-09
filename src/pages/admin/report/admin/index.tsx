@@ -6,13 +6,13 @@ import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useReportTerms } from '@/hooks/api/club/useReportTerms';
 import { cn } from '@/lib/utils';
 import { parseDate } from '@/utils/parse';
-import { BUTTON_TYPE, termList } from './data';
+import { BUTTON_TYPE } from './data';
 
 export default function Index() {
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data;
   const currentTerm = currentTermData?.term ?? 1;
-  // const termList = useReportTerms().data?.data;
+  const termList = useReportTerms(token).data?.data;
 
   const filterPeriod = (term: number) => {
     if (term >= currentTerm) return BUTTON_TYPE.BEFORE;
@@ -29,7 +29,7 @@ export default function Index() {
       <div className="mt-12 w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {termList?.map((item, index) => {
-            const { term, startDay, endDay } = item;
+            const { term, startDate, endDate } = item;
 
             return (
               <div
@@ -49,7 +49,7 @@ export default function Index() {
                           {term}회차
                         </span>
                         <div className="text-gray-400">
-                          {parseDate(startDay)} - {parseDate(endDay)}
+                          {parseDate(startDate)} - {parseDate(endDate)}
                         </div>
                       </div>
                       <div className="flex items-center">

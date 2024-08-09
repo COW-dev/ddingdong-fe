@@ -304,10 +304,14 @@ export async function getMyReportLists(
   return response.data;
 }
 
-export async function getReportTerms(): Promise<
-  AxiosResponse<ActivityReportTerm, unknown>
-> {
-  return await api.get('/club/activity-reports/term');
+export async function getReportTerms(
+  token: string,
+): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
+  return await api.get('/admin/activity-reports/term', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 
 export async function getCurrentReports(

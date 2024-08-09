@@ -30,9 +30,9 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
 
   const handleClickModifyButton = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData();
-    createFormData(formData, term);
-    // return modifyMutation.mutate();
+    let formData = new FormData();
+    formData = createFormData(formData, term);
+    return modifyMutation.mutate(formData);
   };
 
   const handleClickCreateButton = (event: React.FormEvent<HTMLFormElement>) => {

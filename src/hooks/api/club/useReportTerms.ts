@@ -3,7 +3,7 @@ import { AxiosError, type AxiosResponse } from 'axios';
 import { getReportTerms } from '@/apis';
 import { ActivityReportTerm } from '@/types/report';
 
-export function useReportTerms() {
+export function useReportTerms(token: string) {
   return useQuery<
     unknown,
     AxiosError,
@@ -11,6 +11,6 @@ export function useReportTerms() {
     [string]
   >({
     queryKey: ['report-term'],
-    queryFn: getReportTerms,
+    queryFn: () => getReportTerms(token),
   });
 }
