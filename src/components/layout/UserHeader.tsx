@@ -33,7 +33,7 @@ const navItems: {
     },
     {
       id: 3,
-      href: '/faq',
+      href: '/FAQ',
       content: 'FAQ',
     },
   ],
