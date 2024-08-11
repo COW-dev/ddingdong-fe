@@ -172,11 +172,15 @@ export async function createFixComment({
   token,
   content,
 }: NewFixComment) {
-  return await api.post(`/admin/fix-zones/${fixZoneId}/comments`, content, {
-    headers: {
-      Authorization: 'Bearer ' + token,
+  return await api.post(
+    `/admin/fix-zones/${fixZoneId}/comments`,
+    { content },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
-  });
+  );
 }
 
 export async function updateNotice(noticeId: number, noticeData: FormData) {

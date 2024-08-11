@@ -1,37 +1,34 @@
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { list } from 'postcss';
 import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import Dot from '@/assets/dot.svg';
 import Dropdown from '@/components/common/Dropdown';
 import { useDeleteFixComment } from '@/hooks/api/fixzone/useDeleteFixComment';
-import { useUpdateFixComment } from '@/hooks/api/fixzone/useUpdateFixComment';
 import { Comment as CommentType } from '@/types/fix';
 import 'dayjs/locale/ko';
 
 interface CommentProps {
   info: CommentType;
+  fixZoneId: number;
 }
 
-function Comment({ info }: CommentProps) {
+function Comment({ info, fixZoneId }: CommentProps) {
   const [{ token }] = useCookies(['token']);
 
-  const { content, createdAt } = info;
-  const updateMutation = useUpdateFixComment();
+  const { content, createdAt, commentId } = info;
   const deleteMutation = useDeleteFixComment();
 
   dayjs.locale('ko');
   dayjs.extend(relativeTime);
 
   const handleClickDeleteButton = () => {
-    // deleteMutation.mutate({
-    //   fixZonId: '1',
-    //   commentId: '1',
-    //   token,
-    // });
-    console.log('삭제버튼 클릭');
+    deleteMutation.mutate({
+      fixZonId: fixZoneId,
+      commentId: commentId,
+      token,
+    });
   };
 
   return (
@@ -51,15 +48,15 @@ function Comment({ info }: CommentProps) {
           </div>
           {content}
         </div>
-        <div onClick={handleClickDeleteButton}>
+        <div className="flex flex-col justify-center">
           <Dropdown
             head={
               <Image
                 src={Dot}
-                width={50}
-                height={50}
+                width={20}
+                height={20}
                 alt="더보기 버튼"
-                className="mb-2 ml-2 md:mb-auto md:ml-4 md:mt-2"
+                className=""
               />
             }
             list={[

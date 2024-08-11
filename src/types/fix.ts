@@ -13,6 +13,7 @@ export type Comment = {
   content: string;
   profileImageUrl: string;
   createdAt: string;
+  commentId: number;
 };
 
 export type FixDetailInfo = {
@@ -50,8 +51,8 @@ export type NewFixComment = {
 };
 
 export type DeleteFixComment = {
-  fixZonId: string;
-  commentId: string;
+  fixZonId: number;
+  commentId: number;
   token: string;
 };
 

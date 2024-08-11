@@ -69,7 +69,7 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
       </div>
       <div className="flex flex-col gap-2 py-6 text-sm">
         {comments.map((comment, index) => (
-          <Comment key={index} info={comment} />
+          <Comment key={index} info={comment} fixZoneId={fixZoneId} />
         ))}
       </div>
     </>
