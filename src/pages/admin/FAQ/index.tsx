@@ -7,17 +7,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { QnA } from '@/constants/qna';
 import { ROLE_TYPE } from '@/constants/text';
 
 export default function Index() {
   const [cookies] = useCookies(['token', 'role']);
   const { role } = cookies;
 
-  const dummy = [
-    { Q: '총동연 질문', A: '대답' },
-    { Q: '준동아리', A: '대답' },
-  ];
-  console.log('Dummy data:', dummy);
   return (
     <>
       <Head>
@@ -33,17 +29,17 @@ export default function Index() {
           수정
         </button>
         <div className="flex items-center justify-center">
-          {dummy?.map((item, index) => (
+          {QnA?.map((item, index) => (
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index + 1}`}>
-                <AccordionTrigger>
+                <AccordionTrigger className="flex text-left">
                   <span>Q</span>
                   <span className="text-blue-500">.</span>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  {item.Q}
+                  <span className="text-left">{item.Q}</span>
                 </AccordionTrigger>
                 <AccordionContent>
-                  <span className=" font-bold text-blue-500">A.</span>
+                  <div className="font-bold text-blue-500">A.</div>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   {item.A}
                 </AccordionContent>
