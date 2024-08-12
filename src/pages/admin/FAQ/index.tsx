@@ -28,25 +28,25 @@ export default function Index() {
         >
           수정
         </button>
-        <div className="flex items-center justify-center">
-          {QnA?.map((item, index) => (
-            <Accordion key={index} type="single" collapsible className="w-full">
-              <AccordionItem value={`item-${index + 1}`}>
-                <AccordionTrigger className="flex text-left">
-                  <span>Q</span>
-                  <span className="text-blue-500">.</span>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <span className="text-left">{item.Q}</span>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="font-bold text-blue-500">A.</div>
-                  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  {item.A}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          ))}
-        </div>
+      </div>
+      <div className="mt-10 flex flex-col items-center justify-center">
+        {QnA?.map((item, index) => (
+          <Accordion key={index} type="single" collapsible className="w-full">
+            <AccordionItem value={`item-${index}`}>
+              <AccordionTrigger>
+                <span>Q</span>
+                <span className="text-blue-500">.</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="text-left">{item.Q}</span>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="font-bold text-blue-500">A.</div>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                {item.A}
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        ))}
       </div>
     </>
   );
