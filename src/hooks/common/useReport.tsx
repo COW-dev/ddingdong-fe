@@ -20,12 +20,9 @@ export function useReport(initReport: [NewReport, NewReport]) {
       formData.append('uploadFiles2', uploadFileTwo, `uploadFiles2`);
     formData.append(
       'reportData',
-      new Blob([JSON.stringify([parseReportOne, parseReportTwo])], {
-        type: 'application/json',
-      }),
+      JSON.stringify([parseReportOne, parseReportTwo]),
     );
     formData.append('token', token);
-
     return formData;
   };
 

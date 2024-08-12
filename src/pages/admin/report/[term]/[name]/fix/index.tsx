@@ -26,7 +26,7 @@ export default function Index({ term, name }: ReportDetailProps) {
         <title>띵동 일반 동아리 - 활동보고서 수정하기</title>
       </Head>
       <Heading>활동 보고서 수정하기</Heading>
-      <ReportEdit report={[reportOne, reportTwo]} />
+      <ReportEdit report={[reportOne, reportTwo]} term={term} />
     </>
   );
 }
