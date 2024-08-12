@@ -16,7 +16,7 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
   const [{ role }] = useCookies(['role']);
   const [{ token }] = useCookies(['token']);
   const [content, setContent] = useState<string>('');
-  const mutation = useNewFixComment();
+  const mutation = useNewFixComment(fixZoneId);
 
   const handleSubmit = () => {
     mutation.mutate({ token, content, fixZoneId });

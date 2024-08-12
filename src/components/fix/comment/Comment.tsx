@@ -18,7 +18,7 @@ function Comment({ info, fixZoneId }: CommentProps) {
   const [{ token }] = useCookies(['token']);
 
   const { content, createdAt, commentId } = info;
-  const deleteMutation = useDeleteFixComment();
+  const deleteMutation = useDeleteFixComment(fixZoneId);
 
   dayjs.locale('ko');
   dayjs.extend(relativeTime);
