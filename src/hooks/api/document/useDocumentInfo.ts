@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getDocumentInfo } from '@/apis';
-import { NoticeDetail } from '@/types/notice';
+import { DocumentDetail } from '@/types/document';
 
 export function useDocumentInfo(id: number) {
   return useQuery<
     unknown,
     AxiosError,
-    AxiosResponse<NoticeDetail, unknown>,
+    AxiosResponse<DocumentDetail, unknown>,
     [string, number]
   >({
     queryKey: ['documents', id],

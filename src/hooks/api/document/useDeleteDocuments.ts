@@ -7,7 +7,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { deleteDocument } from '@/apis';
-import { DeleteDocument } from '@/types/notice';
+import { DeleteDocument } from '@/types/document';
 
 export function useDeleteDocument(): UseMutationResult<
   unknown,
