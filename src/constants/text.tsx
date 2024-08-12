@@ -53,7 +53,7 @@ export const ROLE_TEXT: RoleText = {
       route: '/documents',
     },
     FAQ: {
-      title: '자료실 관리',
+      title: 'FAQ 관리',
       subtitle: '총동아리연합회 및 동아리에게 자주 물어보는 질문을 관리해요.',
       route: '/FAQ',
     },
