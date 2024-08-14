@@ -14,7 +14,7 @@ interface ResponsiveInfoProps {
 
 function ResponsiveInfo({ image, report, term }: ResponsiveInfoProps) {
   const [info, setInfo] = useState<boolean>(true);
-  if (!report) return;
+  if (!report) <></>;
   const { place, startDate, endDate, name } = report;
   return (
     <>

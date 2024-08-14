@@ -22,8 +22,8 @@ export function useDeleteReport(): UseMutationResult<
       toast.success('활동보고서를 성공적으로 삭제했어요.');
       queryClient.invalidateQueries(['activity-reports']);
     },
-    onError() {
-      toast.error('활동보고서 삭제에 실패했어요.');
+    onError(error) {
+      toast.error(`활동보고서 삭제에 실패했어요 \n ${error.message}`);
     },
   });
 }
