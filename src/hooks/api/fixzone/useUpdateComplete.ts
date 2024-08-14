@@ -25,8 +25,8 @@ export function useUpdateComplete(): UseMutationResult<
       toast.success('처리완료 처리를 완료했어요.');
       router.push('/fix');
     },
-    onError() {
-      toast.error('처리완료 처리를 실패했어요');
+    onError(error) {
+      toast.error(`처리완료 처리를 전송하는데 실패했어요 \n ${error}`);
     },
   });
 }

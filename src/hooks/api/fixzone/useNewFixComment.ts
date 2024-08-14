@@ -18,8 +18,8 @@ export function useNewFixComment(
       toast.success('댓글 작성에 성공했어요.');
       queryClient.invalidateQueries({ queryKey: ['fix', fixId] });
     },
-    onError() {
-      toast.error('댓글 작성에 실패했어요');
+    onError(error) {
+      toast.error(`댓글 작성에 실패했어요 \n ${error}`);
     },
   });
 }

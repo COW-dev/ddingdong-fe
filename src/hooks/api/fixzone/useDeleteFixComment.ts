@@ -17,8 +17,8 @@ export function useDeleteFixComment(
       toast.success('댓글을 성공적으로 삭제했어요.');
       queryClient.invalidateQueries({ queryKey: ['fix', fixId] });
     },
-    onError() {
-      toast.error('댓글 삭제를 실패했어요');
+    onError(error) {
+      toast.error(`댓글 삭제를 실패했어요 \n ${error}`);
     },
   });
 }

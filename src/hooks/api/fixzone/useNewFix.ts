@@ -20,8 +20,8 @@ export function useNewFix(): UseMutationResult<unknown, AxiosError, NewFix> {
       toast.success('요청을 성공적으로 보냈어요.');
       router.push('/fix');
     },
-    onError() {
-      toast.error('요청을 전송하는데 실패했어요');
+    onError(error) {
+      toast.error(`요청을 전송하는데 실패했어요 \n ${error}`);
     },
   });
 }

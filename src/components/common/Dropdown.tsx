@@ -8,7 +8,7 @@ interface DropdownProps {
 export default function Dropdown({ head, list }: DropdownProps) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const handleOpen = () => {
+  const handleClick = () => {
     setOpen(!open);
   };
 
@@ -20,7 +20,7 @@ export default function Dropdown({ head, list }: DropdownProps) {
         data-dropdown-trigger="hover"
         className="rotate-90"
         type="button"
-        onClick={handleOpen}
+        onClick={handleClick}
       >
         {head}
       </button>
@@ -37,6 +37,7 @@ export default function Dropdown({ head, list }: DropdownProps) {
               <li
                 key={index}
                 className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
+                onClick={handleClick}
               >
                 {item}
               </li>
