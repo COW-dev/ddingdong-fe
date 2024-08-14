@@ -7,7 +7,7 @@ import Form from '@/components/report/Form';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { NewReport } from '@/types/report';
-import { parseDateToString } from '@/utils/parse';
+import { parseDate } from '@/utils/parse';
 const participant = {
   name: '',
   studentId: '',
@@ -42,10 +42,8 @@ export default function Index() {
   }, [reportOne.endTime, reportOne.startTime]);
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const reportOnedate =
-      parseDateToString(new Date(String(reportOne.date.startDate))) + ' ';
-    const reportTwodate =
-      parseDateToString(new Date(String(reportTwo.date.startDate))) + ' ';
+    const reportOnedate = parseDate(String(reportOne.date.startDate)) + ' ';
+    const reportTwodate = parseDate(String(reportTwo.date.startDate)) + ' ';
     const reportData = [
       {
         term: reportOne.term,
