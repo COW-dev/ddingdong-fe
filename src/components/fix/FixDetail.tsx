@@ -10,6 +10,7 @@ import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
 import { parseImgUrl } from '@/utils/parse';
 import CommentContainer from './comment/CommentContainer';
+import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
@@ -33,7 +34,16 @@ export default function FixDetail({ id }: Prop) {
     data?.isCompleted ?? false,
   );
   if (!data) return <></>;
-  const { requestedAt, imageUrls, comments, id: fixId, title, content } = data;
+  const {
+    requestedAt,
+    imageUrls,
+    comments,
+    clubName,
+    id: fixId,
+    clubLocation,
+    title,
+    content,
+  } = data;
 
   function handleCompleted() {
     setIsCompleted(true);
@@ -47,20 +57,18 @@ export default function FixDetail({ id }: Prop) {
         <Link href="/fix">
           <Image src={LeftArrow2} alt="back" width={25} height={25} />
         </Link>
-        <span className="ml-2 text-xl font-semibold text-gray-600">
-          {title}
-        </span>
+        <h1 className="ml-2 text-xl font-semibold text-gray-600">{title}</h1>
       </div>
 
-      <div className="mt-3 flex w-full flex-col rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
+      <div className="mt-3 flex w-full flex-col gap-4 rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
         {/* 정보 */}
         <div className=" w-full rounded-xl bg-white md:w-1/2 md:p-3">
-          {/* <FixItemInfo
+          <FixItemInfo
             club={clubName}
             createdAt={requestedAt}
             location={clubLocation}
-          /> */}
-          <div className="mt-4 py-2 pt-4">{content}</div>
+          />
+          <div className="p-4">{content}</div>
         </div>
         {/* 내용 */}
         <div

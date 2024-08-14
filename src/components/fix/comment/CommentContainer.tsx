@@ -62,7 +62,7 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
         <div
           role="button"
           onClick={handleSubmit}
-          className="min-w-fit rounded-3xl bg-blue-500 p-3 font-semibold text-white"
+          className="h-fit min-w-fit rounded-3xl bg-blue-500 p-3 font-semibold text-white"
         >
           댓글 작성
         </div>

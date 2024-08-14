@@ -17,14 +17,8 @@ export type Comment = {
 };
 
 export type FixDetailInfo = {
-  // clubLocation: string;
-  // clubName: string;
-  // title: string;
-  // content: string;
-  // isCompleted: boolean;
-  // requestedAt: string;
-  // imageUrl: string[];
-  // comments: Comment[];
+  clubLocation: string;
+  clubName: string;
   comments: Comment[];
   title: string;
   content: string;
