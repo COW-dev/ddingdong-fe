@@ -6,7 +6,6 @@ import Accordion from '@/components/common/Accordion';
 import AlertDialog from '@/components/common/AlertDialog';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
-import MemberUpload from '@/components/member/MemberUpload';
 import Report from '@/components/report/detail/Report';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
@@ -36,7 +35,7 @@ export default function Index({ term, name }: ReportDetailProps) {
   const onConfirmDelete = () => {
     deleteMutation.mutate({
       term,
-      token: token,
+      token,
     });
   };
 
