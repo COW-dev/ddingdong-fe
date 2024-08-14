@@ -21,6 +21,7 @@ type ReportProps = {
   report: NewReport;
   setValue: Dispatch<SetStateAction<NewReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
+  setRemoveFile: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function Form({
@@ -28,6 +29,7 @@ export default function Form({
   setValue,
   setImage,
   report,
+  setRemoveFile,
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
@@ -63,6 +65,14 @@ export default function Form({
     }));
   }
 
+  function handleClickTimeReset() {
+    setValue((prev) => ({
+      ...prev,
+      startTime: '',
+      endTime: '',
+    }));
+  }
+
   return (
     <>
       <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
@@ -76,7 +86,7 @@ export default function Form({
               minDate={new Date(new Date().getFullYear(), 0, 1)}
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
               onChange={handleDateChange}
-              inputClassName=" w-full h-12  px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
+              inputClassName="w-full h-12  px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
             />
             <input
               name="place"
@@ -87,9 +97,18 @@ export default function Form({
               className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
             />
           </div>
-          <p className=" text-md mt-3 font-semibold text-blue-500 md:my-2 md:text-lg">
-            활동 시간
-          </p>
+          <div className="flex justify-between">
+            <p className="text-md mt-3 font-semibold text-blue-500 md:my-2 md:text-lg">
+              활동 시간
+            </p>
+            <div
+              role="button"
+              onClick={handleClickTimeReset}
+              className="flex flex-col justify-center rounded-xl bg-blue-100 p-1 px-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+            >
+              초기화
+            </div>
+          </div>
           <div className="mb-3 flex flex-col items-center md:flex-row">
             <input
               name="startTime"
@@ -141,11 +160,12 @@ export default function Form({
             />
           </div>
         </div>
-        <div className="h-1/2 w-full  md:ml-2 md:w-1/2">
+        <div className="h-1/2 w-full md:ml-2 md:w-1/2">
           <UploadImage
             image={uploadFiles}
             setImage={setImage}
             imageUrls={imageUrls}
+            setRemoveFile={setRemoveFile}
           />
         </div>
       </div>

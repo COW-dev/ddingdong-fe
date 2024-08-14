@@ -13,6 +13,7 @@ type UploadImageProps = {
     | Dispatch<SetStateAction<NoticeDetail>>
     | Dispatch<SetStateAction<ClubDetail>>;
   urlsName?: string;
+  setRemoveFile?: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function UploadImage({
@@ -21,6 +22,7 @@ export default function UploadImage({
   urlsName,
   imageUrls,
   setNoticeData,
+  setRemoveFile,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
   useEffect(() => {
@@ -47,7 +49,9 @@ export default function UploadImage({
       setPreviewImageUrl(imageUrl);
     }
   }
+
   function handleImageReset() {
+    if (setRemoveFile) setRemoveFile(true);
     setImage && setImage(null);
     setPreviewImageUrl('');
     setNoticeData &&
@@ -56,6 +60,7 @@ export default function UploadImage({
         [urlsName ? `${urlsName}` : `imageUrls`]: [],
       }));
   }
+
   return (
     <div className="flex w-full justify-center p-6">
       {image || previewImageUrl ? (

@@ -26,20 +26,26 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     reportOne,
     reportTwo,
     createFormData,
+    setRemoveFileOne,
+    setRemoveFileTwo,
   } = useReport(report ?? [EMPTY_DATA, EMPTY_DATA]);
 
-  const handleClickModifyButton = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleClickModifyButton = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
     let formData = new FormData();
-    formData = createFormData(formData, term);
+    formData = await createFormData(formData, term);
     return modifyMutation.mutate(formData);
   };
 
-  const handleClickCreateButton = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleClickCreateButton = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ) => {
     event.preventDefault();
-    const formData = new FormData();
-    createFormData(formData, term);
-    // return createMutation.mutate(formData);
+    let formData = new FormData();
+    formData = await createFormData(formData, term);
+    return createMutation.mutate(formData);
   };
 
   return (
@@ -54,6 +60,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
             report={reportOne}
             setValue={setReportOne}
             setImage={setUploadFileOne}
+            setRemoveFile={setRemoveFileOne}
           />
         </Accordion>
         <Accordion title="활동2">
@@ -62,6 +69,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
             report={reportTwo}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
+            setRemoveFile={setRemoveFileTwo}
           />
         </Accordion>
         <div className="m-auto flex justify-center md:mt-6">
