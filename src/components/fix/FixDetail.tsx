@@ -39,7 +39,6 @@ export default function FixDetail({ id }: Prop) {
     imageUrls,
     comments,
     clubName,
-    id: fixId,
     clubLocation,
     title,
     content,
@@ -47,7 +46,7 @@ export default function FixDetail({ id }: Prop) {
 
   function handleCompleted() {
     setIsCompleted(true);
-    // mutation.mutate({ id, completed: true, token });
+    mutation.mutate({ id, token });
   }
 
   return (

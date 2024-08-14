@@ -49,7 +49,3 @@ export type DeleteFixComment = {
   commentId: number;
   token: string;
 };
-
-export interface UpdateFixComment extends DeleteFixComment {
-  content: string;
-}

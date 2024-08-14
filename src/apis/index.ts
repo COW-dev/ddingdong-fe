@@ -32,7 +32,6 @@ import {
   FixDetailInfo,
   NewFix,
   NewFixComment,
-  UpdateFixComment,
 } from '@/types/fix';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
@@ -239,23 +238,6 @@ export async function deleteFixComment({
   );
 }
 
-export async function updateFixComment({
-  fixZonId,
-  commentId,
-  token,
-  content,
-}: UpdateFixComment) {
-  return await api.patch(
-    `admin/fix-zones/${fixZonId}/comments/${commentId}`,
-    content,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
     headers: {
@@ -283,7 +265,7 @@ export async function updateMyClub(clubData: FormData) {
   });
 }
 export async function updateFixComplete({ id, token }: FixComplete) {
-  return await api.patch(`/admin/fix-zones/${id}/complete`, {
+  return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

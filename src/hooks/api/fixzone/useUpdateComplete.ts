@@ -1,3 +1,5 @@
+import { redirect } from 'next/dist/server/api-utils';
+import router from 'next/router';
 import {
   type UseMutationResult,
   useMutation,
@@ -21,6 +23,7 @@ export function useUpdateComplete(): UseMutationResult<
         queryKey: ['admin/fix'],
       });
       toast.success('처리완료 처리를 완료했어요.');
+      router.push('/fix');
     },
     onError() {
       toast.error('처리완료 처리를 실패했어요');
