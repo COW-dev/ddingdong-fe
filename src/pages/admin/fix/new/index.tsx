@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import Heading from '@/components/common/Heading';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
@@ -13,24 +14,19 @@ export default function Index() {
   const [content, setContent] = useState<string>('');
   const [image, setImage] = useState<File[]>([]);
   function handleSubmit() {
+    if (title === '') return toast('제목을 입력해주세요.');
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
+    for (let i = 0; i < image.length; i++) formData.append('images', image[i]);
 
-    for (let i = 0; i < image.length; i++) {
-      formData.append('images', image[i]);
-    }
     mutation.mutate({
       formData: formData,
       token: token,
     });
-    handleReset();
   }
-  function handleReset() {
-    setTitle('');
-    setContent('');
-    setImage([]);
-  }
+
   return (
     <>
       <Heading>동아리방 시설보수 신청</Heading>

@@ -14,14 +14,13 @@ interface CommentProps {
   fixZoneId: number;
 }
 
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
+
 function Comment({ info, fixZoneId }: CommentProps) {
   const [{ token }] = useCookies(['token']);
-
   const { content, createdAt, commentId } = info;
   const deleteMutation = useDeleteFixComment(fixZoneId);
-
-  dayjs.locale('ko');
-  dayjs.extend(relativeTime);
 
   const handleClickDeleteButton = () => {
     deleteMutation.mutate({
@@ -32,14 +31,16 @@ function Comment({ info, fixZoneId }: CommentProps) {
   };
 
   return (
-    <div className="flex w-full gap-4">
-      <Image
-        src={Admin}
-        width={40}
-        height={40}
-        alt="admin image"
-        className="rounded-full"
-      />
+    <div className="my-1 flex w-full gap-4">
+      <div className="min-w-fit">
+        <Image
+          src={Admin}
+          width={40}
+          height={40}
+          alt="admin image"
+          className="rounded-full"
+        />
+      </div>
       <div className="flex w-full justify-between">
         <div>
           <div className="flex gap-2">
@@ -48,17 +49,9 @@ function Comment({ info, fixZoneId }: CommentProps) {
           </div>
           {content}
         </div>
-        <div className="flex flex-col justify-center">
+        <div className="flex h-4 min-w-fit flex-col justify-center">
           <Dropdown
-            head={
-              <Image
-                src={Dot}
-                width={20}
-                height={20}
-                alt="더보기 버튼"
-                className=""
-              />
-            }
+            head={<Image src={Dot} width={20} height={20} alt="더보기 버튼" />}
             list={[
               <div onClick={handleClickDeleteButton} key={0}>
                 삭제

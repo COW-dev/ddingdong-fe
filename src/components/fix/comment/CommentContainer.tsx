@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewFixComment } from '@/hooks/api/fixzone/useNewFixComment';
@@ -19,7 +20,12 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
   const mutation = useNewFixComment(fixZoneId);
 
   const handleSubmit = () => {
+    if (content.length > 255)
+      return toast(
+        `255자 이하로 작성해주세요. \n 현재 글자 수  : ${content.length}`,
+      );
     mutation.mutate({ token, content, fixZoneId });
+    setContent('');
   };
 
   const handleChangeMessage = (message: string) => {
