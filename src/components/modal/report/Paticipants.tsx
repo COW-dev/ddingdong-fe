@@ -21,7 +21,9 @@ type Props = {
 export default function Participants({ data, setData, closeModal }: Props) {
   const [{ token }] = useCookies(['token']);
 
-  const { data: clubData } = useMyClub(token);
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
 
   const [participants, setParticipants] = useState<Array<StudentInfo>>(
     data ?? [participant, participant, participant, participant, participant],

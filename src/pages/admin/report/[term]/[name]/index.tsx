@@ -23,7 +23,9 @@ export default function Index({ term, name }: ReportDetailProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data.term ?? 1;
-  const { data: clubData } = useMyClub(token);
+  const {
+    data: { data: clubData },
+  } = useMyClub(token);
   const deleteMutation = useDeleteReport();
   const reportData = useReportInfo({ term, name, token }).data?.data;
   if (!reportData) return;

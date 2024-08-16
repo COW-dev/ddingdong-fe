@@ -43,7 +43,9 @@ export default function Index() {
   const [introduceImages, setIntroduceImages] = useState<File | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clubData, setClubData] = useState<ClubDetail>(initialClubData);
-  const { data } = useMyClub(token);
+  const {
+    data: { data },
+  } = useMyClub(token);
   const mutation = useUpdateMyClub();
   useEffect(() => {
     if (data) {
