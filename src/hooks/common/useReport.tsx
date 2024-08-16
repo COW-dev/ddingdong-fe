@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
-import UnSubmitImage from '@/assets/cry.png';
+import UnSubmitImage from '@/assets/unsubmit_announce.png';
+
 import { NewReport } from '@/types/report';
 import { getBlobFromImageData, parseNewReportToReport } from '@/utils/parse';
 

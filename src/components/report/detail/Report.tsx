@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
-import Cry from '@/assets/cry.png';
+import UnSubmitImage from '@/assets/unsubmit_announce.png';
 import { ReportDetail } from '@/types/report';
 import { parseImgUrl } from '@/utils/parse';
 import ResponsiveInfo from './ResponsiveInfo';
@@ -16,7 +16,8 @@ export default function Report({ reportData, term }: Props) {
   const { content, imageUrls, participants } = reportData ?? {};
 
   const [data, setData] = useState(reportData);
-  const showImage = imageUrls && imageUrls[0] ? parseImgUrl(imageUrls[0]) : Cry;
+  const showImage =
+    imageUrls && imageUrls[0] ? parseImgUrl(imageUrls[0]) : UnSubmitImage;
   useEffect(() => {
     setData(data);
   }, [imageUrls, data]);
