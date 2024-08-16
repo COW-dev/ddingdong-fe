@@ -22,7 +22,7 @@ export default function DocumentModal({ closeModal }: DocumentModalProps) {
       formData.append('uploadFiles', file[i]);
     }
     formData.append('token', cookies.token);
-
+    closeModal();
     return mutation.mutate(formData);
   }
 
@@ -55,7 +55,7 @@ export default function DocumentModal({ closeModal }: DocumentModalProps) {
 
         <button
           type="submit"
-          className="text-md ml-5 rounded-lg bg-blue-500 px-16 py-2 font-bold text-white transition-colors hover:bg-blue-600 md:w-auto "
+          className="text-md ml-5 rounded-lg bg-blue-500 px-16 py-2.5 font-bold text-white transition-colors hover:bg-blue-600 md:w-auto "
         >
           업로드하기
         </button>
