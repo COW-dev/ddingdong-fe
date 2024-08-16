@@ -22,16 +22,3 @@ export const BUTTON_TYPE: Record<ButtonType, ButtonTypeDetails> = {
     background_color: 'bg-red-50',
   },
 };
-
-export const termList = [
-  {
-    term: 1, // 1회차
-    startDay: '2024-03-01',
-    endDay: '2024-03-14',
-  },
-  {
-    term: 2, // 2회차
-    startDay: '2024-03-15',
-    endDay: '2024-03-28',
-  }, // 10회차까지 제공(최대 20주 기준)
-];

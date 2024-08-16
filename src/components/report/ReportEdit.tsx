@@ -2,7 +2,7 @@ import React from 'react';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { useReport } from '@/hooks/common/useReport';
-import { EMPTY_DATA } from '@/pages/admin/report/new/data';
+
 import { NewReport } from '@/types/report';
 import Form from './Form';
 import Accordion from '../common/Accordion';
@@ -86,3 +86,26 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
 }
 
 export default ReportEdit;
+
+const participant = {
+  name: '',
+  studentId: '',
+  department: '',
+};
+
+export const EMPTY_DATA = {
+  term: 0,
+  date: { startDate: null, endDate: null },
+  place: '',
+  startTime: '',
+  endTime: '',
+  uploadFiles: null,
+  content: '',
+  participants: [
+    participant,
+    participant,
+    participant,
+    participant,
+    participant,
+  ],
+};

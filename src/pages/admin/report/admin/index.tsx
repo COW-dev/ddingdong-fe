@@ -2,11 +2,11 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
+import { BUTTON_TYPE } from '@/constants/recruitment_button';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useReportTerms } from '@/hooks/api/club/useReportTerms';
 import { cn } from '@/lib/utils';
 import { parseDate } from '@/utils/parse';
-import { BUTTON_TYPE } from './data';
 
 export default function Index() {
   const [{ token }] = useCookies(['token']);
