@@ -1,8 +1,7 @@
 export type DocumentDetail = {
   id: number;
   title: string;
-  content: string;
-  createdAt: string;
+  createdAt?: string;
   fileUrls: { fileUrl: string; name: string }[];
   imageUrls?: string[];
 };
