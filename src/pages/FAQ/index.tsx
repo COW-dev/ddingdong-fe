@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import {
   Accordion,
@@ -8,13 +7,8 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { QnA } from '@/constants/qna';
-import { ROLE_TYPE } from '@/constants/text';
 
 export default function Index() {
-  const [cookies] = useCookies(['token', 'role']);
-  const { role } = cookies;
-  console.log('Cookies:', cookies, role);
-
   return (
     <>
       <Head>
