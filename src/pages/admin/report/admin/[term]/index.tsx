@@ -6,12 +6,12 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import ArrowImage from '@/assets/leftArrow.svg';
+import FilterOption from '@/components/report/FilterOption';
 import { cn } from '@/components/ui/utils';
 import { deptCaptionColor } from '@/constants/color';
 import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { Club } from '@/types';
-import FilterOption from '@/components/report/FilterOption';
 
 type ReportPageProps = {
   term: number;
