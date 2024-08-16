@@ -20,7 +20,7 @@ const navItems: {
     content?: string;
   }[];
 } = {
-  '총동아리 연합회': [
+  총동아리연합회: [
     {
       id: 1,
       href: '/notice',
