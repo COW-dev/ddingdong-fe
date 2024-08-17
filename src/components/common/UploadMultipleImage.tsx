@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
-import Cancel from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import ImagesController from './ImagesController';
