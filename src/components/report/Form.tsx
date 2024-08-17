@@ -97,14 +97,14 @@ export default function Form({
               className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
             />
           </div>
-          <div className="flex justify-between">
-            <p className="text-md mt-3 font-semibold text-blue-500 md:my-2 md:text-lg">
+          <div className="mt-3 flex items-center justify-between md:my-2">
+            <p className="text-md font-semibold text-blue-500 md:text-lg">
               활동 시간
             </p>
             <div
               role="button"
               onClick={handleClickTimeReset}
-              className="flex flex-col justify-center rounded-xl bg-blue-100 p-1 px-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+              className="flex h-fit flex-col justify-center rounded-xl bg-blue-100 px-2 py-1 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 md:py-2"
             >
               초기화
             </div>
