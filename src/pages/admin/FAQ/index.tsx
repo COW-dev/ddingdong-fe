@@ -8,7 +8,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { QnA } from '@/constants/qna';
-import { ROLE_TYPE } from '@/constants/text';
 
 export default function Index() {
   const [cookies] = useCookies(['token', 'role']);
