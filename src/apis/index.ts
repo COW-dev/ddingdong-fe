@@ -17,6 +17,7 @@ import {
   DeleteClub,
   UpdateClub,
 } from '@/types/club';
+import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
 import {
   Applicant,
   ApplicantDetail,
@@ -33,12 +34,7 @@ import {
   NewFix,
 } from '@/types/fix';
 
-import {
-  Notice,
-  NoticeDetail,
-  DeleteNotice,
-  DeleteDocument,
-} from '@/types/notice';
+import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {
   ReportResponse,
   MyReportList,
@@ -146,14 +142,14 @@ export async function getNoticeInfo(
 }
 
 export async function getAllDocuments(): Promise<
-  AxiosResponse<Notice[], unknown>
+  AxiosResponse<Document[], unknown>
 > {
   return await api.get('/documents');
 }
 
 export async function getDocumentInfo(
   documentId: number,
-): Promise<AxiosResponse<NoticeDetail, unknown>> {
+): Promise<AxiosResponse<DocumentDetail, unknown>> {
   return await api.get(`/documents/${documentId}`);
 }
 

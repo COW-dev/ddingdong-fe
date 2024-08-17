@@ -14,7 +14,6 @@ export type Document = {
 
 export type NewDocument = {
   title: string;
-  content: string;
   token: string;
 };
 
