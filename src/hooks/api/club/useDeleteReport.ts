@@ -23,7 +23,8 @@ export function useDeleteReport(): UseMutationResult<
       queryClient.invalidateQueries(['activity-reports']);
     },
     onError(error) {
-      toast.error(`활동보고서 삭제에 실패했어요 \n ${error.message}`);
+      const errorMessage = error.message ? `\n ${error.message}` : '';
+      toast.error(`활동보고서 삭제에 실패했어요.${errorMessage}`);
     },
   });
 }

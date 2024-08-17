@@ -23,7 +23,8 @@ export function useNewReport(): UseMutationResult<
       router.push('/report');
     },
     onError(error) {
-      toast.error(`활동보고서 생성에 실패했어요 \n ${error.message}`);
+      const errorMessage = error.message ? `\n ${error.message}` : '';
+      toast.error(`활동보고서 생성에 실패했어요.${errorMessage}`);
     },
   });
 }
