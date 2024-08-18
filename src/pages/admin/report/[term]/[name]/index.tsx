@@ -87,11 +87,10 @@ export default function Index({ term, name }: ReportDetailProps) {
           </button>
         </Link>
       </div>
-
       <Modal
         visible={visible}
         modalRef={modalRef}
-        title={'활동 보고서 삭제'}
+        closeButton={false}
         closeModal={closeModal}
       >
         <AlertDialog onConfirm={onConfirmDelete} onCancle={closeModal} />

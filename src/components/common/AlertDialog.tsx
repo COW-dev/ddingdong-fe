@@ -1,23 +1,44 @@
+import { cn } from '../ui/utils';
+
+const DIALOG_TYPE = {
+  delete: {
+    color: 'red',
+    message: '삭제하기',
+    title: '삭제하시겠습니까?',
+  },
+};
+
 interface AlertDialogProps {
   onConfirm?: () => void;
   onCancle?: () => void;
+  type?: keyof typeof DIALOG_TYPE;
 }
 
-function AlertDialog({ onConfirm, onCancle }: AlertDialogProps) {
+function AlertDialog({
+  onConfirm,
+  onCancle,
+  type = 'delete',
+}: AlertDialogProps) {
   return (
     <>
-      <div className="mb-2 w-full ">
+      <h1 className="text-center text-xl font-bold">
+        {DIALOG_TYPE[type].title}
+      </h1>
+      <div className="m-auto flex max-w-80 gap-2">
         <button
-          className="mx-5 w-[40%] rounded-xl bg-red-400 py-4 font-bold text-white transition-colors hover:bg-red-500 sm:mt-5 sm:py-4 sm:text-lg "
-          onClick={onConfirm}
-        >
-          확인
-        </button>
-        <button
-          className="mx-5 w-[40%] rounded-xl bg-gray-200 py-4 font-bold text-white transition-colors hover:bg-gray-400 sm:mt-5 sm:py-4 sm:text-lg "
+          className="w-[25%] rounded-xl bg-gray-200 py-3.5 text-base font-bold text-gray-500 transition-colors hover:bg-gray-400 md:text-lg"
           onClick={onCancle}
         >
           취소
+        </button>
+        <button
+          className={cn(
+            ' w-[75%] rounded-xl py-3.5 text-base font-bold text-white transition-colors md:text-lg',
+            `bg-${DIALOG_TYPE[type].color}-400 hover:bg-${DIALOG_TYPE[type].color}-500`,
+          )}
+          onClick={onConfirm}
+        >
+          {DIALOG_TYPE[type].message}
         </button>
       </div>
     </>
