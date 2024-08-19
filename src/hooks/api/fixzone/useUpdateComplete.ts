@@ -26,7 +26,8 @@ export function useUpdateComplete(): UseMutationResult<
       router.push('/fix');
     },
     onError(error) {
-      toast.error(`처리완료 처리를 전송하는데 실패했어요 \n ${error}`);
+      const errorMessage = error.message ? `\n ${error.message}` : '';
+      toast.error(`처리완료 변경에 실패했어요.${errorMessage}`);
     },
   });
 }

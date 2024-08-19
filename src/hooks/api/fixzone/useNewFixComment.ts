@@ -19,7 +19,8 @@ export function useNewFixComment(
       queryClient.invalidateQueries({ queryKey: ['fix', fixId] });
     },
     onError(error) {
-      toast.error(`댓글 작성에 실패했어요 \n ${error}`);
+      const errorMessage = error.message ? `\n ${error.message}` : '';
+      toast.error(`댓글 작성에 실패했어요.${errorMessage}`);
     },
   });
 }
