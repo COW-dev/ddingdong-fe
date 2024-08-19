@@ -85,7 +85,7 @@ export default function UploadImage({
         >
           <div className="flex flex-col items-center justify-center pb-6 pt-5 text-gray-400">
             <Image src={Camera} width={30} height={30} alt="upload" />
-            <p className="m-2 text-sm  ">Click to ImageUpload</p>
+            <p className="m-2 text-sm">Click to ImageUpload</p>
             <p className=" text-xs text-gray-400">
               SVG, PNG, JPG (MAX. 800x400px)
             </p>

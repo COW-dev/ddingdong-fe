@@ -17,7 +17,6 @@ const navItems = [
 export default function AdminHeader() {
   const router = useRouter();
   const { resetAuth } = useAuthStore();
-  const [cookie, setCookie, removeCookie] = useCookies(['token', 'role']);
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
 

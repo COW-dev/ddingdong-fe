@@ -14,7 +14,7 @@ export function validator(props: Props) {
   return Boolean(props.value.match(type[props.type]));
 }
 
-export function isMissingData(data: { [x: string]: any }) {
+export function isMissingData(data: { [x: string]: unknown }) {
   for (const key in data) {
     // eslint-disable-next-line no-prototype-builtins
     if (data.hasOwnProperty(key) && String(data[key]).trim() === '') {

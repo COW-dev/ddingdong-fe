@@ -14,6 +14,7 @@ export default function Index({ fixId }: Props) {
     <FixClubDetail id={fixId} />
   );
 }
+
 export const getServerSideProps: GetServerSideProps = async (context: {
   query: any;
 }) => {

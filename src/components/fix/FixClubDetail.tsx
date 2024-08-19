@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 
 import LeftArrow2 from '@/assets/leftArrow2.svg';
@@ -8,7 +7,6 @@ import RightArrow from '@/assets/rightArrow.svg';
 import { useClubFixInfo } from '@/hooks/api/fixzone/useClubFixInfo';
 import { FixClubDetailType } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
-import ClearButton from './Clearbutton';
 import Heading from '../common/Heading';
 import NeutralButton from '../common/NeutralButton';
 type Prop = {
@@ -31,7 +29,7 @@ export default function FixClubDetail({ id }: Prop) {
   useEffect(() => {
     if (response?.data) setData(response?.data);
   }, [response]);
-  const { content, imageUrls, completed, title } = data;
+  const { content, imageUrls, title } = data;
 
   return (
     <>
