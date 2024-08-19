@@ -1,24 +1,18 @@
 import { useCookies } from 'react-cookie';
 import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
+import { sortFixZone } from '@/utils/sort';
 import FixItem from './FixItem';
 
 export default function FixAdminList() {
   const [{ token }] = useCookies(['token']);
   const { data } = useAllFix(token);
   const posts = data?.data ?? [];
-  const result = posts.sort((a, b) => {
-    if (a.isCompleted !== b.isCompleted) {
-      return a.isCompleted ? 1 : -1;
-    }
-    return (
-      new Date(b.requestedAt).getTime() - new Date(a.requestedAt).getTime()
-    );
-  });
+  const sortedPosts = sortFixZone(posts);
 
   return (
     <div>
       <ul className="mt-10 w-full md:mt-14">
-        {result.map((fix, index) => (
+        {sortedPosts.map((fix, index) => (
           <div key={`fix__admin-${index}`}>
             <FixItem data={fix} />
           </div>
