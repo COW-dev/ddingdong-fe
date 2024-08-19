@@ -1,5 +1,5 @@
 import { StaticImageData } from 'next/image';
-import { NewReport, ReportDetail, Report } from '@/types/report';
+import { EditReport, ReportResponse, SubmitReport } from '@/types/report';
 
 export function parseDate(date: string): string {
   const year = date.substring(2, 4);
@@ -29,8 +29,8 @@ const parseStringDateToRangeDate = (start: string, end: string) => {
 
 export const parseNewReportToReport = (
   term: number,
-  report: NewReport,
-): Report => {
+  report: EditReport,
+): SubmitReport => {
   const { date, place, content, participants, startTime, endTime } = report;
   return {
     term,
@@ -42,10 +42,10 @@ export const parseNewReportToReport = (
   };
 };
 
-export const parseReportDetailToEditReport = (
-  report: ReportDetail,
+export const parseReportResponseToEditReport = (
+  report: ReportResponse,
   term: number,
-): NewReport => {
+): EditReport => {
   const {
     place,
     content,

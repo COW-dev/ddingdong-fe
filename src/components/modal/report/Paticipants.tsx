@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 import ParticipantSelect from '@/components/report/ParticipantSelect';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { StudentInfo } from '@/types';
-import { NewReport, ReportDetail } from '@/types/report';
+import { EditReport } from '@/types/report';
 
 const participant = {
   name: '',
@@ -14,7 +14,7 @@ const participant = {
 
 type Props = {
   data: StudentInfo[];
-  setData: Dispatch<SetStateAction<NewReport>> | undefined;
+  setData: Dispatch<SetStateAction<EditReport>> | undefined;
   closeModal: () => void;
 };
 

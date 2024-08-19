@@ -3,12 +3,12 @@ import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { useReport } from '@/hooks/common/useReport';
 
-import { NewReport } from '@/types/report';
+import { EditReport } from '@/types/report';
 import Form from './Form';
 import Accordion from '../common/Accordion';
 
 interface ReportEditProps {
-  report?: [NewReport, NewReport];
+  report?: [EditReport, EditReport];
   term?: number;
 }
 

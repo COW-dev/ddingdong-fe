@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import UnSubmitImage from '@/assets/unsubmit_announce.png';
 
-import { NewReport } from '@/types/report';
+import { EditReport } from '@/types/report';
 import { getBlobFromImageData, parseNewReportToReport } from '@/utils/parse';
 
-export function useReport(initReport: [NewReport, NewReport]) {
+export function useReport(initReport: [EditReport, EditReport]) {
   const [{ token }] = useCookies(['token']);
 
-  const [reportOne, setReportOne] = useState<NewReport>(initReport[0]);
-  const [reportTwo, setReportTwo] = useState<NewReport>(initReport[1]);
+  const [reportOne, setReportOne] = useState<EditReport>(initReport[0]);
+  const [reportTwo, setReportTwo] = useState<EditReport>(initReport[1]);
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
 

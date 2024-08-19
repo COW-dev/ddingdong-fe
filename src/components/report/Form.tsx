@@ -11,15 +11,15 @@ import {
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
 import useModal from '@/hooks/common/useModal';
-import { NewReport } from '@/types/report';
+import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
 import UploadImage from '../common/UploadImage';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
   uploadFiles: File | null;
-  report: NewReport;
-  setValue: Dispatch<SetStateAction<NewReport>>;
+  report: EditReport;
+  setValue: Dispatch<SetStateAction<EditReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
   setRemoveFile: Dispatch<SetStateAction<boolean>>;
 };

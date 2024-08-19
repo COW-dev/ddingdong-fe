@@ -3,12 +3,12 @@ import Image, { StaticImageData } from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import { cn } from '@/lib/utils';
-import { ReportDetail } from '@/types/report';
+import { ReportResponse } from '@/types/report';
 import ActiveDate from './ActiveDate';
 import Place from './Place';
 interface ResponsiveInfoProps {
   image: string | StaticImageData;
-  report: ReportDetail;
+  report: ReportResponse;
   term: number;
 }
 

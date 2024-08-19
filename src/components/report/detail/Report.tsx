@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import UnSubmitImage from '@/assets/unsubmit_announce.png';
-import { ReportDetail } from '@/types/report';
+import { ReportResponse } from '@/types/report';
 import { parseImgUrl } from '@/utils/parse';
 import ResponsiveInfo from './ResponsiveInfo';
 
 type Props = {
-  reportData: ReportDetail;
+  reportData: ReportResponse;
   term: number;
   image?: File | null;
   setImage?: Dispatch<SetStateAction<File | null>>;

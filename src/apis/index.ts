@@ -16,7 +16,6 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  UpdateMembers,
 } from '@/types/club';
 import {
   Applicant,
@@ -36,7 +35,7 @@ import {
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {
-  ReportDetail,
+  ReportResponse,
   MyReportList,
   CurrentReport,
   DeleteReport,
@@ -281,7 +280,7 @@ export async function getReportInfo(
   term: number,
   name: string,
   token: string,
-): Promise<AxiosResponse<ReportDetail[], unknown>> {
+): Promise<AxiosResponse<ReportResponse[], unknown>> {
   return await api.get(
     `/club/activity-reports?term=${term}&club_name=${name}`,
     {
