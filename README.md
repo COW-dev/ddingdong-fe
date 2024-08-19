@@ -14,7 +14,7 @@
 
 <img width="80%" height="80%" src="https://github.com/user-attachments/assets/d3ba14ab-c3ec-4b2e-9d68-4c97e56600e9">
 
-- 2024.08.09 기준
+2024.08.09 기준
 
 ### 🥇 교내 SW 경진대회 우수상,
 ### 💙 명지대학교 공식 동아리 웹사이트 등록
@@ -51,13 +51,15 @@
 
 #### 동아리 관리
 
-![동아리 관리](https://github.com/user-attachments/assets/8acd0117-dbd7-4dfb-91ac-664aaac122ec)
+![동아리 관리](https://github.com/user-attachments/assets/79071858-6fbe-4aa4-a5f8-076e2dbfe21f)
 
 - 총동아리 연합회는 동아리를 생성 및 삭제할 수 있는 권한을 갖습니다.
 - 총동아리 연합회는 각 동아리에게 점수를 부여할 수 있습니다.
 - 각 동아리는 동아리에 부여되는 고유한 아이디와, 비밀번호를 통해 로그인하여 동아리 관리 페이지에 접근할 수 있습니다.
 
 #### 동아리원 명단 관리
+
+![동아리원](https://github.com/user-attachments/assets/43d430ed-6489-4084-80c2-bbcfe97b283f)
 
 - excel을 통한 동아리원 일괄 업로드 기능을 제공하고 있습니다.
 - 직접 수정 기능을 통해 동아리 원의 정보를 수정할 수 있습니다.
@@ -95,6 +97,8 @@
 - 해당 배너는 일반 서비스와 어드민 서비스에 모두 적용됩니다.
 
 #### 동아리 점수 확인
+
+![동아리 점수 확인](https://github.com/user-attachments/assets/2062b02b-7fa2-416c-9578-7fd779e8622e)
 
 - 카테고리별 점수를 확인할 수 있습니다.
 - 동아리 점수가 부여된 내역(날짜, 카테고리, 점수)리스트를 조회할 수 있습니다.
