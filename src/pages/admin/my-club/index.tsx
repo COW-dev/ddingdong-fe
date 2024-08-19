@@ -53,7 +53,7 @@ export default function Index() {
       setIsInitialLoad(false);
     }
   }, [data]);
-
+  console.log('my-club');
   //datapicker형식에 맞도록 변환
   useEffect(() => {
     if (data) {
