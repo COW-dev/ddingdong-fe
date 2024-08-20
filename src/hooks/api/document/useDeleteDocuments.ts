@@ -18,7 +18,7 @@ export function useDeleteDocument(): UseMutationResult<
 
   return useMutation(deleteDocument, {
     onSuccess() {
-      queryClient.invalidateQueries(['/documents']);
+      queryClient.invalidateQueries(['documents']);
       router.push('/documents');
       toast.success('자료을 성공적으로 삭제했어요.');
     },
