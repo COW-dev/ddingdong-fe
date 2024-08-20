@@ -63,7 +63,7 @@ export default function Index() {
         </div>
         <button
           onClick={handleSubmit}
-          className="ml-5 rounded-lg bg-blue-500 px-16 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 md:w-auto md:py-3"
+          className="ml-5 rounded-lg bg-blue-500 px-16 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 md:w-auto md:text-base "
         >
           신청하기
         </button>
