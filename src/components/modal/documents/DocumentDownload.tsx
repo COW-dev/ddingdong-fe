@@ -39,7 +39,7 @@ export default function DocumentDownload({ documentId }: Props) {
 
   return (
     <>
-      <div className="flex flex-col gap-3 p-2">
+      <div className="flex flex-col gap-3">
         <div
           className="flex cursor-pointer justify-between"
           onClick={handleDownloadAll}
