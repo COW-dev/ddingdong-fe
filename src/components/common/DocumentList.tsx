@@ -94,6 +94,7 @@ export default function DocumentList() {
             <span className="text-black">자료실 다운로드</span>
           )
         }
+        closeButton={false}
         closeModal={closeModal}
       >
         {isDeleteState ? (
