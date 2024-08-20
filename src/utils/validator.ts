@@ -5,10 +5,10 @@ const type: Record<string, RegExp> = {
   date: /\d{4}-\d{2}-\d{2}/,
 };
 
-interface Props {
+type Props = {
   value: string;
   type: string;
-}
+};
 
 export function validator(props: Props) {
   return Boolean(props.value.match(type[props.type]));

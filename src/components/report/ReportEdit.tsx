@@ -7,10 +7,10 @@ import { EditReport } from '@/types/report';
 import Form from './Form';
 import Accordion from '../common/Accordion';
 
-interface ReportEditProps {
+type ReportEditProps = {
   report?: [EditReport, EditReport];
   term?: number;
-}
+};
 
 function ReportEdit({ report, term = 0 }: ReportEditProps) {
   const createMutation = useNewReport();

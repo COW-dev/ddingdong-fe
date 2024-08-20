@@ -4,7 +4,7 @@ import CheckboxImg from '@/assets/checkbox.svg';
 import { CatogoryColor } from '@/constants/color';
 import CheckBox from '../../home/CheckBox';
 
-interface Props {
+type Props = {
   setOption: Dispatch<
     SetStateAction<{ category: string[]; recruit: string[]; sort: boolean }>
   >;
@@ -14,7 +14,7 @@ interface Props {
     option: string[],
     setOptionCallback: (updatedOption: string[]) => void,
   ) => void;
-}
+};
 
 function Category({ setOption, option, filterOption }: Props) {
   const { category } = option;

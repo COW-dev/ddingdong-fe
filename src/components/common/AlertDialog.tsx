@@ -8,11 +8,11 @@ const DIALOG_TYPE = {
   },
 };
 
-interface AlertDialogProps {
+type AlertDialogProps = {
   onConfirm?: () => void;
   onCancle?: () => void;
   type?: keyof typeof DIALOG_TYPE;
-}
+};
 
 function AlertDialog({
   onConfirm,

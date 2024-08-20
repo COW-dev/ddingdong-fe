@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { Club } from '@/types';
 import { cn } from '../ui/utils';
 
-interface FilterOptionProps {
+type FilterOptionProps = {
   filterOption: {
     all?: Club[];
     submit?: Club[];
     unSubmit?: Club[];
   };
   setFilteredClub: (clubs: Club[]) => void;
-}
+};
 
 function FilterOption({ setFilteredClub, filterOption }: FilterOptionProps) {
   const [option, setOption] = useState<'all' | 'submit' | 'unSubmit'>('all');

@@ -6,11 +6,11 @@ import { cn } from '@/lib/utils';
 import { ReportResponse } from '@/types/report';
 import ActiveDate from './ActiveDate';
 import Place from './Place';
-interface ResponsiveInfoProps {
+type ResponsiveInfoProps = {
   image: string | StaticImageData;
   report: ReportResponse;
   term: number;
-}
+};
 
 function ResponsiveInfo({ image, report, term }: ResponsiveInfoProps) {
   const [info, setInfo] = useState<boolean>(true);

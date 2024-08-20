@@ -6,14 +6,14 @@ import { useUpdateMembers } from '@/hooks/api/member/useMembers';
 import { Member } from '@/types/club';
 import Dropdown from '../common/Dropdown';
 
-interface MemberMenuProps {
+type MemberMenuProps = {
   handleEditting: () => void;
   members: Member[];
   isEditing: boolean;
   organicMember: Member[];
   setMembers: (members: Member[]) => void;
   isAdding: boolean;
-}
+};
 
 function MemberMenu({
   handleEditting,

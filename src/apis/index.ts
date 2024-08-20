@@ -42,10 +42,11 @@ import {
   ActivityReportTerm,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
-export interface ErrorType {
+
+export type ErrorType = {
   code: number;
   message: string;
-}
+};
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
