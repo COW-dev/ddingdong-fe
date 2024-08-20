@@ -17,7 +17,6 @@ export default function DocumentDownload({ documentId }: Props) {
   });
 
   const { data } = useDocumentInfo(documentId);
-  console.log('data', data);
 
   useEffect(() => {
     if (data) {
