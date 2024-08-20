@@ -1,8 +1,9 @@
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import Bin from '@/assets/bin.svg';
 import Download from '@/assets/download.svg';
+import { ROLE_TYPE } from '@/constants/text';
 import { useAllDocuments } from '@/hooks/api/document/useAllDocuments';
 import { useDeleteDocument } from '@/hooks/api/document/useDeleteDocuments';
 import useModal from '@/hooks/common/useModal';
@@ -15,8 +16,8 @@ export default function DocumentList() {
   const [documentId, setDocumentId] = useState<number>(0);
   const [documents, setDocuments] = useState<Document[]>([]);
   const [isDeleteState, setIsDeleteState] = useState<boolean>(false);
+  const [{ token, role }] = useCookies(['token', 'role']);
 
-  const [{ token }] = useCookies(['token']);
   const { openModal, visible, closeModal, modalRef } = useModal();
   const { data } = useAllDocuments();
   const deleteDocumentMutation = useDeleteDocument();
@@ -64,28 +65,41 @@ export default function DocumentList() {
               </div>
             </div>
             <div className=" mr-5 flex justify-self-end md:w-16">
-              <div className="flex w-full justify-between gap-7">
+              <div
+                className={`flex w-full justify-between ${
+                  role === ROLE_TYPE.ROLE_ADMIN && 'gap-7'
+                }`}
+              >
                 <Image
-                  className=" mb-1 h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
+                  className=" mb-1 h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6 "
                   src={Download}
                   alt={'다운로드 이미지'}
                   width={24}
                   height={24}
                   onClick={() => handleDownloadClick(document.id)}
                 />
-                <Image
-                  className="h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
-                  src={Bin}
-                  alt={'휴지통 이미지'}
-                  width={24}
-                  height={24}
-                  onClick={() => handleDelete(document.id)}
-                />
+                {role === ROLE_TYPE.ROLE_ADMIN && (
+                  <Image
+                    className=" h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
+                    src={Bin}
+                    alt={'휴지통 이미지'}
+                    width={24}
+                    height={24}
+                    onClick={() => handleDelete(document.id)}
+                  />
+                )}
               </div>
             </div>
           </div>
         </li>
       ))}
+      {documents.length === 0 && (
+        <li className="mb-2 flex h-20 w-full flex-col items-center justify-center rounded-xl border border-gray-100 pl-4 pt-2 shadow-sm">
+          <div className=" text-sm text-gray-500 ">
+            자료실 데이터가 존재하지 않습니다.
+          </div>
+        </li>
+      )}
       <Modal
         visible={visible}
         modalRef={modalRef}
