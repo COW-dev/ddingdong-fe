@@ -16,7 +16,6 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  UpdateMembers,
 } from '@/types/club';
 import {
   Applicant,
@@ -36,16 +35,18 @@ import {
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {
-  ReportDetail,
+  ReportResponse,
   MyReportList,
   CurrentReport,
   DeleteReport,
+  ActivityReportTerm,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
-export interface ErrorType {
+
+export type ErrorType = {
   code: number;
   message: string;
-}
+};
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -280,7 +281,7 @@ export async function getReportInfo(
   term: number,
   name: string,
   token: string,
-): Promise<AxiosResponse<ReportDetail[], unknown>> {
+): Promise<AxiosResponse<ReportResponse[], unknown>> {
   return await api.get(
     `/club/activity-reports?term=${term}&club_name=${name}`,
     {
@@ -295,6 +296,16 @@ export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {
   return await api.get('/club/my/activity-reports', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getReportTerms(
+  token: string,
+): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
+  return await api.get('/admin/activity-reports/term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },

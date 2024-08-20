@@ -5,16 +5,16 @@ const type: Record<string, RegExp> = {
   date: /\d{4}-\d{2}-\d{2}/,
 };
 
-interface Props {
+type Props = {
   value: string;
   type: string;
-}
+};
 
 export function validator(props: Props) {
   return Boolean(props.value.match(type[props.type]));
 }
 
-export function isMissingData(data: { [x: string]: any }) {
+export function isMissingData(data: { [x: string]: unknown }) {
   for (const key in data) {
     // eslint-disable-next-line no-prototype-builtins
     if (data.hasOwnProperty(key) && String(data[key]).trim() === '') {

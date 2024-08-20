@@ -13,6 +13,7 @@ import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
+
 type Prop = {
   id: number;
 };

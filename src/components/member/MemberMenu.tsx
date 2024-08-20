@@ -1,31 +1,19 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import Modal from '@/components/common/Modal';
-import MemberUpload from '@/components/member/MemberUpload';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Position } from '@/constants/text';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
-import useModal from '@/hooks/common/useModal';
 import { Member } from '@/types/club';
 import Dropdown from '../common/Dropdown';
 
-interface MemberMenuProps {
+type MemberMenuProps = {
   handleEditting: () => void;
   members: Member[];
   isEditing: boolean;
   organicMember: Member[];
   setMembers: (members: Member[]) => void;
   isAdding: boolean;
-}
+};
 
 function MemberMenu({
   handleEditting,
