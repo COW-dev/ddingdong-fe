@@ -5,14 +5,9 @@ import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
 import Report from '@/components/report/detail/Report';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { ReportResponse } from '@/types/report';
+import { ReportKey, ReportResponse } from '@/types/report';
 
-type Props = {
-  name: string;
-  term: number;
-};
-
-export default function ReportItem({ name, term }: Props) {
+export default function ReportItem({ name, term }: ReportKey) {
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ name, term, token }).data;
   const [reportData, setReportData] = useState<ReportResponse[]>([]);

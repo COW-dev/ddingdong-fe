@@ -5,14 +5,10 @@ import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import ReportEdit from '@/components/report/ReportEdit';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
+import { ReportKey } from '@/types/report';
 import { parseReportResponseToEditReport } from '@/utils/parse';
 
-type Props = {
-  term: number;
-  name: string;
-};
-
-export default function Index({ term, name }: Props) {
+export default function Index({ term, name }: ReportKey) {
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ term, name, token }).data?.data;
   if (!reportDataList) return;

@@ -6,9 +6,12 @@ export type StudentInfo = {
   department: string;
 };
 
-export type MyReportList = {
+export type ReportKey = {
   name: string;
-  term: string;
+  term: number;
+};
+
+export type MyReportList = ReportKey & {
   activityReports: [number, number];
 };
 

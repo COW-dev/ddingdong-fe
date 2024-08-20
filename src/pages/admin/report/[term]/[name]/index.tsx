@@ -13,13 +13,9 @@ import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import useModal from '@/hooks/common/useModal';
 import { cn } from '@/lib/utils';
+import { ReportKey } from '@/types/report';
 
-type Props = {
-  term: number;
-  name: string;
-};
-
-export default function Index({ term, name }: Props) {
+export default function Index({ term, name }: ReportKey) {
   const { openModal, visible, closeModal, modalRef } = useModal();
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data.term ?? 1;

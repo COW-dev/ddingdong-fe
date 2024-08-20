@@ -4,13 +4,9 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import ArrowImage from '@/assets/leftArrow.svg';
 import ReportItem from '@/components/report/ReportItem';
+import { ReportKey } from '@/types/report';
 
-interface ReportPageProps {
-  term: number;
-  name: string;
-}
-
-function Index({ term, name }: ReportPageProps) {
+function Index({ term, name }: ReportKey) {
   const router = useRouter();
 
   const handleClickBackButton = () => {
