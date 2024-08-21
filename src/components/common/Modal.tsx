@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
-import CancleImg from '@/assets/cancel.svg';
+import CancelImg from '@/assets/cancel.svg';
 import ModalPortal from './ModalPortal';
 import { cn } from '../ui/utils';
 type ModalProps = {
@@ -51,7 +51,7 @@ export default function Modal({
               )}
               onClick={closeModal}
             >
-              <Image src={CancleImg} alt="close-button" />
+              <Image src={CancelImg} alt="close-button" />
             </button>
           </div>
           <div className="space-y-6 p-6">{children}</div>
