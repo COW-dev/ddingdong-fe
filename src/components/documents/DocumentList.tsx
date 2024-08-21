@@ -46,49 +46,52 @@ export default function DocumentList() {
   return (
     <ul className="mt-14 w-full md:mt-16">
       {[...(documents ?? [])]?.reverse().map((document) => (
-        <li key={document.id} className="mb-1 w-full cursor-pointer border-b">
-          <div className="md:ph-5 grid w-full grid-cols-[auto_1fr] items-center pb-4 pt-3 transition-opacity md:pt-3.5">
+        <li
+          key={document.id}
+          className="mb-1 flex w-full cursor-pointer flex-row items-center justify-between border-b"
+        >
+          <div className="grid w-full grid-cols-[auto_1fr] items-center p-3 transition-opacity md:p-3.5">
             <div
-              className="col-span-1 flex flex-col hover:opacity-50"
+              className=" col-span-1 flex shrink-0 flex-col overflow-hidden text-ellipsis break-words hover:opacity-50"
               onClick={() => handleDownloadClick(document.id)}
             >
-              <div className="block text-base font-semibold sm:hidden">
+              <div className="block overflow-hidden text-ellipsis whitespace-nowrap text-base font-semibold sm:hidden">
                 {document.title && document.title.length < 25
                   ? document.title
                   : document.title?.substring(0, 25) + '..'}
               </div>
-              <div className="hidden text-xl font-semibold sm:block">
+              <div className="hidden overflow-hidden text-base font-semibold sm:block md:text-xl ">
                 {document.title}
               </div>
               <div className="mb-2 mt-0.5 text-sm font-medium text-gray-400 md:text-base">
                 {new Date(document.createdAt).toLocaleDateString()}
               </div>
             </div>
-            <div className=" mr-5 flex justify-self-end md:w-16">
-              <div
-                className={`flex w-full justify-between ${
-                  role === ROLE_TYPE.ROLE_ADMIN && 'gap-7'
-                }`}
-              >
+          </div>
+          <div className=" mr-5 flex shrink-0 justify-self-end md:w-16">
+            <div
+              className={`flex w-full justify-between ${
+                role === ROLE_TYPE.ROLE_ADMIN && 'gap-7'
+              }`}
+            >
+              <Image
+                className=" mb-1 h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6 "
+                src={Download}
+                alt={'다운로드 이미지'}
+                width={24}
+                height={24}
+                onClick={() => handleDownloadClick(document.id)}
+              />
+              {role === ROLE_TYPE.ROLE_ADMIN && (
                 <Image
-                  className=" mb-1 h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6 "
-                  src={Download}
-                  alt={'다운로드 이미지'}
+                  className=" h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
+                  src={Bin}
+                  alt={'휴지통 이미지'}
                   width={24}
                   height={24}
-                  onClick={() => handleDownloadClick(document.id)}
+                  onClick={() => handleDelete(document.id)}
                 />
-                {role === ROLE_TYPE.ROLE_ADMIN && (
-                  <Image
-                    className=" h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
-                    src={Bin}
-                    alt={'휴지통 이미지'}
-                    width={24}
-                    height={24}
-                    onClick={() => handleDelete(document.id)}
-                  />
-                )}
-              </div>
+              )}
             </div>
           </div>
         </li>
