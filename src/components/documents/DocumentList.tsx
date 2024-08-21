@@ -8,8 +8,8 @@ import { useAllDocuments } from '@/hooks/api/document/useAllDocuments';
 import { useDeleteDocument } from '@/hooks/api/document/useDeleteDocuments';
 import useModal from '@/hooks/common/useModal';
 import { Document } from '@/types/document';
-import AlertDialog from './AlertDialog';
-import Modal from './Modal';
+import AlertDialog from '../common/AlertDialog';
+import Modal from '../common/Modal';
 import DocumentDownload from '../modal/documents/DocumentDownload';
 
 export default function DocumentList() {
