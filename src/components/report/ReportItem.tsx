@@ -3,18 +3,14 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ErrorImg from '@/assets/error-image.png';
 import Accordion from '@/components/common/Accordion';
-import Detail from '@/components/report/detail/index';
+import Report from '@/components/report/detail/Report';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
-import { ReportDetail } from '@/types/report';
+import { ReportKey, ReportResponse } from '@/types/report';
 
-type Props = {
-  name: string;
-  term: number;
-};
-export default function ReportItem({ name, term }: Props) {
+export default function ReportItem({ name, term }: ReportKey) {
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ name, term, token }).data;
-  const [reportData, setReportData] = useState<ReportDetail[]>([]);
+  const [reportData, setReportData] = useState<ReportResponse[]>([]);
   useEffect(() => {
     if (reportDataList?.data) {
       setReportData(reportDataList.data);
@@ -37,10 +33,10 @@ export default function ReportItem({ name, term }: Props) {
       </div>
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">
-          <Detail reportData={reportData[0]} />
+          <Report reportData={reportData[0]} term={term} />
         </Accordion>
         <Accordion title="활동2">
-          <Detail reportData={reportData[1]} />
+          <Report reportData={reportData[1]} term={term} />
         </Accordion>
       </div>
     </>

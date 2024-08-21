@@ -18,12 +18,13 @@ export function useDeleteReport(): UseMutationResult<
 
   return useMutation(deleteReport, {
     onSuccess() {
-      queryClient.invalidateQueries(['activity-reports']);
-      toast.success('활동보고서를 성공적으로 삭제했어요.');
       router.push('/report');
+      toast.success('활동보고서를 성공적으로 삭제했어요.');
+      queryClient.invalidateQueries(['activity-reports']);
     },
-    onError() {
-      toast.error('활동보고서 삭제에 실패했어요.');
+    onError(error) {
+      const errorMessage = error.message ? `\n ${error.message}` : '';
+      toast.error(`활동보고서 삭제에 실패했어요.${errorMessage}`);
     },
   });
 }

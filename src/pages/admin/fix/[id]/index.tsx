@@ -8,6 +8,7 @@ type Props = {
 export default function Index({ id }: Props) {
   return <FixDetail id={id} />;
 }
+
 export const getServerSideProps: GetServerSideProps = async (context: {
   query: any;
 }) => {

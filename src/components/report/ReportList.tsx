@@ -41,12 +41,12 @@ export default function ReportList() {
                 key={item}
                 className={`mb-3 ${
                   Number(item) > Number(currentTerm) &&
-                  !submitTerms?.includes(item)
+                  !submitTerms?.includes(Number(item))
                     ? 'pointer-events-none cursor-not-allowed text-gray-200'
                     : ''
                 }`}
               >
-                {isReports?.includes(item) ? (
+                {isReports?.includes(Number(item)) ? (
                   <Link href={`/report/${item}/${club}`}>
                     <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                       <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
@@ -67,7 +67,7 @@ export default function ReportList() {
                     data-item={item}
                     className={`${
                       Number(item) === Number(currentTerm) &&
-                      !submitTerms?.includes(item)
+                      !submitTerms?.includes(Number(item))
                         ? 'cursor-pointer'
                         : 'pointer-events-none cursor-not-allowed'
                     }`}
@@ -79,7 +79,7 @@ export default function ReportList() {
                         </span>
                         <div className="flex items-center">
                           {Number(item) >= Number(currentTerm) &&
-                          !submitTerms?.includes(item) ? (
+                          !submitTerms?.includes(Number(item)) ? (
                             <div className="mx-1 rounded-lg bg-gray-100 p-2 text-sm font-semibold text-gray-500">
                               제출하기
                             </div>
