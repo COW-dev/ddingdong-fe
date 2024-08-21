@@ -34,7 +34,7 @@ export default function DocumentList() {
     openModal();
   };
 
-  const handleDeleteConfirm = async () => {
+  const handleDeleteConfirm = () => {
     deleteDocumentMutation.mutate({ documentId, token });
     closeModal();
   };
