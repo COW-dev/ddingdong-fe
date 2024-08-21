@@ -1,9 +1,8 @@
-import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import DocumentList from '@/components/common/DocumentList';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
+import DocumentList from '@/components/documents/DocumentList';
 import DocumentModal from '@/components/modal/DocumentModal';
 import { ROLE_TYPE } from '@/constants/text';
 import useModal from '@/hooks/common/useModal';

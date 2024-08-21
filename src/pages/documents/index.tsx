@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import DocumentList from '@/components/common/DocumentList';
 import Heading from '@/components/common/Heading';
+import DocumentList from '@/components/documents/DocumentList';
 
 export default function Index() {
   return (

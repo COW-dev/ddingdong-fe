@@ -112,10 +112,7 @@ export default function DocumentList() {
         closeModal={closeModal}
       >
         {isDeleteState ? (
-          <AlertDialog
-            onConfirm={handleDeleteConfirm}
-            handelCancel={closeModal}
-          />
+          <AlertDialog onConfirm={handleDeleteConfirm} onCancel={closeModal} />
         ) : (
           <DocumentDownload documentId={documentId} />
         )}
