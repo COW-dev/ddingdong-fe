@@ -141,7 +141,7 @@
 </td>
 <td>
 <a href="https://github.com/5uhwann">
-<img src="https://avatars.githubusercontent.com/u/96857599?v=4" width="100px" />
+<img src="https://avatars.githubusercontent.com/u/106325839?v=4" width="100px" />
 </a>
 </td>
 <td>
