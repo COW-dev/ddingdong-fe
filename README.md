@@ -167,7 +167,7 @@
 <table>
 <tr>
 <td>
-<img src="https://avatars.githubusercontent.com/u/78072370?v=4" width="100px" />
+<img src="https://github.com/user-attachments/assets/4248a049-8c69-4ffd-aa8f-cc49abd2a42f" width="100px" />
 </td>
 </tr>
 <tr>
