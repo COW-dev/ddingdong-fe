@@ -29,7 +29,7 @@ export default function ReportList() {
     .map((item) => item.term);
   const isReports = myReportList
     .filter((item) => Number(item.term) <= Number(currentTerm))
-    .map((item) => item.term);
+    .map((item) => Number(item.term));
 
   return (
     <>
