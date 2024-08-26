@@ -43,6 +43,8 @@ export const config = {
     '/login',
     '/notice/:path*',
     '/my-club',
+    '/documents',
+    '/FAQ',
     '/club',
     '/member',
     '/fix',

@@ -10,13 +10,13 @@ const DIALOG_TYPE = {
 
 type AlertDialogProps = {
   onConfirm?: () => void;
-  onCancle?: () => void;
+  onCancel?: () => void;
   type?: keyof typeof DIALOG_TYPE;
 };
 
 function AlertDialog({
   onConfirm,
-  onCancle,
+  onCancel,
   type = 'delete',
 }: AlertDialogProps) {
   return (
@@ -27,7 +27,7 @@ function AlertDialog({
       <div className="m-auto flex max-w-80 gap-2">
         <button
           className="w-[25%] rounded-xl bg-gray-200 py-3.5 text-base font-bold text-gray-500 transition-colors hover:bg-gray-400 md:text-lg"
-          onClick={onCancle}
+          onClick={onCancel}
         >
           취소
         </button>
