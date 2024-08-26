@@ -1,8 +1,7 @@
 import Image from 'next/image';
-import { twMerge } from 'tailwind-merge';
 import CancleImg from '@/assets/cancle.svg';
 import ModalPortal from './ModalPortal';
-import { cn } from '../ui/utils';
+
 type ModalProps = {
   visible: boolean;
   children: React.ReactNode;
@@ -30,25 +29,21 @@ export default function Modal({
           ref={modalRef}
         >
           <div
-            className={twMerge(
-              'flex items-center justify-between rounded-t',
-              title ? `border-b p-5` : 'p-2',
-            )}
+            className={`flex items-center justify-between rounded-t ${
+              title ? `border-b p-5` : 'p-2'
+            }`}
           >
             <h1
-              className={cn(
-                'text-xl font-bold text-gray-400',
-                !title && 'hidden',
-              )}
+              className={`text-xl font-bold text-gray-400 ${
+                !title && 'hidden'
+              }`}
             >
               {title}
             </h1>
             <button
-              className={twMerge(
-                'ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400',
-                'hover:bg-gray-200 hover:text-gray-900',
-                !closeButton && `hidden`,
-              )}
+              className={`ml-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 ${
+                !closeButton && `hidden`
+              } `}
               onClick={closeModal}
             >
               <Image src={CancleImg} alt="close-button" />

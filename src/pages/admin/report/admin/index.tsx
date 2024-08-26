@@ -5,7 +5,6 @@ import Heading from '@/components/common/Heading';
 import { BUTTON_TYPE } from '@/constants/recruitment_button';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useReportTerms } from '@/hooks/api/club/useReportTerms';
-import { cn } from '@/lib/utils';
 import { parseDate } from '@/utils/parse';
 
 export default function Index() {
@@ -40,9 +39,7 @@ export default function Index() {
                 }`}
               >
                 <Link href={`/report/admin/${term}`} data-item={item}>
-                  <div
-                    className={`rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50`}
-                  >
+                  <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                     <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
                       <div>
                         <span className="text-lg font-bold md:text-xl">
@@ -54,11 +51,10 @@ export default function Index() {
                       </div>
                       <div className="flex items-center">
                         <div
-                          className={cn(
-                            'mx-1 rounded-lg p-2 text-sm font-semibold',
-                            filterPeriod(Number(term)).color,
-                            filterPeriod(Number(term)).background_color,
-                          )}
+                          className={`mx-1 rounded-lg p-2 text-sm font-semibold 
+                            ${filterPeriod(Number(term)).color}
+                            ${filterPeriod(Number(term)).background_color}
+                          `}
                         >
                           {filterPeriod(Number(term)).text}
                         </div>

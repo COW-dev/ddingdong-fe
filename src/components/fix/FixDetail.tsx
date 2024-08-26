@@ -14,7 +14,6 @@ import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
-import { cn } from '../ui/utils';
 
 type Prop = {
   id: number;
@@ -71,10 +70,9 @@ export default function FixDetail({ id }: Prop) {
         </div>
         {/* 내용 */}
         <div
-          className={cn(
-            'relative flex w-full items-center justify-center md:w-1/2 md:p-3',
-            imageUrls.length === 0 && 'hidden',
-          )}
+          className={`relative flex w-full items-center justify-center md:w-1/2 md:p-3
+            ${imageUrls.length === 0 && 'hidden'}
+          `}
         >
           <Image
             src={LeftArrow2}
@@ -84,10 +82,8 @@ export default function FixDetail({ id }: Prop) {
             onClick={() => {
               setPresentIndex(presentIndex - 1);
             }}
-            className={cn(
-              'absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25',
-              presentIndex === 0 && `hidden`,
-            )}
+            className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25
+              ${presentIndex === 0 && 'hidden'}`}
           />
           <Image
             src={parseImgUrl(imageUrls[presentIndex])}
@@ -112,20 +108,19 @@ export default function FixDetail({ id }: Prop) {
         </div>
       </div>
       <div
-        className={cn(
-          'flex justify-center',
-          role === ROLE_TYPE.ROLE_CLUB && 'hidden',
-        )}
+        className={`
+          flex justify-center ${role === ROLE_TYPE.ROLE_CLUB && 'hidden'}
+        `}
       >
         <button
           disabled={isCompleted}
           onClick={openModal}
-          className={cn(
-            'mb-3 mt-7 rounded-xl px-10 py-2.5 text-base font-semibold md:mr-0.5',
-            !isCompleted
-              ? `bg-blue-500 text-white hover:bg-blue-600`
-              : `bg-gray-100 text-gray-500`,
-          )}
+          className={`
+            mb-3 mt-7 rounded-xl px-10 py-2.5 text-base font-semibold md:mr-0.5 ${
+              !isCompleted
+                ? 'bg-blue-500 text-white hover:bg-blue-600'
+                : 'bg-gray-100 text-gray-500'
+            }`}
         >
           {isCompleted ? '처리 완료' : '처리 마치기'}
         </button>

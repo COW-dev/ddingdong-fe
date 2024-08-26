@@ -7,7 +7,6 @@ import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import ArrowImage from '@/assets/leftArrow.svg';
 import FilterOption from '@/components/report/FilterOption';
-import { cn } from '@/components/ui/utils';
 import { deptCaptionColor } from '@/constants/color';
 import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
@@ -106,12 +105,12 @@ function Index({ term }: ReportPageProps) {
                   </div>
                   <div className="flex items-center p-5">
                     <div
-                      className={cn(
-                        'flex items-center rounded-lg px-2 py-1 text-sm font-semibold ',
+                      className={`flex items-center rounded-lg px-2 py-1 text-sm font-semibold ${
                         isSubmitClub(item)
                           ? 'bg-green-50 text-green-400'
-                          : 'bg-red-50 text-red-400',
-                      )}
+                          : 'bg-red-50 text-red-400'
+                      }
+                    `}
                     >
                       {isSubmitClub(item) ? '제출완료' : '미제출'}
                     </div>

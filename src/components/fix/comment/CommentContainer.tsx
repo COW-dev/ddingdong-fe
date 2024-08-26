@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewFixComment } from '@/hooks/api/fixzone/useNewFixComment';
-import { cn } from '@/lib/utils';
 import { Comment as CommentType } from '@/types/fix';
 import Comment from './Comment';
 
@@ -44,10 +43,9 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
   return (
     <>
       <div
-        className={cn(
-          'flex w-full gap-2 text-sm',
-          role === ROLE_TYPE.ROLE_CLUB && 'hidden',
-        )}
+        className={`flex w-full gap-2 text-sm ${
+          role === ROLE_TYPE.ROLE_CLUB && 'hidden'
+        }`}
       >
         <div>
           <Image
