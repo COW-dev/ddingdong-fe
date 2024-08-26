@@ -1,7 +1,7 @@
 import React, { Dispatch, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
-import Cancle from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import Images from '@/assets/images.svg';
 
 type Props = {
@@ -45,7 +45,7 @@ export default function ImagesController({
                   onClick={() => setPresentIndex(index)}
                 />
                 <Image
-                  src={Cancle}
+                  src={Cancel}
                   width={16}
                   height={16}
                   className={`absolute right-1 top-1 z-40 rounded-2xl bg-white bg-opacity-50 p-1 hover:bg-gray-200 ${
@@ -81,7 +81,7 @@ export default function ImagesController({
         }`}
       >
         <Image
-          src={isActive ? Cancle : Images}
+          src={isActive ? Cancel : Images}
           width={isActive ? 14 : 25}
           height={isActive ? 14 : 25}
           alt="multiImage"

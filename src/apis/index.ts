@@ -17,6 +17,7 @@ import {
   DeleteClub,
   UpdateClub,
 } from '@/types/club';
+import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
 import {
   Applicant,
   ApplicantDetail,
@@ -132,6 +133,18 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
+export async function getAllDocuments(): Promise<
+  AxiosResponse<Document[], unknown>
+> {
+  return await api.get('/documents');
+}
+
+export async function getDocumentInfo(
+  documentId: number,
+): Promise<AxiosResponse<DocumentDetail, unknown>> {
+  return await api.get(`/documents/${documentId}`);
+}
+
 export async function createNotice(noticeData: FormData) {
   const token = noticeData.get('token');
 
@@ -161,6 +174,16 @@ export async function createBanner({ token, formData }: NewBanner) {
 
 export async function createFix({ token, formData }: NewFix) {
   return await api.post('/club/fix-zones', formData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+export async function createDocument(documentData: FormData) {
+  const token = documentData.get('token');
+
+  return await api.post('/admin/documents', documentData, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
@@ -213,6 +236,13 @@ export async function updateMembers(formdata: FormData) {
 }
 export async function deleteNotice({ noticeId, token }: DeleteNotice) {
   return await api.delete(`/admin/notices/${noticeId}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function deleteDocument({ documentId, token }: DeleteDocument) {
+  return await api.delete(`/admin/documents/${documentId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

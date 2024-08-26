@@ -37,7 +37,7 @@ function MemberMenu({
     return parsedMember;
   }
 
-  function handleClickCancleButton() {
+  function handleClickCancelButton() {
     setMembers(organicMember);
     handleEditting();
   }
@@ -68,7 +68,7 @@ function MemberMenu({
       <div className="flex">
         {isEditing ? (
           <button
-            onClick={handleClickCancleButton}
+            onClick={handleClickCancelButton}
             className="cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500"
           >
             취소

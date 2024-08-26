@@ -85,7 +85,7 @@ export default function Index({ term, name }: ReportKey) {
         closeButton={false}
         closeModal={closeModal}
       >
-        <AlertDialog onConfirm={onConfirmDelete} onCancle={closeModal} />
+        <AlertDialog onConfirm={onConfirmDelete} onCancel={closeModal} />
       </Modal>
     </>
   );
