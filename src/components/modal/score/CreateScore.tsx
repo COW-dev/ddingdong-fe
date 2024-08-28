@@ -3,19 +3,19 @@ import { useCookies } from 'react-cookie';
 import ScoreList from '@/components/score/ScoreList';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewScore } from '@/hooks/api/score/useNewScore';
-import { ScoreDetail } from '@/types/score';
+import { ScoreHistory } from '@/types/score';
 
 type Prop = {
   clubId: number;
   scoreCategory: string;
-  parseList: ScoreDetail[];
+  history: ScoreHistory[];
   closeModal: () => void;
 };
 
 export default function CreateScore({
   clubId,
   scoreCategory,
-  parseList,
+  history,
   closeModal,
 }: Prop) {
   const mutation = useNewScore();
@@ -77,7 +77,7 @@ export default function CreateScore({
           </button>
         </form>
       )}
-      <ScoreList parseList={parseList} />
+      <ScoreList history={history} />
     </div>
   );
 }
