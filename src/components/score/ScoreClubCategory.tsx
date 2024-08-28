@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import { ScoreDetail } from '@/types/score';
+
 type ScoreProps = {
   scoreCategory: string;
   icon: string;
-  parseList: ScoreDetail[];
   amount: number;
 };
 export default function ScoreClubCategory({
