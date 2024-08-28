@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 import { Position } from '@/constants/text';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
 import { Member } from '@/types/club';
-import Dropdown from '../common/Dropdown';
+import ExelDropdown from '../common/ExelDropdown';
 
 type MemberMenuProps = {
   handleEditting: () => void;
@@ -47,10 +47,6 @@ function MemberMenu({
       return toast.error(`수정중인 작업을 마무리하고 저장해주세요.`);
     }
 
-    // if (members.length === organicMember.length) {
-    //   return handleEditting();
-    // }
-
     const parsedMember = parsePosition();
     const formData = new FormData();
     const member = {
@@ -78,7 +74,7 @@ function MemberMenu({
             취소
           </button>
         ) : (
-          <Dropdown file={file} setFile={setFile} />
+          <ExelDropdown file={file} setFile={setFile} />
         )}
         <button
           onClick={isEditing ? handleSubmit : handleEditting}

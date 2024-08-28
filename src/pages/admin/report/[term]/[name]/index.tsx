@@ -12,7 +12,6 @@ import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useReportInfo } from '@/hooks/api/club/useReportInfo';
 import useModal from '@/hooks/common/useModal';
-import { cn } from '@/lib/utils';
 import { ReportKey } from '@/types/report';
 
 export default function Index({ term, name }: ReportKey) {
@@ -62,22 +61,19 @@ export default function Index({ term, name }: ReportKey) {
       </div>
       <div className="m-auto flex gap-2 md:mt-6">
         <button
-          className={cn(
-            `mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors`,
-            'hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
-            currentTermData !== Number(term) && `hidden`,
-          )}
+          className={`mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
+            currentTermData !== Number(term) && 'hidden'
+          }`}
           onClick={handleClickDeleteButton}
         >
           삭제하기
         </button>
         <Link href={`/report/${term}/${name}/fix`}>
           <button
-            className={cn(
-              `mb-4 min-w-fit rounded-xl bg-blue-50 px-3.5 py-2 text-sm font-bold text-blue-400 transition-colors`,
-              'hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base',
-              currentTermData !== Number(term) && `hidden`,
-            )}
+            className={`mb-4 min-w-fit rounded-xl bg-blue-50 px-3.5 py-2 text-sm font-bold text-blue-400 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
+              currentTermData !== Number(term) && 'hidden'
+            }
+            `}
           >
             수정하기
           </button>

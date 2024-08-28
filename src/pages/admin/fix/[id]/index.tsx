@@ -1,18 +1,12 @@
 import { GetServerSideProps } from 'next';
-import { useCookies } from 'react-cookie';
-import FixAdminDetail from '@/components/fix/FixAdminDetail';
-import FixClubDetail from '@/components/fix/FixClubDetail';
-import { ROLE_TYPE } from '@/constants/text';
+import FixDetail from '@/components/fix/FixDetail';
+
 type Props = {
-  fixId: number;
+  id: number;
 };
-export default function Index({ fixId }: Props) {
-  const [{ role }] = useCookies(['role']);
-  return role === ROLE_TYPE.ROLE_ADMIN ? (
-    <FixAdminDetail id={fixId} />
-  ) : (
-    <FixClubDetail id={fixId} />
-  );
+
+export default function Index({ id }: Props) {
+  return <FixDetail id={id} />;
 }
 
 export const getServerSideProps: GetServerSideProps = async (context: {
@@ -21,7 +15,7 @@ export const getServerSideProps: GetServerSideProps = async (context: {
   const { id } = context.query;
   return {
     props: {
-      fixId: id,
+      id: id,
     },
   };
 };

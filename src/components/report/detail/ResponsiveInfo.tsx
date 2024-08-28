@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
-import { cn } from '@/lib/utils';
 import { ReportResponse } from '@/types/report';
 import ActiveDate from './ActiveDate';
 import Place from './Place';
@@ -31,18 +30,18 @@ function ResponsiveInfo({ image, report, term }: ResponsiveInfoProps) {
               height={500}
             />
             <div
-              className={cn(
-                'absolute right-2 z-30 ',
-                info ? `top-[11vh]` : `top-[1vh]`,
-              )}
+              className={`absolute right-2 z-30 ${
+                info ? `top-[11vh]` : `top-[1vh]`
+              }
+              `}
             >
               <Image
                 src={info ? ArrowUp : ArrowDown}
                 width={20}
                 height={20}
-                className={cn(
-                  !info && 'w-12 rounded-full bg-white p-4 opacity-70',
-                )}
+                className={
+                  info ? '' : 'w-12 rounded-full bg-white p-4 opacity-70'
+                }
                 alt="show"
                 onClick={() => setInfo(!info)}
               />

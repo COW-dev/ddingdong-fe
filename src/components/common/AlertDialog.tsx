@@ -1,5 +1,3 @@
-import { cn } from '../ui/utils';
-
 const DIALOG_TYPE = {
   delete: {
     color: 'red',
@@ -32,10 +30,7 @@ function AlertDialog({
           취소
         </button>
         <button
-          className={cn(
-            ' w-[75%] rounded-xl py-3.5 text-base font-bold text-white transition-colors md:text-lg',
-            `bg-${DIALOG_TYPE[type].color}-400 hover:bg-${DIALOG_TYPE[type].color}-500`,
-          )}
+          className={`w-[75%] rounded-xl py-3.5 text-base font-bold text-white transition-colors md:text-lg bg-${DIALOG_TYPE[type].color}-400 hover:bg-${DIALOG_TYPE[type].color}-500`}
           onClick={onConfirm}
         >
           {DIALOG_TYPE[type].message}
