@@ -16,6 +16,8 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
+  Member,
+  UpdateMember,
 } from '@/types/club';
 import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
 import {
@@ -220,6 +222,15 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
 export async function uploadMembers(formdata: FormData) {
   const token = formdata.get('token');
   return await api.post('/club/my/club-members', formdata, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function updateMembers({ member, id, token }: UpdateMember) {
+  console;
+  return await api.patch(`/club/my/club-members/${id}`, member, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
