@@ -9,13 +9,9 @@ import { Member } from '@/types/club';
 
 type Props = {
   member: Member;
-  isEditing: boolean;
-  members: Member[];
-  setMembers: Dispatch<SetStateAction<Member[]>>;
-  setIsAdding?: (isAdding: boolean) => void;
 };
 
-export default function MemberInfo({ member, members, setMembers }: Props) {
+export default function MemberInfo({ member }: Props) {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [value, setValue] = useState<Member>(member);
   const [isEditItem, setisEditItem] = useState<boolean>(false);

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+import ExcelDropdown from '@/components/common/ExelDropdown';
 import SearchBar from '@/components/home/SearchBar';
 import MemberInfo from '@/components/member/MemberInfo';
-import MemberMenu from '@/components/member/MemberMenu';
 
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { Member } from '@/types/club';
@@ -51,9 +51,7 @@ export default function Index() {
           <span className="text-blue-500"> {members.length}명</span>
           입니다.
         </div>
-        <div className="flex gap-2">
-          <Dropdown file={file} setFile={setFile} />
-        </div>
+        <ExcelDropdown />
       </div>
 
       <div className="rounded-xl border-[1.5px] border-gray-100 p-5  ">
@@ -67,13 +65,7 @@ export default function Index() {
 
         <ul className="grid w-full grid-cols-1 sm:grid-cols-2  lg:grid-cols-3">
           {filteredMembers.map((info) => (
-            <div key={info.id}>
-              <MemberInfo
-                setMembers={setMembers}
-                members={members}
-                member={info}
-              />
-            </div>
+            <MemberInfo member={info} key={info.id} />
           ))}
         </ul>
       </div>

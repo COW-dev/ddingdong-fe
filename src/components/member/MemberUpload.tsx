@@ -1,17 +1,17 @@
+import { useState } from 'react';
 import router from 'next/router';
 import { useCookies } from 'react-cookie';
 import UploadExcel from '@/components/common/UploadExcel';
 import { useUploadMembers } from '@/hooks/api/member/useUploadMembers';
 
 type Props = {
-  file: File | null;
-  setFile: React.Dispatch<React.SetStateAction<File | null>>;
   closeModal: () => void;
 };
 
-export default function MemberUpload({ closeModal, file, setFile }: Props) {
+export default function MemberUpload({ closeModal }: Props) {
   const [cookies] = useCookies(['token']);
   const mutation = useUploadMembers();
+  const [file, setFile] = useState<File | null>(null);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
