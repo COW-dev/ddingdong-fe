@@ -48,15 +48,11 @@ export default function Index() {
       <div className="mb-7 flex justify-between">
         <div className="font-bold md:text-xl">
           {data?.name}의 동아리원은 총
-          <span className="text-blue-500">{members.length}명</span>
+          <span className="text-blue-500"> {members.length}명</span>
           입니다.
         </div>
         <div className="flex gap-2">
-          <MemberMenu
-            members={members}
-            organicMember={data?.clubMembers}
-            setMembers={setMembers}
-          />
+          <Dropdown file={file} setFile={setFile} />
         </div>
       </div>
 

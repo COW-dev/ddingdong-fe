@@ -18,16 +18,16 @@ export default function Dropdown({ file, setFile }: Props) {
   const { data } = useMemberFile(token);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const handleOpen = () => {
+  const handleClickExcel = () => {
     setIsOpenModal(!isOpenMoal);
   };
 
-  const handleClickDownButton = () => {
-    if (!data?.data) return toast.error('파일을 다운로드 할 수 없습니다');
+  const handleClickDownload = () => {
+    if (!data?.data) return toast.error('명단을 다운로드 할 수 없습니다');
+
     const blob = new Blob([data.data], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-
     downloadBlob(blob, 'members.xlsx');
   };
 
@@ -39,7 +39,7 @@ export default function Dropdown({ file, setFile }: Props) {
         data-dropdown-trigger="hover"
         className="md:text-md inline-flex min-w-fit items-center rounded-lg bg-green-100 px-5 py-2.5 text-center text-sm font-bold text-green-500 hover:bg-green-200 focus:outline-none "
         type="button"
-        onClick={handleOpen}
+        onClick={handleClickExcel}
       >
         Excel
         <svg
@@ -61,27 +61,23 @@ export default function Dropdown({ file, setFile }: Props) {
       {isOpenMoal && (
         <div
           id="dropdownHover"
-          className=" relative z-20 m-auto min-w-fit divide-y divide-gray-100 rounded-lg bg-green-200 shadow "
+          className="relative z-20 m-auto min-w-fit divide-y divide-gray-100 rounded-lg bg-green-200 shadow "
         >
           <ul
-            className=" absolute -right-18 z-10 mt-10 w-44 rounded-xl border-[1px] bg-white py-2 text-sm text-gray-700 shadow-lg"
+            className="absolute -right-18 z-10 mt-10 w-44 rounded-xl border-[1px] bg-white py-2 text-sm text-gray-700 shadow-lg"
             aria-labelledby="dropdownHoverButton"
           >
-            <li>
-              <span
-                onClick={handleClickDownButton}
-                className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
-              >
-                동아리원 다운받기
-              </span>
+            <li
+              onClick={handleClickDownload}
+              className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
+            >
+              동아리원 다운받기
             </li>
-            <li>
-              <span
-                onClick={openModal}
-                className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
-              >
-                동아리원 수정하기
-              </span>
+            <li
+              onClick={openModal}
+              className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
+            >
+              동아리원 수정하기
             </li>
           </ul>
         </div>

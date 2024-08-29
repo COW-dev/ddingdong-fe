@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   type UseMutationResult,
   useMutation,
@@ -6,16 +5,16 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateMembers } from '@/apis';
+import { uploadMembers } from '@/apis';
 
-export function useUpdateMembers(): UseMutationResult<
+export function useUploadMembers(): UseMutationResult<
   unknown,
   AxiosError,
   FormData
 > {
   const queryClient = useQueryClient();
 
-  return useMutation(updateMembers, {
+  return useMutation(uploadMembers, {
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['/club/my/club-members'],
@@ -23,7 +22,7 @@ export function useUpdateMembers(): UseMutationResult<
       toast.success('동아리원 정보를 수정했어요.');
     },
     onError() {
-      toast.error('동아리원 정보 수정을 실패했어요');
+      toast.error('동아리원 수정에 실패했어요');
     },
   });
 }
