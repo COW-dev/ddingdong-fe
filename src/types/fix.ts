@@ -1,36 +1,51 @@
 export type Fix = {
-  id: number;
-  createdAt: string;
-  club: string;
+  fixZoneId: number;
+  clubLocation: string;
+  clubName: string;
   title: string;
-  completed: boolean;
+  content: string;
+  isCompleted: boolean;
+  requestedAt: string;
 };
 
-export type FixAdminDetailType = {
-  id: number;
+export type Comment = {
+  commentor: string;
+  content: string;
+  profileImageUrl: string;
   createdAt: string;
-  club: string;
-  title: string;
-  completed: boolean;
-  location: string;
-  content: string;
-  imageUrls: string[];
+  commentId: number;
 };
-export type FixClubDetailType = {
-  id: number;
+
+export type FixDetailInfo = {
+  clubLocation: string;
+  clubName: string;
+  comments: Comment[];
   title: string;
-  completed: boolean;
   content: string;
+  id: number;
   imageUrls: string[];
+  isCompleted: boolean;
+  requestedAt: string;
 };
 
 export type FixComplete = {
   id: number;
-  completed: boolean;
   token: string;
 };
 
 export type NewFix = {
   token: string;
   formData: FormData;
+};
+
+export type NewFixComment = {
+  token: string;
+  content: string;
+  fixZoneId: number;
+};
+
+export type DeleteFixComment = {
+  fixZonId: number;
+  commentId: number;
+  token: string;
 };

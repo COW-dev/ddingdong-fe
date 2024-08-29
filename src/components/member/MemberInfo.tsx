@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import Add from '@/assets/add.svg';
-import Cancle from '@/assets/cancle-red.svg';
+import Cancel from '@/assets/cancel-red.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
 import { Position } from '@/constants/text';
@@ -151,7 +151,7 @@ export default function MemberInfo({ member, members, setMembers }: Props) {
         </div>
         {isEditing && (
           <Image
-            src={member.id === 0 ? Add : Cancle}
+            src={member.id === 0 ? Add : Cancel}
             width={10}
             height={10}
             alt="confirm"

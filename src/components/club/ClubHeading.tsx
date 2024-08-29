@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { toast } from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';

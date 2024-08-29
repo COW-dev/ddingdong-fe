@@ -16,8 +16,8 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  Member,
 } from '@/types/club';
+import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
 import {
   Applicant,
   ApplicantDetail,
@@ -27,25 +27,28 @@ import {
 } from '@/types/event';
 
 import {
+  DeleteFixComment,
   Fix,
-  FixAdminDetailType,
-  FixClubDetailType,
   FixComplete,
+  FixDetailInfo,
   NewFix,
+  NewFixComment,
 } from '@/types/fix';
 
 import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
 import {
-  ReportDetail,
+  ReportResponse,
   MyReportList,
   CurrentReport,
   DeleteReport,
+  ActivityReportTerm,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
-export interface ErrorType {
+
+export type ErrorType = {
   code: number;
   message: string;
-}
+};
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -83,7 +86,7 @@ export async function getAdminAllClubs(
 export async function getAdminAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix', {
+  return await api.get('/admin/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -93,32 +96,23 @@ export async function getAdminAllFix(
 export async function getClubAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/club/fix', {
+  return await api.get('/club/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
 
-export async function getAdminFixInfo(
+export async function getFixInfo(
   token: string,
   id: number,
-): Promise<AxiosResponse<FixAdminDetailType, unknown>> {
-  return await api.get(`/admin/fix/${id}`, {
+): Promise<FixDetailInfo> {
+  const response = await api.get(`/club/fix-zones/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
-}
-export async function getClubFixInfo(
-  token: string,
-  id: number,
-): Promise<AxiosResponse<FixClubDetailType, unknown>> {
-  return await api.get(`/club/fix/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
+  return await response.data;
 }
 
 export async function getClubInfo(
@@ -139,6 +133,18 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
+export async function getAllDocuments(): Promise<
+  AxiosResponse<Document[], unknown>
+> {
+  return await api.get('/documents');
+}
+
+export async function getDocumentInfo(
+  documentId: number,
+): Promise<AxiosResponse<DocumentDetail, unknown>> {
+  return await api.get(`/documents/${documentId}`);
+}
+
 export async function createNotice(noticeData: FormData) {
   const token = noticeData.get('token');
 
@@ -148,6 +154,7 @@ export async function createNotice(noticeData: FormData) {
     },
   });
 }
+
 export async function createClub({ token, ...clubData }: NewClub) {
   return await api.post('/admin/clubs', clubData, {
     headers: {
@@ -155,6 +162,7 @@ export async function createClub({ token, ...clubData }: NewClub) {
     },
   });
 }
+
 export async function createBanner({ token, formData }: NewBanner) {
   return await api.post('/admin/banners', formData, {
     headers: {
@@ -163,13 +171,40 @@ export async function createBanner({ token, formData }: NewBanner) {
     },
   });
 }
+
 export async function createFix({ token, formData }: NewFix) {
-  return await api.post('/club/fix', formData, {
+  return await api.post('/club/fix-zones', formData, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
     },
   });
+}
+export async function createDocument(documentData: FormData) {
+  const token = documentData.get('token');
+
+  return await api.post('/admin/documents', documentData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
+export async function createFixComment({
+  fixZoneId,
+  token,
+  content,
+}: NewFixComment) {
+  return await api.post(
+    `/admin/fix-zones/${fixZoneId}/comments`,
+    { content },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
 }
 
 export async function updateNotice(noticeId: number, noticeData: FormData) {
@@ -208,6 +243,13 @@ export async function deleteNotice({ noticeId, token }: DeleteNotice) {
     },
   });
 }
+export async function deleteDocument({ documentId, token }: DeleteDocument) {
+  return await api.delete(`/admin/documents/${documentId}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
 export async function deleteClub({ clubId, token }: DeleteClub) {
   return await api.delete(`/admin/clubs/${clubId}`, {
     headers: {
@@ -215,6 +257,21 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
     },
   });
 }
+export async function deleteFixComment({
+  fixZonId,
+  commentId,
+  token,
+}: DeleteFixComment) {
+  return await api.delete(
+    `/admin/fix-zones/${fixZonId}/comments/${commentId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
     headers: {
@@ -241,16 +298,12 @@ export async function updateMyClub(clubData: FormData) {
     },
   });
 }
-export async function updateFixComplete({ id, completed, token }: FixComplete) {
-  return await api.patch(
-    `/admin/fix/${id}`,
-    { completed },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+export async function updateFixComplete({ id, token }: FixComplete) {
+  return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
-  );
+  });
 }
 
 export async function updateBanner({ id, data, token }: UpdateBanner) {
@@ -282,7 +335,7 @@ export async function getReportInfo(
   term: number,
   name: string,
   token: string,
-): Promise<AxiosResponse<ReportDetail[], unknown>> {
+): Promise<AxiosResponse<ReportResponse[], unknown>> {
   return await api.get(
     `/club/activity-reports?term=${term}&club_name=${name}`,
     {
@@ -297,6 +350,16 @@ export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {
   return await api.get('/club/my/activity-reports', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getReportTerms(
+  token: string,
+): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
+  return await api.get('/admin/activity-reports/term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },

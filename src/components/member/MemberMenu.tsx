@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 import { Position } from '@/constants/text';
 import { useUpdateMembers } from '@/hooks/api/member/useUploadMembers';
 import { Member } from '@/types/club';
-import Dropdown from '../common/Dropdown';
+import ExelDropdown from '../common/ExelDropdown';
 
 interface MemberMenuProps {
   members: Member[];
