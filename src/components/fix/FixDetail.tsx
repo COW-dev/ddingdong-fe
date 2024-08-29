@@ -1,49 +1,51 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import LeftArrow2 from '@/assets/leftArrow2.svg';
 import RightArrow from '@/assets/rightArrow.svg';
-import { useAdminFixInfo } from '@/hooks/api/fixzone/useAdminFixInfo';
+import { ROLE_TYPE } from '@/constants/text';
+import { useFixInfo } from '@/hooks/api/fixzone/useFixInfo';
 import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
-import { FixAdminDetailType } from '@/types/fix';
 import { parseImgUrl } from '@/utils/parse';
+import CommentContainer from './comment/CommentContainer';
 import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
 import Modal from '../common/Modal';
 import ConfirmModal from '../modal/ConfirmModal';
+
 type Prop = {
   id: number;
 };
-const init = {
-  id: 0,
-  club: '',
-  content: '',
-  createdAt: '',
-  imageUrls: [''],
-  completed: false,
-  location: '',
-  title: '',
-};
 
-export default function FixAdminDetail({ id }: Prop) {
+export default function FixDetail({ id }: Prop) {
+  const [{ role }] = useCookies(['role']);
+
   const [{ token }] = useCookies(['token']);
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { data: response } = useAdminFixInfo({ token, id });
-  const [data, setData] = useState<FixAdminDetailType>(init);
-  const [presentIndex, setPresentIndex] = useState<number>(0);
 
-  useEffect(() => {
-    if (response?.data) setData(response?.data);
-  }, [response]);
-  const { club, content, createdAt, imageUrls, completed, location, title } =
-    data;
+  const { data } = useFixInfo({ token, id });
+  const [presentIndex, setPresentIndex] = useState<number>(0);
   const mutation = useUpdateComplete();
 
+  const [isCompleted, setIsCompleted] = useState<boolean>(
+    data?.isCompleted ?? false,
+  );
+  if (!data) return <></>;
+  const {
+    requestedAt,
+    imageUrls,
+    comments,
+    clubName,
+    clubLocation,
+    title,
+    content,
+  } = data;
+
   function handleCompleted() {
-    setData((prev) => ({ ...prev, completed: true }));
-    mutation.mutate({ id, completed: true, token });
+    setIsCompleted(true);
+    mutation.mutate({ id, token });
   }
 
   return (
@@ -53,19 +55,25 @@ export default function FixAdminDetail({ id }: Prop) {
         <Link href="/fix">
           <Image src={LeftArrow2} alt="back" width={25} height={25} />
         </Link>
-        <span className="ml-2 text-xl font-semibold text-gray-600">
-          {title}
-        </span>
+        <h1 className="ml-2 text-xl font-semibold text-gray-600">{title}</h1>
       </div>
 
-      <div className="mt-3 flex w-full flex-col rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
+      <div className="mt-3 flex w-full flex-col gap-4 rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
         {/* 정보 */}
         <div className=" w-full rounded-xl bg-white md:w-1/2 md:p-3">
-          <FixItemInfo club={club} createdAt={createdAt} location={location} />
-          <div className="mt-4 py-2 pt-4">{content}</div>
+          <FixItemInfo
+            club={clubName}
+            createdAt={requestedAt}
+            location={clubLocation}
+          />
+          <div className="p-4">{content}</div>
         </div>
         {/* 내용 */}
-        <div className="relative flex w-full items-center justify-center md:w-1/2 md:p-3">
+        <div
+          className={`relative flex w-full items-center justify-center md:w-1/2 md:p-3
+            ${imageUrls.length === 0 && 'hidden'}
+          `}
+        >
           <Image
             src={LeftArrow2}
             width={30}
@@ -74,9 +82,8 @@ export default function FixAdminDetail({ id }: Prop) {
             onClick={() => {
               setPresentIndex(presentIndex - 1);
             }}
-            className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-              presentIndex === 0 && `hidden`
-            }`}
+            className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25
+              ${presentIndex === 0 && 'hidden'}`}
           />
           <Image
             src={parseImgUrl(imageUrls[presentIndex])}
@@ -100,16 +107,26 @@ export default function FixAdminDetail({ id }: Prop) {
           />
         </div>
       </div>
-      <div className="flex justify-center">
+      <div
+        className={`
+          flex justify-center ${role === ROLE_TYPE.ROLE_CLUB && 'hidden'}
+        `}
+      >
         <button
-          disabled={completed}
+          disabled={isCompleted}
           onClick={openModal}
-          className={`mb-3 mt-7 rounded-xl border bg-blue-500 px-10 py-2.5 text-base font-semibold text-white  ${
-            !completed ? `  hover:bg-blue-600` : ` bg-blue-500`
-          } md:mr-0.5`}
+          className={`
+            mb-3 mt-7 rounded-xl px-10 py-2.5 text-base font-semibold md:mr-0.5 ${
+              !isCompleted
+                ? 'bg-blue-500 text-white hover:bg-blue-600'
+                : 'bg-gray-100 text-gray-500'
+            }`}
         >
-          {completed ? `처리 완료` : `처리 마치기`}
+          {isCompleted ? '처리 완료' : '처리 마치기'}
         </button>
+      </div>
+      <div className="mt-16">
+        <CommentContainer comments={comments} fixZoneId={id} />
       </div>
       <Modal
         visible={visible}

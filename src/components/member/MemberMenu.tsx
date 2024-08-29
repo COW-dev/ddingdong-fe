@@ -1,31 +1,19 @@
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import Modal from '@/components/common/Modal';
-import MemberUpload from '@/components/member/MemberUpload';
-import { Button } from '@/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Position } from '@/constants/text';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
-import useModal from '@/hooks/common/useModal';
 import { Member } from '@/types/club';
-import Dropdown from '../common/Dropdown';
+import ExelDropdown from '../common/ExelDropdown';
 
-interface MemberMenuProps {
+type MemberMenuProps = {
   handleEditting: () => void;
   members: Member[];
   isEditing: boolean;
   organicMember: Member[];
   setMembers: (members: Member[]) => void;
   isAdding: boolean;
-}
+};
 
 function MemberMenu({
   handleEditting,
@@ -49,7 +37,7 @@ function MemberMenu({
     return parsedMember;
   }
 
-  function handleClickCancleButton() {
+  function handleClickCancelButton() {
     setMembers(organicMember);
     handleEditting();
   }
@@ -58,10 +46,6 @@ function MemberMenu({
     if (isAdding) {
       return toast.error(`수정중인 작업을 마무리하고 저장해주세요.`);
     }
-
-    // if (members.length === organicMember.length) {
-    //   return handleEditting();
-    // }
 
     const parsedMember = parsePosition();
     const formData = new FormData();
@@ -84,13 +68,13 @@ function MemberMenu({
       <div className="flex">
         {isEditing ? (
           <button
-            onClick={handleClickCancleButton}
+            onClick={handleClickCancelButton}
             className="cursor-pointer rounded-lg bg-green-100 px-4 py-2 text-sm font-bold text-green-500"
           >
             취소
           </button>
         ) : (
-          <Dropdown file={file} setFile={setFile} />
+          <ExelDropdown file={file} setFile={setFile} />
         )}
         <button
           onClick={isEditing ? handleSubmit : handleEditting}

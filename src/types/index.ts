@@ -38,11 +38,6 @@ export type StudentInfo = {
   department: string;
 };
 
-export type MyReportList = {
-  name: string;
-  term: string;
-};
-
 export type CurrentReport = {
   currentTerm: string;
 };

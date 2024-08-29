@@ -1,9 +1,7 @@
-import { redirect } from 'next/dist/server/api-utils';
 import router from 'next/router';
 import { useCookies } from 'react-cookie';
 import UploadExcel from '@/components/common/UploadExcel';
 import { useUpdateMembers } from '@/hooks/api/member/useMembers';
-import { parseImgUrl } from '@/utils/parse';
 
 type Props = {
   file: File | null;

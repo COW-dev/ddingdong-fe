@@ -3,7 +3,7 @@ import Image from 'next/image';
 import CheckboxImg from '@/assets/checkbox.svg';
 import CheckBox from '../../home/CheckBox';
 
-interface Props {
+type Props = {
   setOption: Dispatch<
     SetStateAction<{ category: string[]; recruit: string[]; sort: boolean }>
   >;
@@ -13,7 +13,7 @@ interface Props {
     option: string[],
     setOptionCallback: (updatedOption: string[]) => void,
   ) => void;
-}
+};
 
 function RecruitStatus({ setOption, option, filterOption }: Props) {
   const { recruit } = option;

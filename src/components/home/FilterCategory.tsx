@@ -1,12 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { CatogoryColor } from '@/constants/color';
 
-interface Props {
+type Props = {
   option: { category: string[]; recruit: string[]; sort: boolean };
   setOption: Dispatch<
     SetStateAction<{ category: string[]; recruit: string[]; sort: boolean }>
   >;
-}
+};
 
 function FilterCategory({ option, setOption }: Props) {
   function filterCategory(item: string) {

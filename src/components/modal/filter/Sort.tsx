@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-interface Props {
+type Props = {
   setOption: Dispatch<
     SetStateAction<{ category: string[]; recruit: string[]; sort: boolean }>
   >;
   option: { category: string[]; recruit: string[]; sort: boolean };
-}
+};
 
 function Sort({ setOption, option }: Props) {
   function handleClickOption(isCategory: boolean) {

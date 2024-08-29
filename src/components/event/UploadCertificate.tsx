@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, ChangeEvent, useState } from 'react';
 import Image from 'next/image';
-import Cancel from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 
 type Props = {
   image: File | null;

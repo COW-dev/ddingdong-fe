@@ -27,7 +27,7 @@ export default function UploadFile({
       setFileName(file.name);
     }
   }
-  function handelCancle() {
+  function handelCancel() {
     setFile(null);
     setFileName(null);
     setNoticeData && setNoticeData((prev) => ({ ...prev, fileUrls: [] }));
@@ -53,7 +53,7 @@ export default function UploadFile({
             <button
               type="button"
               className="ml-auto mr-3 cursor-pointer"
-              onClick={handelCancle}
+              onClick={handelCancel}
             >
               X
             </button>

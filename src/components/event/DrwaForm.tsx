@@ -1,6 +1,5 @@
 import { useState, ChangeEvent, useEffect } from 'react';
 import toast from 'react-hot-toast';
-import { cn } from '@/components/ui/utils';
 import { useApplyDraw } from '@/hooks/api/event/useApplyDraw';
 import { isMissingData } from '@/utils/validator';
 import UploadCertificate from './UploadCertificate';
@@ -55,7 +54,7 @@ export default function DrawForm({ closeModal }: Props) {
         />
       </div>
       <div className="mb-3 flex w-full flex-col items-center">
-        <label className={cn('w-full', 'max-sm:flex max-sm:flex-col')}>
+        <label className="w-full max-sm:flex max-sm:flex-col">
           <span className="text-lg font-semibold text-gray-700">
             학생회비 납부내역 이미지 첨부
           </span>

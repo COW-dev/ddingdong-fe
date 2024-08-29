@@ -1,7 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
-import Cancel from '@/assets/cancle.svg';
-import ClipIcon from '@/assets/clipIcon.svg';
+import Cancel from '@/assets/cancel.svg';
 import File from '@/assets/file.svg';
 import { NoticeDetail } from '@/types/notice';
 
@@ -10,6 +9,7 @@ type UploadFileProps = {
   setFile: Dispatch<SetStateAction<File[]>>;
   fileUrls?: { fileUrl: string; name: string }[];
   setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
+  setDocumentData?: Dispatch<SetStateAction<NoticeDetail>>;
 };
 //file에 add
 export default function UploadMultipleFile({
@@ -17,6 +17,7 @@ export default function UploadMultipleFile({
   setFile,
   fileUrls,
   setNoticeData,
+  setDocumentData,
 }: UploadFileProps) {
   function handleFileAdd(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
@@ -32,11 +33,17 @@ export default function UploadMultipleFile({
     file.splice(index, 1);
     setFile([...file]);
   }
-  function handleReceviedFileDelete(index: number) {
-    fileUrls?.splice(index, 1);
-    fileUrls &&
-      setNoticeData &&
-      setNoticeData((prev) => ({ ...prev, fileUrls: [...fileUrls] }));
+
+  function handleReceivedFileDelete(index: number) {
+    if (fileUrls) {
+      const updatedFileUrls = fileUrls.filter((_, i) => i !== index);
+      if (setNoticeData) {
+        setNoticeData((prev) => ({ ...prev, fileUrls: updatedFileUrls }));
+      }
+      if (setDocumentData) {
+        setDocumentData((prev) => ({ ...prev, fileUrls: updatedFileUrls }));
+      }
+    }
   }
 
   const renderFileItem = (
@@ -44,33 +51,23 @@ export default function UploadMultipleFile({
     index: number,
     callback: (index: number) => void,
   ) => (
-    <div key={`file-${index}`} className="my-1 flex">
-      <Image src={ClipIcon} width={10} height={10} alt="file" />
-      <span className="ml-3 text-xs text-gray-500">{item.name}</span>
+    <div key={`file-${index}`} className="my-2 flex">
       <button
         type="button"
-        className="ml-auto mr-3 cursor-pointer"
+        className=" mr-2 cursor-pointer"
         onClick={() => callback(index)}
       >
-        <Image src={Cancel} width={10} height={10} alt="delete" />
+        <Image src={Cancel} width={15} height={15} alt="delete" />
       </button>
+      <span className=" text-sm font-semibold text-gray-500">{item.name}</span>
     </div>
   );
 
   return (
     <>
-      <div>
-        {file.map((item, index) =>
-          renderFileItem(item, index, handleUploadFileDelete),
-        )}
-        {fileUrls?.map((item, index) =>
-          renderFileItem(item, index, handleReceviedFileDelete),
-        )}
-      </div>
-
-      <div className="mt-3 h-10 w-full rounded-lg border border-gray-100 bg-gray-50 text-gray-900 placeholder:text-gray-300 focus:outline-none">
+      <div className="mt-3 h-12 w-full cursor-pointer rounded-lg border border-gray-100 bg-gray-50 text-gray-900 placeholder:text-gray-300 focus:outline-none">
         <label
-          className="md:text-md flex items-center text-sm font-medium text-gray-300 "
+          className="md:text-md flex h-full items-center text-sm font-medium text-gray-400 "
           htmlFor="file_input"
         >
           <Image
@@ -80,7 +77,9 @@ export default function UploadMultipleFile({
             alt="file"
             className="my-2 ml-3 cursor-pointer"
           />
-          <span className="ml-2 cursor-pointer">파일을 선택해주세요.</span>
+          <span className="ml-2 cursor-pointer font-semibold">
+            파일을 선택해주세요.
+          </span>
           <input
             className="hidden"
             id="file_input"
@@ -90,6 +89,14 @@ export default function UploadMultipleFile({
             onChange={handleFileAdd}
           />
         </label>
+      </div>
+      <div className="ml-1">
+        {file.map((item, index) =>
+          renderFileItem(item, index, handleUploadFileDelete),
+        )}
+        {fileUrls?.map((item, index) =>
+          renderFileItem(item, index, handleReceivedFileDelete),
+        )}
       </div>
     </>
   );

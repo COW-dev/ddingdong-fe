@@ -20,7 +20,7 @@ export default function Index() {
     title: '',
     content: <></>,
   });
-  const [club, setClub] = useState({});
+  const [, setClub] = useState({});
   const [cookies] = useCookies(['token']);
   const [clubs, setAdminClubs] = useState<Array<AdminClub>>([]);
   const { data } = useAdminAllClubs(cookies.token);

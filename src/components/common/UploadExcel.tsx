@@ -25,7 +25,7 @@ export default function UploadMemberExcel({
       setFileName(file.name);
     }
   }
-  function handelCancle() {
+  function handelCancel() {
     setFile(null);
     setFileName(null);
   }
@@ -40,7 +40,7 @@ export default function UploadMemberExcel({
             <>
               <div
                 className=" mr-3 mt-2 flex w-full items-center justify-end"
-                onClick={handelCancle}
+                onClick={handelCancel}
               >
                 <Image
                   src={Refresh}

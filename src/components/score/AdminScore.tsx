@@ -61,7 +61,7 @@ export default function AdminScore({ clubId }: ScoreProps) {
     const category: ScoreDetail[] = [];
     {
       scoreData &&
-        scoreData.map((item) => {
+        scoreData?.map((item) => {
           if (item.scoreCategory === categoryName) category.push(item);
         });
     }

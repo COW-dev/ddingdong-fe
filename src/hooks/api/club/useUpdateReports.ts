@@ -1,3 +1,4 @@
+import router from 'next/router';
 import {
   type UseMutationResult,
   useMutation,
@@ -18,9 +19,11 @@ export function useUpdateReports(
         queryKey: ['activity-reports'],
       });
       toast.success('활동보고서를 수정했어요.');
+      router.push('/report');
     },
-    onError() {
-      toast.error('활동보고서 수정에 실패했어요.');
+    onError(error) {
+      const errorMessage = error.message ? `\n ${error.message}` : '';
+      toast.error(`활동보고서 수정에 실패했어요.${errorMessage}`);
     },
   });
 }
