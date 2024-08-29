@@ -14,12 +14,12 @@ export function useUploadMembers(): UseMutationResult<
   FormData
 > {
   const queryClient = useQueryClient();
-  const router = useRouter();
+  // const router = useRouter();
 
   return useMutation(uploadMembers, {
     onSuccess() {
       queryClient.invalidateQueries(['/club/my/club-members']);
-      router.push('/member');
+      // router.push('/member');
       toast.success('동아리원을 성공적으로 등록했어요.');
     },
     onError() {

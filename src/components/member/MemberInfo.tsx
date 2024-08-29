@@ -1,19 +1,11 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
-import toast from 'react-hot-toast';
 import Add from '@/assets/add.svg';
 import Cancle from '@/assets/cancle-red.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
 import { Position } from '@/constants/text';
 import { Member } from '@/types/club';
-import { isMissingData } from '@/utils/validator';
 
 type Props = {
   member: Member;
@@ -22,28 +14,16 @@ type Props = {
   setMembers: Dispatch<SetStateAction<Member[]>>;
   setIsAdding?: (isAdding: boolean) => void;
 };
-const initMember = {
-  id: 0,
-  name: '',
-  studentNumber: '',
-  department: '',
-  phoneNumber: '',
-  position: '동아리원',
-};
-export default function MemberInfo({
-  member,
-  isEditing,
-  members,
-  setMembers,
-  setIsAdding,
-}: Props) {
+
+export default function MemberInfo({ member, members, setMembers }: Props) {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [value, setValue] = useState<Member>(member);
   const [isEditItem, setisEditItem] = useState<boolean>(false);
   const [positionNum, setPositionNum] = useState<number>(0);
 
-  useEffect(() => {
-    setIsAdding && setIsAdding(value.name !== '');
-  }, [value.name]);
+  // useEffect(() => {
+  //   setIsAdding && setIsAdding(value.name !== '');
+  // }, [value.name]);
 
   function handleEditable() {
     setisEditItem(true);
@@ -59,18 +39,7 @@ export default function MemberInfo({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleMember() {
-    member.id === 0 ? handleCreateMember() : handleDeleteMember();
-  }
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (
-      member.id === 0 &&
-      event.key === 'Enter' &&
-      event.nativeEvent.isComposing === false
-    ) {
-      handleCreateMember();
-    }
-  }
+
   function handlePositionNum() {
     if (positionNum === 2) setPositionNum(0);
     else setPositionNum(positionNum + 1);
@@ -79,23 +48,19 @@ export default function MemberInfo({
       position: Object.keys(Position)[positionNum],
     }));
   }
-  function handleCreateMember() {
-    if (isMissingData(value))
-      return toast.error('입력하지 않은 정보가 존재해요.');
-    setPositionNum(0);
-    const id = members.length > 0 ? members[members?.length - 1]?.id + 1 : 1;
-    setMembers([...members, { ...value, id: id }]);
-    setValue(initMember);
+  function handleMember() {
+    // member.id === 0 ? handleCreateMember() :s handleDeleteMember();
+  }
+  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
+    if (
+      member.id === 0 &&
+      event.key === 'Enter' &&
+      event.nativeEvent.isComposing === false
+    ) {
+      // handleCreateMember();
+    }
   }
 
-  function handleDeleteMember() {
-    const newMembers = [...members];
-    const index = newMembers.findIndex(
-      (newMember) => newMember.id === member.id,
-    );
-    newMembers.splice(index, 1);
-    setMembers(newMembers);
-  }
   function handleModifyMember() {
     const index = members.findIndex((newMember) => newMember.id === member.id);
     if (

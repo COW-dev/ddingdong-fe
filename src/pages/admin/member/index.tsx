@@ -8,29 +8,16 @@ import MemberMenu from '@/components/member/MemberMenu';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { Member } from '@/types/club';
 
-const newMember = {
-  id: 0,
-  name: '',
-  department: '',
-  position: '동아리원',
-  phoneNumber: '',
-  studentNumber: '',
-};
-
 export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
   const [{ token }] = useCookies(['token']);
-  function handleEditting() {
-    setIsEditing(!isEditing);
-  }
+
   const {
     data: { data },
   } = useMyClub(token);
 
   const [members, setMembers] = useState<Member[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isAdding, setIsAdding] = useState<boolean>(false);
 
   useEffect(() => {
     setMembers(data?.clubMembers ?? []);
@@ -66,18 +53,15 @@ export default function Index() {
         </div>
         <div className="flex gap-2">
           <MemberMenu
-            handleEditting={handleEditting}
             members={members}
-            isEditing={isEditing}
             organicMember={data?.clubMembers}
             setMembers={setMembers}
-            isAdding={isAdding}
           />
         </div>
       </div>
 
       <div className="rounded-xl border-[1.5px] border-gray-100 p-5  ">
-        {!isEditing && <SearchBar value={keyword} onChange={setKeyword} />}
+        <SearchBar value={keyword} onChange={setKeyword} />
         <div className="mb-3 mt-5 text-sm font-semibold text-gray-500 md:text-base">
           <span className="text-blue-500 opacity-70">
             {filteredMembers.length}명
@@ -86,19 +70,9 @@ export default function Index() {
         </div>
 
         <ul className="grid w-full grid-cols-1 sm:grid-cols-2  lg:grid-cols-3">
-          {isEditing && (
-            <MemberInfo
-              isEditing={isEditing}
-              setMembers={setMembers}
-              members={members}
-              member={newMember}
-              setIsAdding={setIsAdding}
-            />
-          )}
           {filteredMembers.map((info) => (
             <div key={info.id}>
               <MemberInfo
-                isEditing={isEditing}
                 setMembers={setMembers}
                 members={members}
                 member={info}
