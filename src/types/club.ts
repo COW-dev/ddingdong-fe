@@ -88,9 +88,3 @@ export type DeleteClub = {
   clubId: number | boolean;
   token: string;
 };
-
-export type UpdateMembers = {
-  members: Member[];
-  file: FormData;
-  token: string;
-};

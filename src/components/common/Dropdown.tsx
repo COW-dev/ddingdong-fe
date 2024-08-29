@@ -1,6 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import Link from 'next/link';
+import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
+import { useMemberFile } from '@/hooks/api/member/useMemberFile';
 import useModal from '@/hooks/common/useModal';
+import { downloadBlob } from '@/utils/file';
 import Modal from './Modal';
 import MemberUpload from '../member/MemberUpload';
 
@@ -10,15 +13,24 @@ type Props = {
 };
 
 export default function Dropdown({ file, setFile }: Props) {
-  const [open, setOpen] = useState<boolean>(false);
-
-  const handleOpen = () => {
-    setOpen(!open);
-  };
+  const [{ token }] = useCookies(['token']);
+  const [isOpenMoal, setIsOpenModal] = useState<boolean>(false);
+  const { data } = useMemberFile(token);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const URL =
-    'https://ddingdong-file.s3.ap-northeast-2.amazonaws.com/files/excel/동아리원_명단_수정_양식.xlsx';
+  const handleOpen = () => {
+    setIsOpenModal(!isOpenMoal);
+  };
+
+  const handleClickDownButton = () => {
+    if (!data?.data) return toast.error('파일을 다운로드 할 수 없습니다');
+    const blob = new Blob([data.data], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+
+    downloadBlob(blob, 'members.xlsx');
+  };
+
   return (
     <>
       <button
@@ -46,7 +58,7 @@ export default function Dropdown({ file, setFile }: Props) {
           />
         </svg>
       </button>
-      {open && (
+      {isOpenMoal && (
         <div
           id="dropdownHover"
           className=" relative z-20 m-auto min-w-fit divide-y divide-gray-100 rounded-lg bg-green-200 shadow "
@@ -56,17 +68,17 @@ export default function Dropdown({ file, setFile }: Props) {
             aria-labelledby="dropdownHoverButton"
           >
             <li>
-              <Link
-                href={URL}
-                className="block px-4 py-2 font-semibold hover:bg-gray-100"
+              <span
+                onClick={handleClickDownButton}
+                className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
               >
-                <div>Excel 양식 다운받기</div>
-              </Link>
+                동아리원 다운받기
+              </span>
             </li>
             <li>
               <span
                 onClick={openModal}
-                className=" block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
+                className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
               >
                 동아리원 수정하기
               </span>

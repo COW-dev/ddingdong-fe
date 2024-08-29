@@ -16,7 +16,7 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  UpdateMembers,
+  Member,
 } from '@/types/club';
 import {
   Applicant,
@@ -181,24 +181,26 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
     },
   });
 }
+
 export async function uploadMembers(formdata: FormData) {
   const token = formdata.get('token');
-  return await api.put('/club/my/club-members', formdata, {
+  return await api.post('/club/my/club-members', formdata, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }
-export async function updateMembers(formdata: FormData) {
-  const token = formdata.get('token');
-  return await api.put('/club/my/club-members', formdata, {
+
+export async function getMemberFile(token: string) {
+  return await api.get('/club/my/club-members/excel', {
     headers: {
       Authorization: 'Bearer ' + token,
-      // 'Content-Type': 'multipart/form-data',
+      'Content-Type': 'application/octet-stream',
     },
+    responseType: 'blob',
   });
 }
+
 export async function deleteNotice({ noticeId, token }: DeleteNotice) {
   return await api.delete(`/admin/notices/${noticeId}`, {
     headers: {
