@@ -68,7 +68,7 @@ export default function ClubScore() {
         title={category}
         closeModal={closeModal}
       >
-        <ViewScore history={scoreData.scoreHistories} />
+        <ViewScore history={getCategoryData(category)} />
       </Modal>
     </>
   );
