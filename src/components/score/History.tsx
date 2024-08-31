@@ -15,8 +15,8 @@ export default function History({ totalScore, scoreHistories }: ScoreDetail) {
             scoreHistories ? 'h-56 overflow-scroll md:h-88 ' : ''
           } shadow-md sm:rounded-lg`}
         >
-          <table className="text-md w-full text-left text-gray-500 md:text-lg">
-            <thead className="text-md bg-gray-50 text-gray-700 md:text-lg">
+          <table className="text-md w-full text-left text-gray-500 md:text-lg ">
+            <thead className="text-md sticky top-0 bg-gray-50 text-gray-700 md:text-lg">
               <tr>
                 <th scope="col" className="px-3 md:px-6 md:py-3 ">
                   날짜
