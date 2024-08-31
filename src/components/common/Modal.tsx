@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import CancelImg from '@/assets/cancel.svg';
+import CancleImg from '@/assets/cancle.svg';
 import ModalPortal from './ModalPortal';
 
 type ModalProps = {
@@ -46,7 +46,7 @@ export default function Modal({
               } `}
               onClick={closeModal}
             >
-              <Image src={CancelImg} alt="close-button" />
+              <Image src={CancleImg} alt="close-button" />
             </button>
           </div>
           <div className="space-y-6 p-6">{children}</div>

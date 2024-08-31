@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
-import Cancel from '@/assets/cancel.svg';
+import Cancle from '@/assets/cancle.svg';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
 import { parseImgUrl } from '@/utils/parse';
@@ -74,7 +74,7 @@ export default function UploadImage({
           />
           <div className="z-30 mt-5 min-w-[10%]">
             <button type="button" onClick={handleImageReset}>
-              <Image src={Cancel} height={15} width={15} alt="cancel" />
+              <Image src={Cancle} height={15} width={15} alt="cancel" />
             </button>
           </div>
         </>
