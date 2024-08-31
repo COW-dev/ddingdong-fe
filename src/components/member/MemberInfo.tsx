@@ -50,7 +50,6 @@ export default function MemberInfo({ member }: MemberInfoProps) {
     };
 
     if (!id) return;
-
     mutation.mutate({ member: submitData, id, token });
   }
 

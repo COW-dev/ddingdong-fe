@@ -19,7 +19,6 @@ export default function MemberUpload({ closeModal }: Props) {
     file && formData.append('file', file);
     formData.append('token', cookies.token);
     closeModal();
-    router.push('/');
     return mutation.mutate(formData);
   }
 

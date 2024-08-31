@@ -17,7 +17,7 @@ export function useUploadMembers(): UseMutationResult<
   return useMutation(uploadMembers, {
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['/club/my/club-members'],
+        queryKey: ['my-club'],
       });
       toast.success('동아리원 정보를 수정했어요.');
     },
