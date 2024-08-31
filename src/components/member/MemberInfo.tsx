@@ -1,7 +1,9 @@
 import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import Cancel from '@/assets/cancel-red.svg';
+import CancleIcon from '@/assets/cancle_red.svg';
+import CheckIcon from '@/assets/check_blue.svg';
+import EditIcon from '@/assets/edit.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
 import { Position } from '@/constants/text';
@@ -35,10 +37,6 @@ export default function MemberInfo({ member }: MemberInfoProps) {
     }));
   }
 
-  function handleClickModify() {
-    setIsEditing(true);
-  }
-
   function handleSubmit() {
     setIsEditing(false);
     const { id, studentNumber, position, phoneNumber, name, department } =
@@ -57,14 +55,13 @@ export default function MemberInfo({ member }: MemberInfoProps) {
   }
 
   return (
-    <li className="border-t border-gray-200 p-1 ">
+    <li className="border-t border-gray-200 p-1">
       <div
         className={`relative justify-center rounded-xl p-2 py-3 transition-colors hover:border-gray-200  ${
           isEditing && `bg-gray-100`
         }`}
         key={member.id}
       >
-        <span onClick={handleClickModify}>수정버튼</span>
         <input
           type="text"
           value={value?.name}
@@ -126,16 +123,35 @@ export default function MemberInfo({ member }: MemberInfoProps) {
             />
           </div>
         </div>
-        {isEditing && (
-          <Image
-            src={Cancel}
-            width={10}
-            height={10}
-            alt="confirm"
-            onClick={handleSubmit}
-            className={`absolute right-5 top-5 text-red-500`}
-          />
-        )}
+
+        <div className="absolute right-5 top-5">
+          {isEditing ? (
+            <div className="flex gap-2">
+              <Image
+                src={CancleIcon}
+                width={10}
+                height={10}
+                alt="CancleIcon"
+                onClick={() => setIsEditing(false)}
+              />
+              <Image
+                src={CheckIcon}
+                width={18}
+                height={18}
+                alt="CheckIcon"
+                onClick={handleSubmit}
+              />
+            </div>
+          ) : (
+            <Image
+              src={EditIcon}
+              width={11}
+              height={11}
+              alt="EditIcon"
+              onClick={() => setIsEditing(true)}
+            />
+          )}
+        </div>
       </div>
     </li>
   );
