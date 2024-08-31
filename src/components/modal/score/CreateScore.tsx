@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import ScoreList from '@/components/score/ScoreList';
+import { SCORE_TYPE } from '@/constants/score';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewScore } from '@/hooks/api/score/useNewScore';
 import { ScoreHistory } from '@/types/score';
@@ -23,9 +24,17 @@ export default function CreateScore({
   const { role } = cookies;
   const [amount, setAmount] = useState(0);
   const [reason, setReason] = useState('');
+
+  const getScoreValue = (categoryName: string) => {
+    const scoreEntry = Object.values(SCORE_TYPE).find(
+      (entry) => entry.category === categoryName,
+    );
+    return scoreEntry ? scoreEntry.value : ''; // Return the value if found, otherwise empty string
+  };
+
   function handleClickChange() {
     mutation.mutate({
-      scoreCategory: scoreCategory,
+      scoreCategory: getScoreValue(scoreCategory),
       reason: reason,
       token: cookies.token,
       clubId: clubId,
