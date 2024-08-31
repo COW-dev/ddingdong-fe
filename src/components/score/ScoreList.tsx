@@ -16,7 +16,7 @@ export default function ScoreList({ history }: Props) {
             key={index}
             className=" flex h-10 items-center justify-between space-x-4 border-b"
           >
-            <div>{data.createdAt.split('T')[0]}</div>
+            <div>{data.createdAt.split(' ')[0]}</div>
             <div>{data.reason}</div>
             <div>{data.amount.toFixed(3)}점</div>
           </div>
