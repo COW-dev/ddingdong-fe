@@ -72,7 +72,7 @@ export default function ExcelDropdown() {
               onClick={openModal}
               className="block cursor-pointer px-4 py-2 font-semibold hover:bg-gray-100"
             >
-              동아리원 수정하기
+              동아리원 업로드
             </li>
           </ul>
         </div>
