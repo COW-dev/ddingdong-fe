@@ -1,57 +1,25 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
-import toast from 'react-hot-toast';
-import Add from '@/assets/add.svg';
-import Cancel from '@/assets/cancel-red.svg';
+import { useCookies } from 'react-cookie';
+import CancelIcon from '@/assets/cancel-red.svg';
+import CheckIcon from '@/assets/check_blue.svg';
+import EditIcon from '@/assets/edit.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
 import { Position } from '@/constants/text';
+import { useUpdateMembers } from '@/hooks/api/member/useUpdateMembers';
 import { Member } from '@/types/club';
-import { isMissingData } from '@/utils/validator';
 
-type Props = {
+type MemberInfoProps = {
   member: Member;
-  isEditing: boolean;
-  members: Member[];
-  setMembers: Dispatch<SetStateAction<Member[]>>;
-  setIsAdding?: (isAdding: boolean) => void;
 };
-const initMember = {
-  id: 0,
-  name: '',
-  studentNumber: '',
-  department: '',
-  phoneNumber: '',
-  position: '동아리원',
-};
-export default function MemberInfo({
-  member,
-  isEditing,
-  members,
-  setMembers,
-  setIsAdding,
-}: Props) {
+
+export default function MemberInfo({ member }: MemberInfoProps) {
+  const [{ token }] = useCookies(['token']);
+  const mutation = useUpdateMembers();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [value, setValue] = useState<Member>(member);
-  const [isEditItem, setisEditItem] = useState<boolean>(false);
   const [positionNum, setPositionNum] = useState<number>(0);
-
-  useEffect(() => {
-    setIsAdding && setIsAdding(value.name !== '');
-  }, [value.name]);
-
-  function handleEditable() {
-    setisEditItem(true);
-  }
-  function handleUneditable() {
-    setisEditItem(false);
-    handleModifyMember();
-  }
 
   function handleChange(event: ChangeEvent<HTMLInputElement>) {
     setValue((prev) => ({
@@ -59,18 +27,7 @@ export default function MemberInfo({
       [event.target.name]: event.target.value,
     }));
   }
-  function handleMember() {
-    member.id === 0 ? handleCreateMember() : handleDeleteMember();
-  }
-  function handleKeyDown(event: React.KeyboardEvent<HTMLInputElement>) {
-    if (
-      member.id === 0 &&
-      event.key === 'Enter' &&
-      event.nativeEvent.isComposing === false
-    ) {
-      handleCreateMember();
-    }
-  }
+
   function handlePositionNum() {
     if (positionNum === 2) setPositionNum(0);
     else setPositionNum(positionNum + 1);
@@ -79,48 +36,30 @@ export default function MemberInfo({
       position: Object.keys(Position)[positionNum],
     }));
   }
-  function handleCreateMember() {
-    if (isMissingData(value))
-      return toast.error('입력하지 않은 정보가 존재해요.');
-    setPositionNum(0);
-    const id = members.length > 0 ? members[members?.length - 1]?.id + 1 : 1;
-    setMembers([...members, { ...value, id: id }]);
-    setValue(initMember);
-  }
 
-  function handleDeleteMember() {
-    const newMembers = [...members];
-    const index = newMembers.findIndex(
-      (newMember) => newMember.id === member.id,
-    );
-    newMembers.splice(index, 1);
-    setMembers(newMembers);
-  }
-  function handleModifyMember() {
-    const index = members.findIndex((newMember) => newMember.id === member.id);
-    if (
-      members[index]?.department === value.department &&
-      members[index]?.studentNumber === value.studentNumber &&
-      members[index]?.phoneNumber === value.phoneNumber &&
-      members[index]?.position === value.position &&
-      members[index]?.name === value.name
-    )
-      return;
-    const newMembers = members.map((newMember) =>
-      newMember.id === member.id ? value : newMember,
-    );
-    setMembers(newMembers);
+  function handleSubmit() {
+    setIsEditing(false);
+    const { id, studentNumber, position, phoneNumber, name, department } =
+      value;
+    const submitData = {
+      studentNumber,
+      position: Position[position],
+      phoneNumber,
+      name,
+      department,
+    };
+
+    if (!id) return;
+    mutation.mutate({ member: submitData, id, token });
   }
 
   return (
-    <li className="border-t border-gray-200 p-1 ">
+    <li className="border-t border-gray-200 p-1">
       <div
         className={`relative justify-center rounded-xl p-2 py-3 transition-colors hover:border-gray-200  ${
-          isEditItem && `bg-gray-100`
+          isEditing && `bg-gray-100`
         }`}
-        key={`member-${member.id}`}
-        onMouseEnter={handleEditable}
-        onMouseLeave={handleUneditable}
+        key={member.id}
       >
         <input
           type="text"
@@ -179,23 +118,39 @@ export default function MemberInfo({
               value={value.phoneNumber}
               className="text-md ml-1 bg-inherit font-semibold outline-none"
               onChange={(e) => handleChange(e)}
-              onKeyDown={(e) => handleKeyDown(e)}
               disabled={!isEditing}
             />
           </div>
         </div>
-        {isEditing && (
-          <Image
-            src={member.id === 0 ? Add : Cancel}
-            width={10}
-            height={10}
-            alt="confirm"
-            onClick={handleMember}
-            className={`absolute right-5 top-5 text-red-500  ${
-              !isEditItem && `invisible`
-            }`}
-          />
-        )}
+
+        <div className="absolute right-5 top-5">
+          {isEditing ? (
+            <div className="flex gap-2">
+              <Image
+                src={CancelIcon}
+                width={10}
+                height={10}
+                alt="CancelIcon"
+                onClick={() => setIsEditing(false)}
+              />
+              <Image
+                src={CheckIcon}
+                width={18}
+                height={18}
+                alt="CheckIcon"
+                onClick={handleSubmit}
+              />
+            </div>
+          ) : (
+            <Image
+              src={EditIcon}
+              width={11}
+              height={11}
+              alt="EditIcon"
+              onClick={() => setIsEditing(true)}
+            />
+          )}
+        </div>
       </div>
     </li>
   );

@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
-import File from '@/assets/file.svg';
 import Refresh from '@/assets/refresh.svg';
 
 type UploadFileProps = {
@@ -25,10 +24,12 @@ export default function UploadMemberExcel({
       setFileName(file.name);
     }
   }
-  function handelCancel() {
+
+  function handleCancel() {
     setFile(null);
     setFileName(null);
   }
+
   return (
     <>
       <div className="mt-2 h-60 w-full rounded-lg border border-gray-100 bg-gray-50 placeholder:text-gray-300 focus:outline-none">
@@ -39,14 +40,14 @@ export default function UploadMemberExcel({
           {file || fileName ? (
             <>
               <div
-                className=" mr-3 mt-2 flex w-full items-center justify-end"
-                onClick={handelCancel}
+                className="mr-3 mt-2 flex w-full items-center justify-end"
+                onClick={handleCancel}
               >
                 <Image
                   src={Refresh}
                   height={15}
                   width={15}
-                  alt={'재설정'}
+                  alt="재설정"
                   className="cursor-pointer"
                 />
                 <button
@@ -56,7 +57,7 @@ export default function UploadMemberExcel({
                   재설정
                 </button>
               </div>
-              <span className="mt-20 w-full text-center text-2xl font-bold">
+              <span className="flex h-50 w-full flex-col justify-center text-center text-2xl font-bold">
                 {fileName}
               </span>
             </>
@@ -71,7 +72,7 @@ export default function UploadMemberExcel({
                 </div>
               </div>
               <input
-                className=" hidden"
+                className="hidden"
                 id="excel"
                 name="excel"
                 type="file"

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   type UseMutationResult,
   useMutation,
@@ -14,16 +13,16 @@ export function useUploadMembers(): UseMutationResult<
   FormData
 > {
   const queryClient = useQueryClient();
-  const router = useRouter();
 
   return useMutation(uploadMembers, {
     onSuccess() {
-      queryClient.invalidateQueries(['/club/my/club-members']);
-      router.push('/member');
-      toast.success('동아리원을 성공적으로 등록했어요.');
+      queryClient.invalidateQueries({
+        queryKey: ['my-club'],
+      });
+      toast.success('동아리원 정보를 수정했어요.');
     },
     onError() {
-      toast.error('동아리원을 업로드에 실패했어요.');
+      toast.error('동아리원 수정에 실패했어요');
     },
   });
 }
