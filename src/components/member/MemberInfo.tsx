@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import CancleIcon from '@/assets/cancle_red.svg';
+import CancelIcon from '@/assets/cancel-red.svg';
 import CheckIcon from '@/assets/check_blue.svg';
 import EditIcon from '@/assets/edit.svg';
 import RightArrow from '@/assets/rightArrow.svg';
@@ -127,10 +127,10 @@ export default function MemberInfo({ member }: MemberInfoProps) {
           {isEditing ? (
             <div className="flex gap-2">
               <Image
-                src={CancleIcon}
+                src={CancelIcon}
                 width={10}
                 height={10}
-                alt="CancleIcon"
+                alt="CancelIcon"
                 onClick={() => setIsEditing(false)}
               />
               <Image
