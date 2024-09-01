@@ -23,7 +23,7 @@ export default function ExcelDropdown() {
     const blob = new Blob([data.data], {
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
-    downloadBlob(blob, 'members.xlsx');
+    downloadBlob(blob, '동아리원 명단.xlsx');
   };
 
   return (
