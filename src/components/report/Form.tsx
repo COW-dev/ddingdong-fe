@@ -11,32 +11,30 @@ import {
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
 import useModal from '@/hooks/common/useModal';
-import { NewReport, StudentInfo } from '@/types/report';
+import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
 import UploadImage from '../common/UploadImage';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
-  date: DateRangeType;
   uploadFiles: File | null;
-  place: string;
-  content: string;
-  startTime: string;
-  endTime: string;
-  participants: StudentInfo[];
-  setValue: Dispatch<SetStateAction<NewReport>>;
+  report: EditReport;
+  setValue: Dispatch<SetStateAction<EditReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
+  setRemoveFile: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function Form({
-  date,
   uploadFiles,
-  participants,
   setValue,
   setImage,
+  report,
+  setRemoveFile,
 }: ReportProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
+  const { date, participants, place, content, startTime, endTime, imageUrls } =
+    report;
 
   useEffect(() => {
     if (uploadFiles) {
@@ -59,10 +57,19 @@ export default function Form({
       [event.target.name]: event.target.value,
     }));
   }
+
   function handleDateChange(selectedDate: DateValueType) {
     setValue((prev) => ({
       ...prev,
       date: selectedDate as DateRangeType,
+    }));
+  }
+
+  function handleClickTimeReset() {
+    setValue((prev) => ({
+      ...prev,
+      startTime: '',
+      endTime: '',
     }));
   }
 
@@ -79,29 +86,41 @@ export default function Form({
               minDate={new Date(new Date().getFullYear(), 0, 1)}
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
               onChange={handleDateChange}
-              inputClassName=" w-full h-12  px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
+              inputClassName="w-full h-12  px-4 py-3 text-sm border-[1.5px] border-gray-100 bg-gray-50 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
             />
             <input
               name="place"
               type="text"
               placeholder="활동장소"
+              value={place}
               onChange={(e) => handleChange(e)}
               className="md:text-md mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-base outline-none md:ml-3 md:mt-0 md:pb-3"
             />
           </div>
-          <p className=" text-md mt-3 font-semibold text-blue-500 md:my-2 md:text-lg">
-            활동 시간
-          </p>
+          <div className="mt-3 flex items-center justify-between md:my-2">
+            <p className="text-md font-semibold text-blue-500 md:text-lg">
+              활동 시간
+            </p>
+            <div
+              role="button"
+              onClick={handleClickTimeReset}
+              className="flex h-fit flex-col justify-center rounded-xl bg-blue-100 px-2 py-1 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 md:py-2"
+            >
+              초기화
+            </div>
+          </div>
           <div className="mb-3 flex flex-col items-center md:flex-row">
             <input
               name="startTime"
               type="time"
+              value={startTime}
               onChange={(e) => handleChange(e)}
               className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
             />
             <input
               name="endTime"
               type="time"
+              value={endTime}
               onChange={(e) => handleChange(e)}
               className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
             />
@@ -135,13 +154,19 @@ export default function Form({
             </p>
             <textarea
               name="content"
+              value={content}
               onChange={(e) => handleChange(e)}
               className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
             />
           </div>
         </div>
-        <div className="h-1/2 w-full  md:ml-2 md:w-1/2">
-          <UploadImage image={uploadFiles} setImage={setImage} />
+        <div className="h-1/2 w-full md:ml-2 md:w-1/2">
+          <UploadImage
+            image={uploadFiles}
+            setImage={setImage}
+            imageUrls={imageUrls}
+            setRemoveFile={setRemoveFile}
+          />
         </div>
       </div>
       <Modal

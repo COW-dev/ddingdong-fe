@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
 import { CookiesProvider } from 'react-cookie';
-import { Toaster } from 'react-hot-toast';
 import Layout from '@/components/layout';
 import ToasterWithMax from '@/components/toast/ToasterWithMax';
 

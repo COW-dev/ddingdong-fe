@@ -1,16 +1,14 @@
 import ScoreList from '@/components/score/ScoreList';
-import { ScoreDetail } from '@/types/score';
+import { ScoreHistory } from '@/types/score';
 
 type Prop = {
-  scoreCategory: string;
-  parseList: ScoreDetail[];
-  closeModal: () => void;
+  history: ScoreHistory[];
 };
 
-export default function CreateScore({ parseList }: Prop) {
+export default function CreateScore({ history }: Prop) {
   return (
     <div>
-      <ScoreList parseList={parseList} />
+      <ScoreList history={history} />
     </div>
   );
 }

@@ -51,12 +51,18 @@ export type ClubDetail = {
 };
 
 export type Member = {
-  id: number;
+  id?: number;
   name: string;
   studentNumber: string;
   phoneNumber: string;
   position: string;
   department: string;
+};
+
+export type UpdateMember = {
+  id: number;
+  token: string;
+  member: Member;
 };
 
 export type UpdateMyClub = {
@@ -86,11 +92,5 @@ export type UpdateClub = {
 
 export type DeleteClub = {
   clubId: number | boolean;
-  token: string;
-};
-
-export type UpdateMembers = {
-  members: Member[];
-  file: FormData;
   token: string;
 };

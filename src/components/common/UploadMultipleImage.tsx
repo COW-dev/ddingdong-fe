@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
-import Cancel from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import ImagesController from './ImagesController';
@@ -60,7 +60,6 @@ export default function UploadMultipleImage({
                 onClick={() => setPresentIndex(presentIndex + 1)}
                 className={`${presentIndex === image.length - 1 && `hidden`}`}
               />
-
               <div className="mr-3 mt-5" onClick={handleImageDelete}>
                 <Image src={Cancel} height={20} width={20} alt="cancel" />
               </div>
@@ -77,12 +76,12 @@ export default function UploadMultipleImage({
       ) : (
         <label
           htmlFor="dropzone-file"
-          className=" flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
+          className="flex h-full w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
         >
-          <div className="flex flex-col items-center justify-center text-gray-400">
+          <div className="flex flex-col items-center justify-center p-4 text-gray-400">
             <Image src={Camera} width={30} height={30} alt="upload" />
-            <p className="m-2 text-sm  ">Click to ImageUpload</p>
-            <p className=" text-xs text-gray-400">
+            <p className="m-2 text-sm">Click to ImageUpload</p>
+            <p className="text-xs text-gray-400">
               SVG, PNG, JPG (MAX. 800x400px)
             </p>
           </div>

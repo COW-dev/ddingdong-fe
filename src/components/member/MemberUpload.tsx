@@ -1,19 +1,17 @@
-import { redirect } from 'next/dist/server/api-utils';
+import { useState } from 'react';
 import router from 'next/router';
 import { useCookies } from 'react-cookie';
 import UploadExcel from '@/components/common/UploadExcel';
-import { useUpdateMembers } from '@/hooks/api/member/useMembers';
-import { parseImgUrl } from '@/utils/parse';
+import { useUploadMembers } from '@/hooks/api/member/useUploadMembers';
 
 type Props = {
-  file: File | null;
-  setFile: React.Dispatch<React.SetStateAction<File | null>>;
   closeModal: () => void;
 };
 
-export default function MemberUpload({ closeModal, file, setFile }: Props) {
+export default function MemberUpload({ closeModal }: Props) {
   const [cookies] = useCookies(['token']);
-  const mutation = useUpdateMembers();
+  const mutation = useUploadMembers();
+  const [file, setFile] = useState<File | null>(null);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -21,7 +19,6 @@ export default function MemberUpload({ closeModal, file, setFile }: Props) {
     file && formData.append('file', file);
     formData.append('token', cookies.token);
     closeModal();
-    router.push('/');
     return mutation.mutate(formData);
   }
 
