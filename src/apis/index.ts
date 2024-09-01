@@ -241,7 +241,6 @@ export async function getMemberFile(token: string) {
   return await api.get('/club/my/club-members/excel', {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'application/octet-stream',
     },
     responseType: 'blob',
   });
