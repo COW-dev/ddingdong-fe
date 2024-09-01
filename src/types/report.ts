@@ -16,7 +16,7 @@ export type MyReportList = ReportKey & {
 };
 
 export type CurrentReport = {
-  term: number;
+  term: string;
   currentTerm: string;
 };
 
