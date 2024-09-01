@@ -1,4 +1,5 @@
 import React from 'react';
+import toast from 'react-hot-toast';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { useReport } from '@/hooks/common/useReport';
@@ -30,10 +31,18 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     setRemoveFileTwo,
   } = useReport(report ?? [EMPTY_DATA, EMPTY_DATA]);
 
+  const validateDate = (report: EditReport) => {
+    const { endTime, startTime, date } = report;
+    return endTime !== '' && startTime !== '' && date.startDate;
+  };
+
   const handleClickModifyButton = async (
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
+    if (!validateDate(reportOne) || !validateDate(reportTwo))
+      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
+
     let formData = new FormData();
     formData = await createFormData(formData, term);
     return modifyMutation.mutate(formData);
@@ -43,6 +52,9 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
+    if (!validateDate(reportOne) || !validateDate(reportTwo))
+      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
+
     let formData = new FormData();
     formData = await createFormData(formData, term);
     return createMutation.mutate(formData);
