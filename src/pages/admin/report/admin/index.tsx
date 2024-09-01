@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse';
 export default function Index() {
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data;
-  const currentTerm = currentTermData?.term ?? 1;
+  const currentTerm = Number(currentTermData?.term) ?? '1';
   const termList = useReportTerms(token).data?.data;
 
   const filterPeriod = (term: number) => {
