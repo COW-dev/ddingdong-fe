@@ -7,10 +7,13 @@ import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { MyReportList } from '@/types/report';
 
 export default function ReportList() {
-  const termList = Array.from({ length: 7 }, (_, i) => `${i + 1}`);
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data;
-  const currentTerm = currentTermData?.term ?? 1;
+  const currentTerm = currentTermData?.term ?? 8;
+  const termList = Array.from(
+    { length: 7 },
+    (_, i) => `${Number(currentTerm) + i}`,
+  );
 
   const {
     data: { data: clubData },
