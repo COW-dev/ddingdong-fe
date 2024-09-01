@@ -1,29 +1,22 @@
 import { ScoreDetail } from '@/types/score';
-type Prop = {
-  scoreData: ScoreDetail[];
-};
 
-export default function History({ scoreData }: Prop) {
+export default function History({ totalScore, scoreHistories }: ScoreDetail) {
   return (
     <>
       <div className="mt-10 ">
         <div className=" mb-2 flex flex-row justify-between ">
           <span className="ml-2 text-lg font-semibold lg:text-xl">내역</span>
           <span className="text-lg font-bold text-blue-500 md:text-2xl">
-            총점 :{' '}
-            {scoreData?.length > 0
-              ? scoreData[scoreData?.length - 1]?.remainingScore.toFixed(3) +
-                '점'
-              : '0점'}
+            총점 : {scoreHistories ? totalScore + '점' : '0점'}
           </span>
         </div>
         <div
           className={`${
-            scoreData.length > 5 ? 'h-56 overflow-scroll md:h-88 ' : ''
+            scoreHistories ? 'h-56 overflow-scroll md:h-88 ' : ''
           } shadow-md sm:rounded-lg`}
         >
-          <table className="text-md w-full text-left text-gray-500 md:text-lg">
-            <thead className="text-md bg-gray-50 text-gray-700 md:text-lg">
+          <table className="text-md w-full text-left text-gray-500 md:text-lg ">
+            <thead className="text-md sticky top-0 bg-gray-50 text-gray-700 md:text-lg">
               <tr>
                 <th scope="col" className="px-3 md:px-6 md:py-3 ">
                   날짜
@@ -37,11 +30,11 @@ export default function History({ scoreData }: Prop) {
               </tr>
             </thead>
             <tbody>
-              {scoreData.length > 0 ? (
-                [...scoreData].reverse().map((data, index) => (
+              {scoreHistories ? (
+                scoreHistories.reverse().map((data, index) => (
                   <tr key={index} className=" border-b bg-white">
                     <td className="px-3 py-2 md:px-6 md:py-4">
-                      {data.createdAt.split('T')[0]}
+                      {data?.createdAt.split('T')[0]}
                     </td>
                     <td className="px-2 md:px-6 md:py-4">
                       {data?.scoreCategory}
