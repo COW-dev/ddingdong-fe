@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
-import Cancle from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import File from '@/assets/file.svg';
 import { NoticeDetail } from '@/types/notice';
 
@@ -57,7 +57,7 @@ export default function UploadMultipleFile({
         className=" mr-2 cursor-pointer"
         onClick={() => callback(index)}
       >
-        <Image src={Cancle} width={15} height={15} alt="delete" />
+        <Image src={Cancel} width={15} height={15} alt="delete" />
       </button>
       <span className=" text-sm font-semibold text-gray-500">{item.name}</span>
     </div>

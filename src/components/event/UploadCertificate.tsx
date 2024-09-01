@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, ChangeEvent, useState } from 'react';
 import Image from 'next/image';
-import Cancle from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 
 type Props = {
   image: File | null;
@@ -33,7 +33,7 @@ export default function UploadCertificate({ image, setImage }: Props) {
             />
             <div className=" absolute right-3 top-60 z-30 mt-2 min-w-[10%]">
               <button type="button" onClick={handleImageReset}>
-                <Image src={Cancle} height={15} width={15} alt="cancel" />
+                <Image src={Cancel} height={15} width={15} alt="cancel" />
               </button>
             </div>
           </>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Cancle from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import MiniLogo from '@/assets/miniLogo.svg';
 
 type DrawerProps = {
@@ -42,7 +42,7 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
               }}
             >
               <Image
-                src={Cancle}
+                src={Cancel}
                 width={24}
                 height={24}
                 alt="cancel"

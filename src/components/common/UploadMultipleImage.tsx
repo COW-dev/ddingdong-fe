@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
-import Cancle from '@/assets/cancle.svg';
+import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import ImagesController from './ImagesController';
@@ -61,7 +61,7 @@ export default function UploadMultipleImage({
                 className={`${presentIndex === image.length - 1 && `hidden`}`}
               />
               <div className="mr-3 mt-5" onClick={handleImageDelete}>
-                <Image src={Cancle} height={20} width={20} alt="cancle" />
+                <Image src={Cancel} height={20} width={20} alt="cancel" />
               </div>
             </div>
             <ImagesController
