@@ -63,7 +63,7 @@ export default function ReportList() {
                   </Link>
                 ) : (
                   <Link
-                    href="/report/new"
+                    href={`/report/${item}/new`}
                     data-item={item}
                     className={`${
                       Number(item) === Number(currentTerm) &&
