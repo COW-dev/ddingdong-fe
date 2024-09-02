@@ -44,8 +44,8 @@ export type SubmitReport = {
   //server로 전달하는 report type
   term: number;
   place: string;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
   content: string;
   participants: StudentInfo[];
 };

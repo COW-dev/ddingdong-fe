@@ -34,8 +34,8 @@ export const parseNewReportToReport = (
   const { date, place, content, participants, startTime, endTime } = report;
   return {
     term,
-    startDate: date.startDate + ' ' + startTime,
-    endDate: date.startDate + ' ' + endTime,
+    startDate: date.startDate ? date.startDate + ' ' + startTime : null,
+    endDate: date.startDate ? date.startDate + ' ' + endTime : null,
     place,
     content,
     participants,

@@ -33,6 +33,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
 
   const validateDate = (report: EditReport) => {
     const { endTime, startTime, date } = report;
+    if (endTime === '' && startTime === '' && !date.startDate) return true;
     return endTime !== '' && startTime !== '' && date.startDate;
   };
 
@@ -40,11 +41,13 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
-    if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
 
     let formData = new FormData();
     formData = await createFormData(formData, term);
+
+    if (!validateDate(reportOne) || !validateDate(reportTwo))
+      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
+
     return modifyMutation.mutate(formData);
   };
 
