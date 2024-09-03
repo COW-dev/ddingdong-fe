@@ -1,6 +1,6 @@
 import { useCookies } from 'react-cookie';
 import { useMyFix } from '@/hooks/api/fixzone/useMyFix';
-import { sortFixZone } from '@/utils/sort';
+import { sortFixZone } from '@/utils/adjust';
 import FixItem from './FixItem';
 
 export default function FixClubList() {
