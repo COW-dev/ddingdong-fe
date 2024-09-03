@@ -6,12 +6,12 @@ import Admin from '@/assets/admin.jpg';
 import FixCommentDropdown from '@/components/fix/comment/FixCommentDropdown';
 import { Comment as CommentType } from '@/types/fix';
 import 'dayjs/locale/ko';
-import { adjustTextareaHeight } from '@/utils/adjust';
+import { adjustTextareaHeight } from '@/utils/change';
 
-interface CommentProps {
+type CommentProps = {
   info: CommentType;
   fixZoneId: number;
-}
+};
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);

@@ -7,13 +7,14 @@ import Admin from '@/assets/admin.jpg';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewFixComment } from '@/hooks/api/fixzone/useNewFixComment';
 import { Comment as CommentType } from '@/types/fix';
-import { adjustTextareaHeight } from '@/utils/adjust';
+import { adjustTextareaHeight } from '@/utils/change';
 import Comment from './Comment';
 
-interface CommentContainerProps {
+type CommentContainerProps = {
   comments: CommentType[];
   fixZoneId: number;
-}
+};
+
 function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
   const [{ role }] = useCookies(['role']);
   const [{ token }] = useCookies(['token']);

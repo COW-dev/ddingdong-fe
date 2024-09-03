@@ -1,6 +1,6 @@
 import { useCookies } from 'react-cookie';
 import { useAllFix } from '@/hooks/api/fixzone/useAllFix';
-import { sortFixZone } from '@/utils/adjust';
+import { sortFixZone } from '@/utils/change';
 import FixItem from './FixItem';
 
 export default function FixAdminList() {
