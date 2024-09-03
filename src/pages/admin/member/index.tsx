@@ -46,8 +46,11 @@ export default function Index() {
         동아리원 명단 관리
       </div>
       <div className="mb-7 flex justify-between">
-        <div className="font-bold md:text-xl">
-          {data?.name?.toUpperCase()}의 동아리원은 총
+        <div className="flex items-center text-xl font-bold">
+          <span className="hidden md:inline-block">
+            {data?.name?.toUpperCase()}의&nbsp;
+          </span>
+          동아리원은 총
           <span className="text-blue-500"> {members.length}명</span>
           입니다.
         </div>
