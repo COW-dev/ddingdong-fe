@@ -1,4 +1,3 @@
-import { on } from 'events';
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
@@ -49,11 +48,11 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
           role === ROLE_TYPE.ROLE_CLUB && 'hidden'
         }`}
       >
-        <div>
+        <div className="min-w-fit">
           <Image
             src={Admin}
-            width={52}
-            height={52}
+            width={40}
+            height={40}
             alt="admin image"
             className="rounded-full"
           />
@@ -65,15 +64,17 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
           maxLength={255}
           rows={1}
           onChange={(e) => handleChangeMessage(e.target.value)}
-          className="w-full resize-none rounded-3xl bg-gray-100 p-4 leading-6 text-[#878787] outline-none"
+          className="w-full resize-none rounded-3xl bg-gray-100 p-2.5 text-[#878787] outline-none"
         />
-        <button
-          role="button"
-          onClick={handleSubmit}
-          className="h-fit min-w-fit rounded-3xl bg-blue-500 p-2 text-xs font-semibold text-white md:p-2.5 md:text-sm"
-        >
-          댓글 작성
-        </button>
+        <div className="min-w-fit">
+          <button
+            role="button"
+            onClick={handleSubmit}
+            className="rounded-3xl bg-blue-500 p-2.5 text-xs font-semibold text-white md:text-sm"
+          >
+            댓글 작성
+          </button>
+        </div>
       </div>
       <div className="flex flex-col gap-2 py-6 text-sm">
         {comments.map((comment, index) => (
