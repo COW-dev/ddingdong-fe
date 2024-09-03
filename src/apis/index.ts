@@ -268,12 +268,12 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
   });
 }
 export async function deleteFixComment({
-  fixZonId,
+  fixZoneId,
   commentId,
   token,
 }: DeleteFixComment) {
   return await api.delete(
-    `/admin/fix-zones/${fixZonId}/comments/${commentId}`,
+    `/admin/fix-zones/${fixZoneId}/comments/${commentId}`,
     {
       headers: {
         Authorization: 'Bearer ' + token,
