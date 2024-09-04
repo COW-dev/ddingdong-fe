@@ -70,9 +70,11 @@ export default function FixDetail({ id }: Prop) {
         </div>
         {/* 내용 */}
         <div
-          className={`relative flex w-full items-center justify-center md:w-1/2 md:p-3
-            ${imageUrls.length === 0 && 'hidden'}
-          `}
+          className={
+            imageUrls.length === 0
+              ? 'hidden'
+              : `relative flex w-full items-center justify-center md:w-1/2 md:p-3`
+          }
         >
           <Image
             src={LeftArrow2}
