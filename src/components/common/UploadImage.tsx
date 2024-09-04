@@ -14,7 +14,7 @@ type UploadImageProps = {
     | Dispatch<SetStateAction<ClubDetail>>;
   urlsName?: string;
   setRemoveFile?: Dispatch<SetStateAction<boolean>>;
-  id: number;
+  id?: number;
 };
 
 export default function UploadImage({
