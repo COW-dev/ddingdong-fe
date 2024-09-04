@@ -62,13 +62,16 @@ function Index({ term }: ReportPageProps) {
       <Head>
         <title>활동보고서 관리</title>
       </Head>
-      <h1
-        onClick={handleClickBackButton}
-        className="mt-7 flex text-2xl font-bold md:mt-10 md:text-4xl"
-      >
-        <Image src={ArrowImage} alt="뒤로가기 화살표" width={40} height={40} />
-        {term}회차
+      <h1 className="mt-7 flex text-2xl font-bold md:mt-10 md:text-4xl">
+        활동보고서 관리
       </h1>
+      <div
+        className="mt-7 flex items-center text-xl font-bold md:mt-10 md:text-2xl"
+        onClick={handleClickBackButton}
+      >
+        <Image src={ArrowImage} alt="뒤로가기 화살표" width={28} height={28} />
+        {term}회차
+      </div>
       <FilterOption
         filterOption={optionValue}
         setFilteredClub={setFilteredClub}
