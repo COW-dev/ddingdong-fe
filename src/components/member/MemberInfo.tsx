@@ -123,20 +123,20 @@ export default function MemberInfo({ member }: MemberInfoProps) {
           </div>
         </div>
 
-        <div className="absolute right-5 top-5">
+        <div className="absolute right-5 top-4">
           {isEditing ? (
             <div className="flex gap-2">
               <Image
                 src={CancelIcon}
-                width={10}
-                height={10}
+                width={12}
+                height={12}
                 alt="CancelIcon"
                 onClick={() => setIsEditing(false)}
               />
               <Image
                 src={CheckIcon}
-                width={18}
-                height={18}
+                width={20}
+                height={20}
                 alt="CheckIcon"
                 onClick={handleSubmit}
               />
@@ -144,8 +144,8 @@ export default function MemberInfo({ member }: MemberInfoProps) {
           ) : (
             <Image
               src={EditIcon}
-              width={11}
-              height={11}
+              width={14}
+              height={14}
               alt="EditIcon"
               onClick={() => setIsEditing(true)}
             />
