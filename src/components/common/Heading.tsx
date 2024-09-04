@@ -1,5 +1,5 @@
 type HeadingProps = {
-  children: string;
+  children: React.ReactNode;
 };
 
 export default function Heading({ children }: HeadingProps) {
