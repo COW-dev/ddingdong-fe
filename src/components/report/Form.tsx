@@ -22,6 +22,7 @@ type ReportProps = {
   setValue: Dispatch<SetStateAction<EditReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
   setRemoveFile: Dispatch<SetStateAction<boolean>>;
+  id: number;
 };
 
 export default function Form({
@@ -30,24 +31,11 @@ export default function Form({
   setImage,
   report,
   setRemoveFile,
+  id,
 }: ReportProps) {
-  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
   const { date, participants, place, content, startTime, endTime, imageUrls } =
     report;
-
-  useEffect(() => {
-    if (uploadFiles) {
-      setImage(uploadFiles);
-      const imageUrl = URL.createObjectURL(uploadFiles);
-      setPreviewImageUrl(imageUrl);
-      return () => {
-        URL.revokeObjectURL(imageUrl);
-      };
-    } else {
-      setPreviewImageUrl(null);
-    }
-  }, [setImage, uploadFiles]);
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
@@ -166,6 +154,7 @@ export default function Form({
             setImage={setImage}
             imageUrls={imageUrls}
             setRemoveFile={setRemoveFile}
+            id={id}
           />
         </div>
       </div>

@@ -73,6 +73,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           <Form
             uploadFiles={uploadFileOne}
             report={reportOne}
+            id={1}
             setValue={setReportOne}
             setImage={setUploadFileOne}
             setRemoveFile={setRemoveFileOne}
@@ -82,6 +83,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           <Form
             uploadFiles={uploadFileTwo}
             report={reportTwo}
+            id={2}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
             setRemoveFile={setRemoveFileTwo}
