@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Bin from '@/assets/bin.svg';
+import Bin from '@/assets/bin-black.svg';
 import Score from '@/assets/score.svg';
 import { ModalType } from '@/types';
 import DeleteClub from './DeleteClub';

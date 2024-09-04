@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
-import Bin from '@/assets/bin.svg';
+import Bin from '@/assets/bin-red.svg';
 import Download from '@/assets/download.svg';
 import { ROLE_TYPE } from '@/constants/text';
 import { useAllDocuments } from '@/hooks/api/document/useAllDocuments';
@@ -75,7 +75,7 @@ export default function DocumentList() {
               }`}
             >
               <Image
-                className=" mb-1 h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6 "
+                className="mb-1 h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6 "
                 src={Download}
                 alt={'다운로드 이미지'}
                 width={24}
@@ -84,7 +84,7 @@ export default function DocumentList() {
               />
               {role === ROLE_TYPE.ROLE_ADMIN && (
                 <Image
-                  className=" h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
+                  className="h-5 w-5 cursor-pointer hover:opacity-50 md:h-6 md:w-6"
                   src={Bin}
                   alt={'휴지통 이미지'}
                   width={24}

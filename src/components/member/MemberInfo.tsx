@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import CancelIcon from '@/assets/cancel-red.svg';
-import CheckIcon from '@/assets/check_blue.svg';
+import CheckIcon from '@/assets/check-blue.svg';
 import EditIcon from '@/assets/edit.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
