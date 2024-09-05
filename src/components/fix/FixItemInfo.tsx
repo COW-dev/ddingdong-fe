@@ -12,7 +12,7 @@ export default function FixItemInfo({ club, createdAt, location }: Props) {
         <div className="p-3 text-lg font-bold leading-none text-blue-500 md:text-xl">
           동아리
         </div>
-        <div className="text-base"> {club?.toUpperCase()}</div>
+        <div className="text-base"> {club}</div>
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="p-3 text-lg font-bold leading-none text-blue-500 md:text-xl">

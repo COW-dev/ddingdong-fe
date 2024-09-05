@@ -48,7 +48,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     formData = await createFormData(formData, term);
 
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
+      return toast.error('날짜와 시간을 모두 선택해주세요.');
 
     return modifyMutation.mutate(formData);
   };
@@ -58,7 +58,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
   ) => {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
+      return toast.error('날짜와 시간을 모두 선택해주세요.');
 
     let formData = new FormData();
     formData = await createFormData(formData, term);

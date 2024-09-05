@@ -59,7 +59,7 @@ export default function Index({ term, name }: ReportKey) {
           <Report reportData={reportData[1]} term={term} />
         </Accordion>
       </div>
-      <div className="m-auto flex gap-2 md:mt-20">
+      <div className="m-auto mt-20 flex gap-2">
         <button
           className={`mb-4 w-18 rounded-xl bg-red-100 py-2 text-sm font-bold text-red-500 transition-colors hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
             currentTermData !== String(term) && 'hidden'

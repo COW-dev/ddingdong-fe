@@ -3,11 +3,16 @@ type Prop = {
   endDate: string;
 };
 export default function ActiveDate({ startDate, endDate }: Prop) {
+  const [date, startTime] = startDate?.split(' ') ?? [];
+  const [, endTime] = endDate?.split(' ') ?? [];
+
   return (
-    <div className="md:text-md text-base font-medium opacity-70 md:pb-3">
-      <span>{startDate?.split(' ')[0]}</span>{' '}
+    <div
+      className={date ? 'text-base font-medium opacity-70 md:pb-3' : 'hidden'}
+    >
+      <span className="pr-1">{date}</span>
       <span>
-        {startDate?.split(' ')[1]}~{endDate?.split(' ')[1]}
+        {startTime}~{endTime}
       </span>
     </div>
   );
