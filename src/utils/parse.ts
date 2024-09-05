@@ -22,8 +22,8 @@ export function parseImgUrl(url: string): string {
 }
 
 const parseStringDateToRangeDate = (start: string, end: string) => {
-  const [startDate, startTime] = start.split(' ');
-  const [endDate, endTime] = end.split(' ');
+  const [startDate, startTime] = start?.split(' ') ?? ['', ''];
+  const [endDate, endTime] = end?.split(' ') ?? ['', ''];
   return { startDate, startTime, endDate, endTime };
 };
 

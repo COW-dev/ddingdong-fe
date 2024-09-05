@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
@@ -14,6 +15,7 @@ type ReportEditProps = {
 };
 
 function ReportEdit({ report, term = 0 }: ReportEditProps) {
+  const router = useRouter();
   const createMutation = useNewReport();
   const modifyMutation = useUpdateReports(term);
 
@@ -90,12 +92,30 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           />
         </Accordion>
         <div className="m-auto flex justify-center md:mt-6">
-          <button
-            type="submit"
-            className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
-          >
-            {report ? '수정하기' : '생성하기'}
-          </button>
+          {report ? (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="h-11 w-16 rounded-xl bg-gray-100 px-1 py-2.5 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-200 sm:inline-block md:text-base"
+              >
+                취소
+              </button>
+              <button
+                type="submit"
+                className="h-11 w-24 rounded-xl bg-blue-500 px-1 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 sm:inline-block md:text-base"
+              >
+                제출
+              </button>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+            >
+              생성하기
+            </button>
+          )}
         </div>
       </form>
     </>
