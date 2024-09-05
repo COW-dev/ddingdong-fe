@@ -1,18 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
 import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
-import isNavActive from '@/utils/isNavActive';
-
-const navItems = [
-  {
-    id: 1,
-    href: '/',
-    content: '홈',
-  },
-];
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -39,21 +29,7 @@ export default function AdminHeader() {
         {!isLoginPage && (
           <nav className="-mr-4 md:block">
             <ul className="flex">
-              {navItems.map((item) => (
-                <li key={item.id} className="invisible mx-1 md:visible">
-                  <Link
-                    href={item.href}
-                    className={`inline-block p-3 font-semibold transition-colors hover:text-blue-500 ${
-                      isNavActive(curPath, item.href)
-                        ? 'text-blue-500'
-                        : 'text-gray-500'
-                    }`}
-                  >
-                    {item.content}
-                  </Link>
-                </li>
-              ))}
-              <li className="mx-1">
+              <li>
                 <button
                   className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
                   onClick={() => {
