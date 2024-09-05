@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
@@ -10,11 +11,11 @@ import { parseDate } from '@/utils/parse';
 export default function Index() {
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data;
-  const currentTerm = Number(currentTermData?.term) ?? '1';
+  const currentTerm = Number(currentTermData?.term) ?? '8';
   const termList = useReportTerms(token).data?.data;
 
   const filterPeriod = (term: number) => {
-    if (term >= currentTerm) return BUTTON_TYPE.BEFORE;
+    if (term > currentTerm) return BUTTON_TYPE.BEFORE;
     else if (term === currentTerm) return BUTTON_TYPE.NOW;
     else return BUTTON_TYPE.AFTER;
   };
@@ -27,18 +28,18 @@ export default function Index() {
       <Heading>활동 보고서 관리</Heading>
       <div className="mt-12 w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
-          {termList?.map((item, index) => {
+          {termList?.map((item) => {
             const { term, startDate, endDate } = item;
 
             return (
               <div
-                key={index}
+                key={term}
                 className={`mb-3 ${
-                  filterPeriod(Number(item)) === BUTTON_TYPE.BEFORE &&
+                  filterPeriod(term) === BUTTON_TYPE.BEFORE &&
                   'pointer-events-none cursor-not-allowed text-gray-300'
                 }`}
               >
-                <Link href={`/report/admin/${term}`} data-item={item}>
+                <Link href={`/report/admin/${term}`} data-item={term}>
                   <div className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50">
                     <div className="flex h-full w-full items-center justify-between p-5 md:p-6">
                       <div>
@@ -52,11 +53,11 @@ export default function Index() {
                       <div className="flex items-center">
                         <div
                           className={`mx-1 rounded-lg p-2 text-sm font-semibold 
-                            ${filterPeriod(Number(term)).color}
-                            ${filterPeriod(Number(term)).background_color}
+                            ${filterPeriod(term).color}
+                            ${filterPeriod(term).background_color}
                           `}
                         >
-                          {filterPeriod(Number(term)).text}
+                          {filterPeriod(term).text}
                         </div>
                       </div>
                     </div>
