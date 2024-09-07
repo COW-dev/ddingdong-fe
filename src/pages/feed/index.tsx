@@ -6,6 +6,7 @@ import { Feed } from '@/types/feed';
 
 export default function Index() {
   const [feeds, setFeeds] = useState<Array<Feed>>([]);
+
   const { data } = useAllFeeds();
 
   useEffect(() => {
@@ -26,9 +27,7 @@ export default function Index() {
           </div>
         ) : (
           <div className="w-full">
-            <div className="grid grid-cols-3">
-              <ClubFeed feeds={feeds} />
-            </div>
+            <ClubFeed feeds={feeds} size="large" />
           </div>
         )}
       </div>
