@@ -34,6 +34,7 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-lottie-player": "^1.5.4",
+    "react-player": "^2.16.0",
     "react-tailwindcss-datepicker": "^1.6.5",
     "react-textarea-autosize": "^8.4.1",
     "tailwind-merge": "^2.2.1",
