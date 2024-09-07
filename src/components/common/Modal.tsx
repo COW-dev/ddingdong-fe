@@ -9,6 +9,7 @@ type ModalProps = {
   closeModal: () => void;
   title?: React.ReactNode;
   closeButton?: boolean;
+  feed?: boolean;
 };
 
 export default function Modal({
@@ -18,6 +19,7 @@ export default function Modal({
   closeModal,
   modalRef,
   title,
+  feed = false,
 }: ModalProps) {
   if (!visible) return <></>;
 
@@ -25,12 +27,16 @@ export default function Modal({
     <ModalPortal>
       <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-10">
         <div
-          className="z-60 relative m-5 max-h-[80%] w-full max-w-lg overflow-y-scroll overscroll-y-contain rounded-lg bg-white shadow md:overflow-y-auto"
+          className={`z-60 relative m-5  w-full rounded-lg bg-white shadow  ${
+            feed
+              ? 'max-w-3xl md:h-[70%]'
+              : 'max-h-[80%] max-w-lg overflow-y-scroll md:overflow-y-auto'
+          }`}
           ref={modalRef}
         >
           <div
             className={`flex items-center justify-between rounded-t ${
-              title ? `border-b p-5` : 'p-2'
+              title && `border-b p-5`
             }`}
           >
             <h1
@@ -49,7 +55,7 @@ export default function Modal({
               <Image src={CancelImg} alt="close-button" />
             </button>
           </div>
-          <div className="space-y-6 p-6">{children}</div>
+          <div className={`space-y-6  ${!feed && 'p-6'}`}>{children}</div>
         </div>
       </div>
     </ModalPortal>
