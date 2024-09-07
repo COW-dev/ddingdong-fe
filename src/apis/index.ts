@@ -16,7 +16,6 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  Member,
   UpdateMember,
 } from '@/types/club';
 import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
@@ -28,6 +27,7 @@ import {
   User,
 } from '@/types/event';
 
+import { Feed } from '@/types/feed';
 import {
   DeleteFixComment,
   Fix,
@@ -145,6 +145,16 @@ export async function getDocumentInfo(
   documentId: number,
 ): Promise<AxiosResponse<DocumentDetail, unknown>> {
   return await api.get(`/documents/${documentId}`);
+}
+
+export async function getAllFeeds(): Promise<AxiosResponse<Feed[], unknown>> {
+  return await api.get('/feeds');
+}
+
+export async function getClubFeed(
+  clubId: number,
+): Promise<AxiosResponse<Feed[], unknown>> {
+  return await api.get(`/clubs/${clubId}/feeds`);
 }
 
 export async function createNotice(noticeData: FormData) {
