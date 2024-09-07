@@ -14,7 +14,6 @@ export default function Index() {
     }
   }, [data]);
 
-  console.log('data', data);
   return (
     <>
       <Head>
