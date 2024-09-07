@@ -82,7 +82,7 @@ export default function UploadImage({
         </>
       ) : (
         <label
-          htmlFor={`dropzone-file${id}`}
+          htmlFor={`dropzone-file-${id}`}
           className=" dar flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
         >
           <div className="flex flex-col items-center justify-center pb-6 pt-5 text-gray-400">
