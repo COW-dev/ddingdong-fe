@@ -27,7 +27,7 @@ import {
   User,
 } from '@/types/event';
 
-import { Feed } from '@/types/feed';
+import { Feed, FeedDetail } from '@/types/feed';
 import {
   DeleteFixComment,
   Fix,
@@ -155,6 +155,12 @@ export async function getClubFeed(
   clubId: number,
 ): Promise<AxiosResponse<Feed[], unknown>> {
   return await api.get(`/clubs/${clubId}/feeds`);
+}
+
+export async function getFeedDetail(
+  feedId: number,
+): Promise<AxiosResponse<FeedDetail, unknown>> {
+  return await api.get(`/feeds/${feedId}`);
 }
 
 export async function createNotice(noticeData: FormData) {
