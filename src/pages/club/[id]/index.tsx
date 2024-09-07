@@ -45,7 +45,16 @@ export default function Index({ clubId }: ClubDetailProps) {
       },
       {
         label: '활동 피드',
-        content: <ClubFeed feeds={clubFeed} />,
+        content:
+          clubFeed.length === 0 ? (
+            <div className="flex w-full items-center justify-center">
+              <div className="mt-20 text-base font-medium text-gray-500">
+                등록된 게시물이 없습니다.
+              </div>
+            </div>
+          ) : (
+            <ClubFeed feeds={clubFeed} size="large" />
+          ),
       },
     ];
 
