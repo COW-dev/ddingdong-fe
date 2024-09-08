@@ -5,10 +5,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import Bin from '@/assets/bin-red.svg';
+import AlertDialog from '@/components/common/AlertDialog';
 import { ROLE_TYPE } from '@/constants/text';
 import { useDeleteFixComment } from '@/hooks/api/fixzone/useDeleteFixComment';
+import useModal from '@/hooks/common/useModal';
 import { Comment as CommentType } from '@/types/fix';
 import { adjustTextareaHeight } from '@/utils/change';
+import Modal from '../../common/Modal';
 import 'dayjs/locale/ko';
 
 type CommentProps = {
@@ -25,6 +28,8 @@ function Comment({ info, fixZoneId }: CommentProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { content, createdAt, commentId } = info;
 
+  const { openModal, visible, closeModal, modalRef } = useModal();
+
   useEffect(() => {
     adjustTextareaHeight(textareaRef);
   }, [content]);
@@ -35,6 +40,7 @@ function Comment({ info, fixZoneId }: CommentProps) {
       commentId: commentId,
       token,
     });
+    closeModal();
   };
 
   return (
@@ -69,11 +75,22 @@ function Comment({ info, fixZoneId }: CommentProps) {
               alt={'휴지통 이미지'}
               width={20}
               height={20}
-              onClick={handleClickDeleteButton}
+              onClick={openModal}
             />
           </div>
         )}
       </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        closeButton={false}
+        closeModal={closeModal}
+      >
+        <AlertDialog
+          onConfirm={handleClickDeleteButton}
+          onCancel={closeModal}
+        />
+      </Modal>
     </div>
   );
 }
