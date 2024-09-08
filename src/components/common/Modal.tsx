@@ -25,9 +25,13 @@ export default function Modal({
 
   return (
     <ModalPortal>
-      <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-10">
+      <div
+        className={`fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black ${
+          feed ? 'bg-opacity-40' : 'bg-opacity-10'
+        }`}
+      >
         <div
-          className={`z-60 relative m-5  w-full rounded-lg bg-white shadow  ${
+          className={`z-60 relative m-5  w-full rounded-lg bg-white shadow ${
             feed
               ? 'max-w-3xl md:h-[70%]'
               : 'max-h-[80%] max-w-lg overflow-y-scroll md:overflow-y-auto'
@@ -55,7 +59,7 @@ export default function Modal({
               <Image src={CancelImg} alt="close-button" />
             </button>
           </div>
-          <div className={`space-y-6  ${!feed && 'p-6'}`}>{children}</div>
+          <div className={` ${!feed && 'space-y-6  p-6'}`}>{children}</div>
         </div>
       </div>
     </ModalPortal>
