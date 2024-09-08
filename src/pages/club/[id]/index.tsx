@@ -9,6 +9,7 @@ import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
 import { useClubFeed } from '@/hooks/api/feed/useClubFeed';
 import { TabMenu } from '@/types/feed';
+import { useEffect, useState } from 'react';
 
 type ClubDetailProps = {
   clubId: number;
@@ -53,7 +54,7 @@ export default function Index({ clubId }: ClubDetailProps) {
               </div>
             </div>
           ) : (
-            <ClubFeed feeds={clubFeed} size="large" />
+            <ClubFeed feeds={clubFeed} size="medium" />
           ),
       },
     ];
@@ -78,6 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (context: {
   query: any;
 }) => {
   const { id } = context.query;
+
   return {
     props: {
       clubId: id,

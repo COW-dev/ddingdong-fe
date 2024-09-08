@@ -23,7 +23,6 @@ type RoleText = {
     notice: NavBox;
     documents: NavBox;
     FAQ?: NavBox;
-    feed?: NavBox;
   };
 };
 
@@ -64,11 +63,6 @@ export const ROLE_TEXT: RoleText = {
       title: '동아리 정보 수정',
       subtitle: '동아리 상세 정보를 입력/수정해요.',
       route: '/my-club',
-    },
-    feed: {
-      title: '동아리 피드 관리',
-      subtitle: '동아리 피드를 작성하고, 확인해요.',
-      route: '/feed',
     },
     member: {
       title: '동아리원 명단 관리',
