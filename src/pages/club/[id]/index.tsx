@@ -9,7 +9,6 @@ import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
 import { useClubFeed } from '@/hooks/api/feed/useClubFeed';
 import { TabMenu } from '@/types/feed';
-import { useEffect, useState } from 'react';
 
 type ClubDetailProps = {
   clubId: number;
