@@ -2,11 +2,14 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
-import FixCommentDropdown from '@/components/fix/comment/FixCommentDropdown';
+import Bin from '@/assets/bin-red.svg';
+import { ROLE_TYPE } from '@/constants/text';
+import { useDeleteFixComment } from '@/hooks/api/fixzone/useDeleteFixComment';
 import { Comment as CommentType } from '@/types/fix';
-import 'dayjs/locale/ko';
 import { adjustTextareaHeight } from '@/utils/change';
+import 'dayjs/locale/ko';
 
 type CommentProps = {
   info: CommentType;
@@ -17,12 +20,22 @@ dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
 function Comment({ info, fixZoneId }: CommentProps) {
+  const [{ token, role }] = useCookies(['token', 'role']);
+  const deleteMutation = useDeleteFixComment(fixZoneId);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { content, createdAt, commentId } = info;
 
   useEffect(() => {
     adjustTextareaHeight(textareaRef);
   }, [content]);
+
+  const handleClickDeleteButton = () => {
+    deleteMutation.mutate({
+      fixZoneId: fixZoneId,
+      commentId: commentId,
+      token,
+    });
+  };
 
   return (
     <div className="my-1 flex gap-4">
@@ -48,9 +61,18 @@ function Comment({ info, fixZoneId }: CommentProps) {
             ref={textareaRef}
           />
         </div>
-        <div className="relative flex h-4 min-w-fit flex-col justify-center p-4">
-          <FixCommentDropdown fixZoneId={fixZoneId} commentId={commentId} />
-        </div>
+        {role === ROLE_TYPE.ROLE_ADMIN && (
+          <div className="relative flex h-4 min-w-fit flex-col justify-center p-2">
+            <Image
+              className="cursor-pointer hover:opacity-50"
+              src={Bin}
+              alt={'휴지통 이미지'}
+              width={20}
+              height={20}
+              onClick={handleClickDeleteButton}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
