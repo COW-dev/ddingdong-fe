@@ -22,30 +22,37 @@ export default function ClubFeedDetail({ feedId }: Props) {
         : Admin;
 
     return (
-      <div className="flex h-full w-full flex-col justify-center">
-        <div className="flex items-center justify-center rounded-t-lg bg-black">
+      <div className="flex h-full w-full flex-col">
+        <div
+          className={`${
+            feed.feedType === 'VIDEO' ? 'h-full ' : 'h-[225px]'
+          }  w-full rounded-t-lg bg-black md:h-[450px]`}
+        >
           {feed.feedType === 'VIDEO' ? (
             <VideoPlayer videoUrl={feed.fileUrl} />
           ) : (
             <Image
               src={feed.fileUrl}
               alt={'동아리 피드'}
-              height={425}
-              style={{ objectFit: 'contain' }}
+              height={450}
+              width={450}
+              className="h-full w-full object-contain"
             />
           )}
         </div>
-        <div className=" ml-5 flex h-[20vh] flex-col items-start justify-center md:ml-10 ">
+        <div className=" ml-5 flex h-[17vh] flex-col items-start justify-center md:ml-10 ">
           <div className="flex flex-row items-center justify-center">
-            <Image
-              src={imageSrc}
-              alt={'동아리 대표 이미지'}
-              width={10}
-              height={10}
-              priority
-              className="m-auto h-12 w-12 rounded-full object-cover md:h-12 md:w-12"
-            />
-            <div className="ml-2 text-xl font-semibold md:text-2xl">
+            <div className="h-12 w-12 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-14 md:w-14">
+              <Image
+                src={imageSrc}
+                alt={'동아리 대표 이미지'}
+                width={80}
+                height={80}
+                priority
+                className="m-auto h-12 w-12 rounded-full object-cover md:h-14 md:w-14"
+              />
+            </div>
+            <div className="ml-2 text-base font-semibold md:text-2xl">
               {feed.clubInfo.name}
             </div>
           </div>
