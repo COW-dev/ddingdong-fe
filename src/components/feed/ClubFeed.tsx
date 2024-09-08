@@ -13,7 +13,7 @@ type ClubFeedProps = {
 
 export default function ClubFeed({ feeds, size }: ClubFeedProps) {
   const [loading, setLoading] = useState(true);
-  const [feed, setFeed] = useState<number>(0);
+  const [feedId, setFeedId] = useState<number>(0);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   useEffect(() => {
@@ -23,34 +23,50 @@ export default function ClubFeed({ feeds, size }: ClubFeedProps) {
   }, [feeds]);
 
   const handleClick = (id: number) => {
-    setFeed(id);
+    setFeedId(id);
     openModal();
   };
 
+  const renderSkeleton = () => (
+    <>
+      {Array(feeds?.length)
+        .fill(0)
+        .map((_, index) => (
+          <div
+            key={index}
+            className={`h-30 w-full gap-1 ${
+              size === 'medium' ? 'md:h-54' : 'md:h-60 lg:h-72'
+            }`}
+          >
+            <Skeleton />
+          </div>
+        ))}
+    </>
+  );
+
+  const renderFeeds = () => (
+    <>
+      {feeds?.map((item, index) => (
+        <div key={item.id}>
+          <Image
+            src={item.thumbnailUrl}
+            alt={`image-${index + 1}`}
+            width={500}
+            height={500}
+            style={{ objectFit: 'contain' }}
+            className={`h-30 w-full bg-black ${
+              size === 'medium' ? 'md:h-54' : 'md:h-60 lg:h-72'
+            }`}
+            onClick={() => handleClick(item.id)}
+          />
+        </div>
+      ))}
+    </>
+  );
+
   return (
-    <div className="grid grid-cols-3">
-      {loading
-        ? Array(feeds?.length || 1)
-            .fill(0)
-            .map((item, index) => (
-              <div key={index} className="h-auto w-full gap-3">
-                <Skeleton />
-              </div>
-            ))
-        : feeds?.map((item, index) => (
-            <div key={item.id} className="border">
-              <Image
-                src={item.thumbnailUrl}
-                alt={`image-${index + 1}`}
-                width={500}
-                height={500}
-                className={` h-42 w-full ${
-                  size === 'medium' ? 'md:h-54' : ' md:h-60 lg:h-72'
-                }`}
-                onClick={() => handleClick(item.id)}
-              />
-            </div>
-          ))}
+    <div className="grid grid-cols-3 gap-1">
+      {loading ? renderSkeleton() : renderFeeds()}
       <Modal
         visible={visible}
         modalRef={modalRef}
@@ -58,7 +74,7 @@ export default function ClubFeed({ feeds, size }: ClubFeedProps) {
         closeButton={false}
         feed={true}
       >
-        <ClubFeedDetail feedId={feed} closeModal={closeModal} />
+        <ClubFeedDetail feedId={feedId} />
       </Modal>
     </div>
   );
