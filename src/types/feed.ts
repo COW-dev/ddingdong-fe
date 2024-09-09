@@ -16,6 +16,6 @@ export type FeedDetail = {
   clubInfo: ClubInfo;
   activityContent: string;
   fileUrl: string;
-  feedType: string;
+  feedType: 'IMAGE' | 'VIDEO';
   createdDate: string;
 };
