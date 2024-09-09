@@ -22,39 +22,49 @@ export default function Report({ reportData, term }: Props) {
     setData(data);
   }, [imageUrls, data]);
 
+  const isParticipants =
+    participants?.filter((participant) => participant.name).length > 0;
   return (
-    <div className="flex flex-col items-center md:m-3 md:flex-row md:justify-evenly lg:justify-between">
+    <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
       <div className="mb-2 flex flex-col">
         <ResponsiveInfo image={showImage} report={reportData} term={term} />
         <div className="p-3 md:p-0">
           <p className="my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 참여 인원
           </p>
-          <ul
-            className="md:text-md grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3
+          {isParticipants ? (
+            <ul
+              className="grid w-full grid-cols-1 gap-1.5 text-base font-medium opacity-70 md:grid-cols-1 md:pb-3
               lg:grid-cols-2"
-          >
-            {participants?.map((participant, index) => (
-              <li
-                key={`participant-${index}`}
-                className={`${participant.name === '' && `hidden`}`}
-              >
-                {participant.name} | {participant.studentId} |
-                {participant.department}
-              </li>
-            ))}
-          </ul>
+            >
+              {participants?.map((participant, index) => (
+                <li
+                  key={`participant-${index}`}
+                  className={`${participant.name === '' && `hidden`}`}
+                >
+                  {participant.name} | {participant.studentId} |
+                  {participant.department}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <span className="text-gray-400">작성된 내용이 없습니다.</span>
+          )}
         </div>
         <div className="p-3 md:p-0">
           <p className="my-3 text-lg font-semibold text-blue-500 md:text-lg">
             활동 내용
           </p>
-          <span className="md:text-md h-24 w-full rounded-xl text-base font-medium opacity-70 md:pb-3">
-            {content}
-          </span>
+          {content === '' ? (
+            <span className="text-gray-400">작성된 내용이 없습니다.</span>
+          ) : (
+            <span className="h-24 w-full text-base font-medium opacity-70 md:pb-3">
+              {content}
+            </span>
+          )}
         </div>
       </div>
-      <div className={`hidden md:block`}>
+      <div className="hidden md:block">
         <Image
           src={showImage}
           className={`bg-gray-50 object-cover`}

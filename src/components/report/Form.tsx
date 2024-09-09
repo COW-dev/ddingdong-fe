@@ -118,9 +118,8 @@ export default function Form({
               활동 참여 인원
             </p>
             <div
-              className="md:text-md min-h-[10vh] 
-               w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4
-               py-3 text-base outline-none md:pb-3"
+              className="min-h-[10vh] w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4
+               py-3 text-base outline-none"
             >
               {participants.map((participant, index) => (
                 <div
