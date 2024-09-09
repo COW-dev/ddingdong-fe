@@ -22,15 +22,15 @@ export default function Index() {
   ]);
 
   const removeTokens = () => {
-    removeCookie('refresh_token');
-    removeCookie('access_token');
+    removeCookie('refresh_token', { domain: '.mju.ac.kr' });
+    removeCookie('access_token', { domain: '.mju.ac.kr' });
   };
 
   useEffect(() => {
     if (cookies.refresh_token || cookies.access_token) {
       removeTokens();
     }
-  }, [cookies.refresh_token, cookies.access_token, removeTokens]);
+  }, [cookies.refresh_token, cookies.access_token]);
 
   const notices = noticedata?.data.sort((a, b) => {
     return b.id - a.id;

@@ -24,12 +24,16 @@ export default function Index() {
   ]);
   const { setAuth } = useAuthStore();
 
+  const removeTokens = () => {
+    removeCookie('refresh_token', { domain: '.mju.ac.kr' });
+    removeCookie('access_token', { domain: '.mju.ac.kr' });
+  };
+
   useEffect(() => {
     if (cookie.refresh_token || cookie.access_token) {
-      removeCookie('refresh_token');
-      removeCookie('access_token');
+      removeTokens();
     }
-  }, [cookie, removeCookie]);
+  }, [cookie.refresh_token, cookie.access_token]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
