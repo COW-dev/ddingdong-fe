@@ -44,7 +44,7 @@ export default function ClubInfo({
     }
   }
 
-  const parsedImg = introduceImageUrls && parseImgUrl(introduceImageUrls[0]);
+  const parsedImg = introduceImageUrls[0] && parseImgUrl(introduceImageUrls[0]);
 
   return (
     <main className="w-full lg:w-[70%]">
@@ -57,32 +57,34 @@ export default function ClubInfo({
           <div className="my-2 text-lg font-bold md:text-xl">
             동아리 소개 이미지
           </div>
-          <Image
-            src={parsedImg}
-            width={1000}
-            height={500}
-            priority
-            alt="동아리 소개 사진"
-            className={`${
-              introduceImageUrls.length === 0 && `hidden`
-            } max-h-[50vh] rounded-2xl object-scale-down`}
-          />
+          {parsedImg && (
+            <Image
+              src={parsedImg}
+              width={1000}
+              height={500}
+              priority
+              alt="동아리 소개 사진"
+              className={`${
+                introduceImageUrls.length === 0 && `hidden`
+              } max-h-[50vh] rounded-2xl object-scale-down`}
+            />
+          )}
         </div>
 
         <div className="mt-6 text-lg font-bold md:mt-8 md:text-xl">
           우리 동아리를 소개할게요
         </div>
         <div className="mt-1 bg-white text-base font-medium text-gray-500 md:mt-2 md:text-lg">
-          {introduction?.split('\n').map((line: string) => (
-            <p key={line}>{parseUrl(line)}</p>
+          {introduction?.split('\n').map((line: string, index: number) => (
+            <p key={index}>{parseUrl(line)}</p>
           ))}
         </div>
       </section>
       <section className="mt-6 md:mt-8">
         <div className="text-lg font-bold md:text-xl">이런 활동을 해요</div>
         <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
-          {activity?.split('\n').map((line: string) => (
-            <li key={line}>{line}</li>
+          {activity?.split('\n').map((line: string, index: number) => (
+            <li key={index}>{line}</li>
           ))}
         </ul>
       </section>
@@ -91,8 +93,8 @@ export default function ClubInfo({
           이런 분과 함께하고 싶어요
         </div>
         <ul className="ml-5 mt-1 list-disc text-base font-medium text-gray-500 md:mt-1.5 md:text-lg">
-          {ideal?.split('\n').map((line: string) => (
-            <li key={line}>{line}</li>
+          {ideal?.split('\n').map((line: string, index: number) => (
+            <li key={index}>{line}</li>
           ))}
         </ul>
       </section>
