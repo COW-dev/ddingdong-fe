@@ -16,6 +16,21 @@ export default function Index() {
   const { data: noticedata } = useAllNotices();
   const { data: documentData } = useAllDocuments();
   const [infoElement, setInfoElement] = useState(<></>);
+  const [cookies, setCookie, removeCookie] = useCookies([
+    'access_token',
+    'refresh_token',
+  ]);
+
+  const removeTokens = () => {
+    removeCookie('refresh_token');
+    removeCookie('access_token');
+  };
+
+  useEffect(() => {
+    if (cookies.refresh_token || cookies.access_token) {
+      removeTokens();
+    }
+  }, [cookies.refresh_token, cookies.access_token, removeTokens]);
 
   const notices = noticedata?.data.sort((a, b) => {
     return b.id - a.id;
