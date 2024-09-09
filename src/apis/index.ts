@@ -504,8 +504,6 @@ export async function getApplier(
 
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
-  // const cookies = new Cookies(); //?
-  // cookies.getAll();  //?
   removeToken();
   window.location.href = '/login';
   toast.error(error.response?.data?.message ?? `로그인 시간이 만료되었어요.`);
