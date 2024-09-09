@@ -93,7 +93,7 @@ export default function UploadImage({
             </p>
           </div>
           <input
-            id={`dropzone-file${id}`}
+            id={`dropzone-file-${id}`}
             type="file"
             className="hidden"
             accept="image/*"
