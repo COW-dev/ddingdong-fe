@@ -1,5 +1,5 @@
 /* eslint-disable import/named */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AxiosResponse } from 'axios';
@@ -16,8 +16,20 @@ export default function Index() {
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cookie, setCookie, removeCookie] = useCookies(['token', 'role']);
+  const [cookie, setCookie, removeCookie] = useCookies([
+    'token',
+    'role',
+    'access_token',
+    'refresh_token',
+  ]);
   const { setAuth } = useAuthStore();
+
+  useEffect(() => {
+    if (cookie.refresh_token || cookie.access_token) {
+      removeCookie('refresh_token');
+      removeCookie('access_token');
+    }
+  }, [cookie, removeCookie]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
