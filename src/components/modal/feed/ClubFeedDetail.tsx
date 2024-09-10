@@ -5,16 +5,19 @@ import Admin from '@/assets/admin.jpg';
 import VideoPlayer from '@/components/feed/VideoPlayer';
 import { useFeedDetail } from '@/hooks/api/feed/useFeedDetail';
 import { parseImgUrl } from '@/utils/parse';
+import { useState } from 'react';
+import Skeleton from '@/components/common/Skeleton';
 
 export type Props = {
   feedId: number;
 };
 export default function ClubFeedDetail({ feedId }: Props) {
   const { isError, isSuccess, data } = useFeedDetail(feedId);
+  const [loadedImages, setLoadedImages] = useState<Boolean>(false);
   const location = router.pathname === '/feeds';
 
   if (isError) {
-    return <div>에러가 발생했습니다.</div>;
+    return <div>ERROR</div>;
   }
 
   if (isSuccess) {
@@ -25,23 +28,33 @@ export default function ClubFeedDetail({ feedId }: Props) {
         ? parseImgUrl(feed.clubProfile.profileImageUrl)
         : Admin;
 
+    const renderSkeleton = () => (
+      <div className="absolute inset-0">
+        <Skeleton />
+      </div>
+    );
+
     return (
       <div className="flex h-full w-full flex-col ">
         <div
           className={`${
             feed.feedType === 'VIDEO' ? 'h-full ' : 'h-[225px]'
-          } w-full  rounded-t-lg bg-black md:h-[450px]`}
+          } relative  w-full rounded-t-lg bg-black md:h-[450px]`}
         >
           {feed.feedType === 'VIDEO' ? (
             <VideoPlayer videoUrl={feed.fileUrl} />
           ) : (
-            <Image
-              src={feed.fileUrl}
-              alt={'동아리 피드'}
-              height={450}
-              width={450}
-              className="h-full w-full object-contain"
-            />
+            <>
+              {!loadedImages && renderSkeleton()}
+              <Image
+                src={feed.fileUrl}
+                alt={'동아리 피드'}
+                height={450}
+                width={450}
+                onLoad={() => setLoadedImages(true)}
+                className="h-full w-full object-contain"
+              />
+            </>
           )}
         </div>
         <div className="ml-5 flex h-[17vh] flex-col items-start justify-center  md:ml-10 ">
