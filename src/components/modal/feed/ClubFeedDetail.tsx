@@ -24,8 +24,8 @@ export default function ClubFeedDetail({ feedId }: Props) {
     const feed = data.data;
 
     const imageSrc =
-      feed.clubProfile.profileImageUrl.length > 0
-        ? parseImgUrl(feed.clubProfile.profileImageUrl)
+      feed.clubProfile.profileImageUrl?.length > 0
+        ? parseImgUrl(feed.clubProfile?.profileImageUrl)
         : Admin;
 
     const renderSkeleton = () => (
@@ -57,25 +57,21 @@ export default function ClubFeedDetail({ feedId }: Props) {
             </>
           )}
         </div>
-        <div className="ml-5 flex h-[17vh] flex-col items-start justify-center  md:ml-10 ">
-          <div className="flex flex-row items-center justify-center">
-            <div className="h-12 w-12 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-14 md:w-14">
-              <Image
-                src={imageSrc}
-                alt={'동아리 대표 이미지'}
-                width={80}
-                height={80}
-                priority
-                className="m-auto h-12 w-12 rounded-full object-cover md:h-14 md:w-14"
-              />
-            </div>
-            <Link
-              href={location ? `/club/${feed.clubProfile.id}` : '#'}
-              className="ml-2 text-base font-semibold md:text-2xl"
-            >
-              {feed.clubProfile.name}
-            </Link>
-          </div>
+        <div className="ml-5 flex h-[17vh] flex-col items-start justify-center md:ml-10 ">
+          <Link
+            href={location ? `/club/${feed.clubProfile.id}` : '#'}
+            className="flex items-center text-base font-semibold md:text-2xl"
+          >
+            <Image
+              src={imageSrc}
+              alt={'동아리 대표 이미지'}
+              width={80}
+              height={80}
+              priority
+              className="m-auto mr-3 h-12 w-12 rounded-full border-[1.5px] object-cover md:h-14 md:w-14"
+            />
+            {feed.clubProfile.name}
+          </Link>
 
           <div className="my-1 text-base font-medium md:text-xl">
             {feed.activityContent}
