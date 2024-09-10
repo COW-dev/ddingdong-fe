@@ -40,7 +40,7 @@ export default function ClubInfo({
       });
       return <div className="flex">{elements}</div>;
     } else {
-      return <p>{line}</p>;
+      return <span>{line}</span>;
     }
   }
 
