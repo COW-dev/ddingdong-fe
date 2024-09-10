@@ -1,10 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import router from 'next/router';
 import Admin from '@/assets/admin.jpg';
 import VideoPlayer from '@/components/feed/VideoPlayer';
 import { useFeedDetail } from '@/hooks/api/feed/useFeedDetail';
 import { parseImgUrl } from '@/utils/parse';
-import Link from 'next/link';
-import router from 'next/router';
 
 export type Props = {
   feedId: number;

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import VideoPlayButton from '@/assets/videoplay.svg';
 import useModal from '@/hooks/common/useModal';
 import { Feed } from '@/types/feed';
 import Modal from '../common/Modal';
 import Skeleton from '../common/Skeleton';
 import ClubFeedDetail from '../modal/feed/ClubFeedDetail';
-import VideoPlayButton from '@/assets/videoplay.svg';
 
 type ClubFeedProps = {
   feeds: Feed[] | undefined;
