@@ -8,7 +8,8 @@ export type Club = {
   recruitStatus: string;
 };
 
-export type ClubInfo = {
+export type ClubProfile = {
+  id: string;
   name: string;
   profileImageUrl: string;
 };

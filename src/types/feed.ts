@@ -1,4 +1,4 @@
-import { ClubInfo } from './club';
+import { ClubProfile } from './club';
 
 export type TabMenu = {
   label: string;
@@ -13,7 +13,7 @@ export type Feed = {
 
 export type FeedDetail = {
   id: number;
-  clubInfo: ClubInfo;
+  clubProfile: ClubProfile;
   activityContent: string;
   fileUrl: string;
   feedType: 'IMAGE' | 'VIDEO';
