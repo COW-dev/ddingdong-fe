@@ -79,19 +79,18 @@ export default function UserHeader() {
         </button>
         <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
           <div className="flex flex-col items-start justify-center p-3">
-            {Object.entries(navItems).map(([category, items], index) =>
+            {Object.keys(navItems).map((category, index) =>
               category === '동아리피드' ? (
-                <>
+                <div key={category} className="w-full border-b py-4">
                   <Link
                     key={index}
-                    href={items[0].href}
+                    href={navItems[category][0].href}
                     className="w-full p-4 font-semibold"
                     onClick={() => setIsOpen(false)}
                   >
                     {category}
                   </Link>
-                  <hr className=" w-full border-t border-gray-200" />
-                </>
+                </div>
               ) : (
                 <Accordion
                   key={index}
@@ -105,12 +104,13 @@ export default function UserHeader() {
                     </AccordionTrigger>
                     <AccordionContent>
                       <ul className="flex list-none flex-col space-y-2 pl-0">
-                        {items.map((item, index) => (
-                          <li key={index} className="flex-grow">
-                            <a
+                        {navItems[category]?.map((item, idx) => (
+                          <li key={item.id} className="flex-grow">
+                            <Link
                               href={item.href}
                               target={category === 'SNS' ? '_blank' : '_self'}
                               rel="noopener noreferrer"
+                              onClick={() => setIsOpen(false)}
                               className="text-md flex items-center font-semibold text-gray-500 hover:text-blue-500"
                             >
                               {item.image && (
@@ -123,7 +123,7 @@ export default function UserHeader() {
                                 />
                               )}
                               {item.content}
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
