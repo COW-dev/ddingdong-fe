@@ -53,7 +53,7 @@ export default function Index({ clubId }: ClubDetailProps) {
               </div>
             </div>
           ) : (
-            <ClubFeed feeds={clubFeed} size="medium" />
+            <ClubFeed feeds={clubFeed} />
           ),
       },
     ];

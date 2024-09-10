@@ -27,7 +27,7 @@ export default function Index() {
           </div>
         ) : (
           <div className="w-full">
-            <ClubFeed feeds={feeds} size="large" />
+            <ClubFeed feeds={feeds} />
           </div>
         )}
       </div>
