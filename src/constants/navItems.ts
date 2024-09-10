@@ -29,7 +29,7 @@ export const navItems: {
   동아리피드: [
     {
       id: 4,
-      href: '/feed',
+      href: '/feeds',
     },
   ],
   SNS: [
