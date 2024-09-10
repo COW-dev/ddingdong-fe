@@ -21,12 +21,12 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
     >
       <section
         className={
-          ' delay-400 absolute left-0 top-0 h-full w-screen max-w-lg transform bg-white shadow-xl transition-all duration-500 ease-in-out  ' +
+          ' delay-400 absolute right-0 top-0 h-full w-screen max-w-lg transform bg-white shadow-xl transition-all duration-500 ease-in-out  ' +
           (isOpen ? ' translate-x-0 ' : ' translate-x-full ')
         }
       >
         <article className="relative flex h-16 w-full justify-between">
-          <header className="flex w-full justify-between bg-blue-600 p-4 text-lg font-bold">
+          <header className="flex w-full justify-between bg-blue-600 px-6 text-lg font-bold">
             <Image
               src={MiniLogo}
               width={1544}

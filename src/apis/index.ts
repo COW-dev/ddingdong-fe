@@ -245,7 +245,6 @@ export async function uploadMembers(formdata: FormData) {
 }
 
 export async function updateMembers({ member, id, token }: UpdateMember) {
-  console;
   return await api.patch(`/club/my/club-members/${id}`, member, {
     headers: {
       Authorization: 'Bearer ' + token,
