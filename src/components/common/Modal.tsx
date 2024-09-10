@@ -31,10 +31,8 @@ export default function Modal({
         }`}
       >
         <div
-          className={`z-60 relative m-5  w-full rounded-lg bg-white shadow ${
-            feed
-              ? 'max-w-3xl md:h-[70%]'
-              : 'max-h-[80%] max-w-lg overflow-y-scroll md:overflow-y-auto'
+          className={`z-60 relative m-5  w-full overflow-y-scroll rounded-lg bg-white shadow md:overflow-y-auto ${
+            feed ? 'max-w-3xl md:h-[70%]' : 'max-h-[80%] max-w-lg '
           }`}
           ref={modalRef}
         >
