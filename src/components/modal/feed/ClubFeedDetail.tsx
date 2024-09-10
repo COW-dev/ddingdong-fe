@@ -1,19 +1,19 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import router from 'next/router';
 import Admin from '@/assets/admin.jpg';
+import Skeleton from '@/components/common/Skeleton';
 import VideoPlayer from '@/components/feed/VideoPlayer';
 import { useFeedDetail } from '@/hooks/api/feed/useFeedDetail';
 import { parseImgUrl } from '@/utils/parse';
-import { useState } from 'react';
-import Skeleton from '@/components/common/Skeleton';
 
 export type Props = {
   feedId: number;
 };
 export default function ClubFeedDetail({ feedId }: Props) {
   const { isError, isSuccess, data } = useFeedDetail(feedId);
-  const [loadedImages, setLoadedImages] = useState<Boolean>(false);
+  const [loadedImages, setLoadedImages] = useState<boolean>(false);
   const location = router.pathname === '/feeds';
 
   if (isError) {
