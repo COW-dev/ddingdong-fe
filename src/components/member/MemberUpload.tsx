@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import router from 'next/router';
 import { useCookies } from 'react-cookie';
 import UploadExcel from '@/components/common/UploadExcel';
 import { useUploadMembers } from '@/hooks/api/member/useUploadMembers';
@@ -25,9 +24,13 @@ export default function MemberUpload({ closeModal }: Props) {
   return (
     <div className="h-full w-full">
       <form onSubmit={handleSubmit}>
-        <h6 className=" text-sm font-semibold text-gray-500">
+        {/* <h6 className="text-sm font-semibold text-gray-500">
           파일을 업로드 해주세요.
-        </h6>
+        </h6> */}
+        <span className="text-sm font-semibold leading-none text-red-300">
+          동아리원 양식이 변경됨에 따라 <br />
+          [동아리원 다운받기] 후 해당 양식으로 업로드해주세요.
+        </span>
         <UploadExcel file={file} setFile={setFile} />
         <div className="mt-6 flex w-full justify-center">
           <button
