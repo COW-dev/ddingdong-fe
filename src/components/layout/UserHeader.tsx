@@ -143,7 +143,10 @@ export default function UserHeader() {
     <>
       {/* md */}
       <header className=" fixed z-20 hidden h-16 w-full items-center justify-center border-b bg-white md:flex md:h-18">
-        <div className="flex w-full max-w-6xl items-center px-6 md:px-16">
+        <div
+          className="flex w-full max-w-6xl items-center px-6 md:px-16"
+          ref={dropdownRef}
+        >
           <Link href="/" className="-ml-3 inline-block p-3">
             <Image
               src={'/logo.png'}
@@ -165,7 +168,7 @@ export default function UserHeader() {
                     {category}
                   </Link>
                 ) : (
-                  <div ref={dropdownRef}>
+                  <div>
                     <button
                       onClick={() => handleDropdownToggle(category)}
                       className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-blue-500 focus:outline-none"
@@ -173,19 +176,14 @@ export default function UserHeader() {
                       {category}
                     </button>
                     {openDropdown === category && (
-                      <ul className="absolute left-1/2 top-full mt-2 min-w-max -translate-x-1/2 transform rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
-                        {navItems[category]?.map((item) => (
-                          <li key={item.id}>
-                            <a
+                      <ul className="z-100 absolute left-1/2 top-full mt-2 min-w-max -translate-x-1/2 transform rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+                        {navItems[category]?.map((item, index) => (
+                          <li key={index}>
+                            <Link
                               href={item.href}
                               target={category === 'SNS' ? '_blank' : '_self'}
-                              rel={
-                                category === 'SNS'
-                                  ? 'noopener noreferrer'
-                                  : undefined
-                              }
                               className="flex px-3 py-2 font-semibold text-gray-500 hover:rounded-lg hover:bg-gray-100"
-                              onClick={handleLinkClick}
+                              onClick={() => handleLinkClick()}
                             >
                               {item.image && (
                                 <Image
@@ -197,7 +195,7 @@ export default function UserHeader() {
                                 />
                               )}
                               {item.content}
-                            </a>
+                            </Link>
                           </li>
                         ))}
                       </ul>
