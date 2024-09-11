@@ -8,6 +8,12 @@ export type Club = {
   recruitStatus: string;
 };
 
+export type ClubProfile = {
+  id: string;
+  name: string;
+  profileImageUrl: string;
+};
+
 export type AdminClub = {
   id: number;
   name: string;

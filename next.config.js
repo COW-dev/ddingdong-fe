@@ -1,13 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['ddingdong-file.s3.ap-northeast-2.amazonaws.com', 'github.com'],
+    domains: [
+      'd2syrtcctrfiup.cloudfront.net',
+      'ddingdong-file.s3.ap-northeast-2.amazonaws.com',
+      'github.com',
+    ],
   },
   reactStrictMode: true,
 };
 
 module.exports = nextConfig;
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = withSentryConfig(

@@ -26,13 +26,12 @@ export const navItems: {
       content: 'FAQ',
     },
   ],
-
-  // '동아리 홍보': [
-  //   {
-  //     id: 4,
-  //     href: '/clubs',
-  //   },
-  // ],
+  동아리피드: [
+    {
+      id: 4,
+      href: '/feeds',
+    },
+  ],
   SNS: [
     {
       id: 5,

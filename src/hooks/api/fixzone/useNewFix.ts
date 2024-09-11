@@ -16,7 +16,7 @@ export function useNewFix(): UseMutationResult<unknown, AxiosError, NewFix> {
 
   return useMutation(createFix, {
     onSuccess() {
-      queryClient.invalidateQueries(['banners']);
+      queryClient.invalidateQueries(['fix-zones']);
       toast.success('요청을 성공적으로 보냈어요.');
       router.push('/fix');
     },
