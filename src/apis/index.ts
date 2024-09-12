@@ -48,7 +48,7 @@ import {
 import { Score, ScoreDetail } from '@/types/score';
 
 export type ErrorType = {
-  code: number;
+  status: number;
   message: string;
 };
 
@@ -519,8 +519,6 @@ export async function getApplier(
 
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
-  // const cookies = new Cookies(); //?
-  // cookies.getAll();  //?
   removeToken();
   window.location.href = '/login';
   toast.error(error.response?.data?.message ?? `로그인 시간이 만료되었어요.`);
@@ -532,7 +530,7 @@ function fulfilledResponse(res: AxiosResponse) {
 }
 function rejectedResponse(error: AxiosError<ErrorType>) {
   if (
-    error.response?.data?.code === 401 &&
+    error.response?.data?.status === 401 &&
     error.response?.data?.message == '유효하지 않은 토큰입니다.'
   ) {
     return expirationToken(error);
