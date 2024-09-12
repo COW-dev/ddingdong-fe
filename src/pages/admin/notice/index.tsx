@@ -8,15 +8,19 @@ import NoticeList from '@/components/common/NoticeList';
 import { ROLE_TYPE } from '@/constants/text';
 
 export default function Index() {
-  const [cookies] = useCookies(['token', 'role']);
-  const { role } = cookies;
+  const [{ role }] = useCookies(['role']);
   return (
     <>
       <Head>
         <title>띵동 어드민 - 공지사항</title>
       </Head>
       <div className="flex flex-row items-end justify-between">
-        <Heading>공지사항 관리하기</Heading>
+        <Heading>
+          공지사항
+          <span className={role === ROLE_TYPE.ROLE_CLUB ? 'hidden' : 'ml-1'}>
+            관리하기
+          </span>
+        </Heading>
         <Link
           href="/notice/new"
           className={`-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden ${

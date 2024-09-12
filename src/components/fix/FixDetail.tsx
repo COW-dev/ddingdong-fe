@@ -58,7 +58,7 @@ export default function FixDetail({ id }: Prop) {
         <h1 className="ml-2 text-xl font-semibold text-gray-600">{title}</h1>
       </div>
 
-      <div className="mt-3 flex w-full flex-col gap-4 rounded-xl border border-gray-100 p-6 md:mt-7 md:flex-row">
+      <div className="mt-3 flex w-full flex-col gap-4 rounded-xl border border-gray-100 p-3 md:mt-7 md:flex-row md:p-6">
         {/* 정보 */}
         <div className=" w-full rounded-xl bg-white md:w-1/2 md:p-3">
           <FixItemInfo
@@ -66,45 +66,55 @@ export default function FixDetail({ id }: Prop) {
             createdAt={requestedAt}
             location={clubLocation}
           />
-          <div className="p-4">{content}</div>
+          <div className="px-3 pt-8">
+            {content === '' ? (
+              <span className="text-gray-500">작성된 내용이 없습니다.</span>
+            ) : (
+              content
+            )}
+          </div>
         </div>
         {/* 내용 */}
-        <div
-          className={`relative flex w-full items-center justify-center md:w-1/2 md:p-3
-            ${imageUrls.length === 0 && 'hidden'}
-          `}
-        >
-          <Image
-            src={LeftArrow2}
-            width={30}
-            height={30}
-            alt="leftButton"
-            onClick={() => {
-              setPresentIndex(presentIndex - 1);
-            }}
-            className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25
+        <div className="relative flex w-full items-center justify-center md:w-1/2 md:p-3">
+          {imageUrls.length === 0 ? (
+            <div className="flex min-h-40 w-full items-center justify-center rounded-lg border text-gray-500">
+              등록된 사진이 없습니다.
+            </div>
+          ) : (
+            <>
+              <Image
+                src={LeftArrow2}
+                width={30}
+                height={30}
+                alt="leftButton"
+                onClick={() => {
+                  setPresentIndex(presentIndex - 1);
+                }}
+                className={`absolute left-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25
               ${presentIndex === 0 && 'hidden'}`}
-          />
-          <Image
-            src={parseImgUrl(imageUrls[presentIndex])}
-            width={550}
-            height={500}
-            priority
-            alt="fixImage"
-            className="overflow-hidden object-scale-down "
-          />
-          <Image
-            src={RightArrow}
-            width={30}
-            height={30}
-            alt="leftButton"
-            onClick={() => {
-              setPresentIndex(presentIndex + 1);
-            }}
-            className={`absolute right-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-              presentIndex === imageUrls.length - 1 && `hidden`
-            }`}
-          />
+              />
+              <Image
+                src={parseImgUrl(imageUrls[presentIndex])}
+                width={550}
+                height={500}
+                priority
+                alt="fixImage"
+                className="overflow-hidden object-scale-down "
+              />
+              <Image
+                src={RightArrow}
+                width={30}
+                height={30}
+                alt="leftButton"
+                onClick={() => {
+                  setPresentIndex(presentIndex + 1);
+                }}
+                className={`absolute right-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
+                  presentIndex === imageUrls.length - 1 && `hidden`
+                }`}
+              />
+            </>
+          )}
         </div>
       </div>
       <div

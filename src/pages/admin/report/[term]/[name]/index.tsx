@@ -59,23 +59,23 @@ export default function Index({ term, name }: ReportKey) {
           <Report reportData={reportData[1]} term={term} />
         </Accordion>
       </div>
-      <div className="m-auto flex gap-2 md:mt-6">
+      <div className="m-auto mt-20 flex gap-2">
         <button
-          className={`mb-4 min-w-fit rounded-xl bg-red-50 px-3.5 py-2 text-sm font-bold text-red-400 transition-colors hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
+          className={`mb-4 w-18 rounded-xl bg-red-100 py-2 text-sm font-bold text-red-500 transition-colors hover:bg-red-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
             currentTermData !== String(term) && 'hidden'
           }`}
           onClick={handleClickDeleteButton}
         >
-          삭제하기
+          삭제
         </button>
         <Link href={`/report/${term}/${name}/fix`}>
           <button
-            className={`mb-4 min-w-fit rounded-xl bg-blue-50 px-3.5 py-2 text-sm font-bold text-blue-400 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
+            className={`mb-4 w-18 rounded-xl bg-blue-100 py-2 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 md:mb-2 md:px-4 md:py-2.5 md:text-base ${
               currentTermData !== String(term) && 'hidden'
             }
             `}
           >
-            수정하기
+            수정
           </button>
         </Link>
       </div>

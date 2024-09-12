@@ -22,8 +22,8 @@ export function parseImgUrl(url: string): string {
 }
 
 const parseStringDateToRangeDate = (start: string, end: string) => {
-  const [startDate, startTime] = start.split(' ');
-  const [endDate, endTime] = end.split(' ');
+  const [startDate, startTime] = start?.split(' ') ?? ['', ''];
+  const [endDate, endTime] = end?.split(' ') ?? ['', ''];
   return { startDate, startTime, endDate, endTime };
 };
 
@@ -34,8 +34,8 @@ export const parseNewReportToReport = (
   const { date, place, content, participants, startTime, endTime } = report;
   return {
     term,
-    startDate: date.startDate + ' ' + startTime,
-    endDate: date.startDate + ' ' + endTime,
+    startDate: date.startDate ? date.startDate + ' ' + startTime : '',
+    endDate: date.startDate ? date.startDate + ' ' + endTime : '',
     place,
     content,
     participants,

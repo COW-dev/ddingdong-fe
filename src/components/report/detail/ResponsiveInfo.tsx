@@ -61,8 +61,8 @@ function ResponsiveInfo({ image, report, term }: ResponsiveInfoProps) {
       </div>
 
       {/* md */}
-      <div className="hidden md:inline-block">
-        <div className="flex flex-col items-center md:flex-row md:justify-between">
+      <div className="hidden w-[40vw] md:inline-block">
+        <div className="flex w-full flex-row items-center justify-between">
           <ActiveDate startDate={startDate} endDate={endDate} />
           <Place place={place} />
         </div>

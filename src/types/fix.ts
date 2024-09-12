@@ -45,7 +45,7 @@ export type NewFixComment = {
 };
 
 export type DeleteFixComment = {
-  fixZonId: number;
+  fixZoneId: number;
   commentId: number;
-  token: string;
+  token?: string;
 };

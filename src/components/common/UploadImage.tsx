@@ -14,6 +14,7 @@ type UploadImageProps = {
     | Dispatch<SetStateAction<ClubDetail>>;
   urlsName?: string;
   setRemoveFile?: Dispatch<SetStateAction<boolean>>;
+  id?: number;
 };
 
 export default function UploadImage({
@@ -23,6 +24,7 @@ export default function UploadImage({
   imageUrls,
   setNoticeData,
   setRemoveFile,
+  id,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function UploadImage({
         </>
       ) : (
         <label
-          htmlFor="dropzone-file"
+          htmlFor={`dropzone-file-${id}`}
           className=" dar flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
         >
           <div className="flex flex-col items-center justify-center pb-6 pt-5 text-gray-400">
@@ -91,7 +93,7 @@ export default function UploadImage({
             </p>
           </div>
           <input
-            id="dropzone-file"
+            id={`dropzone-file-${id}`}
             type="file"
             className="hidden"
             accept="image/*"

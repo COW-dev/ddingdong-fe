@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
@@ -14,6 +15,7 @@ type ReportEditProps = {
 };
 
 function ReportEdit({ report, term = 0 }: ReportEditProps) {
+  const router = useRouter();
   const createMutation = useNewReport();
   const modifyMutation = useUpdateReports(term);
 
@@ -33,6 +35,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
 
   const validateDate = (report: EditReport) => {
     const { endTime, startTime, date } = report;
+    if (endTime === '' && startTime === '' && !date.startDate) return true;
     return endTime !== '' && startTime !== '' && date.startDate;
   };
 
@@ -40,11 +43,13 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
-    if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
 
     let formData = new FormData();
     formData = await createFormData(formData, term);
+
+    if (!validateDate(reportOne) || !validateDate(reportTwo))
+      return toast.error('날짜와 시간을 모두 선택해주세요.');
+
     return modifyMutation.mutate(formData);
   };
 
@@ -53,7 +58,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
   ) => {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 선택해야 저장할 수 있어요.');
+      return toast.error('날짜와 시간을 모두 선택해주세요.');
 
     let formData = new FormData();
     formData = await createFormData(formData, term);
@@ -70,6 +75,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           <Form
             uploadFiles={uploadFileOne}
             report={reportOne}
+            id={1}
             setValue={setReportOne}
             setImage={setUploadFileOne}
             setRemoveFile={setRemoveFileOne}
@@ -79,18 +85,37 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           <Form
             uploadFiles={uploadFileTwo}
             report={reportTwo}
+            id={2}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
             setRemoveFile={setRemoveFileTwo}
           />
         </Accordion>
         <div className="m-auto flex justify-center md:mt-6">
-          <button
-            type="submit"
-            className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
-          >
-            {report ? '수정하기' : '생성하기'}
-          </button>
+          {report ? (
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => router.back()}
+                className="h-11 w-16 rounded-xl bg-gray-100 px-1 py-2.5 text-sm font-bold text-gray-500 transition-colors hover:bg-gray-200 sm:inline-block md:text-base"
+              >
+                취소
+              </button>
+              <button
+                type="submit"
+                className="h-11 w-24 rounded-xl bg-blue-500 px-1 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 sm:inline-block md:text-base"
+              >
+                제출
+              </button>
+            </div>
+          ) : (
+            <button
+              type="submit"
+              className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+            >
+              생성하기
+            </button>
+          )}
         </div>
       </form>
     </>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
@@ -6,39 +6,40 @@ import Admin from '@/assets/admin.jpg';
 import { ROLE_TYPE } from '@/constants/text';
 import { useNewFixComment } from '@/hooks/api/fixzone/useNewFixComment';
 import { Comment as CommentType } from '@/types/fix';
+import { adjustTextareaHeight } from '@/utils/change';
 import Comment from './Comment';
 
-interface CommentContainerProps {
+type CommentContainerProps = {
   comments: CommentType[];
   fixZoneId: number;
-}
+};
+
 function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
   const [{ role }] = useCookies(['role']);
   const [{ token }] = useCookies(['token']);
   const [content, setContent] = useState<string>('');
   const mutation = useNewFixComment(fixZoneId);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSubmit = () => {
-    if (content.length > 255)
-      return toast(
-        `255자 이하로 작성해주세요. \n 현재 글자 수  : ${content.length}`,
-      );
     mutation.mutate({ token, content, fixZoneId });
     setContent('');
   };
 
   const handleChangeMessage = (message: string) => {
     setContent(message);
+    if (message.length === 255)
+      toast(
+        <span className="text-center">
+          255자 이하로 작성해주세요. <br />
+          현재 글자 수 : {message.length}
+        </span>,
+      );
   };
 
-  const handleKeydownTextArea = (
-    e: React.KeyboardEvent<HTMLTextAreaElement>,
-  ) => {
-    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-      e.preventDefault();
-      handleSubmit();
-    }
-  };
+  useEffect(() => {
+    adjustTextareaHeight(textareaRef);
+  }, [content]);
 
   return (
     <>
@@ -47,28 +48,32 @@ function CommentContainer({ comments, fixZoneId }: CommentContainerProps) {
           role === ROLE_TYPE.ROLE_CLUB && 'hidden'
         }`}
       >
-        <div>
+        <div className="min-w-fit">
           <Image
             src={Admin}
-            width={52}
-            height={52}
+            width={40}
+            height={40}
             alt="admin image"
             className="rounded-full"
           />
         </div>
         <textarea
-          onKeyDown={handleKeydownTextArea}
           placeholder="코멘트를 작성해 주세요."
           value={content}
+          ref={textareaRef}
+          maxLength={255}
+          rows={1}
           onChange={(e) => handleChangeMessage(e.target.value)}
-          className="h-20 w-full overflow-y-scroll rounded-3xl bg-gray-100 p-4 text-[#878787] outline-none"
+          className="w-full resize-none rounded-3xl bg-gray-100 p-2.5 text-[#878787] outline-none"
         />
-        <div
-          role="button"
-          onClick={handleSubmit}
-          className="h-fit min-w-fit rounded-3xl bg-blue-500 p-3 font-semibold text-white"
-        >
-          댓글 작성
+        <div className="min-w-fit">
+          <button
+            role="button"
+            onClick={handleSubmit}
+            className="rounded-3xl bg-blue-500 p-2.5 text-xs font-semibold text-white md:text-sm"
+          >
+            댓글 작성
+          </button>
         </div>
       </div>
       <div className="flex flex-col gap-2 py-6 text-sm">
