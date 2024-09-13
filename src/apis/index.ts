@@ -48,7 +48,7 @@ import {
 import { Score, ScoreDetail } from '@/types/score';
 
 export type ErrorType = {
-  code: number;
+  status: number;
   message: string;
 };
 
@@ -530,7 +530,7 @@ function fulfilledResponse(res: AxiosResponse) {
 }
 function rejectedResponse(error: AxiosError<ErrorType>) {
   if (
-    error.response?.data?.code === 401 &&
+    error.response?.data?.status === 401 &&
     error.response?.data?.message == '유효하지 않은 토큰입니다.'
   ) {
     return expirationToken(error);
