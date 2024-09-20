@@ -4,7 +4,7 @@ import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { ClubDetail } from '@/types/club';
-import { parseImgUrl } from '@/utils/parse';
+import { parseDate, parseImgUrl } from '@/utils/parse';
 
 type ClubHeadingProps = {
   info: ClubDetail;
@@ -74,16 +74,15 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
               <span>{location}</span>
             </div>
             <div className="mb-1.5">
-              <span className="inline-block w-20 text-gray-500">정기모임</span>
-              <span>{regularMeeting}</span>
+              <span className="inline-block w-20 text-gray-500">모집기간</span>
+              {parseDate(startRecruitPeriod?.split(' ')[0])}
+              <span className="mx-1">~</span>
+              {parseDate(endRecruitPeriod?.split(' ')[0])}
             </div>
           </div>
           <div className="w-full">
-            <span className="inline-block w-20 text-gray-500">모집기간</span>
-            <span>
-              {startRecruitPeriod?.split(' ')[0]}~
-              {endRecruitPeriod?.split(' ')[0]}
-            </span>
+            <span className="inline-block w-20 text-gray-500">정기모임</span>
+            <span>{regularMeeting}</span>
           </div>
         </div>
         <button

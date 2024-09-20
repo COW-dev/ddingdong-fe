@@ -130,24 +130,6 @@ export default function ClubInfoForm({
             disabled={!isEditing}
           />
         </div>
-        <div className="mb-2 w-full md:mb-3 md:w-[50%]">
-          <label className="inline-block w-20 font-semibold text-gray-500">
-            정기모임
-          </label>
-          <input
-            name="regularMeeting"
-            type="text"
-            spellCheck={false}
-            className={`${
-              !isEditing && 'opacity-60'
-            } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
-            value={regularMeeting}
-            onChange={(e) => handleChange(e)}
-            disabled={!isEditing}
-          />
-        </div>
-      </div>
-      <div className="flex flex-col md:flex-row ">
         <div className="mb-2 flex w-full items-center md:mb-3 md:w-[50%]">
           <label className="inline-block w-20 font-semibold text-gray-500">
             모집기간
@@ -180,6 +162,24 @@ export default function ClubInfoForm({
               </div>
             )}
           </div>
+        </div>
+      </div>
+      <div className="flex flex-col md:flex-row ">
+        <div className="mb-2 w-full md:mb-3 md:w-[50%]">
+          <label className="inline-block w-20 font-semibold text-gray-500">
+            정기모임
+          </label>
+          <input
+            name="regularMeeting"
+            type="text"
+            spellCheck={false}
+            className={`${
+              !isEditing && 'opacity-60'
+            } w-[75%] rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5`}
+            value={regularMeeting}
+            onChange={(e) => handleChange(e)}
+            disabled={!isEditing}
+          />
         </div>
         <div className="mb-2 w-full md:mb-3 md:w-[50%]">
           <label className="inline-block w-20 font-semibold text-gray-500">
