@@ -7,12 +7,12 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateFixComplete } from '@/apis';
+import { ErrorType, updateFixComplete } from '@/apis';
 import { FixComplete } from '@/types/fix';
 
 export function useUpdateComplete(): UseMutationResult<
   unknown,
-  AxiosError,
+  AxiosError<ErrorType>,
   FixComplete
 > {
   const queryClient = useQueryClient();
@@ -26,7 +26,9 @@ export function useUpdateComplete(): UseMutationResult<
       router.push('/fix');
     },
     onError(error) {
-      const errorMessage = error.message ? `\n ${error.message}` : '';
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
       toast.error(`처리완료 변경에 실패했어요.${errorMessage}`);
     },
   });

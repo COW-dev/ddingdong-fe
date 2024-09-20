@@ -6,12 +6,12 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
-import { createFixComment } from '@/apis';
+import { createFixComment, ErrorType } from '@/apis';
 import { NewFixComment } from '../../../types/fix';
 
 export function useNewFixComment(
   fixId: number,
-): UseMutationResult<unknown, AxiosError, NewFixComment> {
+): UseMutationResult<unknown, AxiosError<ErrorType>, NewFixComment> {
   const queryClient = useQueryClient();
   return useMutation(createFixComment, {
     onSuccess() {
@@ -19,7 +19,9 @@ export function useNewFixComment(
       queryClient.invalidateQueries({ queryKey: ['fix', fixId] });
     },
     onError(error) {
-      const errorMessage = error.message ? `\n ${error.message}` : '';
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
       toast.error(`댓글 작성에 실패했어요.${errorMessage}`);
     },
   });

@@ -6,11 +6,11 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateReports } from '@/apis';
+import { ErrorType, updateReports } from '@/apis';
 
 export function useUpdateReports(
   term: number,
-): UseMutationResult<unknown, AxiosError, FormData, [number]> {
+): UseMutationResult<unknown, AxiosError<ErrorType>, FormData, [number]> {
   const queryClient = useQueryClient();
 
   return useMutation((formData: FormData) => updateReports(term, formData), {
@@ -22,7 +22,9 @@ export function useUpdateReports(
       router.push('/report');
     },
     onError(error) {
-      const errorMessage = error.message ? `\n ${error.message}` : '';
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
       toast.error(`활동보고서 수정에 실패했어요.${errorMessage}`);
     },
   });

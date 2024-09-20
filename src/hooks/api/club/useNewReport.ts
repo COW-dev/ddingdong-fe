@@ -6,11 +6,11 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { createReport } from '@/apis';
+import { createReport, ErrorType } from '@/apis';
 
 export function useNewReport(): UseMutationResult<
   unknown,
-  AxiosError,
+  AxiosError<ErrorType>,
   FormData
 > {
   const queryClient = useQueryClient();
@@ -23,7 +23,9 @@ export function useNewReport(): UseMutationResult<
       router.push('/report');
     },
     onError(error) {
-      const errorMessage = error.message ? `\n ${error.message}` : '';
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
       toast.error(`활동보고서 생성에 실패했어요.${errorMessage}`);
     },
   });
