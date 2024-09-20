@@ -1,5 +1,5 @@
 const type: Record<string, RegExp> = {
-  phoneNumber: /^010-\d{4}-\d{4}$/,
+  phoneNumber: /^\d{2,3}-\d{3,4}-\d{4}$/,
   password: /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/,
   location: /^S\d{4,}$/,
   date: /\d{4}-\d{2}-\d{2}/,
