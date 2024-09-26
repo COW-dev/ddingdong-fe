@@ -6,12 +6,12 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { deleteReport } from '@/apis';
+import { deleteReport, ErrorType } from '@/apis';
 import { DeleteReport } from '@/types/report';
 
 export function useDeleteReport(): UseMutationResult<
   unknown,
-  AxiosError,
+  AxiosError<ErrorType>,
   DeleteReport
 > {
   const queryClient = useQueryClient();
@@ -23,7 +23,9 @@ export function useDeleteReport(): UseMutationResult<
       queryClient.invalidateQueries(['activity-reports']);
     },
     onError(error) {
-      const errorMessage = error.message ? `\n ${error.message}` : '';
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
       toast.error(`활동보고서 삭제에 실패했어요.${errorMessage}`);
     },
   });

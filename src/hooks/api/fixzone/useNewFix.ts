@@ -7,10 +7,14 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
-import { createFix } from '@/apis';
+import { createFix, ErrorType } from '@/apis';
 import { NewFix } from '../../../types/fix';
 
-export function useNewFix(): UseMutationResult<unknown, AxiosError, NewFix> {
+export function useNewFix(): UseMutationResult<
+  unknown,
+  AxiosError<ErrorType>,
+  NewFix
+> {
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -21,7 +25,9 @@ export function useNewFix(): UseMutationResult<unknown, AxiosError, NewFix> {
       router.push('/fix');
     },
     onError(error) {
-      const errorMessage = error.message ? `\n ${error.message}` : '';
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
       toast.error(`요청을 전송하는데 실패했어요.${errorMessage}`);
     },
   });

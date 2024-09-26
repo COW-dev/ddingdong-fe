@@ -50,6 +50,7 @@ import { Score, ScoreDetail } from '@/types/score';
 export type ErrorType = {
   status: number;
   message: string;
+  timestamp: string;
 };
 
 const api = axios.create({
