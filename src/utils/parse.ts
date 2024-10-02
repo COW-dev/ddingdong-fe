@@ -50,7 +50,7 @@ export const parseReportResponseToEditReport = (
     place,
     content,
     participants,
-    ImageUrls,
+    imageUrls,
     startDate: start,
     endDate: end,
   } = report;
@@ -66,7 +66,7 @@ export const parseReportResponseToEditReport = (
     content,
     date: { startDate, endDate },
     startTime,
-    ImageUrls,
+    imageUrls,
     endTime,
     participants,
   };

@@ -13,15 +13,15 @@ type Props = {
 };
 
 export default function Report({ reportData, term }: Props) {
-  const { content, ImageUrls, participants } = reportData ?? {};
+  const { content, imageUrls, participants } = reportData ?? {};
 
   const [data, setData] = useState(reportData);
 
   const showImage =
-    ImageUrls && ImageUrls[0] ? parseImgUrl(ImageUrls[0]) : UnSubmitImage;
+    imageUrls && imageUrls[0] ? parseImgUrl(imageUrls[0]) : UnSubmitImage;
   useEffect(() => {
     setData(data);
-  }, [ImageUrls, data]);
+  }, [imageUrls, data]);
 
   const isParticipants =
     participants?.filter((participant) => participant.name).length > 0;

@@ -34,7 +34,7 @@ export type EditReport = {
   startTime: string;
   endTime: string;
   content: string;
-  ImageUrls?: string[];
+  imageUrls?: string[];
   uploadFiles?: File | null;
   participants: StudentInfo[];
   token?: string;
@@ -63,7 +63,7 @@ export type ReportResponse = {
   endDate: string;
   startTime: string;
   endTime: string;
-  ImageUrls: string[];
+  imageUrls: string[];
   participants: StudentInfo[];
 };
 

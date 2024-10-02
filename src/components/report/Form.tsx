@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
@@ -34,7 +28,7 @@ export default function Form({
   id,
 }: ReportProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { date, participants, place, content, startTime, endTime, ImageUrls } =
+  const { date, participants, place, content, startTime, endTime, imageUrls } =
     report;
 
   function handleChange(
@@ -151,7 +145,7 @@ export default function Form({
           <UploadImage
             image={uploadFiles}
             setImage={setImage}
-            imageUrls={ImageUrls}
+            imageUrls={imageUrls}
             setRemoveFile={setRemoveFile}
             id={id}
           />
