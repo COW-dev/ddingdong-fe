@@ -34,7 +34,7 @@ export default function Form({
   id,
 }: ReportProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { date, participants, place, content, startTime, endTime, imageUrls } =
+  const { date, participants, place, content, startTime, endTime, ImageUrls } =
     report;
 
   function handleChange(
@@ -151,7 +151,7 @@ export default function Form({
           <UploadImage
             image={uploadFiles}
             setImage={setImage}
-            imageUrls={imageUrls}
+            imageUrls={ImageUrls}
             setRemoveFile={setRemoveFile}
             id={id}
           />
