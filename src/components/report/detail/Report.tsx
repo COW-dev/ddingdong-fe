@@ -16,8 +16,8 @@ export default function Report({ reportData, term }: Props) {
   const { content, imageUrls, participants } = reportData ?? {};
 
   const [data, setData] = useState(reportData);
-  const showImage =
-    imageUrls && imageUrls[0] ? parseImgUrl(imageUrls[0]) : UnSubmitImage;
+
+  const showImage = imageUrls && imageUrls[0] ? imageUrls[0] : UnSubmitImage;
   useEffect(() => {
     setData(data);
   }, [imageUrls, data]);
