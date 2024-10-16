@@ -27,7 +27,7 @@ export type NewClub = {
   category: string;
   tag: string;
   leaderName: string;
-  userId: string;
+  authId: string;
   password: string;
   token?: string;
 };
