@@ -5,19 +5,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
-import Banner from './Banner';
+import { useBanners } from '@/hooks/api/banner/useBanners';
 
 export default function Index() {
-  const { data: bannerData } = useAllBanners();
+  const { data: bannerData } = useBanners();
   const option = {
     loop: true,
   };
+
   const plugin = [
     Autoplay({
       delay: 5000,
     }),
   ];
+
   return (
     <Carousel opts={option} plugins={plugin}>
       <CarouselContent>

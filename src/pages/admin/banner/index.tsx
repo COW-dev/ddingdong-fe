@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import Create from '@/assets/create.svg';
 import Minimenu from '@/assets/minimenu.svg';
-import Banner from '@/components/common/Banner';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import CreateBanner from '@/components/modal/banner/CreateBanner';
 import DeleteBanner from '@/components/modal/banner/DeleteBanner';
-import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
+import { useAdminBanners } from '@/hooks/api/banner/useAdminBanners';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
 import { ResponseBanner } from '@/types/banner';
 
 export default function Index() {
-  const { data: bannerData } = useAllBanners();
+  const [{ token }] = useCookies(['token']);
+  const { data: bannerData } = useAdminBanners(token);
   const initialBanners: ResponseBanner[] = bannerData?.data ?? [];
   const [banners, setBanners] = useState<ResponseBanner[]>(initialBanners);
   const [hydrated, setHydrated] = useState(false);

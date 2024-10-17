@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
-import { getAllBanners } from '@/apis';
+import { getBanners } from '@/apis';
 import { ResponseBanner } from '@/types/banner';
 
-export function useAllBanners() {
+export function useBanners() {
   return useQuery<
     unknown,
     AxiosError,
@@ -11,6 +11,6 @@ export function useAllBanners() {
     [string]
   >({
     queryKey: ['banners'],
-    queryFn: getAllBanners,
+    queryFn: getBanners,
   });
 }

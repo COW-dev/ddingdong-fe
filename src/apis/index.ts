@@ -68,10 +68,20 @@ export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {
   return await api.get('/clubs');
 }
 
-export async function getAllBanners(): Promise<
+export async function getBanners(): Promise<
   AxiosResponse<ResponseBanner[], unknown>
 > {
   return await api.get('/banners');
+}
+
+export async function getAdminBanners(
+  token: string,
+): Promise<AxiosResponse<ResponseBanner[], unknown>> {
+  return await api.get('/admin/banners', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 
 export async function getAdminAllClubs(
