@@ -9,7 +9,7 @@ export function useReport(initReport: [EditReport, EditReport]) {
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
 
-  const createFormData = (term: number): [SubmitReport, SubmitReport] => {
+  const createPairReport = (term: number): [SubmitReport, SubmitReport] => {
     const parseReportOne = parseNewReportToReport(term, reportOne);
     const parseReportTwo = parseNewReportToReport(term, reportTwo);
 
@@ -17,7 +17,7 @@ export function useReport(initReport: [EditReport, EditReport]) {
   };
 
   return {
-    createFormData,
+    createPairReport,
     reportOne,
     reportTwo,
     uploadFileOne,
