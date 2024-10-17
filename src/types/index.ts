@@ -42,6 +42,8 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
+export type UrlType = { originUrl: string; cdnUrl: string };
+
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
 export type ModalType = { title: React.ReactNode; content: React.ReactNode };

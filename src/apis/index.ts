@@ -517,6 +517,26 @@ export async function getApplier(
   });
 }
 
+export async function getPresignedUrl(fileName: string, token: string) {
+  return await api.get(`/file/upload-url?fileName=${fileName}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function uploadPresignedUrl(
+  uploadUrl: string,
+  file: File,
+  contentType: string,
+) {
+  return await api.put(uploadUrl, file, {
+    headers: {
+      'Content-Type': contentType,
+    },
+  });
+}
+
 //error handling
 function expirationToken(error: AxiosError<ErrorType>) {
   removeToken();
