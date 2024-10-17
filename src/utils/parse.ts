@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import { EditReport, ReportResponse, SubmitReport } from '@/types/report';
 
 export function parseDate(date: string): string {
@@ -7,14 +6,6 @@ export function parseDate(date: string): string {
   const day = date.substring(8, 10);
 
   return `${year}.${month}.${day}`;
-}
-
-export async function getBlobFromImageData(
-  imageData: StaticImageData,
-): Promise<Blob> {
-  const response = await fetch(imageData.src);
-  const blob = await response.blob();
-  return blob;
 }
 
 export function parseImgUrl(url: string): string {
@@ -31,7 +22,8 @@ export const parseNewReportToReport = (
   term: number,
   report: EditReport,
 ): SubmitReport => {
-  const { date, place, content, participants, startTime, endTime } = report;
+  const { date, place, content, participants, startTime, endTime, key } =
+    report;
   return {
     term,
     startDate: date.startDate ? date.startDate + ' ' + startTime : '',
@@ -39,6 +31,7 @@ export const parseNewReportToReport = (
     place,
     content,
     participants,
+    key,
   };
 };
 
@@ -50,7 +43,7 @@ export const parseReportResponseToEditReport = (
     place,
     content,
     participants,
-    imageUrls,
+    imageUrl,
     startDate: start,
     endDate: end,
   } = report;
@@ -66,8 +59,9 @@ export const parseReportResponseToEditReport = (
     content,
     date: { startDate, endDate },
     startTime,
-    imageUrls,
+    imageUrl,
     endTime,
     participants,
+    key: '',
   };
 };

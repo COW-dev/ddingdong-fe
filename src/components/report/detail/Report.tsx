@@ -13,18 +13,21 @@ type Props = {
 };
 
 export default function Report({ reportData, term }: Props) {
-  const { content, imageUrls, participants } = reportData ?? {};
+  const { content, imageUrl, participants } = reportData ?? {};
 
   const [data, setData] = useState(reportData);
 
-  const showImage =
-    imageUrls && imageUrls[0] ? parseImgUrl(imageUrls[0]) : UnSubmitImage;
+  const showImage = imageUrl.cdnUrl
+    ? parseImgUrl(imageUrl.cdnUrl)
+    : UnSubmitImage;
+
   useEffect(() => {
     setData(data);
-  }, [imageUrls, data]);
+  }, [imageUrl.cdnUrl, data]);
 
   const isParticipants =
     participants?.filter((participant) => participant.name).length > 0;
+
   return (
     <div className="flex flex-col items-center justify-between md:m-3 md:flex-row">
       <div className="mb-2 flex flex-col">
