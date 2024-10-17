@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
@@ -17,7 +18,8 @@ type ReportEditProps = {
 function ReportEdit({ report, term = 0 }: ReportEditProps) {
   const router = useRouter();
   const createMutation = useNewReport();
-  const modifyMutation = useUpdateReports(term);
+  const modifyMutation = useUpdateReports();
+  const [{ token }] = useCookies(['token']);
 
   const {
     uploadFileOne,
@@ -28,7 +30,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     setReportTwo,
     reportOne,
     reportTwo,
-    createFormData,
+    createPairReport,
     setRemoveFileOne,
     setRemoveFileTwo,
   } = useReport(report ?? [EMPTY_DATA, EMPTY_DATA]);
@@ -43,14 +45,10 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
-
-    let formData = new FormData();
-    formData = await createFormData(formData, term);
-
     if (!validateDate(reportOne) || !validateDate(reportTwo))
       return toast.error('날짜와 시간을 모두 선택해주세요.');
-
-    return modifyMutation.mutate(formData);
+    const reports = createPairReport(term);
+    return modifyMutation.mutate({ reports, token });
   };
 
   const handleClickCreateButton = async (
@@ -59,10 +57,8 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
       return toast.error('날짜와 시간을 모두 선택해주세요.');
-
-    let formData = new FormData();
-    formData = await createFormData(formData, term);
-    return createMutation.mutate(formData);
+    const reports = createPairReport(term);
+    return createMutation.mutate({ reports, token });
   };
 
   return (
@@ -138,6 +134,7 @@ export const EMPTY_DATA = {
   endTime: '',
   uploadFiles: null,
   content: '',
+  imageUrl: { originUrl: '', cdnUrl: '' },
   participants: [
     participant,
     participant,
@@ -145,4 +142,5 @@ export const EMPTY_DATA = {
     participant,
     participant,
   ],
+  key: '',
 };

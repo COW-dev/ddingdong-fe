@@ -1,10 +1,13 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
+import { useMyClub } from '@/hooks/api/club/useMyClub';
 import useModal from '@/hooks/common/useModal';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
 import UploadImage from '../common/UploadImage';
@@ -27,9 +30,38 @@ export default function Form({
   setRemoveFile,
   id,
 }: ReportProps) {
+  const [{ token }] = useCookies(['token']);
+  const {
+    data: { data },
+  } = useMyClub(token);
+
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { date, participants, place, content, startTime, endTime, imageUrls } =
-    report;
+
+  const {
+    date,
+    participants,
+    place,
+    content,
+    startTime,
+    endTime,
+    imageUrl,
+    term,
+  } = report;
+
+  const { getKey } = usePresignedUrl(`activity-report/${term}/${data.name}`);
+
+  const fetchKey = async () => {
+    if (!uploadFiles) return;
+    const key = await getKey(uploadFiles);
+    setValue((prev) => ({
+      ...prev,
+      key,
+    }));
+  };
+
+  useEffect(() => {
+    fetchKey();
+  }, [uploadFiles]);
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
@@ -145,7 +177,7 @@ export default function Form({
           <UploadImage
             image={uploadFiles}
             setImage={setImage}
-            imageUrls={imageUrls}
+            imageUrls={[imageUrl.cdnUrl]}
             setRemoveFile={setRemoveFile}
             id={id}
           />

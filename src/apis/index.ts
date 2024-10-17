@@ -44,6 +44,7 @@ import {
   CurrentReport,
   DeleteReport,
   ActivityReportTerm,
+  SubmitReport,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -347,9 +348,11 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(formdata: FormData) {
-  const token = formdata.get('token');
-  return await api.post('/club/my/activity-reports', formdata, {
+export async function createReport(
+  reports: [SubmitReport, SubmitReport],
+  token: string,
+) {
+  return await api.post('/club/my/activity-reports', reports, {
     headers: {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'multipart/form-data',
@@ -401,10 +404,12 @@ export async function getCurrentReports(
     },
   });
 }
-export async function updateReports(term: number, updateData: FormData) {
-  const token = updateData.get('token');
-
-  return await api.patch(`/club/my/activity-reports?term=${term}`, updateData, {
+export async function updateReports(
+  reports: [SubmitReport, SubmitReport],
+  token: string,
+) {
+  const { term } = reports[0];
+  return await api.patch(`/club/my/activity-reports?term=${term}`, reports, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -514,6 +519,25 @@ export async function getApplier(
   return await api.get(`/admin/events/applied-users/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getPresignedUrl(fileName: string, token: string) {
+  return await api.get(`/file/upload-url?fileName=${fileName}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function uploadPresignedUrl(
+  uploadUrl: string,
+  file: File,
+  contentType: string,
+) {
+  return await api.put(uploadUrl, file, {
+    headers: {
+      'Content-Type': contentType,
     },
   });
 }
