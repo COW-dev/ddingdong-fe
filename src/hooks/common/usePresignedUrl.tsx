@@ -18,10 +18,12 @@ export function usePresignedUrl(fileName: string) {
     }
   };
 
-  const getkeys = (files: File[]) => {
-    return files.map((file) => {
-      getKey(file);
-    });
+  const getkeys = async (files: File[]) => {
+    try {
+      return await Promise.all(files.map((file) => getKey(file)));
+    } catch (error) {
+      toast.error(`파일첨부 과정에서 문제가 발생했어요.`);
+    }
   };
 
   return { getKey, getkeys };
