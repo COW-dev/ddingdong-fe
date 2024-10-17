@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import UploadImage from '@/components/common/UploadImage';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
 
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { SubmitBanner } from '@/types/banner';
 
 type Prop = {
@@ -30,6 +31,28 @@ export default function CreateBanner({ closeModal }: Prop) {
   function handleReset() {
     setBannerData(init);
   }
+  const { getKey } = usePresignedUrl(`banner`);
+
+  const handleChangeImage = async (
+    file: File,
+    urlName: 'webImageKey' | 'mobileImageKey',
+  ) => {
+    const key = await getKey(file);
+    setBannerData((prev) => ({
+      ...prev,
+      [urlName]: key,
+    }));
+  };
+
+  useEffect(() => {
+    if (!webImage) return;
+    handleChangeImage(webImage, 'webImageKey');
+  }, [webImage]);
+
+  useEffect(() => {
+    if (!mobileImage) return;
+    handleChangeImage(mobileImage, 'mobileImageKey');
+  }, [mobileImage]);
 
   return (
     <>

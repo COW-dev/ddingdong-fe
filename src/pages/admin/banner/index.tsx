@@ -12,7 +12,6 @@ import DeleteBanner from '@/components/modal/banner/DeleteBanner';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
-import { BannerType } from '@/types/banner';
 
 export default function Index() {
   const { data: bannerData } = useAllBanners();

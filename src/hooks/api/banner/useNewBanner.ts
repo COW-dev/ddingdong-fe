@@ -7,12 +7,16 @@ import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 
 import { createBanner } from '@/apis';
-import { NewBanner } from '@/types/banner';
+import { SubmitBanner } from '@/types/banner';
 
+export type NewBannerProps = {
+  bannerData: SubmitBanner;
+  token: string;
+};
 export function useNewBanner(): UseMutationResult<
   unknown,
   AxiosError,
-  NewBanner
+  NewBannerProps
 > {
   const queryClient = useQueryClient();
 

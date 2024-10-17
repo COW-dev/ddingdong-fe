@@ -182,11 +182,10 @@ export async function createClub({ token, ...clubData }: NewClub) {
   });
 }
 
-export async function createBanner({ token, formData }: NewBanner) {
-  return await api.post('/admin/banners', formData, {
+export async function createBanner({ bannerData, token }: NewBannerProps) {
+  return await api.post('/admin/banners', bannerData, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }

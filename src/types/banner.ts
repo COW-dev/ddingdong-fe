@@ -1,29 +1,22 @@
+import { UrlType } from '.';
+
 export type NewBanner = {
   token: string;
   formData: FormData;
 };
 
-export type BannerType = {
+export type ResponseBanner = {
   id: number;
-  title: string;
-  subTitle: string;
-  colorCode: string;
-  imgUrl: string;
+  webImageUrl: UrlType;
+  mobileImageUrl: UrlType;
 };
 
-export type NewBannerType = {
-  title: string;
-  subTitle: string;
-  colorCode: string;
+export type SubmitBanner = {
+  webImageKey: string;
+  mobileImageKey: string;
 };
 
 export type DeleteBanner = {
   bannerId: number | string;
-  token: string;
-};
-
-export type UpdateBanner = {
-  id: number;
-  data: FormData;
   token: string;
 };
