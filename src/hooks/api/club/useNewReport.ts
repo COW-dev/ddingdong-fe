@@ -7,16 +7,17 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { createReport, ErrorType } from '@/apis';
+import { SubmitReport } from '@/types/report';
 
 export function useNewReport(): UseMutationResult<
   unknown,
   AxiosError<ErrorType>,
-  FormData
+  { reports: [SubmitReport, SubmitReport]; token: string }
 > {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  return useMutation(createReport, {
+  return useMutation(({ reports, token }) => createReport(reports, token), {
     onSuccess() {
       queryClient.invalidateQueries(['my/activity-reports']);
       toast.success('활동 보고서를 성공적으로 생성했어요.');
