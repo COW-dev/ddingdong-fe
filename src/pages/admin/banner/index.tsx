@@ -12,11 +12,12 @@ import DeleteBanner from '@/components/modal/banner/DeleteBanner';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
+import { ResponseBanner } from '@/types/banner';
 
 export default function Index() {
   const { data: bannerData } = useAllBanners();
-  const initialBanners: BannerType[] = bannerData?.data ?? [];
-  const [banners, setBanners] = useState<BannerType[]>(initialBanners);
+  const initialBanners: ResponseBanner[] = bannerData?.data ?? [];
+  const [banners, setBanners] = useState<ResponseBanner[]>(initialBanners);
   const [hydrated, setHydrated] = useState(false);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
@@ -28,15 +29,16 @@ export default function Index() {
     title: <></>,
     content: <></>,
   });
-  const [banner, setBanner] = useState<BannerType | undefined>();
+  const [banner, setBanner] = useState<ResponseBanner | undefined>();
 
   useEffect(() => {
     if (bannerData) setBanners(bannerData?.data);
   }, [bannerData]);
 
-  function handleBannerClick(data: BannerType) {
+  function handleBannerClick(data: ResponseBanner) {
     setBanner(data);
   }
+
   function handleModal(data: ModalType) {
     setModal(data);
     openModal();
@@ -118,7 +120,7 @@ export default function Index() {
                 </div>
               </div>
             </div>
-            <Banner data={data} />
+            {/* <Banner data={data} /> */}
           </div>
         </div>
       ))}

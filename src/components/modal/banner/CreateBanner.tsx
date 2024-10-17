@@ -31,6 +31,7 @@ export default function CreateBanner({ closeModal }: Prop) {
   function handleReset() {
     setBannerData(init);
   }
+
   const { getKey } = usePresignedUrl(`banner`);
 
   const handleChangeImage = async (

@@ -26,7 +26,7 @@ export default function Index() {
             key={index}
             className="carousel-item relative min-w-full snap-start"
           >
-            <Banner data={resource} />
+            {/* <Banner data={resource} /> */}
           </div>
         ))}
       </CarouselContent>

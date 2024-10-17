@@ -3,13 +3,13 @@ import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
 import { ItemsType } from '@/constants/color';
-import { NewBannerType } from '@/types/banner';
+import { SubmitBanner } from '@/types/banner';
 import { NewClub } from '@/types/club';
 
 type SelectProps = {
   name: string;
   setData:
-    | Dispatch<SetStateAction<NewBannerType>>
+    | Dispatch<SetStateAction<SubmitBanner>>
     | Dispatch<SetStateAction<NewClub>>;
   list: ItemsType[];
 };
