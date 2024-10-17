@@ -1,4 +1,5 @@
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import { UrlType } from '.';
 
 export type StudentInfo = {
   name: string;
@@ -34,7 +35,7 @@ export type EditReport = {
   startTime: string;
   endTime: string;
   content: string;
-  imageUrl: { originUrl: string; cdnUrl: string };
+  imageUrl: UrlType;
   uploadFiles?: File | null;
   participants: StudentInfo[];
   token?: string;
@@ -50,6 +51,7 @@ export type SubmitReport = {
   content: string;
   key: string;
   participants: StudentInfo[];
+  token?: string;
 };
 
 export type ReportResponse = {
@@ -61,7 +63,7 @@ export type ReportResponse = {
   place: string;
   startDate: string;
   endDate: string;
-  imageUrl: { originUrl: string; cdnUrl: string };
+  imageUrl: UrlType;
   participants: StudentInfo[];
 };
 

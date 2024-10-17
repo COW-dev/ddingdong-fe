@@ -9,10 +9,15 @@ import toast from 'react-hot-toast';
 import { createReport, ErrorType } from '@/apis';
 import { SubmitReport } from '@/types/report';
 
+export type SubmitReportProps = {
+  reports: [SubmitReport, SubmitReport];
+  token: string;
+};
+
 export function useNewReport(): UseMutationResult<
   unknown,
   AxiosError<ErrorType>,
-  { reports: [SubmitReport, SubmitReport]; token: string }
+  SubmitReportProps
 > {
   const queryClient = useQueryClient();
   const router = useRouter();
