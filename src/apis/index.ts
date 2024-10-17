@@ -3,12 +3,8 @@ import axios from 'axios';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import {
-  BannerType,
-  DeleteBanner,
-  NewBanner,
-  UpdateBanner,
-} from '@/types/banner';
+import { NewBannerProps } from '@/hooks/api/banner/useNewBanner';
+import { DeleteBanner, ResponseBanner } from '@/types/banner';
 import {
   Club,
   AdminClub,
@@ -73,10 +69,11 @@ export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {
 }
 
 export async function getAllBanners(): Promise<
-  AxiosResponse<BannerType[], unknown>
+  AxiosResponse<ResponseBanner[], unknown>
 > {
   return await api.get('/banners');
 }
+
 export async function getAdminAllClubs(
   token: string,
 ): Promise<AxiosResponse<AdminClub[], unknown>> {
@@ -325,14 +322,6 @@ export async function updateMyClub(clubData: FormData) {
 }
 export async function updateFixComplete({ id, token }: FixComplete) {
   return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateBanner({ id, data, token }: UpdateBanner) {
-  return await api.patch(`/admin/banners/${id}`, data, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
