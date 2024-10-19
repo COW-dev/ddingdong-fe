@@ -18,7 +18,7 @@ export default function AdminHeader() {
           className="-ml-3 inline-block p-3"
         >
           <Image
-            src={'/logo.png'}
+            src={'/halloweenLogo.png'}
             width={1544}
             height={380}
             priority
