@@ -22,7 +22,9 @@ module.exports = {
         112: '28rem',
         128: '32rem',
       },
-      colors: {},
+      colors: {
+        halloween: '#F97316',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
