@@ -39,7 +39,7 @@ export type EditReport = {
   uploadFiles?: File | null;
   participants: StudentInfo[];
   token?: string;
-  key: string;
+  activityReportImageKey: string;
 };
 
 export type SubmitReport = {
@@ -49,9 +49,8 @@ export type SubmitReport = {
   startDate: string;
   endDate: string;
   content: string;
-  key: string;
+  activityReportImageKey: string;
   participants: StudentInfo[];
-  token?: string;
 };
 
 export type ReportResponse = {

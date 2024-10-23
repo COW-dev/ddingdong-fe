@@ -48,7 +48,7 @@ export default function Form({
     term,
   } = report;
 
-  const { getKey } = usePresignedUrl(`activity-report/${term}/${data.name}`);
+  const { getKey } = usePresignedUrl(`activity-report/${term}/${data?.name}`);
 
   const fetchKey = async () => {
     if (!uploadFiles) return;

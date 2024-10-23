@@ -47,8 +47,8 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
       return toast.error('날짜와 시간을 모두 선택해주세요.');
-    const reports = createPairReport(term);
-    return modifyMutation.mutate({ reports, token });
+    const activityReportRequests = createPairReport(term);
+    return modifyMutation.mutate({ activityReportRequests, token });
   };
 
   const handleClickCreateButton = async (
@@ -57,8 +57,8 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
       return toast.error('날짜와 시간을 모두 선택해주세요.');
-    const reports = createPairReport(term);
-    return createMutation.mutate({ reports, token });
+    const activityReportRequests = createPairReport(term);
+    return createMutation.mutate({ activityReportRequests, token });
   };
 
   return (
@@ -142,5 +142,5 @@ export const EMPTY_DATA = {
     participant,
     participant,
   ],
-  key: '',
+  activityReportImageKey: '',
 };

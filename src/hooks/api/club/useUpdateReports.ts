@@ -16,19 +16,23 @@ export function useUpdateReports(): UseMutationResult<
 > {
   const queryClient = useQueryClient();
 
-  return useMutation(({ reports, token }) => updateReports(reports, token), {
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: ['activity-reports'],
-      });
-      toast.success('활동보고서를 수정했어요.');
-      router.push('/report');
+  return useMutation(
+    ({ activityReportRequests, token }) =>
+      updateReports(activityReportRequests, token),
+    {
+      onSuccess() {
+        queryClient.invalidateQueries({
+          queryKey: ['activity-reports'],
+        });
+        toast.success('활동보고서를 수정했어요.');
+        router.push('/report');
+      },
+      onError(error) {
+        const errorMessage = error.response?.data?.message
+          ? `\n ${error.response?.data?.message}`
+          : '';
+        toast.error(`활동보고서 수정에 실패했어요.${errorMessage}`);
+      },
     },
-    onError(error) {
-      const errorMessage = error.response?.data?.message
-        ? `\n ${error.response?.data?.message}`
-        : '';
-      toast.error(`활동보고서 수정에 실패했어요.${errorMessage}`);
-    },
-  });
+  );
 }

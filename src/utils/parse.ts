@@ -22,8 +22,15 @@ export const parseNewReportToReport = (
   term: number,
   report: EditReport,
 ): SubmitReport => {
-  const { date, place, content, participants, startTime, endTime, key } =
-    report;
+  const {
+    date,
+    place,
+    content,
+    participants,
+    startTime,
+    endTime,
+    activityReportImageKey,
+  } = report;
   return {
     term,
     startDate: date.startDate ? date.startDate + ' ' + startTime : '',
@@ -31,7 +38,7 @@ export const parseNewReportToReport = (
     place,
     content,
     participants,
-    key,
+    activityReportImageKey,
   };
 };
 
@@ -62,6 +69,6 @@ export const parseReportResponseToEditReport = (
     imageUrl,
     endTime,
     participants,
-    key: '',
+    activityReportImageKey: '',
   };
 };
