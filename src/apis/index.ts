@@ -63,9 +63,9 @@ export function removeToken() {
   cookies.remove('token');
   cookies.remove('role');
 }
-export async function login(userId: string, password: string) {
+export async function login(authId: string, password: string) {
   removeToken();
-  return await api.post('/auth/sign-in', { userId, password });
+  return await api.post('/auth/sign-in', { authId, password });
 }
 
 export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {

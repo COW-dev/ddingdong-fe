@@ -4,23 +4,27 @@ import toast from 'react-hot-toast';
 import ColorSelect from '@/components/common/ColorSelect';
 import { CatogoryColor } from '@/constants/color';
 import { useNewClub } from '@/hooks/api/club/useNewClub';
+import { NewClub } from '@/types/club';
 import { isMissingData, validator } from '@/utils/validator';
+
 const init = {
   clubName: '',
   category: CatogoryColor[0].title,
   tag: '',
   leaderName: '',
-  userId: '',
+  authId: '',
   password: '',
 };
-type Prop = {
+
+type CreateClubProp = {
   closeModal: () => void;
 };
-export default function CreateClub({ closeModal }: Prop) {
+
+export default function CreateClub({ closeModal }: CreateClubProp) {
   const mutation = useNewClub();
   const [cookies] = useCookies(['token']);
-  const [clubData, setClubData] = useState(init);
-  const { clubName, tag, leaderName, userId, password } = clubData;
+  const [clubData, setClubData] = useState<NewClub>(init);
+  const { clubName, tag, leaderName, authId, password } = clubData;
 
   function handlePasswordValidate(object: { type: string; value: string }) {
     if (object.value && !validator(object)) {
@@ -62,7 +66,7 @@ export default function CreateClub({ closeModal }: Prop) {
 
   return (
     <>
-      <form className=" w-full" onSubmit={handleSubmit}>
+      <form className="w-full" onSubmit={handleSubmit}>
         <div className="mb-3 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">
             동아리명
@@ -120,11 +124,11 @@ export default function CreateClub({ closeModal }: Prop) {
             아이디
           </label>
           <input
-            name="userId"
+            name="authId"
             type="text"
             spellCheck={false}
             className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5"
-            value={userId}
+            value={authId}
             onChange={(e) => handleChange(e)}
           />
         </div>
