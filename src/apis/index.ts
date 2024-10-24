@@ -110,7 +110,7 @@ export async function getFixInfo(
   token: string,
   id: number,
 ): Promise<FixDetailInfo> {
-  const response = await api.get(`/club/fix-zones/${id}`, {
+  const response = await api.get(`/central/fix-zones/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -192,10 +192,9 @@ export async function createBanner({ token, formData }: NewBanner) {
 }
 
 export async function createFix({ token, formData }: NewFix) {
-  return await api.post('/club/fix-zones', formData, {
+  return await api.post('/central/fix-zones', formData, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }
