@@ -94,7 +94,7 @@ export default function FixDetail({ id }: Prop) {
               ${presentIndex === 0 && 'hidden'}`}
               />
               <Image
-                src={parseImgUrl(imageUrls[presentIndex])}
+                src={parseImgUrl(imageUrls[presentIndex].cdnUrl)}
                 width={550}
                 height={500}
                 priority
