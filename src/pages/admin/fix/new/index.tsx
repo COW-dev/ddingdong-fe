@@ -1,30 +1,44 @@
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import Heading from '@/components/common/Heading';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewFix } from '@/hooks/api/fixzone/useNewFix';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { EditFix } from '@/types/fix';
 
 export default function Index() {
   const mutation = useNewFix();
   const [{ token }] = useCookies(['token']);
-
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [post, setPost] = useState<EditFix>(initPost);
   const [image, setImage] = useState<File[]>([]);
+
   function handleSubmit() {
-    if (title === '') return toast('제목을 입력해주세요.');
+    if (post.title === '') return toast('제목을 입력해주세요.');
+    mutation.mutate({ post, token });
+  }
 
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    for (let i = 0; i < image.length; i++) formData.append('images', image[i]);
+  const { getkeys } = usePresignedUrl('fix-zone');
 
-    mutation.mutate({
-      formData: formData,
-      token: token,
-    });
+  const fetchKey = async () => {
+    if (image.length === 0) return;
+    const keys = await getkeys(image);
+    setPost((prev) => ({
+      ...prev,
+      fixZoneImageKeys: keys ?? null,
+    }));
+  };
+
+  useEffect(() => {
+    fetchKey();
+  }, [image]);
+
+  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setPost((prev: EditFix) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
   }
 
   return (
@@ -34,18 +48,20 @@ export default function Index() {
         {/* 정보 */}
         <div className=" flex h-full w-full flex-col justify-between px-6 py-6 pb-0 md:w-1/2 md:p-6">
           <textarea
-            value={title}
+            value={post.title}
+            name="title"
             spellCheck={false}
             className="mb-4 resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium shadow-sm outline-none md:h-1/6 md:p-4 "
             placeholder="[동아리명] 제목을 입력하세요."
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => handleChange(event)}
           />
           <textarea
-            value={content}
+            value={post.content}
+            name="content"
             spellCheck={false}
             className="h-full  resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium shadow-sm outline-none placeholder:text-gray-400 "
             placeholder="내용을 입력하세요."
-            onChange={(event) => setContent(event.target.value)}
+            onChange={(event) => handleChange(event)}
           />
         </div>
         {/* 내용 */}
@@ -69,3 +85,9 @@ export default function Index() {
     </>
   );
 }
+
+const initPost: EditFix = {
+  title: '',
+  content: '',
+  fixZoneImageKeys: [],
+};
