@@ -33,9 +33,15 @@ export type FixComplete = {
   token: string;
 };
 
+export type EditFix = {
+  title: string;
+  content: string;
+  fixZoneImageKeys: string[] | null;
+};
+
 export type NewFix = {
   token: string;
-  formData: FormData;
+  post: EditFix;
 };
 
 export type NewFixComment = {
