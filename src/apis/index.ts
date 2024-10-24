@@ -352,10 +352,9 @@ export async function createReport(
   reports: [SubmitReport, SubmitReport],
   token: string,
 ) {
-  return await api.post('/club/my/activity-reports', reports, {
+  return await api.post('/central/my/activity-reports', reports, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }
@@ -366,7 +365,7 @@ export async function getReportInfo(
   token: string,
 ): Promise<AxiosResponse<ReportResponse[], unknown>> {
   return await api.get(
-    `/club/activity-reports?term=${term}&club_name=${name}`,
+    `/central/activity-reports?term=${term}&club_name=${name}`,
     {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -378,7 +377,7 @@ export async function getReportInfo(
 export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {
-  return await api.get('/club/my/activity-reports', {
+  return await api.get('/central/my/activity-reports', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -388,7 +387,7 @@ export async function getMyReportLists(
 export async function getReportTerms(
   token: string,
 ): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
-  return await api.get('/club/activity-reports/term', {
+  return await api.get('/central/activity-reports/term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -398,18 +397,19 @@ export async function getReportTerms(
 export async function getCurrentReports(
   token: string,
 ): Promise<AxiosResponse<CurrentReport, unknown>> {
-  return await api.get('/club/activity-reports/current-term', {
+  return await api.get('/central/activity-reports/current-term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
+
 export async function updateReports(
   reports: [SubmitReport, SubmitReport],
   token: string,
 ) {
   const { term } = reports[0];
-  return await api.patch(`/club/my/activity-reports?term=${term}`, reports, {
+  return await api.patch(`/central/my/activity-reports?term=${term}`, reports, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -426,7 +426,7 @@ export async function getAdminAllReports(
   });
 }
 export async function deleteReport({ term, token }: DeleteReport) {
-  return await api.delete(`/club/my/activity-reports?term=${term}`, {
+  return await api.delete(`/central/my/activity-reports?term=${term}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
