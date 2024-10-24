@@ -26,7 +26,7 @@ function Comment({ info, fixZoneId }: CommentProps) {
   const [{ token, role }] = useCookies(['token', 'role']);
   const deleteMutation = useDeleteFixComment(fixZoneId);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { content, createdAt, commentId } = info;
+  const { content, createdAt, id: commentId } = info;
 
   const { openModal, visible, closeModal, modalRef } = useModal();
 
