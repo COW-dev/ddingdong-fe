@@ -43,7 +43,7 @@ export const parseNewReportToReport = (
 };
 
 export const parseReportResponseToEditReport = (
-  report: ReportResponse,
+  activityReportRequests: ReportResponse,
   term: number,
 ): EditReport => {
   const {
@@ -53,7 +53,7 @@ export const parseReportResponseToEditReport = (
     imageUrl,
     startDate: start,
     endDate: end,
-  } = report;
+  } = activityReportRequests;
 
   const { startDate, startTime, endDate, endTime } = parseStringDateToRangeDate(
     start,

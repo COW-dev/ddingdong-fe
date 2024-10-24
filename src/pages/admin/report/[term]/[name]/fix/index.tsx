@@ -11,7 +11,7 @@ import { parseReportResponseToEditReport } from '@/utils/parse';
 export default function Index({ term, name }: ReportKey) {
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ term, name, token }).data?.data;
-  if (!reportDataList) return <></>;
+  if (reportDataList?.length === 0) return <></>;
 
   const reportOne = parseReportResponseToEditReport(reportDataList[0], term);
   const reportTwo = parseReportResponseToEditReport(reportDataList[1], term);

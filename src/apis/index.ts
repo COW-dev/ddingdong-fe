@@ -349,14 +349,18 @@ export async function updateClub({ id, score, token }: UpdateClub) {
   });
 }
 export async function createReport(
-  reports: [SubmitReport, SubmitReport],
+  activityReportRequests: [SubmitReport, SubmitReport],
   token: string,
 ) {
-  return await api.post('/central/my/activity-reports', reports, {
-    headers: {
-      Authorization: 'Bearer ' + token,
+  return await api.post(
+    '/central/my/activity-reports',
+    { activityReportRequests },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
-  });
+  );
 }
 
 export async function getReportInfo(

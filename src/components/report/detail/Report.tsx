@@ -17,13 +17,13 @@ export default function Report({ reportData, term }: Props) {
 
   const [data, setData] = useState(reportData);
 
-  const showImage = imageUrl.cdnUrl
+  const showImage = imageUrl?.cdnUrl
     ? parseImgUrl(imageUrl.cdnUrl)
     : UnSubmitImage;
 
   useEffect(() => {
     setData(data);
-  }, [imageUrl.cdnUrl, data]);
+  }, [imageUrl?.cdnUrl, data]);
 
   const isParticipants =
     participants?.filter((participant) => participant.name).length > 0;
