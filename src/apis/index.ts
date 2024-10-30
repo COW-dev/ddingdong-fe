@@ -18,6 +18,7 @@ import {
   UpdateClub,
   UpdateMember,
   UpdateMyClub,
+  Member,
 } from '@/types/club';
 import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
 import {
@@ -232,6 +233,16 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
   const token = noticeData.get('token');
 
   return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getClubMembers(
+  token: string,
+): Promise<AxiosResponse<Array<Member>>> {
+  return await api.get(`/central/my/club-members`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
