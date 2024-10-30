@@ -1,15 +1,15 @@
 import Image from 'next/image';
-import { parseImgUrl } from '@/utils/parse';
+import { UrlType } from '@/types';
 
 export type ClubInfoDetail = {
-  introduceImageUrls: string[];
+  introductionImageUrl: UrlType;
   introduction: string;
   activity: string;
   ideal: string;
 };
 
 export default function ClubInfo({
-  introduceImageUrls,
+  introductionImageUrl,
   introduction,
   activity,
   ideal,
@@ -39,33 +39,28 @@ export default function ClubInfo({
         );
       });
       return <div className="flex">{elements}</div>;
-    } else {
-      return <span>{line}</span>;
     }
+    return <span>{line}</span>;
   }
-
-  const parsedImg = introduceImageUrls[0] && parseImgUrl(introduceImageUrls[0]);
 
   return (
     <main className="w-full lg:w-[70%]">
       <section className="mt-6 md:mt-8">
         <div
-          className={`${
-            introduceImageUrls.length === 0 && `hidden`
-          } mt-6 md:mt-8`}
+          className={`${!introductionImageUrl.cdnUrl && `hidden`} mt-6 md:mt-8`}
         >
           <div className="my-2 text-lg font-bold md:text-xl">
             동아리 소개 이미지
           </div>
-          {parsedImg && (
+          {introductionImageUrl.cdnUrl && (
             <Image
-              src={parsedImg}
+              src={introductionImageUrl.cdnUrl}
               width={1000}
               height={500}
               priority
               alt="동아리 소개 사진"
               className={`${
-                introduceImageUrls.length === 0 && `hidden`
+                !introductionImageUrl && `hidden`
               } max-h-[50vh] rounded-2xl object-scale-down`}
             />
           )}
