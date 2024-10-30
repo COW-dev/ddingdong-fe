@@ -38,8 +38,8 @@ export default function UploadImage({
         setPreviewImageUrl(image as string);
       }
     } else {
-      imageUrls?.originUrl
-        ? setPreviewImageUrl(imageUrls.originUrl)
+      imageUrls?.cdnUrl
+        ? setPreviewImageUrl(imageUrls.cdnUrl)
         : setPreviewImageUrl('');
     }
   }, [image, imageUrls, setImage]);
