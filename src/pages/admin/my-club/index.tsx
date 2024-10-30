@@ -6,17 +6,17 @@ import TextareaAutosize from 'react-textarea-autosize';
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import UploadImage from '@/components/common/UploadImage';
+import Loading from '@/components/loading/Loading';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
+import { usePresignedUrl } from '@/hooks/common/usePresigndUrl';
 import { ClubDetail } from '@/types/club';
-import { parseImgUrl } from '@/utils/parse';
 
 const initialClubData: ClubDetail = {
   name: '',
   tag: '',
   category: '',
   leader: '',
-  content: 'test',
   phoneNumber: '010-1234-1234',
   location: 'S0000',
   isRecruit: false,
@@ -25,36 +25,46 @@ const initialClubData: ClubDetail = {
   parsedRecruitPeriod: { startDate: '', endDate: '' },
   regularMeeting: '',
   introduction: '',
-  profileImageUrls: [''],
-  introduceImageUrls: [''],
   activity: '',
   ideal: '',
-  profileImage: null,
-  introduceImages: null,
+  profileImage: { id: '', originUrl: '', cdnUrl: '' },
+  introductionImage: { id: '', originUrl: '', cdnUrl: '' },
   formUrl: '',
   token: '',
-  clubMembers: [],
 };
 
 export default function Index() {
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-  const [{ token }] = useCookies();
-  const [profileImage, setProfileImage] = useState<File | null>(null);
-  const [introduceImages, setIntroduceImages] = useState<File | null>(null);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [clubData, setClubData] = useState<ClubDetail>(initialClubData);
-  const {
-    data: { data },
-  } = useMyClub(token);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+  const [introductionImageFile, setIntroductionImageFile] =
+    useState<File | null>(null);
+  const [profileImageId, setProfileImageId] = useState<string | null>(null);
+  const [introductionImageId, setIntroductionImageId] = useState<string | null>(
+    null,
+  );
+  const [{ token }] = useCookies();
+
+  const { data } = useMyClub(token);
+
   const mutation = useUpdateMyClub();
+  const {
+    getPresignedId: getProfilePresignedUrl,
+    isLoading: isProfileLoading,
+  } = usePresignedUrl(`profileImageFile`);
+  const {
+    getPresignedId: getIntroductionPresigned,
+    isLoading: isIntroductionLoading,
+  } = usePresignedUrl(`introductionImageFile`);
+
   useEffect(() => {
     if (data) {
-      setClubData({ ...data });
+      setClubData(data.data);
       setIsInitialLoad(false);
     }
   }, [data]);
 
-  //datapicker형식에 맞도록 변환
   useEffect(() => {
     if (data) {
       setClubData((prevClubData) => ({
@@ -68,6 +78,28 @@ export default function Index() {
     }
   }, [data, isInitialLoad, token]);
 
+  useEffect(() => {
+    const fetchIntroductionImageId = async () => {
+      if (introductionImageFile) {
+        const id = await getIntroductionPresigned(introductionImageFile);
+        setIntroductionImageId(id);
+      }
+    };
+
+    fetchIntroductionImageId();
+  }, [getIntroductionPresigned, introductionImageFile]);
+
+  useEffect(() => {
+    const fetchProfileImageId = async () => {
+      if (profileImageFile) {
+        const id = await getProfilePresignedUrl(profileImageFile);
+        setProfileImageId(id);
+      }
+    };
+
+    fetchProfileImageId();
+  }, [getProfilePresignedUrl, profileImageFile]);
+
   function handleTextareaChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = event.target;
     setClubData((prevClubData) => ({
@@ -78,76 +110,42 @@ export default function Index() {
 
   function handleClickCancel() {
     setIsEditing(false);
-    setClubData(data);
+    data && setClubData(data.data);
   }
 
   function handleClickSubmit() {
     setIsEditing(false);
-    const formData = createFormData();
-    return mutation.mutate(formData);
+
+    const requestData = {
+      name: clubData.name,
+      tag: clubData.tag,
+      category: clubData.category,
+      location: clubData.location,
+      clubLeader: clubData.leader,
+      phoneNumber: clubData.phoneNumber,
+      startRecruitPeriod: clubData.parsedRecruitPeriod?.startDate
+        ? `${clubData.parsedRecruitPeriod?.startDate} 00:00`
+        : null,
+      endRecruitPeriod: clubData.parsedRecruitPeriod?.endDate
+        ? `${clubData.parsedRecruitPeriod?.endDate} 00:00`
+        : null,
+      regularMeeting: '',
+      introduction: clubData.introduction,
+      activity: clubData.activity,
+      profileImageId: profileImageFile
+        ? profileImageId
+        : clubData.profileImage.id || null,
+      introductionImageId: introductionImageFile
+        ? introductionImageId
+        : clubData.introductionImage.id || null,
+      ideal: clubData.ideal,
+      formUrl: clubData.formUrl ?? null,
+      token: token,
+    };
+
+    return mutation.mutate(requestData);
   }
 
-  function createFormData() {
-    const formData = new FormData();
-    Object.entries(clubData).forEach(([key, value]) => {
-      if (!excludedKeys.includes(key)) {
-        formData.append(key, value === null ? '' : String(value));
-      }
-    });
-
-    profileImage &&
-      formData.append('profileImage', profileImage, `profileImage`);
-    introduceImages &&
-      formData.append('introduceImages', introduceImages, `introduceImages`);
-    formData.append(
-      'profileImageUrls',
-      clubData?.profileImageUrls?.length === 0
-        ? ''
-        : clubData?.profileImageUrls[0],
-    );
-    formData.append(
-      'introduceImageUrls',
-      clubData?.introduceImageUrls?.length === 0
-        ? ''
-        : clubData?.introduceImageUrls[0],
-    );
-    formData.append(
-      'startRecruitPeriod',
-      clubData.parsedRecruitPeriod?.startDate === null
-        ? ''
-        : clubData.parsedRecruitPeriod?.startDate + ' 00:00',
-    );
-    formData.append(
-      'endRecruitPeriod',
-      clubData.parsedRecruitPeriod?.endDate === null
-        ? ''
-        : clubData.parsedRecruitPeriod?.endDate + ' 23:59',
-    );
-    formData.append('token', token);
-    formData.append('clubLeader', clubData.leader);
-    formData.append(
-      'phoneNumber',
-      clubData.phoneNumber === '' ? '010-0000-0000' : clubData.phoneNumber,
-    );
-    formData.append(
-      'location',
-      clubData.location === '' ? 'S0000' : clubData.location,
-    );
-    return formData;
-  }
-  const image = parseImgUrl(clubData.introduceImageUrls[0]);
-  const excludedKeys = [
-    'profileImage',
-    'introduceImages',
-    'recruitPeriod',
-    'profileImageUrls',
-    'endRecruitPeriod',
-    'startRecruitPeriod',
-    'introduceImageUrls',
-    'parsedRecruitPeriod',
-    'location',
-    'phoneNumber',
-  ];
   return (
     <>
       <Head>
@@ -158,10 +156,11 @@ export default function Index() {
           clubName={clubData.name}
           category={clubData.category}
           tag={clubData.tag}
-          profileImage={clubData.profileImage}
-          profileImageUrls={clubData.profileImageUrls}
+          isLoading={isProfileLoading}
+          profileImage={profileImageFile}
+          profileImageUrl={clubData.profileImage}
           setValue={setClubData}
-          setProfileImage={setProfileImage}
+          setProfileImage={setProfileImageFile}
           isEditing={isEditing}
         />
         {isEditing ? (
@@ -208,17 +207,25 @@ export default function Index() {
             </div>
           </div>
           {isEditing ? (
-            <UploadImage
-              image={introduceImages}
-              setImage={setIntroduceImages}
-              imageUrls={clubData.introduceImageUrls}
-              setNoticeData={setClubData}
-              urlsName={`introduceImageUrls`}
-            />
-          ) : introduceImages || image ? (
+            isIntroductionLoading ? (
+              <div className=" flex w-full items-center justify-center">
+                <Loading className="w-54" />
+              </div>
+            ) : (
+              <UploadImage
+                image={introductionImageFile}
+                setImage={setIntroductionImageFile}
+                imageUrls={clubData.introductionImage}
+                setNoticeData={setClubData}
+                urlsName={`introduceImageUrls`}
+              />
+            )
+          ) : introductionImageFile || clubData.introductionImage?.cdnUrl ? (
             <Image
               src={
-                introduceImages ? URL.createObjectURL(introduceImages) : image
+                introductionImageFile
+                  ? URL.createObjectURL(introductionImageFile)
+                  : clubData.introductionImage?.cdnUrl
               }
               width={1000}
               priority

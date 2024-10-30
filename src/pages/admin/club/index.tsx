@@ -12,7 +12,6 @@ import { useAdminAllClubs } from '@/hooks/api/club/useAdminAllClubs';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
 import type { AdminClub } from '@/types/club';
-import { parseImgUrl } from '@/utils/parse';
 
 export default function Index() {
   const { openModal, visible, closeModal, modalRef } = useModal();
@@ -22,21 +21,16 @@ export default function Index() {
   });
   const [, setClub] = useState({});
   const [cookies] = useCookies(['token']);
-  const [clubs, setAdminClubs] = useState<Array<AdminClub>>([]);
+  const [clubs, setAdminClubs] = useState<AdminClub[]>([]);
   const { data } = useAdminAllClubs(cookies.token);
-
   useEffect(() => {
     setAdminClubs(data?.data ?? []);
   }, [data]);
 
+  console.log(data);
   function handleModal(data: ModalType) {
     setModal(data);
     openModal();
-  }
-
-  function handleImage(data: Array<string>) {
-    if (data?.length === 0) return Admin;
-    return parseImgUrl(data[0]);
   }
 
   return (
@@ -95,7 +89,7 @@ export default function Index() {
                 <div className=" flex h-full w-full justify-around p-5 md:p-6">
                   <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                     <Image
-                      src={handleImage(club.profileImageUrls)}
+                      src={club.profileImage[0].cdnUrl ?? Admin}
                       priority
                       width={80}
                       height={80}
