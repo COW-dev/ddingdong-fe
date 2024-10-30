@@ -25,7 +25,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     formUrl,
   } = info;
 
-  const imageSrc = profileImage.cdnUrl ? profileImage.cdnUrl : Admin;
+  const imageSrc = profileImage.originUrl ? profileImage.originUrl : Admin;
   const { data } = useAllClubs();
   const isRecruit =
     data?.data.find((club) => club.name === name)?.recruitStatus ===

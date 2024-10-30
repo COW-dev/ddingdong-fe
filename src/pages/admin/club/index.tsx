@@ -89,7 +89,7 @@ export default function Index() {
                 <div className=" flex h-full w-full justify-around p-5 md:p-6">
                   <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                     <Image
-                      src={club.profileImage[0].cdnUrl ?? Admin}
+                      src={club.profileImage[0].originUrl ?? Admin}
                       priority
                       width={80}
                       height={80}

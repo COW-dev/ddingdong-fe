@@ -72,8 +72,8 @@ export default function AdminClubHeading({
     return setPreviewImageUrl('');
   }, [profileImage]);
 
-  const imageSource = profileImageUrl?.cdnUrl
-    ? profileImageUrl?.cdnUrl
+  const imageSource = profileImageUrl?.originUrl
+    ? profileImageUrl?.originUrl
     : previewImageUrl;
 
   return (

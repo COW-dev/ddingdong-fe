@@ -47,14 +47,16 @@ export default function ClubInfo({
     <main className="w-full lg:w-[70%]">
       <section className="mt-6 md:mt-8">
         <div
-          className={`${!introductionImageUrl.cdnUrl && `hidden`} mt-6 md:mt-8`}
+          className={`${
+            !introductionImageUrl.originUrl && `hidden`
+          } mt-6 md:mt-8`}
         >
           <div className="my-2 text-lg font-bold md:text-xl">
             동아리 소개 이미지
           </div>
-          {introductionImageUrl.cdnUrl && (
+          {introductionImageUrl.originUrl && (
             <Image
-              src={introductionImageUrl.cdnUrl}
+              src={introductionImageUrl.originUrl}
               width={1000}
               height={500}
               priority
