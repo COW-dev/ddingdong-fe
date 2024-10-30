@@ -2,13 +2,14 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
+import { UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
-import { parseImgUrl } from '@/utils/parse';
+
 type UploadImageProps = {
   image?: File | null;
   setImage?: Dispatch<SetStateAction<File | null>>;
-  imageUrls?: string[];
+  imageUrls?: UrlType;
   setNoticeData?:
     | Dispatch<SetStateAction<NoticeDetail>>
     | Dispatch<SetStateAction<ClubDetail>>;
@@ -37,8 +38,8 @@ export default function UploadImage({
         setPreviewImageUrl(image as string);
       }
     } else {
-      imageUrls?.length === 1
-        ? setPreviewImageUrl(parseImgUrl(imageUrls[0]))
+      imageUrls?.originUrl
+        ? setPreviewImageUrl(imageUrls.originUrl)
         : setPreviewImageUrl('');
     }
   }, [image, imageUrls, setImage]);
