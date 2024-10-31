@@ -142,5 +142,5 @@ export const EMPTY_DATA = {
     participant,
     participant,
   ],
-  activityReportImageKey: '',
+  imageKey: null,
 };

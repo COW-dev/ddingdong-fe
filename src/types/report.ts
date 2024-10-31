@@ -35,11 +35,11 @@ export type EditReport = {
   startTime: string;
   endTime: string;
   content: string;
-  imageUrl: UrlType;
+  imageUrl?: UrlType;
   uploadFiles?: File | null;
   participants: StudentInfo[];
   token?: string;
-  activityReportImageKey: string;
+  imageKey: string | null;
 };
 
 export type SubmitReport = {
@@ -49,7 +49,7 @@ export type SubmitReport = {
   startDate: string;
   endDate: string;
   content: string;
-  activityReportImageKey: string;
+  imageKey: string | null;
   participants: StudentInfo[];
 };
 

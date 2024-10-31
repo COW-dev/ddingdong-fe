@@ -44,18 +44,17 @@ export default function Form({
     content,
     startTime,
     endTime,
-    imageUrl,
+    imageKey,
     term,
   } = report;
 
-  const { getKey } = usePresignedUrl(`activity-report/${term}/${data?.name}`);
-
+  const { getKey } = usePresignedUrl(``);
   const fetchKey = async () => {
     if (!uploadFiles) return;
-    const key = await getKey(uploadFiles);
+    const imageKey = await getKey(uploadFiles);
     setValue((prev) => ({
       ...prev,
-      key,
+      imageKey,
     }));
   };
 
@@ -177,7 +176,7 @@ export default function Form({
           <UploadImage
             image={uploadFiles}
             setImage={setImage}
-            imageUrls={[imageUrl.cdnUrl]}
+            imageUrls={[imageKey ?? '']}
             setRemoveFile={setRemoveFile}
             id={id}
           />
