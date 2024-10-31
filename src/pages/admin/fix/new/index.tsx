@@ -16,19 +16,21 @@ export default function Index() {
 
   function handleSubmit() {
     if (post.title === '') return toast('제목을 입력해주세요.');
-    console.log(post);
     mutation.mutate({ post, token });
   }
 
   const { getIds } = usePresignedUrl();
 
   const fetchKey = async () => {
-    if (image.length === 0) return;
-    const id = await getIds(image);
-    setPost((prev) => ({
-      ...prev,
-      fixZoneImageIds: id ?? null,
-    }));
+    try {
+      const id = await getIds(image);
+      setPost((prev) => ({
+        ...prev,
+        fixZoneImageIds: id ?? null,
+      }));
+    } catch (e) {
+      setImage([]);
+    }
   };
 
   useEffect(() => {
