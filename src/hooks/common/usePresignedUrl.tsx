@@ -15,6 +15,7 @@ export function usePresignedUrl() {
       return id;
     } catch (error) {
       toast.error(`파일첨부 과정에서 문제가 발생했어요.`);
+      throw error;
     }
   };
 
@@ -23,6 +24,7 @@ export function usePresignedUrl() {
       return await Promise.all(files.map((file) => getId(file)));
     } catch (error) {
       toast.error(`파일첨부 과정에서 문제가 발생했어요.`);
+      throw error;
     }
   };
 
