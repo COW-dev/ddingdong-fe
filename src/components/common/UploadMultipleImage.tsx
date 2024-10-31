@@ -15,6 +15,7 @@ export default function UploadMultipleImage({
   setImage,
 }: UploadImageProps) {
   const [presentIndex, setPresentIndex] = useState<number>(0);
+
   function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) {
@@ -30,6 +31,7 @@ export default function UploadMultipleImage({
     if (presentIndex === image.length) setPresentIndex(0);
     setImage([...image]);
   }
+
   return (
     <div className="flex h-full w-full justify-center p-6">
       {image.length !== 0 ? (
@@ -47,7 +49,7 @@ export default function UploadMultipleImage({
               <Image
                 src={URL.createObjectURL(image[presentIndex])}
                 className=" m-auto h-96 overflow-hidden rounded-lg object-scale-down"
-                alt="이미지"
+                alt="시설보수 신청용 이미지"
                 width={800}
                 height={200}
               />
