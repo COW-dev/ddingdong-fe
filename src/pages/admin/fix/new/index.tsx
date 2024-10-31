@@ -16,17 +16,18 @@ export default function Index() {
 
   function handleSubmit() {
     if (post.title === '') return toast('제목을 입력해주세요.');
+    console.log(post);
     mutation.mutate({ post, token });
   }
 
-  const { getkeys } = usePresignedUrl('fix-zone');
+  const { getIds } = usePresignedUrl();
 
   const fetchKey = async () => {
     if (image.length === 0) return;
-    const keys = await getkeys(image);
+    const id = await getIds(image);
     setPost((prev) => ({
       ...prev,
-      fixZoneImageKeys: keys ?? null,
+      fixZoneImageIds: id ?? null,
     }));
   };
 
@@ -89,5 +90,5 @@ export default function Index() {
 const initPost: EditFix = {
   title: '',
   content: '',
-  fixZoneImageKeys: [],
+  fixZoneImageIds: null,
 };

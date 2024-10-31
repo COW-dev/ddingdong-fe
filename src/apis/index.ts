@@ -99,7 +99,7 @@ export async function getAdminAllFix(
 export async function getClubAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/club/fix-zones', {
+  return await api.get('/central/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
