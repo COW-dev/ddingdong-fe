@@ -42,7 +42,7 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
-export type UrlType = { originUrl: string; cdnUrl: string };
+export type UrlType = { id: string; originUrl: string; cdnUrl: string };
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
