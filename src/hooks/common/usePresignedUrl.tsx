@@ -20,7 +20,7 @@ export function usePresignedUrl() {
 
   const getIds = async (files: File[]) => {
     try {
-      return await Promise.all(files.map((file) => getKey(file)));
+      return await Promise.all(files.map((file) => getId(file)));
     } catch (error) {
       toast.error(`파일첨부 과정에서 문제가 발생했어요.`);
     }

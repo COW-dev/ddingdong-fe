@@ -21,7 +21,7 @@ export type Comment = {
 };
 
 export type FixDetailInfo = Fix & {
-  imageUrls: UrlType[];
+  images: UrlType[];
   comments: Comment[];
 };
 

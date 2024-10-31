@@ -15,7 +15,6 @@ export default function UploadMultipleImage({
   setImage,
 }: UploadImageProps) {
   const [presentIndex, setPresentIndex] = useState<number>(0);
-
   function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       for (let i = 0; i < event.target.files.length; i++) {
