@@ -28,19 +28,17 @@ export default function UploadImage({
   id,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
+
   useEffect(() => {
+    if (!image && imageUrls?.originUrl) {
+      setPreviewImageUrl(imageUrls?.originUrl || '');
+      return;
+    }
+
     if (image) {
-      if (image instanceof File) {
-        setImage && setImage(image);
-        const imageUrl = URL.createObjectURL(image);
-        setPreviewImageUrl(imageUrl);
-      } else {
-        setPreviewImageUrl(image as string);
-      }
-    } else {
-      imageUrls?.originUrl
-        ? setPreviewImageUrl(imageUrls.originUrl)
-        : setPreviewImageUrl('');
+      const url = window.URL.createObjectURL(image);
+      setPreviewImageUrl(url);
+      return () => URL.revokeObjectURL(url);
     }
   }, [image, imageUrls, setImage]);
 
@@ -66,12 +64,13 @@ export default function UploadImage({
 
   return (
     <div className="flex w-full justify-center p-6">
-      {image || previewImageUrl ? (
+      {previewImageUrl ? (
         <>
           <Image
             src={previewImageUrl}
-            className="m-auto  h-72 object-scale-down "
+            className="m-auto h-72 object-scale-down "
             alt="이미지"
+            priority
             width={1000}
             height={200}
           />
