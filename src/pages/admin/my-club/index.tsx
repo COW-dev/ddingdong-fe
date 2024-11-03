@@ -115,7 +115,6 @@ export default function Index() {
 
   function handleClickSubmit() {
     setIsEditing(false);
-
     const requestData = {
       name: clubData.name,
       tag: clubData.tag,
@@ -172,7 +171,10 @@ export default function Index() {
               취소
             </button>
             <button
-              className="ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600"
+              className={`ml-1 rounded-xl px-2 py-2 text-blue-500 transition-colors hover:text-blue-600 ${
+                isProfileLoading ||
+                (isIntroductionLoading && 'cursor-not-allowed text-gray-500')
+              }`}
               onClick={handleClickSubmit}
             >
               확인
@@ -220,12 +222,12 @@ export default function Index() {
                 urlsName={`introduceImageUrls`}
               />
             )
-          ) : introductionImageFile || clubData.introductionImage?.cdnUrl ? (
+          ) : introductionImageFile || clubData.introductionImage?.originUrl ? (
             <Image
               src={
                 introductionImageFile
                   ? URL.createObjectURL(introductionImageFile)
-                  : clubData.introductionImage?.cdnUrl
+                  : clubData.introductionImage?.originUrl
               }
               width={1000}
               priority
