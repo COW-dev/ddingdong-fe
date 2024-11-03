@@ -40,6 +40,7 @@ export default function UploadImage({
       setPreviewImageUrl(url);
       return () => URL.revokeObjectURL(url);
     }
+    return setPreviewImageUrl('');
   }, [image, imageUrls, setImage]);
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -58,7 +59,7 @@ export default function UploadImage({
     setNoticeData &&
       setNoticeData((prev: any) => ({
         ...prev,
-        [urlsName ? `${urlsName}` : `imageUrls`]: [],
+        [urlsName ? `${urlsName}` : `imageUrls`]: {},
       }));
   }
 

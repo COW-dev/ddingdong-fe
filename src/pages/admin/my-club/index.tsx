@@ -109,12 +109,15 @@ export default function Index() {
   }
 
   function handleClickCancel() {
+    setProfileImageFile(null);
+    setIntroductionImageFile(null);
     setIsEditing(false);
     data && setClubData(data.data);
   }
 
   function handleClickSubmit() {
     setIsEditing(false);
+
     const requestData = {
       name: clubData.name,
       tag: clubData.tag,
@@ -133,10 +136,10 @@ export default function Index() {
       activity: clubData.activity,
       profileImageId: profileImageFile
         ? profileImageId
-        : clubData.profileImage.id || null,
+        : clubData.profileImage?.id || null,
       introductionImageId: introductionImageFile
         ? introductionImageId
-        : clubData.introductionImage.id || null,
+        : clubData.introductionImage?.id || null,
       ideal: clubData.ideal,
       formUrl: clubData.formUrl ?? null,
       token: token,
@@ -219,10 +222,10 @@ export default function Index() {
                 setImage={setIntroductionImageFile}
                 imageUrls={clubData.introductionImage}
                 setNoticeData={setClubData}
-                urlsName={`introduceImageUrls`}
+                urlsName={`introductionImage`}
               />
             )
-          ) : introductionImageFile || clubData.introductionImage?.originUrl ? (
+          ) : clubData.introductionImage?.originUrl || introductionImageFile ? (
             <Image
               src={
                 introductionImageFile
