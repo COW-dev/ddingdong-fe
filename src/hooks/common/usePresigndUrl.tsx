@@ -4,13 +4,14 @@ import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 import { getPresignedUrl, uploadPresignedUrl } from '@/apis';
 
-export function usePresignedUrl() {
+export function usePresignedUrl(fileName: string) {
   const [{ token }] = useCookies(['token']);
 
   const uploadFile = useMutation(
     async (file: File) => {
-      const { data } = await getPresignedUrl(file.name, token);
+      const { data } = await getPresignedUrl(fileName, token);
       const { id, contentType, uploadUrl } = data;
+
       await uploadPresignedUrl(file, uploadUrl, contentType);
       return id;
     },
@@ -23,10 +24,11 @@ export function usePresignedUrl() {
 
   const getPresignedIds = useCallback(
     async (files: File[]) => {
-      const ids = await Promise.all(
+      const keys = await Promise.all(
         files.map((file) => uploadFile.mutateAsync(file)),
       );
-      return ids;
+
+      return keys;
     },
     [uploadFile],
   );
