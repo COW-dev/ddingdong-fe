@@ -2,13 +2,14 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
+import { UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
-import { parseImgUrl } from '@/utils/parse';
+
 type UploadImageProps = {
   image?: File | null;
   setImage?: Dispatch<SetStateAction<File | null>>;
-  imageUrls?: string[];
+  imageUrls?: UrlType;
   setNoticeData?:
     | Dispatch<SetStateAction<NoticeDetail>>
     | Dispatch<SetStateAction<ClubDetail>>;
@@ -27,20 +28,19 @@ export default function UploadImage({
   id,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
+
   useEffect(() => {
-    if (image) {
-      if (image instanceof File) {
-        setImage && setImage(image);
-        const imageUrl = URL.createObjectURL(image);
-        setPreviewImageUrl(imageUrl);
-      } else {
-        setPreviewImageUrl(image as string);
-      }
-    } else {
-      imageUrls?.length === 1
-        ? setPreviewImageUrl(parseImgUrl(imageUrls[0]))
-        : setPreviewImageUrl('');
+    if (!image && imageUrls?.originUrl) {
+      setPreviewImageUrl(imageUrls?.originUrl || '');
+      return;
     }
+
+    if (image) {
+      const url = window.URL.createObjectURL(image);
+      setPreviewImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    return setPreviewImageUrl('');
   }, [image, imageUrls, setImage]);
 
   function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -59,18 +59,19 @@ export default function UploadImage({
     setNoticeData &&
       setNoticeData((prev: any) => ({
         ...prev,
-        [urlsName ? `${urlsName}` : `imageUrls`]: [],
+        [urlsName ? `${urlsName}` : `imageUrls`]: {},
       }));
   }
 
   return (
     <div className="flex w-full justify-center p-6">
-      {image || previewImageUrl ? (
+      {previewImageUrl ? (
         <>
           <Image
             src={previewImageUrl}
-            className="m-auto  h-72 object-scale-down "
+            className="m-auto h-72 object-scale-down "
             alt="이미지"
+            priority
             width={1000}
             height={200}
           />

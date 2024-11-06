@@ -1,4 +1,5 @@
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import { UrlType } from '.';
 
 export type Club = {
   id: number;
@@ -18,8 +19,8 @@ export type AdminClub = {
   id: number;
   name: string;
   category: string;
-  profileImageUrls: Array<string>;
   score: number;
+  profileImage: UrlType[];
 };
 
 export type NewClub = {
@@ -37,7 +38,6 @@ export type ClubDetail = {
   category: string;
   leader: string;
   phoneNumber: string;
-  content: string;
   location: string;
   isRecruit: boolean;
   parsedRecruitPeriod: DateRangeType | null;
@@ -47,13 +47,10 @@ export type ClubDetail = {
   introduction: string;
   activity: string;
   ideal: string;
-  profileImage: File | null;
-  introduceImages: File | null;
-  introduceImageUrls: string[];
-  profileImageUrls: string[];
+  profileImage: UrlType;
+  introductionImage: UrlType;
   token: string;
   formUrl: string;
-  clubMembers: Member[];
 };
 
 export type Member = {
@@ -74,19 +71,18 @@ export type UpdateMember = {
 export type UpdateMyClub = {
   name: string;
   tag: string;
-  category: string;
   clubLeader: string;
-  content: string;
   phoneNumber: string;
   location: string;
-  isRecruit: boolean;
-  recruitPeriod: DateRangeType;
+  startRecruitPeriod: string | null;
+  endRecruitPeriod: string | null;
   regularMeeting: string;
-  imageUrls: File | string;
   introduction: string;
   activity: string;
-  ideal: string;
-  formUrl: string;
+  ideal: string | null;
+  formUrl: string | null;
+  profileImageId: string | null;
+  introductionImageId: string | null;
   token: string;
 };
 

@@ -28,6 +28,7 @@
     "embla-carousel-autoplay": "^8.0.0-rc22",
     "embla-carousel-react": "^8.0.0-rc22",
     "hls.js": "^1.5.15",
+    "lottie-react": "^2.4.0",
     "lucide-react": "^0.331.0",
     "next": "13.2.4",
     "react": "18.2.0",

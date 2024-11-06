@@ -42,7 +42,13 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
-export type UrlType = { id: string; originUrl: string; cdnUrl: string };
+export type PresignedUrlResponse = {
+  id: string;
+  uploadUrl: string;
+  contentType: string;
+};
+
+export type UrlType = { id?: string; originUrl: string; cdnUrl: string };
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
