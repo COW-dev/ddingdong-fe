@@ -19,14 +19,14 @@ export default function Index() {
     mutation.mutate({ post, token });
   }
 
-  const { getIds } = usePresignedUrl();
+  const { getPresignedIds, isLoading } = usePresignedUrl();
 
   const fetchKey = async () => {
     try {
-      const id = await getIds(image);
+      const ids = await getPresignedIds(image);
       setPost((prev) => ({
         ...prev,
-        fixZoneImageIds: id ?? null,
+        fixZoneImageIds: ids ?? null,
       }));
     } catch (e) {
       setImage([]);
@@ -70,7 +70,11 @@ export default function Index() {
         {/* 내용 */}
         <div className="md:w-1/2  md:flex-row">
           <div className="h-full rounded-xl bg-white">
-            <UploadMultipleImage image={image} setImage={setImage} />
+            <UploadMultipleImage
+              isLoading={isLoading}
+              image={image}
+              setImage={setImage}
+            />
           </div>
         </div>
       </div>
@@ -80,7 +84,10 @@ export default function Index() {
         </div>
         <button
           onClick={handleSubmit}
-          className="ml-5 rounded-lg bg-blue-500 px-16 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 md:w-auto md:text-base "
+          disabled={isLoading}
+          className={`ml-5 rounded-lg bg-blue-500 px-16 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 md:w-auto md:text-base ${
+            isLoading && 'cursor-not-allowed bg-gray-500 hover:bg-gray-600'
+          }`}
         >
           신청하기
         </button>

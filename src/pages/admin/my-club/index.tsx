@@ -9,7 +9,7 @@ import UploadImage from '@/components/common/UploadImage';
 import Loading from '@/components/loading/Loading';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
-import { usePresignedUrl } from '@/hooks/common/usePresigndUrl';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { ClubDetail } from '@/types/club';
 
 const initialClubData: ClubDetail = {

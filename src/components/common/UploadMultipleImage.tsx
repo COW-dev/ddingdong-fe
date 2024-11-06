@@ -5,13 +5,17 @@ import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import ImagesController from './ImagesController';
+import Loading from '../loading/Loading';
+
 type UploadImageProps = {
   image: File[];
   setImage: Dispatch<SetStateAction<File[]>>;
+  isLoading: boolean;
 };
 
 export default function UploadMultipleImage({
   image,
+  isLoading,
   setImage,
 }: UploadImageProps) {
   const [presentIndex, setPresentIndex] = useState<number>(0);
@@ -31,6 +35,13 @@ export default function UploadMultipleImage({
     if (presentIndex === image.length) setPresentIndex(0);
     setImage([...image]);
   }
+
+  if (isLoading)
+    return (
+      <div className="flex h-full w-full justify-center p-6">
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="flex h-full w-full justify-center p-6">
