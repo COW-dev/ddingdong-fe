@@ -5,7 +5,7 @@ import Heading from '@/components/common/Heading';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewFix } from '@/hooks/api/fixzone/useNewFix';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrls } from '@/hooks/common/usePresignedUrls';
 import { EditFix } from '@/types/fix';
 
 export default function Index() {
@@ -19,7 +19,7 @@ export default function Index() {
     mutation.mutate({ post, token });
   }
 
-  const { getPresignedIds, isLoading } = usePresignedUrl();
+  const { getPresignedIds, isLoading } = usePresignedUrls();
 
   const fetchKey = async () => {
     try {
