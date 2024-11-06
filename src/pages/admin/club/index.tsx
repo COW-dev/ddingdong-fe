@@ -27,7 +27,6 @@ export default function Index() {
     setAdminClubs(data?.data ?? []);
   }, [data]);
 
-  console.log(data);
   function handleModal(data: ModalType) {
     setModal(data);
     openModal();
