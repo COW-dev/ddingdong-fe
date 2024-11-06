@@ -36,7 +36,7 @@ export default function Index({ clubId }: ClubDetailProps) {
         label: '동아리 소개',
         content: (
           <ClubInfo
-            introduceImageUrls={clubInfo.introduceImageUrls}
+            introductionImageUrl={clubInfo.introductionImage}
             introduction={clubInfo.introduction}
             activity={clubInfo.activity}
             ideal={clubInfo.ideal}

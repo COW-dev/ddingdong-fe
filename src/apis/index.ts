@@ -17,6 +17,8 @@ import {
   DeleteClub,
   UpdateClub,
   UpdateMember,
+  UpdateMyClub,
+  Member,
 } from '@/types/club';
 import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
 import {
@@ -78,6 +80,7 @@ export async function getAllBanners(): Promise<
 > {
   return await api.get('/banners');
 }
+
 export async function getAdminAllClubs(
   token: string,
 ): Promise<AxiosResponse<AdminClub[], unknown>> {
@@ -237,6 +240,16 @@ export async function updateNotice(noticeId: number, noticeData: FormData) {
   });
 }
 
+export async function getClubMembers(
+  token: string,
+): Promise<AxiosResponse<Array<Member>>> {
+  return await api.get(`/central/my/club-members`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
 export async function uploadMembers(formdata: FormData) {
   const token = formdata.get('token');
   return await api.post('/club/my/club-members', formdata, {
@@ -309,22 +322,21 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
 export async function getMyClub(
   token: string,
 ): Promise<AxiosResponse<ClubDetail, unknown>> {
-  return await api.get('/club/my', {
+  return await api.get('/central/my', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
 
-export async function updateMyClub(clubData: FormData) {
-  const token = clubData.get('token');
-  return await api.patch('/club/my', clubData, {
+export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
+  return await api.patch('/central/my', clubData, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }
+
 export async function updateFixComplete({ id, token }: FixComplete) {
   return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
@@ -537,6 +549,26 @@ export async function getPresignedUrl(fileName: string, token: string) {
 export async function uploadPresignedUrl(
   uploadUrl: string,
   file: File,
+  contentType: string,
+) {
+  return await api.put(uploadUrl, file, {
+    headers: {
+      'Content-Type': contentType,
+    },
+  });
+}
+
+export async function getPresignedUrl(fileName: string, token: string) {
+  return await api.get(`/file/upload-url?fileName=${fileName}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function uploadPresignedUrl(
+  file: File,
+  uploadUrl: string,
   contentType: string,
 ) {
   return await api.put(uploadUrl, file, {
