@@ -28,9 +28,7 @@ export default function Index() {
   }
 
   const onDelete = (index: number) => {
-    const revertedIds = (post.fixZoneImageIds as string[]).filter(
-      (_, i) => i !== index,
-    );
+    const revertedIds = post.fixZoneImageIds.filter((_, i) => i !== index);
     setPost((prev) => ({
       ...prev,
       fixZoneImageIds: revertedIds,
@@ -41,8 +39,7 @@ export default function Index() {
     const ids = await getPresignedIds(files);
     setPost((prev) => ({
       ...prev,
-      fixZoneImageIds:
-        prev.fixZoneImageIds === null ? ids : [...prev.fixZoneImageIds, ...ids],
+      fixZoneImageIds: [...prev.fixZoneImageIds, ...ids],
     }));
   };
 
@@ -101,5 +98,5 @@ export default function Index() {
 const initPost: EditFix = {
   title: '',
   content: '',
-  fixZoneImageIds: null,
+  fixZoneImageIds: [],
 };
