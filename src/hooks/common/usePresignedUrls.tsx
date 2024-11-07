@@ -15,18 +15,44 @@ export function usePresignedUrls() {
     return id;
   });
 
-  const getPresignedIds = useCallback(
-    async (files: File[]) => {
-      try {
-        const ids = await Promise.all(
-          files.map((file) => uploadFile.mutateAsync(file)),
-        );
+  const handleUploadResults = (
+    results: PromiseSettledResult<string>[],
+    files: File[],
+  ): string[] => {
+    const errorFileNames: string[] = [];
+    const ids: string[] = [];
 
-        return ids;
-      } catch (error) {
-        toast.error('파일업로드 과정 중 문제가 발생했습니다.');
-        throw error;
+    results.forEach((result, index) => {
+      if (result.status === 'fulfilled') {
+        ids.push(result.value);
+      } else {
+        errorFileNames.push(files[index].name);
       }
+    });
+
+    if (errorFileNames.length > 0) {
+      handleError(errorFileNames);
+    }
+
+    return ids;
+  };
+
+  const handleError = (fileNames: string[]) => {
+    toast.error(
+      `${fileNames.join('\n')} \n ${
+        fileNames.length
+      }개의 파일에서 업로드에 실패했어요 `,
+    );
+    throw new Error('여러 파일 업로드 중 에러 발생');
+  };
+
+  const getPresignedIds = useCallback(
+    async (files: File[]): Promise<string[]> => {
+      const results = await Promise.allSettled(
+        files.map((file) => uploadFile.mutateAsync(file)),
+      );
+
+      return handleUploadResults(results, files);
     },
     [uploadFile],
   );

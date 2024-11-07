@@ -12,7 +12,6 @@ export default function Index() {
   const mutation = useNewFix();
   const [{ token }] = useCookies(['token']);
   const [post, setPost] = useState<EditFix>(initPost);
-  const [image, setImage] = useState<File[]>([]);
 
   function handleSubmit() {
     if (post.title === '') return toast('제목을 입력해주세요.');
@@ -21,28 +20,31 @@ export default function Index() {
 
   const { getPresignedIds, isLoading } = usePresignedUrls();
 
-  const fetchKey = async () => {
-    try {
-      const ids = await getPresignedIds(image);
-      setPost((prev) => ({
-        ...prev,
-        fixZoneImageIds: ids ?? null,
-      }));
-    } catch (e) {
-      setImage([]);
-    }
-  };
-
-  useEffect(() => {
-    fetchKey();
-  }, [image]);
-
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setPost((prev: EditFix) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   }
+
+  const onDelete = (index: number) => {
+    const revertedIds = (post.fixZoneImageIds as string[]).filter(
+      (_, i) => i !== index,
+    );
+    setPost((prev) => ({
+      ...prev,
+      fixZoneImageIds: revertedIds,
+    }));
+  };
+
+  const onAdd = async (files: File[]) => {
+    const ids = await getPresignedIds(files);
+    setPost((prev) => ({
+      ...prev,
+      fixZoneImageIds:
+        prev.fixZoneImageIds === null ? ids : [...prev.fixZoneImageIds, ...ids],
+    }));
+  };
 
   return (
     <>
@@ -72,8 +74,8 @@ export default function Index() {
           <div className="h-full rounded-xl bg-white">
             <UploadMultipleImage
               isLoading={isLoading}
-              image={image}
-              setImage={setImage}
+              onDelete={onDelete}
+              onAdd={onAdd}
             />
           </div>
         </div>

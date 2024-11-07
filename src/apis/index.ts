@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
+import { PresignedUrlResponse } from '@/types';
 import {
   BannerType,
   DeleteBanner,
@@ -529,7 +530,10 @@ export async function getApplier(
   });
 }
 
-export async function getPresignedUrl(fileName: string, token: string) {
+export async function getPresignedUrl(
+  fileName: string,
+  token: string,
+): Promise<AxiosResponse<PresignedUrlResponse>> {
   return await api.get(`/file/upload-url?fileName=${fileName}`, {
     headers: {
       Authorization: 'Bearer ' + token,
