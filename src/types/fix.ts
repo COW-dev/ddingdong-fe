@@ -33,7 +33,7 @@ export type FixComplete = {
 export type EditFix = {
   title: string;
   content: string;
-  fixZoneImageIds: string[];
+  fixZoneImageIds: string[] | null;
 };
 
 export type NewFix = {
