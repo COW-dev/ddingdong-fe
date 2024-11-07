@@ -68,7 +68,7 @@ export default function UploadMultipleImage({
               <Image
                 src={URL.createObjectURL(image[presentIndex])}
                 className=" m-auto h-96 overflow-hidden rounded-lg object-scale-down"
-                alt="시설보수 신청용 이미지"
+                alt="이미지"
                 width={800}
                 height={200}
               />
