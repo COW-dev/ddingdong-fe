@@ -27,7 +27,7 @@ export default function Index() {
     }));
   }
 
-  const onDelete = (index: number) => {
+  const handleClickDelete = (index: number) => {
     const revertedIds = (post.fixZoneImageIds as string[])?.filter(
       (_, i) => i !== index,
     );
@@ -37,7 +37,7 @@ export default function Index() {
     }));
   };
 
-  const onAdd = async (files: File[]) => {
+  const handleClickUpload = async (files: File[]) => {
     const uploadInfo = await getPresignedIds(files);
     const uploadIds = uploadInfo.map(({ id }) => id);
     setPost((prev) => ({
@@ -78,8 +78,8 @@ export default function Index() {
           <div className="h-full rounded-xl bg-white">
             <UploadMultipleImage
               isLoading={isLoading}
-              onDelete={onDelete}
-              onAdd={onAdd}
+              onDelete={handleClickDelete}
+              onAdd={handleClickUpload}
             />
           </div>
         </div>
