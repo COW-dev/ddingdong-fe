@@ -1,11 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import Heading from '@/components/common/Heading';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewFix } from '@/hooks/api/fixzone/useNewFix';
-import { usePresignedUrls } from '@/hooks/common/usePresignedUrls';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { EditFix } from '@/types/fix';
 
 export default function Index() {
@@ -18,7 +18,7 @@ export default function Index() {
     mutation.mutate({ post, token });
   }
 
-  const { getPresignedIds, isLoading } = usePresignedUrls();
+  const { getPresignedIds, isLoading } = usePresignedUrl();
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setPost((prev: EditFix) => ({
@@ -28,22 +28,26 @@ export default function Index() {
   }
 
   const onDelete = (index: number) => {
-    const revertedIds = (post.fixZoneImageIds as string[]).filter(
+    const revertedIds = (post.fixZoneImageIds as string[])?.filter(
       (_, i) => i !== index,
     );
     setPost((prev) => ({
       ...prev,
-      fixZoneImageIds: revertedIds,
+      fixZoneImageIds: revertedIds.length === 0 ? null : revertedIds,
     }));
   };
 
   const onAdd = async (files: File[]) => {
-    const ids = await getPresignedIds(files);
+    const uploadInfo = await getPresignedIds(files);
+    const uploadIds = uploadInfo.map(({ id }) => id);
     setPost((prev) => ({
       ...prev,
       fixZoneImageIds:
-        prev.fixZoneImageIds === null ? ids : [...prev.fixZoneImageIds, ...ids],
+        prev.fixZoneImageIds === null
+          ? uploadIds
+          : [...prev.fixZoneImageIds, ...uploadIds],
     }));
+    return uploadInfo;
   };
 
   return (

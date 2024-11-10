@@ -4,7 +4,9 @@ import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 import { getPresignedUrl, uploadPresignedUrl } from '@/apis';
 
-export function usePresignedUrls() {
+export type UploadFile = { file: File; id: string };
+
+export function usePresignedUrl() {
   const [{ token }] = useCookies(['token']);
 
   const uploadFile = useMutation(async (file: File) => {
@@ -12,19 +14,27 @@ export function usePresignedUrls() {
     const { id, contentType, uploadUrl } = data;
 
     await uploadPresignedUrl(file, uploadUrl, contentType);
-    return id;
+    return { file, id };
   });
 
-  const handleUploadResults = (
-    results: PromiseSettledResult<string>[],
+  const handleError = (fileNames: string[]) => {
+    toast.error(
+      `${fileNames.join('\n')} \n ${
+        fileNames.length
+      }개의 파일을 다시 업로드해주세요. `,
+    );
+  };
+
+  const handlePartialUpload = (
+    results: PromiseSettledResult<UploadFile>[],
     files: File[],
-  ): string[] => {
+  ): UploadFile[] => {
     const errorFileNames: string[] = [];
-    const ids: string[] = [];
+    const successFile: UploadFile[] = [];
 
     results.forEach((result, index) => {
       if (result.status === 'fulfilled') {
-        ids.push(result.value);
+        successFile.push(result.value);
       } else {
         errorFileNames.push(files[index].name);
       }
@@ -34,31 +44,31 @@ export function usePresignedUrls() {
       handleError(errorFileNames);
     }
 
-    return ids;
+    return successFile;
   };
 
-  const handleError = (fileNames: string[]) => {
-    toast.error(
-      `${fileNames.join('\n')} \n ${
-        fileNames.length
-      }개의 파일에서 업로드에 실패했어요 `,
-    );
-    throw new Error('여러 파일 업로드 중 에러 발생');
+  const getPresignedId = async (file: File) => {
+    try {
+      return await uploadFile.mutateAsync(file);
+    } catch (e) {
+      handleError([file.name]);
+    }
   };
 
   const getPresignedIds = useCallback(
-    async (files: File[]): Promise<string[]> => {
+    async (files: File[]): Promise<UploadFile[]> => {
       const results = await Promise.allSettled(
         files.map((file) => uploadFile.mutateAsync(file)),
       );
 
-      return handleUploadResults(results, files);
+      return handlePartialUpload(results, files);
     },
     [uploadFile],
   );
 
   return {
     getPresignedIds,
+    getPresignedId,
     isLoading: uploadFile.isLoading,
   };
 }

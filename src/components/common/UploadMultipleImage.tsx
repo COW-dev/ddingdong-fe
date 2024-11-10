@@ -4,12 +4,13 @@ import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
+import { UploadFile } from '@/hooks/common/usePresignedUrl';
 import ImagesController from './ImagesController';
 import Loading from '../loading/Loading';
 
 type UploadImageProps = {
   isLoading: boolean;
-  onAdd: (file: File[]) => void;
+  onAdd: (file: File[]) => Promise<UploadFile[]>;
   onDelete: (index: number) => void;
 };
 
@@ -22,18 +23,10 @@ export default function UploadMultipleImage({
   const [image, setImage] = useState<File[]>([]);
 
   async function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
-    const originImage = [...image];
     if (event.target.files && event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file = event.target.files[i];
-        image?.push(file);
-      }
-      try {
-        await onAdd(Array.from(event.target.files));
-        setImage(image);
-      } catch (e) {
-        setImage(originImage);
-      }
+      const uploadInfo = await onAdd(Array.from(event.target.files));
+      const uploadfiles = uploadInfo.map((info) => info.file);
+      setImage([...image, ...uploadfiles]);
     }
   }
 
