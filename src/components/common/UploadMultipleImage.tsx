@@ -4,7 +4,7 @@ import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
-import { UploadFile } from '@/hooks/common/usePresignedUrl';
+import { UploadFile } from '@/types';
 import ImagesController from './ImagesController';
 import Loading from '../loading/Loading';
 

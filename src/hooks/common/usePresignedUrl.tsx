@@ -3,13 +3,12 @@ import { useMutation } from '@tanstack/react-query';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 import { getPresignedUrl, uploadPresignedUrl } from '@/apis';
-
-export type UploadFile = { file: File; id: string };
+import { UploadFile } from '@/types';
 
 export function usePresignedUrl() {
   const [{ token }] = useCookies(['token']);
 
-  const uploadFile = useMutation(async (file: File) => {
+  const uploadFile = useMutation(async (file: File): Promise<UploadFile> => {
     const { data } = await getPresignedUrl(file.name, token);
     const { id, contentType, uploadUrl } = data;
 
@@ -56,11 +55,10 @@ export function usePresignedUrl() {
   };
 
   const getPresignedIds = useCallback(
-    async (files: File[]): Promise<UploadFile[]> => {
+    async (files: File[]) => {
       const results = await Promise.allSettled(
         files.map((file) => uploadFile.mutateAsync(file)),
       );
-
       return handlePartialUpload(results, files);
     },
     [uploadFile],
