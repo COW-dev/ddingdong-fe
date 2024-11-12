@@ -1,28 +1,32 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
+import { UploadFile } from '@/types';
 import ImagesController from './ImagesController';
+import Loading from '../loading/Loading';
+
 type UploadImageProps = {
-  image: File[];
-  setImage: Dispatch<SetStateAction<File[]>>;
+  isLoading: boolean;
+  onAdd: (file: File[]) => Promise<UploadFile[]>;
+  onDelete: (index: number) => void;
 };
 
 export default function UploadMultipleImage({
-  image,
-  setImage,
+  isLoading,
+  onAdd,
+  onDelete,
 }: UploadImageProps) {
   const [presentIndex, setPresentIndex] = useState<number>(0);
+  const [image, setImage] = useState<File[]>([]);
 
-  function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file = event.target.files[i];
-        image?.push(file);
-      }
-      setImage([...image]);
+      const uploadInfo = await onAdd(Array.from(event.target.files));
+      const uploadfiles = uploadInfo.map((info) => info.file);
+      setImage([...image, ...uploadfiles]);
     }
   }
 
@@ -30,7 +34,16 @@ export default function UploadMultipleImage({
     image.splice(presentIndex, 1);
     if (presentIndex === image.length) setPresentIndex(0);
     setImage([...image]);
+    onDelete(presentIndex);
   }
+
+  if (isLoading)
+    return (
+      <div className="flex h-full w-full justify-center p-6">
+        <Loading />
+      </div>
+    );
+
   return (
     <div className="flex h-full w-full justify-center p-6">
       {image.length !== 0 ? (

@@ -42,6 +42,8 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
+export type UploadFile = { file: File; id: string };
+
 export type PresignedUrlResponse = {
   id: string;
   uploadUrl: string;
