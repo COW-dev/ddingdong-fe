@@ -421,15 +421,19 @@ export async function getCurrentReports(
 }
 
 export async function updateReports(
-  reports: [SubmitReport, SubmitReport],
+  activityReportRequests: [SubmitReport, SubmitReport],
   token: string,
 ) {
-  const { term } = reports[0];
-  return await api.patch(`/central/my/activity-reports?term=${term}`, reports, {
-    headers: {
-      Authorization: 'Bearer ' + token,
+  const { term } = activityReportRequests[0];
+  return await api.patch(
+    `/central/my/activity-reports?term=${term}`,
+    { activityReportRequests },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
-  });
+  );
 }
 
 export async function getAdminAllReports(
@@ -535,25 +539,6 @@ export async function getApplier(
   return await api.get(`/admin/events/applied-users/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function getPresignedUrl(fileName: string, token: string) {
-  return await api.get(`/file/upload-url?fileName=${fileName}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function uploadPresignedUrl(
-  uploadUrl: string,
-  file: File,
-  contentType: string,
-) {
-  return await api.put(uploadUrl, file, {
-    headers: {
-      'Content-Type': contentType,
     },
   });
 }

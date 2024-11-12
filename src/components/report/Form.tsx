@@ -7,7 +7,7 @@ import {
 } from 'react-tailwindcss-datepicker/dist/types';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import useModal from '@/hooks/common/useModal';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/common/usePresigndUrl';
 import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
 import UploadImage from '../common/UploadImage';
@@ -44,17 +44,17 @@ export default function Form({
     content,
     startTime,
     endTime,
-    imageKey,
+    imageId,
     term,
   } = report;
 
-  const { getKey } = usePresignedUrl(``);
+  const { getPresignedId } = usePresignedUrl(`report`);
   const fetchKey = async () => {
     if (!uploadFiles) return;
-    const imageKey = await getKey(uploadFiles);
+    const imageId = await getPresignedId(uploadFiles);
     setValue((prev) => ({
       ...prev,
-      imageKey,
+      imageId,
     }));
   };
 
@@ -176,7 +176,7 @@ export default function Form({
           <UploadImage
             image={uploadFiles}
             setImage={setImage}
-            imageUrls={[imageKey ?? '']}
+            imageUrls={[imageId ?? '']}
             setRemoveFile={setRemoveFile}
             id={id}
           />

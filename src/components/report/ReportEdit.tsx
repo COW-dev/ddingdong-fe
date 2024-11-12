@@ -142,5 +142,5 @@ export const EMPTY_DATA = {
     participant,
     participant,
   ],
-  imageKey: null,
+  imageId: null,
 };

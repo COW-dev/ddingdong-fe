@@ -32,24 +32,24 @@ export type EditReport = {
   term: number;
   date: DateRangeType;
   place: string;
-  startTime: string;
-  endTime: string;
+  startTime: string | null;
+  endTime: string | null;
   content: string;
   imageUrl?: UrlType;
   uploadFiles?: File | null;
   participants: StudentInfo[];
   token?: string;
-  imageKey: string | null;
+  imageId: string | null;
 };
 
 export type SubmitReport = {
   //server로 전달하는 report type
   term: number;
   place: string;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
   content: string;
-  imageKey: string | null;
+  imageId: string | null;
   participants: StudentInfo[];
 };
 
