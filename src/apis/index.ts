@@ -3,6 +3,7 @@ import axios from 'axios';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
+import { PresignedUrlResponse } from '@/types';
 import {
   BannerType,
   DeleteBanner,
@@ -102,7 +103,7 @@ export async function getAdminAllFix(
 export async function getClubAllFix(
   token: string,
 ): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/club/fix-zones', {
+  return await api.get('/central/fix-zones', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -113,7 +114,7 @@ export async function getFixInfo(
   token: string,
   id: number,
 ): Promise<FixDetailInfo> {
-  const response = await api.get(`/club/fix-zones/${id}`, {
+  const response = await api.get(`/central/fix-zones/${id}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -194,11 +195,10 @@ export async function createBanner({ token, formData }: NewBanner) {
   });
 }
 
-export async function createFix({ token, formData }: NewFix) {
-  return await api.post('/club/fix-zones', formData, {
+export async function createFix({ token, post }: NewFix) {
+  return await api.post('/central/fix-zones', post, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }
@@ -530,7 +530,10 @@ export async function getApplier(
   });
 }
 
-export async function getPresignedUrl(fileName: string, token: string) {
+export async function getPresignedUrl(
+  fileName: string,
+  token: string,
+): Promise<AxiosResponse<PresignedUrlResponse>> {
   return await api.get(`/file/upload-url?fileName=${fileName}`, {
     headers: {
       Authorization: 'Bearer ' + token,

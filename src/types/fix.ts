@@ -1,5 +1,7 @@
+import { UrlType } from '.';
+
 export type Fix = {
-  fixZoneId: number;
+  id: number;
   clubLocation: string;
   clubName: string;
   title: string;
@@ -9,23 +11,18 @@ export type Fix = {
 };
 
 export type Comment = {
-  commentor: string;
+  id: number;
+  commentor: {
+    name: string;
+    profileImageUrl: UrlType;
+  };
   content: string;
-  profileImageUrl: string;
   createdAt: string;
-  commentId: number;
 };
 
-export type FixDetailInfo = {
-  clubLocation: string;
-  clubName: string;
+export type FixDetailInfo = Fix & {
+  images: UrlType[];
   comments: Comment[];
-  title: string;
-  content: string;
-  id: number;
-  imageUrls: string[];
-  isCompleted: boolean;
-  requestedAt: string;
 };
 
 export type FixComplete = {
@@ -33,9 +30,15 @@ export type FixComplete = {
   token: string;
 };
 
+export type EditFix = {
+  title: string;
+  content: string;
+  fixZoneImageIds: string[] | null;
+};
+
 export type NewFix = {
   token: string;
-  formData: FormData;
+  post: EditFix;
 };
 
 export type NewFixComment = {

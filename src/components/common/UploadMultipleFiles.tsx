@@ -11,7 +11,7 @@ type UploadFileProps = {
   setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
   setDocumentData?: Dispatch<SetStateAction<NoticeDetail>>;
 };
-//file에 add
+
 export default function UploadMultipleFile({
   file,
   setFile,
@@ -21,17 +21,18 @@ export default function UploadMultipleFile({
 }: UploadFileProps) {
   function handleFileAdd(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
+      const newFiles = [...file];
       for (let i = 0; i < event.target.files.length; i++) {
         const fileItem = event.target.files[i];
-        file?.push(fileItem);
+        newFiles.push(fileItem);
       }
-      setFile([...file]);
+      setFile(newFiles);
     }
   }
 
   function handleUploadFileDelete(index: number) {
-    file.splice(index, 1);
-    setFile([...file]);
+    const revertedFiles = file.filter((_, i) => i !== index);
+    setFile(revertedFiles);
   }
 
   function handleReceivedFileDelete(index: number) {
