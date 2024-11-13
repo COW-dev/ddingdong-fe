@@ -5,7 +5,6 @@ import toast from 'react-hot-toast';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { useReport } from '@/hooks/common/useReport';
-
 import { EditReport } from '@/types/report';
 import Form from './Form';
 import Accordion from '../common/Accordion';
@@ -134,7 +133,7 @@ export const EMPTY_DATA = {
   endTime: '',
   uploadFiles: null,
   content: '',
-  imageUrl: { originUrl: '', cdnUrl: '' },
+  imageUrl: null,
   participants: [
     participant,
     participant,

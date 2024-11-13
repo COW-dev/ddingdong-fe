@@ -14,7 +14,6 @@ export default function Index({ term, name }: ReportKey) {
   if (reportDataList?.length === 0) return <></>;
   const reportOne = parseReportResponseToEditReport(reportDataList[0], term);
   const reportTwo = parseReportResponseToEditReport(reportDataList[1], term);
-  console.log(reportOne);
 
   return (
     <>

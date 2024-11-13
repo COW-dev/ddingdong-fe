@@ -43,7 +43,7 @@ export const parseReportResponseToEditReport = (
     place,
     content,
     participants,
-    imageUrl,
+    image,
     startDate: start,
     endDate: end,
   } = activityReportRequests;
@@ -61,7 +61,7 @@ export const parseReportResponseToEditReport = (
     startTime,
     endTime,
     participants,
-    imageUrl,
-    imageId: imageUrl?.originUrl,
+    image,
+    imageId: image?.id ?? null,
   };
 };
