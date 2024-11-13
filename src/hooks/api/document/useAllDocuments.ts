@@ -3,14 +3,9 @@ import { AxiosError, type AxiosResponse } from 'axios';
 import { getAllDocuments } from '@/apis';
 import { Document } from '@/types/document';
 
-export function useAllDocuments() {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<Document[], unknown>,
-    [string]
-  >({
+export function useAllDocuments(page: number) {
+  return useQuery<AxiosResponse<Document, unknown>, AxiosError>({
     queryKey: ['documents'],
-    queryFn: getAllDocuments,
+    queryFn: () => getAllDocuments(page),
   });
 }
