@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
 import { deptCaptionColor } from '@/constants/color';
-import { UrlType } from '@/types';
+import { UploadFile, UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import Loading from '../loading/Loading';
 
@@ -23,6 +23,7 @@ type AdminClubHeadingProps = {
   profileImageUrl: UrlType;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   setProfileImage: Dispatch<SetStateAction<File | null>>;
+  onAdd: (file: File) => Promise<UploadFile>;
 };
 
 export default function AdminClubHeading({
@@ -35,14 +36,16 @@ export default function AdminClubHeading({
   profileImageUrl,
   setValue,
   setProfileImage,
+  onAdd,
 }: AdminClubHeadingProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setProfileImage(file);
-      const imageUrl = URL.createObjectURL(file);
+      const uploadImage = await onAdd(file);
+      setProfileImage(uploadImage.file);
+      const imageUrl = URL.createObjectURL(uploadImage.file);
       setPreviewImageUrl(imageUrl);
     }
   }

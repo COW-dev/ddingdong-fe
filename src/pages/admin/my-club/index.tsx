@@ -9,7 +9,8 @@ import UploadImage from '@/components/common/UploadImage';
 import Loading from '@/components/loading/Loading';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
-import { usePresignedUrl } from '@/hooks/common/usePresigndUrl';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { UploadFile } from '@/types';
 import { ClubDetail } from '@/types/club';
 
 const initialClubData: ClubDetail = {
@@ -52,11 +53,11 @@ export default function Index() {
   const {
     getPresignedId: getProfilePresignedUrl,
     isLoading: isProfileLoading,
-  } = usePresignedUrl(`profileImageFile`);
+  } = usePresignedUrl();
   const {
     getPresignedId: getIntroductionPresigned,
     isLoading: isIntroductionLoading,
-  } = usePresignedUrl(`introductionImageFile`);
+  } = usePresignedUrl();
 
   useEffect(() => {
     if (data) {
@@ -78,28 +79,6 @@ export default function Index() {
     }
   }, [data, isInitialLoad, token]);
 
-  useEffect(() => {
-    const fetchIntroductionImageId = async () => {
-      if (introductionImageFile) {
-        const id = await getIntroductionPresigned(introductionImageFile);
-        setIntroductionImageId(id);
-      }
-    };
-
-    fetchIntroductionImageId();
-  }, [getIntroductionPresigned, introductionImageFile]);
-
-  useEffect(() => {
-    const fetchProfileImageId = async () => {
-      if (profileImageFile) {
-        const id = await getProfilePresignedUrl(profileImageFile);
-        setProfileImageId(id);
-      }
-    };
-
-    fetchProfileImageId();
-  }, [getProfilePresignedUrl, profileImageFile]);
-
   function handleTextareaChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = event.target;
     setClubData((prevClubData) => ({
@@ -107,6 +86,24 @@ export default function Index() {
       [name]: value,
     }));
   }
+
+  const handleProfileImage = async (files: File): Promise<UploadFile> => {
+    const profileInfo = await getProfilePresignedUrl(files);
+    if (profileInfo?.id) {
+      setProfileImageId(profileInfo.id);
+      return profileInfo;
+    }
+    throw new Error('이미지 생성에 문제가 생겼습니다.');
+  };
+
+  const handleIntroductionImage = async (files: File): Promise<UploadFile> => {
+    const introductionInfo = await getIntroductionPresigned(files);
+    if (introductionInfo?.id) {
+      setIntroductionImageId(introductionInfo.id);
+      return introductionInfo;
+    }
+    throw new Error('이미지 생성에 문제가 생겼습니다.');
+  };
 
   function handleClickCancel() {
     setProfileImageFile(null);
@@ -164,6 +161,7 @@ export default function Index() {
           setValue={setClubData}
           setProfileImage={setProfileImageFile}
           isEditing={isEditing}
+          onAdd={handleProfileImage}
         />
         {isEditing ? (
           <div className="-mr-2 mb-2 font-semibold">
@@ -223,6 +221,7 @@ export default function Index() {
                 imageUrls={clubData.introductionImage}
                 setNoticeData={setClubData}
                 urlsName={`introductionImage`}
+                onAdd={handleIntroductionImage}
               />
             )
           ) : clubData.introductionImage?.originUrl || introductionImageFile ? (
