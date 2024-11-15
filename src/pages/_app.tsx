@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import * as ChannelService from '@channel.io/channel-web-sdk-loader';
+import { loadScript, boot } from '@channel.io/channel-web-sdk-loader';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
@@ -39,8 +39,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (typeof window !== 'undefined' && !channelTalkDidInit) {
     channelTalkDidInit = true;
-    ChannelService.loadScript();
-    ChannelService.boot({
+    loadScript();
+    boot({
       pluginKey: process.env.NEXT_PUBLIC_CHANNELTALK_PLUGIN ?? '',
     });
   }
