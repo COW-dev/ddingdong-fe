@@ -20,16 +20,17 @@ export type UpdateDocument = NewDocument & {
 };
 
 export type DocumentFile = {
+  id: string;
+  name: string;
   originUrl: string;
   cdnUrl: string;
-  fileName: string;
 };
 
 export type DocumentDetail = {
   id: number;
   title: string;
   createdAt?: string;
-  fileUrls: DocumentFile[];
+  files: DocumentFile[];
 };
 
 export type DeleteDocument = {
