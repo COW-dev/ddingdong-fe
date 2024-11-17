@@ -1,40 +1,40 @@
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 import Download from '@/assets/download.svg';
-import { useDocumentInfo } from '@/hooks/api/document/useDocumentInfo';
+
 import { DocumentDetail } from '@/types/document';
-import { parseImgUrl } from '@/utils/parse';
+import { downloadBlob } from '@/utils/file';
 
 type Props = {
-  documentId: number;
+  documentData?: DocumentDetail;
 };
-export default function DocumentDownload({ documentId }: Props) {
-  const [documentData, setDocumentData] = useState<DocumentDetail>({
-    id: documentId,
-    title: '제목',
-    fileUrls: [{ fileUrl: '', name: '' }],
-    imageUrls: [''],
-  });
-
-  const { data } = useDocumentInfo(documentId);
-
-  useEffect(() => {
-    if (data) {
-      setDocumentData(data.data);
+export default function DocumentDownload({ documentData }: Props) {
+  const downloadFile = async (url: string, filename: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      downloadBlob(blob, filename);
+    } catch (error) {
+      toast.error('파일 다운로드 중 오류가 발생했습니다.');
     }
-  }, [data]);
+  };
 
-  const handleDownloadAll = () => {
-    documentData.fileUrls.forEach((file, index) => {
-      setTimeout(() => {
-        const link = document.createElement('a');
-        link.href = parseImgUrl(file.fileUrl);
-        link.download = file.name;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }, index * 500);
+  const handleDownloadAll = async () => {
+    if (!documentData?.files.length) return;
+
+    const downloads = documentData.files.map((file, index) => {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          downloadFile(file.originUrl, file.name).then(resolve);
+        }, index * 500);
+      });
     });
+
+    await Promise.all(downloads);
+  };
+
+  const handleSingleDownload = (url: string, filename: string) => {
+    downloadFile(url, filename);
   };
 
   return (
@@ -48,18 +48,20 @@ export default function DocumentDownload({ documentId }: Props) {
           <Image src={Download} width={17} height={17} alt="file" />
         </div>
         <hr />
-        {Array.isArray(documentData.fileUrls) &&
-          documentData.fileUrls.map((item, idx) => (
+        {documentData?.files?.map((item, idx) => (
+          <div
+            key={`notice-file-${idx}`}
+            className="flex w-full cursor-pointer items-center justify-between font-semibold"
+          >
+            <div>{item.name}</div>
             <div
-              key={`notice-file-${idx}`}
-              className="flex w-full cursor-pointer items-center justify-between font-semibold"
+              onClick={() => handleSingleDownload(item.originUrl, item.name)}
+              className="cursor-pointer"
             >
-              <div>{item.name}</div>
-              <a href={parseImgUrl(item.fileUrl)} download target="_blank">
-                <Image src={Download} width={17} height={17} alt="file" />
-              </a>
+              <Image src={Download} width={17} height={17} alt="file" />
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </>
   );
