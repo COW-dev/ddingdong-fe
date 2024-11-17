@@ -12,5 +12,6 @@ export function useDocumentInfo(id: number) {
   >({
     queryKey: ['documents', id],
     queryFn: () => getDocumentInfo(id),
+    enabled: !!id,
   });
 }

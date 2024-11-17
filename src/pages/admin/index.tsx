@@ -14,7 +14,7 @@ export default function Index() {
   const [hydrated, setHydrated] = useState(false);
   const [{ role }] = useCookies(['token', 'role']);
   const { data: noticedata } = useAllNotices();
-  const { data: documentData } = useAllDocuments();
+  const { data: documentData } = useAllDocuments(1);
   const [infoElement, setInfoElement] = useState(<></>);
   const [cookies, setCookie, removeCookie] = useCookies([
     'access_token',
@@ -35,7 +35,8 @@ export default function Index() {
   const notices = noticedata?.data.sort((a, b) => {
     return b.id - a.id;
   });
-  const documents = documentData?.data.sort((a, b) => {
+
+  const documents = documentData?.data?.documents?.sort((a, b) => {
     return b.id - a.id;
   });
 
