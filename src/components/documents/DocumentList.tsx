@@ -6,20 +6,24 @@ import Download from '@/assets/download.svg';
 import { ROLE_TYPE } from '@/constants/text';
 import { useAllDocuments } from '@/hooks/api/document/useAllDocuments';
 import { useDeleteDocument } from '@/hooks/api/document/useDeleteDocuments';
+import { useDocumentInfo } from '@/hooks/api/document/useDocumentInfo';
 import useModal from '@/hooks/common/useModal';
-import { Document } from '@/types/document';
+import { DocumentTitle, DocumentDetail } from '@/types/document';
 import AlertDialog from '../common/AlertDialog';
 import Modal from '../common/Modal';
 import DocumentDownload from '../modal/documents/DocumentDownload';
 
 export default function DocumentList() {
   const [documentId, setDocumentId] = useState<number>(0);
-  const [documents, setDocuments] = useState<Document[]>([]);
+  const [documents, setDocuments] = useState<DocumentTitle[]>();
+  const [documentData, setDocumentData] = useState<DocumentDetail>();
   const [isDeleteState, setIsDeleteState] = useState<boolean>(false);
   const [{ token, role }] = useCookies(['token', 'role']);
 
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { data } = useAllDocuments();
+  const { data } = useAllDocuments(1);
+  const { data: selectedDocumentData } = useDocumentInfo(documentId);
+
   const deleteDocumentMutation = useDeleteDocument();
 
   const handleDownloadClick = (id: number) => {
@@ -40,12 +44,18 @@ export default function DocumentList() {
   };
 
   useEffect(() => {
-    if (data) setDocuments(data?.data ?? []);
+    if (data) setDocuments(data?.data.documents);
   }, [data]);
+
+  useEffect(() => {
+    if (selectedDocumentData) {
+      setDocumentData(selectedDocumentData.data);
+    }
+  }, [selectedDocumentData]);
 
   return (
     <ul className="mt-14 w-full md:mt-16">
-      {[...(documents ?? [])]?.reverse().map((document) => (
+      {documents?.reverse().map((document) => (
         <li
           key={document.id}
           className="mb-1 flex w-full cursor-pointer flex-row items-center justify-between border-b"
@@ -96,30 +106,35 @@ export default function DocumentList() {
           </div>
         </li>
       ))}
-      {documents.length === 0 && (
+      {documents?.length === 0 && (
         <li className="mb-2 flex h-20 w-full flex-col items-center justify-center rounded-xl border border-gray-100 pl-4 pt-2 shadow-sm">
           <div className=" text-sm text-gray-500 ">
             자료실 데이터가 존재하지 않습니다.
           </div>
         </li>
       )}
-      <Modal
-        visible={visible}
-        modalRef={modalRef}
-        title={
-          isDeleteState == false && (
-            <span className="text-black">자료실 다운로드</span>
-          )
-        }
-        closeButton={false}
-        closeModal={closeModal}
-      >
-        {isDeleteState ? (
-          <AlertDialog onConfirm={handleDeleteConfirm} onCancel={closeModal} />
-        ) : (
-          <DocumentDownload documentId={documentId} />
-        )}
-      </Modal>
+      {selectedDocumentData && (
+        <Modal
+          visible={visible}
+          modalRef={modalRef}
+          title={
+            isDeleteState == false && (
+              <span className="text-black">자료실 다운로드</span>
+            )
+          }
+          closeButton={false}
+          closeModal={closeModal}
+        >
+          {isDeleteState ? (
+            <AlertDialog
+              onConfirm={handleDeleteConfirm}
+              onCancel={closeModal}
+            />
+          ) : (
+            <DocumentDownload documentData={documentData} />
+          )}
+        </Modal>
+      )}
     </ul>
   );
 }

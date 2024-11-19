@@ -2,7 +2,9 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 import Cancel from '@/assets/cancel.svg';
 import File from '@/assets/file.svg';
+import { UploadFile } from '@/types';
 import { NoticeDetail } from '@/types/notice';
+import Loading from '../loading/Loading';
 
 type UploadFileProps = {
   file: File[];
@@ -10,23 +12,24 @@ type UploadFileProps = {
   fileUrls?: { fileUrl: string; name: string }[];
   setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
   setDocumentData?: Dispatch<SetStateAction<NoticeDetail>>;
+  isLoading: boolean;
+  onAdd: (file: File[]) => Promise<UploadFile[]>;
 };
 
 export default function UploadMultipleFile({
   file,
   setFile,
+  onAdd,
+  isLoading,
   fileUrls,
   setNoticeData,
   setDocumentData,
 }: UploadFileProps) {
-  function handleFileAdd(event: ChangeEvent<HTMLInputElement>) {
+  async function handleFileAdd(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
-      const newFiles = [...file];
-      for (let i = 0; i < event.target.files.length; i++) {
-        const fileItem = event.target.files[i];
-        newFiles.push(fileItem);
-      }
-      setFile(newFiles);
+      const uploadInfo = await onAdd(Array.from(event.target.files));
+      const uploadFiles = uploadInfo.map((info) => info.file);
+      setFile([...uploadFiles]);
     }
   }
 
@@ -63,6 +66,13 @@ export default function UploadMultipleFile({
       <span className=" text-sm font-semibold text-gray-500">{item.name}</span>
     </div>
   );
+
+  if (isLoading)
+    return (
+      <div className="flex h-full w-full justify-center p-6">
+        <Loading />
+      </div>
+    );
 
   return (
     <>

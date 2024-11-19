@@ -7,11 +7,12 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { createDocument } from '@/apis';
+import { NewDocument } from '@/types/document';
 
 export function useNewDocument(): UseMutationResult<
   unknown,
   AxiosError,
-  FormData
+  NewDocument
 > {
   const queryClient = useQueryClient();
   const router = useRouter();

@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
-import { UrlType } from '@/types';
+import { UploadFile, UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
 
@@ -16,6 +16,7 @@ type UploadImageProps = {
   urlsName?: string;
   setRemoveFile?: Dispatch<SetStateAction<boolean>>;
   id?: number;
+  onAdd: (file: File) => Promise<UploadFile>;
 };
 
 export default function UploadImage({
@@ -26,6 +27,7 @@ export default function UploadImage({
   setNoticeData,
   setRemoveFile,
   id,
+  onAdd,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
 
@@ -34,7 +36,6 @@ export default function UploadImage({
       setPreviewImageUrl(imageUrls?.originUrl || '');
       return;
     }
-
     if (image) {
       const url = window.URL.createObjectURL(image);
       setPreviewImageUrl(url);
@@ -43,11 +44,12 @@ export default function UploadImage({
     return setPreviewImageUrl('');
   }, [image, imageUrls, setImage]);
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setImage && setImage(file);
-      const imageUrl = URL.createObjectURL(file);
+      const uploadImage = await onAdd(file);
+      setImage && setImage(uploadImage.file);
+      const imageUrl = URL.createObjectURL(uploadImage.file);
       setPreviewImageUrl(imageUrl);
     }
   }

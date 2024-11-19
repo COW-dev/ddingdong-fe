@@ -21,7 +21,12 @@ import {
   UpdateMyClub,
   Member,
 } from '@/types/club';
-import { DeleteDocument, Document, DocumentDetail } from '@/types/document';
+import {
+  DeleteDocument,
+  Document,
+  DocumentDetail,
+  NewDocument,
+} from '@/types/document';
 import {
   Applicant,
   ApplicantDetail,
@@ -141,10 +146,10 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
-export async function getAllDocuments(): Promise<
-  AxiosResponse<Document[], unknown>
-> {
-  return await api.get('/documents');
+export async function getAllDocuments(
+  page: number,
+): Promise<AxiosResponse<Document, unknown>> {
+  return await api.get(`/documents?page=${page ?? 1}&limit=10`);
 }
 
 export async function getDocumentInfo(
@@ -203,13 +208,10 @@ export async function createFix({ token, post }: NewFix) {
     },
   });
 }
-export async function createDocument(documentData: FormData) {
-  const token = documentData.get('token');
-
+export async function createDocument({ token, ...documentData }: NewDocument) {
   return await api.post('/admin/documents', documentData, {
     headers: {
       Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
     },
   });
 }
