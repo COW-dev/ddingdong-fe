@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import UploadMultipleFile from '@/components/common/UploadMultipleFiles';
 import { useNewDocument } from '@/hooks/api/document/useNewDocument';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { UploadFile } from '@/types';
 
 type DocumentModalProps = {
   closeModal: () => void;
@@ -9,21 +11,25 @@ type DocumentModalProps = {
 
 export default function DocumentModal({ closeModal }: DocumentModalProps) {
   const [title, setTitle] = useState<string>('');
-  const [file, setFile] = useState<File[]>([]);
-  const [cookies] = useCookies(['token']);
+  const [files, setFiles] = useState<File[]>([]);
+  const [fileId, setFileId] = useState<string[]>([]);
+  const [{ token }] = useCookies(['token']);
 
   const mutation = useNewDocument();
 
+  const { getPresignedIds, isLoading: isDocumentLoading } = usePresignedUrl();
+
+  const handleFileUpload = async (files: File[]): Promise<UploadFile[]> => {
+    const documentInfo = await getPresignedIds(files);
+    const documentIds = documentInfo.map(({ id }) => id);
+    setFileId(documentIds);
+    return documentInfo;
+  };
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('title', title);
-    for (let i = 0; i < file.length; i++) {
-      formData.append('uploadFiles', file[i]);
-    }
-    formData.append('token', cookies.token);
     closeModal();
-    return mutation.mutate(formData);
+    return mutation.mutate({ title, fileIds: fileId, token });
   }
 
   return (
@@ -44,7 +50,12 @@ export default function DocumentModal({ closeModal }: DocumentModalProps) {
           />
         </label>
       </div>
-      <UploadMultipleFile file={file} setFile={setFile} />
+      <UploadMultipleFile
+        file={files}
+        setFile={setFiles}
+        onAdd={handleFileUpload}
+        isLoading={isDocumentLoading}
+      />
       <div className=" mt-6 flex h-12 items-center justify-center md:mt-8">
         <button
           className=" rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-200 md:text-base"
@@ -55,7 +66,10 @@ export default function DocumentModal({ closeModal }: DocumentModalProps) {
 
         <button
           type="submit"
-          className="text-md ml-5 rounded-lg bg-blue-500 px-16 py-2.5 font-bold text-white transition-colors hover:bg-blue-600 md:w-auto "
+          className={`text-md ml-5 rounded-lg bg-blue-500 px-16 py-2.5 font-bold text-white transition-colors hover:bg-blue-600 md:w-auto ${
+            isDocumentLoading && 'cursor-not-allowed bg-gray-500'
+          }`}
+          disabled={isDocumentLoading}
         >
           업로드하기
         </button>
