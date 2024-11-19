@@ -8,8 +8,6 @@ export function useReport(initReport: [EditReport, EditReport]) {
   const [reportTwo, setReportTwo] = useState<EditReport>(initReport[1]);
   const [uploadFileOne, setUploadFileOne] = useState<File | null>(null);
   const [uploadFileTwo, setUploadFileTwo] = useState<File | null>(null);
-  const [removeFileOne, setRemoveFileOne] = useState<boolean>(false);
-  const [removeFileTwo, setRemoveFileTwo] = useState<boolean>(false);
 
   const createPairReport = (term: number): [SubmitReport, SubmitReport] => {
     const parseReportOne = parseNewReportToReport(term, reportOne);
@@ -28,7 +26,5 @@ export function useReport(initReport: [EditReport, EditReport]) {
     setUploadFileTwo,
     setReportOne,
     setReportTwo,
-    setRemoveFileOne,
-    setRemoveFileTwo,
   };
 }

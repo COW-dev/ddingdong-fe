@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
@@ -19,7 +19,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
   const createMutation = useNewReport();
   const modifyMutation = useUpdateReports();
   const [{ token }] = useCookies(['token']);
-
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const {
     uploadFileOne,
     setUploadFileOne,
@@ -30,8 +30,6 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     reportOne,
     reportTwo,
     createPairReport,
-    setRemoveFileOne,
-    setRemoveFileTwo,
   } = useReport(report ?? [EMPTY_DATA, EMPTY_DATA]);
 
   const validateDate = (report: EditReport) => {
@@ -73,7 +71,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
             id={1}
             setValue={setReportOne}
             setImage={setUploadFileOne}
-            setRemoveFile={setRemoveFileOne}
+            setIsEditing={setIsEditing}
           />
         </Accordion>
         <Accordion title="활동2">
@@ -83,7 +81,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
             id={2}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
-            setRemoveFile={setRemoveFileTwo}
+            setIsEditing={setIsEditing}
           />
         </Accordion>
         <div className="m-auto flex justify-center md:mt-6">
@@ -98,7 +96,11 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
               </button>
               <button
                 type="submit"
-                className="h-11 w-24 rounded-xl bg-blue-500 px-1 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 sm:inline-block md:text-base"
+                disabled={isEditing}
+                className={`h-11 w-24 rounded-xl bg-blue-500 px-1 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 sm:inline-block md:text-base ${
+                  isEditing &&
+                  'cursor-not-allowed bg-gray-500 hover:bg-gray-600'
+                }`}
               >
                 제출
               </button>
@@ -106,7 +108,11 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           ) : (
             <button
               type="submit"
-              className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+              disabled={isEditing}
+              className={`h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base ${
+                isEditing &&
+                'cursor-not-allowed bg-gray-500 text-white hover:bg-gray-600'
+              }`}
             >
               생성하기
             </button>

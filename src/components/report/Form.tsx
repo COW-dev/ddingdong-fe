@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
@@ -18,18 +18,28 @@ type ReportProps = {
   report: EditReport;
   setValue: Dispatch<SetStateAction<EditReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
-  setRemoveFile: Dispatch<SetStateAction<boolean>>;
   id: number;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function Form({ setValue, report, id }: ReportProps) {
-  const [uploadImage, setUploadImage] = useState<File | null>(null);
+export default function Form({
+  uploadFiles,
+  setImage,
+  setValue,
+  report,
+  id,
+  setIsEditing,
+}: ReportProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const { date, participants, place, content, startTime, endTime, image } =
     report;
 
   const { getPresignedId, isLoading } = usePresignedUrl();
+
+  useEffect(() => {
+    setIsEditing((prev) => !prev);
+  }, [isLoading]);
 
   const handleChangeImage = async (file: File): Promise<UploadFile> => {
     const uploadInfo = await getPresignedId(file);
@@ -160,8 +170,8 @@ export default function Form({ setValue, report, id }: ReportProps) {
             </div>
           ) : (
             <UploadImage
-              image={uploadImage}
-              setImage={setUploadImage}
+              image={uploadFiles}
+              setImage={setImage}
               onAdd={handleChangeImage}
               setNoticeData={setValue}
               imageUrls={image}
