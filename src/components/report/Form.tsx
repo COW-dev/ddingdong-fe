@@ -1,16 +1,14 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
-import { useCookies } from 'react-cookie';
+import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
-import { useMyClub } from '@/hooks/api/club/useMyClub';
 import useModal from '@/hooks/common/useModal';
-import { usePresignedUrl } from '@/hooks/common/usePresigndUrl';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
-import UploadImage from '../common/UploadImage';
+import PUploadImage from '../common/PUploadImage';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
@@ -22,45 +20,31 @@ type ReportProps = {
   id: number;
 };
 
-export default function Form({
-  uploadFiles,
-  setValue,
-  setImage,
-  report,
-  setRemoveFile,
-  id,
-}: ReportProps) {
-  const [{ token }] = useCookies(['token']);
-  const {
-    data: { data },
-  } = useMyClub(token);
-
+export default function Form({ setValue, report, id }: ReportProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const {
-    date,
-    participants,
-    place,
-    content,
-    startTime,
-    endTime,
-    imageId,
-    term,
-  } = report;
+  const { date, participants, place, content, startTime, endTime, image } =
+    report;
 
-  const { getPresignedId } = usePresignedUrl(`report`);
-  const fetchKey = async () => {
-    if (!uploadFiles) return;
-    const imageId = await getPresignedId(uploadFiles);
-    setValue((prev) => ({
-      ...prev,
-      imageId,
-    }));
+  const { getPresignedId, isLoading } = usePresignedUrl();
+
+  const handleChangeImage = async (file: File | null) => {
+    if (!file) {
+      return setValue((prev) => ({
+        ...prev,
+        imageId: null,
+      }));
+    }
+
+    const uploadInfo = await getPresignedId(file);
+    if (uploadInfo?.id) {
+      setValue((prev) => ({
+        ...prev,
+        imageId: uploadInfo?.id,
+      }));
+    }
+    return uploadInfo;
   };
-
-  useEffect(() => {
-    fetchKey();
-  }, [uploadFiles]);
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
@@ -126,14 +110,14 @@ export default function Form({
             <input
               name="startTime"
               type="time"
-              value={startTime}
+              value={startTime ?? ''}
               onChange={(e) => handleChange(e)}
               className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
             />
             <input
               name="endTime"
               type="time"
-              value={endTime}
+              value={endTime ?? ''}
               onChange={(e) => handleChange(e)}
               className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
             />
@@ -168,17 +152,16 @@ export default function Form({
               name="content"
               value={content}
               onChange={(e) => handleChange(e)}
-              className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
+              className="h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
             />
           </div>
         </div>
         <div className="h-1/2 w-full md:ml-2 md:w-1/2">
-          <UploadImage
-            image={uploadFiles}
-            setImage={setImage}
-            imageUrls={[imageId ?? '']}
-            setRemoveFile={setRemoveFile}
+          <PUploadImage
+            onChange={handleChangeImage}
+            imageUrl={image?.originUrl}
             id={id}
+            isLoading={isLoading}
           />
         </div>
       </div>
