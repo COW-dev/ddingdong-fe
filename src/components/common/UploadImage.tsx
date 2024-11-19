@@ -5,6 +5,7 @@ import Cancel from '@/assets/cancel.svg';
 import { UploadFile, UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
+import { EditReport } from '@/types/report';
 
 type UploadImageProps = {
   image?: File | null;
@@ -12,7 +13,8 @@ type UploadImageProps = {
   imageUrls?: UrlType;
   setNoticeData?:
     | Dispatch<SetStateAction<NoticeDetail>>
-    | Dispatch<SetStateAction<ClubDetail>>;
+    | Dispatch<SetStateAction<ClubDetail>>
+    | Dispatch<SetStateAction<EditReport>>;
   urlsName?: string;
   setRemoveFile?: Dispatch<SetStateAction<boolean>>;
   id?: number;
@@ -61,7 +63,7 @@ export default function UploadImage({
     setNoticeData &&
       setNoticeData((prev: any) => ({
         ...prev,
-        [urlsName ? `${urlsName}` : `imageUrls`]: {},
+        [urlsName ? `${urlsName}` : `imageUrls`]: null,
       }));
   }
 

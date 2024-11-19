@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
@@ -6,9 +6,11 @@ import {
 } from 'react-tailwindcss-datepicker/dist/types';
 import useModal from '@/hooks/common/useModal';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { UploadFile } from '@/types';
 import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
-import PUploadImage from '../common/PUploadImage';
+import UploadImage from '../common/UploadImage';
+import Loading from '../loading/Loading';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
@@ -21,6 +23,7 @@ type ReportProps = {
 };
 
 export default function Form({ setValue, report, id }: ReportProps) {
+  const [uploadImage, setUploadImage] = useState<File | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const { date, participants, place, content, startTime, endTime, image } =
@@ -28,22 +31,16 @@ export default function Form({ setValue, report, id }: ReportProps) {
 
   const { getPresignedId, isLoading } = usePresignedUrl();
 
-  const handleChangeImage = async (file: File | null) => {
-    if (!file) {
-      return setValue((prev) => ({
-        ...prev,
-        imageId: null,
-      }));
-    }
-
+  const handleChangeImage = async (file: File): Promise<UploadFile> => {
     const uploadInfo = await getPresignedId(file);
     if (uploadInfo?.id) {
       setValue((prev) => ({
         ...prev,
         imageId: uploadInfo?.id,
       }));
+      return uploadInfo;
     }
-    return uploadInfo;
+    throw new Error('이미지 생성에 문제가 생겼습니다.');
   };
 
   function handleChange(
@@ -157,12 +154,21 @@ export default function Form({ setValue, report, id }: ReportProps) {
           </div>
         </div>
         <div className="h-1/2 w-full md:ml-2 md:w-1/2">
-          <PUploadImage
-            onChange={handleChangeImage}
-            imageUrl={image?.originUrl}
-            id={id}
-            isLoading={isLoading}
-          />
+          {isLoading ? (
+            <div className=" flex w-full items-center justify-center">
+              <Loading className="w-54" />
+            </div>
+          ) : (
+            <UploadImage
+              image={uploadImage}
+              setImage={setUploadImage}
+              onAdd={handleChangeImage}
+              setNoticeData={setValue}
+              imageUrls={image}
+              urlsName={`imageId`}
+              id={id}
+            />
+          )}
         </div>
       </div>
       <Modal
