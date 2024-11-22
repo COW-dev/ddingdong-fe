@@ -60,7 +60,7 @@ export default function UserHeader() {
       <div className="flex w-full items-center justify-between px-6">
         <Link href="/" className="inline-block p-3">
           <Image
-            src={'/halloweenLogo.png'}
+            src={'/logo.png'}
             width={1544}
             height={380}
             priority
@@ -111,7 +111,7 @@ export default function UserHeader() {
                               target={category === 'SNS' ? '_blank' : '_self'}
                               rel="noopener noreferrer"
                               onClick={() => setIsOpen(false)}
-                              className="text-md flex items-center font-semibold text-gray-500 hover:text-halloween"
+                              className="text-md flex items-center font-semibold text-gray-500 hover:text-blue-500"
                             >
                               {item.image && (
                                 <Image
@@ -147,7 +147,7 @@ export default function UserHeader() {
         >
           <Link href="/" className="-ml-3 inline-block p-3">
             <Image
-              src={'/halloweenLogo.png'}
+              src={'/logo.png'}
               width={1544}
               height={380}
               priority
@@ -161,7 +161,7 @@ export default function UserHeader() {
                 {category === '동아리피드' ? (
                   <Link
                     href={navItems[category][0].href}
-                    className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-halloween focus:outline-none"
+                    className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-blue-500 focus:outline-none"
                   >
                     {category}
                   </Link>
@@ -169,7 +169,7 @@ export default function UserHeader() {
                   <div>
                     <button
                       onClick={() => handleDropdownToggle(category)}
-                      className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-halloween focus:outline-none"
+                      className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-blue-500 focus:outline-none"
                     >
                       {category}
                     </button>
