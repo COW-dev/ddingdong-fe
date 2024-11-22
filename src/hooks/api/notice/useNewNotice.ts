@@ -7,11 +7,12 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { createNotice } from '@/apis';
+import { NewNotice } from '@/types/notice';
 
 export function useNewNotice(): UseMutationResult<
   unknown,
   AxiosError,
-  FormData
+  NewNotice
 > {
   const queryClient = useQueryClient();
   const router = useRouter();

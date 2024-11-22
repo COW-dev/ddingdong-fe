@@ -6,13 +6,16 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateNotice } from '@/apis';
+import { UpdateNotice } from '@/types/notice';
 
-export function useUpdateNotice(
-  noticeId: number,
-): UseMutationResult<unknown, AxiosError, FormData, [number]> {
+export function useUpdateNotice(): UseMutationResult<
+  unknown,
+  AxiosError,
+  UpdateNotice
+> {
   const queryClient = useQueryClient();
 
-  return useMutation((formData: FormData) => updateNotice(noticeId, formData), {
+  return useMutation(updateNotice, {
     onSuccess() {
       queryClient.invalidateQueries({
         queryKey: ['notices'],

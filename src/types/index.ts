@@ -50,7 +50,12 @@ export type PresignedUrlResponse = {
   contentType: string;
 };
 
-export type UrlType = { id?: string; originUrl: string; cdnUrl: string };
+export type UrlType = {
+  id?: string;
+  fileName?: string;
+  originUrl: string;
+  cdnUrl: string;
+};
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
