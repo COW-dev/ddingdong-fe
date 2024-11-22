@@ -41,8 +41,8 @@ export default function Tabs({ TabMenus, tabContext }: Props) {
                 } shrink-0 border-b-2 pb-4 text-base font-medium md:text-xl md:font-semibold
                    ${
                      activeTab === tab.label
-                       ? 'border-halloween text-halloween'
-                       : 'border-transparent text-gray-500 hover:border-halloween hover:text-halloween'
+                       ? 'border-blue-500 text-blue-500'
+                       : 'border-transparent text-gray-500 hover:border-blue-500 hover:text-blue-500'
                    }`}
                 aria-current={activeTab === tab.label ? 'page' : undefined}
               >
