@@ -18,9 +18,7 @@ export default function Index({ term, name }: ReportKey) {
   const { openModal, visible, closeModal, modalRef } = useModal();
   const [{ token }] = useCookies(['token']);
   const currentTermData = useCurrentReports(token).data?.data.term ?? 1;
-  const {
-    data: { data: clubData },
-  } = useMyClub(token);
+  const { data: clubData } = useMyClub(token);
   const deleteMutation = useDeleteReport();
   const reportData = useReportInfo({ term, name, token }).data?.data;
   if (!reportData) return;
@@ -49,7 +47,7 @@ export default function Index({ term, name }: ReportKey) {
       </div>
       <div className="mt-3 space-x-2 text-base font-semibold text-gray-500">
         <span className="after:ml-2 after:content-['|']">{name}</span>
-        <span>{clubData?.leader}</span>
+        <span>{clubData?.data.leader}</span>
       </div>
       <div className="mt-5 w-full md:mt-10">
         <Accordion title="활동1">

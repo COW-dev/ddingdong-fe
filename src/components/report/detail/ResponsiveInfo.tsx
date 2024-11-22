@@ -5,6 +5,7 @@ import ArrowUp from '@/assets/arrowUp.svg';
 import { ReportResponse } from '@/types/report';
 import ActiveDate from './ActiveDate';
 import Place from './Place';
+
 type ResponsiveInfoProps = {
   image: string | StaticImageData;
   report: ReportResponse;

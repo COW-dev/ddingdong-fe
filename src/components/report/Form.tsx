@@ -1,13 +1,16 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import Datepicker from 'react-tailwindcss-datepicker';
 import {
   DateRangeType,
   DateValueType,
 } from 'react-tailwindcss-datepicker/dist/types';
 import useModal from '@/hooks/common/useModal';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { UploadFile } from '@/types';
 import { EditReport } from '@/types/report';
 import Modal from '../common/Modal';
 import UploadImage from '../common/UploadImage';
+import Loading from '../loading/Loading';
 import Participants from '../modal/report/Paticipants';
 
 type ReportProps = {
@@ -15,21 +18,40 @@ type ReportProps = {
   report: EditReport;
   setValue: Dispatch<SetStateAction<EditReport>>;
   setImage: Dispatch<SetStateAction<File | null>>;
-  setRemoveFile: Dispatch<SetStateAction<boolean>>;
   id: number;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
 export default function Form({
   uploadFiles,
-  setValue,
   setImage,
+  setValue,
   report,
-  setRemoveFile,
   id,
+  setIsEditing,
 }: ReportProps) {
   const { openModal, visible, closeModal, modalRef } = useModal();
-  const { date, participants, place, content, startTime, endTime, imageUrls } =
+
+  const { date, participants, place, content, startTime, endTime, image } =
     report;
+
+  const { getPresignedId, isLoading } = usePresignedUrl();
+
+  useEffect(() => {
+    setIsEditing((prev) => !prev);
+  }, [isLoading]);
+
+  const handleChangeImage = async (file: File): Promise<UploadFile> => {
+    const uploadInfo = await getPresignedId(file);
+    if (uploadInfo?.id) {
+      setValue((prev) => ({
+        ...prev,
+        imageId: uploadInfo?.id,
+      }));
+      return uploadInfo;
+    }
+    throw new Error('이미지 생성에 문제가 생겼습니다.');
+  };
 
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
@@ -95,14 +117,14 @@ export default function Form({
             <input
               name="startTime"
               type="time"
-              value={startTime}
+              value={startTime ?? ''}
               onChange={(e) => handleChange(e)}
               className="mt-3 h-12 w-full rounded-xl  border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:mt-0 md:text-base"
             />
             <input
               name="endTime"
               type="time"
-              value={endTime}
+              value={endTime ?? ''}
               onChange={(e) => handleChange(e)}
               className=" mt-3 h-12 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 px-4 py-3 text-sm outline-none placeholder:font-semibold md:ml-3 md:mt-0 md:text-base"
             />
@@ -137,18 +159,26 @@ export default function Form({
               name="content"
               value={content}
               onChange={(e) => handleChange(e)}
-              className="md:text-md h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
+              className="h-24 w-full rounded-xl border-[1.5px] border-gray-100 bg-gray-50 p-3 text-base outline-none md:pb-3"
             />
           </div>
         </div>
         <div className="h-1/2 w-full md:ml-2 md:w-1/2">
-          <UploadImage
-            image={uploadFiles}
-            setImage={setImage}
-            imageUrls={imageUrls}
-            setRemoveFile={setRemoveFile}
-            id={id}
-          />
+          {isLoading ? (
+            <div className=" flex w-full items-center justify-center">
+              <Loading className="w-54" />
+            </div>
+          ) : (
+            <UploadImage
+              image={uploadFiles}
+              setImage={setImage}
+              onAdd={handleChangeImage}
+              setNoticeData={setValue}
+              imageUrls={image}
+              urlsName={`imageId`}
+              id={id}
+            />
+          )}
         </div>
       </div>
       <Modal

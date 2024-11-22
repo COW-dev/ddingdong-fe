@@ -11,6 +11,7 @@ export default function ReportItem({ name, term }: ReportKey) {
   const [{ token }] = useCookies(['token']);
   const reportDataList = useReportInfo({ name, term, token }).data;
   const [reportData, setReportData] = useState<ReportResponse[]>([]);
+
   useEffect(() => {
     if (reportDataList?.data) {
       setReportData(reportDataList.data);

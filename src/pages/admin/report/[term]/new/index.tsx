@@ -14,7 +14,7 @@ export default function Index({ term }: ReportPageType) {
         <title>띵동 일반 동아리 - 활동보고서 작성하기</title>
       </Head>
       <Heading>활동 보고서 작성하기</Heading>
-      <ReportEdit term={term} />
+      <ReportEdit term={Number(term)} />
     </>
   );
 }

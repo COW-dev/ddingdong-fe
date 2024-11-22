@@ -52,6 +52,7 @@ import {
   CurrentReport,
   DeleteReport,
   ActivityReportTerm,
+  SubmitReport,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -361,14 +362,19 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(formdata: FormData) {
-  const token = formdata.get('token');
-  return await api.post('/club/my/activity-reports', formdata, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-      'Content-Type': 'multipart/form-data',
+export async function createReport(
+  activityReportRequests: [SubmitReport, SubmitReport],
+  token: string,
+) {
+  return await api.post(
+    '/central/my/activity-reports',
+    { activityReportRequests },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
-  });
+  );
 }
 
 export async function getReportInfo(
@@ -377,7 +383,7 @@ export async function getReportInfo(
   token: string,
 ): Promise<AxiosResponse<ReportResponse[], unknown>> {
   return await api.get(
-    `/club/activity-reports?term=${term}&club_name=${name}`,
+    `/central/activity-reports?term=${term}&club_name=${name}`,
     {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -389,7 +395,7 @@ export async function getReportInfo(
 export async function getMyReportLists(
   token: string,
 ): Promise<AxiosResponse<MyReportList[], unknown>> {
-  return await api.get('/club/my/activity-reports', {
+  return await api.get('/central/my/activity-reports', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -399,7 +405,7 @@ export async function getMyReportLists(
 export async function getReportTerms(
   token: string,
 ): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
-  return await api.get('/club/activity-reports/term', {
+  return await api.get('/central/activity-reports/term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -409,20 +415,27 @@ export async function getReportTerms(
 export async function getCurrentReports(
   token: string,
 ): Promise<AxiosResponse<CurrentReport, unknown>> {
-  return await api.get('/club/activity-reports/current-term', {
+  return await api.get('/central/activity-reports/current-term', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
-export async function updateReports(term: number, updateData: FormData) {
-  const token = updateData.get('token');
 
-  return await api.patch(`/club/my/activity-reports?term=${term}`, updateData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
+export async function updateReports(
+  activityReportRequests: [SubmitReport, SubmitReport],
+  token: string,
+) {
+  const { term } = activityReportRequests[0];
+  return await api.patch(
+    `/central/my/activity-reports?term=${term}`,
+    { activityReportRequests },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
-  });
+  );
 }
 
 export async function getAdminAllReports(
@@ -435,7 +448,7 @@ export async function getAdminAllReports(
   });
 }
 export async function deleteReport({ term, token }: DeleteReport) {
-  return await api.delete(`/club/my/activity-reports?term=${term}`, {
+  return await api.delete(`/central/my/activity-reports?term=${term}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

@@ -10,9 +10,8 @@ import { parseReportResponseToEditReport } from '@/utils/parse';
 
 export default function Index({ term, name }: ReportKey) {
   const [{ token }] = useCookies(['token']);
-  const reportDataList = useReportInfo({ term, name, token }).data?.data;
-  if (!reportDataList) return <></>;
-
+  const reportDataList = useReportInfo({ term, name, token }).data?.data ?? [];
+  if (reportDataList?.length === 0) return <></>;
   const reportOne = parseReportResponseToEditReport(reportDataList[0], term);
   const reportTwo = parseReportResponseToEditReport(reportDataList[1], term);
 
@@ -22,7 +21,7 @@ export default function Index({ term, name }: ReportKey) {
         <title>띵동 일반 동아리 - 활동보고서 수정하기</title>
       </Head>
       <Heading>활동 보고서 수정하기</Heading>
-      <ReportEdit report={[reportOne, reportTwo]} term={term} />
+      <ReportEdit report={[reportOne, reportTwo]} term={Number(term)} />
     </>
   );
 }

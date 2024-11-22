@@ -14,19 +14,17 @@ export default function ReportList() {
   const currentTerm = currentTermData?.term ?? 8;
   const termList = useReportTerms(token).data?.data;
 
-  const {
-    data: { data: clubData },
-  } = useMyClub(token);
-  const [club, setClub] = useState(clubData?.name);
+  const { data: clubData } = useMyClub(token);
+  const [club, setClub] = useState(clubData?.data.name);
   const { data: reportData } = useMyAllReports(token);
-  const [myReportList, setMyReportList] = useState<Array<MyReportList>>(
+  const [myReportList, setMyReportList] = useState<MyReportList[]>(
     reportData?.data ?? [],
   );
 
   useEffect(() => {
     reportData && setMyReportList(reportData?.data);
-    setClub(clubData?.name);
-  }, [clubData?.name, reportData]);
+    setClub(clubData?.data.name);
+  }, [clubData?.data.name, reportData]);
 
   const submitTerms = myReportList
     .filter((item) => item.name === club)
@@ -34,6 +32,7 @@ export default function ReportList() {
   const isReports = myReportList
     .filter((item) => Number(item.term) <= Number(currentTerm))
     .map((item) => Number(item.term));
+
   return (
     <>
       <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">

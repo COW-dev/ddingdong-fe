@@ -12,9 +12,7 @@ export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
   const [{ token }] = useCookies(['token']);
 
-  const {
-    data: { data },
-  } = useMyClub(token);
+  const { data } = useMyClub(token);
 
   const [members, setMembers] = useState<Member[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
