@@ -5,15 +5,17 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import ClipIcon from '@/assets/clipIcon.svg';
+import LeftArrow from '@/assets/leftArrow.svg';
+import RightArrow from '@/assets/rightArrow.svg';
 import NeutralButton from '@/components/common/NeutralButton';
-import UploadImage from '@/components/common/UploadImage';
 import UploadMultipleFile from '@/components/common/UploadMultipleFiles';
+import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { ROLE_TYPE } from '@/constants/text';
 import { useDeleteNotice } from '@/hooks/api/notice/useDeleteNotice';
 import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
 import { useUpdateNotice } from '@/hooks/api/notice/useUpdateNotice';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { NoticeDetail } from '@/types/notice';
-import { parseImgUrl } from '@/utils/parse';
 
 type NoticeDetailProps = {
   noticeId: number;
@@ -22,26 +24,33 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   const [cookies] = useCookies(['token', 'role']);
   const { role, token } = cookies;
   const [isEditing, setIsEditing] = useState(false);
+  const [presentIndex, setPresentIndex] = useState<number>(0);
   const [noticeData, setNoticeData] = useState<NoticeDetail>({
     id: noticeId,
     title: '',
     content: '',
     createdAt: '',
-    fileUrls: [{ fileUrl: '', name: '' }],
-    imageUrls: [''],
+    images: [],
+    files: [],
   });
-  const [image, setImage] = useState<File | null>(null);
-  const [file, setFile] = useState<File[]>([]);
+  const [fileIds, setFileIds] = useState<string[]>([]);
+  const [imageIds, setImageIds] = useState<string[]>([]);
+
   const {
     data: { data },
   } = useNoticeInfo(noticeId);
-  const updateMutation = useUpdateNotice(noticeId);
+  const { getPresignedIds: getImagePresignedId, isLoading: isImageLoading } =
+    usePresignedUrl();
+  const { getPresignedIds: getFilePresignedId, isLoading: isFileLoading } =
+    usePresignedUrl();
+  const updateMutation = useUpdateNotice();
   const deleteMutation = useDeleteNotice();
-  const { imageUrls, fileUrls } = noticeData;
 
   useEffect(() => {
     if (data) {
       setNoticeData(data);
+      setFileIds(data.files.map((file) => file.id as string));
+      setImageIds(data.images.map((file) => file.id as string));
     }
   }, [data]);
 
@@ -77,7 +86,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   }
 
   function handleClickCancel() {
-    setImage(null);
     setIsEditing(false);
     setNoticeData(data);
   }
@@ -93,6 +101,28 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     });
   }
 
+  const handleUploadImage = async (files: File[]) => {
+    const uploadInfo = await getImagePresignedId(files);
+    const uploadIds = uploadInfo.map(({ id }) => id);
+    setImageIds((prev) => [...prev, ...uploadIds]);
+    return uploadInfo;
+  };
+
+  const handleClickImageDelete = (index: number) => {
+    setImageIds((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleClickFileAdd = async (files: File[]) => {
+    const uploadInfo = await getFilePresignedId(files);
+    const uploadIds = uploadInfo.map(({ id }) => id);
+    setFileIds((prev) => [...prev, ...uploadIds]);
+    return uploadInfo;
+  };
+
+  const handleClickFileDelete = (fileId: string) => {
+    setFileIds((prev) => prev.filter((id) => id !== fileId));
+  };
+
   function handleChange(
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) {
@@ -102,29 +132,17 @@ export default function Index({ noticeId }: NoticeDetailProps) {
     }));
   }
 
-  function parseFileUrl() {
-    let newFile = '';
-    for (let i = 0; i < fileUrls.length; i++) {
-      newFile += fileUrls[i].fileUrl;
-      if (i !== 0) newFile += ',';
-    }
-    return newFile;
-  }
-  function handleClickSubmit() {
+  function handleSubmit() {
     setIsEditing(false);
-    const formData = new FormData();
-    formData.set('title', noticeData.title);
-    formData.set('content', noticeData.content);
-    image && formData.append('thumbnailImages', image);
-    for (let i = 0; i < file.length; i++) {
-      formData.append('uploadFiles', file[i]);
-    }
-    const imgUrls = imageUrls.length === 1 ? imageUrls[0] : '';
-    formData.append('imgUrls', imgUrls);
-    const fileUrlsData = parseFileUrl();
-    formData.append('fileUrls', fileUrlsData);
-    formData.set('token', token);
-    return updateMutation.mutate(formData);
+
+    return updateMutation.mutate({
+      noticeId: noticeId,
+      title: noticeData.title,
+      content: noticeData.content,
+      fileIds,
+      imageIds,
+      token: token,
+    });
   }
 
   return (
@@ -164,7 +182,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             {isEditing ? `취소` : `수정`}
           </button>
           <button
-            onClick={isEditing ? handleClickSubmit : handleClickDelete}
+            onClick={isEditing ? handleSubmit : handleClickDelete}
             className={`p-2  md:ml-0.5 ${
               isEditing ? `text-blue-500` : `text-red-500`
             }`}
@@ -176,11 +194,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       {/* 내용 */}
       {isEditing ? (
         <>
-          <UploadImage
-            image={image}
-            setImage={setImage}
-            imageUrls={imageUrls}
-            setNoticeData={setNoticeData}
+          <UploadMultipleImage
+            isLoading={isImageLoading}
+            onAdd={handleUploadImage}
+            onDelete={handleClickImageDelete}
+            initialImages={noticeData.images}
           />
           <TextareaAutosize
             name="content"
@@ -192,59 +210,73 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           />
         </>
       ) : (
-        <>
-          <div
-            className={`m-auto mt-5 w-3/4 justify-center overflow-hidden rounded-xl p-5 shadow-xl md:flex ${
-              !image && imageUrls.length === 0 && `hidden md:hidden`
-            }`}
-          >
-            <Image
-              src={
-                image ? URL.createObjectURL(image) : parseImgUrl(imageUrls[0])
-              }
-              width={1000}
-              height={300}
-              priority
-              className="m-auto object-cover"
-              alt="reportImage"
-            />
-          </div>
-          <div className="w-full py-8 text-base font-medium md:py-10 md:text-lg">
-            {noticeData.content.split('\n').map((line, idx) => (
-              <div key={line + idx}>
-                <div className="my-2">{parseUrl(line)}</div>
-              </div>
-            ))}
-          </div>
-        </>
+        noticeData.images.length > 0 && (
+          <>
+            <div
+              className={`relative m-auto mt-5 flex h-96 w-96 items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128 ${
+                noticeData.images.length === 0 && `hidden`
+              }`}
+            >
+              <Image
+                src={LeftArrow}
+                width={30}
+                height={30}
+                alt="leftButton"
+                onClick={() => {
+                  setPresentIndex(presentIndex - 1);
+                }}
+                className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 
+              ${presentIndex === 0 && 'hidden'}`}
+              />
+              <Image
+                src={noticeData.images[presentIndex]?.originUrl}
+                width={550}
+                height={500}
+                priority
+                alt="noticeImages"
+                className="max-h-full max-w-full object-contain"
+              />
+              <Image
+                src={RightArrow}
+                width={30}
+                height={30}
+                alt="leftButton"
+                onClick={() => {
+                  setPresentIndex(presentIndex + 1);
+                }}
+                className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
+                  presentIndex === noticeData.images.length - 1 && `hidden`
+                }`}
+              />
+            </div>
+            <div className="w-full py-8 text-base font-medium md:py-3 md:text-lg">
+              {noticeData.content.split('\n').map((line, idx) => (
+                <div key={line + idx}>
+                  <div className="my-2">{parseUrl(line)}</div>
+                </div>
+              ))}
+            </div>
+          </>
+        )
       )}
       <hr className="mt-3" />
       {isEditing ? (
         <UploadMultipleFile
-          file={file}
-          setFile={setFile}
-          fileUrls={fileUrls}
-          setNoticeData={setNoticeData}
+          isLoading={isFileLoading}
+          onAdd={handleClickFileAdd}
+          onDelete={handleClickFileDelete}
+          initialFiles={noticeData.files}
         />
       ) : (
         <>
           <div className="py-8 text-sm font-medium text-gray-500 md:py-10 md:text-base">
-            {Array.isArray(noticeData.fileUrls) &&
-              noticeData.fileUrls.map((item, idx) => (
-                <div key={`notice-file-${idx}`} className="flex gap-3">
-                  <Image src={ClipIcon} width={10} height={10} alt="file" />
-                  <a href={parseImgUrl(item.fileUrl)} download target="_blank">
-                    {item.name}
-                  </a>
-                </div>
-              ))}
-            {file.map((item) => (
-              <>
-                <div className="flex gap-3">
-                  <Image src={ClipIcon} width={10} height={10} alt="file" />
-                  {item.name}
-                </div>
-              </>
+            {noticeData.files.map((item, idx) => (
+              <div key={`notice-file-${idx}`} className="flex gap-3">
+                <Image src={ClipIcon} width={10} height={10} alt="file" />
+                <a href={item.originUrl} download target="_blank">
+                  {item.fileName}
+                </a>
+              </div>
             ))}
           </div>
         </>
