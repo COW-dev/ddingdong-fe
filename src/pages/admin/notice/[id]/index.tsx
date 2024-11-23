@@ -79,7 +79,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           </span>
         );
       });
-      return <div className="flex">{elements}</div>;
+      <div className="flex">{elements}</div>;
     } else {
       return <p>{line}</p>;
     }
@@ -150,7 +150,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       <Head>
         <title>띵동 어드민 - 공지사항</title>
       </Head>
-      {/* 제목 */}
       <TextareaAutosize
         name="title"
         spellCheck={false}
@@ -191,7 +190,6 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           </button>
         </div>
       </div>
-      {/* 내용 */}
       {isEditing ? (
         <>
           <UploadMultipleImage
@@ -210,54 +208,51 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           />
         </>
       ) : (
-        noticeData.images.length > 0 && (
-          <>
-            <div
-              className={`relative m-auto mt-5 flex h-96 w-96 items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128 ${
-                noticeData.images.length === 0 && `hidden`
-              }`}
-            >
-              <Image
-                src={LeftArrow}
-                width={30}
-                height={30}
-                alt="leftButton"
-                onClick={() => {
-                  setPresentIndex(presentIndex - 1);
-                }}
-                className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 
-              ${presentIndex === 0 && 'hidden'}`}
-              />
-              <Image
-                src={noticeData.images[presentIndex]?.originUrl}
-                width={550}
-                height={500}
-                priority
-                alt="noticeImages"
-                className="max-h-full max-w-full object-contain"
-              />
-              <Image
-                src={RightArrow}
-                width={30}
-                height={30}
-                alt="leftButton"
-                onClick={() => {
-                  setPresentIndex(presentIndex + 1);
-                }}
-                className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-                  presentIndex === noticeData.images.length - 1 && `hidden`
-                }`}
-              />
-            </div>
-            <div className="w-full py-8 text-base font-medium md:py-3 md:text-lg">
-              {noticeData.content.split('\n').map((line, idx) => (
-                <div key={line + idx}>
-                  <div className="my-2">{parseUrl(line)}</div>
-                </div>
-              ))}
-            </div>
-          </>
-        )
+        <>
+          {noticeData.images.length > 0 && (
+            <>
+              <div className="relative m-auto mt-5 flex h-96 w-96 items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128">
+                {presentIndex > 0 && (
+                  <Image
+                    src={LeftArrow}
+                    width={30}
+                    height={30}
+                    alt="leftButton"
+                    onClick={() => setPresentIndex(presentIndex - 1)}
+                    className="absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
+                  />
+                )}
+                {noticeData.images[presentIndex] && (
+                  <Image
+                    src={noticeData.images[presentIndex]?.originUrl}
+                    width={550}
+                    height={500}
+                    priority
+                    alt="noticeImages"
+                    className="max-h-full max-w-full object-contain"
+                  />
+                )}
+                {presentIndex < noticeData.images.length - 1 && (
+                  <Image
+                    src={RightArrow}
+                    width={30}
+                    height={30}
+                    alt="rightButton"
+                    onClick={() => setPresentIndex(presentIndex + 1)}
+                    className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
+                  />
+                )}
+              </div>
+            </>
+          )}
+          <div className="w-full py-8 text-base font-medium md:py-3 md:text-lg">
+            {noticeData.content.split('\n').map((line, idx) => (
+              <div key={line + idx} className="my-2">
+                {parseUrl(line)}
+              </div>
+            ))}
+          </div>
+        </>
       )}
       <hr className="mt-3" />
       {isEditing ? (
