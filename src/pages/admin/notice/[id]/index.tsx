@@ -176,7 +176,11 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         >
           <button
             onClick={isEditing ? handleClickCancel : handleClickEdit}
-            className="p-2 text-gray-500 md:mr-0.5"
+            className={`p-2 text-gray-500 md:mr-0.5 ${
+              isImageLoading ||
+              (isFileLoading &&
+                'cursor-not-allowed bg-gray-500 hover:bg-gray-600')
+            }`}
           >
             {isEditing ? `취소` : `수정`}
           </button>

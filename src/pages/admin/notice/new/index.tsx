@@ -94,7 +94,12 @@ export default function Index() {
         <div className="mt-4 flex justify-end md:mt-6">
           <button
             type="submit"
-            className="w-full rounded-xl bg-blue-100 px-4 py-4 font-bold text-blue-500 transition-colors hover:bg-blue-200 md:w-auto md:py-2.5"
+            className={`w-full rounded-xl bg-blue-100 px-4 py-4 font-bold text-blue-500 transition-colors hover:bg-blue-200 md:w-auto md:py-2.5 ${
+              isImageLoading ||
+              (isFileLoading &&
+                ' cursor-not-allowed bg-gray-500 hover:bg-gray-600')
+            }`}
+            disabled={isImageLoading || isFileLoading}
           >
             작성하기
           </button>
