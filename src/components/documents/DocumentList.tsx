@@ -11,7 +11,7 @@ import useModal from '@/hooks/common/useModal';
 import { DocumentDetail } from '@/types/document';
 import AlertDialog from '../common/AlertDialog';
 import Modal from '../common/Modal';
-import PageNation from '../common/PageNation';
+import PagiNation from '../common/PagiNation';
 import DocumentDownload from '../modal/documents/DocumentDownload';
 
 export default function DocumentList() {
@@ -141,7 +141,7 @@ export default function DocumentList() {
           </Modal>
         )}
       </ul>
-      <PageNation
+      <PagiNation
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
