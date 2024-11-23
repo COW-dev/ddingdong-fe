@@ -13,7 +13,7 @@ export type Props = {
   onPageChange: (page: number) => void;
 };
 
-export default function PageController({
+export default function PageNation({
   currentPage,
   totalPages,
   onPageChange,
