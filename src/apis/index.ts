@@ -239,7 +239,6 @@ export async function updateNotice({
   token,
   ...noticeData
 }: UpdateNotice) {
-  console.log('no', noticeData);
   return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
