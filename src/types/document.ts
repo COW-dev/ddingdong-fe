@@ -1,6 +1,6 @@
 export type Document = {
   documents: DocumentTitle[];
-  totalPage: string;
+  totalPageCount: number;
 };
 
 export type DocumentTitle = {

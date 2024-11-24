@@ -149,7 +149,7 @@ export async function getNoticeInfo(
 export async function getAllDocuments(
   page: number,
 ): Promise<AxiosResponse<Document, unknown>> {
-  return await api.get(`/documents?page=${page ?? 1}&limit=10`);
+  return await api.get(`/documents?page=${page}&limit=10`);
 }
 
 export async function getDocumentInfo(

@@ -5,7 +5,8 @@ import { Document } from '@/types/document';
 
 export function useAllDocuments(page: number) {
   return useQuery<AxiosResponse<Document, unknown>, AxiosError>({
-    queryKey: ['documents'],
+    queryKey: ['documents', page],
     queryFn: () => getAllDocuments(page),
+    keepPreviousData: true,
   });
 }
