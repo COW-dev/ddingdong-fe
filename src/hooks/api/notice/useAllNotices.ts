@@ -7,7 +7,7 @@ export function useAllNotices() {
   return useQuery<
     unknown,
     AxiosError,
-    AxiosResponse<Notice[], unknown>,
+    AxiosResponse<Notice, unknown>,
     [string]
   >({
     queryKey: ['notices'],

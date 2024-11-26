@@ -45,7 +45,13 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
-import { Notice, NoticeDetail, DeleteNotice } from '@/types/notice';
+import {
+  Notice,
+  NoticeDetail,
+  DeleteNotice,
+  NewNotice,
+  UpdateNotice,
+} from '@/types/notice';
 import {
   ReportResponse,
   MyReportList,
@@ -134,10 +140,8 @@ export async function getClubInfo(
   return await api.get(`/clubs/${clubId}`);
 }
 
-export async function getAllNotices(): Promise<
-  AxiosResponse<Notice[], unknown>
-> {
-  return await api.get('/notices');
+export async function getAllNotices(): Promise<AxiosResponse<Notice, unknown>> {
+  return await api.get('/notices?page=1&limit=10');
 }
 
 export async function getNoticeInfo(
@@ -174,9 +178,7 @@ export async function getFeedDetail(
   return await api.get(`/feeds/${feedId}`);
 }
 
-export async function createNotice(noticeData: FormData) {
-  const token = noticeData.get('token');
-
+export async function createNotice({ token, ...noticeData }: NewNotice) {
   return await api.post('/admin/notices', noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -232,9 +234,11 @@ export async function createFixComment({
   );
 }
 
-export async function updateNotice(noticeId: number, noticeData: FormData) {
-  const token = noticeData.get('token');
-
+export async function updateNotice({
+  noticeId,
+  token,
+  ...noticeData
+}: UpdateNotice) {
   return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,

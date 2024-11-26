@@ -11,8 +11,7 @@ type DocumentModalProps = {
 
 export default function DocumentModal({ closeModal }: DocumentModalProps) {
   const [title, setTitle] = useState<string>('');
-  const [files, setFiles] = useState<File[]>([]);
-  const [fileId, setFileId] = useState<string[]>([]);
+  const [fileIds, setFileIds] = useState<string[]>([]);
   const [{ token }] = useCookies(['token']);
 
   const mutation = useNewDocument();
@@ -22,15 +21,19 @@ export default function DocumentModal({ closeModal }: DocumentModalProps) {
   const handleFileUpload = async (files: File[]): Promise<UploadFile[]> => {
     const documentInfo = await getPresignedIds(files);
     const documentIds = documentInfo.map(({ id }) => id);
-    setFileId(documentIds);
+    setFileIds(documentIds);
     return documentInfo;
   };
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     closeModal();
-    return mutation.mutate({ title, fileIds: fileId, token });
+    return mutation.mutate({ title, fileIds, token });
   }
+
+  const handleClickFileDelete = (index: string) => {
+    setFileIds((prev) => prev.filter((id) => id !== index));
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -51,10 +54,9 @@ export default function DocumentModal({ closeModal }: DocumentModalProps) {
         </label>
       </div>
       <UploadMultipleFile
-        file={files}
-        setFile={setFiles}
-        onAdd={handleFileUpload}
         isLoading={isDocumentLoading}
+        onAdd={handleFileUpload}
+        onDelete={handleClickFileDelete}
       />
       <div className=" mt-6 flex h-12 items-center justify-center md:mt-8">
         <button

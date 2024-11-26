@@ -5,22 +5,28 @@ import {
 } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
-import { updateNotice } from '@/apis';
+import { ErrorType, updateNotice } from '@/apis';
+import { UpdateNotice } from '@/types/notice';
 
-export function useUpdateNotice(
-  noticeId: number,
-): UseMutationResult<unknown, AxiosError, FormData, [number]> {
+export function useUpdateNotice(): UseMutationResult<
+  unknown,
+  AxiosError<ErrorType>,
+  UpdateNotice
+> {
   const queryClient = useQueryClient();
 
-  return useMutation((formData: FormData) => updateNotice(noticeId, formData), {
+  return useMutation(updateNotice, {
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: ['notices'],
+        queryKey: ['notice'],
       });
       toast.success('공지사항을 수정했어요.');
     },
-    onError() {
-      toast.error('공지사항 수정을 실패했어요');
+    onError(error) {
+      const errorMessage = error.response?.data?.message
+        ? `\n ${error.response?.data?.message}`
+        : '';
+      toast.error(`공지사항 수정에 실패했어요. ${errorMessage}`);
     },
   });
 }
