@@ -22,6 +22,10 @@ module.exports = {
         112: '28rem',
         128: '32rem',
       },
+      colors: {
+        'christmas-red': '#A71005',
+        'christmas-green': '#283A24',
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
