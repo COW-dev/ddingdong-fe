@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { removeToken } from '@/apis';
+import SnowMan from '@/assets/snowman.svg';
+import Tree from '@/assets/tree.svg';
 import { useAuthStore } from '@/store/auth';
 
 export default function AdminHeader() {
@@ -15,31 +17,49 @@ export default function AdminHeader() {
       <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
         <Link
           href={isLoginPage ? '/login' : '/'}
-          className="-ml-3 inline-block p-3"
+          className="-ml-3 inline-block pb-2"
         >
           <Image
-            src={'/logo.png'}
+            src={'/christmas_logo.png'}
             width={1544}
             height={380}
             priority
             alt="ddingdong"
-            className="w-30 md:w-34"
+            className="w-36"
           />
         </Link>
         {!isLoginPage && (
           <nav className="-mr-4 md:block">
             <ul className="flex">
               <li>
-                <button
-                  className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
-                  onClick={() => {
-                    removeToken();
-                    resetAuth();
-                    router.push('/login');
-                  }}
-                >
-                  로그아웃
-                </button>
+                <div className="flex w-full items-end">
+                  <Image
+                    src={SnowMan}
+                    width={10}
+                    height={10}
+                    priority
+                    className="w-8"
+                    alt="snowman"
+                  />
+                  <Image
+                    src={Tree}
+                    width={20}
+                    height={20}
+                    priority
+                    className="w-12 md:w-14"
+                    alt="tree"
+                  />
+                  <button
+                    className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
+                    onClick={() => {
+                      removeToken();
+                      resetAuth();
+                      router.push('/login');
+                    }}
+                  >
+                    로그아웃
+                  </button>
+                </div>
               </li>
             </ul>
           </nav>
