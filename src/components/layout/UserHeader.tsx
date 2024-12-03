@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import MenuButton from '@/assets/smMenu.svg';
-import SnowMan from '@/assets/snowman.svg';
-import Tree from '@/assets/tree.svg';
 import Drawer from '@/components/common/Drawer';
 import {
   Accordion,
@@ -73,17 +71,17 @@ export default function UserHeader() {
         <div className="flex items-center space-x-2">
           <div className="flex w-full items-end">
             <Image
-              src={SnowMan}
-              width={10}
-              height={10}
+              src={'/snowman.png'}
+              width={450}
+              height={450}
               priority
               className="w-8"
               alt="snowman"
             />
             <Image
-              src={Tree}
-              width={20}
-              height={20}
+              src={'/tree.png'}
+              width={450}
+              height={450}
               priority
               className="w-12 md:w-14"
               alt="tree"
@@ -228,17 +226,17 @@ export default function UserHeader() {
             </ul>
             <div className="flex items-end">
               <Image
-                src={SnowMan}
-                width={10}
-                height={10}
+                src={'/snowman.png'}
+                width={450}
+                height={450}
                 priority
-                className="w-9"
+                className="w-8"
                 alt="snowman"
               />
               <Image
-                src={Tree}
-                width={20}
-                height={20}
+                src={'/tree.png'}
+                width={450}
+                height={450}
                 priority
                 className="w-12 md:w-14"
                 alt="tree"

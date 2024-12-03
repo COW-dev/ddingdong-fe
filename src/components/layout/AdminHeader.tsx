@@ -34,17 +34,17 @@ export default function AdminHeader() {
               <li>
                 <div className="flex w-full items-end">
                   <Image
-                    src={SnowMan}
-                    width={10}
-                    height={10}
+                    src={'/snowman.png'}
+                    width={450}
+                    height={450}
                     priority
                     className="w-8"
                     alt="snowman"
                   />
                   <Image
-                    src={Tree}
-                    width={20}
-                    height={20}
+                    src={'/tree.png'}
+                    width={450}
+                    height={450}
                     priority
                     className="w-12 md:w-14"
                     alt="tree"
