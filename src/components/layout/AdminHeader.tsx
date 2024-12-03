@@ -2,8 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { removeToken } from '@/apis';
-import SnowMan from '@/assets/snowman.svg';
-import Tree from '@/assets/tree.svg';
 import { useAuthStore } from '@/store/auth';
 
 export default function AdminHeader() {
