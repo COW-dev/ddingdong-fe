@@ -119,7 +119,7 @@ export default function Index() {
                 </div>
               </div>
             </div>
-            <Banner data={data} />
+            {/* <Banner data={data} /> */}
           </div>
         </div>
       ))}

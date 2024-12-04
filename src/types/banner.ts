@@ -1,8 +1,3 @@
-export type NewBanner = {
-  token: string;
-  formData: FormData;
-};
-
 export type BannerType = {
   id: number;
   title: string;
@@ -11,10 +6,11 @@ export type BannerType = {
   imgUrl: string;
 };
 
-export type NewBannerType = {
-  title: string;
-  subTitle: string;
-  colorCode: string;
+export type NewBanner = {
+  link: string;
+  webImageId: string;
+  mobileImageId: string;
+  token?: string;
 };
 
 export type DeleteBanner = {
