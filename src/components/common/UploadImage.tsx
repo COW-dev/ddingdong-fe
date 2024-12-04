@@ -6,6 +6,7 @@ import { UploadFile, UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
 import { EditReport } from '@/types/report';
+import { cn } from '../ui/utils';
 
 type UploadImageProps = {
   image?: File | null;
@@ -19,6 +20,7 @@ type UploadImageProps = {
   setRemoveFile?: Dispatch<SetStateAction<boolean>>;
   id?: number;
   onAdd: (file: File) => Promise<UploadFile>;
+  className?: string;
 };
 
 export default function UploadImage({
@@ -30,6 +32,7 @@ export default function UploadImage({
   setRemoveFile,
   id,
   onAdd,
+  className,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
 
@@ -68,7 +71,7 @@ export default function UploadImage({
   }
 
   return (
-    <div className="flex w-full justify-center p-6">
+    <div className={cn('flex w-full justify-center p-6', className)}>
       {previewImageUrl ? (
         <>
           <Image

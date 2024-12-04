@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
 import ColorSelect from '@/components/common/ColorSelect';
+import UploadImage from '@/components/common/UploadImage';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
 import { NewBannerType } from '@/types/banner';
-import { isMissingData } from '@/utils/validator';
 const init = {
   title: '',
   subTitle: '',
@@ -21,120 +21,50 @@ export default function CreateBanner({ closeModal }: Prop) {
   const [cookies] = useCookies(['token']);
   const [image, setImage] = useState<File | undefined>(undefined);
   const [bannerData, setBannerData] = useState<NewBannerType>(init);
-  const { title, subTitle, colorCode } = bannerData;
-  useEffect(() => {
-    if (bannerData) setBannerData(bannerData);
-  }, [bannerData]);
-
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setBannerData((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  }
 
   function handleSubmit() {
-    formData.append('title', title);
-    formData.append('subTitle', subTitle);
-    formData.append('colorCode', colorCode);
-    image && formData.append('uploadFiles', image);
-    mutation.mutate({
-      formData: formData,
-      token: cookies.token,
-    });
+    //
     handleReset();
     closeModal();
   }
 
-  function uploadImg(e: ChangeEvent<HTMLInputElement>) {
-    if (e.target.files && e.target.files.length > 0) {
-      const file = e.target.files[0];
-      setImage(file);
-    }
+  function handleChangeWebBanner() {
+    //
   }
-
   function handleReset() {
     setBannerData(init);
   }
   return (
     <>
-      <form className="w-full">
-        <div className="mb-3 w-full">
-          <label className="inline-block w-20 font-semibold text-gray-500">
-            제목
-          </label>
-          <input
-            name="title"
-            type="text"
-            spellCheck={false}
-            value={title}
-            className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-2 w-full">
-          <label className="inline-block w-20 font-semibold text-gray-500">
-            부제목
-          </label>
-          <input
-            name="subTitle"
-            type="text"
-            spellCheck={false}
-            value={subTitle}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5"
-          />
-        </div>
+      <form className="flex flex-col gap-2">
+        <span className="text-xs font-medium text-gray-500">
+          * 웹 배너 규격(px) : 1032X200 / 모바일 배너 규격(px) : 342X225
+        </span>
+        <label className="font-semibold text-gray-500">
+          ‘웹 배너’ 파일을 업로드 해주세요.
+          <UploadImage className="p-0 py-2" />
+        </label>
+        <label className="font-semibold text-gray-500">
+          ‘모바일 배너’ 파일을 업로드 해주세요.
+          <UploadImage className="p-0 py-2" />
+        </label>
 
-        <div className="mr-3 flex  flex-row">
-          <div className=" mb-2 w-full ">
-            <label className="inline-block w-20 font-semibold text-gray-500">
-              배경색
-            </label>
-            <div className="w-full rounded-xl border border-gray-100 bg-gray-50 outline-none   ">
-              <ColorSelect
-                name={'colorCode'}
-                setData={setBannerData}
-                list={BannerColor}
-              />
-            </div>
-          </div>
+        <div className="mt-6 flex h-12 items-center justify-center md:mt-8">
+          <button
+            className="rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-200 md:text-base"
+            onClick={closeModal}
+          >
+            취소
+          </button>
 
-          <div className="mb-3 ml-2 w-full">
-            <label className="font-semibold text-gray-500">
-              이미지
-              <div className="flex w-[100%] flex-col items-center rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none md:px-5">
-                <div className="flex">
-                  <Image
-                    src={ImageInput}
-                    width={25}
-                    height={25}
-                    alt="사진 선택"
-                  />
-                  {image && image.name}
-                </div>
-              </div>
-              <input
-                name="imgUrl"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={uploadImg}
-              />
-            </label>
-          </div>
+          <button
+            type="submit"
+            className={`text-md ml-5 rounded-lg bg-blue-500 px-16 py-2.5 font-bold text-white transition-colors hover:bg-blue-600 md:w-auto    
+          `}
+          >
+            업로드하기
+          </button>
         </div>
-
-        <button
-          onClick={handleSubmit}
-          disabled={!image || isMissingData({ ...bannerData })}
-          className={`mt-5 w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg ${
-            (!image || isMissingData({ ...bannerData })) &&
-            `cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200`
-          }`}
-        >
-          배너 생성하기
-        </button>
       </form>
     </>
   );

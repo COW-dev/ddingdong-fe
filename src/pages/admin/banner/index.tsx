@@ -55,7 +55,7 @@ export default function Index() {
         <div
           onClick={() =>
             handleModal({
-              title: '배너 생성하기',
+              title: '배너 업로드',
               content: <CreateBanner closeModal={closeModal} />,
             })
           }
