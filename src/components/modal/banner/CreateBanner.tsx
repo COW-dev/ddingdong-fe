@@ -2,7 +2,6 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import ImageInput from '@/assets/imageInput.svg';
-import ColorSelect from '@/components/common/ColorSelect';
 import UploadImage from '@/components/common/UploadImage';
 import { BannerColor } from '@/constants/color';
 import { useNewBanner } from '@/hooks/api/banner/useNewBanner';
