@@ -1,9 +1,10 @@
+import { UrlType } from '.';
+
 export type BannerType = {
   id: number;
-  title: string;
-  subTitle: string;
-  colorCode: string;
-  imgUrl: string;
+  link: string;
+  webImageUrl: UrlType;
+  mobileImageUrl: UrlType;
 };
 
 export type NewBanner = {

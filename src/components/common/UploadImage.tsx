@@ -76,10 +76,10 @@ export default function UploadImage({
         <>
           <Image
             src={previewImageUrl}
-            className="m-auto h-72 object-scale-down "
+            className="m-auto h-72 max-w-[90%] object-scale-down"
             alt="이미지"
             priority
-            width={1000}
+            width={1032}
             height={200}
           />
           <div className="z-30 mt-5 min-w-[10%]">

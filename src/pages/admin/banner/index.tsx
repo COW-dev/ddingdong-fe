@@ -8,7 +8,6 @@ import Banner from '@/components/common/Banner';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import CreateBanner from '@/components/modal/banner/CreateBanner';
-import DeleteBanner from '@/components/modal/banner/DeleteBanner';
 import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import useModal from '@/hooks/common/useModal';
 import { ModalType } from '@/types';
@@ -16,34 +15,22 @@ import { BannerType } from '@/types/banner';
 
 export default function Index() {
   const { data: bannerData } = useAllBanners();
-  const initialBanners: BannerType[] = bannerData?.data ?? [];
-  const [banners, setBanners] = useState<BannerType[]>(initialBanners);
-  const [hydrated, setHydrated] = useState(false);
+  const [banners, setBanners] = useState<BannerType[]>(bannerData?.data ?? []);
   const { openModal, visible, closeModal, modalRef } = useModal();
-
-  useEffect(() => {
-    setHydrated(true);
-  }, []);
 
   const [modal, setModal] = useState<ModalType>({
     title: <></>,
     content: <></>,
   });
-  const [banner, setBanner] = useState<BannerType | undefined>();
 
   useEffect(() => {
     if (bannerData) setBanners(bannerData?.data);
   }, [bannerData]);
 
-  function handleBannerClick(data: BannerType) {
-    setBanner(data);
-  }
   function handleModal(data: ModalType) {
     setModal(data);
     openModal();
   }
-
-  if (!hydrated) return null;
 
   return (
     <div className="w-full">
@@ -76,52 +63,8 @@ export default function Index() {
           </div>
         </div>
       </div>
-      {[...banners]?.reverse().map((data, index) => (
-        <div key={`banner-${index}`} className="my-3">
-          <div className="group relative">
-            <div className="editNum absolute right-5 inline-block w-12 p-2 font-semibold">
-              <Image
-                src={Minimenu}
-                width={100}
-                height={100}
-                priority
-                alt="menu"
-                className="w-10"
-                onClick={() => handleBannerClick(data)}
-              />
-            </div>
-            <div className={`relative ${banner === data ? `block` : `hidden`}`}>
-              <div className="absolute end-0 right-2 z-10 mt-2 w-24 rounded-md border border-gray-100 bg-white  shadow-lg ">
-                <div className=" p-2">
-                  <div
-                    className="block rounded-lg px-4 py-2 text-sm text-red-500 opacity-90 hover:bg-gray-50 hover:font-semibold hover:text-red-700"
-                    onClick={() => {
-                      if (banners.length === 1) {
-                        setBanner(undefined);
-                        return toast.error('배너는 한개 이상 존재해야해요.');
-                      }
-                      handleModal({
-                        title: '배너 삭제하기',
-                        content: (
-                          <DeleteBanner id={data.id} closeModal={closeModal} />
-                        ),
-                      });
-                    }}
-                  >
-                    삭제
-                  </div>
-                  <div
-                    className="block rounded-lg px-4 py-2 text-sm text-gray-500 opacity-90 hover:bg-gray-50 hover:font-semibold hover:text-gray-700"
-                    onClick={() => setBanner(undefined)}
-                  >
-                    취소
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* <Banner data={data} /> */}
-          </div>
-        </div>
+      {banners?.map((data, index) => (
+        <Banner data={data} key={index} bannerLength={banners.length} />
       ))}
       <Modal
         visible={visible}
