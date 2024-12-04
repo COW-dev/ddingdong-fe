@@ -93,7 +93,7 @@ export default function FilterOption({
             key={`filter-${item}`}
             onClick={() => handleOption(item)}
             className={`mb-1.5 cursor-pointer font-semibold  md:mb-2 ${
-              item === active ? `border-b text-blue-500` : `text-gray-500`
+              item === active ? `border-b text-christmas-red` : `text-gray-500`
             } ${item === '카테고리' && 'md:hidden'}`}
           >
             <span>{item}</span>

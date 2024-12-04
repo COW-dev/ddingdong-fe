@@ -25,14 +25,14 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
         }
       >
         <article className="relative flex h-16 w-full justify-between">
-          <header className="flex w-full items-center justify-between bg-blue-600 px-6 text-lg font-bold">
+          <header className="flex w-full items-center justify-between bg-christmas-green px-6 text-lg font-bold">
             <Image
-              src={'/m_logo.png'}
+              src={'/m_christmas_logo.png'}
               width={1500}
               height={700}
               priority
               alt="ddingdong"
-              className="w-30 md:w-34"
+              className="w-32"
             />
             <button
               className=""

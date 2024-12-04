@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
+import Snowfall from 'react-snowfall';
 import Write from '@/assets/write.svg';
 import AdminHeading from '@/components/admin/AdminHeading';
 import Slider from '@/components/common/Slider';
@@ -52,7 +53,7 @@ export default function Index() {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
           <span className="md:mr-1.5">안녕하세요, </span>
-          <span className="text-blue-500">U:th</span>
+          <span className="text-christmas-red">U:th</span>
           <span className="ml-1 md:ml-1.5">님</span>
         </div>,
       );
@@ -254,6 +255,15 @@ export default function Index() {
           </ul>
         </div>
       )}
+      <Snowfall
+        snowflakeCount={100}
+        style={{
+          position: 'fixed',
+          width: '100vw',
+          height: '100vh',
+          zIndex: 100,
+        }}
+      />
     </>
   );
 }
