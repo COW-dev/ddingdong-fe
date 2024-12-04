@@ -1,37 +1,40 @@
 import Image from 'next/image';
-import { BannerColor } from '@/constants/color';
+import toast from 'react-hot-toast';
+import Bin from '@/assets/bin-black.svg';
+import useModal from '@/hooks/common/useModal';
 import { BannerType } from '@/types/banner';
+import Modal from './Modal';
+import DeleteBanner from '../modal/banner/DeleteBanner';
 
-export default function Banner({ data }: { data: BannerType }) {
-  if (!data)
-    data = {
-      id: 0,
-      title: 'title',
-      subTitle: 'subTitle',
-      colorCode: '하늘',
-      imgUrl: 'imgUrl',
-    };
-  const { imgUrl, title, subTitle, colorCode } = data;
-  const color = BannerColor.find((item) => item.title === colorCode)?.color;
-  const parsedImgUrl = imgUrl.slice(0, 8) + imgUrl.slice(9);
+type BannerProps = {
+  data: BannerType;
+};
+
+export default function Banner({ data }: BannerProps) {
+  const { id, link, webImageUrl, mobileImageUrl } = data;
+  const { openModal, visible, closeModal, modalRef } = useModal();
+
   return (
-    <div
-      className={`ml-4 flex h-56 flex-col items-center justify-center rounded-xl md:h-48 md:flex-row bg-${color}-100`}
-    >
-      <Image
-        src={parsedImgUrl}
-        width={100}
-        height={100}
-        priority
-        alt="bannerImg"
-        className="mx-4 w-28 object-scale-down drop-shadow-sm md:h-40 md:w-40 "
-      />
-      <div className="mx-4 mb-4 text-center md:mb-0 md:w-[45%] md:text-left">
-        <p className="my-0.5 text-2xl font-bold md:text-4xl">{title}</p>
-        <p className="px-10 text-base font-semibold leading-tight opacity-70 md:px-0 md:text-xl">
-          {subTitle}
-        </p>
+    <>
+      <div className="relative my-4 flex min-w-fit flex-col justify-center">
+        <Image
+          className="absolute right-2 top-2 cursor-pointer rounded-md bg-white p-2 opacity-80 hover:opacity-100"
+          src={Bin}
+          alt={'휴지통 이미지'}
+          width={32}
+          height={32}
+          onClick={openModal}
+        />
+        <Image src={webImageUrl.originUrl} alt={''} width={1024} height={400} />
       </div>
-    </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'배너 삭제하기'}
+        closeModal={closeModal}
+      >
+        <DeleteBanner id={id} closeModal={closeModal} />
+      </Modal>
+    </>
   );
 }
