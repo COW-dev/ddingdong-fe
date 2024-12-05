@@ -47,7 +47,7 @@ export default function Index() {
             })
           }
         >
-          <div className="-mr-3 inline-block p-2 opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
+          <div className="-mr-3 p-1 opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
             <Image
               src={Create}
               width={100}
@@ -64,7 +64,7 @@ export default function Index() {
         </div>
       </div>
       {banners?.map((data, index) => (
-        <Banner data={data} key={index} bannerLength={banners.length} />
+        <Banner data={data} key={index} />
       ))}
       <Modal
         visible={visible}
