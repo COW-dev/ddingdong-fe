@@ -64,7 +64,7 @@ export default function Index() {
         </div>
       </div>
       {banners?.map((data, index) => (
-        <Banner data={data} key={index} />
+        <Banner data={data} showEdit={true} key={index} />
       ))}
       <Modal
         visible={visible}

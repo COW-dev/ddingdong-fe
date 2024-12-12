@@ -1,10 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useCookies } from 'react-cookie';
 import { useMediaQuery } from 'usehooks-ts';
 import Bin from '@/assets/bin-black.svg';
 import { Switch } from '@/components/ui/switch';
-import { ROLE_TYPE } from '@/constants/text';
 import useModal from '@/hooks/common/useModal';
 import { BannerType } from '@/types/banner';
 import Modal from './Modal';
@@ -12,12 +10,11 @@ import DeleteBanner from '../modal/banner/DeleteBanner';
 
 type BannerProps = {
   data: BannerType;
+  showEdit?: boolean;
 };
 
-export default function Banner({ data }: BannerProps) {
-  const [{ role }] = useCookies(['role']);
-
-  const { id, link, webImageUrl, mobileImageUrl } = data;
+export default function Banner({ data, showEdit = false }: BannerProps) {
+  const { id, webImageUrl, mobileImageUrl } = data;
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const breakPoint = '(min-width: 700px)';
@@ -25,17 +22,24 @@ export default function Banner({ data }: BannerProps) {
 
   const [isDesktop, setIsDesktop] = useState<boolean>(isDesktopViewport);
 
+  useEffect(() => {
+    setIsDesktop(isDesktopViewport);
+  }, [isDesktopViewport]);
   return (
     <>
-      <div className="relative my-4 flex min-w-fit flex-col justify-center">
+      <div
+        className={`relative my-4 flex h-52 flex-col justify-center rounded-md  ${
+          isDesktopViewport && 'w-full'
+        } ${showEdit && 'border border-gray-100'}`}
+      >
         <Image
           src={isDesktop ? webImageUrl.originUrl : mobileImageUrl.originUrl}
-          alt={'web_banner_image'}
+          alt="banner-image"
           width={1024}
           height={200}
-          className="max-h-40 object-scale-down"
+          className="h-[90%] object-scale-down"
         />
-        <div className={`${role !== ROLE_TYPE.ROLE_ADMIN && 'hidden'}`}>
+        <div className={showEdit ? 'block' : 'hidden'}>
           <Image
             className="absolute right-2 top-2 cursor-pointer rounded-md bg-white p-2 opacity-80 hover:opacity-100"
             src={Bin}
@@ -45,13 +49,19 @@ export default function Banner({ data }: BannerProps) {
             onClick={openModal}
           />
           <div className="absolute bottom-2 right-2 flex items-center gap-2 text-sm">
-            <span>Mobile</span>
+            <span
+              className={`${!isDesktop && 'text-blue-500'} ${
+                !isDesktopViewport && 'hidden'
+              }`}
+            >
+              Mobile
+            </span>
             <Switch
               checked={isDesktop}
               onCheckedChange={setIsDesktop}
               className="bg-gray-200"
             />
-            <span>PC</span>
+            <span className={`${isDesktop && 'text-blue-500'}`}>PC</span>
           </div>
         </div>
       </div>
