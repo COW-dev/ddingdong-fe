@@ -22,10 +22,7 @@ export default function Index() {
     <Carousel opts={option} plugins={plugin}>
       <CarouselContent>
         {bannerData?.data?.map((resource, index) => (
-          <div
-            key={index}
-            className="carousel-item relative min-w-full snap-start"
-          >
+          <div key={index} className="carousel-item min-w-full snap-start">
             <Banner data={resource} />
           </div>
         ))}
