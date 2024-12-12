@@ -38,13 +38,6 @@ export default function CreateBanner({ closeModal }: Prop) {
   const handleChangeWebBanner = handleChangeBannerImage('webImageId');
   const handleChangeMobileBanner = handleChangeBannerImage('mobileImageId');
 
-  function handleChangeLink(event: ChangeEvent<HTMLInputElement>) {
-    setBanner((prev) => ({
-      ...prev,
-      link: event.target.value,
-    }));
-  }
-
   function handleReset() {
     setBanner(init);
   }
@@ -68,19 +61,6 @@ export default function CreateBanner({ closeModal }: Prop) {
         ‘모바일 배너’ 파일을 업로드 해주세요.
         <UploadImage className="p-0 py-2" onAdd={handleChangeMobileBanner} />
       </label>
-
-      <label className="font-semibold text-gray-500">
-        링크
-        <input
-          name="link"
-          type="text"
-          spellCheck={false}
-          className="w-full rounded-xl border border-gray-100 bg-gray-50 px-4 py-2.5 outline-none"
-          value={banner.link}
-          onChange={(e) => handleChangeLink(e)}
-        />
-      </label>
-
       <div className="mt-6 flex h-12 items-center justify-center md:mt-8">
         <button
           className="rounded-lg bg-gray-100 px-4 py-2.5 text-sm font-semibold text-gray-500 transition-colors hover:bg-gray-200 md:text-base"
