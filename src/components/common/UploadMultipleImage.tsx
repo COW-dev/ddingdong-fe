@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
@@ -25,10 +25,13 @@ export default function UploadMultipleImage({
   const [image, setImage] = useState<File[]>([]);
   const [existingFiles, setExistingFiles] = useState<UrlType[]>(initialImages);
 
-  const allImages = [
-    ...existingFiles.map((item) => item.originUrl),
-    ...image.map((file) => URL.createObjectURL(file)),
-  ];
+  const allImages = useMemo(
+    () => [
+      ...existingFiles.map((item) => item.originUrl),
+      ...image.map((file) => URL.createObjectURL(file)),
+    ],
+    [existingFiles, image],
+  );
 
   async function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
