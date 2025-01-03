@@ -30,13 +30,16 @@ export default function UploadMultipleFile({
   }
 
   function handleExistingFileDelete(index: number) {
-    onDelete(existingFiles[index].id as string);
-    setExistingFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    const fileId = existingFiles[index].id;
+    if (fileId) {
+      onDelete(fileId);
+      setExistingFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+    }
   }
-
   function handleNewFileDelete(index: number) {
     setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   }
+
   const renderFileItem = (
     item: File | UrlType,
     index: number,
