@@ -1,69 +1,65 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Image from 'next/image';
 import Cancel from '@/assets/cancel.svg';
 import File from '@/assets/file.svg';
-import { UploadFile } from '@/types';
-import { NoticeDetail } from '@/types/notice';
+import { UploadFile, UrlType } from '@/types';
 import Loading from '../loading/Loading';
 
 type UploadFileProps = {
-  file: File[];
-  setFile: Dispatch<SetStateAction<File[]>>;
-  fileUrls?: { fileUrl: string; name: string }[];
-  setNoticeData?: Dispatch<SetStateAction<NoticeDetail>>;
-  setDocumentData?: Dispatch<SetStateAction<NoticeDetail>>;
   isLoading: boolean;
   onAdd: (file: File[]) => Promise<UploadFile[]>;
+  onDelete: (fileId: string) => void;
+  initialFiles?: UrlType[];
 };
 
 export default function UploadMultipleFile({
-  file,
-  setFile,
-  onAdd,
   isLoading,
-  fileUrls,
-  setNoticeData,
-  setDocumentData,
+  onAdd,
+  onDelete,
+  initialFiles = [],
 }: UploadFileProps) {
+  const [files, setFiles] = useState<File[]>([]);
+  const [existingFiles, setExistingFiles] = useState<UrlType[]>(initialFiles);
+
   async function handleFileAdd(event: ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const uploadInfo = await onAdd(Array.from(event.target.files));
-      const uploadFiles = uploadInfo.map((info) => info.file);
-      setFile([...uploadFiles]);
+      const newFiles = uploadInfo.map((info) => info.file);
+      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
     }
   }
 
-  function handleUploadFileDelete(index: number) {
-    const revertedFiles = file.filter((_, i) => i !== index);
-    setFile(revertedFiles);
-  }
-
-  function handleReceivedFileDelete(index: number) {
-    if (fileUrls) {
-      const updatedFileUrls = fileUrls.filter((_, i) => i !== index);
-      if (setNoticeData) {
-        setNoticeData((prev) => ({ ...prev, fileUrls: updatedFileUrls }));
-      }
-      if (setDocumentData) {
-        setDocumentData((prev) => ({ ...prev, fileUrls: updatedFileUrls }));
-      }
+  function handleExistingFileDelete(index: number) {
+    const fileId = existingFiles[index].id;
+    if (fileId) {
+      onDelete(fileId);
+      setExistingFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     }
+  }
+  function handleNewFileDelete(index: number) {
+    setFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
   }
 
   const renderFileItem = (
-    item: File | { fileUrl: string; name: string },
+    item: File | UrlType,
     index: number,
+    isExisting: boolean,
     callback: (index: number) => void,
   ) => (
-    <div key={`file-${index}`} className="my-2 flex">
+    <div
+      key={`file-${isExisting ? 'existing' : 'new'}-${index}`}
+      className="my-2 flex"
+    >
       <button
         type="button"
-        className=" mr-2 cursor-pointer"
+        className="mr-2 cursor-pointer"
         onClick={() => callback(index)}
       >
         <Image src={Cancel} width={15} height={15} alt="delete" />
       </button>
-      <span className=" text-sm font-semibold text-gray-500">{item.name}</span>
+      <span className="text-sm font-semibold text-gray-500">
+        {isExisting ? (item as UrlType).fileName : (item as File).name}
+      </span>
     </div>
   );
 
@@ -102,11 +98,11 @@ export default function UploadMultipleFile({
         </label>
       </div>
       <div className="ml-1">
-        {file.map((item, index) =>
-          renderFileItem(item, index, handleUploadFileDelete),
+        {existingFiles.map((item, index) =>
+          renderFileItem(item, index, true, handleExistingFileDelete),
         )}
-        {fileUrls?.map((item, index) =>
-          renderFileItem(item, index, handleReceivedFileDelete),
+        {files.map((item, index) =>
+          renderFileItem(item, index, false, handleNewFileDelete),
         )}
       </div>
     </>

@@ -20,7 +20,7 @@ export type AdminClub = {
   name: string;
   category: string;
   score: number;
-  profileImage: UrlType[];
+  profileImage: UrlType;
 };
 
 export type NewClub = {

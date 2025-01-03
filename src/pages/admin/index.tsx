@@ -13,7 +13,7 @@ import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
   const [{ role }] = useCookies(['token', 'role']);
-  const { data: noticedata } = useAllNotices();
+  const { data: noticeData } = useAllNotices();
   const { data: documentData } = useAllDocuments(1);
   const [infoElement, setInfoElement] = useState(<></>);
   const [cookies, setCookie, removeCookie] = useCookies([
@@ -32,7 +32,7 @@ export default function Index() {
     }
   }, [cookies.refresh_token, cookies.access_token]);
 
-  const notices = noticedata?.data.sort((a, b) => {
+  const notices = noticeData?.data.notices.sort((a, b) => {
     return b.id - a.id;
   });
 

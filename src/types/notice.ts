@@ -1,13 +1,20 @@
+import { UrlType } from '.';
+
 export type NoticeDetail = {
   id: number;
   title: string;
   content: string;
   createdAt: string;
-  fileUrls: { fileUrl: string; name: string }[];
-  imageUrls: string[];
+  images: UrlType[];
+  files: UrlType[];
 };
 
 export type Notice = {
+  notices: NoticeTitle[];
+  totalPage: number;
+};
+
+export type NoticeTitle = {
   id: number;
   title: string;
   createdAt: string;
@@ -16,6 +23,8 @@ export type Notice = {
 export type NewNotice = {
   title: string;
   content: string;
+  imageIds: string[];
+  fileIds: string[];
   token: string;
 };
 
