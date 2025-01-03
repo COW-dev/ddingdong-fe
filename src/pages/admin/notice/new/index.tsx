@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
@@ -18,6 +18,7 @@ export default function Index() {
     usePresignedUrl();
   const { getPresignedIds: getFilePresignedId, isLoading: isFileLoading } =
     usePresignedUrl();
+  const isUploading = isImageLoading || isFileLoading;
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -30,12 +31,15 @@ export default function Index() {
     });
   }
 
-  const handleClickImage = async (files: File[]) => {
-    const uploadInfo = await getImagePresignedId(files);
-    const uploadIds = uploadInfo.map(({ id }) => id);
-    setImageId((prev) => [...prev, ...uploadIds]);
-    return uploadInfo;
-  };
+  const handleClickImage = useCallback(
+    async (files: File[]) => {
+      const uploadInfo = await getImagePresignedId(files);
+      const uploadIds = uploadInfo.map(({ id }) => id);
+      setImageId((prev) => [...prev, ...uploadIds]);
+      return uploadInfo;
+    },
+    [getImagePresignedId],
+  );
 
   const handleClickImageDelete = (index: number) => {
     setImageId((prev) => prev.filter((_, i) => i !== index));
@@ -99,7 +103,7 @@ export default function Index() {
               (isFileLoading &&
                 ' cursor-not-allowed bg-gray-500 hover:bg-gray-600')
             }`}
-            disabled={isImageLoading || isFileLoading}
+            disabled={isUploading}
           >
             작성하기
           </button>
