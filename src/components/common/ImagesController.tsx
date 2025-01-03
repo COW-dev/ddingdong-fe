@@ -5,7 +5,7 @@ import Cancel from '@/assets/cancel.svg';
 import Images from '@/assets/images.svg';
 
 type Props = {
-  image: File[] | null;
+  image: string[] | File[] | null;
   handleImageAdd: Dispatch<React.ChangeEvent<HTMLInputElement>>;
   presentIndex: number;
   setPresentIndex: Dispatch<number>;
@@ -37,7 +37,9 @@ export default function ImagesController({
                 }`}
               >
                 <Image
-                  src={URL.createObjectURL(item)}
+                  src={
+                    typeof item === 'string' ? item : URL.createObjectURL(item)
+                  }
                   width={100}
                   height={100}
                   alt="image"

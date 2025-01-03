@@ -103,7 +103,7 @@ export default function UploadMultipleImage({
             </div>
             <ImagesController
               handleImageAdd={handleImageAdd}
-              image={image}
+              image={allImages}
               setPresentIndex={setPresentIndex}
               presentIndex={presentIndex}
               handleImageDelete={handleImageDelete}
