@@ -76,49 +76,42 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       >
         {new Date(createdAt ?? '').toLocaleString()}
       </div>
-      <div
-        className={`m-auto mt-10 h-50 w-3/4 justify-center overflow-hidden rounded-xl p-5 shadow-xl md:flex ${
-          images.length === 0 && `hidden md:hidden`
-        }`}
-      >
-        <div
-          className={`relative m-auto mt-5 flex items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128 ${
-            noticeData.images.length === 0 && `hidden`
-          }`}
-        >
-          <Image
-            src={LeftArrow}
-            width={30}
-            height={30}
-            alt="leftButton"
-            onClick={() => {
-              setPresentIndex(presentIndex - 1);
-            }}
-            className={`absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 
-              ${presentIndex === 0 && 'hidden'}`}
-          />
-          <Image
-            src={noticeData.images[presentIndex]?.originUrl}
-            width={550}
-            height={500}
-            priority
-            alt={`${noticeData.images[presentIndex]?.fileName}`}
-            className="max-h-full max-w-full object-contain"
-          />
-          <Image
-            src={RightArrow}
-            width={30}
-            height={30}
-            alt="leftButton"
-            onClick={() => {
-              setPresentIndex(presentIndex + 1);
-            }}
-            className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-              presentIndex === noticeData.images.length - 1 && `hidden`
-            }`}
-          />
+
+      {noticeData.images.length > 0 && (
+        <div className="relative m-auto mt-5 flex h-96 w-96 items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128">
+          {presentIndex > 0 && (
+            <Image
+              src={LeftArrow}
+              width={30}
+              height={30}
+              alt="leftButton"
+              onClick={() => setPresentIndex(presentIndex - 1)}
+              className="absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
+            />
+          )}
+          {noticeData.images[presentIndex] && (
+            <Image
+              src={noticeData.images[presentIndex]?.originUrl}
+              width={550}
+              height={500}
+              priority
+              alt="noticeImages"
+              className="max-h-full max-w-full object-contain"
+            />
+          )}
+          {presentIndex < noticeData.images.length - 1 && (
+            <Image
+              src={RightArrow}
+              width={30}
+              height={30}
+              alt="rightButton"
+              onClick={() => setPresentIndex(presentIndex + 1)}
+              className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
+            />
+          )}
         </div>
-      </div>
+      )}
+
       <div className="w-full py-8 text-base font-medium md:py-10 md:text-lg">
         {noticeData.content.split('\n').map((line, idx) => (
           <div key={line + idx}>
