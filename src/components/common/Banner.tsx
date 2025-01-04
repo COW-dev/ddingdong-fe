@@ -1,37 +1,81 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { BannerColor } from '@/constants/color';
+import resolveConfig from 'tailwindcss/resolveConfig';
+import { useMediaQuery } from 'usehooks-ts';
+import Bin from '@/assets/bin-black.svg';
+import { Switch } from '@/components/ui/switch';
+import useModal from '@/hooks/common/useModal';
 import { BannerType } from '@/types/banner';
+import Modal from './Modal';
+import tailwindConfig from '../../../tailwind.config';
+import DeleteBanner from '../modal/banner/DeleteBanner';
 
-export default function Banner({ data }: { data: BannerType }) {
-  if (!data)
-    data = {
-      id: 0,
-      title: 'title',
-      subTitle: 'subTitle',
-      colorCode: '하늘',
-      imgUrl: 'imgUrl',
-    };
-  const { imgUrl, title, subTitle, colorCode } = data;
-  const color = BannerColor.find((item) => item.title === colorCode)?.color;
-  const parsedImgUrl = imgUrl.slice(0, 8) + imgUrl.slice(9);
+type BannerProps = {
+  data: BannerType;
+  showEdit?: boolean;
+};
+
+export default function Banner({ data, showEdit = false }: BannerProps) {
+  const { id, webImageUrl, mobileImageUrl } = data;
+  const { openModal, visible, closeModal, modalRef } = useModal();
+
+  const fullConfig = resolveConfig(tailwindConfig);
+  const breakPoint = `(min-width:${fullConfig.theme.screens.md})`;
+  const isDesktopViewport = useMediaQuery(breakPoint);
+
+  const [isDesktop, setIsDesktop] = useState<boolean>(isDesktopViewport);
+
+  useEffect(() => {
+    setIsDesktop(isDesktopViewport);
+  }, [isDesktopViewport]);
   return (
-    <div
-      className={`ml-4 flex h-56 flex-col items-center justify-center rounded-xl md:h-48 md:flex-row bg-${color}-100`}
-    >
-      <Image
-        src={parsedImgUrl}
-        width={100}
-        height={100}
-        priority
-        alt="bannerImg"
-        className="mx-4 w-28 object-scale-down drop-shadow-sm md:h-40 md:w-40 "
-      />
-      <div className="mx-4 mb-4 text-center md:mb-0 md:w-[45%] md:text-left">
-        <p className="my-0.5 text-2xl font-bold md:text-4xl">{title}</p>
-        <p className="px-10 text-base font-semibold leading-tight opacity-70 md:px-0 md:text-xl">
-          {subTitle}
-        </p>
+    <>
+      <div
+        className={`relative my-4 flex h-52 flex-col justify-center rounded-md  ${
+          isDesktopViewport && 'w-full'
+        } ${showEdit && 'border border-gray-100'}`}
+      >
+        <Image
+          src={isDesktop ? webImageUrl.originUrl : mobileImageUrl.originUrl}
+          alt="banner-image"
+          width={1024}
+          height={200}
+          className="h-[90%] object-scale-down"
+        />
+        <div className={showEdit ? 'block' : 'hidden'}>
+          <Image
+            className="absolute right-2 top-2 cursor-pointer rounded-md bg-white p-2 opacity-80 hover:opacity-100"
+            src={Bin}
+            alt={'휴지통 이미지'}
+            width={32}
+            height={32}
+            onClick={openModal}
+          />
+          <div className="absolute bottom-2 right-2 flex items-center gap-2 text-sm">
+            <span
+              className={`${!isDesktop && 'text-blue-500'} ${
+                !isDesktopViewport && 'hidden'
+              }`}
+            >
+              Mobile
+            </span>
+            <Switch
+              checked={isDesktop}
+              onCheckedChange={setIsDesktop}
+              className="bg-gray-200"
+            />
+            <span className={`${isDesktop && 'text-blue-500'}`}>PC</span>
+          </div>
+        </div>
       </div>
-    </div>
+      <Modal
+        visible={visible}
+        modalRef={modalRef}
+        title={'배너 삭제하기'}
+        closeModal={closeModal}
+      >
+        <DeleteBanner id={id} closeModal={closeModal} />
+      </Modal>
+    </>
   );
 }

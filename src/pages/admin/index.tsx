@@ -73,7 +73,7 @@ export default function Index() {
       <div className="relative mt-7">
         <Link
           href="/banner"
-          className={`absolute right-0 top-2 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
+          className={`absolute right-2 top-6 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
             role === ROLE_TYPE.ROLE_CLUB && 'invisible'
           }`}
         >
