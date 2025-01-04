@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import resolveConfig from 'tailwindcss/resolveConfig';
 import { useMediaQuery } from 'usehooks-ts';
 import Bin from '@/assets/bin-black.svg';
 import { Switch } from '@/components/ui/switch';
 import useModal from '@/hooks/common/useModal';
 import { BannerType } from '@/types/banner';
 import Modal from './Modal';
+import tailwindConfig from '../../../tailwind.config';
 import DeleteBanner from '../modal/banner/DeleteBanner';
 
 type BannerProps = {
@@ -17,7 +19,8 @@ export default function Banner({ data, showEdit = false }: BannerProps) {
   const { id, webImageUrl, mobileImageUrl } = data;
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const breakPoint = '(min-width: 700px)';
+  const fullConfig = resolveConfig(tailwindConfig);
+  const breakPoint = `(min-width:${fullConfig.theme.screens.md})`;
   const isDesktopViewport = useMediaQuery(breakPoint);
 
   const [isDesktop, setIsDesktop] = useState<boolean>(isDesktopViewport);
