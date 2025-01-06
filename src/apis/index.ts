@@ -140,8 +140,10 @@ export async function getClubInfo(
   return await api.get(`/clubs/${clubId}`);
 }
 
-export async function getAllNotices(): Promise<AxiosResponse<Notice, unknown>> {
-  return await api.get('/notices?page=1&limit=10');
+export async function getAllNotices(
+  page: number,
+): Promise<AxiosResponse<Notice, unknown>> {
+  return await api.get(`/notices?page=${page}&limit=10`);
 }
 
 export async function getNoticeInfo(
