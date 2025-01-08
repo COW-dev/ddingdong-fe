@@ -53,6 +53,11 @@ export type ClubDetail = {
   formUrl: string;
 };
 
+export type MemberInfo = {
+  clubName: string;
+  clubMembers: Member[];
+};
+
 export type Member = {
   id?: number;
   name: string;
