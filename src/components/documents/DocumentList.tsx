@@ -15,7 +15,7 @@ import PagiNation from '../common/PagiNation';
 import DocumentDownload from '../modal/documents/DocumentDownload';
 
 export default function DocumentList() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [documentId, setDocumentId] = useState<number>(0);
   const [documentData, setDocumentData] = useState<DocumentDetail>();
   const [isDeleteState, setIsDeleteState] = useState<boolean>(false);

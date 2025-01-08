@@ -13,7 +13,7 @@ import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
   const [{ role }] = useCookies(['token', 'role']);
-  const { data: noticeData } = useAllNotices();
+  const { data: noticeData } = useAllNotices(1);
   const { data: documentData } = useAllDocuments(1);
   const [infoElement, setInfoElement] = useState(<></>);
   const [cookies, setCookie, removeCookie] = useCookies([
