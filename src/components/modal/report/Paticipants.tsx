@@ -46,7 +46,7 @@ export default function Participants({ data, setData, closeModal }: Props) {
           <ParticipantSelect
             name={participant.name}
             setData={setParticipants}
-            list={clubMemberData?.data ?? []}
+            list={clubMemberData?.data.clubMembers ?? []}
             id={index}
           />
         </div>

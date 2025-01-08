@@ -4,22 +4,19 @@ import { useCookies } from 'react-cookie';
 import ExcelDropdown from '@/components/common/ExelDropdown';
 import SearchBar from '@/components/home/SearchBar';
 import MemberInfo from '@/components/member/MemberInfo';
-
-import { useMyClub } from '@/hooks/api/club/useMyClub';
+import { useClubMembers } from '@/hooks/api/member/useClubMembers';
 import { Member } from '@/types/club';
 
 export default function Index() {
   const [keyword, setKeyword] = useState<string>('');
   const [{ token }] = useCookies(['token']);
-
-  const { data } = useMyClub(token);
-
+  const { data: data } = useClubMembers(token);
   const [members, setMembers] = useState<Member[]>([]);
   const [filteredMembers, setFilteredMembers] = useState<Member[]>([]);
 
   useEffect(() => {
-    setMembers(data?.clubMembers ?? []);
-    setFilteredMembers(data?.clubMembers ?? []);
+    setMembers(data?.data.clubMembers ?? []);
+    setFilteredMembers(data?.data.clubMembers ?? []);
   }, [data]);
 
   useEffect(() => {
@@ -46,7 +43,7 @@ export default function Index() {
       <div className="mb-7 flex justify-between">
         <div className="flex items-center text-xl font-bold">
           <span className="hidden md:inline-block">
-            {data?.name?.toUpperCase()}의&nbsp;
+            {data?.data.clubName?.toUpperCase()}의&nbsp;
           </span>
           동아리원은 총
           <span className="text-blue-500"> {members.length}명</span>
