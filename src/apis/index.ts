@@ -19,7 +19,7 @@ import {
   UpdateClub,
   UpdateMember,
   UpdateMyClub,
-  Member,
+  MemberInfo,
 } from '@/types/club';
 import {
   DeleteDocument,
@@ -247,8 +247,8 @@ export async function updateNotice({
 
 export async function getClubMembers(
   token: string,
-): Promise<AxiosResponse<Array<Member>>> {
-  return await api.get(`/central/my/club-members`, {
+): Promise<AxiosResponse<MemberInfo, unknown>> {
+  return await api.get('/central/my/club-members', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -273,7 +273,7 @@ export async function updateMembers({ member, id, token }: UpdateMember) {
 }
 
 export async function getMemberFile(token: string) {
-  return await api.get('/club/my/club-members/excel', {
+  return await api.get('/central/my/club-members/excel', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
