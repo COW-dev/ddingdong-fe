@@ -25,7 +25,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   const {
     data: { data },
   } = useNoticeInfo(noticeId);
-  const { title, createdAt, images, files } = noticeData;
+  const { title, createdAt, content, images, files } = noticeData;
 
   useEffect(() => {
     if (data) {
@@ -77,7 +77,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         {new Date(createdAt ?? '').toLocaleString()}
       </div>
 
-      {noticeData.images.length > 0 && (
+      {images.length > 0 && (
         <div className="relative m-auto mt-5 flex h-96 w-96 items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128">
           {presentIndex > 0 && (
             <Image
@@ -89,9 +89,9 @@ export default function Index({ noticeId }: NoticeDetailProps) {
               className="absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
             />
           )}
-          {noticeData.images[presentIndex] && (
+          {images[presentIndex] && (
             <Image
-              src={noticeData.images[presentIndex]?.originUrl}
+              src={images[presentIndex]?.originUrl}
               width={550}
               height={500}
               priority
@@ -99,7 +99,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
               className="max-h-full max-w-full object-contain"
             />
           )}
-          {presentIndex < noticeData.images.length - 1 && (
+          {presentIndex < images.length - 1 && (
             <Image
               src={RightArrow}
               width={30}
@@ -113,7 +113,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       )}
 
       <div className="w-full py-8 text-base font-medium md:py-10 md:text-lg">
-        {noticeData.content.split('\n').map((line, idx) => (
+        {content.split('\n').map((line, idx) => (
           <div key={line + idx}>
             <div className="my-2">{parseUrl(line)}</div>
           </div>
