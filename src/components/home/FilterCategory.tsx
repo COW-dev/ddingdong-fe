@@ -20,7 +20,7 @@ function FilterCategory({ option, setOption }: Props) {
     <div className="my-2 hidden w-full rounded-xl bg-gray-50 p-2 px-4 font-semibold text-gray-500 md:flex">
       <span
         className={`cursor-pointer ${
-          option.category.length === 0 && 'text-christmas-red'
+          option.category.length === 0 && 'text-new-year'
         }`}
         onClick={() => setOption((prev) => ({ ...prev, category: [] }))}
       >
@@ -30,7 +30,7 @@ function FilterCategory({ option, setOption }: Props) {
         <div
           onClick={() => filterCategory(category.title)}
           className={`cursor-pointer before:p-2 before:text-gray-300 before:content-['|'] ${
-            option.category.includes(category.title) && 'text-christmas-red'
+            option.category.includes(category.title) && 'text-new-year'
           }`}
           key={`category${index}`}
         >
