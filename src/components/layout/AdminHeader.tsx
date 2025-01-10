@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
+import NewYear from '../common/NewYear';
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -18,7 +19,7 @@ export default function AdminHeader() {
           className="-ml-3 inline-block pb-2"
         >
           <Image
-            src={'/christmas_logo.png'}
+            src={'/new-year-logo.png'}
             width={1544}
             height={380}
             priority
@@ -31,22 +32,7 @@ export default function AdminHeader() {
             <ul className="flex">
               <li>
                 <div className="flex w-full items-end">
-                  <Image
-                    src={'/snowman.png'}
-                    width={450}
-                    height={450}
-                    priority
-                    className="w-8"
-                    alt="snowman"
-                  />
-                  <Image
-                    src={'/tree.png'}
-                    width={450}
-                    height={450}
-                    priority
-                    className="w-12 md:w-14"
-                    alt="tree"
-                  />
+                  <NewYear />
                   <button
                     className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
                     onClick={() => {

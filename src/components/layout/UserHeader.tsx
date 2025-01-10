@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { navItems } from '@/constants/navItems';
+import NewYear from '../common/NewYear';
 
 export default function UserHeader() {
   const [hydrated, setHydrated] = useState(false);
@@ -60,7 +61,7 @@ export default function UserHeader() {
       <div className="flex w-full items-center justify-between px-6">
         <Link href="/" className="inline-block pb-2">
           <Image
-            src={'/christmas_logo.png'}
+            src={'/new-year-logo.png'}
             width={1544}
             height={380}
             priority
@@ -69,23 +70,8 @@ export default function UserHeader() {
           />
         </Link>
         <div className="flex items-center space-x-2">
-          <div className="flex w-full items-end">
-            <Image
-              src={'/snowman.png'}
-              width={450}
-              height={450}
-              priority
-              className="w-8"
-              alt="snowman"
-            />
-            <Image
-              src={'/tree.png'}
-              width={450}
-              height={450}
-              priority
-              className="w-12 md:w-14"
-              alt="tree"
-            />
+          <div className="flex items-end">
+            <NewYear />
           </div>
           <button className="p-1" onClick={() => handleOpenDrawer()}>
             <Image
@@ -131,7 +117,7 @@ export default function UserHeader() {
                               target={category === 'SNS' ? '_blank' : '_self'}
                               rel="noopener noreferrer"
                               onClick={() => setIsOpen(false)}
-                              className="text-md flex items-center font-semibold text-gray-500 hover:text-christmas-green"
+                              className="text-md flex items-center font-semibold text-gray-500 hover:text-new-year"
                             >
                               {item.image && (
                                 <Image
@@ -165,9 +151,9 @@ export default function UserHeader() {
           className="flex w-full max-w-6xl items-center px-6 md:px-16"
           ref={dropdownRef}
         >
-          <Link href="/" className="-ml-3 inline-block pb-2">
+          <Link href="/" className="inline-block pb-2">
             <Image
-              src={'/christmas_logo.png'}
+              src={'/new-year-logo.png'}
               width={1544}
               height={380}
               priority
@@ -182,7 +168,7 @@ export default function UserHeader() {
                   {category === '동아리피드' ? (
                     <Link
                       href={navItems[category][0].href}
-                      className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-christmas-red focus:outline-none"
+                      className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-new-year focus:outline-none"
                     >
                       {category}
                     </Link>
@@ -190,7 +176,7 @@ export default function UserHeader() {
                     <div>
                       <button
                         onClick={() => handleDropdownToggle(category)}
-                        className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-christmas-red focus:outline-none"
+                        className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-new-year focus:outline-none"
                       >
                         {category}
                       </button>
@@ -225,22 +211,7 @@ export default function UserHeader() {
               ))}
             </ul>
             <div className="flex items-end">
-              <Image
-                src={'/snowman.png'}
-                width={450}
-                height={450}
-                priority
-                className="w-8"
-                alt="snowman"
-              />
-              <Image
-                src={'/tree.png'}
-                width={450}
-                height={450}
-                priority
-                className="w-12 md:w-14"
-                alt="tree"
-              />
+              <NewYear />
             </div>
           </div>
         </div>
