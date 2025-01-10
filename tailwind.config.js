@@ -23,8 +23,7 @@ module.exports = {
         128: '32rem',
       },
       colors: {
-        'christmas-red': '#A71005',
-        'christmas-green': '#283A24',
+        'new-year': '#126BA4',
       },
       keyframes: {
         'accordion-down': {
