@@ -8,6 +8,7 @@ import { ROLE_TYPE } from '@/constants/text';
 import { useFixInfo } from '@/hooks/api/fixzone/useFixInfo';
 import { useUpdateComplete } from '@/hooks/api/fixzone/useUpdateComplete';
 import useModal from '@/hooks/common/useModal';
+import { sortByOrder } from '@/utils/change';
 import CommentContainer from './comment/CommentContainer';
 import FixItemInfo from './FixItemInfo';
 import Heading from '../common/Heading';
@@ -40,6 +41,7 @@ export default function FixDetail({ id }: Prop) {
     title,
     content,
   } = data;
+  const sortedImages = sortByOrder(images);
 
   function handleCompleted() {
     setIsCompleted(true);
@@ -74,7 +76,7 @@ export default function FixDetail({ id }: Prop) {
         </div>
         {/* 내용 */}
         <div className="relative flex w-full items-center justify-center md:w-1/2 md:p-3">
-          {images.length === 0 ? (
+          {sortedImages.length === 0 ? (
             <div className="flex min-h-40 w-full items-center justify-center rounded-lg border text-gray-500">
               등록된 사진이 없습니다.
             </div>
@@ -92,7 +94,7 @@ export default function FixDetail({ id }: Prop) {
               ${presentIndex === 0 && 'hidden'}`}
               />
               <Image
-                src={images[presentIndex].originUrl}
+                src={sortedImages[presentIndex].originUrl}
                 width={550}
                 height={500}
                 priority
@@ -108,7 +110,7 @@ export default function FixDetail({ id }: Prop) {
                   setPresentIndex(presentIndex + 1);
                 }}
                 className={`absolute right-2 z-10 mx-3 rounded-3xl bg-slate-100  opacity-50 transition-all duration-300 ease-in-out hover:opacity-100 disabled:cursor-not-allowed disabled:opacity-25 ${
-                  presentIndex === images.length - 1 && `hidden`
+                  presentIndex === sortedImages.length - 1 && `hidden`
                 }`}
               />
             </>
