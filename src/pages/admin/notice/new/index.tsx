@@ -6,6 +6,7 @@ import UploadMultipleFile from '@/components/common/UploadMultipleFiles';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewNotice } from '@/hooks/api/notice/useNewNotice';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { createImageOrder } from '@/utils/change';
 
 export default function Index() {
   const [title, setTitle] = useState<string>('');
@@ -22,11 +23,12 @@ export default function Index() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     return mutation.mutate({
       title,
       content,
-      fileIds,
-      imageIds,
+      files: createImageOrder(fileIds),
+      images: createImageOrder(imageIds),
       token,
     });
   }
