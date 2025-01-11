@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Snowfall from 'react-snowfall';
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
@@ -95,15 +94,6 @@ export default function Home() {
           />
         ))}
       </ul>
-      <Snowfall
-        snowflakeCount={100}
-        style={{
-          position: 'fixed',
-          width: '100vw',
-          height: '100vh',
-          zIndex: 100,
-        }}
-      />
     </>
   );
 }

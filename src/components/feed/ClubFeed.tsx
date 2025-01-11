@@ -41,18 +41,20 @@ export default function ClubFeed({ feeds }: ClubFeedProps) {
           className="relative flex aspect-square w-full cursor-pointer"
         >
           {!loadedImages[item.id] && renderSkeleton()}
-          <Image
-            src={item.thumbnailUrl}
-            alt={`image-${index + 1}`}
-            width={350}
-            height={350}
-            onLoad={() => handleImageLoad(item.id)}
-            style={{ objectFit: 'cover' }}
-            className={`aspect-square ${
-              loadedImages[item.id] ? 'visible' : 'invisible'
-            }`}
-            onClick={() => handleClick(item.id)}
-          />
+          {item.thumbnailUrl && (
+            <Image
+              src={item.thumbnailUrl}
+              alt={`image-${index + 1}`}
+              width={350}
+              height={350}
+              onLoad={() => handleImageLoad(item.id)}
+              style={{ objectFit: 'cover' }}
+              className={`aspect-square ${
+                loadedImages[item.id] ? 'visible' : 'invisible'
+              }`}
+              onClick={() => handleClick(item.id)}
+            />
+          )}
           {item.feedType == 'VIDEO' && (
             <Image
               width={20}
