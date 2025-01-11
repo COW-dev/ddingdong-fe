@@ -1,4 +1,4 @@
-import { UrlType } from '.';
+import { OrderUUID, UrlType } from '.';
 
 export type NoticeDetail = {
   id: number;
@@ -23,8 +23,8 @@ export type NoticeTitle = {
 export type NewNotice = {
   title: string;
   content: string;
-  imageIds: string[];
-  fileIds: string[];
+  images: OrderUUID[] | null;
+  files: OrderUUID[] | null;
   token: string;
 };
 
