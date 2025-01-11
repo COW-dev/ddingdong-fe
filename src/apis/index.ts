@@ -257,7 +257,7 @@ export async function getClubMembers(
 
 export async function uploadMembers(formdata: FormData) {
   const token = formdata.get('token');
-  return await api.post('/club/my/club-members', formdata, {
+  return await api.post('/central/my/club-members', formdata, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -265,7 +265,7 @@ export async function uploadMembers(formdata: FormData) {
 }
 
 export async function updateMembers({ member, id, token }: UpdateMember) {
-  return await api.patch(`/club/my/club-members/${id}`, member, {
+  return await api.patch(`/central/my/club-members/${id}`, member, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
