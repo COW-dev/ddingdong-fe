@@ -31,11 +31,5 @@ export function createImageOrder(uuids: string[] | null) {
 }
 
 export function sortByOrder(urls: UrlType[]) {
-  const hasOrder = (url: UrlType): url is UrlType & { order: number } => {
-    return url.order !== undefined;
-  };
-  if (!urls.every(hasOrder)) {
-    return urls;
-  }
-  return urls.slice().sort((a, b) => a.order - b.order);
+  return urls.slice().sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 }
