@@ -7,18 +7,22 @@ import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewFix } from '@/hooks/api/fixzone/useNewFix';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { EditFix } from '@/types/fix';
+import { createImageOrder } from '@/utils/change';
 
 export default function Index() {
   const mutation = useNewFix();
   const [{ token }] = useCookies(['token']);
   const [post, setPost] = useState<EditFix>(initPost);
+  const { getPresignedIds, isLoading } = usePresignedUrl();
 
   function handleSubmit() {
     if (post.title === '') return toast('제목을 입력해주세요.');
-    mutation.mutate({ post, token });
+    const submitData = {
+      ...post,
+      images: createImageOrder(post.images),
+    };
+    mutation.mutate({ post: submitData, token });
   }
-
-  const { getPresignedIds, isLoading } = usePresignedUrl();
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     setPost((prev: EditFix) => ({
@@ -28,12 +32,12 @@ export default function Index() {
   }
 
   const handleClickDelete = (index: number) => {
-    const revertedIds = (post.fixZoneImageIds as string[])?.filter(
+    const revertedIds = (post.images as string[])?.filter(
       (_, i) => i !== index,
     );
     setPost((prev) => ({
       ...prev,
-      fixZoneImageIds: revertedIds.length === 0 ? null : revertedIds,
+      images: revertedIds.length === 0 ? null : revertedIds,
     }));
   };
 
@@ -42,10 +46,7 @@ export default function Index() {
     const uploadIds = uploadInfo.map(({ id }) => id);
     setPost((prev) => ({
       ...prev,
-      fixZoneImageIds:
-        prev.fixZoneImageIds === null
-          ? uploadIds
-          : [...prev.fixZoneImageIds, ...uploadIds],
+      images: prev.images === null ? uploadIds : [...prev.images, ...uploadIds],
     }));
     return uploadInfo;
   };
@@ -105,5 +106,5 @@ export default function Index() {
 const initPost: EditFix = {
   title: '',
   content: '',
-  fixZoneImageIds: null,
+  images: null,
 };

@@ -1,4 +1,4 @@
-import { UrlType } from '.';
+import { OrderUUID, UrlType } from '.';
 
 export type Fix = {
   id: number;
@@ -33,12 +33,14 @@ export type FixComplete = {
 export type EditFix = {
   title: string;
   content: string;
-  fixZoneImageIds: string[] | null;
+  images: string[] | null;
 };
 
 export type NewFix = {
   token: string;
-  post: EditFix;
+  post: Omit<EditFix, 'images'> & {
+    images: OrderUUID[] | null;
+  };
 };
 
 export type NewFixComment = {

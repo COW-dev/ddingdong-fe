@@ -16,6 +16,7 @@ import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
 import { useUpdateNotice } from '@/hooks/api/notice/useUpdateNotice';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { NoticeDetail } from '@/types/notice';
+import { createImageOrder, sortByOrder } from '@/utils/change';
 
 type NoticeDetailProps = {
   noticeId: number;
@@ -49,8 +50,10 @@ export default function Index({ noticeId }: NoticeDetailProps) {
   useEffect(() => {
     if (data) {
       setNoticeData(data);
-      setFileIds(data.files.map((file) => file.id as string));
-      setImageIds(data.images.map((file) => file.id as string));
+      const sortedImages = sortByOrder(data.images);
+      const sortedFiles = sortByOrder(data.files);
+      setFileIds(sortedFiles.map((file) => file.id as string));
+      setImageIds(sortedImages.map((file) => file.id as string));
     }
   }, [data]);
 
@@ -139,11 +142,13 @@ export default function Index({ noticeId }: NoticeDetailProps) {
       noticeId: noticeId,
       title: noticeData.title,
       content: noticeData.content,
-      fileIds,
-      imageIds,
+      files: createImageOrder(fileIds),
+      images: createImageOrder(imageIds),
       token: token,
     });
   }
+  const sortedImages = sortByOrder(noticeData.images);
+  const sortedFiles = sortByOrder(noticeData.files);
 
   return (
     <>
@@ -200,7 +205,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             isLoading={isImageLoading}
             onAdd={handleUploadImage}
             onDelete={handleClickImageDelete}
-            initialImages={noticeData.images}
+            initialImages={sortedImages}
           />
           <TextareaAutosize
             name="content"
@@ -213,7 +218,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
         </>
       ) : (
         <>
-          {noticeData.images.length > 0 && (
+          {sortedImages.length > 0 && (
             <>
               <div className="relative m-auto mt-5 flex h-96 w-96 items-center justify-center overflow-hidden rounded-xl p-5 shadow-xl md:h-128 md:w-128">
                 {presentIndex > 0 && (
@@ -226,9 +231,9 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                     className="absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
                   />
                 )}
-                {noticeData.images[presentIndex] && (
+                {sortedImages[presentIndex] && (
                   <Image
-                    src={noticeData.images[presentIndex]?.originUrl}
+                    src={sortedImages[presentIndex]?.originUrl}
                     width={550}
                     height={500}
                     priority
@@ -236,7 +241,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                     className="max-h-full max-w-full object-contain"
                   />
                 )}
-                {presentIndex < noticeData.images.length - 1 && (
+                {presentIndex < sortedImages.length - 1 && (
                   <Image
                     src={RightArrow}
                     width={30}
@@ -264,12 +269,12 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           isLoading={isFileLoading}
           onAdd={handleClickFileAdd}
           onDelete={handleClickFileDelete}
-          initialFiles={noticeData.files}
+          initialFiles={sortedFiles}
         />
       ) : (
         <>
           <div className="py-8 text-sm font-medium text-gray-500 md:py-10 md:text-base">
-            {noticeData.files.map((item, idx) => (
+            {sortedFiles.map((item, idx) => (
               <div key={`notice-file-${idx}`} className="flex gap-3">
                 <Image src={ClipIcon} width={10} height={10} alt="file" />
                 <a href={item.originUrl} download target="_blank">

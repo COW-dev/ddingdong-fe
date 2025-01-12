@@ -52,10 +52,13 @@ export type PresignedUrlResponse = {
 
 export type UrlType = {
   id?: string;
+  order?: number;
   fileName?: string;
   originUrl: string;
   cdnUrl: string;
 };
+
+export type OrderUUID = { id: string; order: number };
 
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
