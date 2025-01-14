@@ -1,19 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import ClubFeed from '@/components/feed/ClubFeed';
 import { useAllFeeds } from '@/hooks/api/feed/useAllFeeds';
-import { Feed } from '@/types/feed';
+
+const OBSERVER_OPTIONS = {
+  root: null,
+  rootMargin: '50px',
+  threshold: 0.1,
+};
 
 export default function Index() {
-  const [feeds, setFeeds] = useState<Array<Feed>>([]);
+  const observerTarget = useRef<HTMLDivElement>(null);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useAllFeeds();
 
-  const { data } = useAllFeeds();
+  const feeds = data?.pages.flatMap((page) => page.data.newestFeeds) ?? [];
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      });
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
+  );
 
   useEffect(() => {
-    if (data) {
-      setFeeds(data.data);
+    const observer = new IntersectionObserver(handleObserver, OBSERVER_OPTIONS);
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
     }
-  }, [data]);
+    return () => observer.disconnect();
+  }, [handleObserver]);
 
   return (
     <>
@@ -28,6 +49,7 @@ export default function Index() {
         ) : (
           <div className="w-full">
             <ClubFeed feeds={feeds} />
+            <div ref={observerTarget} className="h-5 w-full bg-transparent" />
           </div>
         )}
       </div>
