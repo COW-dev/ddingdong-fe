@@ -35,7 +35,7 @@ import {
   User,
 } from '@/types/event';
 
-import { Feed, FeedDetail } from '@/types/feed';
+import { Feed, FeedDetail, TotalFeed } from '@/types/feed';
 import {
   DeleteFixComment,
   Fix,
@@ -164,8 +164,12 @@ export async function getDocumentInfo(
   return await api.get(`/documents/${documentId}`);
 }
 
-export async function getAllFeeds(): Promise<AxiosResponse<Feed[], unknown>> {
-  return await api.get('/feeds');
+export async function getAllFeeds(
+  currentCursorId: number | -1,
+): Promise<AxiosResponse<TotalFeed, unknown>> {
+  return await api.get(
+    `/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
+  );
 }
 
 export async function getClubFeed(
