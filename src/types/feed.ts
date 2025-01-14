@@ -1,3 +1,4 @@
+import { UrlType } from '.';
 import { ClubProfile } from './club';
 
 export type TabMenu = {
@@ -5,17 +6,29 @@ export type TabMenu = {
   content: JSX.Element;
 };
 
+export type TotalFeed = {
+  newestFeeds: Feed[];
+  pagingInfo: PagingInfo;
+};
+
 export type Feed = {
   id: number;
-  thumbnailUrl: string;
   feedType?: string;
+  thumbnailCdnUrl: string;
+  thumbnailOriginUrl: string;
 };
 
 export type FeedDetail = {
   id: number;
-  clubProfile: ClubProfile;
-  activityContent: string;
-  fileUrl: string;
   feedType: 'IMAGE' | 'VIDEO';
+  activityContent: string;
+  fileUrls: UrlType;
   createdDate: string;
+  clubProfile: ClubProfile;
+};
+
+export type PagingInfo = {
+  hasNext: boolean;
+  nextCursorId: number;
+  currentCursorId: number;
 };
