@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import ClubFeed from '@/components/feed/ClubFeed';
+import Loading from '@/components/loading/Loading';
 import { useAllFeeds } from '@/hooks/api/feed/useAllFeeds';
 
 const OBSERVER_OPTIONS = {
@@ -11,7 +12,7 @@ const OBSERVER_OPTIONS = {
 
 export default function Index() {
   const observerTarget = useRef<HTMLDivElement>(null);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useAllFeeds();
 
   const feeds = data?.pages.flatMap((page) => page.data.newestFeeds) ?? [];
@@ -35,6 +36,14 @@ export default function Index() {
     }
     return () => observer.disconnect();
   }, [handleObserver]);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <>
