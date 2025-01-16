@@ -47,11 +47,8 @@ export default function ClubFeed({ feeds }: ClubFeedProps) {
             alt={`image-${index + 1}`}
             fill
             priority={index < 10}
-            onLoad={() => handleImageLoad(item.id)}
             style={{ objectFit: 'cover' }}
-            className={`aspect-square ${
-              isImageLoaded(item.id) ? 'visible' : 'invisible'
-            }`}
+            onLoad={() => handleImageLoad(item.id)}
             onClick={() => handleClick(item.id)}
           />
           {item.feedType == 'VIDEO' && (
