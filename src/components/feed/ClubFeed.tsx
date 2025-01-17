@@ -12,9 +12,7 @@ type ClubFeedProps = {
 };
 
 export default function ClubFeed({ feeds }: ClubFeedProps) {
-  const [loadedImages, setLoadedImages] = useState<{ [key: number]: boolean }>(
-    {},
-  );
+  const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   const [feedId, setFeedId] = useState<number>(0);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
@@ -26,6 +24,8 @@ export default function ClubFeed({ feeds }: ClubFeedProps) {
   const handleImageLoad = (id: number) => {
     setLoadedImages((prev) => ({ ...prev, [id]: true }));
   };
+
+  const isImageLoaded = (id: number) => loadedImages[id] || false;
 
   const renderSkeleton = () => (
     <div className="absolute inset-0">
@@ -40,17 +40,15 @@ export default function ClubFeed({ feeds }: ClubFeedProps) {
           key={item.id}
           className="relative flex aspect-square w-full cursor-pointer"
         >
-          {!loadedImages[item.id] && renderSkeleton()}
+          {!isImageLoaded(item.id) && renderSkeleton()}
+
           <Image
-            src={item.thumbnailUrl}
+            src={item.thumbnailCdnUrl}
             alt={`image-${index + 1}`}
-            width={350}
-            height={350}
-            onLoad={() => handleImageLoad(item.id)}
+            fill
+            priority={index < 10}
             style={{ objectFit: 'cover' }}
-            className={`aspect-square ${
-              loadedImages[item.id] ? 'visible' : 'invisible'
-            }`}
+            onLoad={() => handleImageLoad(item.id)}
             onClick={() => handleClick(item.id)}
           />
           {item.feedType == 'VIDEO' && (
