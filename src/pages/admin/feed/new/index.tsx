@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
 import ClubSummary from '@/components/club/ClubSummary';
 import UploadMedia from '@/components/common/UploadMedia';
@@ -11,6 +12,8 @@ import { useClubStore } from '@/store/club';
 import { UploadFile } from '@/types';
 import { NewFeed } from '@/types/feed';
 import { subscribeToSSE } from '@/utils/subscribeToSSE';
+
+const MAX_FILE_SIZE = 300 * 1024 * 1024;
 
 export default function Index() {
   const [{ token }] = useCookies(['token']);
@@ -26,6 +29,11 @@ export default function Index() {
   const mutation = useNewFeed();
 
   async function handleFile(files: File): Promise<UploadFile> {
+    if (files.size > MAX_FILE_SIZE) {
+      toast.error('파일 크기는 300MB 이하로 업로드해야 합니다.');
+      return Promise.reject('파일 크기는 300MB 이하로 업로드해야 합니다.');
+    }
+
     const fileInfo = await getPresignedId(files);
 
     if (fileInfo?.id) {
