@@ -33,14 +33,14 @@ export function subscribeToSSE(token: string, mediaId: string) {
       removeVideoUpload(mediaId);
       eventSource.close();
     }
-  });
 
-  eventSource.addEventListener('error', () => {
-    toast.error('비디오 업로드 중 문제가 발생했습니다.', {
-      id: toastId,
-      duration: 10000,
-    });
-    removeVideoUpload(mediaId);
-    eventSource.close();
+    if (parsedData.data.convertJobStatus === 'ERROR') {
+      toast.success('비디오 업로드 중 문제가 발생했습니다.', {
+        id: toastId,
+        duration: 5000,
+      });
+      removeVideoUpload(mediaId);
+      eventSource.close();
+    }
   });
 }
