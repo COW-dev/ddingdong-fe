@@ -70,7 +70,6 @@ export default function ClubFeed({
           }
         >
           {!isImageLoaded(item.id) && renderSkeleton()}
-
           {editMode && (
             <Image
               width={30}

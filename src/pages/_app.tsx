@@ -4,6 +4,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import { loadScript, boot } from '@channel.io/channel-web-sdk-loader';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
@@ -22,6 +23,8 @@ const queryClient = new QueryClient({
   },
 });
 
+let channelTalkDidInit = false;
+
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
@@ -33,6 +36,15 @@ export default function App({ Component, pageProps }: AppProps) {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [router.events]);
+
+  if (typeof window !== 'undefined' && !channelTalkDidInit) {
+    channelTalkDidInit = true;
+    loadScript();
+    boot({
+      pluginKey: process.env.NEXT_PUBLIC_CHANNELTALK_PLUGIN ?? '',
+    });
+  }
+
   return (
     <>
       <Head>

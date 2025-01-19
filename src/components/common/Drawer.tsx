@@ -1,7 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import Cancel from '@/assets/cancel.svg';
-import MiniLogo from '@/assets/miniLogo.svg';
+import Cancel from '@/assets/cancel-white.svg';
 
 type DrawerProps = {
   children: React.ReactNode;
@@ -26,14 +25,14 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
         }
       >
         <article className="relative flex h-16 w-full justify-between">
-          <header className="flex w-full justify-between bg-blue-600 px-6 text-lg font-bold">
+          <header className="flex w-full items-center justify-between bg-new-year px-6 text-lg font-bold">
             <Image
-              src={MiniLogo}
-              width={1544}
-              height={380}
+              src={'/m_new-year-logo.png'}
+              width={1500}
+              height={700}
               priority
               alt="ddingdong"
-              className="w-34"
+              className="mb-2 w-32"
             />
             <button
               className=""

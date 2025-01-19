@@ -10,6 +10,7 @@
     "lint:fix": "next lint --fix"
   },
   "dependencies": {
+    "@channel.io/channel-web-sdk-loader": "^2.0.0",
     "@radix-ui/react-accordion": "^1.2.0",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-slot": "^1.1.0",
@@ -29,6 +30,7 @@
     "embla-carousel-autoplay": "^8.0.0-rc22",
     "embla-carousel-react": "^8.0.0-rc22",
     "event-source-polyfill": "^1.0.31",
+    "framer-motion": "^11.16.4",
     "hls.js": "^1.5.15",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.331.0",
@@ -38,6 +40,7 @@
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-lottie-player": "^1.5.4",
+    "react-snowfall": "^2.2.0",
     "react-tailwindcss-datepicker": "^1.6.5",
     "react-textarea-autosize": "^8.4.1",
     "tailwind-merge": "^2.2.1",
