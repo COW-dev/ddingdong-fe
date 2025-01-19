@@ -11,7 +11,7 @@ import ClubFeedDetail from '../modal/feed/ClubFeedDetail';
 
 type ClubFeedProps = {
   feeds: Feed[] | undefined;
-  gridNum?: number;
+  viewMode?: 'ADMIN' | 'TOTAL';
   editMode?: boolean;
   selectedFeedId?: number;
   onFeedSelect?: (id: number) => void;
@@ -19,7 +19,7 @@ type ClubFeedProps = {
 
 export default function ClubFeed({
   feeds,
-  gridNum = 3,
+  viewMode = 'TOTAL',
   editMode = false,
   selectedFeedId,
   onFeedSelect,
@@ -56,7 +56,11 @@ export default function ClubFeed({
   );
 
   return (
-    <div className={`grid grid-cols-${gridNum} gap-0.5`}>
+    <div
+      className={`grid gap-0.5 ${
+        viewMode === 'ADMIN' ? 'grid-cols-4' : 'grid-cols-3'
+      }`}
+    >
       {feeds?.map((item, index) => (
         <div
           key={item.id}

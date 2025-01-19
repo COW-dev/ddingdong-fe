@@ -121,9 +121,9 @@ export default function Index() {
       </div>
       <div className="mt-10 w-full">
         <ClubFeed
-          editMode={editMode}
           feeds={feeds}
-          gridNum={4}
+          viewMode="ADMIN"
+          editMode={editMode}
           selectedFeedId={selectedFeed}
           onFeedSelect={handleRadioChange}
         />
