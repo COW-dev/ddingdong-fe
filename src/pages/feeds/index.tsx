@@ -11,7 +11,6 @@ export default function Index() {
     useAllFeeds();
 
   const feeds = data?.pages.flatMap((page) => page.data.newestFeeds) ?? [];
-
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {

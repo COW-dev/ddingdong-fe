@@ -38,6 +38,7 @@ export default function ClubFeed({
 
   const isImageLoaded = (id: number) => loadedImages[id] || false;
 
+
   const handleCheckboxChange = (id: number) => {
     if (onFeedSelect) {
       onFeedSelect(id);
@@ -58,6 +59,7 @@ export default function ClubFeed({
           className="relative flex aspect-square w-full cursor-pointer"
         >
           {!isImageLoaded(item.id) && renderSkeleton()}
+
           {editMode && (
             <Image
               width={20}
