@@ -23,6 +23,7 @@ type RoleText = {
     notice: NavBox;
     documents: NavBox;
     FAQ?: NavBox;
+    feed: NavBox;
   };
 };
 
@@ -56,6 +57,11 @@ export const ROLE_TEXT: RoleText = {
       title: 'FAQ 관리',
       subtitle: '총동아리연합회 및 동아리에게 자주 물어보는 질문을 관리해요.',
       route: '/FAQ',
+    },
+    feed: {
+      title: '동아리 피드 업로드',
+      subtitle: '동아리의 활동 사진 및 영상을 업로드하고 홍보해요.',
+      route: '/feed',
     },
   },
   [ROLE_TYPE.ROLE_CLUB]: {
@@ -91,6 +97,11 @@ export const ROLE_TEXT: RoleText = {
     documents: {
       title: '자료실',
       route: '/documents',
+    },
+    feed: {
+      title: '동아리 피드 업로드',
+      subtitle: '동아리의 활동 사진 및 영상을 업로드하고 홍보해요.',
+      route: '/feed',
     },
   },
 };

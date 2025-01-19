@@ -3,14 +3,9 @@ import { AxiosError, type AxiosResponse } from 'axios';
 import { getAllNotices } from '@/apis';
 import { Notice } from '@/types/notice';
 
-export function useAllNotices() {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<Notice[], unknown>,
-    [string]
-  >({
-    queryKey: ['notices'],
-    queryFn: getAllNotices,
+export function useAllNotices(page: number) {
+  return useQuery<AxiosResponse<Notice, unknown>, AxiosError>({
+    queryKey: ['notices', page],
+    queryFn: () => getAllNotices(page),
   });
 }

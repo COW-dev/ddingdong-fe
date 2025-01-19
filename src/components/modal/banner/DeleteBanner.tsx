@@ -1,15 +1,24 @@
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
+import { useAllBanners } from '@/hooks/api/banner/useAllBanners';
 import { useDeleteBanner } from '@/hooks/api/banner/useDeleteBanner';
 
-type Props = {
+type DeleteBannerProps = {
   id: number;
   closeModal: () => void;
 };
-export default function DeleteBanner({ id, closeModal }: Props) {
+
+export default function DeleteBanner({ id, closeModal }: DeleteBannerProps) {
   const deleteMutation = useDeleteBanner();
+  const { data: banners } = useAllBanners();
+
   const [cookies] = useCookies(['token']);
 
   function handleClickDelete() {
+    if (!banners?.data || banners?.data.length < 2) {
+      closeModal();
+      return toast.error('배너는 한개 이상 존재해야해요.');
+    }
     deleteMutation.mutate({
       bannerId: id,
       token: cookies.token,

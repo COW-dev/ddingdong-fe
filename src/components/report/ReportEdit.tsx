@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { useNewReport } from '@/hooks/api/club/useNewReport';
 import { useUpdateReports } from '@/hooks/api/club/useUpdateReports';
 import { useReport } from '@/hooks/common/useReport';
-
 import { EditReport } from '@/types/report';
 import Form from './Form';
 import Accordion from '../common/Accordion';
@@ -17,8 +17,9 @@ type ReportEditProps = {
 function ReportEdit({ report, term = 0 }: ReportEditProps) {
   const router = useRouter();
   const createMutation = useNewReport();
-  const modifyMutation = useUpdateReports(term);
-
+  const modifyMutation = useUpdateReports();
+  const [{ token }] = useCookies(['token']);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const {
     uploadFileOne,
     setUploadFileOne,
@@ -28,9 +29,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     setReportTwo,
     reportOne,
     reportTwo,
-    createFormData,
-    setRemoveFileOne,
-    setRemoveFileTwo,
+    createPairReport,
   } = useReport(report ?? [EMPTY_DATA, EMPTY_DATA]);
 
   const validateDate = (report: EditReport) => {
@@ -43,14 +42,10 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event: React.FormEvent<HTMLFormElement>,
   ) => {
     event.preventDefault();
-
-    let formData = new FormData();
-    formData = await createFormData(formData, term);
-
     if (!validateDate(reportOne) || !validateDate(reportTwo))
       return toast.error('날짜와 시간을 모두 선택해주세요.');
-
-    return modifyMutation.mutate(formData);
+    const activityReportRequests = createPairReport(term);
+    return modifyMutation.mutate({ activityReportRequests, token });
   };
 
   const handleClickCreateButton = async (
@@ -59,10 +54,8 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
       return toast.error('날짜와 시간을 모두 선택해주세요.');
-
-    let formData = new FormData();
-    formData = await createFormData(formData, term);
-    return createMutation.mutate(formData);
+    const activityReportRequests = createPairReport(term);
+    return createMutation.mutate({ activityReportRequests, token });
   };
 
   return (
@@ -78,7 +71,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
             id={1}
             setValue={setReportOne}
             setImage={setUploadFileOne}
-            setRemoveFile={setRemoveFileOne}
+            setIsEditing={setIsEditing}
           />
         </Accordion>
         <Accordion title="활동2">
@@ -88,7 +81,7 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
             id={2}
             setValue={setReportTwo}
             setImage={setUploadFileTwo}
-            setRemoveFile={setRemoveFileTwo}
+            setIsEditing={setIsEditing}
           />
         </Accordion>
         <div className="m-auto flex justify-center md:mt-6">
@@ -103,7 +96,11 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
               </button>
               <button
                 type="submit"
-                className="h-11 w-24 rounded-xl bg-blue-500 px-1 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 sm:inline-block md:text-base"
+                disabled={isEditing}
+                className={`h-11 w-24 rounded-xl bg-blue-500 px-1 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 sm:inline-block md:text-base ${
+                  isEditing &&
+                  'cursor-not-allowed bg-gray-500 hover:bg-gray-600'
+                }`}
               >
                 제출
               </button>
@@ -111,7 +108,11 @@ function ReportEdit({ report, term = 0 }: ReportEditProps) {
           ) : (
             <button
               type="submit"
-              className="h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base"
+              disabled={isEditing}
+              className={`h-11 w-28 rounded-xl bg-blue-100 px-1 py-2.5 text-sm font-bold text-blue-500 transition-colors hover:bg-blue-200 sm:inline-block md:text-base ${
+                isEditing &&
+                'cursor-not-allowed bg-gray-500 text-white hover:bg-gray-600'
+              }`}
             >
               생성하기
             </button>
@@ -138,6 +139,7 @@ export const EMPTY_DATA = {
   endTime: '',
   uploadFiles: null,
   content: '',
+  imageUrl: null,
   participants: [
     participant,
     participant,
@@ -145,4 +147,5 @@ export const EMPTY_DATA = {
     participant,
     participant,
   ],
+  imageId: null,
 };

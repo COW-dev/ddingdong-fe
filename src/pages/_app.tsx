@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Analytics } from '@vercel/analytics/react';
 import { CookiesProvider } from 'react-cookie';
-
+import VideoUploadProgress from '@/components/common/VideoUploadProgress';
 import Layout from '@/components/layout';
 import ToasterWithMax from '@/components/toast/ToasterWithMax';
 import * as gtag from '@/lib/gtag';
@@ -82,6 +82,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Layout>
             <Component {...pageProps} />
+            <VideoUploadProgress />
           </Layout>
           <ReactQueryDevtools />
           <Analytics />

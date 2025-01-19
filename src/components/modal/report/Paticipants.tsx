@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import Link from 'next/link';
 import { useCookies } from 'react-cookie';
 import ParticipantSelect from '@/components/report/ParticipantSelect';
-import { useMyClub } from '@/hooks/api/club/useMyClub';
+import { useClubMembers } from '@/hooks/api/member/useClubMembers';
 import { StudentInfo } from '@/types';
 import { EditReport } from '@/types/report';
 
@@ -21,10 +21,7 @@ type Props = {
 export default function Participants({ data, setData, closeModal }: Props) {
   const [{ token }] = useCookies(['token']);
 
-  const {
-    data: { data: clubData },
-  } = useMyClub(token);
-
+  const { data: clubMemberData } = useClubMembers(token);
   const [participants, setParticipants] = useState<Array<StudentInfo>>(
     data ?? [participant, participant, participant, participant, participant],
   );
@@ -49,7 +46,7 @@ export default function Participants({ data, setData, closeModal }: Props) {
           <ParticipantSelect
             name={participant.name}
             setData={setParticipants}
-            list={clubData?.clubMembers}
+            list={clubMemberData?.data.clubMembers ?? []}
             id={index}
           />
         </div>

@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next/types';
 import BottomButton from '@/components/club/BottomButton';
@@ -5,6 +6,7 @@ import ClubHeading from '@/components/club/ClubHeading';
 import ClubInfo from '@/components/club/ClubInfo';
 import ClubFeed from '@/components/feed/ClubFeed';
 import Tabs from '@/components/feed/Tabs';
+import { OBSERVER_OPTIONS } from '@/constants/observer';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { useClubInfo } from '@/hooks/api/club/useClubInfo';
 import { useClubFeed } from '@/hooks/api/feed/useClubFeed';
@@ -15,16 +17,44 @@ type ClubDetailProps = {
 };
 
 export default function Index({ clubId }: ClubDetailProps) {
-  const { isError, isSuccess, data: clubInfoData } = useClubInfo(clubId);
+  const observerTarget = useRef<HTMLDivElement>(null);
+  const [activeTab, setActiveTab] = useState(0);
+  const { data: clubInfoData, isSuccess } = useClubInfo(clubId);
   const { data: allClubs } = useAllClubs();
-  const { data: clubFeedData } = useClubFeed(clubId);
+  const {
+    data: clubFeedData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useClubFeed(clubId);
 
-  if (isError) {
-    return <div>에러가 발생했습니다.</div>;
-  }
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      });
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
+  );
+
+  useEffect(() => {
+    if (activeTab === 1) {
+      const observer = new IntersectionObserver(
+        handleObserver,
+        OBSERVER_OPTIONS,
+      );
+      if (observerTarget.current) {
+        observer.observe(observerTarget.current);
+      }
+      return () => observer.disconnect();
+    }
+  }, [handleObserver, activeTab]);
+
   if (isSuccess && clubFeedData && allClubs) {
     const clubInfo = clubInfoData.data;
-    const clubFeed = clubFeedData.data;
+    const clubFeed = clubFeedData.pages.flatMap((page) => page.data.clubFeeds);
     const { name, formUrl } = clubInfo;
 
     const isRecruit =
@@ -36,7 +66,7 @@ export default function Index({ clubId }: ClubDetailProps) {
         label: '동아리 소개',
         content: (
           <ClubInfo
-            introduceImageUrls={clubInfo.introduceImageUrls}
+            introductionImageUrl={clubInfo.introductionImage}
             introduction={clubInfo.introduction}
             activity={clubInfo.activity}
             ideal={clubInfo.ideal}
@@ -53,7 +83,13 @@ export default function Index({ clubId }: ClubDetailProps) {
               </div>
             </div>
           ) : (
-            <ClubFeed feeds={clubFeed} />
+            <>
+              <ClubFeed feeds={clubFeed} />
+              <div
+                ref={observerTarget}
+                className="mt-5 h-5 w-full bg-transparent"
+              />
+            </>
           ),
       },
     ];
@@ -64,7 +100,11 @@ export default function Index({ clubId }: ClubDetailProps) {
           <title>{`띵동 - ${name}`}</title>
         </Head>
         <ClubHeading info={clubInfo} />
-        <Tabs TabMenus={ClubTabMenus} tabContext="allClubs" />
+        <Tabs
+          TabMenus={ClubTabMenus}
+          tabContext="allClubs"
+          onTabChange={(index) => setActiveTab(index)}
+        />
         <div className={`${!isRecruit && 'hidden'}`}>
           <BottomButton href={clubInfo.formUrl}>지원하기</BottomButton>
         </div>

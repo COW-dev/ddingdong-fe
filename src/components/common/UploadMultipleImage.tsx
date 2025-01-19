@@ -1,39 +1,74 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
 import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
+import { UploadFile, UrlType } from '@/types';
 import ImagesController from './ImagesController';
+import Loading from '../loading/Loading';
+
 type UploadImageProps = {
-  image: File[];
-  setImage: Dispatch<SetStateAction<File[]>>;
+  isLoading: boolean;
+  onAdd: (file: File[]) => Promise<UploadFile[]>;
+  onDelete: (index: number) => void;
+  initialImages?: UrlType[];
 };
 
 export default function UploadMultipleImage({
-  image,
-  setImage,
+  isLoading,
+  onAdd,
+  onDelete,
+  initialImages = [],
 }: UploadImageProps) {
   const [presentIndex, setPresentIndex] = useState<number>(0);
+  const [image, setImage] = useState<File[]>([]);
+  const [existingFiles, setExistingFiles] = useState<UrlType[]>(initialImages);
 
-  function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
+  const allImages = useMemo(
+    () => [
+      ...existingFiles.map((item) => item.originUrl),
+      ...image.map((file) => URL.createObjectURL(file)),
+    ],
+    [existingFiles, image],
+  );
+
+  async function handleImageAdd(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
-      for (let i = 0; i < event.target.files.length; i++) {
-        const file = event.target.files[i];
-        image?.push(file);
-      }
-      setImage([...image]);
+      const uploadInfo = await onAdd(Array.from(event.target.files));
+      const uploadfiles = uploadInfo.map((info) => info.file);
+      setImage([...image, ...uploadfiles]);
     }
   }
 
   function handleImageDelete() {
-    image.splice(presentIndex, 1);
-    if (presentIndex === image.length) setPresentIndex(0);
-    setImage([...image]);
+    if (presentIndex >= allImages.length) return;
+    const isExistingFile = presentIndex < existingFiles.length;
+
+    if (isExistingFile) {
+      setExistingFiles((files) => files.filter((_, i) => i !== presentIndex));
+    }
+    if (!isExistingFile) {
+      const newImageIndex = presentIndex - existingFiles.length;
+      setImage((files) => files.filter((_, i) => i !== newImageIndex));
+    }
+
+    if (presentIndex === allImages.length - 1)
+      setPresentIndex(Math.max(0, presentIndex - 1));
+
+    onDelete(presentIndex);
   }
+
+  if (isLoading)
+    return (
+      <div className="flex h-full w-full justify-center p-6">
+        <Loading />
+      </div>
+    );
+
   return (
     <div className="flex h-full w-full justify-center p-6">
-      {image.length !== 0 ? (
+      {allImages.length !== 0 ? (
         <>
           <div className="relative h-96">
             <div className="flex">
@@ -46,7 +81,7 @@ export default function UploadMultipleImage({
                 className={`${presentIndex === 0 && `hidden`}`}
               />
               <Image
-                src={URL.createObjectURL(image[presentIndex])}
+                src={allImages[presentIndex]}
                 className=" m-auto h-96 overflow-hidden rounded-lg object-scale-down"
                 alt="이미지"
                 width={800}
@@ -58,7 +93,9 @@ export default function UploadMultipleImage({
                 width={25}
                 alt="right"
                 onClick={() => setPresentIndex(presentIndex + 1)}
-                className={`${presentIndex === image.length - 1 && `hidden`}`}
+                className={`${
+                  presentIndex === allImages.length - 1 && `hidden`
+                }`}
               />
               <div className="mr-3 mt-5" onClick={handleImageDelete}>
                 <Image src={Cancel} height={20} width={20} alt="cancel" />
@@ -66,7 +103,7 @@ export default function UploadMultipleImage({
             </div>
             <ImagesController
               handleImageAdd={handleImageAdd}
-              image={image}
+              image={allImages}
               setPresentIndex={setPresentIndex}
               presentIndex={presentIndex}
               handleImageDelete={handleImageDelete}

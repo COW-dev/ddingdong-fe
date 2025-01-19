@@ -4,7 +4,7 @@ import { getMemberFile } from '@/apis';
 
 export function useMemberFile(token: string) {
   return useQuery<unknown, AxiosError, AxiosResponse<Blob>>({
-    queryKey: ['/club/my/club-members'],
+    queryKey: ['/central/my/club-members/excel'],
     queryFn: () => getMemberFile(token),
   });
 }

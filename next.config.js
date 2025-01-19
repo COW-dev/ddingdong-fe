@@ -2,7 +2,9 @@
 const nextConfig = {
   images: {
     domains: [
+      'ddn4vjj3ws13w.cloudfront.net',
       'd2syrtcctrfiup.cloudfront.net',
+      'ddingdong-converted-file.s3.ap-northeast-2.amazonaws.com',
       'ddingdong-file.s3.ap-northeast-2.amazonaws.com',
       'github.com',
     ],

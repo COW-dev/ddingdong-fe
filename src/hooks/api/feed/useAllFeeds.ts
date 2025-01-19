@@ -1,16 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-import { AxiosError, type AxiosResponse } from 'axios';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { type AxiosResponse } from 'axios';
 import { getAllFeeds } from '@/apis';
-import { Feed } from '@/types/feed';
+import { TotalFeed } from '@/types/feed';
 
 export function useAllFeeds() {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<Feed[], unknown>,
-    [string]
-  >({
+  return useInfiniteQuery<AxiosResponse<TotalFeed<'newestFeeds'>>>({
     queryKey: ['feeds'],
-    queryFn: getAllFeeds,
+    queryFn: ({ pageParam = -1 }) => getAllFeeds(pageParam),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.pagingInfo?.hasNext) {
+        return lastPage.data.pagingInfo.nextCursorId;
+      }
+      return undefined;
+    },
   });
 }

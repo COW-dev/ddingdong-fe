@@ -13,14 +13,13 @@ import { useAllNotices } from '@/hooks/api/notice/useAllNotices';
 export default function Index() {
   const [hydrated, setHydrated] = useState(false);
   const [{ role }] = useCookies(['token', 'role']);
-  const { data: noticedata } = useAllNotices();
-  const { data: documentData } = useAllDocuments();
+  const { data: noticeData } = useAllNotices(1);
+  const { data: documentData } = useAllDocuments(1);
   const [infoElement, setInfoElement] = useState(<></>);
   const [cookies, setCookie, removeCookie] = useCookies([
     'access_token',
     'refresh_token',
   ]);
-
   const removeTokens = () => {
     removeCookie('refresh_token', { domain: '.mju.ac.kr' });
     removeCookie('access_token', { domain: '.mju.ac.kr' });
@@ -32,10 +31,11 @@ export default function Index() {
     }
   }, [cookies.refresh_token, cookies.access_token]);
 
-  const notices = noticedata?.data.sort((a, b) => {
+  const notices = noticeData?.data.notices.sort((a, b) => {
     return b.id - a.id;
   });
-  const documents = documentData?.data.sort((a, b) => {
+
+  const documents = documentData?.data?.documents?.sort((a, b) => {
     return b.id - a.id;
   });
 
@@ -72,7 +72,7 @@ export default function Index() {
       <div className="relative mt-7">
         <Link
           href="/banner"
-          className={`absolute right-0 top-2 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
+          className={`absolute right-2 top-6 z-10 inline-block w-12 p-2 opacity-40 transition-opacity hover:opacity-70  ${
             role === ROLE_TYPE.ROLE_CLUB && 'invisible'
           }`}
         >
@@ -99,6 +99,19 @@ export default function Index() {
             <p>{ROLE_TEXT[role].club.subtitle}</p>
           </div>
         </Link>
+        {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role]?.member && (
+          <Link
+            href={ROLE_TEXT[role].feed.route}
+            className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          >
+            <h2 className="text-xl font-bold md:text-2xl">
+              {ROLE_TEXT[role].feed.title}
+            </h2>
+            <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+              <p>{ROLE_TEXT[role].feed.subtitle}</p>
+            </div>
+          </Link>
+        )}
         {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role]?.member && (
           <Link
             href={ROLE_TEXT[role]?.member?.route ?? ''}

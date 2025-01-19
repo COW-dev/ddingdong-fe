@@ -2,19 +2,25 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
+import { UploadFile, UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
-import { parseImgUrl } from '@/utils/parse';
+import { EditReport } from '@/types/report';
+import { cn } from '../ui/utils';
+
 type UploadImageProps = {
   image?: File | null;
   setImage?: Dispatch<SetStateAction<File | null>>;
-  imageUrls?: string[];
+  imageUrls?: UrlType;
   setNoticeData?:
     | Dispatch<SetStateAction<NoticeDetail>>
-    | Dispatch<SetStateAction<ClubDetail>>;
+    | Dispatch<SetStateAction<ClubDetail>>
+    | Dispatch<SetStateAction<EditReport>>;
   urlsName?: string;
   setRemoveFile?: Dispatch<SetStateAction<boolean>>;
   id?: number;
+  onAdd: (file: File) => Promise<UploadFile>;
+  className?: string;
 };
 
 export default function UploadImage({
@@ -25,29 +31,30 @@ export default function UploadImage({
   setNoticeData,
   setRemoveFile,
   id,
+  onAdd,
+  className,
 }: UploadImageProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
+
   useEffect(() => {
-    if (image) {
-      if (image instanceof File) {
-        setImage && setImage(image);
-        const imageUrl = URL.createObjectURL(image);
-        setPreviewImageUrl(imageUrl);
-      } else {
-        setPreviewImageUrl(image as string);
-      }
-    } else {
-      imageUrls?.length === 1
-        ? setPreviewImageUrl(parseImgUrl(imageUrls[0]))
-        : setPreviewImageUrl('');
+    if (!image && imageUrls?.originUrl) {
+      setPreviewImageUrl(imageUrls?.originUrl || '');
+      return;
     }
+    if (image) {
+      const url = window.URL.createObjectURL(image);
+      setPreviewImageUrl(url);
+      return () => URL.revokeObjectURL(url);
+    }
+    return setPreviewImageUrl('');
   }, [image, imageUrls, setImage]);
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setImage && setImage(file);
-      const imageUrl = URL.createObjectURL(file);
+      const uploadImage = await onAdd(file);
+      setImage && setImage(uploadImage.file);
+      const imageUrl = URL.createObjectURL(uploadImage.file);
       setPreviewImageUrl(imageUrl);
     }
   }
@@ -59,19 +66,20 @@ export default function UploadImage({
     setNoticeData &&
       setNoticeData((prev: any) => ({
         ...prev,
-        [urlsName ? `${urlsName}` : `imageUrls`]: [],
+        [urlsName ? `${urlsName}` : `imageUrls`]: null,
       }));
   }
 
   return (
-    <div className="flex w-full justify-center p-6">
-      {image || previewImageUrl ? (
+    <div className={cn('flex w-full justify-center p-6', className)}>
+      {previewImageUrl ? (
         <>
           <Image
             src={previewImageUrl}
-            className="m-auto  h-72 object-scale-down "
+            className="m-auto h-72 max-w-[90%] object-scale-down"
             alt="이미지"
-            width={1000}
+            priority
+            width={1032}
             height={200}
           />
           <div className="z-30 mt-5 min-w-[10%]">

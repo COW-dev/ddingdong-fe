@@ -1,31 +1,55 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import Heading from '@/components/common/Heading';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
 import { useNewFix } from '@/hooks/api/fixzone/useNewFix';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { EditFix } from '@/types/fix';
+import { createImageOrder } from '@/utils/change';
 
 export default function Index() {
   const mutation = useNewFix();
   const [{ token }] = useCookies(['token']);
+  const [post, setPost] = useState<EditFix>(initPost);
+  const { getPresignedIds, isLoading } = usePresignedUrl();
 
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
-  const [image, setImage] = useState<File[]>([]);
   function handleSubmit() {
-    if (title === '') return toast('제목을 입력해주세요.');
-
-    const formData = new FormData();
-    formData.append('title', title);
-    formData.append('content', content);
-    for (let i = 0; i < image.length; i++) formData.append('images', image[i]);
-
-    mutation.mutate({
-      formData: formData,
-      token: token,
-    });
+    if (post.title === '') return toast('제목을 입력해주세요.');
+    const submitData = {
+      ...post,
+      images: createImageOrder(post.images),
+    };
+    mutation.mutate({ post: submitData, token });
   }
+
+  function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setPost((prev: EditFix) => ({
+      ...prev,
+      [event.target.name]: event.target.value,
+    }));
+  }
+
+  const handleClickDelete = (index: number) => {
+    const revertedIds = (post.images as string[])?.filter(
+      (_, i) => i !== index,
+    );
+    setPost((prev) => ({
+      ...prev,
+      images: revertedIds.length === 0 ? null : revertedIds,
+    }));
+  };
+
+  const handleClickUpload = async (files: File[]) => {
+    const uploadInfo = await getPresignedIds(files);
+    const uploadIds = uploadInfo.map(({ id }) => id);
+    setPost((prev) => ({
+      ...prev,
+      images: prev.images === null ? uploadIds : [...prev.images, ...uploadIds],
+    }));
+    return uploadInfo;
+  };
 
   return (
     <>
@@ -34,24 +58,30 @@ export default function Index() {
         {/* 정보 */}
         <div className=" flex h-full w-full flex-col justify-between px-6 py-6 pb-0 md:w-1/2 md:p-6">
           <textarea
-            value={title}
+            value={post.title}
+            name="title"
             spellCheck={false}
             className="mb-4 resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium shadow-sm outline-none md:h-1/6 md:p-4 "
             placeholder="[동아리명] 제목을 입력하세요."
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => handleChange(event)}
           />
           <textarea
-            value={content}
+            value={post.content}
+            name="content"
             spellCheck={false}
             className="h-full  resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium shadow-sm outline-none placeholder:text-gray-400 "
             placeholder="내용을 입력하세요."
-            onChange={(event) => setContent(event.target.value)}
+            onChange={(event) => handleChange(event)}
           />
         </div>
         {/* 내용 */}
         <div className="md:w-1/2  md:flex-row">
           <div className="h-full rounded-xl bg-white">
-            <UploadMultipleImage image={image} setImage={setImage} />
+            <UploadMultipleImage
+              isLoading={isLoading}
+              onDelete={handleClickDelete}
+              onAdd={handleClickUpload}
+            />
           </div>
         </div>
       </div>
@@ -61,7 +91,10 @@ export default function Index() {
         </div>
         <button
           onClick={handleSubmit}
-          className="ml-5 rounded-lg bg-blue-500 px-16 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 md:w-auto md:text-base "
+          disabled={isLoading}
+          className={`ml-5 rounded-lg bg-blue-500 px-16 py-2.5 text-sm font-bold text-white transition-colors hover:bg-blue-600 md:w-auto md:text-base ${
+            isLoading && 'cursor-not-allowed bg-gray-500 hover:bg-gray-600'
+          }`}
         >
           신청하기
         </button>
@@ -69,3 +102,9 @@ export default function Index() {
     </>
   );
 }
+
+const initPost: EditFix = {
+  title: '',
+  content: '',
+  images: null,
+};

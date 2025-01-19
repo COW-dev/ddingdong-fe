@@ -1,4 +1,3 @@
-import { StaticImageData } from 'next/image';
 import { EditReport, ReportResponse, SubmitReport } from '@/types/report';
 
 export function parseDate(date: string): string {
@@ -7,18 +6,6 @@ export function parseDate(date: string): string {
   const day = date.substring(8, 10);
 
   return `${year}.${month}.${day}`;
-}
-
-export async function getBlobFromImageData(
-  imageData: StaticImageData,
-): Promise<Blob> {
-  const response = await fetch(imageData.src);
-  const blob = await response.blob();
-  return blob;
-}
-
-export function parseImgUrl(url: string): string {
-  return url?.slice(0, 8) + url?.slice(9);
 }
 
 const parseStringDateToRangeDate = (start: string, end: string) => {
@@ -31,29 +18,31 @@ export const parseNewReportToReport = (
   term: number,
   report: EditReport,
 ): SubmitReport => {
-  const { date, place, content, participants, startTime, endTime } = report;
+  const { date, place, content, participants, startTime, endTime, imageId } =
+    report;
   return {
     term,
-    startDate: date.startDate ? date.startDate + ' ' + startTime : '',
-    endDate: date.startDate ? date.startDate + ' ' + endTime : '',
+    startDate: date.startDate ? date.startDate + ' ' + startTime : null,
+    endDate: date.startDate ? date.startDate + ' ' + endTime : null,
     place,
     content,
     participants,
+    imageId,
   };
 };
 
 export const parseReportResponseToEditReport = (
-  report: ReportResponse,
+  activityReportRequests: ReportResponse,
   term: number,
 ): EditReport => {
   const {
     place,
     content,
     participants,
-    imageUrls,
+    image,
     startDate: start,
     endDate: end,
-  } = report;
+  } = activityReportRequests;
 
   const { startDate, startTime, endDate, endTime } = parseStringDateToRangeDate(
     start,
@@ -66,8 +55,9 @@ export const parseReportResponseToEditReport = (
     content,
     date: { startDate, endDate },
     startTime,
-    imageUrls,
     endTime,
     participants,
+    image,
+    imageId: image?.id ?? null,
   };
 };

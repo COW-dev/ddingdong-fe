@@ -9,39 +9,61 @@ import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
 import { deptCaptionColor } from '@/constants/color';
+import { UploadFile, UrlType } from '@/types';
 import { ClubDetail } from '@/types/club';
+import Loading from '../loading/Loading';
 
 type AdminClubHeadingProps = {
   clubName: string;
   category: string;
   tag: string;
+  isLoading: boolean;
   profileImage: File | null;
   isEditing: boolean;
-  profileImageUrls: string[];
+  profileImageUrl: UrlType;
   setValue: Dispatch<SetStateAction<ClubDetail>>;
   setProfileImage: Dispatch<SetStateAction<File | null>>;
+  onAdd: (file: File) => Promise<UploadFile>;
 };
 
 export default function AdminClubHeading({
   clubName,
   category,
   tag,
-  profileImage,
+  isLoading,
   isEditing,
-  profileImageUrls,
+  profileImage,
+  profileImageUrl,
   setValue,
   setProfileImage,
+  onAdd,
 }: AdminClubHeadingProps) {
   const [previewImageUrl, setPreviewImageUrl] = useState<string>('');
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      setProfileImage(file);
-      const imageUrl = URL.createObjectURL(file);
+      const uploadImage = await onAdd(file);
+      setProfileImage(uploadImage.file);
+      const imageUrl = URL.createObjectURL(uploadImage.file);
       setPreviewImageUrl(imageUrl);
     }
   }
+
+  function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setValue((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleImageReset() {
+    setPreviewImageUrl('');
+    setProfileImage(null);
+    setValue((prev) => ({
+      ...prev,
+      profileImage: { originUrl: '', cdnUrl: '', id: '' },
+    }));
+  }
+
   useEffect(() => {
     if (profileImage) {
       const imageUrl = window.URL.createObjectURL(profileImage);
@@ -49,53 +71,44 @@ export default function AdminClubHeading({
       return () => {
         URL.revokeObjectURL(imageUrl);
       };
-    } else {
-      setPreviewImageUrl('');
     }
+    return setPreviewImageUrl('');
   }, [profileImage]);
 
-  const parsedImg =
-    profileImageUrls &&
-    profileImageUrls[0]?.slice(0, 8) + profileImageUrls[0]?.slice(9);
-  function handleChange(event: ChangeEvent<HTMLInputElement>) {
-    setValue((prev) => ({
-      ...prev,
-      [event.target.name]: event.target.value,
-    }));
-  }
-  function handleImageReset() {
-    setPreviewImageUrl('');
-    setValue((prev) => ({
-      ...prev,
-      profileImageUrls: [],
-    }));
-  }
+  const imageSource = profileImageUrl?.originUrl
+    ? profileImageUrl?.originUrl
+    : previewImageUrl;
+
   return (
     <>
       <div className=" relative flex flex-row items-center">
-        {parsedImg || previewImageUrl ? (
-          <>
-            <Image
-              src={parsedImg ? parsedImg : previewImageUrl}
-              width={100}
-              height={100}
-              alt="image"
-              priority
-              className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
-            />
-            {isEditing && (
-              <div className="absolute start-16 top-0.5 md:start-18">
-                <Image
-                  src={Camera}
-                  width={20}
-                  height={20}
-                  className="cursor-pointer opacity-40"
-                  onClick={handleImageReset}
-                  alt="재사용"
-                />
-              </div>
-            )}
-          </>
+        {imageSource ? (
+          isLoading ? (
+            <Loading className="m-auto h-20 w-20 object-cover md:h-24 md:w-24" />
+          ) : (
+            <>
+              <Image
+                src={imageSource}
+                width={100}
+                height={100}
+                alt="image"
+                priority
+                className="m-auto h-20 w-20 rounded-full object-cover md:h-24 md:w-24"
+              />
+              {isEditing && (
+                <div className="absolute start-16 top-0.5 md:start-18">
+                  <Image
+                    src={Camera}
+                    width={20}
+                    height={20}
+                    className="cursor-pointer opacity-40"
+                    onClick={handleImageReset}
+                    alt="재사용"
+                  />
+                </div>
+              )}
+            </>
+          )
         ) : (
           <label
             htmlFor="uploadFiles"

@@ -4,7 +4,7 @@ import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { ClubDetail } from '@/types/club';
-import { parseDate, parseImgUrl } from '@/utils/parse';
+import { parseDate } from '@/utils/parse';
 
 type ClubHeadingProps = {
   info: ClubDetail;
@@ -19,14 +19,13 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     phoneNumber,
     location,
     regularMeeting,
-    profileImageUrls,
+    profileImage,
     startRecruitPeriod,
     endRecruitPeriod,
     formUrl,
   } = info;
 
-  const imageSrc =
-    profileImageUrls.length > 0 ? parseImgUrl(profileImageUrls[0]) : Admin;
+  const imageSrc = profileImage?.originUrl ? profileImage?.originUrl : Admin;
   const { data } = useAllClubs();
   const isRecruit =
     data?.data.find((club) => club.name === name)?.recruitStatus ===
