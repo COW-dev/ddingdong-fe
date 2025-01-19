@@ -20,7 +20,6 @@ export default function Index() {
     'access_token',
     'refresh_token',
   ]);
-
   const removeTokens = () => {
     removeCookie('refresh_token', { domain: '.mju.ac.kr' });
     removeCookie('access_token', { domain: '.mju.ac.kr' });
@@ -98,6 +97,17 @@ export default function Index() {
           </h2>
           <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
             <p>{ROLE_TEXT[role].club.subtitle}</p>
+          </div>
+        </Link>
+        <Link
+          href={ROLE_TEXT[role].feed.route}
+          className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+        >
+          <h2 className="text-xl font-bold md:text-2xl">
+            {ROLE_TEXT[role].feed.title}
+          </h2>
+          <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+            <p>{ROLE_TEXT[role].feed.subtitle}</p>
           </div>
         </Link>
         {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role]?.member && (
