@@ -25,8 +25,8 @@ export default function ClubFeedDetail({ feedId }: Props) {
     const feed = data.data;
 
     const imageSrc =
-      feed?.clubProfile.profileImageUrl?.length > 0
-        ? parseImgUrl(feed.clubProfile?.profileImageUrl)
+      feed?.clubProfile.profileImageCdnUrl?.length > 0
+        ? parseImgUrl(feed.clubProfile?.profileImageCdnUrl)
         : Admin;
 
     const renderSkeleton = () => (

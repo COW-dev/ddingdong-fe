@@ -12,7 +12,8 @@ export type Club = {
 export type ClubProfile = {
   id: string;
   name: string;
-  profileImageUrl: string;
+  profileImageOriginUrl: string;
+  profileImageCdnUrl: string;
 };
 
 export type AdminClub = {
