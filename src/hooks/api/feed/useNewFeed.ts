@@ -20,7 +20,7 @@ export function useNewFeed(): UseMutationResult<
   return useMutation(createFeed, {
     onSuccess(_, variables) {
       queryClient.invalidateQueries(['feed']);
-      if (!variables.mimeType?.includes('VIDEO')) {
+      if (!variables.mimeType?.includes('video')) {
         toast.success('피드가 생성되었어요.');
       }
       router.push('/');

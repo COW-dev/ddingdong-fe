@@ -27,6 +27,7 @@ export default function Index() {
 
   async function handleFile(files: File): Promise<UploadFile> {
     const fileInfo = await getPresignedId(files);
+
     if (fileInfo?.id) {
       setFeedData((prev) => ({
         ...prev,
@@ -39,7 +40,7 @@ export default function Index() {
   }
 
   function handleSubmit() {
-    if (feedData.mimeType?.includes('VIDEO')) {
+    if (feedData.mimeType?.includes('video')) {
       mutation.mutate(
         { ...feedData, token },
         {
