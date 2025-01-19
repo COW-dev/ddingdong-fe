@@ -2,13 +2,8 @@ import { useCallback, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import ClubFeed from '@/components/feed/ClubFeed';
 import Loading from '@/components/loading/Loading';
+import { OBSERVER_OPTIONS } from '@/constants/observer';
 import { useAllFeeds } from '@/hooks/api/feed/useAllFeeds';
-
-const OBSERVER_OPTIONS = {
-  root: null,
-  rootMargin: '50px',
-  threshold: 0.1,
-};
 
 export default function Index() {
   const observerTarget = useRef<HTMLDivElement>(null);
@@ -16,7 +11,6 @@ export default function Index() {
     useAllFeeds();
 
   const feeds = data?.pages.flatMap((page) => page.data.newestFeeds) ?? [];
-
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {

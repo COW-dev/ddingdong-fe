@@ -10,7 +10,7 @@ export function useFeedDetail(id: number) {
     AxiosResponse<FeedDetail, unknown>,
     [string, number]
   >({
-    queryKey: ['feeds', id],
+    queryKey: ['feed', id],
     queryFn: () => getFeedDetail(id),
   });
 }

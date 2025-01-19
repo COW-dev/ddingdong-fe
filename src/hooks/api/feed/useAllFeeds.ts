@@ -4,7 +4,7 @@ import { getAllFeeds } from '@/apis';
 import { TotalFeed } from '@/types/feed';
 
 export function useAllFeeds() {
-  return useInfiniteQuery<AxiosResponse<TotalFeed>>({
+  return useInfiniteQuery<AxiosResponse<TotalFeed<'newestFeeds'>>>({
     queryKey: ['feeds'],
     queryFn: ({ pageParam = -1 }) => getAllFeeds(pageParam),
     getNextPageParam: (lastPage) => {

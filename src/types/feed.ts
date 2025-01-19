@@ -6,9 +6,19 @@ export type TabMenu = {
   content: JSX.Element;
 };
 
-export type TotalFeed = {
-  newestFeeds: Feed[];
+type FeedKey = 'newestFeeds' | 'clubFeeds';
+
+export type TotalFeed<T extends FeedKey> = {
+  [K in T]: Feed[];
+} & {
   pagingInfo: PagingInfo;
+};
+
+export type NewFeed = {
+  activityContent: string;
+  mediaId: string;
+  mimeType: string;
+  token?: string;
 };
 
 export type Feed = {
@@ -31,4 +41,9 @@ export type PagingInfo = {
   hasNext: boolean;
   nextCursorId: number;
   currentCursorId: number;
+};
+
+export type DeleteFeed = {
+  feedId: number;
+  token: string;
 };

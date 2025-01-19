@@ -28,6 +28,7 @@
     "clsx": "^2.1.0",
     "embla-carousel-autoplay": "^8.0.0-rc22",
     "embla-carousel-react": "^8.0.0-rc22",
+    "event-source-polyfill": "^1.0.31",
     "hls.js": "^1.5.15",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.331.0",
@@ -45,6 +46,7 @@
     "zustand": "^4.3.8"
   },
   "devDependencies": {
+    "@types/event-source-polyfill": "^1.0.5",
     "@types/gtag.js": "^0.0.20",
     "@typescript-eslint/eslint-plugin": "^5.59.0",
     "@typescript-eslint/parser": "^5.59.0",

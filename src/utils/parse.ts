@@ -8,10 +8,6 @@ export function parseDate(date: string): string {
   return `${year}.${month}.${day}`;
 }
 
-export function parseImgUrl(url: string): string {
-  return url?.slice(0, 8) + url?.slice(9);
-}
-
 const parseStringDateToRangeDate = (start: string, end: string) => {
   const [startDate, startTime] = start?.split(' ') ?? ['', ''];
   const [endDate, endTime] = end?.split(' ') ?? ['', ''];

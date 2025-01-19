@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import Check from '@/assets/check.svg';
+import EmptyCheck from '@/assets/empty-check.svg';
 import VideoPlayButton from '@/assets/videoplay.svg';
 import useModal from '@/hooks/common/useModal';
 import { Feed } from '@/types/feed';
@@ -9,16 +11,28 @@ import ClubFeedDetail from '../modal/feed/ClubFeedDetail';
 
 type ClubFeedProps = {
   feeds: Feed[] | undefined;
+  viewMode?: 'ADMIN' | 'TOTAL';
+  editMode?: boolean;
+  selectedFeedId?: number;
+  onFeedSelect?: (id: number) => void;
 };
 
-export default function ClubFeed({ feeds }: ClubFeedProps) {
+export default function ClubFeed({
+  feeds,
+  viewMode = 'TOTAL',
+  editMode = false,
+  selectedFeedId,
+  onFeedSelect,
+}: ClubFeedProps) {
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   const [feedId, setFeedId] = useState<number>(0);
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const handleClick = (id: number) => {
-    setFeedId(id);
-    openModal();
+    if (!editMode) {
+      setFeedId(id);
+      openModal();
+    }
   };
 
   const handleImageLoad = (id: number) => {
@@ -27,6 +41,14 @@ export default function ClubFeed({ feeds }: ClubFeedProps) {
 
   const isImageLoaded = (id: number) => loadedImages[id] || false;
 
+  const handleCheckboxChange = (id: number) => {
+    if (selectedFeedId === id) {
+      onFeedSelect && onFeedSelect(0);
+      return;
+    }
+    onFeedSelect && onFeedSelect(id);
+  };
+
   const renderSkeleton = () => (
     <div className="absolute inset-0">
       <Skeleton />
@@ -34,22 +56,38 @@ export default function ClubFeed({ feeds }: ClubFeedProps) {
   );
 
   return (
-    <div className="grid grid-cols-3 gap-0.5">
+    <div
+      className={`grid gap-0.5 ${
+        viewMode === 'ADMIN' ? 'grid-cols-4' : 'grid-cols-3'
+      }`}
+    >
       {feeds?.map((item, index) => (
         <div
           key={item.id}
           className="relative flex aspect-square w-full cursor-pointer"
+          onClick={() =>
+            editMode ? handleCheckboxChange(item.id) : handleClick(item.id)
+          }
         >
           {!isImageLoaded(item.id) && renderSkeleton()}
 
+          {editMode && (
+            <Image
+              width={30}
+              height={30}
+              src={selectedFeedId === item.id ? Check : EmptyCheck}
+              alt={'삭제 버튼'}
+              className="absolute left-2 top-2 md:h-8 md:w-8"
+            />
+          )}
           <Image
+            width={350}
+            height={350}
             src={item.thumbnailCdnUrl}
             alt={`image-${index + 1}`}
-            fill
             priority={index < 10}
             style={{ objectFit: 'cover' }}
             onLoad={() => handleImageLoad(item.id)}
-            onClick={() => handleClick(item.id)}
           />
           {item.feedType == 'VIDEO' && (
             <Image

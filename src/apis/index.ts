@@ -35,7 +35,8 @@ import {
   User,
 } from '@/types/event';
 
-import { Feed, FeedDetail, TotalFeed } from '@/types/feed';
+import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
+
 import {
   DeleteFixComment,
   Fix,
@@ -70,7 +71,6 @@ export type ErrorType = {
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
-  timeout: 5000,
 });
 
 export function removeToken() {
@@ -164,18 +164,43 @@ export async function getDocumentInfo(
   return await api.get(`/documents/${documentId}`);
 }
 
+export async function createFeed({ token, ...feedData }: NewFeed) {
+  return await api.post('/central/my/feeds', feedData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
 export async function getAllFeeds(
   currentCursorId: number | -1,
-): Promise<AxiosResponse<TotalFeed, unknown>> {
+): Promise<AxiosResponse<TotalFeed<'newestFeeds'>, unknown>> {
   return await api.get(
     `/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
   );
 }
 
+export async function getMyFeeds(
+  token: string,
+  currentCursorId: number | -1,
+): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
+  return await api.get(
+    `/central/my/feeds?currentCursorId=${currentCursorId ?? -1}&size=16`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
 export async function getClubFeed(
   clubId: number,
-): Promise<AxiosResponse<Feed[], unknown>> {
-  return await api.get(`/clubs/${clubId}/feeds`);
+  currentCursorId: number,
+): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
+  return await api.get(
+    `/clubs/${clubId}/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
+  );
 }
 
 export async function getFeedDetail(
@@ -186,6 +211,14 @@ export async function getFeedDetail(
 
 export async function createNotice({ token, ...noticeData }: NewNotice) {
   return await api.post('/admin/notices', noticeData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function deleteFeed({ feedId, token }: DeleteFeed) {
+  return await api.delete(`/central/my/feeds/${feedId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
