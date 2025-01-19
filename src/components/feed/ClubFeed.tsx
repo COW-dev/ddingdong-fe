@@ -38,7 +38,6 @@ export default function ClubFeed({
 
   const isImageLoaded = (id: number) => loadedImages[id] || false;
 
-
   const handleCheckboxChange = (id: number) => {
     if (onFeedSelect) {
       onFeedSelect(id);
