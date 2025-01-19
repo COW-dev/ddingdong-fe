@@ -96,7 +96,7 @@ export default function Index() {
               </button>
               <button
                 onClick={openModal}
-                className="rounded-xl bg-red-50 px-4 py-3 text-lg font-bold text-red-400 hover:bg-red-500"
+                className="rounded-xl bg-red-50 px-4 py-3 text-lg font-bold text-red-400 hover:bg-red-100"
               >
                 삭제 하기
               </button>
@@ -119,9 +119,9 @@ export default function Index() {
           )}
         </div>
       </div>
-      <div className="w-full">
+      <div className="mt-10 w-full">
         <ClubFeed
-          editMode
+          editMode={editMode}
           feeds={feeds}
           gridNum={4}
           selectedFeedId={selectedFeed}
