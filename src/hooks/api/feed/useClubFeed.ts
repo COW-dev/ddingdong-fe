@@ -1,16 +1,17 @@
-import { useQuery } from '@tanstack/react-query';
-import { AxiosError, type AxiosResponse } from 'axios';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { type AxiosResponse } from 'axios';
 import { getClubFeed } from '@/apis';
-import { Feed } from '@/types/feed';
+import { TotalFeed } from '@/types/feed';
 
-export function useClubFeed(id: number) {
-  return useQuery<
-    unknown,
-    AxiosError,
-    AxiosResponse<Feed[], unknown>,
-    [string, number]
-  >({
-    queryKey: ['feeds', id],
-    queryFn: () => getClubFeed(id),
+export function useClubFeed(clubId: number) {
+  return useInfiniteQuery<AxiosResponse<TotalFeed<'clubFeeds'>>>({
+    queryKey: ['feeds', clubId],
+    queryFn: ({ pageParam = -1 }) => getClubFeed(clubId, pageParam),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.data.pagingInfo.hasNext) {
+        return lastPage.data.pagingInfo.nextCursorId;
+      }
+      return undefined;
+    },
   });
 }
