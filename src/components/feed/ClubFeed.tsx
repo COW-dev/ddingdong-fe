@@ -8,6 +8,7 @@ import { Feed } from '@/types/feed';
 import Modal from '../common/Modal';
 import Skeleton from '../common/Skeleton';
 import ClubFeedDetail from '../modal/feed/ClubFeedDetail';
+
 type ClubFeedProps = {
   feeds: Feed[] | undefined;
   gridNum?: number;
@@ -28,8 +29,10 @@ export default function ClubFeed({
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const handleClick = (id: number) => {
-    setFeedId(id);
-    openModal();
+    if (!editMode) {
+      setFeedId(id);
+      openModal();
+    }
   };
 
   const handleImageLoad = (id: number) => {
@@ -39,9 +42,11 @@ export default function ClubFeed({
   const isImageLoaded = (id: number) => loadedImages[id] || false;
 
   const handleCheckboxChange = (id: number) => {
-    if (onFeedSelect) {
-      onFeedSelect(id);
+    if (selectedFeedId === id) {
+      onFeedSelect && onFeedSelect(0);
+      return;
     }
+    onFeedSelect && onFeedSelect(id);
   };
 
   const renderSkeleton = () => (
@@ -56,28 +61,29 @@ export default function ClubFeed({
         <div
           key={item.id}
           className="relative flex aspect-square w-full cursor-pointer"
+          onClick={() =>
+            editMode ? handleCheckboxChange(item.id) : handleClick(item.id)
+          }
         >
           {!isImageLoaded(item.id) && renderSkeleton()}
 
           {editMode && (
             <Image
-              width={20}
-              height={20}
-              src={selectedFeedId === item.id ? EmptyCheck : Check}
+              width={30}
+              height={30}
+              src={selectedFeedId === item.id ? Check : EmptyCheck}
               alt={'삭제 버튼'}
-              className="absolute right-0 top-0 shadow-md md:h-12 md:w-12"
-              onClick={() => handleCheckboxChange(item.id)}
+              className="absolute left-2 top-2 md:h-8 md:w-8"
             />
           )}
           <Image
-            width={500}
-            height={500}
+            width={350}
+            height={350}
             src={item.thumbnailCdnUrl}
             alt={`image-${index + 1}`}
             priority={index < 10}
             style={{ objectFit: 'cover' }}
             onLoad={() => handleImageLoad(item.id)}
-            onClick={() => handleClick(item.id)}
           />
           {item.feedType == 'VIDEO' && (
             <Image
