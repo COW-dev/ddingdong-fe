@@ -13,7 +13,7 @@ export function usePresignedUrl() {
     const { id, contentType, uploadUrl } = data;
 
     await uploadPresignedUrl(file, uploadUrl, contentType);
-    return { file, id };
+    return { id, file, contentType };
   });
 
   const handleError = (fileNames: string[]) => {
