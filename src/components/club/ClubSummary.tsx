@@ -17,7 +17,7 @@ export default function ClubSummary({
     <div className="flex items-center">
       <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
         <Image
-          src={Admin ?? profileImageUrl}
+          src={profileImageUrl ?? Admin}
           width={80}
           height={80}
           priority
