@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import UnSubmitImage from '@/assets/unsubmit_announce.png';
 import { ReportResponse } from '@/types/report';
-import { parseImgUrl } from '@/utils/parse';
+
 import ResponsiveInfo from './ResponsiveInfo';
 
 type Props = {

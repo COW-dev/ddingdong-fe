@@ -6,7 +6,6 @@ import Admin from '@/assets/admin.jpg';
 import Skeleton from '@/components/common/Skeleton';
 import VideoPlayer from '@/components/feed/VideoPlayer';
 import { useFeedDetail } from '@/hooks/api/feed/useFeedDetail';
-import { parseImgUrl } from '@/utils/parse';
 
 export type Props = {
   feedId: number;
@@ -24,10 +23,9 @@ export default function ClubFeedDetail({ feedId }: Props) {
   if (isSuccess) {
     const feed = data.data;
 
-    const imageSrc =
-      feed?.clubProfile.profileImageCdnUrl?.length > 0
-        ? parseImgUrl(feed.clubProfile?.profileImageCdnUrl)
-        : Admin;
+    const imageSrc = feed?.clubProfile.profileImageCdnUrl
+      ? feed.clubProfile?.profileImageCdnUrl
+      : Admin;
 
     const renderSkeleton = () => (
       <div className="absolute inset-0">
