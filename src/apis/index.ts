@@ -186,7 +186,7 @@ export async function getMyFeeds(
   currentCursorId: number | -1,
 ): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
   return await api.get(
-    `/my/feeds?currentCursorId=${currentCursorId ?? -1}&size=12`,
+    `/central/my/feeds?currentCursorId=${currentCursorId ?? -1}&size=12`,
     {
       headers: {
         Authorization: 'Bearer ' + token,
