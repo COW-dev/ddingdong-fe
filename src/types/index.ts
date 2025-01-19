@@ -42,7 +42,11 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
-export type UploadFile = { file: File; id: string };
+export type UploadFile = {
+  id: string;
+  file: File;
+  [x: string]: string | File;
+};
 
 export type PresignedUrlResponse = {
   id: string;
