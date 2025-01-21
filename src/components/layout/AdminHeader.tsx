@@ -3,13 +3,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
+import { useClubStore } from '@/store/club';
 import NewYear from '../common/NewYear';
 
 export default function AdminHeader() {
   const router = useRouter();
   const { resetAuth } = useAuthStore();
+  const { resetClub } = useClubStore();
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
+
+  const handelLogout = () => {
+    removeToken();
+    resetAuth();
+    resetClub();
+    router.push('/login');
+  };
 
   return (
     <header className="fixed z-40 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
@@ -35,11 +44,7 @@ export default function AdminHeader() {
                   <NewYear />
                   <button
                     className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
-                    onClick={() => {
-                      removeToken();
-                      resetAuth();
-                      router.push('/login');
-                    }}
+                    onClick={handelLogout}
                   >
                     로그아웃
                   </button>
