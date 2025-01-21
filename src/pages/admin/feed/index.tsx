@@ -101,7 +101,7 @@ export default function Index() {
                 취소
               </button>
               <button
-                onClick={openModal}
+                onClick={() => openModal()}
                 disabled={!selectedFeed}
                 className={`${
                   !selectedFeed && ' disabled:cursor-not-allowed'
@@ -154,7 +154,13 @@ export default function Index() {
         closeButton={false}
         closeModal={closeModal}
       >
-        <AlertDialog onConfirm={() => handleDelete()} onCancel={closeModal} />
+        <AlertDialog
+          onConfirm={() => {
+            handleDelete();
+            setEditMode(false);
+          }}
+          onCancel={closeModal}
+        />
       </Modal>
     </>
   );
