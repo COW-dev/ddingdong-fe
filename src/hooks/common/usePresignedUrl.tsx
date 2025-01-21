@@ -9,7 +9,10 @@ export function usePresignedUrl() {
   const [{ token }] = useCookies(['token']);
 
   const uploadFile = useMutation(async (file: File): Promise<UploadFile> => {
-    const { data } = await getPresignedUrl(file.name, token);
+    const { data } = await getPresignedUrl(
+      encodeURIComponent(file.name),
+      token,
+    );
     const { id, contentType, uploadUrl } = data;
 
     await uploadPresignedUrl(file, uploadUrl, contentType);
