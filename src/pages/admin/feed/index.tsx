@@ -96,7 +96,7 @@ export default function Index() {
             <>
               <button
                 onClick={() => setEditMode(!editMode)}
-                className="rounded-xl bg-gray-100 px-4 py-2.5 text-lg font-bold text-gray-500 transition-colors hover:bg-gray-300 md:w-auto md:py-2.5"
+                className="text-md rounded-xl bg-gray-100 px-2 py-2 font-bold text-gray-500 transition-colors hover:bg-gray-300 md:w-auto md:px-4 md:py-2.5 md:text-lg"
               >
                 취소
               </button>
@@ -105,7 +105,7 @@ export default function Index() {
                 disabled={!selectedFeed}
                 className={`${
                   !selectedFeed && ' disabled:cursor-not-allowed'
-                } rounded-xl bg-red-50 px-4 py-3 text-lg font-bold text-red-400 hover:bg-red-100`}
+                } text-md rounded-xl bg-red-50 px-2 py-2 font-bold text-red-400 hover:bg-red-100 md:px-4 md:py-3 md:text-lg`}
               >
                 삭제하기
               </button>
