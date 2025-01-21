@@ -107,7 +107,7 @@ export default function Index() {
                   !selectedFeed && ' disabled:cursor-not-allowed'
                 } rounded-xl bg-red-50 px-4 py-3 text-lg font-bold text-red-400 hover:bg-red-100`}
               >
-                삭제 하기
+                삭제하기
               </button>
             </>
           ) : (
