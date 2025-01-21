@@ -10,6 +10,7 @@ import Banner from './Banner';
 
 export default function Index() {
   const { data: bannerData } = useAllBanners();
+
   const option = {
     loop: true,
   };
@@ -27,8 +28,12 @@ export default function Index() {
           </div>
         ))}
       </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
+      {bannerData && bannerData?.data?.length > 1 && (
+        <>
+          <CarouselPrevious />
+          <CarouselNext />
+        </>
+      )}
     </Carousel>
   );
 }
