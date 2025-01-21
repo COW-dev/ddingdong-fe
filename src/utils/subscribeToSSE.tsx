@@ -46,7 +46,7 @@ export function subscribeToSSE(token: string, mediaId: string) {
   });
   eventSource.onerror = () => {
     toast(
-      `동영상 처리에 시간이 조금 더 필요합니다.\n 조금만 곧 완료되니 잠시만 기다려 주세요!`,
+      `동영상 처리에 시간이 조금 더 필요합니다.\n 곧 완료되니 잠시만 기다려 주세요!`,
       {
         id: toastId,
         duration: 7000,
