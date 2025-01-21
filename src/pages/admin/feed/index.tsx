@@ -70,7 +70,13 @@ export default function Index() {
   }
 
   if (!club) {
-    return <div>동아리 정보가 존재하지 않아요.</div>;
+    return (
+      <div className="flex h-96 items-center justify-center">
+        <div className="text-base font-medium text-gray-500">
+          동아리 정보가 존재하지 않아요.
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -96,7 +102,10 @@ export default function Index() {
               </button>
               <button
                 onClick={openModal}
-                className="rounded-xl bg-red-50 px-4 py-3 text-lg font-bold text-red-400 hover:bg-red-100"
+                disabled={!selectedFeed}
+                className={`${
+                  !selectedFeed && ' disabled:cursor-not-allowed'
+                } rounded-xl bg-red-50 px-4 py-3 text-lg font-bold text-red-400 hover:bg-red-100`}
               >
                 삭제 하기
               </button>
@@ -120,14 +129,24 @@ export default function Index() {
         </div>
       </div>
       <div className="mt-10 w-full">
-        <ClubFeed
-          feeds={feeds}
-          viewMode="ADMIN"
-          editMode={editMode}
-          selectedFeedId={selectedFeed}
-          onFeedSelect={handleRadioChange}
-        />
-        <div ref={observerTarget} className="h-5 w-full bg-transparent" />
+        {feeds.length === 0 ? (
+          <div className="flex h-96 items-center justify-center">
+            <div className="text-base font-medium text-gray-500">
+              등록된 게시물이 없습니다.
+            </div>
+          </div>
+        ) : (
+          <>
+            <ClubFeed
+              feeds={feeds}
+              viewMode="ADMIN"
+              editMode={editMode}
+              selectedFeedId={selectedFeed}
+              onFeedSelect={handleRadioChange}
+            />
+            <div ref={observerTarget} className="h-5 w-full bg-transparent" />
+          </>
+        )}
       </div>
       <Modal
         visible={visible}
