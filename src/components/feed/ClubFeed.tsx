@@ -80,7 +80,8 @@ export default function ClubFeed({
             />
           )}
           <Image
-            fill
+            width={350}
+            height={350}
             src={item.thumbnailCdnUrl}
             alt={`image-${index + 1}`}
             priority={index < 10}
