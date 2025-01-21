@@ -37,7 +37,7 @@ export default function ClubFeedDetail({ feedId }: Props) {
       <div className="flex h-full w-full flex-col ">
         <div
           className={`${
-            feed?.feedType === 'VIDEO' ? 'h-full ' : 'h-[225px]'
+            feed?.feedType === 'VIDEO' ? 'h-full ' : 'h-64'
           } relative  w-full rounded-t-lg bg-black md:h-[450px]`}
         >
           {feed?.feedType === 'VIDEO' ? (
@@ -56,7 +56,7 @@ export default function ClubFeedDetail({ feedId }: Props) {
             </>
           )}
         </div>
-        <div className="mx-5 flex h-[17vh] flex-col items-start justify-center md:ml-10 ">
+        <div className="mx-5 flex h-36 flex-col items-start justify-center md:ml-10 ">
           <div className="flex w-full items-center justify-between">
             <Link
               href={location ? `/club/${feed?.clubProfile.id}` : '#'}
