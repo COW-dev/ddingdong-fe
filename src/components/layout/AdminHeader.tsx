@@ -13,7 +13,7 @@ export default function AdminHeader() {
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
 
-  const handelLogout = () => {
+  const handleLogout = () => {
     removeToken();
     resetAuth();
     resetClub();
@@ -44,7 +44,7 @@ export default function AdminHeader() {
                   <NewYear />
                   <button
                     className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
-                    onClick={handelLogout}
+                    onClick={handleLogout}
                   >
                     로그아웃
                   </button>
