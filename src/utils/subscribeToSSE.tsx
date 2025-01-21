@@ -13,7 +13,7 @@ export function subscribeToSSE(token: string, mediaId: string) {
         Authorization: 'Bearer ' + token,
       },
       withCredentials: true,
-      heartbeatTimeout: 60000,
+      heartbeatTimeout: 120000,
     },
   );
   const toastId = toast.loading('비디오를 업로드가 시작되었습니다.');
@@ -44,12 +44,15 @@ export function subscribeToSSE(token: string, mediaId: string) {
       eventSource.close();
     }
   });
-  eventSource.onerror = (error) => {
-    console.error('SSE Error:', error);
-    toast.error('비디오 업로드 중 문제가 발생했습니다.', {
-      id: toastId,
-      duration: 5000,
-    });
+  eventSource.onerror = () => {
+    toast(
+      `동영상 처리에 시간이 조금 더 필요합니다.\n 조금만 곧 완료되니 잠시만 기다려 주세요!`,
+      {
+        id: toastId,
+        duration: 7000,
+        icon: '⏰',
+      },
+    );
     removeVideoUpload(mediaId);
     eventSource.close();
   };
