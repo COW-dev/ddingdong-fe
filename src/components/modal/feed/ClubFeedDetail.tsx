@@ -56,7 +56,7 @@ export default function ClubFeedDetail({ feedId }: Props) {
             </>
           )}
         </div>
-        <div className="mx-5 flex h-36 flex-col items-start justify-center md:ml-10 ">
+        <div className="mx-5 my-1 flex h-36 flex-col items-start justify-center md:my-3 md:ml-10 ">
           <div className="flex w-full items-center justify-between">
             <Link
               href={location ? `/club/${feed?.clubProfile.id}` : '#'}
