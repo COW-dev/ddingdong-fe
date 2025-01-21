@@ -57,8 +57,8 @@ export default function ClubFeed({
 
   return (
     <div
-      className={`grid gap-0.5 ${
-        viewMode === 'ADMIN' ? 'grid-cols-4' : 'grid-cols-3'
+      className={`grid grid-cols-3 gap-0.5 ${
+        viewMode === 'ADMIN' && 'md:grid-cols-4'
       }`}
     >
       {feeds?.map((item, index) => (
@@ -80,12 +80,12 @@ export default function ClubFeed({
             />
           )}
           <Image
-            width={350}
-            height={350}
+            fill
             src={item.thumbnailCdnUrl}
             alt={`image-${index + 1}`}
             priority={index < 10}
             style={{ objectFit: 'cover' }}
+            className="aspect-square"
             onLoad={() => handleImageLoad(item.id)}
           />
           {item.feedType == 'VIDEO' && (
