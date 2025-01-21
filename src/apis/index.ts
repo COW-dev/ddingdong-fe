@@ -526,7 +526,7 @@ export async function getAllScores(
 export async function getMyScore(
   token: string,
 ): Promise<AxiosResponse<ScoreDetail, unknown>> {
-  return await api.get('/club/my/score', {
+  return await api.get('/central/my/score', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
