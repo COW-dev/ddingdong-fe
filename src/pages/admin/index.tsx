@@ -169,16 +169,16 @@ export default function Index() {
             </div>
           </Link>
         )}
-        {role === ROLE_TYPE.ROLE_ADMIN && ROLE_TEXT[role]?.banner && (
+        {role === ROLE_TYPE.ROLE_ADMIN && (
           <Link
-            href={ROLE_TEXT[role].banner.route}
+            href={ROLE_TEXT[role]?.banner?.route ?? ''}
             className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
           >
             <h2 className="text-xl font-bold md:text-2xl">
-              {ROLE_TEXT[role].banner.title}
+              {ROLE_TEXT[role]?.banner?.title ?? ''}
             </h2>
             <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
-              <p>{ROLE_TEXT[role].banner.subtitle}</p>
+              <p>{ROLE_TEXT[role]?.banner?.subtitle ?? ''}</p>
             </div>
           </Link>
         )}
