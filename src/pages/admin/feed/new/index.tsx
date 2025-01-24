@@ -49,14 +49,10 @@ export default function Index() {
 
   function handleSubmit() {
     if (feedData.mimeType?.includes('video')) {
-      mutation.mutate(
-        { ...feedData, token },
-        {
-          onSuccess: () => {
-            subscribeToSSE(token, feedData.mediaId);
-          },
-        },
+      subscribeToSSE(token, feedData.mediaId, () =>
+        mutation.mutate({ ...feedData, token }),
       );
+      router.push('/');
       return;
     }
     mutation.mutate({ ...feedData, token });
