@@ -5,11 +5,7 @@ import { useClubStore } from '@/store/club';
 export default function AdminHeading() {
   const [{ token }] = useCookies(['token']);
   const { data } = useMyClub(token);
-  const setClub = useClubStore((state) => state.setClub);
-
-  if (data) {
-    setClub(data.data);
-  }
+  useClubStore((state) => state.setClub);
 
   return (
     <div className="flex w-full items-end justify-between">
