@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useCookies } from 'react-cookie';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useClubStore } from '@/store/club';
@@ -5,7 +6,13 @@ import { useClubStore } from '@/store/club';
 export default function AdminHeading() {
   const [{ token }] = useCookies(['token']);
   const { data } = useMyClub(token);
-  useClubStore((state) => state.setClub);
+  const setClub = useClubStore((state) => state.setClub);
+
+  useEffect(() => {
+    if (data?.data) {
+      setClub(data.data);
+    }
+  }, [data, setClub]);
 
   return (
     <div className="flex w-full items-end justify-between">
