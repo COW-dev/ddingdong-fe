@@ -22,8 +22,8 @@ export function useNewFeed(): UseMutationResult<
       queryClient.invalidateQueries(['feed']);
       if (!variables.mimeType?.includes('video')) {
         toast.success('피드가 생성되었어요.');
+        router.push('/');
       }
-      router.push('/');
     },
     onError(error) {
       const errorMessage = error.response?.data?.message

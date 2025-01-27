@@ -2,7 +2,11 @@ import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import toast from 'react-hot-toast';
 import { useUploadStore } from '@/store/upload';
 
-export function subscribeToSSE(token: string, mediaId: string) {
+export function subscribeToSSE(
+  token: string,
+  mediaId: string,
+  createFeed: () => void,
+) {
   const { setVideoUploading, removeVideoUpload } = useUploadStore.getState();
   const EventSource = EventSourcePolyfill || NativeEventSource;
 
@@ -23,6 +27,7 @@ export function subscribeToSSE(token: string, mediaId: string) {
   eventSource.addEventListener('connect', (event) => {
     if ((event as MessageEvent).data === 'Connected successfully!') {
       toast.loading('비디오 업로드 중입니다.', { id: toastId });
+      createFeed();
     }
   });
 
@@ -30,7 +35,7 @@ export function subscribeToSSE(token: string, mediaId: string) {
     const messageEvent = event as MessageEvent;
     const parsedData = JSON.parse(messageEvent.data);
     if (parsedData.data.convertJobStatus === 'COMPLETE') {
-      toast.success('비디오 업로드가 완료되었습니다!', { id: toastId });
+      toast.success('피드가 생성되었어요.', { id: toastId });
       removeVideoUpload(mediaId);
       eventSource.close();
     }

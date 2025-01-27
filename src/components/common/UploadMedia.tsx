@@ -71,7 +71,7 @@ export default function UploadMedia({ onAdd, isLoading }: Props) {
             <Image src={Camera} width={30} height={30} alt="upload" />
             <p className="m-2 text-sm">Click to ImageUpload</p>
             <p className=" text-xs text-gray-400">
-              * 파일 용량은 최대 500MB / 4분까지 업로드 가능합니다.
+              * 파일 용량은 최대 300MB까지 업로드 가능합니다.
             </p>
           </div>
           <input
