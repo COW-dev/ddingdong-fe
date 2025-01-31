@@ -1,5 +1,6 @@
 import { Trash2 } from 'lucide-react';
 import { useCookies } from 'react-cookie';
+import { toast } from 'react-hot-toast';
 import {
   Accordion,
   AccordionContent,
@@ -32,9 +33,25 @@ export default function FAQList({
   const [cookies] = useCookies(['token', 'role']);
   const { token } = cookies;
 
+  const { mutate: deleteFaq, isLoading } = useDeleteFaq();
+
   const isClickedDeleteButton = (questionId?: number) => {
-    if (!questionId) return;
-    useDeleteFaq({ questionId, token });
+    if (!questionId || !token) {
+      toast.error('인증 정보가 없습니다.');
+      return;
+    }
+
+    deleteFaq(
+      { questionId, token },
+      {
+        onSuccess: () => {
+          toast.success('FAQ가 삭제되었습니다.');
+        },
+        onError: () => {
+          toast.error('FAQ 삭제에 실패했습니다.');
+        },
+      },
+    );
   };
 
   return (
@@ -49,7 +66,7 @@ export default function FAQList({
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index}`}>
                 <AccordionTrigger isArrow={false}>
-                  <div className="">
+                  <div>
                     <span>Q</span>
                     <span className="text-blue-500">.</span>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -70,7 +87,9 @@ export default function FAQList({
                     }
                   />
                   <Trash2
-                    className="text-red-400"
+                    className={`cursor-pointer text-red-400 ${
+                      isLoading ? 'opacity-50' : ''
+                    }`}
                     onClick={() => isClickedDeleteButton(item.id)}
                   />
                 </AccordionTrigger>
@@ -105,7 +124,9 @@ export default function FAQList({
                     <span>{item.question}</span>
                   </div>
                   <Trash2
-                    className="text-red-400"
+                    className={`cursor-pointer text-red-400 ${
+                      isLoading ? 'opacity-50' : ''
+                    }`}
                     onClick={() => isClickedDeleteButton(item.id)}
                   />
                 </AccordionTrigger>

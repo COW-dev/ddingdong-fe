@@ -666,8 +666,11 @@ export async function createFaq({
   });
 }
 
-export async function deleteFaq({ questionId, token }: DeleteFaq) {
-  return await api.delete(`/admin/questions/${questionId}`, {
+export async function deleteFaq({
+  questionId,
+  token,
+}: DeleteFaq): Promise<void> {
+  return api.delete(`/admin/questions/${questionId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
