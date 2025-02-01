@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
@@ -20,6 +21,7 @@ interface FAQListProps {
   newFAQs: FAQItem[];
   setNewFAQs: React.Dispatch<React.SetStateAction<FAQItem[]>>;
   isEditing: boolean;
+  refetch: () => void;
 }
 
 export default function FAQList({
@@ -27,6 +29,7 @@ export default function FAQList({
   newFAQs,
   setNewFAQs,
   isEditing,
+  refetch,
 }: FAQListProps) {
   const safeFAQ: FAQItem[] = Array.isArray(FAQ?.data) ? FAQ?.data : [];
 
@@ -45,6 +48,7 @@ export default function FAQList({
       { questionId, token },
       {
         onSuccess: () => {
+          refetch();
           toast.success('FAQ가 삭제되었습니다.');
         },
         onError: () => {

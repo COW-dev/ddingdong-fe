@@ -35,7 +35,7 @@ import {
   User,
 } from '@/types/event';
 
-import { CreateFaq, Faq, DeleteFaq } from '@/types/faq';
+import { UpdateFaq, FAQItem, Faq, DeleteFaq } from '@/types/faq';
 import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
 
 import {
@@ -671,6 +671,17 @@ export async function deleteFaq({
   token,
 }: DeleteFaq): Promise<void> {
   return api.delete(`/admin/questions/${questionId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+export async function updateFaq({ token, questionId, faqData }: UpdateFaq) {
+  const formData = new URLSearchParams();
+  formData.append('question', faqData.question);
+  formData.append('reply', faqData.reply);
+
+  return await api.patch(`/admin/questions/${questionId}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
