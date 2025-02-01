@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Trash2 } from 'lucide-react';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
@@ -100,10 +99,11 @@ export default function FAQList({
                 <AccordionContent>
                   <div className="font-bold text-blue-500">A.</div>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <input
-                    className="w-full bg-gray-50"
-                    placeholder={item.reply}
+                  <textarea
+                    className="w-full resize-none rounded-md border border-gray-200 bg-gray-50 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="답변을 입력해주세요"
                     value={item.reply}
+                    rows={3}
                     onChange={(e) =>
                       setNewFAQs((prev) =>
                         prev.map((faq, i) =>
