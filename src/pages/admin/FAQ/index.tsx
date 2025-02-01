@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
@@ -10,7 +10,7 @@ import { useCreateFaq } from '@/hooks/api/faq/useCreateFaq';
 export default function Index() {
   const [cookies] = useCookies(['token', 'role']);
   const { token } = cookies;
-  const { data: FAQ } = useAllFaq(token);
+  const { data: FAQ, refetch } = useAllFaq(token);
   const { mutate: createFaq, isLoading: isSaving } = useCreateFaq();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -29,9 +29,20 @@ export default function Index() {
     if (newFAQs.length === 0) return;
 
     try {
-      await Promise.all(newFAQs.map((faq) => createFaq({ token, ...faq })));
-      toast.success('FAQ가 성공적으로 저장되었습니다');
-      setNewFAQs([]);
+      await Promise.all(
+        newFAQs.map((faq) =>
+          createFaq(
+            { token, ...faq },
+            {
+              onSuccess: () => {
+                refetch();
+                setNewFAQs([]);
+                toast.success('FAQ가 성공적으로 저장되었습니다');
+              },
+            },
+          ),
+        ),
+      );
     } catch (error) {
       toast.error('FAQ 저장에 실패하였습니다');
     }
@@ -56,9 +67,11 @@ export default function Index() {
             <button
               onClick={saveFAQ}
               className={`ml-3 h-10 rounded-lg px-4.5 py-2 text-sm font-bold text-white 
-${
-  isSaving ? 'cursor-not-allowed bg-gray-500' : 'bg-blue-500 hover:bg-blue-600'
-}`}
+                ${
+                  isSaving
+                    ? 'cursor-not-allowed bg-gray-500'
+                    : 'bg-blue-500 hover:bg-blue-600'
+                }`}
               disabled={isSaving}
             >
               저장하기
@@ -90,6 +103,7 @@ ${
         newFAQs={newFAQs}
         setNewFAQs={setNewFAQs}
         isEditing={isEditing}
+        refetch={refetch}
       />
     </>
   );

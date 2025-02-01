@@ -14,3 +14,14 @@ export type DeleteFaq = {
   token: string;
   questionId: number;
 };
+
+export type FAQItem = {
+  question: string;
+  reply: string;
+};
+
+export type UpdateFaq = {
+  token: string;
+  questionId: number;
+  faqData: FAQItem;
+};
