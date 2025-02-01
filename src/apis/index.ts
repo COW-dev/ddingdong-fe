@@ -35,6 +35,7 @@ import {
   User,
 } from '@/types/event';
 
+import { UpdateFaq, FAQItem, Faq, DeleteFaq } from '@/types/faq';
 import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
 
 import {
@@ -638,3 +639,51 @@ function rejectedResponse(error: AxiosError<ErrorType>) {
 }
 
 api.interceptors.response.use(fulfilledResponse, rejectedResponse);
+
+export async function getAllFaq(
+  token: string,
+): Promise<AxiosResponse<Faq[], unknown>> {
+  return await api.get('/admin/questions', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function createFaq({
+  token,
+  question,
+  reply,
+}: FAQItem & { token: string }) {
+  const formData = new URLSearchParams();
+  formData.append('question', question);
+  formData.append('reply', reply);
+
+  return await api.post('/admin/questions', formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function deleteFaq({
+  questionId,
+  token,
+}: DeleteFaq): Promise<void> {
+  return api.delete(`/admin/questions/${questionId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+export async function updateFaq({ token, questionId, faqData }: UpdateFaq) {
+  const formData = new URLSearchParams();
+  formData.append('question', faqData.question);
+  formData.append('reply', faqData.reply);
+
+  return await api.patch(`/admin/questions/${questionId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
