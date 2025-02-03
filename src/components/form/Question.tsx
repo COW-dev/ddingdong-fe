@@ -13,8 +13,8 @@ interface Props {
     options: string[] | null;
     required: boolean;
     order: number;
-    section?: string;
   };
+  section: string;
   deleteQuestion: (sectionName: string | undefined, index: number) => void;
 }
 
@@ -26,9 +26,7 @@ export default function Question({
   deleteQuestion,
 }: Props) {
   const options = ['객관식', '서술형', '단답형', '체크박스', '파일 업로드'];
-  const [selectedOption, setSelectedOption] = useState<string>(
-    questionData.type,
-  );
+  const [selectedType, setSelectedType] = useState<string>(questionData.type);
   const [enabled, setEnabled] = useState<boolean>(questionData.required);
 
   const updateInput = (sectionName: string, index: number, value: string) => {
@@ -46,14 +44,26 @@ export default function Question({
     );
   };
 
-  const updateOption = (sectionName: string, index: number, value: string) => {
+  const updateSelector = (
+    sectionName: string,
+    index: number,
+    value: string,
+  ) => {
     setFormField((prev) =>
       prev.map((section) =>
         section.section === sectionName
           ? {
               ...section,
               questions: section.questions.map((question, qIndex) =>
-                qIndex === index ? { ...question, type: value } : question,
+                qIndex === index
+                  ? {
+                      ...question,
+                      type: value,
+                      options: ['객관식', '체크박스'].includes(value)
+                        ? ['옵션1']
+                        : null,
+                    }
+                  : question,
               ),
             }
           : section,
@@ -86,18 +96,21 @@ export default function Question({
         />
         <Dropdown
           contents={options}
-          selected={selectedOption}
+          selected={selectedType}
           setSelected={(value) => {
-            setSelectedOption(value);
-            updateOption(section.section, index, value);
+            setSelectedType(value);
+            updateSelector(section.section, index, value);
           }}
         />
       </div>
       <div className="py-4">
         <Content
-          option={selectedOption}
+          index={index}
+          type={selectedType}
           isEditing={true}
           questionData={questionData}
+          setFormField={setFormField}
+          section={section}
         />
       </div>
       <div className="flex w-full items-center justify-end gap-3">
