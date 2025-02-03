@@ -11,126 +11,174 @@ import EmptySquare from '../../assets/empty_square_check.svg';
 
 type Props = {
   option: '객관식' | '서술형' | '단답형' | '체크박스' | '파일 업로드';
-  isReadOnly: boolean;
+  isEditing: boolean;
 };
 
-export default function Content({ option, isReadOnly }: Props) {
+export default function Content({ option, isEditing, QuestionInfo }: Props) {
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+
   const [selectedRadio, setSelectedRadio] = useState<number | null>(null);
+  const [radioOptions, setRadioOptions] = useState<string[]>(['옵션 1']);
+
   const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>([false]);
-  const [options, setOptions] = useState<string[]>(['옵션 1']);
+  const [checkboxOptions, setCheckboxOptions] = useState<string[]>(['옵션 1']);
 
   const handleRadioSelect = (index: number) => {
-    if (!isReadOnly) {
+    if (!isEditing) {
       setSelectedRadio(index);
     }
   };
 
   const handleCheckboxToggle = (index: number) => {
-    if (!isReadOnly) {
+    if (!isEditing) {
       setCheckedBoxes((prev) =>
         prev.map((checked, i) => (i === index ? !checked : checked)),
       );
     }
   };
 
-  const handleAddOption = () => {
-    if (isReadOnly && options.length < 5) {
-      const newOption = `옵션 ${options.length + 1}`;
-      setOptions([...options, newOption]);
+  const handleAddRadioOption = () => {
+    if (isEditing && radioOptions.length < 5) {
+      setRadioOptions([...radioOptions, `옵션 ${radioOptions.length + 1}`]);
+    }
+  };
+
+  const handleAddCheckboxOption = () => {
+    if (isEditing && checkboxOptions.length < 5) {
+      setCheckboxOptions([
+        ...checkboxOptions,
+        `옵션 ${checkboxOptions.length + 1}`,
+      ]);
       setCheckedBoxes([...checkedBoxes, false]);
     }
   };
 
-  const handleRemoveOption = (index: number) => {
-    if (isReadOnly && options.length > 1) {
-      setOptions(options.filter((_, i) => i !== index));
+  const handleRemoveRadioOption = (index: number) => {
+    if (isEditing && radioOptions.length > 1) {
+      setRadioOptions(radioOptions.filter((_, i) => i !== index));
+    }
+  };
+
+  const handleRemoveCheckboxOption = (index: number) => {
+    if (isEditing && checkboxOptions.length > 1) {
+      setCheckboxOptions(checkboxOptions.filter((_, i) => i !== index));
       setCheckedBoxes(checkedBoxes.filter((_, i) => i !== index));
     }
   };
 
-  const handleOptionChange = (index: number, newValue: string) => {
-    if (isReadOnly) {
-      setOptions((prev) =>
+  const handleRadioOptionChange = (index: number, newValue: string) => {
+    if (isEditing) {
+      setRadioOptions((prev) =>
+        prev.map((opt, i) => (i === index ? newValue : opt)),
+      );
+    }
+  };
+
+  const handleCheckboxOptionChange = (index: number, newValue: string) => {
+    if (isEditing) {
+      setCheckboxOptions((prev) =>
         prev.map((opt, i) => (i === index ? newValue : opt)),
       );
     }
   };
 
   return (
-    <>
-      {(option === '객관식' || option === '체크박스') && (
-        <div className="flex flex-col items-start gap-2 px-2">
-          {options.map((opt, i) => (
+    <div className="border-b border-gray-200 pb-3">
+      {option === '객관식' && (
+        <div className="flex flex-col items-start gap-2 px-2 pb-3">
+          {radioOptions.map((opt, i) => (
             <div
               key={i}
               className="flex w-full flex-row items-center justify-between gap-2"
             >
               <div
                 className={`flex h-[34px] flex-shrink-0 items-center ${
-                  isReadOnly
-                    ? 'pointer-events-none cursor-default'
-                    : 'cursor-pointer'
+                  isEditing ? '' : 'cursor-pointer'
                 }`}
-                onClick={() =>
-                  option === '객관식'
-                    ? !isReadOnly && handleRadioSelect(i)
-                    : !isReadOnly && handleCheckboxToggle(i)
-                }
+                onClick={() => !isEditing && handleRadioSelect(i)}
               >
                 <Image
-                  src={
-                    option === '객관식'
-                      ? selectedRadio === i
-                        ? Check
-                        : EmptyCircle
-                      : checkedBoxes[i]
-                      ? CheckBox
-                      : EmptySquare
-                  }
-                  alt={option === '객관식' ? '객관식 선택' : '체크박스 선택'}
-                  width={
-                    option === '객관식'
-                      ? selectedRadio === i
-                        ? 17
-                        : 20
-                      : checkedBoxes[i]
-                      ? 17
-                      : 20
-                  }
-                  height={
-                    option === '객관식'
-                      ? selectedRadio === i
-                        ? 17
-                        : 20
-                      : checkedBoxes[i]
-                      ? 17
-                      : 20
-                  }
+                  src={selectedRadio === i ? Check : EmptyCircle}
+                  alt="객관식 선택"
+                  width={selectedRadio === i ? 17 : 20}
+                  height={selectedRadio === i ? 17 : 20}
                 />
                 <input
                   type="text"
                   value={opt}
-                  onChange={(e) => handleOptionChange(i, e.target.value)}
-                  className="px-3 font-semibold text-gray-500"
-                  disabled={!isReadOnly}
+                  onChange={(e) => handleRadioOptionChange(i, e.target.value)}
+                  className="px-3 font-semibold text-gray-500 outline-none"
+                  disabled={!isEditing}
                 />
               </div>
-              {isReadOnly && options.length > 1 && (
-                <button onClick={() => handleRemoveOption(i)}>
+              {isEditing && radioOptions.length > 1 && (
+                <button onClick={() => handleRemoveRadioOption(i)}>
                   <Image src={CloseIcon} alt="삭제" width={16} height={16} />
                 </button>
               )}
             </div>
           ))}
-          {isReadOnly && options.length < 5 && (
+          {isEditing && radioOptions.length < 5 && (
             <button
-              onClick={handleAddOption}
+              onClick={handleAddRadioOption}
               className="mt-1 flex items-center gap-3 rounded py-1 align-middle font-semibold text-gray-300"
             >
               <Image
-                src={option === '객관식' ? EmptyCircle : EmptySquare}
-                alt={option === '객관식' ? '객관식 선택' : '체크박스 선택'}
+                src={EmptyCircle}
+                alt="객관식 선택"
+                width={20}
+                height={20}
+              />
+              옵션 추가...
+            </button>
+          )}
+        </div>
+      )}
+
+      {option === '체크박스' && (
+        <div className="flex flex-col items-start gap-2 border-b border-gray-100 px-2 pb-3">
+          {checkboxOptions.map((opt, i) => (
+            <div
+              key={i}
+              className="flex w-full flex-row items-center justify-between gap-2"
+            >
+              <div
+                className={`flex h-[34px] flex-shrink-0 items-center ${
+                  isEditing ? '' : 'cursor-pointer'
+                }`}
+                onClick={() => !isEditing && handleCheckboxToggle(i)}
+              >
+                <Image
+                  src={checkedBoxes[i] ? CheckBox : EmptySquare}
+                  alt="체크박스 선택"
+                  width={checkedBoxes[i] ? 17 : 20}
+                  height={checkedBoxes[i] ? 17 : 20}
+                />
+                <input
+                  type="text"
+                  value={opt}
+                  onChange={(e) =>
+                    handleCheckboxOptionChange(i, e.target.value)
+                  }
+                  className=" px-3 font-semibold text-gray-500 outline-none"
+                  disabled={!isEditing}
+                />
+              </div>
+              {isEditing && checkboxOptions.length > 1 && (
+                <button onClick={() => handleRemoveCheckboxOption(i)}>
+                  <Image src={CloseIcon} alt="삭제" width={16} height={16} />
+                </button>
+              )}
+            </div>
+          ))}
+          {isEditing && checkboxOptions.length < 5 && (
+            <button
+              onClick={handleAddCheckboxOption}
+              className="mt-1 flex items-center gap-3 rounded py-1 align-middle font-semibold text-gray-300"
+            >
+              <Image
+                src={EmptySquare}
+                alt="체크박스 선택"
                 width={20}
                 height={20}
               />
@@ -141,36 +189,23 @@ export default function Content({ option, isReadOnly }: Props) {
       )}
 
       {option === '서술형' && (
-        <div className={isReadOnly ? 'pointer-events-none opacity-50' : ''}>
-          <TextArea
-            placeholder="서술형 응답(최대 1,000자 이내)"
-            disabled={isReadOnly}
-          />
-        </div>
+        <TextArea
+          placeholder="서술형 응답(최대 1,000자 이내)"
+          disabled={isEditing}
+        />
       )}
-
       {option === '단답형' && (
-        <div className={isReadOnly ? 'pointer-events-none opacity-50' : ''}>
-          <TextArea
-            placeholder="단답형 응답 (최대 300자 이내)"
-            disabled={isReadOnly}
-          />
-        </div>
+        <TextArea
+          placeholder="단답형 응답 (최대 300자 이내)"
+          disabled={isEditing}
+        />
       )}
-
       {option === '파일 업로드' && (
-        <div className={isReadOnly ? 'pointer-events-none opacity-50' : ''}>
-          <div className="relative">
-            <FileUpload
-              onFilesSelected={(files) => setUploadedFiles(files)}
-              disabled={isReadOnly}
-            />
-            {isReadOnly && (
-              <div className="pointer-events-none absolute inset-0 bg-gray-200 opacity-50"></div>
-            )}
-          </div>
-        </div>
+        <FileUpload
+          onFilesSelected={(files) => setUploadedFiles(files)}
+          disabled={isEditing}
+        />
       )}
-    </>
+    </div>
   );
 }

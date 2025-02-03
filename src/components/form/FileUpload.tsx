@@ -1,5 +1,5 @@
 import { useState } from 'react';
-export default function FileUpload({ onFilesSelected }) {
+export default function FileUpload({ onFilesSelected, disabled }) {
   const [files, setFiles] = useState([]);
 
   const handleFileChange = (event) => {
@@ -21,6 +21,7 @@ export default function FileUpload({ onFilesSelected }) {
           multiple
           className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
           onChange={handleFileChange}
+          disabled={disabled}
         />
       </label>
     </div>

@@ -5,13 +5,13 @@ export default function Dropdown({ contents, selected, setSelected }) {
   return (
     <div className="relative w-48 font-semibold text-gray-500">
       <div
-        className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 bg-white px-4 py-2"
+        className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-3"
         onClick={() => setOpenDropdown(!openDropdown)}
       >
         {selected}
       </div>
       {openDropdown && (
-        <div className="absolute z-40 mt-1 w-full rounded-lg border border-gray-100 bg-white shadow-lg ">
+        <div className="absolute z-40 mt-1 w-full rounded-lg border border-gray-200 bg-white shadow-lg ">
           {contents.map((item, index) => (
             <div
               key={index}
