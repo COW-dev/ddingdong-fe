@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BaseInput from './BaseInput';
 import { StepDropdown } from './StepDropdown';
 
-export default function CommonQuestion() {
+export default function CommonQuestion({ disabled }) {
   const stepItem = {
     ICT융합대학: [
       '디지털콘텐츠디자인학과',
@@ -52,16 +52,16 @@ export default function CommonQuestion() {
   };
 
   return (
-    <div className="mb-4 flex flex-col gap-3 rounded-lg border border-gray-200 px-10 py-4 ">
-      <div className="flex flex-row gap-2">
-        <BaseInput placeholder="이름을 입력해주세요" />
-        <BaseInput placeholder="학번을 입력해주세요" />
-        <StepDropdown contents={stepItem} />
+    <div className="mb-3 flex flex-col gap-3 rounded-lg border border-gray-200 px-5 py-10">
+      <div className="flex flex-row flex-wrap gap-2 md:flex-nowrap">
+        <BaseInput placeholder="이름을 입력해주세요" disabled={disabled} />
+        <BaseInput placeholder="학번을 입력해주세요" disabled={disabled} />
+        <StepDropdown contents={stepItem} disabled={disabled} />
       </div>
 
-      <div className="flex gap-3">
-        <BaseInput placeholder="전화번호를 입력해주세요" />
-        <BaseInput placeholder="이메일을 입력해주세요" />
+      <div className="flex flex-wrap gap-2 md:flex-nowrap">
+        <BaseInput placeholder="전화번호를 입력해주세요" disabled={disabled} />
+        <BaseInput placeholder="이메일을 입력해주세요" disabled={disabled} />
       </div>
       <div className="w-full border-t border-gray-200 pt-2 text-right font-semibold text-gray-400">
         * 해당 질문은 기본제공 질문입니다
