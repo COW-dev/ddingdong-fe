@@ -1,10 +1,12 @@
 import { useState } from 'react';
-
+import Image from 'next/image';
+import ArrowDown from '../../assets/arrowDown.svg';
 type Props = {
   contents: { [key: string]: string[] };
+  disabled?: boolean;
 };
 
-export function StepDropdown({ contents }: Props) {
+export function StepDropdown({ contents, disabled = false }: Props) {
   const allItems = Object.entries(contents).flatMap(([category, items]) =>
     items.map((item) => ({ category, item })),
   );
@@ -15,19 +17,24 @@ export function StepDropdown({ contents }: Props) {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
-    <div className="relative w-56 cursor-pointer items-center rounded-lg border border-gray-200 bg-white text-start align-middle text-base font-semibold text-gray-400 md:w-128 md:text-lg">
+    <div
+      className={`relative w-full items-center rounded-lg border border-gray-200 text-start align-middle text-base font-semibold text-gray-400 md:text-lg
+        ${disabled ? '' : 'cursor-pointer bg-white '}
+      `}
+    >
       <div
-        className="flex h-full flex-row items-center justify-between pl-5 hover:rounded-lg md:py-3"
-        onClick={() => setOpenDropdown(!openDropdown)}
+        className="flex h-full flex-row items-center justify-between px-4 py-3 hover:rounded-lg md:py-1 "
+        onClick={() => !disabled && setOpenDropdown(!openDropdown)}
       >
-        {selectedContent}
+        {selectedContent ? '학과를 선택해 주세요' : selectedContent}
+        <Image src={ArrowDown} alt="arrow_down" />
       </div>
 
-      {openDropdown && (
-        <div className="absolute left-0 top-full z-10 max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg md:w-64">
+      {openDropdown && !disabled && (
+        <div className="absolute left-0 top-full z-10 max-h-60 w-full overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-lg">
           {Object.entries(contents).map(([category, items], categoryIndex) => (
             <div key={categoryIndex} className="flex flex-col">
-              <div className="cursor-default border-gray-200 px-5 py-2 font-semibold text-gray-300">
+              <div className="cursor-default border-b border-gray-200 px-5 py-4 font-semibold text-gray-300">
                 {category}
               </div>
 
