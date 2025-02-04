@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
-
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import Image from 'next/image';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
-
 import CloseIcon from '../../assets/cancel.svg';
 import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
@@ -27,57 +25,57 @@ export default function Content({
   setFormField,
   section,
 }: Props) {
-  const [localOptions, setLocalOptions] = useState<string[]>(
-    questionData.options || [],
+  const localOptions = useMemo(
+    () => questionData.options || [],
+    [questionData.options],
   );
 
-  useEffect(() => {
-    if (JSON.stringify(localOptions) !== JSON.stringify(questionData.options)) {
-      setLocalOptions(questionData.options || []);
-    }
-  }, [questionData.options]);
+  const updateOption = useCallback(
+    (newOptions: string[]) => {
+      setFormField((prevState) =>
+        prevState.map((sec) =>
+          sec.section === section.section
+            ? {
+                ...sec,
+                questions: sec.questions.map((question, qIndex) =>
+                  qIndex === index
+                    ? { ...question, options: newOptions }
+                    : question,
+                ),
+              }
+            : sec,
+        ),
+      );
+    },
+    [setFormField, section.section, index],
+  );
 
-  const updateOption = (newOptions: string[]) => {
-    setFormField((prevState) =>
-      prevState.map((sec) =>
-        sec.section === section.section
-          ? {
-              ...sec,
-              questions: sec.questions.map((question, qIndex) =>
-                qIndex === index
-                  ? { ...question, options: newOptions }
-                  : question,
-              ),
-            }
-          : sec,
-      ),
-    );
-
-    setTimeout(() => {
-      setLocalOptions(newOptions);
-    }, 0);
-  };
-
-  const handleAddOption = () => {
+  const handleAddOption = useCallback(() => {
     if (isEditing && localOptions.length < 5) {
       updateOption([...localOptions, `옵션 ${localOptions.length + 1}`]);
     }
-  };
+  }, [isEditing, localOptions, updateOption]);
 
-  const handleRemoveOption = (optIndex: number) => {
-    if (isEditing && localOptions.length > 1) {
-      updateOption(localOptions.filter((_, i) => i !== optIndex));
-    }
-  };
+  const handleRemoveOption = useCallback(
+    (optIndex: number) => {
+      if (isEditing && localOptions.length > 1) {
+        updateOption(localOptions.filter((_, i) => i !== optIndex));
+      }
+    },
+    [isEditing, localOptions, updateOption],
+  );
 
-  const handleOptionChange = (optIndex: number, newValue: string) => {
-    if (isEditing) {
-      const newOptions = localOptions.map((opt, i) =>
-        i === optIndex ? newValue : opt,
-      );
-      updateOption(newOptions);
-    }
-  };
+  const handleOptionChange = useCallback(
+    (optIndex: number, newValue: string) => {
+      if (isEditing) {
+        const newOptions = localOptions.map((opt, i) =>
+          i === optIndex ? newValue : opt,
+        );
+        updateOption(newOptions);
+      }
+    },
+    [isEditing, localOptions, updateOption],
+  );
 
   return (
     <div className="border-b border-gray-200 pb-3">
@@ -86,7 +84,7 @@ export default function Content({
           {localOptions.map((opt, i) => (
             <div
               key={i}
-              className="flex w-full flex-row items-center justify-between gap-2"
+              className="flex w-full items-center justify-between gap-2"
             >
               <div className="flex h-[34px] items-center">
                 <Image
