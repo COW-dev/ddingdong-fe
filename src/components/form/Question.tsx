@@ -25,6 +25,7 @@ export default function Question({
   section,
   questionData,
   setFormField,
+  isClosed,
   deleteQuestion,
 }: Props) {
   const options = ['객관식', '서술형', '단답형', '체크박스', '파일 업로드'];
@@ -91,11 +92,14 @@ export default function Question({
   return (
     <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-4 ">
       <div className="flex w-full justify-center pb-4">
-        <Image src={hamburger} alt="hamburger" className="cursor-pointer" />
+        {!isClosed && (
+          <Image src={hamburger} alt="hamburger" className="cursor-pointer" />
+        )}
       </div>
       <div className="flex w-full flex-row flex-wrap gap-2 md:flex-nowrap">
         <BaseInput
           placeholder="질문을 입력해주세요"
+          disabled={isClosed}
           value={questionData.question}
           onChange={(e) => updateInput(section.section, index, e.target.value)}
         />
@@ -106,6 +110,7 @@ export default function Question({
             setSelectedType(value);
             updateSelector(section.section, index, value);
           }}
+          disabled={isClosed}
         />
       </div>
       <div className="py-4">
@@ -116,24 +121,28 @@ export default function Question({
           questionData={questionData}
           setFormField={setFormField}
           section={section}
+          isClosed={isClosed}
         />
       </div>
-      <div className="flex w-full items-center justify-end gap-3">
-        <div className="flex items-center gap-2 text-center align-middle">
-          <span className="text-sm font-medium text-gray-500">{'필수'}</span>
-          <Switch
-            checked={enabled}
-            onCheckedChange={(value) => {
-              setEnabled(value);
-              updateSwitch(section.section, index, value);
-            }}
+      {!isClosed && (
+        <div className="flex w-full items-center justify-end gap-3">
+          <div className="flex items-center gap-2 text-center align-middle">
+            <span className="text-sm font-medium text-gray-500">{'필수'}</span>
+
+            <Switch
+              checked={enabled}
+              onCheckedChange={(value) => {
+                setEnabled(value);
+                updateSwitch(section.section, index, value);
+              }}
+            />
+          </div>
+          <Trash2
+            className="cursor-pointer text-sm text-gray-500"
+            onClick={() => deleteQuestion(questionData.section, index)}
           />
         </div>
-        <Trash2
-          className="cursor-pointer text-sm text-gray-500"
-          onClick={() => deleteQuestion(questionData.section, index)}
-        />
-      </div>
+      )}
     </div>
   );
 }

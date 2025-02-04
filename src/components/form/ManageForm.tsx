@@ -38,7 +38,11 @@ interface Props {
 }
 
 export default function ManageForm({ formData }: Props) {
-  const [isChecked, setIsChecked] = useState(false);
+  const [isClosed, setIsClosed] = useState(
+    formData?.startDate ? new Date(formData.startDate) < new Date() : false,
+  );
+
+  const [isChecked, setIsChecked] = useState(formData?.hasInterview);
   function categorizeFormFields(formData) {
     const categorizedFields = {};
 
@@ -87,7 +91,7 @@ export default function ManageForm({ formData }: Props) {
   ];
 
   const [formField, setFormField] = useState(
-    modiformField
+    formData
       ? modiformField
       : [
           {
@@ -174,18 +178,26 @@ export default function ManageForm({ formData }: Props) {
     <div className="p-6">
       <div className="flex items-center justify-between gap-2">
         <button className="text-xl font-bold">지원서 템플릿 관리</button>
-        <button className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400">
-          저장하기
-        </button>
+        {!isClosed && (
+          <button className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400">
+            저장하기
+          </button>
+        )}
       </div>
       <div className="flex w-full items-center justify-end gap-1 pt-10 text-base font-semibold text-gray-500">
-        <div className="relative flex h-[20px] w-[20px] items-center justify-center">
+        <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image
-            onClick={() => setIsChecked(!isChecked)}
+            onClick={() => {
+              if (!isClosed) {
+                setIsChecked(!isChecked);
+              }
+            }}
             src={isChecked ? square : emptySquare}
             width={isChecked ? 17 : 21}
             height={isChecked ? 17 : 21}
-            className="object-contain"
+            className={`object-contain ${
+              isClosed ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+            }`}
             alt="checkBox"
           />
         </div>
@@ -193,14 +205,15 @@ export default function ManageForm({ formData }: Props) {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className="mt-4 flex flex-row gap-3">
+        <div className="mt-4 flex flex-row flex-wrap gap-3 md:flex-nowrap">
           <BaseInput
             type="text"
             placeholder={'지원서 제목을 입력해주세요'}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            disabled={isClosed}
           />
-          <div className="w-[75%] rounded-lg border">
+          <div className="w-full rounded-lg border">
             <Datepicker
               value={recruitPeriod}
               useRange={false}
@@ -208,6 +221,7 @@ export default function ManageForm({ formData }: Props) {
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
               onChange={handleDateChange}
               placeholder="모집 기간을 설정하세요"
+              disabled={isClosed}
             />
           </div>
         </div>
@@ -215,6 +229,7 @@ export default function ManageForm({ formData }: Props) {
           placeholder="지원서 설명을 입력해 주세요"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          disabled={isClosed}
         />
       </div>
 
@@ -224,6 +239,7 @@ export default function ManageForm({ formData }: Props) {
           focusSection={focusSection}
           sections={sections}
           setFocusSection={setFocusSection}
+          isClosed={isClosed}
         />
         {focusSection == '공통' && <CommonQuestion disabled={true} />}
 
@@ -239,6 +255,7 @@ export default function ManageForm({ formData }: Props) {
                   deleteQuestion={() => deleteQuestion(section.section, qIndex)}
                   setFormField={setFormField}
                   section={section}
+                  isClosed={isClosed}
                 />
               ))}
             </div>

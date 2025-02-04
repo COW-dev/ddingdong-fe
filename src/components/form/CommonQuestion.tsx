@@ -52,7 +52,7 @@ export default function CommonQuestion({ disabled }) {
   };
 
   return (
-    <div className="mb-3 flex flex-col gap-3 rounded-lg border border-gray-200 px-5 py-10">
+    <div className="mb-3 flex flex-col gap-3 rounded-lg border border-gray-200 px-4 py-10">
       <div className="flex flex-row flex-wrap gap-2 md:flex-nowrap">
         <BaseInput placeholder="이름을 입력해주세요" disabled={disabled} />
         <BaseInput placeholder="학번을 입력해주세요" disabled={disabled} />

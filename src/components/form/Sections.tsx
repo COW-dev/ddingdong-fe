@@ -6,6 +6,7 @@ export default function Sections({
   focusSection,
   setFocusSection,
   sections,
+  isClosed,
 }) {
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -25,7 +26,7 @@ export default function Sections({
         </div>
       ))}
 
-      {sections.length < 5 && (
+      {sections.length < 5 && !isClosed && (
         <div
           onClick={addSection}
           className="cursor-pointer whitespace-nowrap rounded-md rounded-b-none border border-b-0 border-gray-200 bg-white px-3 py-1 font-semibold text-gray-500 hover:bg-gray-50"

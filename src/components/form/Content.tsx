@@ -15,6 +15,7 @@ interface Props {
   };
   setFormField: (update: any) => void;
   section: { section: string; questions: any[] };
+  isClosed: boolean;
 }
 
 export default function Content({
@@ -23,6 +24,7 @@ export default function Content({
   isEditing,
   questionData,
   setFormField,
+  isClosed,
   section,
 }: Props) {
   const localOptions = useMemo(
@@ -97,18 +99,18 @@ export default function Content({
                   type="text"
                   value={opt}
                   onChange={(e) => handleOptionChange(i, e.target.value)}
-                  className="px-3 font-semibold text-gray-500 outline-none"
-                  disabled={!isEditing}
+                  className="bg-white px-3 font-semibold text-gray-500 outline-none"
+                  disabled={!isEditing || isClosed}
                 />
               </div>
-              {isEditing && localOptions.length > 1 && (
+              {isEditing && !isClosed && localOptions.length > 1 && (
                 <button onClick={() => handleRemoveOption(i)}>
                   <Image src={CloseIcon} alt="삭제" width={16} height={16} />
                 </button>
               )}
             </div>
           ))}
-          {isEditing && localOptions.length < 5 && (
+          {isEditing && !isClosed && localOptions.length < 5 && (
             <button
               onClick={handleAddOption}
               className="mt-1 flex items-center gap-3 text-gray-300"
