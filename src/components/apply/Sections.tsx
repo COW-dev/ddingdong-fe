@@ -1,26 +1,34 @@
 import { useState } from 'react';
 import { InfoIcon } from 'lucide-react';
 
+type Props = {
+  addSection: () => void;
+  focusSection: string;
+  setFocusSection: (section: string) => void;
+  sections: string[];
+  isClosed: boolean;
+};
+
 export default function Sections({
   addSection,
   focusSection,
   setFocusSection,
   sections,
   isClosed,
-}) {
-  const [showTooltip, setShowTooltip] = useState(false);
+}: Props) {
+  const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   return (
     <div className="relative flex items-center gap-1 border-b-0 px-4 font-semibold">
-      {sections.map((name: string, index: number) => (
+      {sections?.map((name: string, index: number) => (
         <div
-          key={index + 1}
+          key={index}
           className={`cursor-pointer rounded-md rounded-b-none border border-b-0 border-gray-200 px-3 py-1 ${
-            focusSection === sections[index]
+            focusSection === name
               ? 'bg-blue-50 text-blue-500'
               : 'bg-white text-gray-500 hover:bg-gray-50'
           }`}
-          onClick={() => setFocusSection(sections[index])}
+          onClick={() => setFocusSection(name)}
         >
           {name}
         </div>
