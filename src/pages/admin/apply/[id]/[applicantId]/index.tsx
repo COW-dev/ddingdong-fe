@@ -6,6 +6,7 @@ import LeftArrow from '@/assets/leftArrow2.svg';
 import ApplicantInfo from '@/components/apply/ApplicantInfo';
 import ApplyResult from '@/components/apply/ApplyResult';
 import Loading from '@/components/loading/Loading';
+import { STATUS_TYPE } from '@/constants/apply';
 import { useApplicantInfo } from '@/hooks/api/apply/useApplicantInfo';
 import { useUpdateApplicantStatus } from '@/hooks/api/apply/useUpdateApplicantStatus';
 import { ApplicantStatus } from '@/types/apply';
@@ -54,8 +55,8 @@ export default function Index({ id, applicantId }: Props) {
   return (
     <div className="flex flex-col gap-3">
       <div className="mt-7 flex items-center justify-between border-b border-gray-300 pb-3">
-        <div className="flex flex-row items-center">
-          <Link href={`/apply/${id}`} className="flex items-end">
+        <div className="flex flex-row items-center ">
+          <Link href={`/apply/${id}`} className="flex items-center">
             <Image
               src={LeftArrow}
               alt="back"
@@ -66,9 +67,18 @@ export default function Index({ id, applicantId }: Props) {
             <h1 className="ml-3 text-2xl font-bold md:text-4xl">
               {applicantData?.name}
             </h1>
+            <div
+              className={`${
+                STATUS_TYPE[applicantData.status].backgroundColor
+              } ${
+                STATUS_TYPE[applicantData.status].color
+              } ml-4 rounded-lg px-2 py-[5px] text-sm font-semibold`}
+            >
+              {STATUS_TYPE[applicantData.status].statusText}
+            </div>
           </Link>
         </div>
-        <span>
+        <span className="text-lg">
           제출일시{' '}
           {`${
             applicantData?.submittedAt.replaceAll('-', '.').split('T')[0]

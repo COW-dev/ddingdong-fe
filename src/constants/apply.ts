@@ -14,30 +14,35 @@ export const getApplicantInfo = (applicant: {
 
 export const STATUS_TYPE: Record<
   string,
-  { text: string; color: string; backgroundColor: string }
+  { text: string; statusText?: string; color: string; backgroundColor: string }
 > = {
   SUBMITTED: {
     text: '평가전',
+    statusText: '평가전',
     color: 'text-gray-500',
     backgroundColor: 'bg-gray-50',
   },
   FIRST_PASS: {
     text: '합격',
+    statusText: '서류 합격',
     color: 'text-green-500',
     backgroundColor: 'bg-green-50',
   },
   FIRST_FAIL: {
     text: '불합격',
+    statusText: '서류 불합격',
     color: 'text-red-500',
     backgroundColor: 'bg-red-50',
   },
   FINAL_PASS: {
     text: '합격',
+    statusText: '면접 합격',
     color: 'text-green-500',
     backgroundColor: 'bg-green-50',
   },
   FINAL_FAIL: {
     text: '불합격',
+    statusText: '면접 불합격',
     color: 'text-red-500',
     backgroundColor: 'bg-red-50',
   },
