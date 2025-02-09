@@ -552,7 +552,7 @@ export async function getAllApplication(
   return await api.get(
     `/central/my/forms/${formId}/applications?currentCursorId=${
       currentCursorId ?? -1
-    }&size=12`,
+    }&size=15`,
     {
       headers: {
         Authorization: 'Bearer ' + token,

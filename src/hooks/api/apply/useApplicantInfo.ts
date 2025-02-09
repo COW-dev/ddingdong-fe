@@ -15,7 +15,7 @@ export function useApplicantInfo(
     AxiosResponse<ApplicantDetail, unknown>,
     [string, number]
   >({
-    queryKey: ['applicant-info', applicantId],
+    queryKey: ['apply', applicantId],
     queryFn: () => getApplicantInfo(formId, applicantId, token),
   });
 }

@@ -34,6 +34,7 @@ type Props = {
 export default function Index({ id, isActive }: Props) {
   const [{ token }] = useCookies(['token']);
   const observerTarget = useRef<HTMLDivElement>(null);
+
   const current = new Date().toISOString().split('T')[0];
 
   const {
@@ -47,9 +48,14 @@ export default function Index({ id, isActive }: Props) {
   const registerMutation = useRegisterApplicant();
 
   const { openModal, visible, closeModal, modalRef } = useModal();
+
   const applicationData = data?.pages.flatMap((page) => page.data)[0];
+  const applicantData = data?.pages.flatMap(
+    (page) => page.data.formApplications,
+  );
+
   const { documentApplicants, interviewApplicants } = filterApplicants(
-    applicationData?.formApplications ?? [],
+    applicantData ?? [],
   );
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -215,9 +221,12 @@ export default function Index({ id, isActive }: Props) {
           >
             명단 연동하기
           </button>
-          <button className="hidden rounded-xl bg-green-100 font-bold text-green-500 hover:bg-green-200 md:block md:px-7 md:py-3.5 md:text-lg">
+          <Link
+            href={`/apply/${id}/email`}
+            className="hidden rounded-xl bg-green-100 font-bold text-green-500 hover:bg-green-200 md:block md:px-7 md:py-3.5 md:text-lg"
+          >
             이메일 전송하기
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -225,7 +234,7 @@ export default function Index({ id, isActive }: Props) {
         <Tabs TabMenus={ClubTabMenus} tabContext="myClub" />
       ) : (
         <>
-          <ApplicantList data={applicationData.formApplications} />
+          <ApplicantList data={applicantData ?? []} />
           <div
             ref={observerTarget}
             className="mt-5 h-5 w-full bg-transparent"
