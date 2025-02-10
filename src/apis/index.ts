@@ -48,6 +48,7 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
+import { FormData } from '@/types/form';
 import {
   Notice,
   NoticeDetail,
@@ -64,7 +65,6 @@ import {
   SubmitReport,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
-import { FormData } from '@/types/form';
 
 export type ErrorType = {
   status: number;
@@ -729,6 +729,26 @@ export async function createForm(token: string, formData: FormData) {
 
 export async function getAllForms(token: string) {
   return await api.get('/central/my/forms', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getForm(token: string, formId: number) {
+  return await api.get(`/central/my/forms/${formId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function updateForm(
+  token: string,
+  formId: number,
+  formData: FormData,
+) {
+  return await api.put(`/central/my/forms/${formId}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

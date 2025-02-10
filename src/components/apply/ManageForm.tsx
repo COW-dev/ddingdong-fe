@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useCookies } from 'react-cookie';
 import Datepicker from 'react-tailwindcss-datepicker';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import BaseInput from '@/components/apply/BaseInput';
@@ -7,11 +8,10 @@ import CommonQuestion from '@/components/apply/CommnQuestion';
 import Question from '@/components/apply/Question';
 import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
+import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
 import emptySquare from '../../assets/empty_square_check.svg';
-import { useNewForm } from '@/hooks/api/form/useNewForm';
-import { useCookies } from 'react-cookie';
 type Section = string;
 
 type QuestionType = 'CHECK_BOX' | 'RADIO' | 'TEXT' | 'LONG_TEXT' | 'FILE';
@@ -42,6 +42,31 @@ interface Props {
 export default function ManageForm({ formData }: Props) {
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
+  const [isEditing, setIsEditing] = useState(false);
+
+  const [title, setTitle] = useState(formData?.title ? formData.title : '');
+  const [description, setDescription] = useState(
+    formData?.description ? formData.description : '',
+  );
+
+  useEffect(() => {
+    if (formData) {
+      const updatedFormFields = Object.keys(categorizeFormFields(formData)).map(
+        (section) => ({
+          section,
+          questions: categorizeFormFields(formData)[section].map((field) => ({
+            question: field.question,
+            type: field.type,
+            options: field.options || ['옵션1'],
+            required: field.required,
+            order: field.order,
+          })),
+        }),
+      );
+
+      setFormField(updatedFormFields);
+    }
+  }, [formData]);
 
   const handleSave = () => {
     const formatDate = (dateString: string | null) => {
@@ -71,9 +96,11 @@ export default function ManageForm({ formData }: Props) {
     newFormMutation.mutate(formattedPostData);
   };
 
-  const [isClosed, setIsClosed] = useState(
-    formData?.startDate ? new Date(formData.startDate) < new Date() : false,
-  );
+  const isPastStartDate = formData?.startDate
+    ? new Date(formData.startDate) < new Date()
+    : false;
+
+  const [isClosed, setIsClosed] = useState(true);
 
   const [isChecked, setIsChecked] = useState(formData?.hasInterview);
   function categorizeFormFields(formData) {
@@ -144,11 +171,6 @@ export default function ManageForm({ formData }: Props) {
 
   console.log(formField);
 
-  const [title, setTitle] = useState(formData?.title ? formData.title : '');
-  const [description, setDescription] = useState(
-    formData?.description ? formData.description : '',
-  );
-
   const addQuestion = () => {
     setFormField((prev) =>
       prev.map((section) =>
@@ -207,18 +229,60 @@ export default function ManageForm({ formData }: Props) {
     }
   };
 
+  const onClickEditButton = () => {
+    setIsEditing(true);
+    setIsClosed(false);
+  };
+
+  const onClickCancelButton = () => {
+    setIsEditing(false);
+    setIsClosed(true);
+  };
+
   return (
     <div className="p-6">
       <div className="flex items-center justify-between gap-2">
         <button className="text-xl font-bold">지원서 템플릿 관리</button>
-        {!isClosed && (
-          <button
-            className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
-            onClick={handleSave}
-          >
-            저장하기
-          </button>
-        )}
+        <div className="flex items-center justify-between gap-2">
+          {!formData ? (
+            <button
+              className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
+              onClick={handleSave}
+            >
+              저장하기
+            </button>
+          ) : (
+            <>
+              {!isEditing ? (
+                <button
+                  onClick={onClickEditButton}
+                  className={`${
+                    isClosed && isPastStartDate
+                      ? 'cursor-not-allowed bg-gray-100 text-gray-400'
+                      : 'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'
+                  } rounded-lg px-3 py-2 font-semibold`}
+                >
+                  수정하기
+                </button>
+              ) : (
+                <div className="flex flex-row gap-2">
+                  <button
+                    onClick={onClickCancelButton}
+                    className="rounded-lg bg-gray-100 px-3 py-2 font-semibold text-gray-500 hover:bg-gray-200"
+                  >
+                    취소
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
+                  >
+                    저장하기
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+        </div>
       </div>
       <div className="flex w-full items-center justify-end gap-1 pt-10 text-base font-semibold text-gray-500">
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
