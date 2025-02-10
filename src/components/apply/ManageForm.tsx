@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import BaseInput from '@/components/apply/BaseInput';
@@ -9,6 +10,7 @@ import Question from '@/components/apply/Question';
 import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
+import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
 import emptySquare from '../../assets/empty_square_check.svg';
@@ -19,7 +21,7 @@ type QuestionType = 'CHECK_BOX' | 'RADIO' | 'TEXT' | 'LONG_TEXT' | 'FILE';
 interface FormField {
   question: string;
   type: QuestionType;
-  options: string[] | null;
+  options: string[] | [];
   required: boolean;
   order: number;
   section: Section;
@@ -37,11 +39,13 @@ interface FormData {
 
 interface Props {
   formData?: FormData;
+  id?: number;
 }
 
-export default function ManageForm({ formData }: Props) {
+export default function ManageForm({ formData, id }: Props) {
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
+  const updateFormMutation = useUpdateForm(token, id);
   const [isEditing, setIsEditing] = useState(false);
 
   const [title, setTitle] = useState(formData?.title ? formData.title : '');
@@ -68,13 +72,33 @@ export default function ManageForm({ formData }: Props) {
     }
   }, [formData]);
 
-  const handleSave = () => {
+  const handleCreateForm = () => {
+    const formattedPostData = formatFormData();
+
+    newFormMutation.mutate(formattedPostData);
+  };
+
+  const handleUpdateForm = () => {
+    if (!id || !formData) {
+      toast.error('수정할 폼이 존재하지 않습니다.');
+      return;
+    }
+
+    const formattedPostData = formatFormData();
+
+    updateFormMutation.mutate({
+      token,
+      formId: id,
+      formData: formattedPostData,
+    });
+  };
+
+  const formatFormData = (): FormData => {
     const formatDate = (dateString: string | null) => {
-      if (!dateString) return '';
-      return new Date(dateString).toISOString().split('T')[0];
+      return dateString ? new Date(dateString).toISOString().split('T')[0] : '';
     };
 
-    const formattedPostData: FormData = {
+    return {
       title: title.trim(),
       description: description.trim() || null,
       startDate: formatDate(recruitPeriod.startDate),
@@ -85,22 +109,20 @@ export default function ManageForm({ formData }: Props) {
         section.questions.map((question) => ({
           question: question.question.trim(),
           type: question.type,
-          options: question.options ? question.options : null,
+          options: question.options || [],
           required: question.required,
           order: question.order,
           section: section.section,
         })),
       ),
     };
-
-    newFormMutation.mutate(formattedPostData);
   };
 
   const isPastStartDate = formData?.startDate
     ? new Date(formData.startDate) < new Date()
     : false;
 
-  const [isClosed, setIsClosed] = useState(true);
+  const [isClosed, setIsClosed] = useState(formData);
 
   const [isChecked, setIsChecked] = useState(formData?.hasInterview);
   function categorizeFormFields(formData) {
@@ -247,7 +269,7 @@ export default function ManageForm({ formData }: Props) {
           {!formData ? (
             <button
               className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
-              onClick={handleSave}
+              onClick={handleCreateForm}
             >
               저장하기
             </button>
@@ -273,7 +295,7 @@ export default function ManageForm({ formData }: Props) {
                     취소
                   </button>
                   <button
-                    onClick={handleSave}
+                    onClick={handleUpdateForm}
                     className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
                   >
                     저장하기
@@ -284,6 +306,7 @@ export default function ManageForm({ formData }: Props) {
           )}
         </div>
       </div>
+
       <div className="flex w-full items-center justify-end gap-1 pt-10 text-base font-semibold text-gray-500">
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image

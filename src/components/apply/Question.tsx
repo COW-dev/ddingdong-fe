@@ -12,7 +12,7 @@ interface Props {
   questionData: {
     question: string;
     type: string;
-    options: string[] | null;
+    options: string[] | [];
     required: boolean;
     order: number;
   };
@@ -28,7 +28,7 @@ export default function Question({
   isClosed,
   deleteQuestion,
 }: Props) {
-  const options = ['CHECK_BOX', 'RADIO', 'TEXT', 'LONG_TEXT', 'FILE'];
+  const types = ['CHECK_BOX', 'RADIO', 'TEXT', 'LONG_TEXT', 'FILE'];
   const [selectedType, setSelectedType] = useState<string>(questionData.type);
   const [enabled, setEnabled] = useState<boolean>(questionData.required);
 
@@ -64,7 +64,7 @@ export default function Question({
                       type: value,
                       options: ['RADIO', 'CHECK_BOX'].includes(value)
                         ? ['옵션1']
-                        : null,
+                        : [],
                     }
                   : question,
               ),
@@ -104,7 +104,7 @@ export default function Question({
           onChange={(e) => updateInput(section.section, index, e.target.value)}
         />
         <Dropdown
-          contents={options}
+          contents={types}
           selected={selectedType}
           setSelected={(value) => {
             setSelectedType(value);
