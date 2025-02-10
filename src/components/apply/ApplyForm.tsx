@@ -44,14 +44,16 @@ export default function ApplyForm() {
       </div>
 
       <div>
-        {formData.formFields.map((data) => (
+        {formData.formFields.map((data, index) => (
           <ApplyContent
             key={data.fieldId}
-            type={data.type}
-            options={data.options}
-            required={data.required}
             fieldId={data.fieldId}
+            index={index}
+            type={data.type}
+            options={data.options ?? []}
+            required={data.required}
             question={data.question}
+            isClosed={false}
           />
         ))}
       </div>

@@ -6,6 +6,19 @@ import CloseIcon from '../../assets/cancel.svg';
 import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
 
+interface QuestionData {
+  question: string;
+  type: 'CHECK_BOX' | 'RADIO' | 'TEXT' | 'LONG_TEXT' | 'FILE';
+  options: string[];
+  required: boolean;
+  order: number;
+}
+
+interface FormField {
+  section: string;
+  questions: QuestionData[];
+}
+
 interface Props {
   index: number;
   type: string;
@@ -34,7 +47,7 @@ export default function Content({
 
   const updateOption = useCallback(
     (newOptions: string[]) => {
-      setFormField((prevState) =>
+      setFormField((prevState: FormField[]) =>
         prevState.map((sec) =>
           sec.section === section.section
             ? {

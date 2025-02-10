@@ -1,7 +1,16 @@
 import React from 'react';
 
-export default function SelectSection({ sectionData }) {
-  console.log(sectionData);
+interface SectionData {
+  title: string;
+  description: string;
+  sections: string[];
+}
+
+interface SelectSectionProps {
+  sectionData: SectionData;
+}
+
+export default function SelectSection({ sectionData }: SelectSectionProps) {
   return (
     <div>
       <div className="text-4xl font-bold text-gray-600">
@@ -11,10 +20,17 @@ export default function SelectSection({ sectionData }) {
         {sectionData.description}
       </div>
 
-      <div>{sectionData.sections}</div>
       <div>
-        <button>취소</button>
-        <button>다음</button>
+        {sectionData.sections.map((section, index) => (
+          <div key={index}>{section}</div>
+        ))}
+      </div>
+
+      <div className="flex gap-4">
+        <button className="rounded bg-gray-300 px-4 py-2">취소</button>
+        <button className="rounded bg-blue-500 px-4 py-2 text-white">
+          다음
+        </button>
       </div>
     </div>
   );

@@ -1,17 +1,25 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import ArrowDown from '../../assets/arrowDown.svg';
+import { QuestionType } from '@/types/form';
+
+interface DropdownProps {
+  contents: QuestionType[];
+  selected: QuestionType;
+  setSelected: (value: QuestionType) => void;
+  disabled?: boolean;
+}
 
 export default function Dropdown({
   contents,
   selected,
   setSelected,
-  disabled,
-}) {
+  disabled = false,
+}: DropdownProps) {
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const convertToKorean = (value) => {
-    const translations = {
+  const convertToKorean = (value: QuestionType): string => {
+    const translations: Record<QuestionType, string> = {
       CHECK_BOX: '체크박스',
       RADIO: '객관식',
       TEXT: '단답형',
@@ -25,12 +33,11 @@ export default function Dropdown({
     <div className="relative w-full font-semibold text-gray-500 md:w-1/3">
       <div
         className={`flex items-center justify-between rounded-lg border px-4 py-3
-    ${
-      disabled
-        ? 'border-gray-300 bg-gray-100 text-gray-400'
-        : 'cursor-pointer border-gray-200 bg-white text-gray-500'
-    }
-  `}
+        ${
+          disabled
+            ? 'border-gray-300 bg-gray-100 text-gray-400'
+            : 'cursor-pointer border-gray-200 bg-white text-gray-500'
+        }`}
         onClick={() => {
           if (!disabled) {
             setOpenDropdown(!openDropdown);

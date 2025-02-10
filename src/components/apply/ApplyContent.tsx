@@ -8,11 +8,12 @@ import FilledCircle from '../../assets/check.svg';
 import FilledSquare from '../../assets/checkbox.svg';
 
 interface Props {
+  fieldId: number;
   index: number;
   type: string;
   isClosed: boolean;
   question: string;
-  options: string[];
+  options: string[] | [];
   required: boolean;
 }
 

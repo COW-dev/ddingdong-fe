@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import BaseInput from './BaseInput';
 import { StepDropdown } from './StepDropdown';
 
-export default function CommonQuestion({ disabled }) {
+export default function CommonQuestion({ disabled = false }) {
   const stepItem = {
     ICT융합대학: [
       '디지털콘텐츠디자인학과',

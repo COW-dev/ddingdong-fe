@@ -6,17 +6,39 @@ import Content from './Content';
 import Dropdown from './Dropdown';
 import hamburger from '../../assets/hamburger.svg';
 import { Switch } from '../../components/ui/switch';
+import { QuestionType } from '@/types/form';
+
+interface Section {
+  section: string;
+  questions: any[];
+}
+
+interface QuestionData {
+  question: string;
+  type: string;
+  options: string[];
+  required: boolean;
+  order: number;
+}
 
 interface Props {
   index: number;
-  questionData: {
-    question: string;
-    type: string;
-    options: string[] | [];
-    required: boolean;
-    order: number;
-  };
+  questionData: QuestionData;
+  section: Section;
+  deleteQuestion: (sectionName: string | undefined, index: number) => void;
+}
+
+interface FormField {
   section: string;
+  questions: QuestionData[];
+}
+
+interface Props {
+  index: number;
+  questionData: QuestionData;
+  section: Section;
+  setFormField: React.Dispatch<React.SetStateAction<FormField[]>>;
+  isClosed?: boolean;
   deleteQuestion: (sectionName: string | undefined, index: number) => void;
 }
 
@@ -28,8 +50,18 @@ export default function Question({
   isClosed,
   deleteQuestion,
 }: Props) {
-  const types = ['CHECK_BOX', 'RADIO', 'TEXT', 'LONG_TEXT', 'FILE'];
-  const [selectedType, setSelectedType] = useState<string>(questionData.type);
+  const types: QuestionType[] = [
+    'CHECK_BOX',
+    'RADIO',
+    'TEXT',
+    'LONG_TEXT',
+    'FILE',
+  ];
+
+  const [selectedType, setSelectedType] = useState<QuestionType>(
+    questionData.type as QuestionType,
+  );
+
   const [enabled, setEnabled] = useState<boolean>(questionData.required);
 
   const updateInput = (sectionName: string, index: number, value: string) => {
@@ -101,12 +133,15 @@ export default function Question({
           placeholder="질문을 입력해주세요"
           disabled={isClosed}
           value={questionData.question}
-          onChange={(e) => updateInput(section.section, index, e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            updateInput(section.section, index, e.target.value)
+          }
         />
+
         <Dropdown
           contents={types}
           selected={selectedType}
-          setSelected={(value) => {
+          setSelected={(value: QuestionType) => {
             setSelectedType(value);
             updateSelector(section.section, index, value);
           }}
@@ -121,7 +156,7 @@ export default function Question({
           questionData={questionData}
           setFormField={setFormField}
           section={section}
-          isClosed={isClosed}
+          isClosed={isClosed ?? false}
         />
       </div>
       {!isClosed && (
@@ -139,7 +174,7 @@ export default function Question({
           </div>
           <Trash2
             className="cursor-pointer text-sm text-gray-500"
-            onClick={() => deleteQuestion(questionData.section, index)}
+            onClick={() => deleteQuestion(section.section, index)}
           />
         </div>
       )}

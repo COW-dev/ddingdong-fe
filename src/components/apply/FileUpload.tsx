@@ -1,16 +1,26 @@
 import { useState } from 'react';
-export default function FileUpload({ onFilesSelected, disabled }) {
-  const [files, setFiles] = useState([]);
 
-  const handleFileChange = (event) => {
+interface FileUploadProps {
+  onFilesSelected: (files: File[]) => void;
+  disabled?: boolean;
+}
+
+export default function FileUpload({
+  onFilesSelected,
+  disabled = false,
+}: FileUploadProps) {
+  const [files, setFiles] = useState<File[]>([]);
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+
     const selectedFiles = Array.from(event.target.files);
-    setFiles(selectedFiles);
     onFilesSelected(selectedFiles);
   };
 
   return (
     <div className="flex flex-col gap-3">
-      <label className="relative flex w-full cursor-pointer rounded-lg border border-gray-50 bg-gray-50 px-4 py-3 text-start text-sm font-semibold text-gray-400 shadow-sm ">
+      <label className="relative flex w-full cursor-pointer rounded-lg border border-gray-50 bg-gray-50 px-4 py-3 text-start text-sm font-semibold text-gray-400 shadow-sm">
         {files.length > 0
           ? `선택된 파일 (${files.length}개): ${files
               .map((file) => file.name)

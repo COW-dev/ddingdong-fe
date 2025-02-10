@@ -11,41 +11,23 @@ import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
+import { FormData, FormField, QuestionType } from '@/types/form';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
 import emptySquare from '../../assets/empty_square_check.svg';
-type Section = string;
-
-type QuestionType = 'CHECK_BOX' | 'RADIO' | 'TEXT' | 'LONG_TEXT' | 'FILE';
-
-interface FormField {
-  question: string;
-  type: QuestionType;
-  options: string[] | [];
-  required: boolean;
-  order: number;
-  section: Section;
-}
-
-interface FormData {
-  title: string;
-  description?: string | null;
-  startDate: string;
-  endDate: string;
-  hasInterview: boolean;
-  sections: Section[];
-  formFields: FormField[];
-}
 
 interface Props {
   formData?: FormData;
   id?: number;
 }
+interface CategorizedFields {
+  [key: string]: FormField[];
+}
 
 export default function ManageForm({ formData, id }: Props) {
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
-  const updateFormMutation = useUpdateForm(token, id);
+  const updateFormMutation = useUpdateForm();
   const [isEditing, setIsEditing] = useState(false);
 
   const [title, setTitle] = useState(formData?.title ? formData.title : '');
@@ -94,8 +76,10 @@ export default function ManageForm({ formData, id }: Props) {
   };
 
   const formatFormData = (): FormData => {
-    const formatDate = (dateString: string | null) => {
-      return dateString ? new Date(dateString).toISOString().split('T')[0] : '';
+    const formatDate = (date: Date | string | null) => {
+      if (!date) return '';
+      if (date instanceof Date) return date.toISOString().split('T')[0];
+      return new Date(date).toISOString().split('T')[0];
     };
 
     return {
@@ -103,17 +87,19 @@ export default function ManageForm({ formData, id }: Props) {
       description: description.trim() || null,
       startDate: formatDate(recruitPeriod.startDate),
       endDate: formatDate(recruitPeriod.endDate),
-      hasInterview: isChecked,
+      hasInterview: isChecked ?? false,
       sections: sections,
       formFields: formField.flatMap((section) =>
-        section.questions.map((question) => ({
-          question: question.question.trim(),
-          type: question.type,
-          options: question.options || [],
-          required: question.required,
-          order: question.order,
-          section: section.section,
-        })),
+        section.questions.map(
+          (question): FormField => ({
+            question: question.question.trim(),
+            type: question.type as QuestionType,
+            options: question.options || [],
+            required: question.required,
+            order: question.order,
+            section: section.section,
+          }),
+        ),
       ),
     };
   };
@@ -122,24 +108,28 @@ export default function ManageForm({ formData, id }: Props) {
     ? new Date(formData.startDate) < new Date()
     : false;
 
-  const [isClosed, setIsClosed] = useState(formData);
+  const [isClosed, setIsClosed] = useState(formData ? true : false);
 
   const [isChecked, setIsChecked] = useState(formData?.hasInterview);
-  function categorizeFormFields(formData) {
-    const categorizedFields = {};
 
-    formData?.sections.forEach((section) => {
+  function categorizeFormFields(
+    formData: FormData | undefined,
+  ): CategorizedFields {
+    const categorizedFields: CategorizedFields = {};
+
+    (formData?.sections || []).forEach((section) => {
       categorizedFields[section] = [];
     });
 
-    formData?.formFields.forEach((field) => {
-      if (categorizedFields.hasOwnProperty(field.section)) {
+    (formData?.formFields || []).forEach((field) => {
+      if (field.section in categorizedFields) {
         categorizedFields[field.section].push(field);
       }
     });
 
     return categorizedFields;
   }
+
   const [modiformField, setmodiFormField] = useState(
     Object.keys(categorizeFormFields(formData)).map((section) => ({
       section,
@@ -158,9 +148,18 @@ export default function ManageForm({ formData, id }: Props) {
     formData ? formData.sections : ['공통'],
   );
   const [recruitPeriod, setRecruitPeriod] = useState<DateRangeType>({
-    startDate: formData?.startDate || null,
-    endDate: formData?.endDate || null,
+    startDate: null,
+    endDate: null,
   });
+
+  useEffect(() => {
+    if (formData) {
+      setRecruitPeriod({
+        startDate: formData.startDate ? new Date(formData.startDate) : null,
+        endDate: formData.endDate ? new Date(formData.endDate) : null,
+      });
+    }
+  }, [formData]);
 
   const baseQuestion = [
     {
@@ -215,11 +214,11 @@ export default function ManageForm({ formData, id }: Props) {
     );
   };
 
-  const handleDateChange = (newValue) => {
-    setRecruitPeriod(newValue);
+  const handleDateChange = (newValue: DateRangeType | null) => {
+    setRecruitPeriod(newValue ?? { startDate: null, endDate: null });
   };
 
-  const deleteQuestion = (sectionName, questionIndex) => {
+  const deleteQuestion = (sectionName: string, questionIndex: number) => {
     setFormField((prev) =>
       prev.map((section) =>
         section.section === sectionName
@@ -333,9 +332,12 @@ export default function ManageForm({ formData, id }: Props) {
             type="text"
             placeholder={'지원서 제목을 입력해주세요'}
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setTitle(e.target.value)
+            }
             disabled={isClosed}
           />
+
           <div className="w-full rounded-lg border">
             <Datepicker
               value={recruitPeriod}
@@ -351,7 +353,9 @@ export default function ManageForm({ formData, id }: Props) {
         <TextArea
           placeholder="지원서 설명을 입력해 주세요"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setDescription(e.target.value)
+          }
           disabled={isClosed}
         />
       </div>
