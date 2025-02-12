@@ -1,12 +1,9 @@
-import { PagingInfo } from './feed';
-
 export type Application = {
   title: string;
   startDate: string;
   endDate: string;
   hasInterview: boolean;
   formApplications: Applicant[];
-  pagingInfo: PagingInfo;
   token?: string;
 };
 

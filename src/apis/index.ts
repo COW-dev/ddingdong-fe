@@ -546,19 +546,13 @@ export async function registerApplicants({ formId, token }: RegisterApplicant) {
 
 export async function getAllApplication(
   formId: number,
-  currentCursorId: number | -1,
   token: string,
 ): Promise<AxiosResponse<Application, unknown>> {
-  return await api.get(
-    `/central/my/forms/${formId}/applications?currentCursorId=${
-      currentCursorId ?? -1
-    }&size=15`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+  return await api.get(`/central/my/forms/${formId}/applications`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
-  );
+  });
 }
 
 export async function getApplicantInfo(
