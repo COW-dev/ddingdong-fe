@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next/types';
+import { useCookies } from 'react-cookie';
 import LeftArrow2 from '@/assets/leftArrow2.svg';
 import StatisticsIntro from '@/components/apply/StatisticsIntro';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
 import Question from '@/pages/test/question';
-import { useCookies } from 'react-cookie';
-import { ApplyQuestion } from '@/components/ui/bar-chart';
+import { ApplyQuestion } from '@/types/apply';
 
 type Props = {
   applyId: number;

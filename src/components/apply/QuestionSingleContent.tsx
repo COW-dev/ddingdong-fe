@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { AnswerItem, useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
-import router from 'next/router';
 import Image from 'next/image';
-import File from '@/assets/file.svg';
+import router from 'next/router';
 import { useCookies } from 'react-cookie';
+import File from '@/assets/file.svg';
+import { AnswerItem, useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
 
 const componentMap = {
   TEXT: TextList,

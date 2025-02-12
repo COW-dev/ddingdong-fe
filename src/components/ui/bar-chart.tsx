@@ -1,29 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
-
-export type ApplyRate = {
-  label: string;
-  count: number;
-  comparedToBefore: {
-    ratio: number;
-    value: number;
-  };
-};
-
-export type ApplyQuestion = {
-  question: string;
-  id: number;
-  count: number;
-  section: string;
-  type: 'RADIO' | 'CHECK_BOX' | 'TEXT' | 'FILE' | 'LONG_TEXT';
-};
-
-export type ChartItem = {
-  label: string;
-  count: number;
-  ratio: number;
-  rank?: number;
-};
+import { ChartItem } from '@/types/apply';
 
 ChartJS.register(BarController, BarElement, Tooltip);
 
@@ -59,7 +36,7 @@ const BarChart = ({ passedData }: Props) => {
   const [barThickness, setBarThickness] = useState(getBarThickness);
 
   const renderChart = () => {
-    const ctx = canvasRef.current;
+    const ctx = canvasRef.current?.getContext('2d');
     if (!ctx) return;
 
     chartInstance = new ChartJS(ctx, {
