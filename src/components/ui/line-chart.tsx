@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 
 import { tooltip } from './chart/tooltip';
-import { ApplyRate } from './table-chart';
+import { ApplyRate } from './bar-chart';
 
 ChartJS.register(
   LineController,

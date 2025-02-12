@@ -7,7 +7,7 @@ import {
   Legend,
 } from 'chart.js';
 import { tooltip } from './chart/tooltip';
-import { ChartItem } from './table-chart';
+import { ChartItem } from './bar-chart';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
