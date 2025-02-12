@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
 import { ChartItem } from '@/types/apply';
+import { tooltip } from './chart/tooltip';
 
 ChartJS.register(BarController, BarElement, Tooltip);
 
@@ -36,10 +37,10 @@ const BarChart = ({ passedData }: Props) => {
   const [barThickness, setBarThickness] = useState(getBarThickness);
 
   const renderChart = () => {
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
+    const canvasContext = canvasRef.current?.getContext('2d');
+    if (!canvasContext) return;
 
-    chartInstance = new ChartJS(ctx, {
+    chartInstance = new ChartJS(canvasContext, {
       type: 'bar',
       data: getChartData(),
       options: {
@@ -85,7 +86,7 @@ const BarChart = ({ passedData }: Props) => {
 export default BarChart;
 
 const tableChartOption = {
-  plugins: { legend: { display: false } },
+  plugins: { legend: { display: false }, tooltip: tooltip },
   responsive: true,
   maintainAspectRatio: false,
 };

@@ -42,11 +42,15 @@ const PieChart = ({ passedData }: Props) => {
   };
 
   const renderChart = () => {
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+
+    const canvasContext = canvasRef.current?.getContext('2d');
+    if (!canvasContext) return;
 
     resizeChart();
-    chartInstance = new ChartJS(ctx, {
+    chartInstance = new ChartJS(canvasContext, {
       type: 'pie',
       data: getChartData(),
       options: PieChartOption,
@@ -66,19 +70,20 @@ const PieChart = ({ passedData }: Props) => {
 };
 
 export default PieChart;
-
 const PieChartOption = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'right' as const,
+      align: 'center' as const,
       labels: {
+        usePointStyle: true, // 원형 마커 스타일 적용
         font: {
           family: 'Pretendard',
           size: 14,
-          weight: 700,
         },
+        color: '#1F2937',
       },
     },
     tooltip: tooltip,

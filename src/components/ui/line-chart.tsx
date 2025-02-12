@@ -9,8 +9,8 @@ import {
   Tooltip,
 } from 'chart.js';
 
+import { ApplyRate } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
-import { ApplyRate } from './bar-chart';
 
 ChartJS.register(
   LineController,
@@ -44,10 +44,10 @@ const LineChart = ({ passedData }: Props) => {
   };
 
   const renderChart = () => {
-    const ctx = canvasRef.current?.getContext('2d');
-    if (!ctx) return;
+    const canvasContext = canvasRef.current?.getContext('2d');
+    if (!canvasContext) return;
 
-    chartInstance = new ChartJS(ctx, {
+    chartInstance = new ChartJS(canvasContext, {
       type: 'line',
       data: getChartData(),
       options: lineChartOption,
@@ -77,7 +77,7 @@ const lineChartStyle = {
 const lineChartOption = {
   responsive: true,
   plugins: {
-    legend: { display: false }, // 범례 숨김
+    legend: { display: false },
     tooltip: {
       ...tooltip,
       callbacks: {

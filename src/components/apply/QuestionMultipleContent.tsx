@@ -25,12 +25,12 @@ export default function QuestionMultipleContent({ type, id }: Props) {
         {
           label: '지문1입니다.',
           count: 5,
-          ratio: 30,
+          ratio: 20,
         },
         {
           label: '지문2입니다.',
           count: 4,
-          ratio: 30,
+          ratio: 40,
         },
         {
           label: '지문3입니다.',
