@@ -2,22 +2,28 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import ArrowDown from '@/assets/arrowDown.svg';
 import ArrowUp from '@/assets/arrowUp.svg';
+import { cn } from '../ui/utils';
 
 type AccordionProps = {
-  title: string;
+  title: React.ReactNode;
   children: React.ReactNode;
   visible?: boolean;
+  className?: string;
+  onToggle?: (isOpen: boolean) => void;
 };
 
 export default function Accordion({
   title,
   children,
+  className,
   visible,
+  onToggle,
 }: AccordionProps) {
   const [open, setOpen] = useState<boolean>(visible ?? true);
 
   const handleOpen = () => {
     setOpen(!open);
+    onToggle?.(!open);
   };
   return (
     <div
@@ -30,9 +36,12 @@ export default function Accordion({
         <button
           type="button"
           data-te-collapse-init
-          className={`flex w-full items-center justify-between border-b border-gray-200 p-4 text-left font-medium text-gray-500 ${
-            open ? 'active' : ''
-          }`}
+          className={cn(
+            `flex w-full items-center justify-between border-b border-gray-200 p-4 text-left font-medium text-gray-500 ${
+              open ? 'active' : ''
+            }`,
+            className,
+          )}
           data-accordion-target="#accordion-flush-body-1"
           aria-expanded={open ? 'true' : 'false'}
           aria-controls="accordion-flush-body-1"

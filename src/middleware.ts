@@ -52,6 +52,8 @@ export const config = {
     '/club/:path*',
     '/report',
     '/banner',
+    '/apply',
+    '/apply/:path*',
     '/admin/:path*',
     '/report/:path*',
     '/feeds/:path*',
