@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useRef } from 'react';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -18,7 +17,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { OBSERVER_OPTIONS } from '@/constants/observer';
 import { useAllApplication } from '@/hooks/api/apply/useAllApplication';
 import { useDeleteApplication } from '@/hooks/api/apply/useDeleteApply';
 import { useRegisterApplicant } from '@/hooks/api/apply/useRegisterApplicant';
@@ -33,39 +31,18 @@ type Props = {
 
 export default function Index({ id, isActive }: Props) {
   const [{ token }] = useCookies(['token']);
-  const observerTarget = useRef<HTMLDivElement>(null);
-
   const current = new Date().toISOString().split('T')[0];
 
-  const {
-    data: data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useAllApplication(id, token);
+  const { data: data, isLoading } = useAllApplication(id, token);
   const deleteMutation = useDeleteApplication();
   const registerMutation = useRegisterApplicant();
 
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const applicationData = data?.pages.flatMap((page) => page.data)[0];
-  const applicantData = data?.pages.flatMap(
-    (page) => page.data.formApplications,
-  );
+  const applicationData = data?.data;
 
   const { documentApplicants, interviewApplicants } = filterApplicants(
-    applicantData ?? [],
-  );
-  const handleObserver = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-          fetchNextPage();
-        }
-      });
-    },
-    [fetchNextPage, hasNextPage, isFetchingNextPage],
+    applicationData?.formApplications ?? [],
   );
 
   const handleRegister = () => {
@@ -82,37 +59,15 @@ export default function Index({ id, isActive }: Props) {
     });
   };
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleObserver, OBSERVER_OPTIONS);
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-    }
-    return () => observer.disconnect();
-  }, [handleObserver]);
-
   const ClubTabMenus: TabMenu[] = [
     {
       label: '서류',
-      content: (
-        <>
-          <ApplicantList data={documentApplicants ?? []} />{' '}
-          <div
-            ref={observerTarget}
-            className="mt-5 h-5 w-full bg-transparent"
-          />
-        </>
-      ),
+      content: <ApplicantList data={documentApplicants ?? []} />,
     },
     {
       label: '면접',
       content: (
-        <>
-          <ApplicantList type="INTERVIEW" data={interviewApplicants ?? []} />
-          <div
-            ref={observerTarget}
-            className="mt-5 h-5 w-full bg-transparent"
-          />
-        </>
+        <ApplicantList type="INTERVIEW" data={interviewApplicants ?? []} />
       ),
     },
   ];
@@ -233,13 +188,7 @@ export default function Index({ id, isActive }: Props) {
       {applicationData.hasInterview ? (
         <Tabs TabMenus={ClubTabMenus} tabContext="myClub" />
       ) : (
-        <>
-          <ApplicantList data={applicantData ?? []} />
-          <div
-            ref={observerTarget}
-            className="mt-5 h-5 w-full bg-transparent"
-          />
-        </>
+        <ApplicantList data={applicationData.formApplications ?? []} />
       )}
       <Link href={`/apply/${id}/edit`}>
         <button className="fixed bottom-10 right-5 flex h-12 items-center justify-center rounded-[100px] bg-blue-500 px-8 py-3 font-semibold text-white hover:bg-blue-600 md:bottom-20 md:right-20 md:px-10 md:py-4">

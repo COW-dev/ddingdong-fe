@@ -25,7 +25,6 @@ type Props = {
 };
 
 export default function ApplicantList({ type = 'DOCUMENT', data }: Props) {
-  console.log('data', data);
   const [{ token }] = useCookies(['token']);
   const [allChecked, setAllChecked] = useState<boolean>(false);
   const [selectedApplicants, setSelectedApplicants] = useState<{
