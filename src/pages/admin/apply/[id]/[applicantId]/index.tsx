@@ -72,13 +72,13 @@ export default function Index({ id, applicantId }: Props) {
                 STATUS_TYPE[applicantData.status].backgroundColor
               } ${
                 STATUS_TYPE[applicantData.status].color
-              } ml-4 rounded-lg px-2 py-[5px] text-sm font-semibold`}
+              } ml-2 rounded-lg p-1 text-xs font-semibold md:ml-4 md:px-2 md:py-[5px] md:text-sm`}
             >
               {STATUS_TYPE[applicantData.status].statusText}
             </div>
           </Link>
         </div>
-        <span className="text-lg">
+        <span className="text-base md:text-lg">
           제출일시{' '}
           {`${
             applicantData?.submittedAt.replaceAll('-', '.').split('T')[0]

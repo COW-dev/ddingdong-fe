@@ -71,7 +71,7 @@ export const getNextStatus = (
       fail: 'FIRST_FAIL',
     },
     FIRST_PASS: {
-      pass: 'FINAL_PASS',
+      pass: hasInterview ? 'FINAL_PASS' : 'FIRST_PASS',
       fail: hasInterview ? 'FINAL_FAIL' : 'FIRST_FAIL',
     },
     FIRST_FAIL: {
