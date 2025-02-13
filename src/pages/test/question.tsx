@@ -17,7 +17,7 @@ function Question({ data }: Props) {
   }
 
   return (
-    <div className="mt-7 rounded-md border border-[#E5E7EB] p-2 md:p-[14px]">
+    <div className="mb-7 rounded-md border border-[#E5E7EB] p-2 md:p-[14px]">
       <Accordion
         onToggle={() => setIsOpen(!isOpen)}
         className="border-none"
