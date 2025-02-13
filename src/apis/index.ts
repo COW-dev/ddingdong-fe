@@ -754,3 +754,7 @@ export async function updateForm(
     },
   });
 }
+
+export async function getSections(formId: number) {
+  return await api.get(`/forms/${formId}/sections`);
+}
