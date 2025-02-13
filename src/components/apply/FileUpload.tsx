@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Image from 'next/image';
+import File from '../../assets/file.svg';
 
 interface FileUploadProps {
   onFilesSelected: (files: File[]) => void;
@@ -15,17 +17,24 @@ export default function FileUpload({
     if (!event.target.files) return;
 
     const selectedFiles = Array.from(event.target.files);
+    setFiles(selectedFiles);
     onFilesSelected(selectedFiles);
   };
 
   return (
-    <div className="flex flex-col gap-3">
-      <label className="relative flex w-full cursor-pointer rounded-lg border border-gray-50 bg-gray-50 px-4 py-3 text-start text-sm font-semibold text-gray-400 shadow-sm">
-        {files.length > 0
-          ? `선택된 파일 (${files.length}개): ${files
-              .map((file) => file.name)
-              .join(', ')}`
-          : '파일을 선택해주세요'}
+    <div className="flex flex-col gap-3 rounded-lg border">
+      <label className="relative flex w-full cursor-pointer items-center gap-2 rounded-lg border border-gray-50 bg-gray-50 px-4 py-3 text-start text-sm font-semibold text-gray-400 shadow-sm">
+        <Image src={File} alt="file_icon" width={17} />
+
+        {files.length > 0 ? (
+          <span className="text-gray-500">
+            선택된 파일 ({files.length}개):{' '}
+            {files.map((file) => file.name).join(', ')}
+          </span>
+        ) : (
+          '파일을 선택해주세요'
+        )}
+
         <input
           type="file"
           multiple

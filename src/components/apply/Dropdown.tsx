@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import ArrowDown from '../../assets/arrowDown.svg';
 import { QuestionType } from '@/types/form';
+import ArrowDownGray from '../../assets/arrow_down_gray.svg';
 
 interface DropdownProps {
   contents: QuestionType[];
@@ -32,10 +32,10 @@ export default function Dropdown({
   return (
     <div className="relative w-full font-semibold text-gray-500 md:w-1/3">
       <div
-        className={`flex items-center justify-between rounded-lg border px-4 py-3
+        className={`flex items-center justify-between rounded-xl border px-4 py-2.5
         ${
           disabled
-            ? 'border-gray-300 bg-gray-100 text-gray-400'
+            ? ' '
             : 'cursor-pointer border-gray-200 bg-white text-gray-500'
         }`}
         onClick={() => {
@@ -46,7 +46,7 @@ export default function Dropdown({
       >
         {convertToKorean(selected)}
         <Image
-          src={ArrowDown}
+          src={ArrowDownGray}
           alt="arrow"
           className={`transition-transform duration-300 ${
             openDropdown ? 'rotate-180' : ''
