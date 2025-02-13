@@ -16,13 +16,20 @@ const BarChart = ({ passedData }: Props) => {
   const getChartData = () => {
     const labels = passedData.map((item) => item.label);
     const rates = passedData.map((item) => item.ratio);
-    const backgroundColors = passedData.map((item) =>
-      item.rank === 1
-        ? '#3B82F6'
-        : item.rank === 2 || item.rank === 3
-        ? '#DBEAFE'
-        : '#E5E7EB',
-    );
+    const sorteCountData = [...passedData].sort((a, b) => b.count - a.count);
+    const colorMap = sorteCountData.map((item, index) => {
+      if (index === 0) return '#3B82F6';
+      if (index === 1 || index === 2) return '#DBEAFE';
+      return '#E5E7EB';
+    });
+
+    const backgroundColors = passedData.map((item) => {
+      const sortedIndex = sorteCountData.findIndex(
+        (sortedItem) => sortedItem === item,
+      );
+      return colorMap[sortedIndex];
+    });
+
     return {
       labels,
       datasets: [

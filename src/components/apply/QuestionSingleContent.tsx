@@ -56,8 +56,8 @@ export default function QuestionSingleContent({ type, id }: Props) {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      {data?.data.answers.map((answer) => {
-        return <ChartComponent answer={answer} />;
+      {data?.data.answers.map((answer, index) => {
+        return <ChartComponent answer={answer} key={index} />;
       })}
     </div>
   );
@@ -113,8 +113,7 @@ function TextList({ answer }: { answer: AnswerItem }) {
         target.style.height = 'auto';
         target.style.height = `${target.scrollHeight}px`;
       }}
-    >
-      {answer.answer}
-    </textarea>
+      value={answer.answer}
+    />
   );
 }

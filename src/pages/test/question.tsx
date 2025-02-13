@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Accordion from '@/components/common/Accordion';
-import { ApplyQuestion } from '@/components/ui/bar-chart';
 import QuestionMultipleContent from '@/components/apply/QuestionMultipleContent';
 import QuestionSingleContent from '@/components/apply/QuestionSingleContent';
+import Accordion from '@/components/common/Accordion';
+import { ApplyQuestion } from '@/types/apply';
 
 type Props = {
   data: ApplyQuestion;
