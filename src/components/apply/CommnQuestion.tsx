@@ -1,55 +1,57 @@
-import React from 'react';
+import React, { useCallback, useRef } from 'react';
+import { departmentInfo } from '@/constants/department';
 import BaseInput from './BaseInput';
 import { StepDropdown } from './StepDropdown';
 
-export default function CommonQuestion({ disabled = false }) {
-  const stepItem = {
-    ICT융합대학: [
-      '디지털콘텐츠디자인학과',
-      '융합소프트웨어학부',
-      '정보통신공학과',
-    ],
-    미래융합대학: [
-      '창의융합인재학부',
-      '사회복지학과',
-      '부동산학과',
-      '법무행정학과',
-      '심리치료학과',
-      '미래융합경영학과',
-      '멀티디자인학과',
-      '회계세무학과',
-      '계약학과',
-    ],
-    자연과학대학: [
-      '수학과',
-      '물리학과',
-      '화학과',
-      '식품영양학과',
-      '생명과학정보학과',
-    ],
-    공과대학: [
-      '전기공학과',
-      '전자공학과',
-      '반도체공학과',
-      '화학공학과',
-      '신소재공학과',
-      '환경에너지공학과',
-      '컴퓨터공학과',
-      '토목환경공학과',
-      '교통공학과',
-      '기계공학과',
-      '산업경영공학과',
-      '공학교육혁신센터',
-    ],
-    예술체육대학: ['디자인학부', '스포츠학부', '바둑학과', '예술학부'],
-    건축대학: ['건축학부'],
-    방목기초교육대학: [
-      '전공자유학부(인문)',
-      '전공자유학부(자연)',
-      '융합전공학부(인문)',
-    ],
-    국제학부: ['글로벌비즈니스전공'],
-  };
+interface RequiredQuestions {
+  name?: string;
+  studentNumber?: string;
+  department?: string;
+  phoneNumber?: string;
+  email?: string;
+}
+
+interface CommonQuestionProps {
+  disabled?: boolean;
+  requiredQuestions?: RequiredQuestions;
+  setRequiredQuestions?: React.Dispatch<
+    React.SetStateAction<RequiredQuestions>
+  >;
+}
+
+export default function CommonQuestion({
+  disabled = false,
+  requiredQuestions,
+  setRequiredQuestions,
+}: CommonQuestionProps) {
+  const nameRef = useRef(requiredQuestions?.name || '');
+  const studentNumberRef = useRef(requiredQuestions?.studentNumber || '');
+  const phoneNumberRef = useRef(requiredQuestions?.phoneNumber || '');
+  const emailRef = useRef(requiredQuestions?.email || '');
+
+  const handleBlur = useCallback(
+    (field: keyof RequiredQuestions, value: string) => {
+      if (setRequiredQuestions) {
+        setRequiredQuestions((prev) => ({
+          ...prev,
+          [field]: value,
+        }));
+      }
+    },
+    [setRequiredQuestions],
+  );
+
+  const handleDepartmentChange = useCallback(
+    (selectedDept: string) => {
+      if (setRequiredQuestions) {
+        setRequiredQuestions((prev) => ({
+          ...prev,
+          department: selectedDept,
+        }));
+      }
+    },
+    [setRequiredQuestions],
+  );
 
   return (
     <div className="mb-3 flex flex-col gap-5 rounded-lg border border-gray-200 px-6 py-7">
@@ -58,27 +60,46 @@ export default function CommonQuestion({ disabled = false }) {
           placeholder="이름을 입력해주세요"
           label={'이름'}
           disabled={disabled}
+          defaultValue={nameRef.current}
+          onChange={(e) => (nameRef.current = e.target.value)}
+          onBlur={() => handleBlur('name', nameRef.current)}
         />
         <BaseInput
           placeholder="학번을 입력해주세요"
           label={'학번'}
           disabled={disabled}
+          defaultValue={studentNumberRef.current}
+          onChange={(e) => (studentNumberRef.current = e.target.value)}
+          onBlur={() => handleBlur('studentNumber', studentNumberRef.current)}
         />
-        <StepDropdown contents={stepItem} label={'학과'} disabled={disabled} />
+        <StepDropdown
+          contents={departmentInfo}
+          label={'학과'}
+          disabled={disabled}
+          selectItem={handleDepartmentChange}
+          selectedContent={requiredQuestions?.department || ''}
+        />
       </div>
 
       <div className="flex flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
           placeholder="전화번호를 입력해주세요"
-          label={'전화번호(` - `제외)'}
+          label={`전화번호(' - '제외)`}
           disabled={disabled}
+          defaultValue={phoneNumberRef.current}
+          onChange={(e) => (phoneNumberRef.current = e.target.value)}
+          onBlur={() => handleBlur('phoneNumber', phoneNumberRef.current)}
         />
         <BaseInput
           placeholder="이메일을 입력해주세요"
           label={'이메일'}
           disabled={disabled}
+          defaultValue={emailRef.current}
+          onChange={(e) => (emailRef.current = e.target.value)}
+          onBlur={() => handleBlur('email', emailRef.current)}
         />
       </div>
+
       <div className="w-full border-t border-gray-200 pt-6 text-right font-semibold text-gray-500">
         {disabled
           ? '* 해당 질문은 기본제공 질문입니다'
