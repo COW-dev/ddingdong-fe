@@ -1,4 +1,4 @@
-import type { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getAllForms } from '@/apis';
 
 export function useAllForms(token: string) {

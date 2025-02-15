@@ -6,8 +6,9 @@ export function useAllSections(id: number) {
   return useQuery({
     queryKey: ['Sections'],
     queryFn: () => getSections(id),
+    enabled: !!id,
     onError: (error) => {
-      toast.error('섹션 조회에 오류가 발생하였습니다');
+      toast.error('조회에 오류가 발생하였습니다' + (error as string));
     },
   });
 }
