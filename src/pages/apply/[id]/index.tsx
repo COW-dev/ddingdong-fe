@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import JSConfetti from 'js-confetti';
 import ApplyForm from '@/components/apply/ApplyForm';
 import { useAllSections } from '@/hooks/api/apply/useAllSections';
+import { useFormDetail } from '@/hooks/api/apply/useFormDetail';
 import Check from '../../../assets/check.svg';
 import FilledCircle from '../../../assets/check_form.svg';
 import EmptyCircle from '../../../assets/empty-circle-check.svg';
@@ -11,34 +12,46 @@ import EmptyCircle from '../../../assets/empty-circle-check.svg';
 export default function IndexPage() {
   const router = useRouter();
   const { id } = router.query;
+  const formId = id ? Number(id) : 0;
 
-  const parsedId: number | undefined = (() => {
-    if (Array.isArray(id)) return parseInt(id[0], 10);
-    if (typeof id === 'string') return parseInt(id, 10);
-  })();
+  const { data: sectionsData, isLoading } = useAllSections(formId);
+  const [selectedRadio, setSelectedRadio] = useState<string>('');
+  const [step, setStep] = useState<'SECTION' | 'QUESTION' | 'SUBMITED'>(
+    'SECTION',
+  );
 
-  const { data: sectionsData, isLoading } = useAllSections(parsedId ?? -1);
-  const [step, setStep] = useState<
-    'SECTION' | 'QUESTION' | 'SUBMITED' | '로딩'
-  >('로딩');
+  const sections = useMemo(
+    () => sectionsData?.data?.sections || [],
+    [sectionsData],
+  );
 
   useEffect(() => {
-    if (!isLoading && sectionsData) {
-      const sections = sectionsData?.data?.sections || [];
-      if (sections.length > 2) {
-        setStep('QUESTION');
-      } else {
-        setStep('QUESTION');
-      }
+    if (!isLoading && sections.length > 2) {
+      setStep('SECTION');
+    } else {
+      setStep('QUESTION');
     }
-  }, [sectionsData, isLoading]);
-  console.log(sectionsData);
+  }, [sections, isLoading]);
+
+  const { data: questionData } = useFormDetail(formId, selectedRadio);
+
+  const goBack = () => {
+    router.back();
+  };
+
+  const onClickNext = () => {
+    if (!selectedRadio) {
+      alert('지원 분야를 선택해주세요!');
+      return;
+    }
+    setStep('QUESTION');
+  };
 
   return (
     <div>
-      <div>
-        {step === 'SECTION' ||
-          (step == 'QUESTION' && (
+      {!isLoading && (
+        <div>
+          {(step === 'SECTION' || step === 'QUESTION') && (
             <div className="pb-6">
               <div className="py-5 pt-10 text-4xl font-bold text-gray-800">
                 {sectionsData?.data?.title}
@@ -47,52 +60,63 @@ export default function IndexPage() {
                 {sectionsData?.data?.description}
               </div>
             </div>
-          ))}
-        {step === 'SECTION' && (
-          <div className="flex w-full flex-col justify-center">
-            <SelectSection sections={sectionsData?.data?.sections} />
-            <div className="flex w-full justify-center gap-3 py-10 font-bold">
-              <button className="rounded-lg bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-50">
-                취소
-              </button>
-              <button className="rounded-lg bg-blue-100 px-5 py-2 text-blue-500 ">
-                다음
-              </button>
+          )}
+          {step === 'SECTION' && (
+            <div className="flex w-full flex-col justify-center">
+              <SelectSection
+                sections={sections}
+                setSelectedRadio={setSelectedRadio}
+                selectedRadio={selectedRadio}
+              />
+              <div className="flex w-full justify-center gap-3 py-10 font-bold">
+                <button
+                  onClick={goBack}
+                  className="rounded-lg bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
+                >
+                  취소
+                </button>
+                <button
+                  onClick={onClickNext}
+                  className="rounded-lg bg-blue-100 px-5 py-2 text-blue-500 hover:bg-blue-200"
+                >
+                  다음
+                </button>
+              </div>
             </div>
-          </div>
-        )}
-        {step === 'QUESTION' && (
-          <div>
-            <ApplyForm />
-            <div className="flex w-full justify-center gap-3 py-10 font-bold">
-              <button className="rounded-xl bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-50">
-                취소
-              </button>
-              <button className="rounded-xl bg-blue-500 px-10 py-2 text-white ">
-                제출하기
-              </button>
+          )}
+          {step === 'QUESTION' && (
+            <div>
+              <ApplyForm formData={questionData} setStep={setStep} />
             </div>
-          </div>
-        )}
-      </div>
-      {step === 'SUBMITED' && <Submited />}
+          )}
+        </div>
+      )}
+      {step == 'SUBMITED' && (
+        <div>
+          <Submited />
+        </div>
+      )}
     </div>
   );
 }
 
 interface SectionsProps {
   sections: string[];
+  selectedRadio: string;
+  setSelectedRadio: (value: string) => void;
 }
 
-export function SelectSection({ sections }: SectionsProps) {
-  const [selectedRadio, setSelectedRadio] = useState<string>('');
-
+export function SelectSection({
+  sections,
+  selectedRadio,
+  setSelectedRadio,
+}: SectionsProps) {
   return (
     <div className="flex flex-col items-start rounded-xl border px-6 py-5 pb-5">
       <div className="px-2 py-2 text-xl font-bold text-blue-500">
         지원분야를 선택해주세요.
       </div>
-      {sections.map(
+      {sections?.map(
         (opt, i) =>
           opt !== '공통' && (
             <div
