@@ -19,7 +19,11 @@ export default function Index() {
 
   return (
     <div>
-      {formData ? <ManageForm formData={formData} id={id} /> : <Skeleton />}
+      {formData ? (
+        <ManageForm formData={formData} id={Number(id)} />
+      ) : (
+        <Skeleton />
+      )}
     </div>
   );
 }
