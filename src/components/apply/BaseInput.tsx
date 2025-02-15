@@ -1,11 +1,26 @@
+import { ChangeEvent } from 'react';
+
+interface BaseInputProps {
+  className?: string;
+  disabled?: boolean;
+  as?: 'input' | 'textarea';
+  label?: string;
+  placeholder?: string;
+  onChange?: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  [key: string]: any;
+}
+
 export default function BaseInput({
   className = '',
   disabled = false,
   as = 'input',
   label = '',
   placeholder = '',
+  onChange,
   ...props
-}) {
+}: BaseInputProps) {
   const Component = as === 'textarea' ? 'textarea' : 'input';
 
   return (
@@ -22,6 +37,7 @@ export default function BaseInput({
         placeholder={
           disabled || as === 'textarea' || as === 'input' ? placeholder : ''
         }
+        onChange={onChange}
         {...props}
       />
     </div>
