@@ -35,6 +35,7 @@
     "event-source-polyfill": "^1.0.31",
     "framer-motion": "^11.16.4",
     "hls.js": "^1.5.15",
+    "js-confetti": "^0.12.0",
     "lottie-react": "^2.4.0",
     "lucide-react": "^0.331.0",
     "next": "13.2.4",
