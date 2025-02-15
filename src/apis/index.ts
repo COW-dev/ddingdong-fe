@@ -48,7 +48,7 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
-import { FormData } from '@/types/form';
+import { FormData, ApplyData } from '@/types/form';
 import {
   Notice,
   NoticeDetail,
@@ -757,4 +757,15 @@ export async function updateForm(
 
 export async function getSections(formId: number) {
   return await api.get(`/forms/${formId}/sections`);
+}
+
+export async function getFormDetail(formId: number, section: string) {
+  return await api.get(`forms/${formId}?section=${section}`);
+}
+
+export async function submitApplicationForm(
+  formId: number,
+  formData: ApplyData,
+) {
+  return await api.post(`forms/${formId}/applications`, formData);
 }
