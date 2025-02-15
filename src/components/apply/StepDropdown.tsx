@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ArrowDownGray from '../../assets/arrow_down_gray.svg';
 
@@ -6,16 +6,27 @@ type Props = {
   contents: { [key: string]: string[] };
   disabled?: boolean;
   label?: string;
+  selectItem: (item: string) => void;
+  selectedContent: string;
 };
 
-export function StepDropdown({ label, contents, disabled = false }: Props) {
+export function StepDropdown({
+  label,
+  contents,
+  selectItem,
+  disabled = false,
+  selectedContent,
+}: Props) {
   const allItems = Object.entries(contents).flatMap(([category, items]) =>
     items.map((item) => ({ category, item })),
   );
 
-  const [selectedContent, setSelectedContent] = useState(
-    allItems[0]?.item || '',
-  );
+  useEffect(() => {
+    if (!selectedContent && allItems.length > 0) {
+      selectItem(allItems[0].item);
+    }
+  }, [selectedContent, allItems, selectItem]);
+
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
@@ -47,16 +58,17 @@ export function StepDropdown({ label, contents, disabled = false }: Props) {
             {Object.entries(contents).map(
               ([category, items], categoryIndex) => (
                 <div key={categoryIndex} className="flex flex-col">
-                  <div className="cursor-default border-b border-gray-200 px-5 py-4 font-semibold text-gray-300">
+                  <div className="cursor-default border-b border-gray-200 px-5 py-3 font-semibold text-gray-300">
                     {category}
                   </div>
 
                   {items.map((item, key) => (
                     <div
                       key={key}
-                      className="cursor-pointer px-5 py-2 hover:bg-gray-100"
+                      className="cursor-pointer px-5 py-3 hover:bg-gray-100"
                       onClick={() => {
-                        setSelectedContent(item);
+                        selectItem(item);
+                        setOpenDropdown(false);
                         setOpenDropdown(false);
                       }}
                     >

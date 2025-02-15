@@ -4,18 +4,18 @@ import BaseInput from './BaseInput';
 import { StepDropdown } from './StepDropdown';
 
 interface RequiredQuestions {
-  name?: string;
-  studentNumber?: string;
-  department?: string;
-  phoneNumber?: string;
-  email?: string;
+  name: string;
+  studentNumber: string;
+  department: string;
+  phoneNumber: string;
+  email: string;
 }
 
 interface CommonQuestionProps {
   disabled?: boolean;
-  requiredQuestions?: RequiredQuestions;
-  setRequiredQuestions?: React.Dispatch<
-    React.SetStateAction<RequiredQuestions>
+  requiredQuestions: RequiredQuestions;
+  setRequiredQuestions: React.Dispatch<
+    React.SetStateAction<RequiredQuestions | Partial<RequiredQuestions>>
   >;
 }
 
@@ -32,10 +32,13 @@ export default function CommonQuestion({
   const handleBlur = useCallback(
     (field: keyof RequiredQuestions, value: string) => {
       if (setRequiredQuestions) {
-        setRequiredQuestions((prev) => ({
-          ...prev,
-          [field]: value,
-        }));
+        setRequiredQuestions(
+          (prev) =>
+            ({
+              ...prev,
+              [field]: value ?? '',
+            } as RequiredQuestions),
+        );
       }
     },
     [setRequiredQuestions],
