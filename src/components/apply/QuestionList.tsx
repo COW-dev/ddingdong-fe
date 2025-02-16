@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
+import Question from '@/components/apply/ApplyQuestion';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
-import Question from '@/pages/test/question';
 import { ApplyQuestion } from '@/types/apply';
 import Sections from './Sections';
 
@@ -18,7 +18,7 @@ function QuestionList({ applyId }: Prop) {
 
   useEffect(() => {
     const filteredData = data?.data.fieldStatistics.fields.filter(
-      (item) => item.section === fields,
+      (item: ApplyQuestion) => item.section === fields,
     );
     setFieldsData(filteredData);
   }, [fields, data]);

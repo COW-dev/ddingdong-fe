@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
+import { ChartItem } from '@/types/apply';
 import OptionModal from '../ui/OptionModal';
 
 type Props = {
@@ -20,10 +21,10 @@ type Props = {
 export default function StatisticsIntro({ applyId }: Props) {
   const [{ token }] = useCookies(['token']);
   const { data } = useApplyStatistics(applyId, token);
-  const sortDepartmentRanksByLabel = () => {
+  const sortDepartmentRanksByLabel = (): ChartItem[] => {
     if (!data?.data.departmentStatistics) return [];
     return (
-      data?.data.departmentStatistics.sort((a, b) =>
+      data?.data.departmentStatistics.sort((a: ChartItem, b: ChartItem) =>
         a.label.localeCompare(b.label),
       ) ?? data?.data.departmentStatistics
     );
@@ -46,7 +47,9 @@ export default function StatisticsIntro({ applyId }: Props) {
           <div className="absolute -right-8 bottom-3 ">
             <OptionModal
               labels={
-                sortDepartmentRanksByLabel().map((item) => item.label) ?? []
+                sortDepartmentRanksByLabel().map(
+                  (item: ChartItem) => item.label,
+                ) ?? []
               }
             />
           </div>

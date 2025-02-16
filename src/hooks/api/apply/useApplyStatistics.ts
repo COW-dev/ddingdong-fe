@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError, type AxiosResponse } from 'axios';
 import { getApplyStatistics } from '@/apis';
-import { ApplyStatistics } from '@/pages/test/test';
+import { ApplyStatistics } from '@/types/apply';
 
 export function useApplyStatistics(applyId: number, token: string) {
   return useQuery<

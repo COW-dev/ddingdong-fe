@@ -21,3 +21,15 @@ export type ChartItem = {
   ratio: number;
   rank?: number;
 };
+
+export type ApplyStatistics = {
+  totalCount: number;
+  departmentStatistics: ChartItem[];
+  applicantStatistics: ApplyRate[];
+  fieldStatistics: fieldStatistics;
+};
+
+export type fieldStatistics = {
+  fields: ApplyQuestion[];
+  sections: string[];
+};

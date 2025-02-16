@@ -3,7 +3,6 @@ import axios from 'axios';
 import type { AxiosError, AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import { MOCK_ApplyStatistics } from '@/pages/test/test';
 import { PresignedUrlResponse } from '@/types';
 import {
   BannerType,
