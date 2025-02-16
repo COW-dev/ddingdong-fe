@@ -113,10 +113,6 @@ const lineChartOption = {
     legend: { display: false },
     tooltip: {
       ...tooltip,
-      callbacks: {
-        title: () => ['N%'],
-        label: () => '',
-      },
     },
   },
 };

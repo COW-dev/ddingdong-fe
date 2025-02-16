@@ -4,4 +4,10 @@ export const tooltip = {
   backgroundColor: '#F3F4F6',
   titleColor: 'black',
   bodyColor: 'black',
+  callbacks: {
+    title: () => [],
+    label: (data: { formattedValue: string }) => {
+      return data.formattedValue;
+    },
+  },
 };
