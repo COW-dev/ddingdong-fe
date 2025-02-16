@@ -77,8 +77,6 @@ export default function ApplyContent({
     });
   };
 
-  console.log(formAnswers, 'formAnswers');
-
   return (
     <div className="my-5 rounded-lg border px-6 py-6">
       <div>
@@ -97,7 +95,7 @@ export default function ApplyContent({
                   : handleRadioChange(opt)
               }
               key={i}
-              className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2 hover:bg-gray-100"
+              className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-3 py-2 md:hover:bg-gray-100"
             >
               <div className="flex cursor-pointer items-center">
                 <Image
@@ -148,7 +146,10 @@ export default function ApplyContent({
       )}
 
       {type === 'FILE' && (
-        <FileUpload onFilesSelected={() => {}} disabled={false} />
+        <FileUpload
+          onFilesSelected={(files) => console.log(files)}
+          disabled={false}
+        />
       )}
     </div>
   );

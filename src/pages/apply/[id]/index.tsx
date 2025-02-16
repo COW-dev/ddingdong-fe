@@ -100,7 +100,7 @@ export default function IndexPage() {
       )}
       {step == 'SUBMITTED' && (
         <div>
-          <SubmitTed />
+          <Submitted applicationCount={questionData?.data.applicationCount} />
         </div>
       )}
     </div>
@@ -164,7 +164,11 @@ export function SelectSection({
   );
 }
 
-export function SubmitTed() {
+interface SubmittedProps {
+  applicationCount: number;
+}
+
+export function Submitted({ applicationCount }: SubmittedProps) {
   const jsConfetti = new JSConfetti();
 
   useEffect(() => {
@@ -194,9 +198,9 @@ export function SubmitTed() {
         <div className="text-4xl font-bold text-gray-700">
           지원서 제출이 완료되었습니다!
         </div>
-        <p className="w-1/3">
-          ~~ 동아리에 지원해주셔서 감사합니다! 현재까지 ~~ 동아리 지원자는
-          N명입니다.
+        <p className="w-1/2">
+          동아리에 지원해주셔서 감사합니다!
+          <p>현재까지 동아리 지원자는 {applicationCount + 1}명입니다.</p>
         </p>
       </div>
     </div>
