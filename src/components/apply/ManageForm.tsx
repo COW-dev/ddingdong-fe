@@ -57,14 +57,22 @@ export default function ManageForm({ formData, id }: Props) {
   }, [formData]);
 
   const handleCreateForm = () => {
-    const formattedPostData = formatFormData();
+    if (!description || description.length > 255) {
+      toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
+      return;
+    }
 
+    const formattedPostData = formatFormData();
     newFormMutation.mutate(formattedPostData);
   };
 
   const handleUpdateForm = () => {
     if (!id || !formData) {
       toast.error('수정할 폼이 존재하지 않습니다.');
+      return;
+    }
+    if (!description || description.length > 255) {
+      toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
       return;
     }
 
@@ -260,6 +268,8 @@ export default function ManageForm({ formData, id }: Props) {
     setIsClosed(true);
   };
 
+  console.log(description.length, 'description length');
+
   return (
     <div>
       <Head>
@@ -356,7 +366,7 @@ export default function ManageForm({ formData, id }: Props) {
           </div>
         </div>
         <TextArea
-          placeholder="지원서 설명을 입력해 주세요"
+          placeholder="지원서 설명을 입력해 주세요 (최대 255자 이내)"
           value={description}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setDescription(e.target.value)
