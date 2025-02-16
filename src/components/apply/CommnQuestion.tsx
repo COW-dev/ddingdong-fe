@@ -13,8 +13,8 @@ interface RequiredQuestions {
 
 interface CommonQuestionProps {
   disabled?: boolean;
-  requiredQuestions: RequiredQuestions;
-  setRequiredQuestions: React.Dispatch<
+  requiredQuestions?: RequiredQuestions;
+  setRequiredQuestions?: React.Dispatch<
     React.SetStateAction<RequiredQuestions | Partial<RequiredQuestions>>
   >;
 }
