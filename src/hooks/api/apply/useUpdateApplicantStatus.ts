@@ -17,7 +17,7 @@ export function useUpdateApplicantStatus(): UseMutationResult<
   return useMutation(updateApplicantStatus, {
     onSuccess() {
       toast.success('지원자 상태 수정에 성공했어요.');
-      queryClient.refetchQueries(['apply']);
+      queryClient.invalidateQueries(['apply']);
     },
     onError(error) {
       const errorMessage = error.response?.data?.message
