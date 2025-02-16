@@ -14,11 +14,9 @@ interface UpdateFormParams {
   formData: FormData;
 }
 
-export function useUpdateForm(): UseMutationResult<
-  unknown,
-  AxiosError,
-  UpdateFormParams
-> {
+export function useUpdateForm(
+  setIsEditing: (value: boolean) => void,
+): UseMutationResult<unknown, AxiosError, UpdateFormParams> {
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -29,6 +27,7 @@ export function useUpdateForm(): UseMutationResult<
       onSuccess() {
         queryClient.invalidateQueries(['admin/apply']);
         toast.success('폼 정보를 수정했어요.');
+        setIsEditing(false);
       },
       onError(error: AxiosError<{ message?: string }>) {
         const errorMessage =
