@@ -30,7 +30,11 @@ interface RequiredQuestions {
   email: string;
 }
 
-export default function ApplyForm({ formData, setStep }: ApplyFormProps) {
+export default function ApplyForm({
+  sections,
+  formData,
+  setStep,
+}: ApplyFormProps) {
   const [questionData, setQuestionData] = useState(formData?.data);
   const router = useRouter();
   const { id } = router.query;
@@ -48,7 +52,11 @@ export default function ApplyForm({ formData, setStep }: ApplyFormProps) {
   const [formAnswers, setFormAnswers] = useState([]);
 
   const goSection = () => {
-    setStep('SECTION');
+    if (sections.length > 2) {
+      setStep('SECTION');
+    } else {
+      router.back();
+    }
   };
 
   const [applyContent, setApplyContent] = useState<{ formAnswers: any[] }>({
