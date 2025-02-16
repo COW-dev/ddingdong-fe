@@ -8,7 +8,9 @@ import {
   ApplicantDetail,
   Application,
   DeleteApplication,
+  NewEmail,
   RegisterApplicant,
+  UpdateApplicantNote,
   UpdateApplicantStatus,
 } from '@/types/apply';
 import {
@@ -544,6 +546,22 @@ export async function registerApplicants({ formId, token }: RegisterApplicant) {
   );
 }
 
+export async function createResultEmail({
+  formId,
+  token,
+  ...emailData
+}: NewEmail) {
+  return await api.post(
+    `/central/my/forms/${formId}/results/email`,
+    { emailData },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
 export async function getAllApplication(
   formId: number,
   token: string,
@@ -570,6 +588,22 @@ export async function getApplicantInfo(
   );
 }
 
+export async function updateApplicantNote({
+  formId,
+  applicationId,
+  token,
+  note,
+}: UpdateApplicantNote): Promise<AxiosResponse<ApplicantDetail, unknown>> {
+  return await api.patch(
+    `/central/my/forms/${formId}/applications/${applicationId}`,
+    { note },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
 export async function updateApplicantStatus({
   formId,
   token,
