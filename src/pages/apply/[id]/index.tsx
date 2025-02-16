@@ -16,7 +16,7 @@ export default function IndexPage() {
 
   const { data: sectionsData, isLoading } = useAllSections(formId);
   const [selectedRadio, setSelectedRadio] = useState<string>('');
-  const [step, setStep] = useState<'SECTION' | 'QUESTION' | 'SUBMITED'>(
+  const [step, setStep] = useState<'SECTION' | 'QUESTION' | 'SUBMITTED'>(
     'SECTION',
   );
 
@@ -33,7 +33,12 @@ export default function IndexPage() {
     }
   }, [sections, isLoading]);
 
-  const { data: questionData } = useFormDetail(formId, selectedRadio);
+  const { data: questionData, refetch } = useFormDetail(formId, selectedRadio);
+  useEffect(() => {
+    if (selectedRadio) {
+      refetch();
+    }
+  }, [selectedRadio, refetch]);
 
   const goBack = () => {
     router.back();
@@ -86,14 +91,16 @@ export default function IndexPage() {
           )}
           {step === 'QUESTION' && (
             <div>
-              <ApplyForm formData={questionData} setStep={setStep} />
+              {questionData && (
+                <ApplyForm formData={questionData} setStep={setStep} />
+              )}
             </div>
           )}
         </div>
       )}
-      {step == 'SUBMITED' && (
+      {step == 'SUBMITTED' && (
         <div>
-          <Submited />
+          <SubmitTed />
         </div>
       )}
     </div>
@@ -121,7 +128,7 @@ export function SelectSection({
           opt !== '공통' && (
             <div
               key={i}
-              className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-2 hover:bg-gray-100"
+              className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-2 md:hover:bg-gray-100"
               onClick={() => setSelectedRadio(opt)}
             >
               <div className="relative flex h-6 w-6 items-center justify-center">
@@ -157,7 +164,7 @@ export function SelectSection({
   );
 }
 
-export function Submited() {
+export function SubmitTed() {
   const jsConfetti = new JSConfetti();
 
   useEffect(() => {

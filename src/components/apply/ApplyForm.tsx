@@ -19,7 +19,7 @@ interface FormData {
 
 interface ApplyFormProps {
   formData: FormData;
-  setStep: (step: string) => void;
+  setStep: (step: 'SECTION' | 'QUESTION' | 'SUBMITTED') => void;
 }
 
 interface RequiredQuestions {
@@ -78,7 +78,7 @@ export default function ApplyForm({ formData, setStep }: ApplyFormProps) {
         !answer.value ||
         (Array.isArray(answer.value) && answer.value.length === 0)
       ) {
-        toast.error(`"${field.question}" 필수 항목을 입력하여 주세요`);
+        toast.error(`필수 항목을 입력하여 주세요`);
         return;
       }
     }
