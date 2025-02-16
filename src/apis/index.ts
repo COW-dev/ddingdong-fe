@@ -538,6 +538,7 @@ export async function getMyScore(
 export async function registerApplicants({ formId, token }: RegisterApplicant) {
   return await api.post(
     `/central/my/forms/${formId}/members/register-applicants`,
+    {},
     {
       headers: {
         Authorization: 'Bearer ' + token,
@@ -553,7 +554,7 @@ export async function createResultEmail({
 }: NewEmail) {
   return await api.post(
     `/central/my/forms/${formId}/results/email`,
-    { emailData },
+    emailData,
     {
       headers: {
         Authorization: 'Bearer ' + token,

@@ -21,6 +21,7 @@ export default function ApplicantCard({ data, type, checked, onCheck }: Props) {
       <CheckBox
         className="mt-1"
         value={checked}
+        aria-label={`${data.name} 지원자 선택`}
         onChange={() => onCheck(!checked)}
       />
       <div className="w-full border-b border-gray-100 bg-white pb-3 transition-colors hover:border-gray-200 md:rounded-xl md:border-[1.5px] md:pb-0 md:hover:bg-gray-50">
