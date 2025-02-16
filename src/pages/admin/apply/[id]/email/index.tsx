@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { TooltipContent } from '@radix-ui/react-tooltip';
 import { AlertCircle } from 'lucide-react';
+import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import {
   Select,
@@ -21,20 +22,36 @@ import {
   EMAIL_OPTIONS,
   TEMPLATE,
 } from '@/constants/apply';
+import { useNewResultEmail } from '@/hooks/api/apply/useNewResultEmail';
+import { ApplicantStatus } from '@/types/apply';
 
 export default function Index() {
+  const [{ token }] = useCookies(['token']);
   const router = useRouter();
   const { id } = router.query;
 
   const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>(TEMPLATE);
+  const [target, setTarget] = useState<ApplicantStatus>('SUBMITTED');
+  const [message, setMessage] = useState<string>(TEMPLATE);
+
+  const mutation = useNewResultEmail();
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
     if (!newValue.includes(APPLICANT_PLACEHOLDER)) {
       return;
     }
-    setContent(newValue);
+    setMessage(newValue);
+  };
+
+  const handleSubmit = () => {
+    mutation.mutate({
+      formId: Number(id),
+      title,
+      target,
+      message: message,
+      token,
+    });
   };
 
   return (
@@ -65,7 +82,7 @@ export default function Index() {
         </div>
       </div>
 
-      <Select>
+      <Select onValueChange={(value) => setTarget(value as ApplicantStatus)}>
         <SelectTrigger className="mt-6 w-[135px] text-base font-semibold text-gray-500 focus:ring-0">
           <SelectValue placeholder="전송대상선택" />
         </SelectTrigger>
@@ -91,7 +108,7 @@ export default function Index() {
       />
       <TextareaAutosize
         name="content"
-        value={content}
+        value={message}
         onChange={handleChange}
         minRows={8}
         maxRows={15}
@@ -105,7 +122,10 @@ export default function Index() {
         >
           취소
         </Link>
-        <button className="rounded-xl bg-blue-500 px-10 py-3 text-lg font-bold text-white hover:bg-blue-600 md:px-[60px] md:py-3.5">
+        <button
+          onClick={handleSubmit}
+          className="rounded-xl bg-blue-500 px-10 py-3 text-lg font-bold text-white hover:bg-blue-600 md:px-[60px] md:py-3.5"
+        >
           전송하기
         </button>
       </div>
