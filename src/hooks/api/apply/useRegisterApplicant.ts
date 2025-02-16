@@ -17,7 +17,7 @@ export function useRegisterApplicant(): UseMutationResult<
 
   return useMutation(registerApplicants, {
     onSuccess() {
-      queryClient.invalidateQueries(['/central/my/club-members']);
+      queryClient.invalidateQueries(['email']);
       toast.success('동아리원 명단 연동에 성공했어요.');
     },
     onError() {
