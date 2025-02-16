@@ -50,7 +50,40 @@ const LineChart = ({ passedData }: Props) => {
     chartInstance = new ChartJS(canvasContext, {
       type: 'line',
       data: getChartData(),
-      options: lineChartOption,
+      options: {
+        ...lineChartOption,
+        scales: {
+          x: {
+            offset: true,
+            grid: { display: false },
+          },
+          y: {
+            display: false,
+            beginAtZero: true,
+            max: Math.max(...getChartData().datasets[0].data) + 20,
+          },
+        },
+      },
+      plugins: [
+        {
+          id: 'custom-text-plugin',
+          afterDatasetsDraw: (chart) => {
+            const { ctx, data } = chart;
+            const dataset = data.datasets[0].data as number[];
+
+            dataset.forEach((value, index) => {
+              const meta = chart.getDatasetMeta(0);
+              const bar = meta.data[index];
+              ctx.fillStyle =
+                index === dataset.length - 1 ? '#3B82F6' : '#6B7280';
+              ctx.font = 'bold 12px Arial';
+              ctx.textAlign = 'center';
+              ctx.fillText(`${value}%`, bar.x, bar.y - 15);
+              ctx.restore();
+            });
+          },
+        },
+      ],
     });
   };
 
@@ -84,16 +117,6 @@ const lineChartOption = {
         title: () => ['N%'],
         label: () => '',
       },
-    },
-  },
-  scales: {
-    x: {
-      offset: true,
-      grid: { display: false },
-    },
-    y: {
-      display: false,
-      beginAtZero: true,
     },
   },
 };

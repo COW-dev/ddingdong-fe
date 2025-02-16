@@ -20,7 +20,7 @@ const PieChart = ({ passedData }: Props) => {
   let chartInstance: ChartJS | null = null;
 
   const getChartData = () => {
-    const labels = passedData.map((item) => item.label);
+    const labels = passedData.map((item) => `${item.label} (${item.ratio})`);
     const ratios = passedData.map((item) => item.ratio);
     return {
       labels,

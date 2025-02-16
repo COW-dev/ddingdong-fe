@@ -64,6 +64,15 @@ export const MOCK_ApplyStatistics: ApplyStatistics = {
         value: 85, // 증가수치 및 감소수치
       },
     },
+    {
+      label: '2025-2', //api로 호출한거
+      count: 45,
+      comparedToBefore: {
+        //전 폼지 대비 증감 값
+        ratio: 50, // 증감율 %
+        value: 85, // 증가수치 및 감소수치
+      },
+    },
   ],
   fieldStatistics: {
     sections: ['공통', '서버', '웹'],

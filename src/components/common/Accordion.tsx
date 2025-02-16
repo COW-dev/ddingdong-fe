@@ -47,7 +47,7 @@ export default function Accordion({
           aria-controls="accordion-flush-body-1"
           onClick={handleOpen}
         >
-          <span className=" text-lg text-black opacity-70 ">{title}</span>
+          <span className=" text-lg text-black">{title}</span>
           {open ? (
             <Image src={ArrowUp} alt="화살표" width={15} height={15} />
           ) : (

@@ -6,7 +6,6 @@ import LeftArrow2 from '@/assets/leftArrow2.svg';
 import QuestionList from '@/components/apply/QuestionList';
 import StatisticsIntro from '@/components/apply/StatisticsIntro';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
-import { ApplyQuestion } from '@/types/apply';
 
 type Props = {
   applyId: number;
