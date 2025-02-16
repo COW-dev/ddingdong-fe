@@ -42,8 +42,8 @@ export type ClubDetail = {
   location: string;
   isRecruit: boolean;
   parsedRecruitPeriod: DateRangeType | null;
-  startRecruitPeriod: string;
-  endRecruitPeriod: string;
+  startDate: string;
+  endDate: string;
   regularMeeting: string;
   introduction: string;
   activity: string;
@@ -51,7 +51,7 @@ export type ClubDetail = {
   profileImage: UrlType;
   introductionImage: UrlType;
   token: string;
-  formUrl: string;
+  formId: number;
 };
 
 export type MemberInfo = {
