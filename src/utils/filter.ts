@@ -8,7 +8,7 @@ export const filterApplicants = (data: Applicant[]) => {
   return { documentApplicants: data, interviewApplicants };
 };
 
-export const getDocumentStatus = (status: string) => {
+export const getDocumentStatus = (status: ApplicantStatus) => {
   if (status === 'FIRST_FAIL') return 'FIRST_FAIL';
   if (['FIRST_PASS', 'FINAL_PASS', 'FINAL_FAIL'].includes(status))
     return 'FIRST_PASS';

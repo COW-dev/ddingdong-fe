@@ -1,10 +1,11 @@
-export const getApplicantInfo = (applicant: {
-  name: string;
-  studentNumber: string;
-  department: string;
-  phoneNumber: string;
-  email: string;
-}) => [
+import { Applicant } from '@/types/apply';
+
+export const getApplicantInfo = (
+  applicant: Pick<
+    Applicant,
+    'name' | 'studentNumber' | 'department' | 'phoneNumber' | 'email'
+  >,
+) => [
   { label: '이름', value: applicant.name },
   { label: '학번', value: applicant.studentNumber },
   { label: '학과', value: applicant.department },
@@ -51,8 +52,8 @@ export const STATUS_TYPE: Record<
 export const EMAIL_STATUS = {
   FIRST_PASS: '서류 합격',
   FIRST_FAIL: '서류 불합격',
-  INTERVIEW_PASS: '면접 합격',
-  INTERVIEW_FAIL: '면접 불합격',
+  FINAL_PASS: '면접 합격',
+  FINAL_FAIL: '면접 불합격',
 } as const;
 
 export const EMAIL_OPTIONS = Object.values(EMAIL_STATUS);
