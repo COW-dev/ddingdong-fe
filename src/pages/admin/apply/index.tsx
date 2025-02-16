@@ -42,7 +42,7 @@ export default function Index() {
         <Heading>지원서 관리</Heading>
         <button
           onClick={() => router.push('/apply/new')}
-          className="rounded-lg bg-blue-100 px-4 py-2 text-base font-semibold text-blue-500 hover:bg-blue-200"
+          className="mt-7 rounded-lg bg-blue-100 px-4 py-2 text-base font-semibold text-blue-500 hover:bg-blue-200"
         >
           생성하기
         </button>

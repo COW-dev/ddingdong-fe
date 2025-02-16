@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
 import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
@@ -15,6 +16,7 @@ import { FormData, FormField, QuestionType } from '@/types/form';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
 import emptySquare from '../../assets/empty_square_check.svg';
+import Heading from '../common/Heading';
 
 interface Props {
   formData?: FormData;
@@ -27,8 +29,8 @@ interface CategorizedFields {
 export default function ManageForm({ formData, id }: Props) {
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
-  const updateFormMutation = useUpdateForm();
   const [isEditing, setIsEditing] = useState(false);
+  const updateFormMutation = useUpdateForm(setIsEditing);
 
   const [title, setTitle] = useState(formData?.title ? formData.title : '');
   const [description, setDescription] = useState(
@@ -190,8 +192,6 @@ export default function ManageForm({ formData, id }: Props) {
         ],
   );
 
-  console.log(formField);
-
   const addQuestion = () => {
     setFormField((prev) =>
       prev.map((section) =>
@@ -261,13 +261,16 @@ export default function ManageForm({ formData, id }: Props) {
   };
 
   return (
-    <div className="p-6">
+    <div>
+      <Head>
+        <title>지원서 템플릿 관리</title>
+      </Head>
       <div className="flex items-center justify-between gap-2">
-        <button className="text-xl font-bold">지원서 템플릿 관리</button>
-        <div className="flex items-center justify-between gap-2">
+        <Heading>지원서 템플릿 관리</Heading>
+        <div className="mt-7 flex items-center justify-between gap-2">
           {!formData ? (
             <button
-              className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
+              className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-600"
               onClick={handleCreateForm}
             >
               저장하기
@@ -276,7 +279,9 @@ export default function ManageForm({ formData, id }: Props) {
             <>
               {!isEditing ? (
                 <button
-                  onClick={onClickEditButton}
+                  onClick={
+                    isClosed && isPastStartDate ? undefined : onClickEditButton
+                  }
                   className={`${
                     isClosed && isPastStartDate
                       ? 'cursor-not-allowed bg-gray-100 text-gray-400'
@@ -332,9 +337,9 @@ export default function ManageForm({ formData, id }: Props) {
             type="text"
             placeholder={'지원서 제목을 입력해주세요'}
             value={title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setTitle(e.target.value)
-            }
+            onChange={(
+              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+            ) => setTitle(e.target.value)}
             disabled={isClosed}
           />
 
