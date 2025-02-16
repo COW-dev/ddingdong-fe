@@ -17,28 +17,7 @@ type Props = {
 export default function QuestionMultipleContent({ type, id }: Props) {
   const ChartComponent = componentMap[type];
   const [{ token }] = useCookies();
-  // const { data } = useMultipleAnswer(id, token);
-  const data = {
-    data: {
-      type: 'RADIO',
-      options: [
-        {
-          label: '지문1입니다.',
-          count: 5,
-          ratio: 20,
-        },
-        {
-          label: '지문2입니다.',
-          count: 4,
-          ratio: 40,
-        },
-        {
-          label: '지문3입니다.',
-          count: 5,
-          ratio: 30,
-        },
-      ],
-    },
-  };
+  const { data } = useMultipleAnswer(id, token);
+
   return <div>{<ChartComponent passedData={data?.data.options ?? []} />}</div>;
 }

@@ -60,7 +60,7 @@ export default function Accordion({
         className={`${open ? 'active' : 'hidden'}`}
         aria-labelledby="accordion-flush-heading-1"
       >
-        <div className="mx-2  py-5 ">{children}</div>
+        <div className="mx-2 py-5">{children}</div>
       </div>
     </div>
   );

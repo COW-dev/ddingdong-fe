@@ -8,6 +8,7 @@ import {
 } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
+import OptionModal from './OptionModal';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
@@ -15,12 +16,30 @@ type Props = {
   passedData: ChartItem[];
 };
 
+const truncateLabel = (
+  ctx: CanvasRenderingContext2D,
+  label: string,
+  maxWidth: number,
+) => {
+  if (ctx.measureText(label).width <= maxWidth) return label; // 너비가 넘지 않으면 그대로 사용
+
+  let truncated = label;
+  while (ctx.measureText(truncated + '...').width > maxWidth) {
+    truncated = truncated.slice(0, -1); // 한 글자씩 줄이기
+  }
+  return truncated + '...';
+};
+
 const PieChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let chartInstance: ChartJS | null = null;
 
   const getChartData = () => {
-    const labels = passedData.map((item) => `${item.label} (${item.ratio})`);
+    const labels = passedData.map((item) =>
+      item.label.length > 7
+        ? `${item.label.slice(0, 6)}... (${item.ratio})`
+        : `${item.label} (${item.ratio})`,
+    );
     const ratios = passedData.map((item) => item.ratio);
     return {
       labels,
@@ -66,7 +85,14 @@ const PieChart = ({ passedData }: Props) => {
     };
   }, [passedData]);
 
-  return <canvas ref={canvasRef} className="h-auto w-full" />;
+  return (
+    <div className="relative flex h-auto w-full">
+      <canvas ref={canvasRef} />
+      <div className="absolute bottom-0 right-0">
+        <OptionModal labels={passedData.map((item) => item.label)} />
+      </div>
+    </div>
+  );
 };
 
 export default PieChart;
@@ -78,7 +104,7 @@ const PieChartOption = {
       position: 'right' as const,
       align: 'center' as const,
       labels: {
-        usePointStyle: true, // 원형 마커 스타일 적용
+        usePointStyle: true,
         font: {
           family: 'Pretendard',
           size: 14,
