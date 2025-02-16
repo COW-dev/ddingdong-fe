@@ -52,3 +52,23 @@ export interface FormBlockData {
   formStatus: '진행 전' | '진행 중' | '마감';
   onClick: () => void;
 }
+
+export interface SectionsProps {
+  addSection: () => void;
+  focusSection: string;
+  sections: string[];
+  setFocusSection: (section: string) => void;
+  isClosed: boolean;
+  formField: {
+    section: string;
+    questions: FormField[];
+  }[];
+  setFormField: (
+    fields: {
+      section: string;
+      questions: FormField[];
+    }[],
+  ) => void;
+  setSections: (sections: string[]) => void;
+  baseQuestion: FormField[];
+}
