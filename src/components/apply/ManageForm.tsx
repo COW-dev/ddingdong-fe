@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import arrow_left from '@/assets/arrow_left.svg';
 import BaseInput from '@/components/apply/BaseInput';
 import CommonQuestion from '@/components/apply/CommnQuestion';
 import Question from '@/components/apply/Question';
@@ -13,6 +15,7 @@ import TextArea from '@/components/apply/TextArea';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
 import { FormData, FormField, QuestionType } from '@/types/form';
+import FormEditButtons from './FormEditButtons';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
 import emptySquare from '../../assets/empty_square_check.svg';
@@ -27,6 +30,7 @@ interface CategorizedFields {
 }
 
 export default function ManageForm({ formData, id }: Props) {
+  const router = useRouter();
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
   const [isEditing, setIsEditing] = useState(false);
@@ -45,7 +49,7 @@ export default function ManageForm({ formData, id }: Props) {
           questions: categorizeFormFields(formData)[section].map((field) => ({
             question: field.question,
             type: field.type,
-            options: field.options || ['옵션1'],
+            options: field.options || [],
             required: field.required,
             order: field.order,
           })),
@@ -57,7 +61,7 @@ export default function ManageForm({ formData, id }: Props) {
   }, [formData]);
 
   const handleCreateForm = () => {
-    if (!description || description.length > 255) {
+    if (description.length > 255) {
       toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
       return;
     }
@@ -244,18 +248,12 @@ export default function ManageForm({ formData, id }: Props) {
     );
   };
 
-  const addSection = () => {
-    const sectionName = prompt('새 섹션 이름을 입력하세요:');
-    if (sectionName) {
-      setSections((prev) => [...prev, sectionName]);
-      setFormField((prev) => [
-        ...prev,
-        {
-          section: sectionName,
-          questions: baseQuestion.map((q) => ({ ...q })),
-        },
-      ]);
-    }
+  const [modalVisible, setModalVisible] = useState(false);
+  const [newSectionName, setNewSectionName] = useState('');
+
+  const handleOpenModal = () => {
+    setNewSectionName('');
+    setModalVisible(true);
   };
 
   const onClickEditButton = () => {
@@ -268,57 +266,35 @@ export default function ManageForm({ formData, id }: Props) {
     setIsClosed(true);
   };
 
-  console.log(description.length, 'description length');
-
+  console.log(formField, 'formfield');
   return (
     <div>
       <Head>
         <title>지원서 템플릿 관리</title>
       </Head>
+
       <div className="flex items-center justify-between gap-2">
-        <Heading>지원서 템플릿 관리</Heading>
-        <div className="mt-7 flex items-center justify-between gap-2">
-          {!formData ? (
-            <button
-              className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-600"
-              onClick={handleCreateForm}
-            >
-              저장하기
-            </button>
-          ) : (
-            <>
-              {!isEditing ? (
-                <button
-                  onClick={
-                    isClosed && isPastStartDate ? undefined : onClickEditButton
-                  }
-                  className={`${
-                    isClosed && isPastStartDate
-                      ? 'cursor-not-allowed bg-gray-100 text-gray-400'
-                      : 'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'
-                  } rounded-lg px-3 py-2 font-semibold`}
-                >
-                  수정하기
-                </button>
-              ) : (
-                <div className="flex flex-row gap-2">
-                  <button
-                    onClick={onClickCancelButton}
-                    className="rounded-lg bg-gray-100 px-3 py-2 font-semibold text-gray-500 hover:bg-gray-200"
-                  >
-                    취소
-                  </button>
-                  <button
-                    onClick={handleUpdateForm}
-                    className="rounded-lg bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
-                  >
-                    저장하기
-                  </button>
-                </div>
-              )}
-            </>
-          )}
+        <div
+          onClick={() => router.back()}
+          className="flex cursor-pointer items-center gap-1 "
+        >
+          <Image
+            src={arrow_left}
+            alt="navigation"
+            className="mt-7 w-6 md:mt-11 md:w-9"
+          />
+          <Heading>지원서 생성</Heading>
         </div>
+        <FormEditButtons
+          formData={formData}
+          isEditing={isEditing}
+          isClosed={isClosed}
+          isPastStartDate={isPastStartDate}
+          handleCreateForm={handleCreateForm}
+          onClickEditButton={onClickEditButton}
+          onClickCancelButton={onClickCancelButton}
+          handleUpdateForm={handleUpdateForm}
+        />
       </div>
 
       <div className="flex w-full items-center justify-end gap-1 pt-10 text-base font-semibold text-gray-500">
@@ -377,11 +353,15 @@ export default function ManageForm({ formData, id }: Props) {
 
       <div className="mt-6">
         <Sections
-          addSection={addSection}
+          addSection={handleOpenModal}
           focusSection={focusSection}
           sections={sections}
           setFocusSection={setFocusSection}
           isClosed={isClosed}
+          formField={formField}
+          setFormField={setFormField}
+          setSections={setSections}
+          baseQuestion={baseQuestion}
         />
         {focusSection == '공통' && <CommonQuestion disabled={true} />}
 
@@ -408,7 +388,7 @@ export default function ManageForm({ formData, id }: Props) {
         onClick={addQuestion}
         className="fixed bottom-24 right-12 flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600"
       >
-        <Image src={AddForm} width={27} height={27} alt="폼추가하기" />
+        <Image src={AddForm} width={27} height={27} alt="질문 추가하기" />
       </button>
     </div>
   );

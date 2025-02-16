@@ -86,7 +86,7 @@ export default function ApplyContent({
       </div>
 
       {(type === 'CHECK_BOX' || type === 'RADIO') && (
-        <div className="flex flex-col items-start px-2 pb-3">
+        <div className="flex flex-col items-start pb-3">
           {options.map((opt, i) => (
             <div
               onClick={() =>
