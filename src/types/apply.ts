@@ -1,3 +1,11 @@
+export type NewEmail = {
+  formId: number;
+  title: string;
+  target: ApplicantStatus;
+  message: string;
+  token: string;
+};
+
 export type Application = {
   title: string;
   startDate: string;
@@ -18,6 +26,7 @@ export type Applicant = {
   email: string;
   hasInterview: boolean;
   status: ApplicantStatus;
+  note: string;
 };
 
 export type ApplicantDetail = Applicant & {
@@ -35,6 +44,12 @@ export type Answer = {
   value: string[];
 };
 
+export type UpdateApplicantNote = {
+  formId: number;
+  applicationId: number;
+  note: string;
+  token: string;
+};
 export type UpdateApplicantStatus = {
   formId: number;
   applicationIds: number[];
