@@ -30,17 +30,19 @@ export function StepDropdown({
   const [openDropdown, setOpenDropdown] = useState(false);
 
   return (
-    <div className="h-fix flex w-full flex-col">
+    <div className="h-fix flex w-full flex-col text-lg ">
       {!disabled && (
-        <label className="mb-3 px-1 font-bold text-blue-500">학과</label>
+        <label className="mb-3 px-1 text-lg font-bold text-blue-500 md:text-xl">
+          학과
+        </label>
       )}
       <div
-        className={`relative w-full items-center rounded-xl border border-gray-200 py-1.5 text-start align-middle text-base font-semibold text-gray-500 md:text-lg
+        className={`relative w-full items-center rounded-xl border border-gray-200 py-1.5 text-start align-middle font-semibold text-gray-500 
         ${disabled ? '' : 'cursor-pointer bg-white hover:bg-gray-50'}
       `}
       >
         <div
-          className="flex h-full flex-row items-center justify-between px-5 py-1 text-base hover:rounded-lg "
+          className="flex h-full flex-row items-center justify-between px-4 py-1 hover:rounded-lg "
           onClick={() => !disabled && setOpenDropdown(!openDropdown)}
         >
           {disabled ? '학과를 선택해 주세요' : selectedContent}

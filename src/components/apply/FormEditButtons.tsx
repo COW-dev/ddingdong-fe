@@ -22,10 +22,10 @@ export default function FormEditButtons({
   handleUpdateForm,
 }: Props) {
   return (
-    <div className="mt-7 flex items-center justify-between gap-2">
+    <div className="mt-7 flex items-center justify-between gap-2 text-lg">
       {!formData ? (
         <button
-          className="rounded-xl bg-blue-500 px-4 py-2 text-base font-semibold text-white hover:bg-blue-600"
+          className="rounded-xl bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
           onClick={handleCreateForm}
         >
           저장하기

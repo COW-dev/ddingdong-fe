@@ -26,10 +26,13 @@ export default function IndexPage() {
   );
 
   useEffect(() => {
-    if (!isLoading && sections.length > 2) {
-      setStep('SECTION');
-    } else {
-      setStep('QUESTION');
+    if (!isLoading) {
+      if (sections && sections.length > 2) {
+        setStep('SECTION');
+      } else {
+        setStep('QUESTION');
+        setSelectedRadio('공통');
+      }
     }
   }, [sections, isLoading]);
 
@@ -61,7 +64,7 @@ export default function IndexPage() {
               <div className="py-5 pt-10 text-4xl font-bold text-gray-800">
                 {sectionsData?.data?.title}
               </div>
-              <div className="whitespace-pre-wrap py-2 text-base font-semibold text-gray-500">
+              <div className="whitespace-pre-wrap py-2 text-lg font-semibold text-gray-500">
                 {sectionsData?.data?.description}
               </div>
             </div>
@@ -73,7 +76,7 @@ export default function IndexPage() {
                 setSelectedRadio={setSelectedRadio}
                 selectedRadio={selectedRadio}
               />
-              <div className="flex w-full justify-center gap-3 py-10 font-bold">
+              <div className="flex w-full justify-center gap-3 py-10 text-lg font-bold">
                 <button
                   onClick={goBack}
                   className="rounded-lg bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
@@ -92,7 +95,11 @@ export default function IndexPage() {
           {step === 'QUESTION' && (
             <div>
               {questionData && (
-                <ApplyForm formData={questionData} setStep={setStep} />
+                <ApplyForm
+                  formData={questionData}
+                  setStep={setStep}
+                  sections={sections}
+                />
               )}
             </div>
           )}

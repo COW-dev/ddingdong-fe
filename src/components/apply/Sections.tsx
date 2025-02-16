@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { InfoIcon } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { SectionsProps, FormField } from '@/types/form';
 import Prompt from '../common/Prompt';
-import toast from 'react-hot-toast';
 
 export default function Sections({
   focusSection,
@@ -122,7 +122,7 @@ export default function Sections({
         onConfirm={modalMode === 'rename' ? renameSection : addNewSection}
       />
 
-      <div className="relative flex items-center gap-1 border-b-0 px-2 font-semibold">
+      <div className="relative flex items-center gap-1 border-b-0 px-2 text-lg font-semibold">
         {formField?.map((section, index) => (
           <div key={index} className="relative">
             <div

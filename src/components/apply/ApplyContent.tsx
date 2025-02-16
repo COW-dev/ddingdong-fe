@@ -80,7 +80,7 @@ export default function ApplyContent({
   return (
     <div className="my-5 rounded-lg border px-6 py-6">
       <div>
-        <div className="flex gap-1 pb-3 pl-1 text-base font-bold text-blue-500">
+        <div className="flex gap-1 pb-3 pl-1 text-xl font-bold text-blue-500">
           {question} <span className="text-red-500">{required ? '*' : ''}</span>
         </div>
       </div>
@@ -119,7 +119,7 @@ export default function ApplyContent({
                 />
               </div>
 
-              <span className="py-1 text-sm font-semibold text-gray-500">
+              <span className="py-1 text-base font-semibold text-gray-500">
                 {opt}
               </span>
             </div>

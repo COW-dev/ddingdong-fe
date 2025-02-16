@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { QuestionType } from '@/types/form';
@@ -19,13 +19,6 @@ interface QuestionData {
   options: string[];
   required: boolean;
   order: number;
-}
-
-interface Props {
-  index: number;
-  questionData: QuestionData;
-  section: Section;
-  deleteQuestion: (sectionName: string | undefined, index: number) => void;
 }
 
 interface FormField {
@@ -58,100 +51,84 @@ export default function Question({
     'FILE',
   ];
 
-  const [selectedType, setSelectedType] = useState<QuestionType>(
+  const selectedTypeRef = useRef<QuestionType>(
     questionData.type as QuestionType,
   );
+  const enabledRef = useRef<boolean>(questionData.required);
 
-  const [enabled, setEnabled] = useState<boolean>(questionData.required);
+  const updateField = useCallback(
+    (field: keyof QuestionData, value: any) => {
+      setFormField((prev) =>
+        prev.map((sec) =>
+          sec.section === section.section
+            ? {
+                ...sec,
+                questions: sec.questions.map((q, qIndex) =>
+                  qIndex === index ? { ...q, [field]: value } : q,
+                ),
+              }
+            : sec,
+        ),
+      );
+    },
+    [index, section.section, setFormField],
+  );
 
-  const updateInput = (sectionName: string, index: number, value: string) => {
-    setFormField((prev) =>
-      prev.map((section) =>
-        section.section === sectionName
-          ? {
-              ...section,
-              questions: section.questions.map((question, qIndex) =>
-                qIndex === index ? { ...question, question: value } : question,
-              ),
-            }
-          : section,
-      ),
-    );
-  };
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      updateField('question', e.target.value);
+    },
+    [updateField],
+  );
 
-  const updateSelector = (
-    sectionName: string,
-    index: number,
-    value: string,
-  ) => {
-    setFormField((prev) =>
-      prev.map((section) =>
-        section.section === sectionName
-          ? {
-              ...section,
-              questions: section.questions.map((question, qIndex) =>
-                qIndex === index
-                  ? {
-                      ...question,
-                      type: value,
-                      options: ['RADIO', 'CHECK_BOX'].includes(value)
-                        ? ['옵션1']
-                        : [],
-                    }
-                  : question,
-              ),
-            }
-          : section,
-      ),
-    );
-  };
+  const handleTypeChange = useCallback(
+    (value: QuestionType) => {
+      selectedTypeRef.current = value;
+      updateField('type', value);
+      updateField(
+        'options',
+        ['RADIO', 'CHECK_BOX'].includes(value) ? ['옵션1'] : [],
+      );
+    },
+    [updateField],
+  );
 
-  const updateSwitch = (sectionName: string, index: number, value: boolean) => {
-    setFormField((prev) =>
-      prev.map((section) =>
-        section.section === sectionName
-          ? {
-              ...section,
-              questions: section.questions.map((question, qIndex) =>
-                qIndex === index ? { ...question, required: value } : question,
-              ),
-            }
-          : section,
-      ),
-    );
-  };
+  const handleSwitchChange = useCallback(
+    (value: boolean) => {
+      enabledRef.current = value;
+      updateField('required', value);
+    },
+    [updateField],
+  );
 
   return (
-    <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-4 px-6 ">
+    <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-4 px-6">
       <div className="flex w-full justify-center pb-4">
         {!isClosed && (
           <Image src={hamburger} alt="hamburger" className="cursor-pointer" />
         )}
       </div>
+
       <div className="flex w-full flex-row flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
           placeholder="질문을 입력해주세요"
           disabled={isClosed}
-          value={questionData.question}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-            updateInput(section.section, index, e.target.value)
-          }
+          defaultValue={questionData.question}
+          onChange={handleInputChange}
         />
 
         <Dropdown
           contents={types}
-          selected={selectedType}
-          setSelected={(value: QuestionType) => {
-            setSelectedType(value);
-            updateSelector(section.section, index, value);
-          }}
+          selected={selectedTypeRef.current}
+          setSelected={handleTypeChange}
           disabled={isClosed}
         />
       </div>
+
       <div className="py-4">
         <Content
           index={index}
-          type={selectedType}
+          type={selectedTypeRef.current}
           isEditing={true}
           questionData={questionData}
           setFormField={setFormField}
@@ -159,17 +136,14 @@ export default function Question({
           isClosed={isClosed ?? false}
         />
       </div>
+
       {!isClosed && (
         <div className="flex w-full items-center justify-end gap-3">
           <div className="flex items-center gap-2 text-center align-middle">
-            <span className="text-sm font-medium text-gray-500">{'필수'}</span>
-
+            <span className="text-sm font-medium text-gray-500">필수</span>
             <Switch
-              checked={enabled}
-              onCheckedChange={(value) => {
-                setEnabled(value);
-                updateSwitch(section.section, index, value);
-              }}
+              checked={enabledRef.current}
+              onCheckedChange={handleSwitchChange}
             />
           </div>
           <Trash2

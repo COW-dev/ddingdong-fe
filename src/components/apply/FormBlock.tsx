@@ -10,12 +10,12 @@ export default function FormBlock({
 }: FormBlockData) {
   return (
     <div
-      className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-4"
+      className="flex cursor-pointer items-center justify-between rounded-lg border border-gray-200 bg-white p-4 text-lg"
       onClick={onClick}
     >
       <div className="flex flex-col gap-2">
         <h3 className="text-lg font-semibold">{title}</h3>
-        <p className="text-sm font-semibold text-gray-400">
+        <p className="font-semibold text-gray-400">
           {startDate} ~ {endDate}
         </p>
       </div>

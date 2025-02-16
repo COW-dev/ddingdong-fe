@@ -266,7 +266,6 @@ export default function ManageForm({ formData, id }: Props) {
     setIsClosed(true);
   };
 
-  console.log(formField, 'formfield');
   return (
     <div>
       <Head>
@@ -297,7 +296,7 @@ export default function ManageForm({ formData, id }: Props) {
         />
       </div>
 
-      <div className="flex w-full items-center justify-end gap-1 pt-10 text-base font-semibold text-gray-500">
+      <div className="flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold text-gray-500">
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image
             onClick={() => {
@@ -306,8 +305,8 @@ export default function ManageForm({ formData, id }: Props) {
               }
             }}
             src={isChecked ? square : emptySquare}
-            width={isChecked ? 17 : 21}
-            height={isChecked ? 17 : 21}
+            width={isChecked ? 18 : 22}
+            height={isChecked ? 18 : 22}
             className={`object-contain ${
               isClosed ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
             }`}
@@ -329,7 +328,7 @@ export default function ManageForm({ formData, id }: Props) {
             disabled={isClosed}
           />
 
-          <div className="w-full rounded-lg border">
+          <div className="w-full rounded-lg border pt-1">
             <Datepicker
               value={recruitPeriod}
               useRange={false}
@@ -386,7 +385,7 @@ export default function ManageForm({ formData, id }: Props) {
 
       <button
         onClick={addQuestion}
-        className="fixed bottom-24 right-12 flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600"
+        className="fixed bottom-20 right-20 flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600"
       >
         <Image src={AddForm} width={27} height={27} alt="질문 추가하기" />
       </button>

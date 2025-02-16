@@ -42,13 +42,13 @@ export default function Index() {
         <Heading>지원서 관리</Heading>
         <button
           onClick={() => router.push('/apply/new')}
-          className="mt-7 rounded-lg bg-blue-100 px-4 py-2 text-base font-semibold text-blue-500 hover:bg-blue-200"
+          className="mt-7 rounded-xl bg-blue-100 px-4 py-2 text-lg font-semibold text-blue-500 hover:bg-blue-200"
         >
           생성하기
         </button>
       </div>
       {!isLoading && (
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-4 mt-10 flex items-center gap-2">
           <FilterButton
             label="전체"
             count={formCounts.전체}
@@ -124,7 +124,7 @@ function FilterButton({
         const filterValue = getFilterValue(label);
         onClick(filterValue);
       }}
-      className={`py-2 font-semibold ${
+      className={`py-2 text-base font-semibold ${
         selected === getFilterValue(label) ? 'text-blue-500' : 'text-gray-500'
       }`}
     >

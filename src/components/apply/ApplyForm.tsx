@@ -16,12 +16,13 @@ interface FormData {
     }[];
   };
 }
-
 interface ApplyFormProps {
-  formData: FormData;
-  setStep: (step: 'SECTION' | 'QUESTION' | 'SUBMITTED') => void;
+  formData: any;
+  setStep: React.Dispatch<
+    React.SetStateAction<'SECTION' | 'QUESTION' | 'SUBMITTED'>
+  >;
+  sections: any;
 }
-
 interface RequiredQuestions {
   name: string;
   studentNumber: string;
@@ -127,13 +128,13 @@ export default function ApplyForm({
       <div className="flex w-full justify-center gap-3 py-6 font-bold">
         <button
           onClick={goSection}
-          className="rounded-lg bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
+          className="rounded-xl bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
         >
           취소
         </button>
         <button
           onClick={handleSubmit}
-          className="rounded-lg bg-blue-500 px-12 py-3 text-white hover:bg-blue-600"
+          className="rounded-xl bg-blue-500 px-16 py-3 text-lg text-white hover:bg-blue-600"
         >
           제출하기
         </button>
