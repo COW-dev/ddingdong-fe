@@ -18,8 +18,6 @@ export default function Sections({
     section: null,
   });
 
-  console.log(sections, 'zzz');
-
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<'rename' | 'add' | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -27,6 +25,8 @@ export default function Sections({
 
   const handleContextMenu = (e: React.MouseEvent, sectionName: string) => {
     e.preventDefault();
+    if (sectionName === '공통') return;
+
     setContextMenu({ section: sectionName });
     setFocusSection(sectionName);
   };
@@ -38,20 +38,28 @@ export default function Sections({
   const renameSection = (newName: string) => {
     if (!selectedSection) return;
 
-    if (formField.some((s) => s.section === newName.trim())) {
-      alert('이미 존재하는 섹션 이름입니다.');
+    const trimmedName = newName.trim();
+    if (sections.includes(trimmedName)) {
+      toast.error('이미 존재하는 섹션입니다.');
       return;
     }
 
     setFormField(
       formField.map((section) =>
         section.section === selectedSection
-          ? { ...section, section: newName.trim() }
+          ? { ...section, section: trimmedName }
           : section,
       ),
     );
 
+    setSections(
+      sections.map((section) =>
+        section === selectedSection ? trimmedName : section,
+      ),
+    );
+
     setModalVisible(false);
+    setFocusSection(newName);
   };
 
   const deleteSection = (sectionName: string) => {
@@ -60,9 +68,14 @@ export default function Sections({
     );
     setFormField(updatedFormField);
 
-    if (focusSection === sectionName && updatedFormField.length > 0) {
-      setFocusSection(updatedFormField[0].section);
-    } else if (updatedFormField.length === 0) {
+    const updatedSections = sections.filter(
+      (section) => section !== sectionName,
+    );
+    setSections(updatedSections);
+
+    if (focusSection === sectionName && updatedSections.length > 0) {
+      setFocusSection('공통');
+    } else if (updatedSections.length === 0) {
       setFocusSection('');
     }
   };
@@ -109,7 +122,7 @@ export default function Sections({
         onConfirm={modalMode === 'rename' ? renameSection : addNewSection}
       />
 
-      <div className="relative flex items-center gap-1 border-b-0 px-4 font-semibold">
+      <div className="relative flex items-center gap-1 border-b-0 px-2 font-semibold">
         {formField?.map((section, index) => (
           <div key={index} className="relative">
             <div
@@ -124,24 +137,25 @@ export default function Sections({
               {section.section}
             </div>
 
-            {contextMenu.section === section.section && (
-              <ModifyButton
-                onRename={() => {
-                  setSelectedSection(section.section);
-                  setModalMode('rename');
-                  setModalVisible(true);
-                  setContextMenu({ section: null });
-                }}
-                onDelete={() => {
-                  deleteSection(section.section);
-                  setContextMenu({ section: null });
-                }}
-              />
-            )}
+            {contextMenu.section === section.section &&
+              section.section !== '공통' && (
+                <ModifyButton
+                  onRename={() => {
+                    setSelectedSection(section.section);
+                    setModalMode('rename');
+                    setModalVisible(true);
+                    setContextMenu({ section: null });
+                  }}
+                  onDelete={() => {
+                    deleteSection(section.section);
+                    setContextMenu({ section: null });
+                  }}
+                />
+              )}
           </div>
         ))}
 
-        {sections.length < 5 && !isClosed && (
+        {sections.length < 6 && !isClosed && (
           <div
             onClick={() => {
               setModalMode('add');
@@ -153,20 +167,21 @@ export default function Sections({
           </div>
         )}
       </div>
-
-      <div
-        className="relative"
-        onMouseEnter={() => setShowTooltip(true)}
-        onMouseLeave={() => setShowTooltip(false)}
-      >
-        <InfoIcon className="w-5 cursor-pointer text-gray-500" />
-        {showTooltip && (
-          <div className="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 rounded-lg bg-blue-50 p-3 text-sm font-normal shadow-md">
-            <p>분야별 질문이 다를 경우,</p>
-            <p>시트를 추가하여 구분할 수 있습니다.</p>
-          </div>
-        )}
-      </div>
+      {sections.length < 6 && !isClosed && (
+        <div
+          className="relative"
+          onMouseEnter={() => setShowTooltip(true)}
+          onMouseLeave={() => setShowTooltip(false)}
+        >
+          <InfoIcon className="w-5 cursor-pointer text-gray-500" />
+          {showTooltip && (
+            <div className="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 rounded-lg bg-blue-50 p-3 text-sm font-normal shadow-md">
+              <p>분야별 질문이 다를 경우,</p>
+              <p>시트를 추가하여 구분할 수 있습니다.</p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
