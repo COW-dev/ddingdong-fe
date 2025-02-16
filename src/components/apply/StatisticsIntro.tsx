@@ -11,6 +11,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
+import OptionModal from '../ui/OptionModal';
 
 type Props = {
   applyId: number;
@@ -36,11 +37,20 @@ export default function StatisticsIntro({ applyId }: Props) {
           <ApplicantAnnounceIcon />
         </div>
       </section>
-      <section className="shrink md:w-[400px]">
+      <section className="flex shrink flex-col items-center md:w-[400px]">
         <div>
           <TableChart passedData={sortDepartmentRanksByLabel()} />
         </div>
-        <h2 className="m-3 text-center">지원 학과 TOP 5</h2>
+        <div className="relative flex items-center">
+          <h2 className="m-3 text-center">지원 학과 TOP 5</h2>
+          <div className="absolute -right-8 bottom-3 ">
+            <OptionModal
+              labels={
+                sortDepartmentRanksByLabel().map((item) => item.label) ?? []
+              }
+            />
+          </div>
+        </div>
       </section>
     </div>
   );

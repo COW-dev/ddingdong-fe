@@ -85,17 +85,11 @@ const PieChart = ({ passedData }: Props) => {
     };
   }, [passedData]);
 
-  return (
-    <div className="relative flex h-auto w-full">
-      <canvas ref={canvasRef} />
-      <div className="absolute bottom-0 right-0">
-        <OptionModal labels={passedData.map((item) => item.label)} />
-      </div>
-    </div>
-  );
+  return <canvas ref={canvasRef} className="flex h-auto w-full" />;
 };
 
 export default PieChart;
+
 const PieChartOption = {
   responsive: true,
   maintainAspectRatio: false,

@@ -66,7 +66,7 @@ const BarChart = ({ passedData }: Props) => {
           },
           y: {
             display: false,
-            max: Math.max(...getChartData().datasets[0].data) + 10,
+            max: Math.max(...getChartData().datasets[0].data) + 20,
           },
         },
       },

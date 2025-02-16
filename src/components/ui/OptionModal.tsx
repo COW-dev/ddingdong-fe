@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { HtmlHTMLAttributes, useState } from 'react';
+import { cn } from './utils';
 
 type Prop = {
   labels: string[];
-};
-function OptionModal({ labels }: Prop) {
+  className?: string;
+} & HtmlHTMLAttributes<HTMLButtonElement>;
+
+export default function OptionModal({ labels, className }: Prop) {
   const [open, setOpen] = useState<boolean>(false);
   return (
     <div className="flex flex-col items-end gap-2 text-xs font-semibold">
@@ -22,12 +25,13 @@ function OptionModal({ labels }: Prop) {
       </div>
       <div
         onClick={() => setOpen(!open)}
-        className="max-w-min cursor-pointer rounded-md bg-slate-100 px-2 py-1"
+        className={cn(
+          'max-w-min cursor-pointer rounded-md bg-slate-100 px-2 py-1',
+          className,
+        )}
       >
         옵션
       </div>
     </div>
   );
 }
-
-export default OptionModal;

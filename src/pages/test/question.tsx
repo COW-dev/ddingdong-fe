@@ -42,7 +42,7 @@ function QuestionResponse({ data }: Props) {
 
   if (!count) {
     return (
-      <div className="block w-full p-5 text-sm font-semibold text-[#6B7280] outline-none md:text-base">
+      <div className="block w-full p-5 pt-0 text-sm font-semibold text-[#6B7280] outline-none md:text-base">
         응답자가 없는 문항입니다.
       </div>
     );
