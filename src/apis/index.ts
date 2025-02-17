@@ -678,6 +678,14 @@ export async function getPresignedUrl(
   });
 }
 
+export async function getPresignedUrlForm(
+  fileName: string,
+): Promise<AxiosResponse<PresignedUrlResponse>> {
+  return await api.get(
+    `/file/upload-url/form-application?fileName=${fileName}`,
+  );
+}
+
 export async function uploadPresignedUrl(
   file: File,
   uploadUrl: string,

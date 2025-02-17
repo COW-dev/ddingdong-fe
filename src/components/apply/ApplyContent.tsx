@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { usePresignedUrlForm } from '@/hooks/api/apply/usePresignedUrlForm';
 import { FormAnswer } from '@/types/form';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
@@ -25,6 +26,7 @@ export default function ApplyContent({
   required,
   setFormAnswers,
 }: Props) {
+  const { getPresignedIds, isLoading } = usePresignedUrlForm();
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [longTextValue, setLongTextValue] = useState('');
   const [shortTextValue, setShortTextValue] = useState('');
@@ -57,6 +59,15 @@ export default function ApplyContent({
   ) => {
     setShortTextValue(e.target.value);
     handleFormAnswer([e.target.value]);
+  };
+
+  const handleFileUpload = async (files: File[]) => {
+    if (files.length === 0) return;
+
+    const uploadedFiles = await getPresignedIds(files);
+
+    const fileIds = uploadedFiles.map((file) => file.id);
+    handleFormAnswer(fileIds);
   };
 
   const handleFormAnswer = (newValue: string[]) => {
@@ -144,10 +155,7 @@ export default function ApplyContent({
       )}
 
       {type === 'FILE' && (
-        <FileUpload
-          onFilesSelected={(files) => console.log(files)}
-          disabled={false}
-        />
+        <FileUpload onFilesSelected={handleFileUpload} disabled={isLoading} />
       )}
     </div>
   );
