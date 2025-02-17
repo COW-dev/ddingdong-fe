@@ -39,7 +39,7 @@ export default function Index() {
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const applicationData = data?.data;
-  console.log('applicationData', applicationData);
+
   const { documentApplicants, interviewApplicants } = filterApplicants(
     applicationData?.formApplications ?? [],
   );
