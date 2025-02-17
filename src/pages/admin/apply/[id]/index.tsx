@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,8 +30,21 @@ import { filterApplicants } from '@/utils/filter';
 export default function Index() {
   const router = useRouter();
   const { id } = router.query;
-
   const [{ token }] = useCookies(['token']);
+  const getStorageKey = (id: string | string[] | undefined) =>
+    `apply-tab-${id}`;
+
+  const [activeTab, setActiveTab] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem(getStorageKey(id)) || 0;
+    }
+    return 0;
+  });
+
+  const handleTabChange = (index: number) => {
+    setActiveTab(index);
+    sessionStorage.setItem(getStorageKey(id), String(index));
+  };
 
   const { data: data, isLoading } = useAllApplication(Number(id), token);
   const deleteMutation = useDeleteApplication();
@@ -175,7 +189,12 @@ export default function Index() {
       </div>
 
       {applicationData.hasInterview ? (
-        <Tabs TabMenus={ClubTabMenus} tabContext="myClub" />
+        <Tabs
+          TabMenus={ClubTabMenus}
+          tabContext="myClub"
+          onTabChange={handleTabChange}
+          defaultIndex={Number(activeTab)}
+        />
       ) : (
         <ApplicantList data={applicationData.formApplications ?? []} />
       )}

@@ -5,9 +5,15 @@ type Props = {
   TabMenus: TabMenu[];
   tabContext: 'allClubs' | 'myClub';
   onTabChange?: (index: number) => void;
+  defaultIndex?: number;
 };
-export default function Tabs({ TabMenus, tabContext, onTabChange }: Props) {
-  const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
+export default function Tabs({
+  TabMenus,
+  tabContext,
+  onTabChange,
+  defaultIndex = 0,
+}: Props) {
+  const [activeTabIndex, setActiveTabIndex] = useState<number>(defaultIndex);
   const handleTabChange = (index: number) => {
     setActiveTabIndex(index);
     onTabChange?.(index);
