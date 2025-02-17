@@ -36,6 +36,10 @@ export default function Index() {
 
   const mutation = useNewResultEmail();
 
+  const handleChangeTarget = (targetValue: string) => {
+    setTarget(targetValue as ApplicantStatus);
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.target.value;
     if (!newValue.includes(APPLICANT_PLACEHOLDER)) {
@@ -48,7 +52,7 @@ export default function Index() {
     mutation.mutate({
       formId: Number(id),
       title,
-      target,
+      target: target,
       message: message,
       token,
     });
@@ -82,7 +86,9 @@ export default function Index() {
         </div>
       </div>
 
-      <Select onValueChange={(value) => setTarget(value as ApplicantStatus)}>
+      <Select
+        onValueChange={(value) => handleChangeTarget(value as ApplicantStatus)}
+      >
         <SelectTrigger className="mt-6 w-[135px] text-base font-semibold text-gray-500 focus:ring-0">
           <SelectValue placeholder="전송대상선택" />
         </SelectTrigger>
