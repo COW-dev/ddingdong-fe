@@ -40,6 +40,10 @@ export default function ApplicantList({ type = 'DOCUMENT', data }: Props) {
   const mutation = useUpdateApplicantStatus();
 
   useEffect(() => {
+    setFilterType('ALL');
+  }, [type]);
+
+  useEffect(() => {
     const passed = filterPassedApplicants(data, type);
     const failed = filterFailedApplicants(data, type);
     setPassedApplicants(passed);
