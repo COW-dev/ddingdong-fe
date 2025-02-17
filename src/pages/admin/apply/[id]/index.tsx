@@ -1,6 +1,7 @@
 import { GetServerSideProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import Bin from '@/assets/bin-bold.svg';
 import Chart from '@/assets/chart.svg';
@@ -17,6 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { FORM_STATUS } from '@/constants/apply';
 import { useAllApplication } from '@/hooks/api/apply/useAllApplication';
 import { useDeleteApplication } from '@/hooks/api/apply/useDeleteApply';
 import { useRegisterApplicant } from '@/hooks/api/apply/useRegisterApplicant';
@@ -24,37 +26,34 @@ import useModal from '@/hooks/common/useModal';
 import { TabMenu } from '@/types/feed';
 import { filterApplicants } from '@/utils/filter';
 
-type Props = {
-  id: number;
-  isActive: boolean;
-};
+export default function Index() {
+  const router = useRouter();
+  const { id } = router.query;
 
-export default function Index({ id, isActive }: Props) {
   const [{ token }] = useCookies(['token']);
-  const current = new Date().toISOString().split('T')[0];
 
-  const { data: data, isLoading } = useAllApplication(id, token);
+  const { data: data, isLoading } = useAllApplication(Number(id), token);
   const deleteMutation = useDeleteApplication();
   const registerMutation = useRegisterApplicant();
 
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const applicationData = data?.data;
-
+  console.log('applicationData', applicationData);
   const { documentApplicants, interviewApplicants } = filterApplicants(
     applicationData?.formApplications ?? [],
   );
 
   const handleRegister = () => {
     registerMutation.mutate({
-      formId: id,
+      formId: Number(id),
       token,
     });
   };
 
   const handleDelete = () => {
     deleteMutation.mutate({
-      formId: id,
+      formId: Number(id),
       token,
     });
   };
@@ -148,19 +147,9 @@ export default function Index({ id, isActive }: Props) {
         <div className="flex flex-col">
           <div className="text-base font-bold md:text-2xl">
             <span
-              className={`${
-                isActive
-                  ? applicationData.startDate > current
-                    ? 'text-blue-500'
-                    : 'text-gray-500'
-                  : 'text-red-500'
-              }`}
+              className={`${FORM_STATUS[applicationData.formStatus].color} `}
             >
-              {isActive
-                ? applicationData.startDate > current
-                  ? '진행중인'
-                  : '진행전'
-                : '마감된'}
+              {FORM_STATUS[applicationData.formStatus].text}
             </span>{' '}
             지원서입니다.
           </div>
