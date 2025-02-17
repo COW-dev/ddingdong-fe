@@ -61,13 +61,16 @@ export default function ApplyContent({
     handleFormAnswer([e.target.value]);
   };
 
-  const handleFileUpload = async (files: File[]) => {
+  const handleFileUpload = async (files: File[] | string[]) => {
     if (files.length === 0) return;
 
-    const uploadedFiles = await getPresignedIds(files);
-
-    const fileIds = uploadedFiles.map((file) => file.id);
-    handleFormAnswer(fileIds);
+    if (typeof files[0] === 'string') {
+      handleFormAnswer(files as string[]);
+    } else {
+      const uploadedFiles = await getPresignedIds(files as File[]);
+      const fileIds = uploadedFiles.map((file) => file.id);
+      handleFormAnswer(fileIds);
+    }
   };
 
   const handleFormAnswer = (newValue: string[]) => {
