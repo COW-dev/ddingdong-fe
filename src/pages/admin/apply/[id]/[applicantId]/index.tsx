@@ -115,6 +115,7 @@ export default function Index({ id, applicantId }: Props) {
           메모
         </div>
         <TextareaAutosize
+          maxLength={250}
           defaultValue={data?.data.note}
           onChange={handleNoteChange}
           className="w-full resize-none rounded-xl p-[15px] outline outline-gray-300"
