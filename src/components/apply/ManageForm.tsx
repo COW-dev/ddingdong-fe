@@ -393,12 +393,14 @@ export default function ManageForm({ formData, id }: Props) {
           ))}
       </div>
 
-      <button
-        onClick={addQuestion}
-        className="fixed bottom-20 right-20 flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600"
-      >
-        <Image src={AddForm} width={27} height={27} alt="질문 추가하기" />
-      </button>
+      {(isEditing || !isClosed) && (
+        <button
+          onClick={addQuestion}
+          className="fixed bottom-24 right-10 flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-20"
+        >
+          <Image src={AddForm} width={27} height={27} alt="질문 추가하기" />
+        </button>
+      )}
     </div>
   );
 }
