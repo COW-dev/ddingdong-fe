@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { QuestionType, SectionFormField } from '@/types/form';

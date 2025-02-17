@@ -8,7 +8,11 @@ export function useAllSections(id: number) {
     queryFn: () => getSections(id),
     enabled: !!id,
     onError: (error) => {
-      toast.error('조회에 오류가 발생하였습니다' + (error as string));
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : '알 수 없는 오류가 발생했습니다';
+      toast.error(`조회에 오류가 발생하였습니다: ${errorMessage}`);
     },
   });
 }

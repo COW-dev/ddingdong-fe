@@ -719,7 +719,7 @@ function rejectedResponse(error: AxiosError<ErrorType>) {
 
 api.interceptors.response.use(fulfilledResponse, rejectedResponse);
 
-export async function createForm(token: string, formData: FormData) {
+export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {
     headers: {
       Authorization: `Bearer ${token}`,

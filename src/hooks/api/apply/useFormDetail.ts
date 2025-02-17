@@ -4,7 +4,7 @@ import { getFormDetail } from '@/apis';
 
 export function useFormDetail(id: number, section: string) {
   return useQuery({
-    queryKey: ['FormDetail'],
+    queryKey: ['FormDetail', id, section],
     queryFn: () => getFormDetail(id, section),
     enabled: !!id && !!section,
     onError: (error) => {

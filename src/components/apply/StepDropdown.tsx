@@ -71,7 +71,6 @@ export function StepDropdown({
                       onClick={() => {
                         selectItem(item);
                         setOpenDropdown(false);
-                        setOpenDropdown(false);
                       }}
                     >
                       {item}

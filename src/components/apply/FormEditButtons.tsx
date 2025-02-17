@@ -1,7 +1,8 @@
 import React from 'react';
+import { CreateFormData } from '@/types/form';
 
 type Props = {
-  formData?: any;
+  formData?: CreateFormData;
   isEditing: boolean;
   isClosed: boolean;
   isPastStartDate: boolean;

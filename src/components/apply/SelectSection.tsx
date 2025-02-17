@@ -21,8 +21,8 @@ export default function SelectSection({ sectionData }: SelectSectionProps) {
       </div>
 
       <div>
-        {sectionData.sections.map((section, index) => (
-          <div key={index}>{section}</div>
+        {sectionData.sections.map((section) => (
+          <div key={section}>{section}</div>
         ))}
       </div>
 

@@ -18,11 +18,11 @@ interface FormData {
   };
 }
 interface ApplyFormProps {
-  formData: any;
+  formData: FormData;
   setStep: React.Dispatch<
     React.SetStateAction<'SECTION' | 'QUESTION' | 'SUBMITTED'>
   >;
-  sections: any;
+  sections: string[];
 }
 interface RequiredQuestions {
   name: string;

@@ -12,7 +12,7 @@ import EmptyCircle from '../../../assets/empty-circle-check.svg';
 export default function IndexPage() {
   const router = useRouter();
   const { id } = router.query;
-  const formId = id ? Number(id) : 0;
+  const formId = id && !isNaN(Number(id)) ? Number(id) : 0;
 
   const { data: sectionsData, isLoading } = useAllSections(formId);
   const [selectedRadio, setSelectedRadio] = useState<string>('');
@@ -194,7 +194,7 @@ export function Submitted({ applicationCount }: SubmittedProps) {
       ],
       confettiRadius: 3,
     });
-  });
+  }, []);
 
   return (
     <div className="flex w-full flex-col items-center justify-center py-10">
