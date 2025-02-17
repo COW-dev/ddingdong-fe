@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
-import { QuestionType } from '@/types/form';
+import { QuestionType, SectionFormField } from '@/types/form';
 import BaseInput from './BaseInput';
 import Content from './Content';
 import Dropdown from './Dropdown';
@@ -30,7 +30,7 @@ interface Props {
   index: number;
   questionData: QuestionData;
   section: Section;
-  setFormField: React.Dispatch<React.SetStateAction<FormField[]>>;
+  setFormField: React.Dispatch<React.SetStateAction<SectionFormField[]>>;
   isClosed?: boolean;
   deleteQuestion: (sectionName: string | undefined, index: number) => void;
 }

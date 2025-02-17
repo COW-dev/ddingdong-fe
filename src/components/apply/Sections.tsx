@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { InfoIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { SectionsProps, FormField } from '@/types/form';
+import { SectionsProps } from '@/types/form';
 import Prompt from '../common/Prompt';
 
 export default function Sections({
@@ -93,14 +93,19 @@ export default function Sections({
       return;
     }
 
-    setSections((prev: string[]) => [...prev, trimmedName]);
-    setFormField((prev: FormField[]) => [
+    setSections([...sections, trimmedName]);
+
+    setFormField((prev) => [
       ...prev,
       {
         section: trimmedName,
-        questions: baseQuestion.map((q) => ({ ...q })),
-      } as FormField,
+        questions: baseQuestion.map((q) => ({
+          ...q,
+          section: trimmedName,
+        })),
+      },
     ]);
+
     setFocusSection(trimmedName);
   };
 

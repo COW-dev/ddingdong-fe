@@ -5,7 +5,9 @@ interface TextAreaProps {
   rows?: number;
   disabled: boolean;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onChange?: (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => void;
 }
 
 export default function TextArea({
@@ -23,7 +25,7 @@ export default function TextArea({
       className="resize-none disabled:resize-none"
       disabled={disabled}
       value={value ?? ''}
-      onChange={onChange ?? (() => {})}
+      onChange={onChange}
     />
   );
 }

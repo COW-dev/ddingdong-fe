@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
+import { FormAnswer } from '@/types/form';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
 import FilledCircle from '../../assets/check_form.svg';
@@ -7,18 +8,12 @@ import FilledSquare from '../../assets/check_square_form.svg';
 import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
 
-interface FormAnswer {
-  fieldId: string | number;
-  value: string[];
-}
-
 interface Props {
-  fieldId: string | number;
+  fieldId: string;
   type: 'CHECK_BOX' | 'RADIO' | 'LONG_TEXT' | 'TEXT' | 'FILE';
   question: string;
   options: string[];
   required: boolean;
-  formAnswers: FormAnswer[];
   setFormAnswers: React.Dispatch<React.SetStateAction<FormAnswer[]>>;
 }
 
@@ -28,7 +23,6 @@ export default function ApplyContent({
   options,
   question,
   required,
-  formAnswers,
   setFormAnswers,
 }: Props) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
@@ -51,12 +45,16 @@ export default function ApplyContent({
     handleFormAnswer([option]);
   };
 
-  const longTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const longTextChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
     setLongTextValue(e.target.value);
     handleFormAnswer([e.target.value]);
   };
 
-  const shortTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const shortTextChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+  ) => {
     setShortTextValue(e.target.value);
     handleFormAnswer([e.target.value]);
   };

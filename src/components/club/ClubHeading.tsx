@@ -100,7 +100,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
         </div>
         <button
-          onClick={() => moveToApply(formId)}
+          onClick={() => moveToApply(Number(formId))}
           className={`ml-6 hidden rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
             !isRecruit && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
           }`}

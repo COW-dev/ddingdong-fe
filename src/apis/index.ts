@@ -48,7 +48,7 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
-import { FormData, ApplyData } from '@/types/form';
+import { CreateFormData, ApplyData } from '@/types/form';
 import {
   Notice,
   NoticeDetail,
@@ -746,7 +746,7 @@ export async function getForm(token: string, formId: number) {
 export async function updateForm(
   token: string,
   formId: number,
-  formData: FormData,
+  formData: CreateFormData,
 ) {
   return await api.put(`/central/my/forms/${formId}`, formData, {
     headers: {

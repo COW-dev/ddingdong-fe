@@ -1,22 +1,8 @@
+import { Dispatch, SetStateAction } from 'react';
+
 type Section = string;
 
-export type QuestionType =
-  | 'CHECK_BOX'
-  | 'RADIO'
-  | 'TEXT'
-  | 'LONG_TEXT'
-  | 'FILE';
-
-export interface FormField {
-  question: string;
-  type: QuestionType;
-  options: string[] | [];
-  required: boolean;
-  order: number;
-  section: Section;
-}
-
-export interface FormData {
+export interface CreateFormData {
   title: string;
   description?: string | null;
   startDate: string;
@@ -30,18 +16,61 @@ export interface ManageFormProps {
   formData?: FormData;
 }
 
-export interface Answer {
-  fieldId: number;
+export interface FormAnswer {
+  fieldId: string | number;
   value: string | string[];
+}
+
+export interface QuestionField {
+  question: string;
+  type: QuestionType;
+  options: string[];
+  required: boolean;
+  order: number;
+  section: string;
+}
+
+export type QuestionType =
+  | 'CHECK_BOX'
+  | 'RADIO'
+  | 'LONG_TEXT'
+  | 'TEXT'
+  | 'FILE';
+
+export interface FormField {
+  question: string;
+  type: QuestionType;
+  options: string[];
+  required: boolean;
+  order: number;
+  section: string;
+}
+
+export interface SectionFormField {
+  section: string;
+  questions: FormField[];
+}
+
+export interface FormData {
+  title: string;
+  description?: string | null;
+  startDate: string;
+  endDate: string;
+  hasInterview: boolean;
+  sections: string[];
+  formFields: FormField[];
 }
 
 export interface ApplyData {
   name: string;
-  studentNumber: number;
+  studentNumber: string;
   department: string;
   email: string;
   phoneNumber: string;
-  formAnswers: Answer[];
+  formAnswers: {
+    fieldId: string | number;
+    value: string | string[];
+  }[];
 }
 
 export interface FormBlockData {
@@ -54,21 +83,13 @@ export interface FormBlockData {
 }
 
 export interface SectionsProps {
-  addSection: () => void;
   focusSection: string;
+  setFocusSection: Dispatch<SetStateAction<string>>;
   sections: string[];
-  setFocusSection: (section: string) => void;
+  setSections: Dispatch<SetStateAction<string[]>>;
+  formField: SectionFormField[];
+  setFormField: Dispatch<SetStateAction<SectionFormField[]>>;
   isClosed: boolean;
-  formField: {
-    section: string;
-    questions: FormField[];
-  }[];
-  setFormField: (
-    fields: {
-      section: string;
-      questions: FormField[];
-    }[],
-  ) => void;
-  setSections: (sections: string[]) => void;
-  baseQuestion: FormField[];
+  baseQuestion: Omit<FormField, 'section'>[];
+  addSection: () => void;
 }

@@ -14,7 +14,12 @@ import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
-import { FormData, FormField, QuestionType } from '@/types/form';
+import {
+  FormData,
+  QuestionType,
+  SectionFormField,
+  FormField,
+} from '@/types/form';
 import FormEditButtons from './FormEditButtons';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
@@ -52,6 +57,7 @@ export default function ManageForm({ formData, id }: Props) {
             options: field.options || [],
             required: field.required,
             order: field.order,
+            section: field.section,
           })),
         }),
       );
@@ -153,6 +159,7 @@ export default function ManageForm({ formData, id }: Props) {
         options: field.options || ['옵션1'],
         required: field.required,
         order: field.order,
+        section,
       })),
     })),
   );
@@ -175,17 +182,18 @@ export default function ManageForm({ formData, id }: Props) {
     }
   }, [formData]);
 
-  const baseQuestion = [
+  const baseQuestion: FormField[] = [
     {
       question: '',
       type: 'RADIO',
       options: ['옵션1'],
       required: true,
       order: 1,
+      section: '공통',
     },
   ];
 
-  const [formField, setFormField] = useState(
+  const [formField, setFormField] = useState<SectionFormField[]>(
     formData
       ? modiformField
       : [
@@ -198,33 +206,12 @@ export default function ManageForm({ formData, id }: Props) {
                 options: ['옵션1'],
                 required: true,
                 order: 1,
+                section: '공통',
               },
             ],
           },
         ],
   );
-
-  const addQuestion = () => {
-    setFormField((prev) =>
-      prev.map((section) =>
-        section.section === focusSection
-          ? {
-              ...section,
-              questions: [
-                ...section.questions,
-                {
-                  question: '',
-                  type: 'RADIO',
-                  options: ['옵션1'],
-                  required: true,
-                  order: section.questions.length + 1,
-                },
-              ],
-            }
-          : section,
-      ),
-    );
-  };
 
   const handleDateChange = (newValue: DateRangeType | null) => {
     setRecruitPeriod(newValue ?? { startDate: null, endDate: null });
@@ -264,6 +251,29 @@ export default function ManageForm({ formData, id }: Props) {
   const onClickCancelButton = () => {
     setIsEditing(false);
     setIsClosed(true);
+  };
+
+  const addQuestion = () => {
+    setFormField((prev) =>
+      prev.map((section) =>
+        section.section === focusSection
+          ? {
+              ...section,
+              questions: [
+                ...section.questions,
+                {
+                  question: '',
+                  type: 'RADIO',
+                  options: ['옵션1'],
+                  required: true,
+                  order: section.questions.length + 1,
+                  section: focusSection,
+                },
+              ],
+            }
+          : section,
+      ),
+    );
   };
 
   return (
@@ -343,9 +353,9 @@ export default function ManageForm({ formData, id }: Props) {
         <TextArea
           placeholder="지원서 설명을 입력해 주세요 (최대 255자 이내)"
           value={description}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-            setDescription(e.target.value)
-          }
+          onChange={(
+            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+          ) => setDescription(e.target.value)}
           disabled={isClosed}
         />
       </div>

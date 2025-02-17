@@ -153,7 +153,10 @@ export default function Content({
         />
       )}
       {type === 'FILE' && (
-        <FileUpload onFilesSelected={() => {}} disabled={isEditing} />
+        <FileUpload
+          onFilesSelected={(files) => console.log(files)}
+          disabled={isEditing}
+        />
       )}
     </div>
   );
