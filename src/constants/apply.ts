@@ -49,6 +49,12 @@ export const STATUS_TYPE: Record<
   },
 };
 
+export const FORM_STATUS = {
+  '진행 전': { color: 'text-gray-500', text: '진행전' },
+  '진행 중': { color: 'text-blue-500', text: '진행중인' },
+  마감: { color: 'text-red-500', text: '마감된' },
+} as const;
+
 export const EMAIL_STATUS = {
   FIRST_PASS: '서류 합격',
   FIRST_FAIL: '서류 불합격',

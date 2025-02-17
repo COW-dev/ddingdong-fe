@@ -10,6 +10,7 @@ export type Application = {
   title: string;
   startDate: string;
   endDate: string;
+  formStatus: '진행 전' | '진행 중' | '마감';
   hasInterview: boolean;
   formApplications: Applicant[];
   token?: string;
