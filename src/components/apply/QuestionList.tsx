@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import Question from '@/components/apply/ApplyQuestion';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
 import { ApplyQuestion } from '@/types/apply';
-import Sections from './Sections';
+import StatisticsSections from './StatisticsSections';
 
 type Prop = {
   applyId: number;
@@ -25,7 +25,7 @@ function QuestionList({ applyId }: Prop) {
 
   return (
     <>
-      <Sections
+      <StatisticsSections
         focusSection={fields}
         setFocusSection={setFields}
         sections={data?.data.fieldStatistics.sections ?? ['']}
