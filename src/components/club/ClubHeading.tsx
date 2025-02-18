@@ -83,7 +83,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
               <span className="inline-block w-20 text-gray-500">동아리방</span>
               <span>{location}</span>
             </div>
-            <div className="mb-1.5">
+            <div className="mb-1.5 flex md:flex-row">
               <span className="inline-block w-20 text-gray-500">모집기간</span>
               {startDate && endDate && (
                 <>
@@ -91,6 +91,9 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
                   <span className="mx-1">~</span>
                   {endDate.replace(/-/g, '.')}
                 </>
+              )}
+              {!startDate && !endDate && (
+                <p className="text-gray-500">모집예정</p>
               )}
             </div>
           </div>
