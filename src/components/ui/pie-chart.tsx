@@ -5,6 +5,7 @@ import {
   ArcElement,
   Tooltip,
   Legend,
+  TooltipItem,
 } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
@@ -51,6 +52,7 @@ const PieChart = ({ passedData }: Props) => {
     const ratios = passedData.map((item) => item.ratio);
     return {
       labels,
+      ratios,
       datasets: [
         {
           data: ratios,
@@ -80,7 +82,36 @@ const PieChart = ({ passedData }: Props) => {
     chartInstance = new ChartJS(canvasContext, {
       type: 'pie',
       data: getChartData(),
-      options: PieChartOption,
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'right' as const,
+            align: 'center' as const,
+            labels: {
+              usePointStyle: true,
+              font: {
+                family: 'Pretendard',
+                size: 14,
+              },
+              color: '#1F2937',
+            },
+            onClick: () => {},
+          },
+          tooltip: {
+            ...tooltip,
+            callbacks: {
+              title: () => [],
+              label: (tooltipItem: TooltipItem<'pie'>) => {
+                const dataIndex = tooltipItem.dataIndex;
+                const ratios = getChartData().ratios;
+                return `${ratios[dataIndex]}%`;
+              },
+            },
+          },
+        },
+      },
     });
   };
 
@@ -97,32 +128,3 @@ const PieChart = ({ passedData }: Props) => {
 };
 
 export default PieChart;
-
-const PieChartOption = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: 'right' as const,
-      align: 'center' as const,
-      labels: {
-        usePointStyle: true,
-        font: {
-          family: 'Pretendard',
-          size: 14,
-        },
-        color: '#1F2937',
-      },
-      onClick: () => {},
-    },
-    tooltip: {
-      ...tooltip,
-      callbacks: {
-        title: () => [],
-        label: (data: { formattedValue: string }) => {
-          return `${data.dataset.data[data.dataIndex]}%`;
-        },
-      },
-    },
-  },
-};

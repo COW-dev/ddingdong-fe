@@ -7,6 +7,7 @@ import {
   LineElement,
   PointElement,
   Tooltip,
+  TooltipItem,
 } from 'chart.js';
 
 import { ApplyRate } from '@/types/apply';
@@ -81,7 +82,21 @@ const LineChart = ({ passedData }: Props) => {
       type: 'line',
       data: getChartData(),
       options: {
-        ...lineChartOption,
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            ...tooltip,
+            callbacks: {
+              title: () => [],
+              label: (tooltipItem: TooltipItem<'line'>) => {
+                const dataIndex = tooltipItem.dataIndex;
+                const counts = getChartData().rates;
+                return `${counts[dataIndex]}%`;
+              },
+            },
+          },
+        },
         scales: {
           x: {
             offset: true,
@@ -135,21 +150,4 @@ const lineChartStyle = {
   pointBorderColor: ['#B0B0B0', '#B0B0B0', '#3B82F6'],
   pointBorderWidth: 2, // 포인트 테두리 두께
   fill: false,
-};
-
-const lineChartOption = {
-  responsive: true,
-  plugins: {
-    legend: { display: false },
-    tooltip: {
-      ...tooltip,
-      callbacks: {
-        title: () => [],
-        label: (data: { formattedValue: string }) => {
-          console.log(data);
-          return `${data.chart.config?._config.data.rates[data.dataIndex]}%`;
-        },
-      },
-    },
-  },
 };

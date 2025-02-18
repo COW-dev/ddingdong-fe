@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
+import {
+  Chart as ChartJS,
+  BarController,
+  BarElement,
+  Tooltip,
+  Chart,
+  TooltipItem,
+} from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
 
@@ -53,7 +60,22 @@ const BarChart = ({ passedData }: Props) => {
       type: 'bar',
       data: getChartData(),
       options: {
-        ...tableChartOption,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            ...tooltip,
+            callbacks: {
+              title: () => [],
+              label: (tooltipItem: TooltipItem<'bar'>) => {
+                const dataIndex = tooltipItem.dataIndex;
+                const counts = getChartData().counts;
+                return `${counts[dataIndex]}명`;
+              },
+            },
+          },
+        },
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
           x: {
             grid: { display: false },
@@ -112,21 +134,3 @@ const BarChart = ({ passedData }: Props) => {
 };
 
 export default BarChart;
-
-const tableChartOption = {
-  plugins: {
-    legend: { display: false },
-    tooltip: {
-      ...tooltip,
-      callbacks: {
-        title: () => [],
-        label: (data: { formattedValue: string }) => {
-          console.log(data);
-          return `${data.chart.config?._config.data.counts[data.dataIndex]}명`;
-        },
-      },
-    },
-  },
-  responsive: true,
-  maintainAspectRatio: false,
-};
