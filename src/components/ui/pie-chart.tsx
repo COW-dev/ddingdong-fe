@@ -33,6 +33,15 @@ const truncateLabel = (
 const PieChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let chartInstance: ChartJS | null = null;
+
+  const getPieChartStyle = (ratios: number[]) => {
+    return {
+      backgroundColor: ['#3B82F6', '#BFDBFE', '#F87171', '#9CA3AF', '#E5E7EB'],
+      borderWidth: ratios.some((ratio) => ratio === 100) ? 0 : 10,
+      hoverBorderColor: '#FFFFFF',
+    };
+  };
+
   const getChartData = () => {
     const labels = passedData.map((item) =>
       item.label.length > 7
@@ -45,7 +54,7 @@ const PieChart = ({ passedData }: Props) => {
       datasets: [
         {
           data: ratios,
-          ...PieChartStyle,
+          ...getPieChartStyle(ratios),
         },
       ],
     };
@@ -104,22 +113,16 @@ const PieChartOption = {
         },
         color: '#1F2937',
       },
+      onClick: () => {},
     },
     tooltip: {
       ...tooltip,
       callbacks: {
         title: () => [],
         label: (data: { formattedValue: string }) => {
-          console.log(data);
           return `${data.dataset.data[data.dataIndex]}%`;
         },
       },
     },
   },
-};
-
-const PieChartStyle = {
-  backgroundColor: ['#3B82F6', '#BFDBFE', '#F87171', '#9CA3AF', '#E5E7EB'],
-  borderWidth: 10,
-  hoverBorderColor: '#FFFFFF',
 };
