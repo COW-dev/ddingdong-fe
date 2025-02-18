@@ -18,7 +18,7 @@ export default function Index({ applyId }: Props) {
   return (
     <>
       <div className="my-7 flex items-center md:my-11">
-        <Link href="/fix">
+        <Link href={`/apply/${applyId}`}>
           <Image
             src={LeftArrow2}
             alt="back"

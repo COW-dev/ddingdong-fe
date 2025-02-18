@@ -17,20 +17,6 @@ type Props = {
   passedData: ChartItem[];
 };
 
-const truncateLabel = (
-  ctx: CanvasRenderingContext2D,
-  label: string,
-  maxWidth: number,
-) => {
-  if (ctx.measureText(label).width <= maxWidth) return label; // 너비가 넘지 않으면 그대로 사용
-
-  let truncated = label;
-  while (ctx.measureText(truncated + '...').width > maxWidth) {
-    truncated = truncated.slice(0, -1); // 한 글자씩 줄이기
-  }
-  return truncated + '...';
-};
-
 const PieChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let chartInstance: ChartJS | null = null;
