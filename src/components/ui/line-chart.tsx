@@ -58,8 +58,12 @@ const LineChart = ({ passedData }: Props) => {
 
     const labels = parsedApplicantData.map((item) => item?.label);
     const datas = parsedApplicantData.map((item) => item?.count);
+    const rates = parsedApplicantData.map(
+      (item) => item?.comparedToBefore.ratio,
+    );
     return {
       labels,
+      rates,
       datasets: [
         {
           data: datas,
@@ -139,6 +143,13 @@ const lineChartOption = {
     legend: { display: false },
     tooltip: {
       ...tooltip,
+      callbacks: {
+        title: () => [],
+        label: (data: { formattedValue: string }) => {
+          console.log(data);
+          return `${data.chart.config?._config.data.rates[data.dataIndex]}%`;
+        },
+      },
     },
   },
 };

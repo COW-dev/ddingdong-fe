@@ -16,6 +16,7 @@ const BarChart = ({ passedData }: Props) => {
   const getChartData = () => {
     const labels = passedData.map((item) => item.label);
     const rates = passedData.map((item) => item.ratio);
+    const counts = passedData.map((item) => item.count);
     const sorteCountData = [...passedData].sort((a, b) => b.count - a.count);
     const colorMap = sorteCountData.map((item, index) => {
       if (index === 0) return '#3B82F6';
@@ -32,6 +33,7 @@ const BarChart = ({ passedData }: Props) => {
 
     return {
       labels,
+      counts,
       datasets: [
         { data: rates, backgroundColor: backgroundColors, barThickness },
       ],
@@ -112,7 +114,19 @@ const BarChart = ({ passedData }: Props) => {
 export default BarChart;
 
 const tableChartOption = {
-  plugins: { legend: { display: false }, tooltip: tooltip },
+  plugins: {
+    legend: { display: false },
+    tooltip: {
+      ...tooltip,
+      callbacks: {
+        title: () => [],
+        label: (data: { formattedValue: string }) => {
+          console.log(data);
+          return `${data.chart.config?._config.data.counts[data.dataIndex]}명`;
+        },
+      },
+    },
+  },
   responsive: true,
   maintainAspectRatio: false,
 };
