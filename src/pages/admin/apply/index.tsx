@@ -88,13 +88,16 @@ export default function Index() {
       )}
 
       <div className="flex flex-col gap-3">
-        {getFilteredForms().map((form) => (
-          <FormBlock
-            key={form.formId}
-            {...form}
-            onClick={() => handleClickFormBlock(form.formId)}
-          />
-        ))}
+        {getFilteredForms()
+          .slice()
+          .reverse()
+          .map((form) => (
+            <FormBlock
+              key={form.formId}
+              {...form}
+              onClick={() => handleClickFormBlock(form.formId)}
+            />
+          ))}
       </div>
     </>
   );
