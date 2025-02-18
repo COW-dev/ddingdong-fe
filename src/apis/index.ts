@@ -94,6 +94,43 @@ export async function getAllBanners(): Promise<
 > {
   return await api.get('/banners');
 }
+export async function getApplyStatistics(
+  applyId: number,
+  token: string,
+): Promise<AxiosResponse<any, unknown>> {
+  return await api.get(`/central/my/forms/${applyId}/statistics`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getMultipleAnswer(
+  questionId: number,
+  token: string,
+): Promise<AxiosResponse<any, unknown>> {
+  return await api.get(
+    `/central/my/forms/statistics/multiple-choice?fieldId=${questionId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+export async function getSingleAnswer(
+  questionId: number,
+  token: string,
+): Promise<AxiosResponse<any, unknown>> {
+  return await api.get(
+    `/central/my/forms/statistics/text?fieldId=${questionId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
 
 export async function getAdminAllClubs(
   token: string,
