@@ -7,7 +7,6 @@ import {
   LineElement,
   PointElement,
   Tooltip,
-  TooltipItem,
 } from 'chart.js';
 
 import { ApplyRate } from '@/types/apply';
@@ -89,10 +88,9 @@ const LineChart = ({ passedData }: Props) => {
             ...tooltip,
             callbacks: {
               title: () => [],
-              label: (tooltipItem: TooltipItem<'line'>) => {
-                const dataIndex = tooltipItem.dataIndex;
+              label: (data) => {
                 const counts = getChartData().rates;
-                return `${counts[dataIndex]}%`;
+                return `${counts[data.dataIndex]}%`;
               },
             },
           },

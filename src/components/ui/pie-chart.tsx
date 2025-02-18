@@ -5,7 +5,6 @@ import {
   ArcElement,
   Tooltip,
   Legend,
-  TooltipItem,
 } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
@@ -83,16 +82,15 @@ const PieChart = ({ passedData }: Props) => {
               },
               color: '#1F2937',
             },
-            onClick: () => {},
+            // onClick: () => {},
           },
           tooltip: {
             ...tooltip,
             callbacks: {
               title: () => [],
-              label: (tooltipItem: TooltipItem<'pie'>) => {
-                const dataIndex = tooltipItem.dataIndex;
+              label: (data) => {
                 const ratios = getChartData().ratios;
-                return `${ratios[dataIndex]}%`;
+                return `${ratios[data.dataIndex]}%`;
               },
             },
           },

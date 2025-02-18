@@ -1,12 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Chart as ChartJS,
-  BarController,
-  BarElement,
-  Tooltip,
-  Chart,
-  TooltipItem,
-} from 'chart.js';
+import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
 
@@ -66,10 +59,9 @@ const BarChart = ({ passedData }: Props) => {
             ...tooltip,
             callbacks: {
               title: () => [],
-              label: (tooltipItem: TooltipItem<'bar'>) => {
-                const dataIndex = tooltipItem.dataIndex;
+              label: (data) => {
                 const counts = getChartData().counts;
-                return `${counts[dataIndex]}명`;
+                return `${counts[data.dataIndex]}명`;
               },
             },
           },
