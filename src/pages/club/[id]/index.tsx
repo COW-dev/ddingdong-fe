@@ -55,11 +55,7 @@ export default function Index({ clubId }: ClubDetailProps) {
   if (isSuccess && clubFeedData && allClubs) {
     const clubInfo = clubInfoData.data;
     const clubFeed = clubFeedData.pages.flatMap((page) => page.data.clubFeeds);
-    const { name, formUrl } = clubInfo;
-
-    const isRecruit =
-      allClubs?.data.find((club) => club.name === name)?.recruitStatus ===
-        '모집 중' && formUrl;
+    const { name } = clubInfo;
 
     const ClubTabMenus: TabMenu[] = [
       {
@@ -105,9 +101,7 @@ export default function Index({ clubId }: ClubDetailProps) {
           tabContext="allClubs"
           onTabChange={(index) => setActiveTab(index)}
         />
-        <div className={`${!isRecruit && 'hidden'}`}>
-          <BottomButton href={clubInfo.formUrl}>지원하기</BottomButton>
-        </div>
+        <div className={`${'hidden'}`}></div>
       </>
     );
   }

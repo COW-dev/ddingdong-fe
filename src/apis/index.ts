@@ -48,6 +48,7 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
+import { CreateFormData, ApplyData } from '@/types/form';
 import {
   Notice,
   NoticeDetail,
@@ -677,6 +678,14 @@ export async function getPresignedUrl(
   });
 }
 
+export async function getPresignedUrlForm(
+  fileName: string,
+): Promise<AxiosResponse<PresignedUrlResponse>> {
+  return await api.get(
+    `/file/upload-url/form-application?fileName=${fileName}`,
+  );
+}
+
 export async function uploadPresignedUrl(
   file: File,
   uploadUrl: string,
@@ -717,3 +726,54 @@ function rejectedResponse(error: AxiosError<ErrorType>) {
 }
 
 api.interceptors.response.use(fulfilledResponse, rejectedResponse);
+
+export async function createForm(token: string, formData: CreateFormData) {
+  return await api.post('/central/my/forms', formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getAllForms(token: string) {
+  return await api.get('/central/my/forms', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getForm(token: string, formId: number) {
+  return await api.get(`/central/my/forms/${formId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function updateForm(
+  token: string,
+  formId: number,
+  formData: CreateFormData,
+) {
+  return await api.put(`/central/my/forms/${formId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getSections(formId: number) {
+  return await api.get(`/forms/${formId}/sections`);
+}
+
+export async function getFormDetail(formId: number, section: string) {
+  return await api.get(`forms/${formId}?section=${section}`);
+}
+
+export async function submitApplicationForm(
+  formId: number,
+  formData: ApplyData,
+) {
+  return await api.post(`forms/${formId}/applications`, formData);
+}

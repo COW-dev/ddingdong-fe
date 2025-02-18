@@ -1,4 +1,6 @@
-// 지원서 작성 페이지
-export default function Index() {
-  return <></>;
+import React from 'react';
+import ManageForm from '@/components/apply/ManageForm';
+
+export default function index() {
+  return <ManageForm />;
 }
