@@ -9,17 +9,14 @@ interface UploadFile {
 }
 
 export function usePresignedUrlForm() {
-  // Presigned URL 요청
   const presignedUrlMutation = useMutation(
     async (fileName: string) => {
-      console.log(`Presigned URL 요청: ${fileName}`);
       const response = await getPresignedUrlForm(fileName);
-      console.log('Presigned URL 응답:', response.data);
+
       return response.data;
     },
     {
       onError: (error) => {
-        console.error('Presigned URL 요청 실패:', error);
         toast.error('Presigned URL 요청 중 오류가 발생했습니다.');
       },
     },
@@ -39,7 +36,6 @@ export function usePresignedUrlForm() {
     },
     {
       onError: (error) => {
-        console.error('파일 업로드 실패:', error);
         toast.error('파일 업로드 중 오류가 발생했습니다.');
       },
     },
@@ -62,7 +58,6 @@ export function usePresignedUrlForm() {
 
       return { id, fileName: file.name };
     } catch (error) {
-      console.error(`파일 업로드 실패: ${file.name}`, error);
       toast.error(`${file.name} 업로드 실패. 다시 시도해주세요.`);
       return null;
     }
