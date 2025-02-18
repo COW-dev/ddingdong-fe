@@ -56,5 +56,6 @@ export const config = {
     '/report/:path*',
     '/feeds/:path*',
     '/feed/:path*',
+    '/apply/:path*',
   ],
 };
