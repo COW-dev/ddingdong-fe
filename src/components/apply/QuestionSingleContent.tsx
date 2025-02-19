@@ -1,10 +1,12 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import router from 'next/router';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import File from '@/assets/file.svg';
-import { AnswerItem, useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
+import { useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
+import { AnswerItem } from '@/types/apply';
+
 const componentMap = {
   TEXT: TextList,
   LONG_TEXT: TextList,

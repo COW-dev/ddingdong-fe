@@ -22,6 +22,13 @@ export type ChartItem = {
   rank?: number;
 };
 
+export type AnswerItem = {
+  applicationId: number;
+  name: string;
+  answer: string;
+  fileName?: string;
+};
+
 export type ApplyStatistics = {
   totalCount: number;
   departmentStatistics: ChartItem[];
