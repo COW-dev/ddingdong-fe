@@ -82,7 +82,8 @@ const PieChart = ({ passedData }: Props) => {
               },
               color: '#1F2937',
             },
-            // onClick: () => {},
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onClick: () => {},
           },
           tooltip: {
             ...tooltip,
