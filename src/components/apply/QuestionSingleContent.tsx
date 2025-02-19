@@ -68,11 +68,16 @@ function TextList({ answer }: { answer: AnswerItem }) {
     return () => window.removeEventListener('resize', resizeTextarea);
   }, []);
 
+  const handleClick = () => {
+    const { id } = router.query;
+    router.push(`/apply/${id}/${answer.applicationId}`);
+  };
+
   return (
     <textarea
       ref={textareaRef}
       rows={1}
-      onClick={() => router.push(`${router.asPath}/${answer.applicationId}`)}
+      onClick={handleClick}
       readOnly
       className="block w-full rounded-xl border border-[#E5E7EB]  p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
       onInput={(e) => {
