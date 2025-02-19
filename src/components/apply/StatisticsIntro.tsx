@@ -61,7 +61,7 @@ export default function StatisticsIntro({ applyId }: Props) {
 
 function ApplicantAnnounceIcon() {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger>
           <Image src={InfoIcon} width={22} height={22} alt={'announce_icon'} />
