@@ -25,6 +25,7 @@ export default function QuestionMultipleContent({ type, id }: Props) {
       <div className="absolute bottom-0 right-0">
         <OptionModal
           labels={data?.data.options?.map(({ label }) => label) ?? []}
+          className="md:px-3 md:py-2 md:text-sm"
         />
       </div>
       <div className="max-w-[400px]">

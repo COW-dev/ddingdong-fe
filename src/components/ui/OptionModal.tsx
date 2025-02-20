@@ -17,8 +17,9 @@ export default function OptionModal({ labels, className }: Prop) {
       >
         {labels.map((label, index) => {
           return (
-            <li className="p-1" key={index}>
-              {label}
+            <li className="m-1 flex list-none gap-1 p-1" key={index}>
+              <span>-</span>
+              <div>{label}</div>
             </li>
           );
         })}
