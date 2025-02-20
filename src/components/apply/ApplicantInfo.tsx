@@ -19,10 +19,10 @@ export default function ApplicantInfo({ ...props }: Props) {
 
   return (
     <div className="mt-2">
-      <span className="w-[50px] cursor-pointer rounded-md rounded-b-none  border-gray-200 bg-blue-50 px-2.5 py-1 font-semibold text-blue-500">
+      <span className="ml-3 w-[50px] cursor-pointer rounded-md rounded-b-none  border-gray-200 bg-blue-50 px-2.5 py-1 font-bold text-blue-500">
         {section ? section.section : '공통'}
       </span>
-      <ApplyContentBox className=" rounded-t-none md:flex-row md:items-start">
+      <ApplyContentBox className=" md:flex-row md:items-start">
         {info.map(({ label, value }) => (
           <div
             key={label}
