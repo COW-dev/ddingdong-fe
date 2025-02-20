@@ -129,6 +129,7 @@ export default function ApplyForm({
     });
   };
 
+  console.log(formAnswers, 'formAnswer');
   return (
     <div>
       <CommonQuestion
