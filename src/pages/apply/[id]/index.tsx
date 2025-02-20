@@ -20,6 +20,30 @@ export default function IndexPage() {
     'SECTION',
   );
 
+  const currentDate = new Date();
+  const today = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    currentDate.getDate(),
+  );
+
+  const startDate = sectionsData?.data?.startDate
+    ? new Date(sectionsData.data.startDate)
+    : null;
+  const endDate = sectionsData?.data?.endDate
+    ? new Date(sectionsData.data.endDate)
+    : null;
+
+  if (startDate) {
+    startDate.setHours(0, 0, 0, 0);
+  }
+  if (endDate) {
+    endDate.setHours(23, 59, 59, 999);
+  }
+
+  const isActive =
+    startDate && endDate && startDate <= today && today <= endDate;
+
   const sections = useMemo(
     () => sectionsData?.data?.sections || [],
     [sectionsData],
@@ -57,7 +81,7 @@ export default function IndexPage() {
 
   return (
     <div>
-      {!isLoading && (
+      {!isLoading && isActive ? (
         <div>
           {(step === 'SECTION' || step === 'QUESTION') && (
             <div className="pb-6">
@@ -104,7 +128,18 @@ export default function IndexPage() {
             </div>
           )}
         </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <p className="text-2xl font-bold text-gray-800">
+            현재 지원 기간이 아닙니다.
+          </p>
+          <p className="mt-4 text-lg text-gray-600">
+            지원 가능 기간: {sectionsData?.data?.startDate} ~{' '}
+            {sectionsData?.data?.endDate}
+          </p>
+        </div>
       )}
+
       {step == 'SUBMITTED' && (
         <div>
           <Submitted
