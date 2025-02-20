@@ -87,7 +87,6 @@ export default function ApplyForm({
 
   const handleSubmit = () => {
     const result = applyDataSchema.safeParse(applyContent);
-
     if (!result.success) {
       const formattedErrors = result.error.format();
 
@@ -101,11 +100,14 @@ export default function ApplyForm({
         .filter(Boolean);
 
       allErrorMessages.forEach((message) => toast.error(message));
+
+      return;
     }
 
     const requiredFields = formData.data.formFields.filter(
       (field: any) => field.required,
     );
+
     for (const field of requiredFields) {
       const answer = applyContent.formAnswers.find(
         (ans) => ans.fieldId === field.id,
