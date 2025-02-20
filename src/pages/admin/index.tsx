@@ -145,7 +145,7 @@ export default function Index() {
         </Link>
         {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role].member && (
           <Link
-            href={ROLE_TEXT[role]?.apply?.route}
+            href={ROLE_TEXT[role]?.apply?.route ?? ' '}
             className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
           >
             <h2 className="text-xl font-bold md:text-2xl">
