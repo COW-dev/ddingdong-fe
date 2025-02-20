@@ -48,8 +48,15 @@ export default function ApplyResult({ ...answers }: Answer) {
     if (type === 'FILE') {
       return (
         <div className="flex items-center gap-2">
-          <div className="text-lg font-semibold text-gray-700">{value}</div>
-          <Image src={DownLoad} width={20} height={20} alt="file" />
+          <a
+            download
+            href={value[0]}
+            target="_blank"
+            className="flex items-center text-lg font-semibold text-gray-700"
+          >
+            {value[0]}
+            <Image src={DownLoad} width={20} height={20} alt="file" />
+          </a>
         </div>
       );
     }
