@@ -27,9 +27,6 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
 
   const imageSrc = profileImage?.originUrl ? profileImage?.originUrl : Admin;
   const { data } = useAllClubs();
-  const isRecruit =
-    data?.data.find((club) => club.name === name)?.recruitStatus ===
-      '모집 중' && formId;
 
   const router = useRouter();
 
@@ -105,11 +102,11 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
         <button
           onClick={() => moveToApply(Number(formId))}
           className={`ml-6 hidden rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
-            !isRecruit && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
+            !formId && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
           }`}
-          disabled={!isRecruit}
+          disabled={!formId}
         >
-          {isRecruit ? '지원하기' : '모집 마감'}
+          {formId ? '지원하기' : '모집 마감'}
         </button>
       </div>
     </>
