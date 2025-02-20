@@ -101,6 +101,8 @@ export default function ManageForm({ formData, id }: Props) {
       formId: id,
       formData: formattedPostData,
     });
+    setIsEditing(false);
+    setIsClosed(true);
   };
 
   const formatFormData = (): FormData => {
