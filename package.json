@@ -50,6 +50,7 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "usehooks-ts": "^3.1.0",
+    "zod": "^3.24.2",
     "zustand": "^4.3.8"
   },
   "devDependencies": {

@@ -67,7 +67,11 @@ export default function ManageForm({ formData, id }: Props) {
   }, [formData]);
 
   const handleCreateForm = () => {
-    if (description.length > 255) {
+    if (!title) {
+      toast.error('지원서 제목을 입력하여주세요. ');
+    }
+
+    if (!description || description.length > 255) {
       toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
       return;
     }
@@ -81,6 +85,10 @@ export default function ManageForm({ formData, id }: Props) {
       toast.error('수정할 폼이 존재하지 않습니다.');
       return;
     }
+    if (!title) {
+      toast.error('지원서 제목을 입력하여주세요. ');
+    }
+
     if (!description || description.length > 255) {
       toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
       return;

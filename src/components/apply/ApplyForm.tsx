@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { useSubmitApply } from '@/hooks/api/apply/useSubmitApply';
 import { ApplyData, FormAnswer } from '@/types/form';
+import { applyDataSchema } from '@/types/schemas/applyDataSchema';
 import ApplyContent from './ApplyContent';
 import CommonQuestion from './CommnQuestion';
 
@@ -85,14 +86,21 @@ export default function ApplyForm({
   }, [requiredQuestions, formAnswers]);
 
   const handleSubmit = () => {
-    if (
-      !applyContent.name ||
-      !applyContent.studentNumber ||
-      !applyContent.email ||
-      !applyContent.phoneNumber
-    ) {
-      toast.error('필수 정보를 입력해주세요.');
-      return;
+    const result = applyDataSchema.safeParse(applyContent);
+
+    if (!result.success) {
+      const formattedErrors = result.error.format();
+
+      const allErrorMessages = Object.entries(formattedErrors)
+        .map(([field, error]) => {
+          if ('_errors' in error) {
+            return `${error._errors?.[0]}`;
+          }
+          return '';
+        })
+        .filter(Boolean);
+
+      allErrorMessages.forEach((message) => toast.error(message));
     }
 
     const requiredFields = formData.data.formFields.filter(
