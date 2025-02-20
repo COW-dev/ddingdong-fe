@@ -1,6 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 import router from 'next/router';
+import {
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+  Tooltip,
+} from '@radix-ui/react-tooltip';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import File from '@/assets/file.svg';
@@ -26,13 +32,26 @@ export default function QuestionSingleContent({ type, id }: Props) {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      {data?.data.answers.map((answer, index) => {
-        return <ChartComponent answer={answer} key={index} />;
-      })}
+      {data?.data.answers.map((answer, index) => (
+        <TooltipProvider delayDuration={0} key={index}>
+          <Tooltip>
+            <TooltipTrigger>
+              <ChartComponent answer={answer} />
+            </TooltipTrigger>
+            <TooltipContent
+              side="bottom"
+              align="end"
+              sideOffset={0}
+              className="m-2 bg-gray-100"
+            >
+              {answer.name}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ))}
     </div>
   );
 }
-
 function FileList({ answer }: { answer: AnswerItem }) {
   return (
     <label
