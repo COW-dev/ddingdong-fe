@@ -73,7 +73,7 @@ function ApplicantAnnounceIcon() {
         >
           <p className="rounded-md bg-[#EFF6FF] p-2.5 text-xs">
             신규 기능 개설로 기존(2024.09) <br />
-            동아리원을 이전 지원자 수로 대체했어요
+            동아리원을 이전 동아리원 수로 대체했어요
           </p>
         </TooltipContent>
       </Tooltip>
