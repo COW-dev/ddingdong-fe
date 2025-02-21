@@ -88,18 +88,17 @@ export default function ApplyForm({
   const handleSubmit = () => {
     const result = applyDataSchema.safeParse(applyContent);
     if (!result.success) {
+      console.log(result.error.format());
+
       const formattedErrors = result.error.format();
 
-      const allErrorMessages = Object.entries(formattedErrors)
-        .map(([field, error]) => {
-          if ('_errors' in error) {
-            return `${error._errors?.[0]}`;
-          }
-          return '';
-        })
-        .filter(Boolean);
+      const firstErrorMessage = Object.values(formattedErrors)
+        .flatMap((error) => (error && '_errors' in error ? error._errors : []))
+        .find(Boolean);
 
-      allErrorMessages.forEach((message) => toast.error(message));
+      if (firstErrorMessage) {
+        toast.error(firstErrorMessage);
+      }
 
       return;
     }

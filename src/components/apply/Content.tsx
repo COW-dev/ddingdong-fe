@@ -113,7 +113,7 @@ export default function Content({
                   value={opt}
                   onChange={(e) => handleOptionChange(i, e.target.value)}
                   className="bg-white px-3 font-semibold text-gray-500 outline-none"
-                  disabled={isEditing || !isClosed}
+                  disabled={!isEditing || isClosed}
                 />
               </div>
               {isEditing && !isClosed && localOptions.length > 1 && (
