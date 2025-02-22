@@ -29,12 +29,13 @@ import Heading from '../common/Heading';
 interface Props {
   formData?: FormData;
   id?: number;
+  onReset?: () => void;
 }
 interface CategorizedFields {
   [key: string]: FormField[];
 }
 
-export default function ManageForm({ formData, id }: Props) {
+export default function ManageForm({ formData, id, onReset }: Props) {
   const router = useRouter();
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
@@ -259,8 +260,7 @@ export default function ManageForm({ formData, id }: Props) {
   };
 
   const onClickCancelButton = () => {
-    setIsEditing(false);
-    setIsClosed(true);
+    onReset?.();
   };
 
   const addQuestion = () => {
