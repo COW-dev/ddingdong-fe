@@ -25,6 +25,7 @@ type RoleText = {
     FAQ?: NavBox;
     feed: NavBox;
     banner?: NavBox;
+    apply?: NavBox;
   };
 };
 
@@ -108,6 +109,11 @@ export const ROLE_TEXT: RoleText = {
       title: '동아리 피드 업로드',
       subtitle: '동아리의 활동 사진 및 영상을 업로드하고 홍보해요.',
       route: '/feed',
+    },
+    apply: {
+      title: '지원자 관리',
+      subtitle: '지원서 양식을 생성하고, 제출된 지원서를 관리해요.',
+      route: '/apply',
     },
   },
 };

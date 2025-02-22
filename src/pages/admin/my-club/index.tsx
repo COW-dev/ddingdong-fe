@@ -21,16 +21,12 @@ const initialClubData: ClubDetail = {
   phoneNumber: '010-1234-1234',
   location: 'S0000',
   isRecruit: false,
-  startRecruitPeriod: '',
-  endRecruitPeriod: '',
-  parsedRecruitPeriod: { startDate: '', endDate: '' },
   regularMeeting: '',
   introduction: '',
   activity: '',
   ideal: '',
   profileImage: { id: '', originUrl: '', cdnUrl: '' },
   introductionImage: { id: '', originUrl: '', cdnUrl: '' },
-  formUrl: '',
   token: '',
 };
 
@@ -65,19 +61,6 @@ export default function Index() {
       setIsInitialLoad(false);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (data) {
-      setClubData((prevClubData) => ({
-        ...prevClubData,
-        parsedRecruitPeriod: {
-          startDate: prevClubData.startRecruitPeriod?.split(' ')[0] || '',
-          endDate: prevClubData.endRecruitPeriod?.split(' ')[0] || '',
-        },
-        token: token,
-      }));
-    }
-  }, [data, isInitialLoad, token]);
 
   function handleTextareaChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const { name, value } = event.target;
@@ -122,12 +105,6 @@ export default function Index() {
       location: clubData.location,
       clubLeader: clubData.leader,
       phoneNumber: clubData.phoneNumber,
-      startRecruitPeriod: clubData.parsedRecruitPeriod?.startDate
-        ? `${clubData.parsedRecruitPeriod?.startDate} 00:00`
-        : null,
-      endRecruitPeriod: clubData.parsedRecruitPeriod?.endDate
-        ? `${clubData.parsedRecruitPeriod?.endDate} 00:00`
-        : null,
       regularMeeting: '',
       introduction: clubData.introduction,
       activity: clubData.activity,
@@ -138,8 +115,10 @@ export default function Index() {
         ? introductionImageId
         : clubData.introductionImage?.id || null,
       ideal: clubData.ideal,
-      formUrl: clubData.formUrl ?? null,
       token: token,
+      startRecruitPeriod: '',
+      endRecruitPeriod: '',
+      formUrl: '',
     };
 
     return mutation.mutate(requestData);
@@ -196,8 +175,6 @@ export default function Index() {
           phoneNumber={clubData.phoneNumber}
           location={clubData.location}
           regularMeeting={clubData.regularMeeting}
-          parsedRecruitPeriod={clubData?.parsedRecruitPeriod}
-          formUrl={clubData.formUrl}
           setValue={setClubData}
           isEditing={isEditing}
         />

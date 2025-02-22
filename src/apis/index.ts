@@ -5,6 +5,15 @@ import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 import { PresignedUrlResponse } from '@/types';
 import {
+  ApplicantDetail,
+  Application,
+  DeleteApplication,
+  NewEmail,
+  RegisterApplicant,
+  UpdateApplicantNote,
+  UpdateApplicantStatus,
+} from '@/types/apply';
+import {
   BannerType,
   DeleteBanner,
   NewBanner,
@@ -27,13 +36,6 @@ import {
   DocumentDetail,
   NewDocument,
 } from '@/types/document';
-import {
-  Applicant,
-  ApplicantDetail,
-  CollectStamp,
-  Colletions,
-  User,
-} from '@/types/event';
 
 import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
 
@@ -46,6 +48,7 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
+import { CreateFormData, ApplyData } from '@/types/form';
 import {
   Notice,
   NoticeDetail,
@@ -91,6 +94,43 @@ export async function getAllBanners(): Promise<
   AxiosResponse<BannerType[], unknown>
 > {
   return await api.get('/banners');
+}
+export async function getApplyStatistics(
+  applyId: number,
+  token: string,
+): Promise<AxiosResponse<any, unknown>> {
+  return await api.get(`/central/my/forms/${applyId}/statistics`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getMultipleAnswer(
+  questionId: number,
+  token: string,
+): Promise<AxiosResponse<any, unknown>> {
+  return await api.get(
+    `/central/my/forms/statistics/multiple-choice?fieldId=${questionId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+export async function getSingleAnswer(
+  questionId: number,
+  token: string,
+): Promise<AxiosResponse<any, unknown>> {
+  return await api.get(
+    `/central/my/forms/statistics/text?fieldId=${questionId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
 }
 
 export async function getAdminAllClubs(
@@ -532,55 +572,95 @@ export async function getMyScore(
     },
   });
 }
-export async function getMyCollects(
-  studentName: string,
-  studentNumber: number,
-): Promise<AxiosResponse<Colletions, unknown>> {
-  return await api.get(
-    `/events/stamps?studentName=${studentName}&studentNumber=${studentNumber}`,
-  );
-}
-export async function getMyQrCode(
-  studentName: string,
-  studentNumber: number,
-): Promise<AxiosResponse<User, unknown>> {
-  return await api.get(
-    `events/qr/?studentName=${studentName}&studentNumber=${studentNumber}`,
-  );
-}
-export async function collectStamp({
-  studentName,
-  studentNumber,
-  department,
-  clubCode,
-}: CollectStamp) {
+
+export async function registerApplicants({ formId, token }: RegisterApplicant) {
   return await api.post(
-    `/events/stamps?studentName=${studentName}&studentNumber=${studentNumber}`,
+    `/central/my/forms/${formId}/members/register-applicants`,
+    {},
     {
-      studentName,
-      studentNumber,
-      department,
-      clubCode,
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     },
   );
 }
-export async function applyDraw(formdata: FormData) {
-  return await api.patch('/events/apply', formdata);
+
+export async function createResultEmail({
+  formId,
+  token,
+  ...emailData
+}: NewEmail) {
+  return await api.post(
+    `/central/my/forms/${formId}/results/email`,
+    emailData,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
 }
-export async function getAllAppliers(
+
+export async function getAllApplication(
+  formId: number,
   token: string,
-): Promise<AxiosResponse<Applicant[], unknown>> {
-  return await api.get('/admin/events/applied-users', {
+): Promise<AxiosResponse<Application, unknown>> {
+  return await api.get(`/central/my/forms/${formId}/applications`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
-export async function getApplier(
+
+export async function getApplicantInfo(
+  formId: number,
+  applicantId: number,
   token: string,
-  id: number,
 ): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.get(`/admin/events/applied-users/${id}`, {
+  return await api.get(
+    `/central/my/forms/${formId}/applications/${applicantId}`,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
+export async function updateApplicantNote({
+  formId,
+  applicationId,
+  token,
+  note,
+}: UpdateApplicantNote): Promise<AxiosResponse<ApplicantDetail, unknown>> {
+  return await api.patch(
+    `/central/my/forms/${formId}/applications/${applicationId}`,
+    { note },
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+export async function updateApplicantStatus({
+  formId,
+  token,
+  ...statusData
+}: UpdateApplicantStatus): Promise<AxiosResponse<ApplicantDetail, unknown>> {
+  return await api.patch(
+    `/central/my/forms/${formId}/applications`,
+    statusData,
+    {
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
+    },
+  );
+}
+
+export async function deleteApplication({ formId, token }: DeleteApplication) {
+  return await api.delete(`/central/my/forms/${formId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -596,6 +676,14 @@ export async function getPresignedUrl(
       Authorization: 'Bearer ' + token,
     },
   });
+}
+
+export async function getPresignedUrlForm(
+  fileName: string,
+): Promise<AxiosResponse<PresignedUrlResponse>> {
+  return await api.get(
+    `/file/upload-url/form-application?fileName=${fileName}`,
+  );
 }
 
 export async function uploadPresignedUrl(
@@ -638,3 +726,54 @@ function rejectedResponse(error: AxiosError<ErrorType>) {
 }
 
 api.interceptors.response.use(fulfilledResponse, rejectedResponse);
+
+export async function createForm(token: string, formData: CreateFormData) {
+  return await api.post('/central/my/forms', formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getAllForms(token: string) {
+  return await api.get('/central/my/forms', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getForm(token: string, formId: number) {
+  return await api.get(`/central/my/forms/${formId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function updateForm(
+  token: string,
+  formId: number,
+  formData: CreateFormData,
+) {
+  return await api.put(`/central/my/forms/${formId}`, formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function getSections(formId: number) {
+  return await api.get(`/forms/${formId}/sections`);
+}
+
+export async function getFormDetail(formId: number, section: string) {
+  return await api.get(`forms/${formId}?section=${section}`);
+}
+
+export async function submitApplicationForm(
+  formId: number,
+  formData: ApplyData,
+) {
+  return await api.post(`forms/${formId}/applications`, formData);
+}
