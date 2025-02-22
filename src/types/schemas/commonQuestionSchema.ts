@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const commonQuestionSchema = z.object({
   name: z.string().min(1, '이름을 입력하세요.'),
-  studentNumber: z.string().min(8).max(8, '올바른 학번을 힙력하세요.'),
+  studentNumber: z.string().min(8, '올바른 학번을 힙력하세요.'),
   department: z.string(),
   phoneNumber: z
     .string()
