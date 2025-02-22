@@ -111,7 +111,7 @@ export default function Index() {
           </Link>
         </div>
         <div className="flex gap-2">
-          <Link href="/statistics">
+          <Link href={`/apply/${id}/statistics`}>
             <Image src={Chart} alt="chart" width={32} height={32} />
           </Link>
           <Image
