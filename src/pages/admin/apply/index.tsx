@@ -30,7 +30,7 @@ export default function Index() {
   };
 
   const handleClickFormBlock = (formId: number) => {
-    router.push(`/apply/${formId}/new`);
+    router.push(`/apply/${formId}`);
   };
 
   return (

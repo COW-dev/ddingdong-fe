@@ -66,7 +66,7 @@ export default function Content({
   );
 
   const handleAddOption = useCallback(() => {
-    if (isEditing && localOptions.length < 5) {
+    if (isEditing && localOptions.length < 20) {
       updateOption([...localOptions, `옵션 ${localOptions.length + 1}`]);
     }
   }, [isEditing, localOptions, updateOption]);
@@ -123,7 +123,7 @@ export default function Content({
               )}
             </div>
           ))}
-          {isEditing && !isClosed && localOptions.length < 5 && (
+          {isEditing && !isClosed && localOptions.length < 20 && (
             <button
               onClick={handleAddOption}
               className="mt-1 flex items-center gap-3 text-gray-300"

@@ -32,7 +32,7 @@ export default function Dropdown({
   return (
     <div className="relative w-full font-semibold text-gray-500 md:w-1/3">
       <div
-        className={`flex items-center justify-between rounded-xl border px-4 py-2.5
+        className={`flex items-center justify-between rounded-xl border px-4 py-3
         ${
           disabled
             ? ' '

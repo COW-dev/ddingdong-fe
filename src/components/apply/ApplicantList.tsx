@@ -136,7 +136,7 @@ export default function ApplicantList({ type = 'DOCUMENT', data }: Props) {
           <div className="rounded-md border px-1 py-0.5 md:ml-4">
             <DropdownMenu>
               <DropdownMenuTrigger className="mt-0.5 flex items-center px-1 outline-none">
-                합격여부선택
+                합격여부변경
                 <ChevronDown className="h-4 w-4 md:h-5 md:w-5" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="mt-2 min-w-[110px] p-2 font-semibold md:min-w-[120px]">
