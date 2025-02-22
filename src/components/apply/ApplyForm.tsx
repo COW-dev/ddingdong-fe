@@ -88,8 +88,6 @@ export default function ApplyForm({
   const handleSubmit = () => {
     const result = applyDataSchema.safeParse(applyContent);
     if (!result.success) {
-      console.log(result.error.format());
-
       const formattedErrors = result.error.format();
 
       const firstErrorMessage = Object.values(formattedErrors)
@@ -128,7 +126,6 @@ export default function ApplyForm({
     });
   };
 
-  console.log(formAnswers, 'formAnswer');
   return (
     <div>
       <CommonQuestion
