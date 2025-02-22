@@ -78,6 +78,10 @@ export type Answer = {
   order: number;
   section: string;
   value: string[];
+  files: {
+    name: string;
+    cdnUrl: string;
+  }[];
 };
 
 export type UpdateApplicantNote = {

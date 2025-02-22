@@ -6,7 +6,7 @@ import CheckBox from '../common/CheckBox';
 import Radio from '../common/Radio';
 
 export default function ApplyResult({ ...answers }: Answer) {
-  const { question, type, order, options, required, value } = answers;
+  const { question, type, order, options, required, value, files } = answers;
 
   const renderContent = () => {
     if (type === 'CHECK_BOX' && options) {
@@ -45,19 +45,23 @@ export default function ApplyResult({ ...answers }: Answer) {
       );
     }
 
-    if (type === 'FILE') {
+    if (type === 'FILE' && files.length > 0) {
       return (
-        <div className="flex items-center gap-2">
-          <a
-            download
-            href={value[0]}
-            target="_blank"
-            className="flex items-center text-lg font-semibold text-gray-700"
-          >
-            {value[0]}
-            <Image src={DownLoad} width={20} height={20} alt="file" />
-          </a>
-        </div>
+        <>
+          {files.map((file) => (
+            <div key={file.name} className="flex items-center gap-2">
+              <a
+                download
+                href={file.cdnUrl}
+                target="_blank"
+                className="flex items-center text-lg font-semibold text-gray-700"
+              >
+                {file.name}
+                <Image src={DownLoad} width={20} height={20} alt="file" />
+              </a>
+            </div>
+          ))}
+        </>
       );
     }
   };
