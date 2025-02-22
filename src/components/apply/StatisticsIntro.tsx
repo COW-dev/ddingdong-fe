@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { useCookies } from 'react-cookie';
 import InfoIcon from '@/assets/info.svg';
-import TableChart from '@/components/ui/bar-chart';
+import BarChart from '@/components/ui/bar-chart';
 import LineChart from '@/components/ui/line-chart';
 import {
   Tooltip,
@@ -40,7 +40,7 @@ export default function StatisticsIntro({ applyId }: Props) {
       </section>
       <section className="flex shrink flex-col items-center md:w-[400px]">
         <div>
-          <TableChart passedData={sortDepartmentRanksByLabel()} />
+          <BarChart passedData={sortDepartmentRanksByLabel()} />
         </div>
         <div className="relative flex items-center">
           <h2 className="m-3 text-center">지원 학과 TOP 5</h2>

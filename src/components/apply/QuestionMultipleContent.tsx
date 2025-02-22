@@ -1,13 +1,13 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useMultipleAnswer } from '@/hooks/api/apply/useMultipleAnswer';
-import TableChart from '../ui/bar-chart';
+import BarChart from '../ui/bar-chart';
 import OptionModal from '../ui/OptionModal';
 import PieChart from '../ui/pie-chart';
 
 const componentMap = {
   RADIO: PieChart,
-  CHECK_BOX: TableChart,
+  CHECK_BOX: BarChart,
 } as const;
 
 type Props = {
@@ -28,9 +28,7 @@ export default function QuestionMultipleContent({ type, id }: Props) {
           className="md:px-3 md:py-2 md:text-sm"
         />
       </div>
-      <div className="max-w-[400px]">
-        <ChartComponent passedData={data?.data.options ?? []} />
-      </div>
+      <ChartComponent passedData={data?.data.options ?? []} />
     </div>
   );
 }
