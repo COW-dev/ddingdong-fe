@@ -116,7 +116,10 @@ export default function Sections({
 
   return (
     <TooltipProvider>
-      <div onClick={handleClickOutside} className="relative flex items-center">
+      <div
+        onClick={handleClickOutside}
+        className="relative flex items-center overflow-x-scroll md:overflow-visible"
+      >
         <Prompt
           visible={modalVisible}
           closeModal={() => setModalVisible(false)}
@@ -184,7 +187,7 @@ export default function Sections({
             <TooltipTrigger asChild>
               <InfoIcon className="w-5 cursor-pointer text-gray-500" />
             </TooltipTrigger>
-            <TooltipContent side="top" className="w-64">
+            <TooltipContent side="top" className="w-52 bg-blue-50">
               <p>분야별 질문이 다를 경우,</p>
               <p>시트를 추가하여 구분할 수 있습니다.</p>
             </TooltipContent>
@@ -203,7 +206,7 @@ export function ModifyButton({
   onDelete: () => void;
 }) {
   return (
-    <div className="absolute left-0 top-full mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
+    <div className="absolute left-0 top-full z-30 mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
       <button
         onClick={onRename}
         className="whitespace-nowrap rounded-lg px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
