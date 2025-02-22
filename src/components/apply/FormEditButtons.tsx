@@ -56,7 +56,7 @@ export default function FormEditButtons({
               </button>
               <button
                 onClick={handleUpdateForm}
-                className="rounded-xl bg-blue-500 px-3 py-2 font-semibold text-white hover:bg-blue-400"
+                className="rounded-xl bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-400"
               >
                 저장하기
               </button>

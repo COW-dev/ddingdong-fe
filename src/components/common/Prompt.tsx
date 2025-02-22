@@ -78,13 +78,13 @@ export default function Prompt({
       </div>
       <div className="flex w-full justify-center gap-2">
         <button
-          className="rounded-xl bg-gray-100 px-3 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-200"
+          className="rounded-xl bg-gray-100 px-3 py-2 text-base font-semibold text-gray-500 hover:bg-gray-200"
           onClick={closeModal}
         >
           {cancelText}
         </button>
         <button
-          className="rounded-xl bg-blue-500 px-8 text-sm font-semibold text-white hover:bg-blue-600"
+          className="rounded-xl bg-blue-500 px-8 text-base font-semibold text-white hover:bg-blue-600"
           onClick={handleSubmit}
         >
           {confirmText}

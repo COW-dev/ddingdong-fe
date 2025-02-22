@@ -1,8 +1,26 @@
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { InfoIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
-import { SectionsProps } from '@/types/form';
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from '@/components/ui/tooltip';
+import { SectionFormField, FormField } from '@/types/form';
 import Prompt from '../common/Prompt';
+
+type SectionsProps = {
+  focusSection: string;
+  setFocusSection: Dispatch<SetStateAction<string>>;
+  sections: string[];
+  setSections: Dispatch<SetStateAction<string[]>>;
+  formField: SectionFormField[];
+  setFormField: Dispatch<SetStateAction<SectionFormField[]>>;
+  isClosed: boolean;
+  baseQuestion: Omit<FormField, 'section'>[];
+  addSection: () => void;
+};
 
 export default function Sections({
   focusSection,
@@ -21,7 +39,6 @@ export default function Sections({
   const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<'rename' | 'add' | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const [showTooltip, setShowTooltip] = useState<boolean>(false);
 
   const handleContextMenu = (e: React.MouseEvent, sectionName: string) => {
     e.preventDefault();
@@ -110,84 +127,86 @@ export default function Sections({
   };
 
   return (
-    <div onClick={handleClickOutside} className="relative flex items-center">
-      <Prompt
-        visible={modalVisible}
-        closeModal={() => setModalVisible(false)}
-        title={
-          modalMode === 'rename'
-            ? '변경할 이름을 입력해주세요.'
-            : '새 섹션을 추가하세요'
-        }
-        placeholder="글자 수 최대 10자 이내"
-        maxLength={10}
-        confirmText={modalMode === 'rename' ? '변경하기' : '추가하기'}
-        cancelText="취소"
-        closeButton={false}
-        onConfirm={modalMode === 'rename' ? renameSection : addNewSection}
-      />
+    <TooltipProvider>
+      <div
+        onClick={handleClickOutside}
+        className="relative flex items-center overflow-x-scroll sm:overflow-visible"
+      >
+        <Prompt
+          visible={modalVisible}
+          closeModal={() => setModalVisible(false)}
+          title={
+            modalMode === 'rename'
+              ? '변경할 이름을 입력해주세요.'
+              : '새 섹션을 추가하세요'
+          }
+          placeholder="글자 수 최대 10자 이내"
+          maxLength={10}
+          confirmText={modalMode === 'rename' ? '변경하기' : '추가하기'}
+          cancelText="취소"
+          closeButton={false}
+          onConfirm={modalMode === 'rename' ? renameSection : addNewSection}
+        />
 
-      <div className="relative flex items-center gap-1 border-b-0 px-2 text-lg font-semibold">
-        {formField?.map((section, index) => (
-          <div key={index} className="relative">
-            <div
-              className={`cursor-pointer rounded-md rounded-b-none border border-b-0 border-gray-200 px-3 py-1 ${
-                focusSection === section.section
-                  ? 'bg-blue-50 text-blue-500'
-                  : 'bg-white text-gray-600 hover:bg-gray-50'
-              }`}
-              onClick={() => setFocusSection(section.section)}
-              onContextMenu={(e) => handleContextMenu(e, section.section)}
-            >
-              {section.section}
+        <div className="relative flex items-center gap-1 border-b-0 px-2 text-lg font-semibold">
+          {formField?.map((section, index) => (
+            <div key={index} className="relative">
+              <div
+                className={`cursor-pointer rounded-md rounded-b-none border border-b-0 border-gray-200 px-3 py-1 ${
+                  focusSection === section.section
+                    ? 'bg-blue-50 text-blue-500'
+                    : 'bg-white text-gray-600 hover:bg-gray-50'
+                }`}
+                onClick={() => setFocusSection(section.section)}
+                onContextMenu={(e) => handleContextMenu(e, section.section)}
+              >
+                {section.section}
+              </div>
+
+              {contextMenu.section === section.section &&
+                section.section !== '공통' && (
+                  <ModifyButton
+                    onRename={() => {
+                      setSelectedSection(section.section);
+                      setModalMode('rename');
+                      setModalVisible(true);
+                      setContextMenu({ section: null });
+                    }}
+                    onDelete={() => {
+                      deleteSection(section.section);
+                      setContextMenu({ section: null });
+                    }}
+                  />
+                )}
             </div>
+          ))}
 
-            {contextMenu.section === section.section &&
-              section.section !== '공통' && (
-                <ModifyButton
-                  onRename={() => {
-                    setSelectedSection(section.section);
-                    setModalMode('rename');
-                    setModalVisible(true);
-                    setContextMenu({ section: null });
-                  }}
-                  onDelete={() => {
-                    deleteSection(section.section);
-                    setContextMenu({ section: null });
-                  }}
-                />
-              )}
-          </div>
-        ))}
-
-        {sections.length < 6 && !isClosed && (
-          <div
-            onClick={() => {
-              setModalMode('add');
-              setModalVisible(true);
-            }}
-            className="cursor-pointer whitespace-nowrap rounded-md rounded-b-none border border-b-0 border-gray-200 bg-white px-3 py-1 font-semibold text-gray-600 hover:bg-gray-50"
-          >
-            + 추가하기
-          </div>
-        )}
-      </div>
-      {sections.length < 6 && !isClosed && (
-        <div
-          className="relative"
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
-        >
-          <InfoIcon className="w-5 cursor-pointer text-gray-500" />
-          {showTooltip && (
-            <div className="absolute left-1/2 top-full mt-2 w-64 -translate-x-1/2 rounded-lg bg-blue-50 p-3 text-sm font-normal shadow-md">
-              <p>분야별 질문이 다를 경우,</p>
-              <p>시트를 추가하여 구분할 수 있습니다.</p>
+          {sections.length < 6 && !isClosed && (
+            <div
+              onClick={() => {
+                setModalMode('add');
+                setModalVisible(true);
+              }}
+              className="cursor-pointer whitespace-nowrap rounded-md rounded-b-none border border-b-0 border-gray-200 bg-white px-3 py-1 font-semibold text-gray-600 hover:bg-gray-50"
+            >
+              + 추가하기
             </div>
           )}
         </div>
-      )}
-    </div>
+
+        {sections.length < 6 && !isClosed && (
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <InfoIcon className="w-5 cursor-pointer text-gray-500" />
+            </TooltipTrigger>
+            <TooltipContent side="top" className="w-52 bg-blue-50">
+              <p>분야별 질문이 다를 경우,</p>
+              <p>시트를 추가하여 구분할 수 있습니다.</p>
+            </TooltipContent>
+          </Tooltip>
+        )}
+      </div>
+    </TooltipProvider>
   );
 }
 
@@ -199,7 +218,7 @@ export function ModifyButton({
   onDelete: () => void;
 }) {
   return (
-    <div className="absolute left-0 top-full mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
+    <div className="absolute left-0 top-full z-30 mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
       <button
         onClick={onRename}
         className="whitespace-nowrap rounded-lg px-4 py-2 text-left text-gray-700 hover:bg-gray-100"

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Image from 'next/image';
-import { usePresignedUrlForm } from '@/hooks/api/apply/usePresignedUrlForm'; // Presigned URL 훅 가져오기
+import { usePresignedUrlForm } from '@/hooks/api/apply/usePresignedUrlForm';
 import File from '../../assets/file.svg';
 
 interface FileUploadProps {
-  onFilesSelected: (files: File[] | string[]) => void;
+  onFilesSelected: (files: string[]) => void;
   disabled?: boolean;
 }
 
@@ -13,6 +13,7 @@ export default function FileUpload({
   disabled = false,
 }: FileUploadProps) {
   const [files, setFiles] = useState<File[]>([]);
+  const [fileIds, setFileIds] = useState<string[]>([]);
   const { getPresignedIds, isLoading } = usePresignedUrlForm();
 
   const handleFileChange = async (
@@ -27,17 +28,21 @@ export default function FileUpload({
 
     if (getPresignedIds) {
       const uploadedFiles = await getPresignedIds(selectedFiles);
-      const fileIds = uploadedFiles.map((file) => file.id);
+      const newFileIds = uploadedFiles.map((file) => file.id);
 
-      onFilesSelected(fileIds);
-    } else {
-      console.error('getPresignedIds is undefined.');
+      const updatedFileIds = [...fileIds, ...newFileIds];
+      setFileIds(updatedFileIds);
+      onFilesSelected(updatedFileIds);
     }
   };
 
   const removeFile = (index: number) => {
     const updatedFiles = files.filter((_, i) => i !== index);
+    const updatedFileIds = fileIds.filter((_, i) => i !== index);
+
     setFiles(updatedFiles);
+    setFileIds(updatedFileIds);
+    onFilesSelected(updatedFileIds);
   };
 
   return (
@@ -56,14 +61,14 @@ export default function FileUpload({
 
       {files.length > 0 && (
         <div className="px-4 pb-2">
-          <ul className="flex flex-col justify-start gap-1 text-center align-middle">
+          <ul className="flex flex-col justify-start gap-1 whitespace-pre-line align-middle">
             {files.map((file, index) => (
               <li
                 key={index}
                 className="flex flex-row items-center text-base text-gray-600"
               >
                 <button
-                  className="p-1 pr-2 text-sm text-gray-500"
+                  className="p-1 pr-4 text-base text-gray-500"
                   onClick={() => removeFile(index)}
                 >
                   X

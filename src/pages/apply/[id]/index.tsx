@@ -1,13 +1,22 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import isBetween from 'dayjs/plugin/isBetween';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import JSConfetti from 'js-confetti';
+import Warning from '@/assets/warning.svg';
 import ApplyForm from '@/components/apply/ApplyForm';
 import { useAllSections } from '@/hooks/api/apply/useAllSections';
 import { useFormDetail } from '@/hooks/api/apply/useFormDetail';
 import Check from '../../../assets/check.svg';
 import FilledCircle from '../../../assets/check_form.svg';
 import EmptyCircle from '../../../assets/empty-circle-check.svg';
+
+dayjs.extend(relativeTime);
+dayjs.extend(isBetween);
+dayjs.extend(relativeTime);
 
 export default function IndexPage() {
   const router = useRouter();
@@ -19,6 +28,19 @@ export default function IndexPage() {
   const [step, setStep] = useState<'SECTION' | 'QUESTION' | 'SUBMITTED'>(
     'SECTION',
   );
+  const today = dayjs();
+
+  const isActive =
+    sectionsData?.data?.startDate &&
+    sectionsData?.data?.endDate &&
+    dayjs(sectionsData.data.startDate).isValid() &&
+    dayjs(sectionsData.data.endDate).isValid() &&
+    today.isBetween(
+      dayjs(sectionsData.data.startDate),
+      dayjs(sectionsData.data.endDate).endOf('day'),
+      'second',
+      '[]',
+    );
 
   const sections = useMemo(
     () => sectionsData?.data?.sections || [],
@@ -57,7 +79,7 @@ export default function IndexPage() {
 
   return (
     <div>
-      {!isLoading && (
+      {!isLoading && isActive ? (
         <div>
           {(step === 'SECTION' || step === 'QUESTION') && (
             <div className="pb-6">
@@ -104,10 +126,27 @@ export default function IndexPage() {
             </div>
           )}
         </div>
+      ) : (
+        <div className="justify-centerpb-20 flex flex-col items-center gap-6 pt-10 text-center">
+          <div className="m-2 rounded-full bg-red-500 p-2">
+            <Image src={Warning} alt="warning" width={50} />
+          </div>
+          <p className="text-3xl font-bold text-gray-800">
+            현재 지원 기간이 아닙니다.
+          </p>
+          <p className="text-lg font-semibold text-gray-600">
+            지원 가능 기간: {sectionsData?.data?.startDate} ~{' '}
+            {sectionsData?.data?.endDate}
+          </p>
+        </div>
       )}
+
       {step == 'SUBMITTED' && (
         <div>
-          <Submitted applicationCount={questionData?.data.applicationCount} />
+          <Submitted
+            applicationCount={questionData?.data.applicationCount}
+            clubName={questionData?.data.clubName}
+          />
         </div>
       )}
     </div>
@@ -173,9 +212,10 @@ export function SelectSection({
 
 interface SubmittedProps {
   applicationCount: number;
+  clubName: string;
 }
 
-export function Submitted({ applicationCount }: SubmittedProps) {
+export function Submitted({ applicationCount, clubName }: SubmittedProps) {
   const jsConfetti = new JSConfetti();
 
   useEffect(() => {
@@ -206,8 +246,10 @@ export function Submitted({ applicationCount }: SubmittedProps) {
           지원서 제출이 완료되었습니다!
         </div>
         <p className="w-1/2">
-          동아리에 지원해주셔서 감사합니다!
-          <p>현재까지 동아리 지원자는 {applicationCount + 1}명입니다.</p>
+          {clubName}에 지원해주셔서 감사합니다!
+          <p>
+            현재까지 {clubName} 지원자는 {applicationCount + 1}명입니다.
+          </p>
         </p>
       </div>
     </div>

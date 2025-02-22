@@ -1,11 +1,9 @@
 import React, { useCallback, useRef } from 'react';
-import Image from 'next/image';
 import { Trash2 } from 'lucide-react';
 import { QuestionType, SectionFormField } from '@/types/form';
 import BaseInput from './BaseInput';
 import Content from './Content';
 import Dropdown from './Dropdown';
-import hamburger from '../../assets/hamburger.svg';
 import { Switch } from '../../components/ui/switch';
 
 interface Section {
@@ -19,11 +17,6 @@ interface QuestionData {
   options: string[];
   required: boolean;
   order: number;
-}
-
-interface FormField {
-  section: string;
-  questions: QuestionData[];
 }
 
 interface Props {
@@ -102,13 +95,7 @@ export default function Question({
   );
 
   return (
-    <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-4 px-6">
-      <div className="flex w-full justify-center pb-4">
-        {!isClosed && (
-          <Image src={hamburger} alt="hamburger" className="cursor-pointer" />
-        )}
-      </div>
-
+    <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-8 px-6">
       <div className="flex w-full flex-row flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
           placeholder="질문을 입력해주세요"

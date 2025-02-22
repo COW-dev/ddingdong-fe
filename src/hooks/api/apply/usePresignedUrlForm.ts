@@ -59,6 +59,7 @@ export function usePresignedUrlForm() {
       return { id, fileName: file.name };
     } catch (error) {
       toast.error(`${file.name} 업로드 실패. 다시 시도해주세요.`);
+
       return null;
     }
   };

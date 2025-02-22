@@ -8,6 +8,7 @@ import FilledCircle from '../../assets/check_form.svg';
 import FilledSquare from '../../assets/check_square_form.svg';
 import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
+import UploadFile from '../common/UploadFile';
 
 interface Props {
   fieldId: string;
@@ -92,7 +93,7 @@ export default function ApplyContent({
   return (
     <div className="my-5 rounded-lg border px-6 py-6">
       <div>
-        <div className="flex gap-1 pb-3 pl-1 text-xl font-bold text-blue-500">
+        <div className="flex gap-1 pb-3 pl-1 text-lg font-bold text-blue-500 md:text-xl">
           {question} <span className="text-red-500">{required ? '*' : ''}</span>
         </div>
       </div>

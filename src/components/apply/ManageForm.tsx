@@ -29,12 +29,13 @@ import Heading from '../common/Heading';
 interface Props {
   formData?: FormData;
   id?: number;
+  onReset?: () => void;
 }
 interface CategorizedFields {
   [key: string]: FormField[];
 }
 
-export default function ManageForm({ formData, id }: Props) {
+export default function ManageForm({ formData, id, onReset }: Props) {
   const router = useRouter();
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
@@ -67,7 +68,11 @@ export default function ManageForm({ formData, id }: Props) {
   }, [formData]);
 
   const handleCreateForm = () => {
-    if (description.length > 255) {
+    if (!title) {
+      toast.error('지원서 제목을 입력하여주세요. ');
+    }
+
+    if (!description || description.length > 255) {
       toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
       return;
     }
@@ -81,6 +86,10 @@ export default function ManageForm({ formData, id }: Props) {
       toast.error('수정할 폼이 존재하지 않습니다.');
       return;
     }
+    if (!title) {
+      toast.error('지원서 제목을 입력하여주세요. ');
+    }
+
     if (!description || description.length > 255) {
       toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
       return;
@@ -93,6 +102,8 @@ export default function ManageForm({ formData, id }: Props) {
       formId: id,
       formData: formattedPostData,
     });
+    setIsEditing(false);
+    setIsClosed(true);
   };
 
   const formatFormData = (): FormData => {
@@ -249,8 +260,7 @@ export default function ManageForm({ formData, id }: Props) {
   };
 
   const onClickCancelButton = () => {
-    setIsEditing(false);
-    setIsClosed(true);
+    onReset?.();
   };
 
   const addQuestion = () => {
@@ -392,13 +402,12 @@ export default function ManageForm({ formData, id }: Props) {
             </div>
           ))}
       </div>
-
-      {(isEditing || !isClosed) && (
+      {!isClosed && (
         <button
           onClick={addQuestion}
-          className="fixed bottom-24 right-10 flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-20"
+          className="fixed bottom-24 right-[calc(10vw)] flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-[calc(5vw)] lg:right-[calc(2vw)]"
         >
-          <Image src={AddForm} width={27} height={27} alt="질문 추가하기" />
+          <Image src={AddForm} width={40} height={40} alt="질문 추가하기" />
         </button>
       )}
     </div>
