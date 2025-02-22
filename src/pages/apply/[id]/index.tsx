@@ -1,13 +1,22 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import isBetween from 'dayjs/plugin/isBetween';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import JSConfetti from 'js-confetti';
+import Warning from '@/assets/warning.svg';
 import ApplyForm from '@/components/apply/ApplyForm';
 import { useAllSections } from '@/hooks/api/apply/useAllSections';
 import { useFormDetail } from '@/hooks/api/apply/useFormDetail';
 import Check from '../../../assets/check.svg';
 import FilledCircle from '../../../assets/check_form.svg';
 import EmptyCircle from '../../../assets/empty-circle-check.svg';
+
+dayjs.extend(relativeTime);
+dayjs.extend(isBetween);
+dayjs.extend(relativeTime);
 
 export default function IndexPage() {
   const router = useRouter();
@@ -19,30 +28,19 @@ export default function IndexPage() {
   const [step, setStep] = useState<'SECTION' | 'QUESTION' | 'SUBMITTED'>(
     'SECTION',
   );
-
-  const currentDate = new Date();
-  const today = new Date(
-    currentDate.getFullYear(),
-    currentDate.getMonth(),
-    currentDate.getDate(),
-  );
-
-  const startDate = sectionsData?.data?.startDate
-    ? new Date(sectionsData.data.startDate)
-    : null;
-  const endDate = sectionsData?.data?.endDate
-    ? new Date(sectionsData.data.endDate)
-    : null;
-
-  if (startDate) {
-    startDate.setHours(0, 0, 0, 0);
-  }
-  if (endDate) {
-    endDate.setHours(23, 59, 59, 999);
-  }
+  const today = dayjs();
 
   const isActive =
-    startDate && endDate && startDate <= today && today <= endDate;
+    sectionsData?.data?.startDate &&
+    sectionsData?.data?.endDate &&
+    dayjs(sectionsData.data.startDate).isValid() &&
+    dayjs(sectionsData.data.endDate).isValid() &&
+    today.isBetween(
+      dayjs(sectionsData.data.startDate),
+      dayjs(sectionsData.data.endDate).endOf('day'),
+      'second',
+      '[]',
+    );
 
   const sections = useMemo(
     () => sectionsData?.data?.sections || [],
@@ -129,11 +127,14 @@ export default function IndexPage() {
           )}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20 text-center">
-          <p className="text-2xl font-bold text-gray-800">
+        <div className="justify-centerpb-20 flex flex-col items-center gap-6 pt-10 text-center">
+          <div className="m-2 rounded-full bg-red-500 p-2">
+            <Image src={Warning} alt="warning" width={50} />
+          </div>
+          <p className="text-3xl font-bold text-gray-800">
             현재 지원 기간이 아닙니다.
           </p>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="text-lg font-semibold text-gray-600">
             지원 가능 기간: {sectionsData?.data?.startDate} ~{' '}
             {sectionsData?.data?.endDate}
           </p>
