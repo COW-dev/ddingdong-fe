@@ -79,69 +79,73 @@ export default function IndexPage() {
 
   return (
     <div>
-      {!isLoading && isActive ? (
-        <div>
-          {(step === 'SECTION' || step === 'QUESTION') && (
-            <div className="pb-6">
-              <div className="py-5 pt-10 text-4xl font-bold text-gray-800">
-                {sectionsData?.data?.title}
+      {!isLoading ? (
+        isActive ? (
+          <div>
+            {(step === 'SECTION' || step === 'QUESTION') && (
+              <div className="pb-6">
+                <div className="py-5 pt-10 text-4xl font-bold text-gray-800">
+                  {sectionsData?.data?.title}
+                </div>
+                <div className="whitespace-pre-wrap py-2 text-lg font-semibold text-gray-500">
+                  {sectionsData?.data?.description}
+                </div>
               </div>
-              <div className="whitespace-pre-wrap py-2 text-lg font-semibold text-gray-500">
-                {sectionsData?.data?.description}
-              </div>
-            </div>
-          )}
-          {step === 'SECTION' && (
-            <div className="flex w-full flex-col justify-center">
-              <SelectSection
-                sections={sections}
-                setSelectedRadio={setSelectedRadio}
-                selectedRadio={selectedRadio}
-              />
-              <div className="flex w-full justify-center gap-3 py-10 text-lg font-bold">
-                <button
-                  onClick={goBack}
-                  className="rounded-lg bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
-                >
-                  취소
-                </button>
-                <button
-                  onClick={onClickNext}
-                  className="rounded-lg bg-blue-100 px-5 py-2 text-blue-500 hover:bg-blue-200"
-                >
-                  다음
-                </button>
-              </div>
-            </div>
-          )}
-          {step === 'QUESTION' && (
-            <div>
-              {questionData && (
-                <ApplyForm
-                  formData={questionData}
-                  setStep={setStep}
+            )}
+            {step === 'SECTION' && (
+              <div className="flex w-full flex-col justify-center">
+                <SelectSection
                   sections={sections}
+                  setSelectedRadio={setSelectedRadio}
+                  selectedRadio={selectedRadio}
                 />
-              )}
-            </div>
-          )}
-        </div>
-      ) : (
-        <div className="justify-centerpb-20 flex flex-col items-center gap-6 pt-10 text-center">
-          <div className="m-2 rounded-full bg-red-500 p-2">
-            <Image src={Warning} alt="warning" width={50} />
+                <div className="flex w-full justify-center gap-3 py-10 text-lg font-bold">
+                  <button
+                    onClick={goBack}
+                    className="rounded-lg bg-gray-100 px-4 py-2 text-gray-500 hover:bg-gray-200"
+                  >
+                    취소
+                  </button>
+                  <button
+                    onClick={onClickNext}
+                    className="rounded-lg bg-blue-100 px-5 py-2 text-blue-500 hover:bg-blue-200"
+                  >
+                    다음
+                  </button>
+                </div>
+              </div>
+            )}
+            {step === 'QUESTION' && (
+              <div>
+                {questionData && (
+                  <ApplyForm
+                    formData={questionData}
+                    setStep={setStep}
+                    sections={sections}
+                  />
+                )}
+              </div>
+            )}
           </div>
-          <p className="text-3xl font-bold text-gray-800">
-            현재 지원 기간이 아닙니다.
-          </p>
-          <p className="text-lg font-semibold text-gray-600">
-            지원 가능 기간: {sectionsData?.data?.startDate} ~{' '}
-            {sectionsData?.data?.endDate}
-          </p>
-        </div>
+        ) : (
+          <div className="justify-centerpb-20 flex flex-col items-center gap-6 pt-10 text-center">
+            <div className="m-2 rounded-full bg-red-500 p-2 pb-2.5">
+              <Image src={Warning} alt="warning" width={50} />
+            </div>
+            <p className="text-3xl font-bold text-gray-800">
+              현재 지원 기간이 아닙니다.
+            </p>
+            <p className="text-lg font-semibold text-gray-600">
+              지원 가능 기간: {sectionsData?.data?.startDate} ~{' '}
+              {sectionsData?.data?.endDate}
+            </p>
+          </div>
+        )
+      ) : (
+        <div className="flex h-screen items-center justify-center"></div>
       )}
 
-      {step == 'SUBMITTED' && (
+      {step === 'SUBMITTED' && (
         <div>
           <Submitted
             applicationCount={questionData?.data.applicationCount}
