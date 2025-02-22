@@ -1,12 +1,24 @@
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 import DownLoad from '@/assets/download.svg';
 import { Answer } from '@/types/apply';
+import { downloadBlob } from '@/utils/file';
 import ApplyContentBox from './ApplyContentBox';
 import CheckBox from '../common/CheckBox';
 import Radio from '../common/Radio';
 
 export default function ApplyResult({ ...answers }: Answer) {
-  const { question, type, order, options, required, value } = answers;
+  const { question, type, order, options, required, value, files } = answers;
+
+  const downloadFile = async (url: string, filename: string) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      downloadBlob(blob, filename);
+    } catch (error) {
+      toast.error('파일 다운로드 중 오류가 발생했습니다.');
+    }
+  };
 
   const renderContent = () => {
     if (type === 'CHECK_BOX' && options) {
@@ -45,12 +57,27 @@ export default function ApplyResult({ ...answers }: Answer) {
       );
     }
 
-    if (type === 'FILE') {
+    if (type === 'FILE' && files.length > 0) {
       return (
-        <div className="flex items-center gap-2">
-          <div className="text-lg font-semibold text-gray-700">{value}</div>
-          <Image src={DownLoad} width={20} height={20} alt="file" />
-        </div>
+        <>
+          {files.map((file) => (
+            <div key={file.name} className="flex items-center gap-2">
+              <button
+                onClick={() => downloadFile(file.cdnUrl, file.name)}
+                className="flex items-center text-lg font-semibold text-gray-700"
+              >
+                {file.name}
+                <Image
+                  src={DownLoad}
+                  width={20}
+                  height={20}
+                  alt="file"
+                  className="ml-3"
+                />
+              </button>
+            </div>
+          ))}
+        </>
       );
     }
   };
