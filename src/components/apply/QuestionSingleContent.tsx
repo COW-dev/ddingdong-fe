@@ -42,7 +42,7 @@ export default function QuestionSingleContent({ type, id }: Props) {
               side="bottom"
               align="end"
               sideOffset={0}
-              className="m-2 bg-gray-100"
+              className="m-2 rounded-lg bg-gray-100 p-1 px-1.5 text-sm md:p-2 md:px-2 md:text-base"
             >
               {answer.name}
             </TooltipContent>
