@@ -136,7 +136,8 @@ export default function ManageForm({ formData, id, onReset }: Props) {
   };
 
   const isPastStartDate = formData?.startDate
-    ? new Date(formData.startDate) < new Date()
+    ? new Date(formData.startDate).setHours(0, 0, 0, 0) <=
+      new Date().setHours(0, 0, 0, 0)
     : false;
 
   const [isClosed, setIsClosed] = useState(formData ? true : false);
