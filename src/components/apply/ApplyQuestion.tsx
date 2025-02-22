@@ -49,9 +49,16 @@ function QuestionResponse({ data }: Props) {
   }
 
   return (
-    <div className="flex w-full justify-center">
+    <div className="w-full">
       {isSingleType(type) ? (
-        <QuestionSingleContent id={id} type={type} />
+        <>
+          {type === 'FILE' && (
+            <span className="w-full p-2 text-right text-xs font-semibold text-gray-500 md:text-sm">
+              * FILE 저장기능은 지원자 상세화면에서 지원해요
+            </span>
+          )}
+          <QuestionSingleContent id={id} type={type} />
+        </>
       ) : (
         <QuestionMultipleContent id={id} type={type} />
       )}

@@ -1,9 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import router from 'next/router';
+import {
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+  Tooltip,
+} from '@radix-ui/react-tooltip';
 import { useCookies } from 'react-cookie';
+import TextareaAutosize from 'react-textarea-autosize';
 import File from '@/assets/file.svg';
-import { AnswerItem, useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
+import { useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
+import { AnswerItem } from '@/types/apply';
 
 const componentMap = {
   TEXT: TextList,
@@ -24,13 +32,26 @@ export default function QuestionSingleContent({ type, id }: Props) {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      {data?.data.answers.map((answer, index) => {
-        return <ChartComponent answer={answer} key={index} />;
-      })}
+      {data?.data.answers.map((answer, index) => (
+        <TooltipProvider delayDuration={0} key={index}>
+          <Tooltip>
+            <TooltipTrigger>
+              <ChartComponent answer={answer} />
+            </TooltipTrigger>
+            <TooltipContent
+              side="bottom"
+              align="end"
+              sideOffset={0}
+              className="m-2 rounded-lg bg-gray-100 p-1 px-1.5 text-sm md:p-2 md:px-2 md:text-base"
+            >
+              {answer.name}
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      ))}
     </div>
   );
 }
-
 function FileList({ answer }: { answer: AnswerItem }) {
   return (
     <label
@@ -50,36 +71,16 @@ function FileList({ answer }: { answer: AnswerItem }) {
 }
 
 function TextList({ answer }: { answer: AnswerItem }) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const resizeTextarea = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
+  const handleClick = () => {
+    const { id } = router.query;
+    router.push(`/apply/${id}/${answer.applicationId}`);
   };
 
-  useEffect(() => {
-    resizeTextarea();
-  }, [answer]);
-
-  useEffect(() => {
-    window.addEventListener('resize', resizeTextarea);
-    return () => window.removeEventListener('resize', resizeTextarea);
-  }, []);
-
   return (
-    <textarea
-      ref={textareaRef}
-      rows={1}
-      onClick={() => router.push(`${router.asPath}/${answer.applicationId}`)}
+    <TextareaAutosize
+      onClick={handleClick}
       readOnly
       className="block w-full rounded-xl border border-[#E5E7EB]  p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
-      onInput={(e) => {
-        const target = e.target as HTMLTextAreaElement;
-        target.style.height = 'auto';
-        target.style.height = `${target.scrollHeight}px`;
-      }}
       value={answer.answer}
     />
   );

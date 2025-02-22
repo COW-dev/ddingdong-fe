@@ -8,7 +8,6 @@ import {
 } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
-import OptionModal from './OptionModal';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
@@ -82,7 +81,8 @@ const PieChart = ({ passedData }: Props) => {
               },
               color: '#1F2937',
             },
-            // onClick: () => {},
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            onClick: () => {},
           },
           tooltip: {
             ...tooltip,
@@ -108,7 +108,9 @@ const PieChart = ({ passedData }: Props) => {
     };
   }, [passedData]);
 
-  return <canvas ref={canvasRef} className="flex h-auto w-full" />;
+  return (
+    <canvas ref={canvasRef} className="flex h-auto w-full max-w-[400px]" />
+  );
 };
 
 export default PieChart;

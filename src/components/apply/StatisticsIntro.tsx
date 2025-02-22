@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { useCookies } from 'react-cookie';
 import InfoIcon from '@/assets/info.svg';
-import TableChart from '@/components/ui/bar-chart';
+import BarChart from '@/components/ui/bar-chart';
 import LineChart from '@/components/ui/line-chart';
 import {
   Tooltip,
@@ -40,7 +40,7 @@ export default function StatisticsIntro({ applyId }: Props) {
       </section>
       <section className="flex shrink flex-col items-center md:w-[400px]">
         <div>
-          <TableChart passedData={sortDepartmentRanksByLabel()} />
+          <BarChart passedData={sortDepartmentRanksByLabel()} />
         </div>
         <div className="relative flex items-center">
           <h2 className="m-3 text-center">지원 학과 TOP 5</h2>
@@ -61,7 +61,7 @@ export default function StatisticsIntro({ applyId }: Props) {
 
 function ApplicantAnnounceIcon() {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger>
           <Image src={InfoIcon} width={22} height={22} alt={'announce_icon'} />
@@ -73,7 +73,7 @@ function ApplicantAnnounceIcon() {
         >
           <p className="rounded-md bg-[#EFF6FF] p-2.5 text-xs">
             신규 기능 개설로 기존(2024.09) <br />
-            동아리원을 이전 지원자 수로 대체했어요
+            동아리원을 이전 동아리원 수로 대체했어요
           </p>
         </TooltipContent>
       </Tooltip>

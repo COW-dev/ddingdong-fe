@@ -50,12 +50,13 @@ const LineChart = ({ passedData }: Props) => {
         ? JSON.parse(localStorage.getItem('club') ?? '')
         : '';
     const clubName = club.state?.club.name.toUpperCase() ?? '';
-
     const parsedApplicantData = [
       MOCK_APPLYCANT[clubName],
-      calculateCompared(MOCK_APPLYCANT[clubName], passedData[2]),
+      calculateCompared(
+        MOCK_APPLYCANT[clubName],
+        passedData[passedData.length - 1],
+      ),
     ];
-
     const labels = parsedApplicantData.map((item) => item?.label);
     const datas = parsedApplicantData.map((item) => item?.count);
     const rates = parsedApplicantData.map(
