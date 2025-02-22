@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { InfoIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {
@@ -7,8 +7,20 @@ import {
   TooltipContent,
   TooltipProvider,
 } from '@/components/ui/tooltip';
-import { SectionsProps } from '@/types/form';
+import { SectionFormField, FormField } from '@/types/form';
 import Prompt from '../common/Prompt';
+
+type SectionsProps = {
+  focusSection: string;
+  setFocusSection: Dispatch<SetStateAction<string>>;
+  sections: string[];
+  setSections: Dispatch<SetStateAction<string[]>>;
+  formField: SectionFormField[];
+  setFormField: Dispatch<SetStateAction<SectionFormField[]>>;
+  isClosed: boolean;
+  baseQuestion: Omit<FormField, 'section'>[];
+  addSection: () => void;
+};
 
 export default function Sections({
   focusSection,
@@ -118,7 +130,7 @@ export default function Sections({
     <TooltipProvider>
       <div
         onClick={handleClickOutside}
-        className="relative flex items-center overflow-x-scroll md:overflow-visible"
+        className="relative flex items-center overflow-x-scroll sm:overflow-visible"
       >
         <Prompt
           visible={modalVisible}

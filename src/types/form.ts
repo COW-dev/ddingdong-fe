@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 type Section = string;
 
 export interface CreateFormData {
@@ -80,16 +78,4 @@ export interface FormBlockData {
   endDate: string;
   formStatus: '진행 전' | '진행 중' | '마감';
   onClick: () => void;
-}
-
-export interface SectionsProps {
-  focusSection: string;
-  setFocusSection: Dispatch<SetStateAction<string>>;
-  sections: string[];
-  setSections: Dispatch<SetStateAction<string[]>>;
-  formField: SectionFormField[];
-  setFormField: Dispatch<SetStateAction<SectionFormField[]>>;
-  isClosed: boolean;
-  baseQuestion: Omit<FormField, 'section'>[];
-  addSection: () => void;
 }
