@@ -20,6 +20,7 @@ import {
 import {
   APPLICANT_PLACEHOLDER,
   EMAIL_OPTIONS,
+  EMAIL_STATUS,
   TEMPLATE,
 } from '@/constants/apply';
 import { useNewResultEmail } from '@/hooks/api/apply/useNewResultEmail';
@@ -48,11 +49,15 @@ export default function Index() {
     setMessage(newValue);
   };
 
+  const EMAIL_STATUS_REVERSE = Object.fromEntries(
+    Object.entries(EMAIL_STATUS).map(([key, value]) => [value, key]),
+  ) as Record<string, keyof typeof EMAIL_STATUS>;
+
   const handleSubmit = () => {
     mutation.mutate({
       formId: Number(id),
       title,
-      target: target,
+      target: EMAIL_STATUS_REVERSE[target],
       message: message,
       token,
     });
