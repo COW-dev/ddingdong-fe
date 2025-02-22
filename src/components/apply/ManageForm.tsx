@@ -334,7 +334,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
             alt="checkBox"
           />
         </div>
-        우리동아리는 면접을 보지 않아요!
+        우리동아리는 면접을 봐요!
       </div>
 
       <div className="flex flex-col gap-4">
