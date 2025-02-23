@@ -221,6 +221,7 @@ interface SubmittedProps {
 
 export function Submitted({ applicationCount, clubName }: SubmittedProps) {
   const jsConfetti = new JSConfetti();
+  const router = useRouter();
 
   useEffect(() => {
     jsConfetti.addConfetti({
@@ -242,19 +243,26 @@ export function Submitted({ applicationCount, clubName }: SubmittedProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center py-10">
-      <div className="p-10">
+      <div className="p-10 py-5">
         <Image src={Check} alt="checkIcon" width={70} />
       </div>
       <div className="flex w-full flex-col items-center gap-4 py-2 text-center">
         <div className="text-4xl font-bold text-gray-700">
           지원서 제출이 완료되었습니다!
         </div>
-        <p className="w-1/2">
+        <div className="w-1/2 text-gray-600">
           {clubName}에 지원해주셔서 감사합니다!
           <p>
             현재까지 {clubName} 지원자는 {applicationCount + 1}명입니다.
           </p>
-        </p>
+        </div>
+
+        <button
+          className="mt-3 rounded-xl bg-blue-500 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-blue-600 max-md:block"
+          onClick={() => router.push('/')}
+        >
+          홈 화면으로 이동하기
+        </button>
       </div>
     </div>
   );

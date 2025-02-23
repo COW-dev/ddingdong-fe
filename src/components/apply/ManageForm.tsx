@@ -334,7 +334,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
             alt="checkBox"
           />
         </div>
-        우리동아리는 면접을 봐요!
+        우리 동아리는 면접을 봐요!
       </div>
 
       <div className="flex flex-col gap-4">
@@ -349,7 +349,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
             disabled={isClosed}
           />
 
-          <div className="w-full rounded-lg border pt-1">
+          <div className="h-fit w-full rounded-lg border py-0.5">
             <Datepicker
               value={recruitPeriod}
               useRange={false}

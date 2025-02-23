@@ -101,7 +101,7 @@ export default function Content({
               key={i}
               className="flex w-full items-center justify-between gap-2"
             >
-              <div className="flex h-[34px] items-center">
+              <div className="flex h-[34px] w-full items-center">
                 <Image
                   src={type === 'RADIO' ? EmptyCircle : EmptySquare}
                   alt={`${type} 선택`}
@@ -112,7 +112,7 @@ export default function Content({
                   type="text"
                   value={opt}
                   onChange={(e) => handleOptionChange(i, e.target.value)}
-                  className="bg-white px-3 font-semibold text-gray-500 outline-none"
+                  className="w-full bg-white px-3 font-semibold text-gray-500 outline-none"
                   disabled={!isEditing || isClosed}
                 />
               </div>

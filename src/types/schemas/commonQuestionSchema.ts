@@ -6,7 +6,7 @@ export const commonQuestionSchema = z.object({
   department: z.string(),
   phoneNumber: z
     .string()
-    .regex(/^010\d{8}$/, '올바른 전화번호 형식이 아닙니다.'),
+    .regex(/^010-\d{4}-\d{4}$/, '올바른 전화번호 형식이 아닙니다.'),
   email: z.string().email('올바른 이메일을 입력하세요.'),
 });
 

@@ -167,17 +167,23 @@ export default function ApplicantList({ type = 'DOCUMENT', data }: Props) {
           </div>
         </div>
       </div>
-      <ul className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
-        {applicants?.map((item, index) => (
-          <ApplicantCard
-            key={index}
-            data={item}
-            type={type}
-            checked={selectedApplicants[type].has(item.id)}
-            onCheck={(checked) => handleCheckApplicant(item.id, checked)}
-          />
-        ))}
-      </ul>
+      {applicants?.length === 0 ? (
+        <p className="mt-4 py-36 text-center font-semibold text-gray-500">
+          지원자가 아직 없습니다.
+        </p>
+      ) : (
+        <ul className="mt-4 grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-4">
+          {applicants.map((item, index) => (
+            <ApplicantCard
+              key={index}
+              data={item}
+              type={type}
+              checked={selectedApplicants[type].has(item.id)}
+              onCheck={(checked) => handleCheckApplicant(item.id, checked)}
+            />
+          ))}
+        </ul>
+      )}
     </>
   );
 }
