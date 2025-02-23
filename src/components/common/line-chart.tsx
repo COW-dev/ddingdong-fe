@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 
 import { ApplyRate } from '@/types/apply';
-import { tooltip } from './chart/tooltip';
+import { tooltip } from '../../constants/tooltip';
 import { MOCK_APPLYCANT } from '../apply/applicant.data';
 
 ChartJS.register(
