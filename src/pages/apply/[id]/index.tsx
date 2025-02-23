@@ -250,12 +250,12 @@ export function Submitted({ applicationCount, clubName }: SubmittedProps) {
         <div className="text-4xl font-bold text-gray-700">
           지원서 제출이 완료되었습니다!
         </div>
-        <p className="w-1/2 text-gray-600">
+        <div className="w-1/2 text-gray-600">
           {clubName}에 지원해주셔서 감사합니다!
-          <p className="text-gray-600">
+          <p>
             현재까지 {clubName} 지원자는 {applicationCount + 1}명입니다.
           </p>
-        </p>
+        </div>
 
         <button
           className="bottom-28 my-5 rounded-xl bg-blue-500 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-blue-600 max-md:block lg:hidden"
