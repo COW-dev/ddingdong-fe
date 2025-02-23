@@ -88,16 +88,22 @@ export default function Index() {
       )}
 
       <div className="flex flex-col gap-3">
-        {getFilteredForms()
-          .slice()
-          .reverse()
-          .map((form) => (
-            <FormBlock
-              key={form.formId}
-              {...form}
-              onClick={() => handleClickFormBlock(form.formId)}
-            />
-          ))}
+        {getFilteredForms().length === 0 ? (
+          <p className="mt-4 py-36 text-center font-semibold text-gray-500">
+            생성된 지원서가 없습니다.
+          </p>
+        ) : (
+          getFilteredForms()
+            .slice()
+            .reverse()
+            .map((form) => (
+              <FormBlock
+                key={form.formId}
+                {...form}
+                onClick={() => handleClickFormBlock(form.formId)}
+              />
+            ))
+        )}
       </div>
     </>
   );
