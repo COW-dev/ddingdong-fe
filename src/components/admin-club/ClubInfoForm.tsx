@@ -6,7 +6,6 @@ import {
   useState,
 } from 'react';
 import toast from 'react-hot-toast';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import { ClubDetail } from '@/types/club';
 import { validator } from '@/utils/validator';
 

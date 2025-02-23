@@ -105,7 +105,7 @@ export default function Index() {
       location: clubData.location,
       clubLeader: clubData.leader,
       phoneNumber: clubData.phoneNumber,
-      regularMeeting: '',
+      regularMeeting: clubData.regularMeeting,
       introduction: clubData.introduction,
       activity: clubData.activity,
       profileImageId: profileImageFile
