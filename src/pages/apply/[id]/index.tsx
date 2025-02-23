@@ -258,7 +258,7 @@ export function Submitted({ applicationCount, clubName }: SubmittedProps) {
         </div>
 
         <button
-          className="bottom-28 my-5 rounded-xl bg-blue-500 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-blue-600 max-md:block lg:hidden"
+          className="my-5 rounded-xl bg-blue-500 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-blue-600 max-md:block"
           onClick={() => router.push('/')}
         >
           홈 화면으로 이동하기
