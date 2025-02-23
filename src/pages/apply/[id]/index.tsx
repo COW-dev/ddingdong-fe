@@ -243,7 +243,7 @@ export function Submitted({ applicationCount, clubName }: SubmittedProps) {
 
   return (
     <div className="flex w-full flex-col items-center justify-center py-10">
-      <div className="p-10">
+      <div className="p-10 py-5">
         <Image src={Check} alt="checkIcon" width={70} />
       </div>
       <div className="flex w-full flex-col items-center gap-4 py-2 text-center">
@@ -258,7 +258,7 @@ export function Submitted({ applicationCount, clubName }: SubmittedProps) {
         </div>
 
         <button
-          className="my-5 rounded-xl bg-blue-500 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-blue-600 max-md:block"
+          className="mt-3 rounded-xl bg-blue-500 px-8 py-3 text-base font-bold text-white transition-colors hover:bg-blue-600 max-md:block"
           onClick={() => router.push('/')}
         >
           홈 화면으로 이동하기
