@@ -53,17 +53,23 @@ export default function QuestionSingleContent({ type, id }: Props) {
   );
 }
 function FileList({ answer }: { answer: AnswerItem }) {
+  const handleClick = () => {
+    const { id } = router.query;
+    router.push(`/apply/${id}/${answer.applicationId}`);
+  };
+
   return (
     <label
-      className="flex items-center rounded-xl border border-[#E5E7EB] p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
+      className="flex items-center rounded-xl border border-[#E5E7EB] px-5 py-2 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
       htmlFor="file_input"
+      onClick={handleClick}
     >
       <Image
         src={File}
         width={20}
         height={20}
         alt="file"
-        className="my-2 ml-3 cursor-pointer"
+        className="my-2 cursor-pointer"
       />
       <span className="ml-3">{answer.answer}</span>
     </label>
@@ -80,7 +86,7 @@ function TextList({ answer }: { answer: AnswerItem }) {
     <TextareaAutosize
       onClick={handleClick}
       readOnly
-      className="block w-full rounded-xl border border-[#E5E7EB]  p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
+      className="block w-full resize-none rounded-xl border border-[#E5E7EB]  p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
       value={answer.answer}
     />
   );

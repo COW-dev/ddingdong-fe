@@ -53,9 +53,9 @@ function QuestionResponse({ data }: Props) {
       {isSingleType(type) ? (
         <>
           {type === 'FILE' && (
-            <span className="w-full p-2 text-right text-xs font-semibold text-gray-500 md:text-sm">
+            <div className="w-full p-2 text-left text-xs font-semibold text-gray-500 md:text-sm">
               * FILE 저장기능은 지원자 상세화면에서 지원해요
-            </span>
+            </div>
           )}
           <QuestionSingleContent id={id} type={type} />
         </>
