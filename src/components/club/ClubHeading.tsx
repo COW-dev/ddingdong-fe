@@ -109,6 +109,15 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           {formId ? '지원하기' : '모집 마감'}
         </button>
       </div>
+      <button
+        onClick={() => moveToApply(Number(formId))}
+        className={`fixed bottom-6 w-[90%] rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 max-md:block lg:hidden  ${
+          !formId && `hidden cursor-not-allowed bg-gray-300 hover:bg-gray-300`
+        }`}
+        disabled={!formId}
+      >
+        {formId ? '지원하기' : '모집 마감'}
+      </button>
     </>
   );
 }

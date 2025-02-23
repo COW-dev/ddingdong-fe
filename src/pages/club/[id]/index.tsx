@@ -101,7 +101,6 @@ export default function Index({ clubId }: ClubDetailProps) {
           tabContext="allClubs"
           onTabChange={(index) => setActiveTab(index)}
         />
-        <div className={`${'hidden'}`}></div>
       </>
     );
   }
