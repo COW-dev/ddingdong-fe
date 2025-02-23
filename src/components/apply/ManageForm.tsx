@@ -321,7 +321,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image
             onClick={() => {
-              if (!isClosed) {
+              if (!isClosed && !isPastStartDate) {
                 setIsChecked(!isChecked);
               }
             }}
@@ -329,7 +329,9 @@ export default function ManageForm({ formData, id, onReset }: Props) {
             width={isChecked ? 18 : 22}
             height={isChecked ? 18 : 22}
             className={`object-contain ${
-              isClosed ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+              isClosed || isPastStartDate
+                ? 'cursor-not-allowed opacity-50'
+                : 'cursor-pointer'
             }`}
             alt="checkBox"
           />
@@ -346,7 +348,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
             onChange={(
               e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
             ) => setTitle(e.target.value)}
-            disabled={isClosed}
+            disabled={isClosed || isPastStartDate}
           />
 
           <div className="h-fit w-full rounded-lg border py-0.5">
@@ -367,7 +369,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
           ) => setDescription(e.target.value)}
-          disabled={isClosed}
+          disabled={isClosed || isPastStartDate}
         />
       </div>
 
@@ -377,7 +379,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           focusSection={focusSection}
           sections={sections}
           setFocusSection={setFocusSection}
-          isClosed={isClosed}
+          isClosed={isClosed || isPastStartDate}
           formField={formField}
           setFormField={setFormField}
           setSections={setSections}
@@ -397,13 +399,13 @@ export default function ManageForm({ formData, id, onReset }: Props) {
                   deleteQuestion={() => deleteQuestion(section.section, qIndex)}
                   setFormField={setFormField}
                   section={section}
-                  isClosed={isClosed}
+                  isClosed={isClosed || isPastStartDate}
                 />
               ))}
             </div>
           ))}
       </div>
-      {!isClosed && (
+      {!isClosed && !isPastStartDate && (
         <button
           onClick={addQuestion}
           className="fixed bottom-24 right-[calc(10vw)] flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-[calc(5vw)] lg:right-[calc(2vw)]"

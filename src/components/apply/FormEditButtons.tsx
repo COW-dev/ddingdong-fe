@@ -35,14 +35,8 @@ export default function FormEditButtons({
         <>
           {!isEditing ? (
             <button
-              onClick={
-                isClosed && isPastStartDate ? undefined : onClickEditButton
-              }
-              className={`${
-                isClosed && isPastStartDate
-                  ? 'cursor-not-allowed bg-gray-100 text-gray-400'
-                  : 'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'
-              } rounded-xl px-4 py-2 font-semibold`}
+              onClick={onClickEditButton}
+              className={`${'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'} rounded-xl px-4 py-2 font-semibold`}
             >
               수정하기
             </button>
