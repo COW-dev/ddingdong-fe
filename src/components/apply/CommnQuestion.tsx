@@ -87,7 +87,7 @@ export default function CommonQuestion({
       <div className="flex flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
           placeholder="전화번호를 입력해주세요"
-          label={`전화번호(' - '제외)`}
+          label={`전화번호(' - '포함)`}
           disabled={disabled}
           defaultValue={phoneNumberRef.current}
           onChange={(e) => (phoneNumberRef.current = e.target.value)}
