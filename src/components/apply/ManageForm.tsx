@@ -97,11 +97,19 @@ export default function ManageForm({ formData, id, onReset }: Props) {
 
     const formattedPostData = formatFormData();
 
-    updateFormMutation.mutate({
-      token,
-      formId: id,
-      formData: formattedPostData,
-    });
+    updateFormMutation.mutate(
+      {
+        token,
+        formId: id,
+        formData: formattedPostData,
+      },
+      {
+        onError: () => {
+          onReset?.();
+        },
+      },
+    );
+
     setIsEditing(false);
     setIsClosed(true);
   };
@@ -286,7 +294,6 @@ export default function ManageForm({ formData, id, onReset }: Props) {
       ),
     );
   };
-
   return (
     <div>
       <Head>
@@ -316,7 +323,6 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           handleUpdateForm={handleUpdateForm}
         />
       </div>
-
       <div className="flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold text-gray-500">
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image
@@ -372,7 +378,6 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           disabled={isClosed || isPastStartDate}
         />
       </div>
-
       <div className="mt-6">
         <Sections
           addSection={handleOpenModal}
@@ -386,7 +391,6 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           baseQuestion={baseQuestion}
         />
         {focusSection == '공통' && <CommonQuestion disabled={true} />}
-
         {formField
           .filter((item) => item.section === focusSection)
           .map((section) => (
