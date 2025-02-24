@@ -349,7 +349,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
         <div className="mt-4 flex flex-row flex-wrap gap-3 md:flex-nowrap">
           <BaseInput
             type="text"
-            placeholder={'지원서 제목을 입력해주세요'}
+            placeholder={'지원서 제목을 입력해 주세요.'}
             value={title}
             onChange={(
               e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -370,7 +370,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           </div>
         </div>
         <TextArea
-          placeholder="지원서 설명을 입력해 주세요 (최대 255자 이내)"
+          placeholder="지원서 설명을 입력해 주세요. (최대 255자 이내)"
           value={description}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
