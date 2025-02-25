@@ -8,7 +8,7 @@ import {
   TooltipProvider,
 } from '@/components/ui/tooltip';
 import { FormState, QuestionField } from '@/types/form';
-import Prompt from '../common/Prompt';
+import Prompt from './Prompt';
 
 type SectionsProps = {
   focusSection: string;

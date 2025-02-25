@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import Modal from '@/components/common/Modal';
-import BaseInput from '../apply/BaseInput';
+import BaseInput from './BaseInput';
 
 type PromptProps = {
   visible: boolean;
