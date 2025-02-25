@@ -60,7 +60,7 @@ export default function CommonQuestion({
     <div className="mb-3 flex flex-col gap-5 rounded-lg border border-gray-200 px-6 py-7">
       <div className="flex flex-row flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
-          placeholder="이름을 입력해주세요"
+          placeholder="이름을 입력해 주세요."
           label={'이름'}
           disabled={disabled}
           defaultValue={nameRef.current}
@@ -68,7 +68,7 @@ export default function CommonQuestion({
           onBlur={() => handleBlur('name', nameRef.current)}
         />
         <BaseInput
-          placeholder="학번을 입력해주세요"
+          placeholder="학번을 입력해 주세요."
           label={'학번'}
           disabled={disabled}
           defaultValue={studentNumberRef.current}
@@ -86,7 +86,7 @@ export default function CommonQuestion({
 
       <div className="flex flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
-          placeholder="전화번호를 입력해주세요"
+          placeholder="전화번호를 입력해 주세요."
           label={`전화번호(' - '포함)`}
           disabled={disabled}
           defaultValue={phoneNumberRef.current}
@@ -94,7 +94,7 @@ export default function CommonQuestion({
           onBlur={() => handleBlur('phoneNumber', phoneNumberRef.current)}
         />
         <BaseInput
-          placeholder="이메일을 입력해주세요"
+          placeholder="이메일을 입력해 주세요."
           label={'이메일'}
           disabled={disabled}
           defaultValue={emailRef.current}

@@ -45,7 +45,7 @@ export function StepDropdown({
           className="flex h-full flex-row items-center justify-between px-4 py-1 hover:rounded-lg "
           onClick={() => !disabled && setOpenDropdown(!openDropdown)}
         >
-          {disabled ? '학과를 선택해 주세요' : selectedContent}
+          {disabled ? '학과를 선택해 주세요.' : selectedContent}
           <Image
             src={ArrowDownGray}
             alt="arrow_down"

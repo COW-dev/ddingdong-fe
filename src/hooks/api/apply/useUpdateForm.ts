@@ -16,6 +16,7 @@ interface UpdateFormParams {
 
 export function useUpdateForm(
   setIsEditing: (value: boolean) => void,
+  onReset?: () => void,
 ): UseMutationResult<unknown, AxiosError, UpdateFormParams> {
   const queryClient = useQueryClient();
 
@@ -34,6 +35,8 @@ export function useUpdateForm(
           error.response?.data?.message || '폼 정보 수정에 실패했습니다.';
 
         toast.error(errorMessage);
+
+        onReset?.();
       },
     },
   );
