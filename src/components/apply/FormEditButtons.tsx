@@ -15,8 +15,6 @@ type Props = {
 export default function FormEditButtons({
   formData,
   isEditing,
-  isClosed,
-  isPastStartDate,
   handleCreateForm,
   onClickEditButton,
   onClickCancelButton,
@@ -36,7 +34,9 @@ export default function FormEditButtons({
           {!isEditing ? (
             <button
               onClick={onClickEditButton}
-              className={`${'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'} rounded-xl px-4 py-2 font-semibold`}
+              className={
+                'cursor-pointer rounded-xl bg-blue-100 px-4 py-2 font-semibold text-blue-500 hover:bg-blue-200'
+              }
             >
               수정하기
             </button>
