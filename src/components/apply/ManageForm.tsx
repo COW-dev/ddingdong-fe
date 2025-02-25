@@ -265,6 +265,12 @@ export default function ManageForm({ formData, id, onReset }: Props) {
     onReset?.();
   };
 
+  const handleCheckBoxClick = () => {
+    if (!isClosed && !isPastStartDate) {
+      setIsChecked(!isChecked);
+    }
+  };
+
   const addQuestion = () => {
     setFormField((prev) =>
       prev.map((section) =>
@@ -319,11 +325,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
       <div className="flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold text-gray-500">
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image
-            onClick={() => {
-              if (!isClosed && !isPastStartDate) {
-                setIsChecked(!isChecked);
-              }
-            }}
+            onClick={handleCheckBoxClick}
             src={isChecked ? square : emptySquare}
             width={isChecked ? 18 : 22}
             height={isChecked ? 18 : 22}
