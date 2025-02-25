@@ -1,19 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
-import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import arrow_left from '@/assets/arrow_left.svg';
 import BaseInput from '@/components/apply/BaseInput';
 import CommonQuestion from '@/components/apply/CommnQuestion';
 import Field from '@/components/apply/Field';
 import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
-import { useNewForm } from '@/hooks/api/apply/useNewForm';
-import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
 import { FormState, FormField } from '@/types/form';
 import FormEditButtons from './FormEditButtons';
 import AddForm from '../../assets/add_form.svg';
@@ -33,9 +28,14 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
   const isPastStartDate = formData?.startDate
     ? new Date(formData.startDate) < new Date()
     : false;
-  const [mode, setMode] = useState<'view' | 'edit'>(formData ? 'view' : 'edit');
+
+  const [mode, setMode] = useState<'view' | 'edit'>(
+    formData == undefined ? 'edit' : 'view',
+  );
+
   const isDisabled = mode === 'view' || isPastStartDate;
-  const isEditableRegardlessOfPeriod = mode === 'edit';
+
+  const isEditableRegardlessOfPeriod = mode === 'view';
 
   const [focusSection, setFocusSection] = useState('공통');
   const baseField: FormField = {
@@ -135,11 +135,26 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           />
           <Heading>지원서 생성</Heading>
         </div>
-        <FormEditButtons formData={formData} mode={mode} onReset={onReset} />
+        <FormEditButtons
+          formData={formData}
+          mode={mode}
+          setMode={setMode}
+          onReset={onReset}
+          formState={formState}
+          id={id}
+        />
       </div>
 
-      <div className="flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold text-gray-500">
-        <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
+      <div
+        className={`flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold ${
+          isDisabled ? 'cursor-not-allowed text-gray-400' : 'text-gray-500'
+        }`}
+      >
+        <div
+          className={`relative flex h-[20px] w-[20px] items-center justify-center ${
+            isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+          }`}
+        >
           <Image
             onClick={() => {
               if (!isDisabled) {
@@ -149,7 +164,9 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
             src={formState.hasInterview ? square : emptySquare}
             width={formState.hasInterview ? 18 : 22}
             height={formState.hasInterview ? 18 : 22}
-            className={'cursor-pointer object-contain opacity-50'}
+            className={`object-contain ${
+              isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+            }`}
             alt="checkBox"
           />
         </div>
@@ -212,7 +229,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
                   deleteQuestion={() => deleteField(field.section, index)}
                   setFormState={setFormState}
                   focusSection={focusSection}
-                  isClosed={false}
+                  isClosed={isDisabled}
                   fieldData={field}
                 />
               </div>
