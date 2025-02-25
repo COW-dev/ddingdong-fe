@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { cn } from '@/lib/utils';
 
 interface BaseInputProps {
   className?: string;
@@ -33,10 +34,13 @@ export default function BaseInput({
 
       <Component
         disabled={disabled}
-        className={`h-full w-full resize-none rounded-xl border border-gray-200 ${
-          disabled ? 'bg-gray-100' : 'bg-gray-50'
-        }  px-4 py-3 text-lg font-semibold text-gray-500 outline-none transition-all duration-300 ease-in-out 
-           focus:border-blue-500 focus:ring-blue-300 disabled:resize-none md:px-5 ${className}`}
+        className={cn(
+          'h-full w-full resize-none rounded-xl border px-4 py-3 text-lg font-semibold text-gray-500 outline-none transition-all duration-300 ease-in-out focus:border-blue-500 focus:ring-blue-300 md:px-5',
+          disabled
+            ? 'border-gray-200 bg-gray-100 disabled:resize-none'
+            : 'border-gray-200 bg-gray-50',
+          className,
+        )}
         placeholder={
           disabled || as === 'textarea' || as === 'input' ? placeholder : ''
         }
