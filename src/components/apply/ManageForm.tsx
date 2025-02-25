@@ -40,7 +40,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
   const [isEditing, setIsEditing] = useState(false);
-  const updateFormMutation = useUpdateForm(setIsEditing);
+  const updateFormMutation = useUpdateForm(setIsEditing, onReset);
 
   const [title, setTitle] = useState(formData?.title ? formData.title : '');
   const [description, setDescription] = useState(
@@ -97,18 +97,11 @@ export default function ManageForm({ formData, id, onReset }: Props) {
 
     const formattedPostData = formatFormData();
 
-    updateFormMutation.mutate(
-      {
-        token,
-        formId: id,
-        formData: formattedPostData,
-      },
-      {
-        onError: () => {
-          onReset?.();
-        },
-      },
-    );
+    updateFormMutation.mutate({
+      token,
+      formId: id,
+      formData: formattedPostData,
+    });
 
     setIsEditing(false);
     setIsClosed(true);
