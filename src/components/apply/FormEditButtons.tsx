@@ -1,30 +1,23 @@
 import React from 'react';
-import { CreateFormData } from '@/types/form';
+import { FormState } from '@/types/form';
+
+type ModeType = 'view' | 'edit';
 
 type Props = {
-  formData?: CreateFormData;
-  isEditing: boolean;
-  isClosed: boolean;
-  isPastStartDate: boolean;
-  handleCreateForm: () => void;
-  onClickEditButton: () => void;
-  onClickCancelButton: () => void;
-  handleUpdateForm: () => void;
+  formData: FormState;
+  mode: ModeType;
+  onReset: () => void;
 };
 
-export default function FormEditButtons({
-  formData,
-  isEditing,
-  isClosed,
-  isPastStartDate,
-  handleCreateForm,
-  onClickEditButton,
-  onClickCancelButton,
-  handleUpdateForm,
-}: Props) {
+export default function FormEditButtons({ formData, mode, onReset }: Props) {
+  const onClickEditButton = () => {};
+  const handleCreateForm = () => {};
+  const onClickCancelButton = () => {};
+  const handleUpdateForm = () => {};
+
   return (
     <div className="mt-7 flex items-center justify-between gap-2 text-lg">
-      {!formData ? (
+      {formData ? (
         <button
           className="rounded-xl bg-blue-500 px-4 py-2 font-semibold text-white hover:bg-blue-600"
           onClick={handleCreateForm}
@@ -33,16 +26,12 @@ export default function FormEditButtons({
         </button>
       ) : (
         <>
-          {!isEditing ? (
+          {mode == 'view' ? (
             <button
-              onClick={
-                isClosed && isPastStartDate ? undefined : onClickEditButton
+              onClick={onClickEditButton}
+              className={
+                'cursor-pointer rounded-xl bg-blue-100 px-4 py-2 font-semibold text-blue-500 hover:bg-blue-200'
               }
-              className={`${
-                isClosed && isPastStartDate
-                  ? 'cursor-not-allowed bg-gray-100 text-gray-400'
-                  : 'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'
-              } rounded-xl px-4 py-2 font-semibold`}
             >
               수정하기
             </button>

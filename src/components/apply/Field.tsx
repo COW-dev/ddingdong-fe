@@ -1,41 +1,29 @@
 import React, { useCallback, useRef } from 'react';
 import { Trash2 } from 'lucide-react';
-import { QuestionType, SectionFormField } from '@/types/form';
+import { QuestionType, FormState, FormField } from '@/types/form';
 import BaseInput from './BaseInput';
 import Content from './Content';
 import Dropdown from './Dropdown';
-import { Switch } from '../../components/ui/switch';
+import { Switch } from '../ui/switch';
 
-interface Section {
-  section: string;
-  questions: any[];
-}
-
-interface QuestionData {
-  question: string;
-  type: string;
-  options: string[];
-  required: boolean;
-  order: number;
-}
-
-interface Props {
+type Props = {
   index: number;
-  questionData: QuestionData;
-  section: Section;
-  setFormField: React.Dispatch<React.SetStateAction<SectionFormField[]>>;
+  focusSection: string;
   isClosed?: boolean;
+  setFormState: React.Dispatch<React.SetStateAction<FormState>>;
   deleteQuestion: (sectionName: string | undefined, index: number) => void;
-}
+  fieldData: FormField;
+};
 
-export default function Question({
+export default function Field({
   index,
-  section,
-  questionData,
-  setFormField,
+  focusSection,
+  setFormState,
   isClosed,
   deleteQuestion,
+  fieldData,
 }: Props) {
+  console.log(fieldData, 'formState.formFields');
   const types: QuestionType[] = [
     'CHECK_BOX',
     'RADIO',
@@ -44,27 +32,19 @@ export default function Question({
     'FILE',
   ];
 
-  const selectedTypeRef = useRef<QuestionType>(
-    questionData.type as QuestionType,
-  );
-  const enabledRef = useRef<boolean>(questionData.required);
+  const selectedTypeRef = useRef<QuestionType>(fieldData.type as QuestionType);
+  const enabledRef = useRef<boolean>(fieldData.required);
 
   const updateField = useCallback(
-    (field: keyof QuestionData, value: any) => {
-      setFormField((prev) =>
-        prev.map((sec) =>
-          sec.section === section.section
-            ? {
-                ...sec,
-                questions: sec.questions.map((q, qIndex) =>
-                  qIndex === index ? { ...q, [field]: value } : q,
-                ),
-              }
-            : sec,
+    (field: keyof FormField, value: any) => {
+      setFormState((prev) => ({
+        ...prev,
+        formFields: prev.formFields.map((fieldItem, fieldIndex) =>
+          fieldIndex === index ? { ...fieldItem, [field]: value } : fieldItem,
         ),
-      );
+      }));
     },
-    [index, section.section, setFormField],
+    [index, setFormState],
   );
 
   const handleInputChange = useCallback(
@@ -100,7 +80,7 @@ export default function Question({
         <BaseInput
           placeholder="질문을 입력해주세요"
           disabled={isClosed}
-          defaultValue={questionData.question}
+          defaultValue={fieldData.question}
           onChange={handleInputChange}
         />
 
@@ -116,11 +96,10 @@ export default function Question({
         <Content
           index={index}
           type={selectedTypeRef.current}
-          isEditing={true}
-          questionData={questionData}
-          setFormField={setFormField}
-          section={section}
+          setFormState={setFormState}
+          section={fieldData.section}
           isClosed={isClosed ?? false}
+          fieldData={fieldData}
         />
       </div>
 
@@ -135,7 +114,7 @@ export default function Question({
           </div>
           <Trash2
             className="cursor-pointer text-sm text-gray-500"
-            onClick={() => deleteQuestion(section.section, index)}
+            onClick={() => deleteQuestion(focusSection, index)}
           />
         </div>
       )}
