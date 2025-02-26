@@ -49,7 +49,7 @@ const LineChart = ({ passedData }: Props) => {
       typeof window !== 'undefined'
         ? JSON.parse(localStorage.getItem('club') ?? '')
         : '';
-    const clubName = club.state?.club.name.toUpperCase() ?? '';
+    const clubName = club.state?.club?.name.toUpperCase() ?? '';
     const parsedApplicantData = [
       MOCK_APPLYCANT[clubName],
       calculateCompared(

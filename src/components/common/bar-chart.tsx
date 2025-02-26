@@ -151,8 +151,17 @@ function BarList({ passedData }: Props) {
       {passedData.map((item, index) => (
         <div
           key={index}
-          className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm  text-[#6B7280] outline-none md:text-base"
-          style={{ borderColor: getBgColorFromCount(passedData)[index] }}
+          className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm  outline-none md:text-base"
+          style={{
+            backgroundColor:
+              getBgColorFromCount(passedData)[index] === '#E5E7EB'
+                ? 'white'
+                : getBgColorFromCount(passedData)[index],
+            color:
+              getBgColorFromCount(passedData)[index] === '#3B82F6'
+                ? 'white'
+                : '#6B7280',
+          }}
         >
           <span className="font-semibold">{item.label}</span>
           <span className="opacity-40">|</span>

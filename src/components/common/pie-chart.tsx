@@ -109,7 +109,7 @@ const PieChart = ({ passedData }: Props) => {
   }, [passedData]);
 
   return (
-    <canvas ref={canvasRef} className="flex h-auto w-full max-w-[400px]" />
+    <canvas ref={canvasRef} className="flex h-auto w-full max-w-[550px]" />
   );
 };
 
