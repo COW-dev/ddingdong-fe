@@ -13,6 +13,12 @@ import File from '@/assets/file.svg';
 import { useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
 import { AnswerItem } from '@/types/apply';
 
+type FileItem = {
+  applicationId: number;
+  name: string;
+  answer: string[];
+};
+
 const componentMap = {
   TEXT: TextList,
   LONG_TEXT: TextList,
@@ -21,7 +27,7 @@ const componentMap = {
 
 type Props = {
   id: number;
-  type: 'TEXT' | 'FILE' | 'LONG_TEXT';
+  type: 'TEXT' | 'LONG_TEXT';
 };
 
 export default function QuestionSingleContent({ type, id }: Props) {
@@ -29,14 +35,37 @@ export default function QuestionSingleContent({ type, id }: Props) {
   const ChartComponent = componentMap[type];
 
   const { data } = useSingleAnswer(id, token);
+  const groupFileItems = (data: AnswerItem[]) => {
+    const grouped = data.reduce<Record<number, FileItem>>(
+      (acc, { applicationId, name, answer }) => {
+        acc[applicationId] = { applicationId, name, answer: [] };
+        acc[applicationId].answer.push(answer);
+        return acc;
+      },
+      {},
+    );
+    return Object.values(grouped);
+  };
+
+  const answers =
+    data?.data.type === 'FILE'
+      ? groupFileItems(data?.data.answers)
+      : data?.data.answers ?? [];
+
+  const isFileItemType = (answer: FileItem | AnswerItem): answer is FileItem =>
+    Array.isArray(answer.answer);
 
   return (
     <div className="flex w-full flex-col gap-4">
-      {data?.data.answers.map((answer, index) => (
+      {answers.map((answer, index) => (
         <TooltipProvider delayDuration={0} key={index}>
           <Tooltip>
             <TooltipTrigger>
-              <ChartComponent answer={answer} />
+              {isFileItemType(answer) ? (
+                <FileList answer={answer} />
+              ) : (
+                <ChartComponent answer={answer} />
+              )}
             </TooltipTrigger>
             <TooltipContent
               side="bottom"
@@ -52,7 +81,8 @@ export default function QuestionSingleContent({ type, id }: Props) {
     </div>
   );
 }
-function FileList({ answer }: { answer: AnswerItem }) {
+
+function FileList({ answer }: { answer: FileItem }) {
   const handleClick = () => {
     const { id } = router.query;
     router.push(`/apply/${id}/${answer.applicationId}`);
