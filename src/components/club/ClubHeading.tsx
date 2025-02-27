@@ -114,7 +114,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
             !isRecruitmentPeriod &&
             `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
           }`}
-          disabled={!formId}
+          disabled={!isRecruitmentPeriod}
         >
           {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
         </button>
