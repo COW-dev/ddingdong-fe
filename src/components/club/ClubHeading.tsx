@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';
@@ -37,6 +38,11 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   const moveToApply: MoveToApply = (id) => {
     router.push(`/apply/${id}`);
   };
+
+  const now = dayjs();
+  const isRecruitmentPeriod =
+    now.isAfter(dayjs(startDate).startOf('day')) &&
+    now.isBefore(dayjs(endDate).endOf('day'));
 
   return (
     <>
@@ -100,23 +106,31 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
         </div>
         <button
-          onClick={() => moveToApply(Number(formId))}
+          onClick={() => {
+            if (!isRecruitmentPeriod) return;
+            moveToApply(Number(formId));
+          }}
           className={`ml-6 hidden rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
-            !formId && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
+            !isRecruitmentPeriod &&
+            `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
           }`}
-          disabled={!formId}
+          disabled={!isRecruitmentPeriod}
         >
-          {formId ? '지원하기' : '모집 마감'}
+          {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
         </button>
       </div>
       <button
-        onClick={() => moveToApply(Number(formId))}
+        onClick={() => {
+          if (!isRecruitmentPeriod) return;
+          moveToApply(Number(formId));
+        }}
         className={`fixed bottom-6 w-[90%] rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 max-md:block lg:hidden  ${
-          !formId && `hidden cursor-not-allowed bg-gray-300 hover:bg-gray-300`
+          !isRecruitmentPeriod &&
+          `hidden cursor-not-allowed bg-gray-300 hover:bg-gray-300`
         }`}
-        disabled={!formId}
+        disabled={!isRecruitmentPeriod}
       >
-        {formId ? '지원하기' : '모집 마감'}
+        {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
       </button>
     </>
   );
