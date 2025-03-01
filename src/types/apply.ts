@@ -1,3 +1,5 @@
+import { QuestionType } from './form';
+
 export type ApplyRate = {
   label: string;
   count: number;
@@ -12,7 +14,7 @@ export type ApplyQuestion = {
   id: number;
   count: number;
   section: string;
-  type: 'RADIO' | 'CHECK_BOX' | 'TEXT' | 'FILE' | 'LONG_TEXT';
+  type: QuestionType;
 };
 
 export type ChartItem = {
@@ -85,7 +87,7 @@ export type ApplicantDetail = Applicant & {
 export type Answer = {
   fieldId: number;
   question: string;
-  type: 'CHECK_BOX' | 'RADIO' | 'TEXT' | 'LONG_TEXT' | 'FILE';
+  type: QuestionType;
   options: string[] | null;
   required: boolean;
   order: number;

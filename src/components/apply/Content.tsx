@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import Image from 'next/image';
+import { QuestionType } from '@/types/form';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
 import CloseIcon from '../../assets/cancel.svg';
@@ -8,7 +9,7 @@ import EmptySquare from '../../assets/empty_square_check.svg';
 
 interface QuestionData {
   question: string;
-  type: 'CHECK_BOX' | 'RADIO' | 'TEXT' | 'LONG_TEXT' | 'FILE';
+  type: QuestionType;
   options: string[];
   required: boolean;
   order: number;
