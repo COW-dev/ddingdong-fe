@@ -13,10 +13,10 @@ export default function Question({ data }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="mb-7 max-h-[50vh] overflow-scroll rounded-md border border-[#E5E7EB] p-2 md:p-[14px]">
+    <div className="mb-7 max-h-[50vh] overflow-scroll rounded-md border border-[#E5E7EB] px-2 md:px-[14px]">
       <Accordion
         onToggle={() => setIsOpen(!isOpen)}
-        className="border-none"
+        className="border-none pt-2 md:pt-[14px]"
         visible={false}
         title={
           <>

@@ -11,28 +11,31 @@ import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import File from '@/assets/file.svg';
 import { useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
-import { AnswerItem } from '@/types/apply';
-
-type FileItem = {
-  applicationId: number;
-  name: string;
-  answer: string[];
-};
+import { AnswerItem, FileItem } from '@/types/apply';
 
 const componentMap = {
   TEXT: TextList,
   LONG_TEXT: TextList,
-  FILE: FileList,
 } as const;
+
+const ChartComponent = ({
+  textType,
+  answer,
+}: {
+  textType: 'TEXT' | 'LONG_TEXT';
+  answer: AnswerItem;
+}) => {
+  const Component = componentMap[textType];
+  return <Component answer={answer} />;
+};
 
 type Props = {
   id: number;
-  type: 'TEXT' | 'LONG_TEXT';
+  type: 'TEXT' | 'LONG_TEXT' | 'FILE';
 };
 
 export default function QuestionSingleContent({ type, id }: Props) {
   const [{ token }] = useCookies();
-  const ChartComponent = componentMap[type];
 
   const { data } = useSingleAnswer(id, token);
   const groupFileItems = (data: AnswerItem[]) => {
@@ -64,7 +67,10 @@ export default function QuestionSingleContent({ type, id }: Props) {
               {isFileItemType(answer) ? (
                 <FileList answer={answer} />
               ) : (
-                <ChartComponent answer={answer} />
+                <ChartComponent
+                  answer={answer}
+                  textType={type as 'TEXT' | 'LONG_TEXT'}
+                />
               )}
             </TooltipTrigger>
             <TooltipContent

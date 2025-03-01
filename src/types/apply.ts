@@ -29,6 +29,12 @@ export type AnswerItem = {
   fileName?: string;
 };
 
+export type FileItem = {
+  applicationId: number;
+  name: string;
+  answer: string[];
+};
+
 export type ApplyStatistics = {
   totalCount: number;
   departmentStatistics: ChartItem[];
