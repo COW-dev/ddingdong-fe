@@ -130,7 +130,7 @@ export function BarGraph({ passedData }: Props) {
             dataset.forEach((value, index) => {
               const meta = chart.getDatasetMeta(0);
               const bar = meta.data[index];
-              ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280'; // 최대값이면 파란색, 아니면 기본 색상
+              ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';
               ctx.font = 'bold 12px Arial';
               ctx.textAlign = 'center';
               ctx.fillText(`${value}%`, bar.x, bar.y - 10);
