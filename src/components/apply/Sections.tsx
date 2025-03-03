@@ -150,7 +150,7 @@ export default function Sections({
 
         <div className="relative flex items-center gap-1 border-b-0 px-2 text-lg font-semibold">
           {formField?.map((section, index) => (
-            <div key={index} className="relative">
+            <div key={index} className="relative whitespace-nowrap">
               <div
                 className={`cursor-pointer rounded-md rounded-b-none border border-b-0 border-gray-200 px-3 py-1 ${
                   focusSection === section.section
