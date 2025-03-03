@@ -26,7 +26,6 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     formId,
   } = info;
 
-  const imageSrc = profileImage?.originUrl ? profileImage?.originUrl : Admin;
   const { data } = useAllClubs();
 
   const router = useRouter();
@@ -49,7 +48,15 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
       <div className="flex flex-col">
         <div className="flex flex-row items-end">
           <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
-            <Image src={imageSrc} width={80} height={80} priority alt="admin" />
+            {
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={profileImage?.originUrl ?? Admin}
+                alt="admin"
+                width={80}
+                height={80}
+              />
+            }
           </div>
           <div className="ml-3">
             <Heading>{name}</Heading>
