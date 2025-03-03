@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import Admin from '@/assets/admin.jpg';
@@ -42,7 +41,6 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   const isRecruitmentPeriod =
     now.isAfter(dayjs(startDate).startOf('day')) &&
     now.isBefore(dayjs(endDate).endOf('day'));
-
   return (
     <>
       <div className="flex flex-col">
@@ -51,7 +49,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
             {
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={profileImage?.originUrl ?? Admin}
+                src={profileImage?.originUrl ?? Admin.src}
                 alt="admin"
                 width={80}
                 height={80}
