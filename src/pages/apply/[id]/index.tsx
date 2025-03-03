@@ -47,14 +47,12 @@ export default function IndexPage() {
     [sectionsData],
   );
 
- useEffect(() => {
+  useEffect(() => {
     if (!isLoading) {
-      if (sections && sections.length > 2) {
       if (sections.length > 2) {
         setStep('SECTION');
       } else {
         setStep('QUESTION');
-        setSelectedRadio('공통');
         setSelectedRadio(sections.length === 2 ? sections[1] : '공통');
       }
     }
