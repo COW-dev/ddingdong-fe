@@ -17,9 +17,9 @@ import emptySquare from '../../assets/empty_square_check.svg';
 import Heading from '../common/Heading';
 
 type ManageFormType = {
-  formData: FormState;
-  id: number;
-  onReset: () => void;
+  formData?: FormState;
+  id?: number;
+  onReset?: () => void;
 };
 
 export default function ManageForm({ formData, id, onReset }: ManageFormType) {
@@ -136,12 +136,12 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           <Heading>지원서 생성</Heading>
         </div>
         <FormEditButtons
-          formData={formData}
+          formData={formData ? formData : undefined}
           mode={mode}
           setMode={setMode}
-          onReset={onReset}
+          onReset={onReset ? onReset : () => undefined}
           formState={formState}
-          id={id}
+          id={id ? id : undefined}
         />
       </div>
 

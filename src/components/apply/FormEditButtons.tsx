@@ -7,12 +7,12 @@ import { FormState } from '@/types/form';
 type ModeType = 'view' | 'edit';
 
 type Props = {
-  formData: FormState;
+  formData: FormState | undefined;
   mode: ModeType;
   onReset: () => void;
   setMode: React.Dispatch<React.SetStateAction<ModeType>>;
   formState: FormState;
-  id: number;
+  id: number | undefined;
 };
 
 export default function FormEditButtons({
@@ -42,6 +42,9 @@ export default function FormEditButtons({
     onReset();
   };
   const handleUpdateForm = () => {
+    if (id === undefined) {
+      return;
+    }
     updateFormMutation.mutate({
       token,
       formId: id,
