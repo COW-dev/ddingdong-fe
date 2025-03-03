@@ -91,3 +91,5 @@ export type FormField = {
   order: number;
   section: string;
 };
+
+export type ModeType = 'view' | 'edit';

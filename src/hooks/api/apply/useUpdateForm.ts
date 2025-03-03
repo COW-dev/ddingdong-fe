@@ -6,7 +6,7 @@ import {
 import { AxiosError } from 'axios';
 import toast from 'react-hot-toast';
 import { updateForm } from '@/apis';
-import { FormData } from '@/types/form';
+import { ModeType, FormData } from '@/types/form';
 
 interface UpdateFormParams {
   token: string;
@@ -15,7 +15,7 @@ interface UpdateFormParams {
 }
 
 export function useUpdateForm(
-  setMode: (value: boolean) => void,
+  setMode: (value: ModeType) => void,
 ): UseMutationResult<unknown, AxiosError, UpdateFormParams> {
   const queryClient = useQueryClient();
 
@@ -32,7 +32,6 @@ export function useUpdateForm(
       onError(error: AxiosError<{ message?: string }>) {
         const errorMessage =
           error.response?.data?.message || '폼 정보 수정에 실패했습니다.';
-
         toast.error(errorMessage);
       },
     },

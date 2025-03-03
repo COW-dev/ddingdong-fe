@@ -4,17 +4,19 @@ import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
 import isBetween from 'dayjs/plugin/isBetween';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import JSConfetti from 'js-confetti';
 import Warning from '@/assets/warning.svg';
 import ApplyForm from '@/components/apply/ApplyForm';
-import Loading from '@/components/loading/Loading';
 import { useAllSections } from '@/hooks/api/apply/useAllSections';
 import { useFormDetail } from '@/hooks/api/apply/useFormDetail';
 import Check from '../../../assets/check.svg';
 import FilledCircle from '../../../assets/check_form.svg';
 import EmptyCircle from '../../../assets/empty-circle-check.svg';
 
+dayjs.extend(relativeTime);
 dayjs.extend(isBetween);
+dayjs.extend(relativeTime);
 
 export default function IndexPage() {
   const router = useRouter();
@@ -27,15 +29,18 @@ export default function IndexPage() {
     'SECTION',
   );
   const today = dayjs();
-  const startDate = dayjs(sectionsData?.data?.startDate);
-  const endDate = dayjs(sectionsData?.data?.endDate);
 
   const isActive =
-    startDate.isValid() &&
-    endDate.isValid() &&
     sectionsData?.data?.startDate &&
     sectionsData?.data?.endDate &&
-    today.isBetween(startDate, endDate.endOf('day'), 'second', '[]');
+    dayjs(sectionsData.data.startDate).isValid() &&
+    dayjs(sectionsData.data.endDate).isValid() &&
+    today.isBetween(
+      dayjs(sectionsData.data.startDate),
+      dayjs(sectionsData.data.endDate).endOf('day'),
+      'second',
+      '[]',
+    );
 
   const sections = useMemo(
     () => sectionsData?.data?.sections || [],
@@ -74,11 +79,6 @@ export default function IndexPage() {
 
   return (
     <div>
-      {isLoading && (
-        <div className="flex h-screen w-full items-center justify-center">
-          <Loading />
-        </div>
-      )}
       {!isLoading ? (
         isActive ? (
           <div>

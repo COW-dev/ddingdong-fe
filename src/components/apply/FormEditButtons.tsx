@@ -31,7 +31,11 @@ export default function FormEditButtons({
     setMode('edit');
   };
   const handleCreateForm = () => {
-    newFormMutation.mutate(formState);
+    newFormMutation.mutate({
+      ...formState,
+      startDate: formState.startDate || '',
+      endDate: formState.endDate || '',
+    });
   };
   const onClickCancelButton = () => {
     setMode('view');
@@ -41,7 +45,11 @@ export default function FormEditButtons({
     updateFormMutation.mutate({
       token,
       formId: id,
-      formData: formState,
+      formData: {
+        ...formState,
+        startDate: formState.startDate || '',
+        endDate: formState.endDate || '',
+      },
     });
   };
 
