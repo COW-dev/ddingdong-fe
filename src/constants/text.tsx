@@ -111,7 +111,7 @@ export const ROLE_TEXT: RoleText = {
       route: '/feed',
     },
     apply: {
-      title: '지원자 관리',
+      title: '지원서 관리',
       subtitle: '지원서 양식을 생성하고, 제출된 지원서를 관리해요.',
       route: '/apply',
     },

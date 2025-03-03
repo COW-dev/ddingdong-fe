@@ -105,11 +105,9 @@ export default function Index({ id, applicantId }: Props) {
         </span>
       </div>
       <ApplicantInfo {...applicantData} />
-      {applicantData?.formFieldAnswers
-        ?.sort((a, b) => a.order - b.order)
-        ?.map((answer) => (
-          <ApplyResult key={answer.fieldId} {...answer} />
-        ))}
+      {applicantData?.formFieldAnswers?.map((answer) => (
+        <ApplyResult key={answer.fieldId} {...answer} />
+      ))}
       <ApplyContentBox>
         <div className="mb-4 text-base font-semibold text-blue-600 md:text-xl md:font-bold">
           메모
