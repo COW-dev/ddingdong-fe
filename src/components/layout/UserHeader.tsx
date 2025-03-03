@@ -147,11 +147,12 @@ export default function UserHeader() {
           ref={dropdownRef}
         >
           <Link href="/">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={'/logo.png'}
               width={1544}
               height={380}
-              priority
+              // priority
               alt="ddingdong"
               className="w-40 md:w-44"
             />
