@@ -176,6 +176,7 @@ export default function Sections({
                     deleteSection(section);
                     setContextMenu({ section: null });
                   }}
+                  disabled={!isClosed}
                 />
               )}
             </div>
@@ -213,24 +214,30 @@ export default function Sections({
 export function ModifyButton({
   onRename,
   onDelete,
+  disabled = false,
 }: {
   onRename: () => void;
   onDelete: () => void;
+  disabled?: boolean;
 }) {
   return (
-    <div className="absolute left-0 top-full z-30 mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
-      <button
-        onClick={onRename}
-        className="whitespace-nowrap rounded-lg px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-      >
-        이름 변경하기
-      </button>
-      <button
-        onClick={onDelete}
-        className="rounded-lg px-4 py-2 text-left text-red-500 hover:bg-gray-100"
-      >
-        삭제하기
-      </button>
-    </div>
+    <>
+      {disabled && (
+        <div className="absolute left-0 top-full z-30 mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
+          <button
+            onClick={onRename}
+            className="whitespace-nowrap rounded-lg px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+          >
+            이름 변경하기
+          </button>
+          <button
+            onClick={onDelete}
+            className="rounded-lg px-4 py-2 text-left text-red-500 hover:bg-gray-100"
+          >
+            삭제하기
+          </button>
+        </div>
+      )}
+    </>
   );
 }
