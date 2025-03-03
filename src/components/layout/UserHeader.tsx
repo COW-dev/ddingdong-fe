@@ -59,11 +59,12 @@ export default function UserHeader() {
     return (
       <div className="flex w-full items-center justify-between px-6">
         <Link href="/" className="inline-block">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={'/logo.png'}
             width={1544}
             height={380}
-            priority
+            // priority
             alt="ddingdong"
             className="w-32"
           />
