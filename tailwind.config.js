@@ -22,9 +22,7 @@ module.exports = {
         112: '28rem',
         128: '32rem',
       },
-      colors: {
-        'new-year': '#126BA4',
-      },
+
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
