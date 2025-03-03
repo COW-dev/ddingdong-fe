@@ -64,7 +64,7 @@ export default function ClubFeedDetail({ feedId }: Props) {
               className="flex items-center text-base font-semibold md:text-2xl"
             >
               <img
-                src={data.data.clubProfile?.profileImageCdnUrl ?? Admin}
+                src={data.data.clubProfile?.profileImageCdnUrl ?? Admin.src}
                 alt={'동아리 대표 이미지'}
                 width={80}
                 height={80}
