@@ -13,7 +13,7 @@ import { STATUS_TYPE } from '@/constants/apply';
 import { useApplicantInfo } from '@/hooks/api/apply/useApplicantInfo';
 import { useUpdateApplicantNote } from '@/hooks/api/apply/useUpdateApplicantNote';
 import { useUpdateApplicantStatus } from '@/hooks/api/apply/useUpdateApplicantStatus';
-import { ApplicantStatus } from '@/types/apply';
+import { Answer, ApplicantStatus } from '@/types/apply';
 import { getNextStatus } from '@/utils/filter';
 
 type Props = {
@@ -26,8 +26,16 @@ export default function Index({ id, applicantId }: Props) {
   const { data: data, isLoading } = useApplicantInfo(id, applicantId, token);
   const [note, setNote] = useState<string>(data?.data.note || '');
   const applicantData = data?.data;
+
   const statusMutation = useUpdateApplicantStatus();
   const noteMutation = useUpdateApplicantNote(applicantId);
+
+  const sortFormResponses = (answer: Answer[]) =>
+    answer.sort((a, b) => {
+      if (a.section < b.section) return -1;
+      if (a.section > b.section) return 1;
+      return a.order - b.order;
+    });
 
   const handleNoteChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setNote(e.target.value);
@@ -105,7 +113,7 @@ export default function Index({ id, applicantId }: Props) {
         </span>
       </div>
       <ApplicantInfo {...applicantData} />
-      {applicantData?.formFieldAnswers?.map((answer) => (
+      {sortFormResponses(applicantData.formFieldAnswers).map((answer) => (
         <ApplyResult key={answer.fieldId} {...answer} />
       ))}
       <ApplyContentBox>
