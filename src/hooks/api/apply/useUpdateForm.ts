@@ -16,6 +16,7 @@ interface UpdateFormParams {
 
 export function useUpdateForm(
   setMode: (value: ModeType) => void,
+  onReset?: () => void,
 ): UseMutationResult<unknown, AxiosError, UpdateFormParams> {
   const queryClient = useQueryClient();
 
