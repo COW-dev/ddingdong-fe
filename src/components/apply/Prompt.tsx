@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 import Modal from '@/components/common/Modal';
 import BaseInput from './BaseInput';
@@ -14,6 +14,7 @@ type PromptProps = {
   cancelText?: string;
   closeButton?: boolean;
   onConfirm: (value: string) => void;
+  modalRef?: React.RefObject<HTMLDivElement> | undefined;
 };
 
 export default function Prompt({
@@ -26,9 +27,9 @@ export default function Prompt({
   confirmText = '확인',
   cancelText = '취소',
   closeButton = true,
+  modalRef = undefined,
   onConfirm,
 }: PromptProps) {
-  const modalRef = useRef<HTMLDivElement>(null);
   const [inputValue, setInputValue] = useState('');
 
   const handleChange = (
@@ -40,18 +41,19 @@ export default function Prompt({
   };
 
   const handleSubmit = () => {
-    if (!inputValue.trim()) {
+    const trimmedValue = inputValue.trim();
+    if (!trimmedValue) {
       toast.error('값을 입력해주세요.');
       return;
     }
 
-    onConfirm(inputValue.trim());
+    onConfirm(trimmedValue);
     setInputValue('');
     closeModal();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && inputValue.trim()) {
       e.preventDefault();
       handleSubmit();
     }
@@ -61,7 +63,7 @@ export default function Prompt({
     <Modal
       visible={visible}
       closeModal={closeModal}
-      modalRef={modalRef}
+      modalRef={modalRef ?? { current: null }}
       closeButton={closeButton}
     >
       <div className="flex flex-col gap-4 px-4 py-1">

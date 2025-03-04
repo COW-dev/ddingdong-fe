@@ -7,6 +7,7 @@ import {
   TooltipContent,
   TooltipProvider,
 } from '@/components/ui/tooltip';
+import useModal from '@/hooks/common/useModal';
 import { FormState, QuestionField } from '@/types/form';
 import Prompt from './Prompt';
 
@@ -33,9 +34,9 @@ export default function Sections({
     section: null,
   });
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<'rename' | 'add' | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const { openModal, visible, closeModal, modalRef } = useModal();
 
   const handleContextMenu = (e: React.MouseEvent, sectionName: string) => {
     e.preventDefault();
@@ -74,10 +75,6 @@ export default function Sections({
     setFocusSection(trimmedName);
   };
 
-  const handleClickOutside = () => {
-    setContextMenu({ section: null });
-  };
-
   const renameSection = (newName: string) => {
     if (!selectedSection) return;
 
@@ -105,7 +102,7 @@ export default function Sections({
 
     toast.success('섹션 이름이 변경되었습니다.');
     setFocusSection(trimmedName);
-    setModalVisible(false);
+    closeModal();
   };
 
   const deleteSection = (sectionName: string) => {
@@ -129,13 +126,10 @@ export default function Sections({
 
   return (
     <TooltipProvider>
-      <div
-        onClick={handleClickOutside}
-        className="relative flex items-center overflow-x-scroll sm:overflow-visible"
-      >
+      <div className="relative flex items-center overflow-x-scroll sm:overflow-visible">
         <Prompt
-          visible={modalVisible}
-          closeModal={() => setModalVisible(false)}
+          visible={visible}
+          closeModal={closeModal}
           title={
             modalMode === 'rename'
               ? '변경할 이름을 입력해주세요.'
@@ -147,6 +141,7 @@ export default function Sections({
           cancelText="취소"
           closeButton={false}
           onConfirm={modalMode === 'rename' ? renameSection : addNewSection}
+          modalRef={modalRef as React.RefObject<HTMLDivElement>}
         />
 
         <div className="relative flex items-center gap-1 border-b-0 px-2 text-lg font-semibold">
@@ -169,7 +164,7 @@ export default function Sections({
                   onRename={() => {
                     setSelectedSection(section);
                     setModalMode('rename');
-                    setModalVisible(true);
+                    openModal();
                     setContextMenu({ section: null });
                   }}
                   onDelete={() => {
@@ -186,7 +181,7 @@ export default function Sections({
             <div
               onClick={() => {
                 setModalMode('add');
-                setModalVisible(true);
+                openModal();
               }}
               className="cursor-pointer whitespace-nowrap rounded-md rounded-b-none border border-b-0 border-gray-200 bg-white px-3 py-1 font-semibold text-gray-600 hover:bg-gray-50"
             >
