@@ -76,8 +76,8 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
   const handleDateChange = (date: any) => {
     setFormState((prevState) => ({
       ...prevState,
-      startDate: date.startDate,
       endDate: date.endDate,
+      ...(isDisabled ? {} : { startDate: date.startDate }),
     }));
   };
 
@@ -114,8 +114,6 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
       ),
     }));
   };
-
-  console.log(formState, 'formState^^');
 
   return (
     <div>
@@ -189,7 +187,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
                 startDate: formState.startDate,
                 endDate: formState.endDate,
               }}
-              useRange={false}
+              useRange={true}
               minDate={new Date(new Date().getFullYear(), 0, 1)}
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
               onChange={handleDateChange}
