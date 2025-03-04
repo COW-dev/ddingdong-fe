@@ -33,6 +33,8 @@ export function useUpdateForm(
         const errorMessage =
           error.response?.data?.message || '폼 정보 수정에 실패했습니다.';
         toast.error(errorMessage);
+
+        onReset?.();
       },
     },
   );

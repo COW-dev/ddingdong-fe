@@ -49,7 +49,7 @@ export default function FileUpload({
     <div className="flex flex-col gap-3 rounded-lg border">
       <label className="relative flex w-full cursor-pointer items-center gap-2 rounded-lg border border-gray-50 bg-gray-50 px-4 py-3 text-start text-sm font-semibold text-gray-400 shadow-sm">
         <Image src={File} alt="file_icon" width={17} />
-        파일을 선택해주세요
+        파일을 선택해 주세요.
         <input
           type="file"
           multiple

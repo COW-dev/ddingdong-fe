@@ -114,7 +114,6 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
       ),
     }));
   };
-
   return (
     <div>
       <Head>
@@ -203,7 +202,6 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           disabled={isDisabled}
         />
       </div>
-
       <div className="mt-6">
         <Sections
           setFormState={setFormState}

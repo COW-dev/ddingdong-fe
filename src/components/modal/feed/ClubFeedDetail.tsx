@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,9 +24,9 @@ export default function ClubFeedDetail({ feedId }: Props) {
   if (isSuccess) {
     const feed = data.data;
 
-    const imageSrc = feed?.clubProfile.profileImageCdnUrl
-      ? feed.clubProfile?.profileImageCdnUrl
-      : Admin;
+    // const imageSrc = feed?.clubProfile.profileImageCdnUrl
+    //   ? feed.clubProfile?.profileImageCdnUrl
+    //   : Admin;
 
     const renderSkeleton = () => (
       <div className="absolute inset-0">
@@ -45,7 +46,7 @@ export default function ClubFeedDetail({ feedId }: Props) {
           ) : (
             <>
               {!loadedImages && renderSkeleton()}
-              <Image
+              <img
                 src={feed?.fileUrls.cdnUrl}
                 alt={'동아리 피드'}
                 height={450}
@@ -62,12 +63,12 @@ export default function ClubFeedDetail({ feedId }: Props) {
               href={location ? `/club/${feed?.clubProfile.id}` : '#'}
               className="flex items-center text-base font-semibold md:text-2xl"
             >
-              <Image
-                src={imageSrc}
+              <img
+                src={data.data.clubProfile?.profileImageCdnUrl ?? Admin.src}
                 alt={'동아리 대표 이미지'}
                 width={80}
                 height={80}
-                priority
+                // priority
                 className="m-auto mr-3 h-12 w-12 rounded-full border-[1.5px] object-cover md:h-14 md:w-14"
               />
               {feed?.clubProfile.name}

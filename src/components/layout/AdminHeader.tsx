@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
 import { useClubStore } from '@/store/club';
-import NewYear from '../common/NewYear';
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -23,12 +22,9 @@ export default function AdminHeader() {
   return (
     <header className="fixed z-40 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
       <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
-        <Link
-          href={isLoginPage ? '/login' : '/'}
-          className="-ml-3 inline-block pb-2"
-        >
+        <Link href={isLoginPage ? '/login' : '/'} className="-ml-3">
           <Image
-            src={'/new-year-logo.png'}
+            src={'/logo.png'}
             width={1544}
             height={380}
             priority
@@ -41,7 +37,6 @@ export default function AdminHeader() {
             <ul className="flex">
               <li>
                 <div className="flex w-full items-end">
-                  <NewYear />
                   <button
                     className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
                     onClick={handleLogout}

@@ -50,7 +50,7 @@ export default function Index() {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
           <span className="md:mr-1.5">안녕하세요, </span>
-          <span className="text-new-year">U:th</span>
+          <span className="text-blue-500">U:th</span>
           <span className="ml-1 md:ml-1.5">님</span>
         </div>,
       );

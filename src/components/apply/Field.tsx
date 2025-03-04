@@ -78,7 +78,7 @@ export default function Field({
     <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-8 px-6">
       <div className="flex w-full flex-row flex-wrap gap-3 md:flex-nowrap">
         <BaseInput
-          placeholder="질문을 입력해주세요"
+          placeholder="질문을 입력해 주세요."
           disabled={isClosed}
           defaultValue={fieldData.question}
           onChange={handleInputChange}

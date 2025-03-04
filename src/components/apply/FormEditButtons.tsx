@@ -72,6 +72,9 @@ export default function FormEditButtons({
               onClick={onClickEditButton}
               className={
                 'cursor-pointer rounded-xl bg-blue-100 px-4 py-2 font-semibold text-blue-500 hover:bg-blue-200'
+              onClick={onClickEditButton}
+              className={
+                'cursor-pointer rounded-xl bg-blue-100 px-4 py-2 font-semibold text-blue-500 hover:bg-blue-200'
               }
             >
               수정하기
