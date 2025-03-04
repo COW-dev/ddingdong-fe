@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+import TextareaAutosize from 'react-textarea-autosize';
 import DownLoad from '@/assets/download.svg';
 import { Answer } from '@/types/apply';
 import { downloadBlob } from '@/utils/file';
 import ApplyContentBox from './ApplyContentBox';
 import CheckBox from '../common/CheckBox';
 import Radio from '../common/Radio';
-
 export default function ApplyResult({ ...answers }: Answer) {
   const { question, type, order, options, required, section, value, files } =
     answers;
@@ -52,9 +52,12 @@ export default function ApplyResult({ ...answers }: Answer) {
     }
     if (type === 'TEXT' || type === 'LONG_TEXT') {
       return (
-        <div className="text-base font-semibold text-gray-700 md:text-lg">
+        <TextareaAutosize
+          disabled
+          className="w-full bg-inherit text-base font-semibold text-gray-700 md:text-lg"
+        >
           {value}
-        </div>
+        </TextareaAutosize>
       );
     }
 
