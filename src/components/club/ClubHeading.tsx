@@ -1,10 +1,10 @@
-import Image from 'next/image';
+import { useRouter } from 'next/router';
+import dayjs from 'dayjs';
 import Admin from '@/assets/admin.jpg';
 import Heading from '@/components/common/Heading';
 import { deptCaptionColor } from '@/constants/color';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import { ClubDetail } from '@/types/club';
-import { parseDate } from '@/utils/parse';
 
 type ClubHeadingProps = {
   info: ClubDetail;
@@ -20,22 +20,42 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     location,
     regularMeeting,
     profileImage,
-    startRecruitPeriod,
-    endRecruitPeriod,
-    formUrl,
+    startDate,
+    endDate,
+    formId,
   } = info;
 
-  const imageSrc = profileImage?.originUrl ? profileImage?.originUrl : Admin;
   const { data } = useAllClubs();
-  const isRecruit =
-    data?.data.find((club) => club.name === name)?.recruitStatus ===
-      '모집 중' && formUrl;
+
+  const router = useRouter();
+  const { recruitStatus } = router.query;
+
+  interface MoveToApply {
+    (id: number): void;
+  }
+
+  const moveToApply: MoveToApply = (id) => {
+    router.push(`/apply/${id}`);
+  };
+
+  const now = dayjs();
+  const isRecruitmentPeriod =
+    now.isAfter(dayjs(startDate).startOf('day')) &&
+    now.isBefore(dayjs(endDate).endOf('day'));
   return (
     <>
       <div className="flex flex-col">
         <div className="flex flex-row items-end">
           <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
-            <Image src={imageSrc} width={80} height={80} priority alt="admin" />
+            {
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={profileImage?.originUrl ?? Admin.src}
+                alt="admin"
+                width={80}
+                height={80}
+              />
+            }
           </div>
           <div className="ml-3">
             <Heading>{name}</Heading>
@@ -72,11 +92,18 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
               <span className="inline-block w-20 text-gray-500">동아리방</span>
               <span>{location}</span>
             </div>
-            <div className="mb-1.5">
+            <div className="mb-1.5 flex md:flex-row">
               <span className="inline-block w-20 text-gray-500">모집기간</span>
-              {parseDate(startRecruitPeriod?.split(' ')[0])}
-              <span className="mx-1">~</span>
-              {parseDate(endRecruitPeriod?.split(' ')[0])}
+              {startDate && endDate && (
+                <>
+                  {startDate.replace(/-/g, '.')}
+                  <span className="mx-1">~</span>
+                  {endDate.replace(/-/g, '.')}
+                </>
+              )}
+              {!startDate && !endDate && (
+                <p className="text-gray-500">모집예정</p>
+              )}
             </div>
           </div>
           <div className="w-full">
@@ -85,20 +112,40 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           </div>
         </div>
         <button
-          className={`ml-6 hidden rounded-xl bg-blue-500 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
-            !isRecruit && `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
+          onClick={() => {
+            if (!isRecruitmentPeriod) return;
+            moveToApply(Number(formId));
+          }}
+          className={`ml-6 hidden rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 lg:block lg:w-[25%] ${
+            !isRecruitmentPeriod &&
+            `cursor-not-allowed bg-gray-300 hover:bg-gray-300 `
           }`}
-          disabled={!isRecruit}
+          disabled={!isRecruitmentPeriod}
         >
-          <a
-            href={isRecruit ? formUrl : void 0}
-            target="_blank"
-            className="inline-block w-full py-3.5"
-          >
-            {isRecruit ? '지원하기' : '모집 마감'}
-          </a>
+          {isRecruitmentPeriod
+            ? '지원하기'
+            : recruitStatus
+            ? recruitStatus
+            : '모집 마감'}
         </button>
       </div>
+      <button
+        onClick={() => {
+          if (!isRecruitmentPeriod) return;
+          moveToApply(Number(formId));
+        }}
+        className={`fixed bottom-6 w-[90%] rounded-xl bg-blue-500 py-3 text-lg font-bold text-white transition-colors hover:bg-blue-600 max-md:block lg:hidden  ${
+          !isRecruitmentPeriod &&
+          `hidden cursor-not-allowed bg-gray-300 hover:bg-gray-300`
+        }`}
+        disabled={!isRecruitmentPeriod}
+      >
+        {isRecruitmentPeriod
+          ? '지원하기'
+          : recruitStatus
+          ? recruitStatus
+          : '모집 마감'}
+      </button>
     </>
   );
 }

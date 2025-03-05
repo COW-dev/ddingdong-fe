@@ -50,7 +50,7 @@ export default function Index() {
       setInfoElement(
         <div className="mt-7 text-2xl font-bold leading-tight md:mt-10 md:flex md:text-3xl">
           <span className="md:mr-1.5">안녕하세요, </span>
-          <span className="text-new-year">U:th</span>
+          <span className="text-blue-500">U:th</span>
           <span className="ml-1 md:ml-1.5">님</span>
         </div>,
       );
@@ -143,9 +143,22 @@ export default function Index() {
             <p>{ROLE_TEXT[role].fix.subtitle}</p>
           </div>
         </Link>
+        {role === ROLE_TYPE.ROLE_CLUB && ROLE_TEXT[role].member && (
+          <Link
+            href={ROLE_TEXT[role]?.apply?.route ?? ' '}
+            className="inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
+          >
+            <h2 className="text-xl font-bold md:text-2xl">
+              {ROLE_TEXT[role]?.apply?.title}
+            </h2>
+            <div className="mt-2 text-sm font-semibold leading-tight text-gray-400 md:mt-3 md:text-base md:leading-tight">
+              <p>{ROLE_TEXT[role]?.apply?.subtitle}</p>
+            </div>
+          </Link>
+        )}
         {role === ROLE_TYPE.ROLE_ADMIN && (
           <Link
-            href={ROLE_TEXT[role].documents.route}
+            href={ROLE_TEXT[role].documents.route ?? ''}
             className=" inline-block min-h-[7rem] w-full rounded-xl border-[1.5px] px-6 py-5 transition-colors hover:border-gray-300 hover:bg-gray-50 md:min-h-[8.5rem] md:px-8 md:py-7"
           >
             <h2 className="text-xl font-bold md:text-2xl">
