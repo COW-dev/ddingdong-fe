@@ -63,6 +63,7 @@ import {
   DeleteReport,
   ActivityReportTerm,
   SubmitReport,
+  TermReport,
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -459,19 +460,27 @@ export async function createReport(
   );
 }
 
-export async function getReportInfo(
+export async function getMyReportInfo(
   term: number,
-  name: string,
   token: string,
 ): Promise<AxiosResponse<ReportResponse[], unknown>> {
-  return await api.get(
-    `/central/activity-reports?term=${term}&club_name=${name}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+  return await api.get(`/central/activity-reports?term=${term}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
-  );
+  });
+}
+
+export async function getReportInfo(
+  term: number,
+  clubId: number,
+  token: string,
+): Promise<AxiosResponse<ReportResponse[], unknown>> {
+  return await api.get(`/admin/activity-reports/clubs/${clubId}?term=${term}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
 }
 
 export async function getMyReportLists(
@@ -520,10 +529,11 @@ export async function updateReports(
   );
 }
 
-export async function getAdminAllReports(
+export async function getTermReports(
+  term: number,
   token: string,
-): Promise<AxiosResponse<any[], unknown>> {
-  return await api.get('/admin/activity-reports', {
+): Promise<AxiosResponse<TermReport[], unknown>> {
+  return await api.get(`/admin/activity-reports?term=${term}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

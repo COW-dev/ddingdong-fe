@@ -8,8 +8,8 @@ import { useCookies } from 'react-cookie';
 import ArrowImage from '@/assets/leftArrow.svg';
 import FilterOption from '@/components/report/FilterOption';
 import { deptCaptionColor } from '@/constants/color';
-import { useAdminAllReports } from '@/hooks/api/club/useAdminAllReports';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
+import { useTermReports } from '@/hooks/api/club/useTermReports';
 import { Club } from '@/types';
 
 type ReportPageProps = {
@@ -20,15 +20,13 @@ function Index({ term }: ReportPageProps) {
   const router = useRouter();
   const [{ token }] = useCookies(['token']);
   const { data: allClub } = useAllClubs();
-  const { data: allReports } = useAdminAllReports(token);
+  const { data: termReports } = useTermReports(term, token);
 
   const [filteredClub, setFilteredClub] = useState<Club[] | undefined>(
     allClub?.data,
   );
 
-  const submitClubNames = allReports?.data
-    .filter((item) => item.term === String(term))
-    .map((item) => item.name);
+  const submitClubNames = termReports?.data.map(({ club }) => club.name);
   const submitClubs = allClub?.data?.filter((club) =>
     submitClubNames?.includes(club.name),
   );

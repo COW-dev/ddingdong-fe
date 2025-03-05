@@ -4,13 +4,13 @@ import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import ReportEdit from '@/components/report/ReportEdit';
-import { useReportInfo } from '@/hooks/api/club/useReportInfo';
+import { useMyReportInfo } from '@/hooks/api/club/useMyReportInfo';
 import { ReportKey } from '@/types/report';
 import { parseReportResponseToEditReport } from '@/utils/parse';
 
-export default function Index({ term, name }: ReportKey) {
+export default function Index({ term }: ReportKey) {
   const [{ token }] = useCookies(['token']);
-  const reportDataList = useReportInfo({ term, name, token }).data?.data ?? [];
+  const reportDataList = useMyReportInfo({ term, token }).data?.data ?? [];
   if (reportDataList?.length === 0) return <></>;
   const reportOne = parseReportResponseToEditReport(reportDataList[0], term);
   const reportTwo = parseReportResponseToEditReport(reportDataList[1], term);
