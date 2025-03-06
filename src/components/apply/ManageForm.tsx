@@ -40,7 +40,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
   const [isEditing, setIsEditing] = useState(false);
-  const updateFormMutation = useUpdateForm(setIsEditing, onReset);
+  const updateFormMutation = useUpdateForm(setIsEditing);
 
   const [title, setTitle] = useState(formData?.title ? formData.title : '');
   const [description, setDescription] = useState(
@@ -102,7 +102,6 @@ export default function ManageForm({ formData, id, onReset }: Props) {
       formId: id,
       formData: formattedPostData,
     });
-
     setIsEditing(false);
     setIsClosed(true);
   };
@@ -137,8 +136,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
   };
 
   const isPastStartDate = formData?.startDate
-    ? new Date(formData.startDate).setHours(0, 0, 0, 0) <=
-      new Date().setHours(0, 0, 0, 0)
+    ? new Date(formData.startDate) < new Date()
     : false;
 
   const [isClosed, setIsClosed] = useState(formData ? true : false);
@@ -265,12 +263,6 @@ export default function ManageForm({ formData, id, onReset }: Props) {
     onReset?.();
   };
 
-  const handleCheckBoxClick = () => {
-    if (!isClosed && !isPastStartDate) {
-      setIsChecked(!isChecked);
-    }
-  };
-
   const addQuestion = () => {
     setFormField((prev) =>
       prev.map((section) =>
@@ -293,6 +285,7 @@ export default function ManageForm({ formData, id, onReset }: Props) {
       ),
     );
   };
+
   return (
     <div>
       <Head>
@@ -322,37 +315,40 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           handleUpdateForm={handleUpdateForm}
         />
       </div>
+
       <div className="flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold text-gray-500">
         <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
           <Image
-            onClick={handleCheckBoxClick}
+            onClick={() => {
+              if (!isClosed) {
+                setIsChecked(!isChecked);
+              }
+            }}
             src={isChecked ? square : emptySquare}
             width={isChecked ? 18 : 22}
             height={isChecked ? 18 : 22}
             className={`object-contain ${
-              isClosed || isPastStartDate
-                ? 'cursor-not-allowed opacity-50'
-                : 'cursor-pointer'
+              isClosed ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
             }`}
             alt="checkBox"
           />
         </div>
-        우리 동아리는 면접을 봐요!
+        우리동아리는 면접을 보지 않아요!
       </div>
 
       <div className="flex flex-col gap-4">
         <div className="mt-4 flex flex-row flex-wrap gap-3 md:flex-nowrap">
           <BaseInput
             type="text"
-            placeholder={'지원서 제목을 입력해 주세요.'}
+            placeholder={'지원서 제목을 입력해주세요'}
             value={title}
             onChange={(
               e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
             ) => setTitle(e.target.value)}
-            disabled={isClosed || isPastStartDate}
+            disabled={isClosed}
           />
 
-          <div className="h-fit w-full rounded-lg border py-0.5">
+          <div className="w-full rounded-lg border pt-1">
             <Datepicker
               value={recruitPeriod}
               useRange={false}
@@ -365,27 +361,29 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           </div>
         </div>
         <TextArea
-          placeholder="지원서 설명을 입력해 주세요. (최대 255자 이내)"
+          placeholder="지원서 설명을 입력해 주세요 (최대 255자 이내)"
           value={description}
           onChange={(
             e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
           ) => setDescription(e.target.value)}
-          disabled={isClosed || isPastStartDate}
+          disabled={isClosed}
         />
       </div>
+
       <div className="mt-6">
         <Sections
           addSection={handleOpenModal}
           focusSection={focusSection}
           sections={sections}
           setFocusSection={setFocusSection}
-          isClosed={isClosed || isPastStartDate}
+          isClosed={isClosed}
           formField={formField}
           setFormField={setFormField}
           setSections={setSections}
           baseQuestion={baseQuestion}
         />
         {focusSection == '공통' && <CommonQuestion disabled={true} />}
+
         {formField
           .filter((item) => item.section === focusSection)
           .map((section) => (
@@ -398,13 +396,13 @@ export default function ManageForm({ formData, id, onReset }: Props) {
                   deleteQuestion={() => deleteQuestion(section.section, qIndex)}
                   setFormField={setFormField}
                   section={section}
-                  isClosed={isClosed || isPastStartDate}
+                  isClosed={isClosed}
                 />
               ))}
             </div>
           ))}
       </div>
-      {!isClosed && !isPastStartDate && (
+      {!isClosed && (
         <button
           onClick={addQuestion}
           className="fixed bottom-24 right-[calc(10vw)] flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-[calc(5vw)] lg:right-[calc(2vw)]"
