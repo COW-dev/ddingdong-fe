@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
-import { toast } from 'react-hot-toast';
 import Heading from '@/components/common/Heading';
 import FAQList from '@/components/faq/FAQList';
 import { useAllFaq } from '@/hooks/api/faq/useAllFaq';
@@ -17,7 +16,9 @@ export default function Index() {
   const [newFAQs, setNewFAQs] = useState<{ question: string; reply: string }[]>(
     [],
   );
-
+  //취소시 refetch
+  //저장하기시 createFaq 호출
+  //수정하기 삭제 다시 구현
   const addFAQ = () => {
     setNewFAQs([
       ...newFAQs,
@@ -25,27 +26,12 @@ export default function Index() {
     ]);
   };
 
-  const saveFAQ = async () => {
-    if (newFAQs.length === 0) return;
-
-    try {
-      await Promise.all(
-        newFAQs.map((faq) =>
-          createFaq(
-            { token, ...faq },
-            {
-              onSuccess: () => {
-                refetch();
-                setNewFAQs([]);
-                toast.success('FAQ가 성공적으로 저장되었습니다');
-              },
-            },
-          ),
-        ),
-      );
-    } catch (error) {
-      toast.error('FAQ 저장에 실패하였습니다');
-    }
+  const saveFAQ = () => {
+    newFAQs.forEach((faq) => {
+      createFaq({ ...faq, token });
+    });
+    setNewFAQs([]);
+    setIsEditing(false);
   };
 
   return (

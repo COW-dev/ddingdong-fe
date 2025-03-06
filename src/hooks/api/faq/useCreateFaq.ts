@@ -1,13 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 import { createFaq } from '@/apis/index';
 
 export const useCreateFaq = () => {
   return useMutation(createFaq, {
     onSuccess: () => {
-      console.log('FAQ 생성성공');
+      toast.success('FAQ 생성성공');
     },
     onError: (error) => {
-      console.error('FAQ 생성실패', error);
+      toast.error('FAQ 생성실패');
     },
   });
 };
