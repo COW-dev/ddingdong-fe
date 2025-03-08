@@ -46,7 +46,7 @@ export default function ClubFeedDetail({ feedId }: Props) {
           ) : (
             <>
               {!loadedImages && renderSkeleton()}
-              <img
+              <Image
                 src={feed?.fileUrls.cdnUrl}
                 alt={'동아리 피드'}
                 height={450}
@@ -63,12 +63,12 @@ export default function ClubFeedDetail({ feedId }: Props) {
               href={location ? `/club/${feed?.clubProfile.id}` : '#'}
               className="flex items-center text-base font-semibold md:text-2xl"
             >
-              <img
+              <Image
                 src={data.data.clubProfile?.profileImageCdnUrl ?? Admin.src}
                 alt={'동아리 대표 이미지'}
                 width={80}
                 height={80}
-                // priority
+                priority
                 className="m-auto mr-3 h-12 w-12 rounded-full border-[1.5px] object-cover md:h-14 md:w-14"
               />
               {feed?.clubProfile.name}
