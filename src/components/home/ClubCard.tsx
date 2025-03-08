@@ -22,7 +22,10 @@ export default function ClubCard({
       className="rounded-xl border-[1.5px] border-gray-100 bg-white transition-colors hover:border-gray-200 hover:bg-gray-50"
     >
       <Link
-        href={`/club/${id}`}
+        href={{
+          pathname: `/club/${id}`,
+          query: { recruitStatus },
+        }}
         className="flex h-full w-full justify-between p-5 md:p-6"
       >
         <div>
