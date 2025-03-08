@@ -13,7 +13,6 @@ type Props = {
   fieldData: FormField;
   setFormState: React.Dispatch<React.SetStateAction<FormState>>;
   isClosed: boolean;
-  section: any;
 };
 
 export default function Content({

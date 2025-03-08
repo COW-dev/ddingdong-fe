@@ -93,3 +93,9 @@ export type FormField = {
 };
 
 export type ModeType = 'view' | 'edit';
+
+export type UpdateFormDeadlineParams = {
+  token: string;
+  formId: number;
+  endDate: string;
+};

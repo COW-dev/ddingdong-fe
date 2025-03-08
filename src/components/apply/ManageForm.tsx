@@ -27,7 +27,6 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
 
   const isPastStartDate = formData?.startDate
     ? new Date(formData.startDate) < new Date()
-    ? new Date(formData.startDate) < new Date()
     : false;
 
   const [mode, setMode] = useState<'view' | 'edit'>(
@@ -75,9 +74,11 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
   };
 
   const handleDateChange = (date: any) => {
+    const formattedEndDate = new Date(date.endDate).toISOString().split('T')[0];
+
     setFormState((prevState) => ({
       ...prevState,
-      endDate: date.endDate,
+      endDate: formattedEndDate,
       ...(isDisabled ? {} : { startDate: date.startDate }),
     }));
   };
@@ -141,6 +142,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           onReset={onReset ? onReset : () => undefined}
           formState={formState}
           id={id ? id : undefined}
+          isPastStartDate={isPastStartDate}
         />
       </div>
 
@@ -185,8 +187,10 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           <div className="w-full rounded-lg border pt-1">
             <Datepicker
               value={{
-                startDate: formState.startDate,
-                endDate: formState.endDate,
+                startDate: formState.startDate
+                  ? new Date(formState.startDate)
+                  : null,
+                endDate: formState.endDate ? new Date(formState.endDate) : null,
               }}
               useRange={true}
               minDate={new Date(new Date().getFullYear(), 0, 1)}

@@ -23,7 +23,6 @@ export default function Field({
   deleteQuestion,
   fieldData,
 }: Props) {
-  console.log(fieldData, 'formState.formFields');
   const types: QuestionType[] = [
     'CHECK_BOX',
     'RADIO',
@@ -97,7 +96,6 @@ export default function Field({
           index={index}
           type={selectedTypeRef.current}
           setFormState={setFormState}
-          section={fieldData.section}
           isClosed={isClosed ?? false}
           fieldData={fieldData}
         />

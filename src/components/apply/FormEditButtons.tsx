@@ -2,6 +2,7 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
+import { useUpdateFormDeadline } from '@/hooks/api/apply/useUpdateFormDeadline';
 import { FormState } from '@/types/form';
 
 type ModeType = 'view' | 'edit';
@@ -13,9 +14,11 @@ type Props = {
   setMode: React.Dispatch<React.SetStateAction<ModeType>>;
   formState: FormState;
   id: number | undefined;
+  isPastStartDate: boolean;
 };
 
 export default function FormEditButtons({
+  isPastStartDate,
   formData,
   mode,
   onReset,
@@ -26,6 +29,7 @@ export default function FormEditButtons({
   const [{ token }] = useCookies(['token']);
   const newFormMutation = useNewForm(token);
   const updateFormMutation = useUpdateForm(setMode);
+  const updateFormDeadlineMutation = useUpdateFormDeadline();
 
   const onClickEditButton = () => {
     setMode('edit');
@@ -45,15 +49,23 @@ export default function FormEditButtons({
     if (id === undefined) {
       return;
     }
-    updateFormMutation.mutate({
-      token,
-      formId: id,
-      formData: {
-        ...formState,
-        startDate: formState.startDate || '',
+    if (isPastStartDate) {
+      updateFormDeadlineMutation.mutate({
+        token,
+        formId: id,
         endDate: formState.endDate || '',
-      },
-    });
+      });
+    } else {
+      updateFormMutation.mutate({
+        token,
+        formId: id,
+        formData: {
+          ...formState,
+          startDate: formState.startDate || '',
+          endDate: formState.endDate || '',
+        },
+      });
+    }
   };
 
   return (
