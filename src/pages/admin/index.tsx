@@ -203,7 +203,6 @@ export default function Index() {
           </h2>
           <Link
             href={ROLE_TEXT[role].notice.route}
-            // eslint-disable-next-line prettier/prettier
             className="-mr-1 inline-block p-1 text-sm font-semibold text-gray-400 transition-colors hover:text-blue-500 md:text-base"
           >
             더 보기
@@ -243,7 +242,6 @@ export default function Index() {
             </h2>
             <Link
               href={ROLE_TEXT[role].documents.route}
-              // eslint-disable-next-line prettier/prettier
               className="-mr-1 inline-block p-1 text-sm font-semibold text-gray-400 transition-colors hover:text-blue-500 md:text-base"
             >
               더 보기

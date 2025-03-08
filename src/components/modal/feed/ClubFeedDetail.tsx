@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,10 +22,6 @@ export default function ClubFeedDetail({ feedId }: Props) {
 
   if (isSuccess) {
     const feed = data.data;
-
-    // const imageSrc = feed?.clubProfile.profileImageCdnUrl
-    //   ? feed.clubProfile?.profileImageCdnUrl
-    //   : Admin;
 
     const renderSkeleton = () => (
       <div className="absolute inset-0">
