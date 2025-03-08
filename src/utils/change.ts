@@ -14,7 +14,7 @@ export function sortFixZone(posts: Fix[]): Fix[] {
 }
 
 export function adjustTextareaHeight(
-  textareaRef: RefObject<HTMLTextAreaElement | null>,
+  textareaRef: RefObject<HTMLTextAreaElement>,
 ) {
   if (textareaRef.current) {
     textareaRef.current.style.height = 'auto';

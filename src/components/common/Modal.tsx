@@ -5,7 +5,7 @@ import ModalPortal from './ModalPortal';
 type ModalProps = {
   visible: boolean;
   children: React.ReactNode;
-  modalRef: React.RefObject<HTMLDivElement | null>;
+  modalRef: React.RefObject<HTMLDivElement>;
   closeModal: () => void;
   title?: React.ReactNode;
   closeButton?: boolean;

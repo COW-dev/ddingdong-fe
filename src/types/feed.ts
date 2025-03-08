@@ -1,4 +1,3 @@
-import { JSX } from 'react';
 import { UrlType } from '.';
 import { ClubProfile } from './club';
 
