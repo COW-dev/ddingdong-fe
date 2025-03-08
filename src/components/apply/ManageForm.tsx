@@ -27,6 +27,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
 
   const isPastStartDate = formData?.startDate
     ? new Date(formData.startDate) < new Date()
+    ? new Date(formData.startDate) < new Date()
     : false;
 
   const [mode, setMode] = useState<'view' | 'edit'>(
@@ -114,6 +115,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
       ),
     }));
   };
+
   return (
     <div>
       <Head>
@@ -167,7 +169,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
             alt="checkBox"
           />
         </div>
-        우리 동아리는 면접을 봐요!
+        우리동아리는 면접을 보지 않아요!
       </div>
 
       <div className="flex flex-col gap-4">
@@ -180,7 +182,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
             disabled={isDisabled}
           />
 
-          <div className="h-fit w-full rounded-lg border py-0.5">
+          <div className="w-full rounded-lg border pt-1">
             <Datepicker
               value={{
                 startDate: formState.startDate,
@@ -202,6 +204,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           disabled={isDisabled}
         />
       </div>
+
       <div className="mt-6">
         <Sections
           setFormState={setFormState}
