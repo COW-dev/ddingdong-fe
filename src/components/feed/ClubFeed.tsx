@@ -79,19 +79,16 @@ export default function ClubFeed({
               className="absolute left-2 top-2 md:h-8 md:w-8"
             />
           )}
-          {
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              width={350}
-              height={350}
-              src={item.thumbnailCdnUrl}
-              alt={`image-${index + 1}`}
-              // priority={index < 10}
-              style={{ objectFit: 'cover' }}
-              className="aspect-square"
-              onLoad={() => handleImageLoad(item.id)}
-            />
-          }
+          <Image
+            width={350}
+            height={350}
+            src={item.thumbnailCdnUrl}
+            alt={`image-${index + 1}`}
+            priority={index < 10}
+            style={{ objectFit: 'cover' }}
+            className="aspect-square"
+            onLoad={() => handleImageLoad(item.id)}
+          />
           {item.feedType == 'VIDEO' && (
             <Image
               width={20}
