@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import dayjs from 'dayjs';
 import Admin from '@/assets/admin.jpg';
@@ -46,15 +47,12 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
       <div className="flex flex-col">
         <div className="flex flex-row items-end">
           <div className="h-14 w-14 overflow-hidden rounded-full border-[1.5px] border-gray-100 md:h-20 md:w-20">
-            {
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={profileImage?.originUrl ?? Admin.src}
-                alt="admin"
-                width={80}
-                height={80}
-              />
-            }
+            <Image
+              src={profileImage?.originUrl ?? Admin.src}
+              alt="admin"
+              width={80}
+              height={80}
+            />
           </div>
           <div className="ml-3">
             <Heading>{name}</Heading>

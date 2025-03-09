@@ -55,12 +55,11 @@ export default function ClubInfo({
             동아리 소개 이미지
           </div>
           {introductionImageUrl?.originUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={introductionImageUrl?.originUrl}
-              // width={1000}
-              // height={500}
-              // priority
+              width={1000}
+              height={500}
+              priority
               alt="동아리 소개 사진"
               className={`${
                 !introductionImageUrl && `hidden`
