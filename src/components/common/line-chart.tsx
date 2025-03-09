@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 
 import { ApplyRate } from '@/types/apply';
-import { tooltip } from './chart/tooltip';
+import { tooltip } from '../../constants/tooltip';
 import { MOCK_APPLYCANT } from '../apply/applicant.data';
 
 ChartJS.register(
@@ -49,7 +49,7 @@ const LineChart = ({ passedData }: Props) => {
       typeof window !== 'undefined'
         ? JSON.parse(localStorage.getItem('club') ?? '')
         : '';
-    const clubName = club.state?.club.name.toUpperCase() ?? '';
+    const clubName = club.state?.club?.name.toUpperCase() ?? '';
     const parsedApplicantData = [
       MOCK_APPLYCANT[clubName],
       calculateCompared(
@@ -142,11 +142,11 @@ const LineChart = ({ passedData }: Props) => {
 export default LineChart;
 
 const lineChartStyle = {
-  borderColor: '#B0B0B0', // 연한 회색 선
-  borderWidth: 1.5, // 선 두께 조정
-  pointRadius: 6, // 포인트 크기
-  pointBackgroundColor: '#ffffff', // 마지막 점 강조
+  borderColor: '#B0B0B0',
+  borderWidth: 1.5,
+  pointRadius: 6,
+  pointBackgroundColor: '#ffffff',
   pointBorderColor: ['#B0B0B0', '#B0B0B0', '#3B82F6'],
-  pointBorderWidth: 2, // 포인트 테두리 두께
+  pointBorderWidth: 2,
   fill: false,
 };

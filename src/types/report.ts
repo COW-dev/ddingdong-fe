@@ -12,6 +12,11 @@ export type ReportKey = {
   term: number;
 };
 
+export type TermReport = {
+  club: { id: number; name: string };
+  activityReports: [number, number];
+};
+
 export type MyReportList = ReportKey & {
   activityReports: [number, number];
 };

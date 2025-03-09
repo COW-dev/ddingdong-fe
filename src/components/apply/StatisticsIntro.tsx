@@ -2,8 +2,8 @@ import Image from 'next/image';
 
 import { useCookies } from 'react-cookie';
 import InfoIcon from '@/assets/info.svg';
-import BarChart from '@/components/ui/bar-chart';
-import LineChart from '@/components/ui/line-chart';
+import BarChart from '@/components/common/bar-chart';
+import LineChart from '@/components/common/line-chart';
 import {
   Tooltip,
   TooltipContent,

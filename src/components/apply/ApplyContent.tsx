@@ -1,18 +1,17 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { usePresignedUrlForm } from '@/hooks/api/apply/usePresignedUrlForm';
-import { FormAnswer } from '@/types/form';
+import { FormAnswer, QuestionType } from '@/types/form';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
 import FilledCircle from '../../assets/check_form.svg';
 import FilledSquare from '../../assets/check_square_form.svg';
 import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
-import UploadFile from '../common/UploadFile';
 
 interface Props {
   fieldId: string;
-  type: 'CHECK_BOX' | 'RADIO' | 'LONG_TEXT' | 'TEXT' | 'FILE';
+  type: QuestionType;
   question: string;
   options: string[];
   required: boolean;

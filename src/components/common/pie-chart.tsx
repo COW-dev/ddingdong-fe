@@ -7,7 +7,7 @@ import {
   Legend,
 } from 'chart.js';
 import { ChartItem } from '@/types/apply';
-import { tooltip } from './chart/tooltip';
+import { tooltip } from '../../constants/tooltip';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
@@ -109,7 +109,7 @@ const PieChart = ({ passedData }: Props) => {
   }, [passedData]);
 
   return (
-    <canvas ref={canvasRef} className="flex h-auto w-full max-w-[400px]" />
+    <canvas ref={canvasRef} className="flex h-auto w-full max-w-[550px]" />
   );
 };
 

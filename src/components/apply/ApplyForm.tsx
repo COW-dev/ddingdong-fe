@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
 import { useSubmitApply } from '@/hooks/api/apply/useSubmitApply';
-import { ApplyData, FormAnswer } from '@/types/form';
+import { ApplyData, FormAnswer, QuestionType } from '@/types/form';
 import { applyDataSchema } from '@/types/schemas/applyDataSchema';
 import ApplyContent from './ApplyContent';
 import CommonQuestion from './CommnQuestion';
@@ -11,7 +11,7 @@ interface FormData {
   data: {
     formFields: {
       id: string;
-      type: 'CHECK_BOX' | 'RADIO' | 'LONG_TEXT' | 'TEXT' | 'FILE';
+      type: QuestionType;
       options?: string[];
       required: boolean;
       question: string;
@@ -143,7 +143,7 @@ export default function ApplyForm({
       {questionData?.formFields?.map(
         (field: {
           id: string;
-          type: 'CHECK_BOX' | 'RADIO' | 'LONG_TEXT' | 'TEXT' | 'FILE';
+          type: QuestionType;
           options?: string[];
           required: boolean;
           question: string;
