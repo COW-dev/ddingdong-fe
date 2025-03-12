@@ -369,4 +369,28 @@ export const MOCK_APPLYCANT: { [key: string]: ApplyRate } = {
       value: 0,
     },
   },
+  'PPT(PINGPONGTIME)': {
+    label: '2024-09',
+    count: 0,
+    comparedToBefore: {
+      ratio: 0,
+      value: 0,
+    },
+  },
+  RING: {
+    label: '2024-09',
+    count: 0,
+    comparedToBefore: {
+      ratio: 0,
+      value: 0,
+    },
+  },
+  명지유도회: {
+    label: '2024-09',
+    count: 0,
+    comparedToBefore: {
+      ratio: 0,
+      value: 0,
+    },
+  },
 };

@@ -29,8 +29,7 @@ type Props = {
 function calculateCompared(previous: ApplyRate, current: ApplyRate) {
   const countDifference = current?.count - previous?.count;
   const ratio =
-    previous.count === 0 ? 0 : (countDifference / previous.count) * 100;
-
+    previous?.count === 0 ? 0 : (countDifference / previous?.count) * 100;
   return {
     ...current,
     comparedToBefore: {
@@ -49,7 +48,7 @@ const LineChart = ({ passedData }: Props) => {
       typeof window !== 'undefined'
         ? JSON.parse(localStorage.getItem('club') ?? '')
         : '';
-    const clubName = club.state?.club.name.toUpperCase() ?? '';
+    const clubName = club.state?.club?.name.toUpperCase() ?? '';
     const parsedApplicantData = [
       MOCK_APPLYCANT[clubName],
       calculateCompared(
