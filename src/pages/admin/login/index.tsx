@@ -1,8 +1,7 @@
-/* eslint-disable import/named */
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { AxiosResponse } from 'axios';
+import { type AxiosResponse } from 'axios';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import { login } from '@/apis';
@@ -15,7 +14,6 @@ export default function Index() {
   const router = useRouter();
   const [id, setId] = useState<string>('');
   const [pw, setPw] = useState<string>('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [cookie, setCookie, removeCookie] = useCookies([
     'token',
     'role',

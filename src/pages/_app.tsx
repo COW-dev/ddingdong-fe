@@ -52,7 +52,18 @@ export default function App({ Component, pageProps }: AppProps) {
           name="viewport"
           content="width=device-width, initial-scale=1, user-scalable=no"
         />
-        <link rel="icon" href="/favicon.svg" />
+        <link
+          rel="icon"
+          href="/favicon.svg"
+          type="image/x-icon"
+          media="(prefers-color-scheme: light)"
+        />
+        <link
+          rel="icon"
+          href="/favicon_dark.svg"
+          type="image/x-icon"
+          media="(prefers-color-scheme: dark)"
+        />
         <meta
           name="description"
           content="명지대학교의 모든 동아리, 띵동에서 확인해 보세요!"
