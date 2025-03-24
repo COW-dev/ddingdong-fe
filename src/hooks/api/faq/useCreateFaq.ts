@@ -5,10 +5,10 @@ import { createFaq } from '@/apis/index';
 export const useCreateFaq = () => {
   return useMutation(createFaq, {
     onSuccess: () => {
-      toast.success('FAQ 생성성공');
+      toast.success('FAQ 생성을 성공하였습니다');
     },
     onError: (error) => {
-      toast.error('FAQ 생성실패');
+      toast.error('FAQ 생성을 실패하였습니다');
     },
   });
 };

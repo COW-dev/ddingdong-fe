@@ -21,10 +21,10 @@ export function useDeleteFaq(): UseMutationResult<
     {
       onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: ['faqs'] });
-        toast.success('FAQ 삭제 성공');
+        toast.success('삭제되었습니다');
       },
       onError: (error) => {
-        toast.error('FAQ 삭제 실패:');
+        toast.error('FAQ 삭제를 실패하였습니다');
       },
     },
   );

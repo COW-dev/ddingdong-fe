@@ -43,18 +43,7 @@ export default function FAQList({
       return;
     }
 
-    deleteFaq(
-      { questionId, token },
-      {
-        onSuccess: () => {
-          refetch();
-          toast.success('FAQ가 삭제되었습니다.');
-        },
-        onError: () => {
-          toast.error('FAQ 삭제에 실패했습니다.');
-        },
-      },
-    );
+    deleteFaq({ questionId, token });
   };
 
   return (
