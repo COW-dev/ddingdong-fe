@@ -779,7 +779,7 @@ export async function submitApplicationForm(
   return await api.post(`forms/${formId}/applications`, formData);
 }
 
-export async function getAllFaq(
+export async function getAllFaqAdmin(
   token: string,
 ): Promise<AxiosResponse<Faq[], unknown>> {
   return await api.get('/admin/questions', {
@@ -787,6 +787,10 @@ export async function getAllFaq(
       Authorization: 'Bearer ' + token,
     },
   });
+}
+
+export async function getAllFaq(): Promise<AxiosResponse<Faq[], unknown>> {
+  return await api.get('/questions');
 }
 
 export async function createFaq({

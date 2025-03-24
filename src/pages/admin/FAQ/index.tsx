@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import FAQList from '@/components/faq/FAQList';
-import { useAllFaq } from '@/hooks/api/faq/useAllFaq';
+import { useAllFaq } from '@/hooks/api/faq/useAllFaqAdmin';
 import { useCreateFaq } from '@/hooks/api/faq/useCreateFaq';
 
 export default function Index() {
