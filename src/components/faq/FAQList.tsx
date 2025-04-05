@@ -1,6 +1,5 @@
 import { Trash2 } from 'lucide-react';
 import { useCookies } from 'react-cookie';
-import { toast } from 'react-hot-toast';
 import {
   Accordion,
   AccordionContent,
@@ -8,20 +7,7 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { useDeleteFaq } from '@/hooks/api/faq/useDeleteFaq';
-
-interface FAQItem {
-  question: string;
-  reply: string;
-  id?: number;
-}
-
-interface FAQListProps {
-  FAQ: any;
-  newFAQs: FAQItem[];
-  setNewFAQs: React.Dispatch<React.SetStateAction<FAQItem[]>>;
-  isEditing: boolean;
-  refetch: () => void;
-}
+import { FAQListProps, FAQItemId } from '@/types/faq';
 
 export default function FAQList({
   FAQ,
@@ -30,7 +16,7 @@ export default function FAQList({
   isEditing,
   refetch,
 }: FAQListProps) {
-  const safeFAQ: FAQItem[] = Array.isArray(FAQ?.data) ? FAQ?.data : [];
+  const safeFAQ: FAQItemId[] = Array.isArray(FAQ?.data) ? FAQ?.data : [];
 
   const [cookies] = useCookies(['token', 'role']);
   const { token } = cookies;
@@ -38,12 +24,9 @@ export default function FAQList({
   const { mutate: deleteFaq, isLoading } = useDeleteFaq();
 
   const isClickedDeleteButton = (questionId?: number) => {
-    if (!questionId || !token) {
-      toast.error('인증 정보가 없습니다.');
-      return;
+    if (questionId !== undefined) {
+      deleteFaq({ questionId, token });
     }
-
-    deleteFaq({ questionId, token });
   };
 
   return (

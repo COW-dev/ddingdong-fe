@@ -1,4 +1,4 @@
-interface FAQActionsProps {
+interface type {
   isEditing: boolean;
   isSaving?: boolean;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +12,7 @@ export default function FAQActions({
   setIsEditing,
   saveFAQ,
   addFAQ,
-}: FAQActionsProps) {
+}: type) {
   return (
     <div className="flex flex-col items-end justify-between">
       {isEditing ? (

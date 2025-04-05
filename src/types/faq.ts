@@ -25,3 +25,17 @@ export type UpdateFaq = {
   questionId: number;
   faqData: FAQItem;
 };
+
+export type FAQItemId = {
+  question: string;
+  reply: string;
+  id?: number;
+};
+
+export type FAQListProps = {
+  FAQ: any;
+  newFAQs: FAQItemId[];
+  setNewFAQs: React.Dispatch<React.SetStateAction<FAQItem[]>>;
+  isEditing: boolean;
+  refetch: () => void;
+};

@@ -44,7 +44,7 @@ export const config = {
     '/notice/:path*',
     '/my-club',
     '/documents',
-    '/FAQ',
+    '/faq',
     '/club',
     '/member',
     '/fix',
