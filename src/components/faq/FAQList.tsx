@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
 import { useCookies } from 'react-cookie';
 import {
@@ -7,9 +8,12 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { useDeleteFaq } from '@/hooks/api/faq/useDeleteFaq';
+import useModal from '@/hooks/common/useModal';
 import { FAQListProps, FAQItemId } from '@/types/faq';
-
+import AlertDialog from '../common/AlertDialog';
+import Modal from '../common/Modal';
 export default function FAQList({
+  setIsEditing,
   FAQ,
   newFAQs,
   setNewFAQs,
@@ -21,12 +25,31 @@ export default function FAQList({
   const [cookies] = useCookies(['token', 'role']);
   const { token } = cookies;
 
-  const { mutate: deleteFaq, isLoading } = useDeleteFaq();
+  const { mutate: deleteFaq, isLoading } = useDeleteFaq(refetch);
 
-  const isClickedDeleteButton = (questionId?: number) => {
-    if (questionId !== undefined) {
-      deleteFaq({ questionId, token });
+  const { openModal, visible, closeModal, modalRef } = useModal();
+
+  const [deleteQuestionId, setDeleteQuestionId] = useState<number | null>(null);
+
+  const isClickedDeleteButton = (questionId: number) => {
+    setDeleteQuestionId(questionId);
+    openModal();
+  };
+
+  const confirmDelete = () => {
+    if (deleteQuestionId !== null) {
+      deleteFaq({ questionId: deleteQuestionId, token });
+      setIsEditing(false);
+      closeModal();
     }
+  };
+
+  const cancelDelete = () => {
+    closeModal();
+  };
+
+  const deleteFromNewFAQs = (index: number) => {
+    setNewFAQs((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -37,7 +60,7 @@ export default function FAQList({
 
       {isEditing ? (
         <>
-          {newFAQs.map((item, index) => (
+          {newFAQs.slice().map((item, index) => (
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index}`}>
                 <AccordionTrigger isArrow={false}>
@@ -46,10 +69,9 @@ export default function FAQList({
                     <span className="text-blue-500">.</span>
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   </div>
-
                   <input
-                    className="w-11/12"
-                    placeholder={item.question}
+                    className="w-11/12 px-2"
+                    placeholder="질문을 입력해주세요"
                     value={item.question}
                     onChange={(e) =>
                       setNewFAQs((prev) =>
@@ -65,7 +87,7 @@ export default function FAQList({
                     className={`cursor-pointer text-red-400 ${
                       isLoading ? 'opacity-50' : ''
                     }`}
-                    onClick={() => isClickedDeleteButton(item.id)}
+                    onClick={() => deleteFromNewFAQs(index)}
                   />
                 </AccordionTrigger>
                 <AccordionContent>
@@ -88,23 +110,50 @@ export default function FAQList({
               </AccordionItem>
             </Accordion>
           ))}
-
-          {safeFAQ.map((item, index) => (
+          {safeFAQ
+            .slice()
+            .reverse()
+            .map((item, index) => (
+              <Accordion
+                key={index}
+                type="single"
+                collapsible
+                className="w-full"
+              >
+                <AccordionItem value={`item-${index}`}>
+                  <AccordionTrigger isArrow={false}>
+                    <div className="faq-question">
+                      <span>Q</span>
+                      <span className="text-blue-500">.</span>
+                      <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      <span>{item.question}</span>
+                    </div>
+                    <Trash2
+                      className={'cursor-pointer text-red-400 '}
+                      onClick={() => isClickedDeleteButton(item.id ?? 0)}
+                    />
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="font-bold text-blue-500">A.</div>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    {item.reply}
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            ))}
+        </>
+      ) : (
+        safeFAQ
+          .slice()
+          .reverse()
+          .map((item, index) => (
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index}`}>
-                <AccordionTrigger isArrow={false}>
-                  <div className="faq-question">
-                    <span>Q</span>
-                    <span className="text-blue-500">.</span>
-                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <span>{item.question}</span>
-                  </div>
-                  <Trash2
-                    className={`cursor-pointer text-red-400 ${
-                      isLoading ? 'opacity-50' : ''
-                    }`}
-                    onClick={() => isClickedDeleteButton(item.id)}
-                  />
+                <AccordionTrigger>
+                  <span>Q</span>
+                  <span className="text-blue-500">.</span>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  <span>{item.question}</span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <div className="font-bold text-blue-500">A.</div>
@@ -113,26 +162,22 @@ export default function FAQList({
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-          ))}
-        </>
-      ) : (
-        safeFAQ.map((item, index) => (
-          <Accordion key={index} type="single" collapsible className="w-full">
-            <AccordionItem value={`item-${index}`}>
-              <AccordionTrigger>
-                <span>Q</span>
-                <span className="text-blue-500">.</span>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span>{item.question}</span>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="font-bold text-blue-500">A.</div>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                {item.reply}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        ))
+          ))
+      )}
+
+      {visible && (
+        <Modal
+          visible={visible}
+          closeModal={closeModal}
+          closeButton={false}
+          modalRef={modalRef}
+        >
+          <AlertDialog
+            type="delete"
+            onConfirm={confirmDelete}
+            onCancel={cancelDelete}
+          />
+        </Modal>
       )}
     </div>
   );
