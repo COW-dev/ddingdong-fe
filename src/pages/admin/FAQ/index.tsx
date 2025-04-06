@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
@@ -10,20 +10,15 @@ export default function Index() {
   const [cookies] = useCookies(['token', 'role']);
   const { token } = cookies;
   const { data: FAQ, refetch } = useAllFaq(token);
-  const { mutate: createFaq, isLoading: isSaving } = useCreateFaq();
+  const { mutate: createFaq, isLoading: isSaving } = useCreateFaq(refetch);
 
   const [isEditing, setIsEditing] = useState(false);
   const [newFAQs, setNewFAQs] = useState<{ question: string; reply: string }[]>(
     [],
   );
-  //취소시 refetch
-  //저장하기시 createFaq 호출
-  //수정하기 삭제 다시 구현
+
   const addFAQ = () => {
-    setNewFAQs([
-      ...newFAQs,
-      { question: '질문을 입력해주세요', reply: '답변을 입력해주세요' },
-    ]);
+    setNewFAQs([...newFAQs, { question: '', reply: '' }]);
   };
 
   const saveFAQ = () => {
@@ -45,13 +40,18 @@ export default function Index() {
         {isEditing ? (
           <div>
             <button
-              onClick={() => setIsEditing(false)}
+              onClick={() => {
+                setIsEditing(false);
+                setNewFAQs([]);
+              }}
               className="ml-3 h-10 rounded-lg bg-gray-100 px-4.5 py-2 text-sm font-bold text-gray-500 hover:bg-gray-200"
             >
               취소
             </button>
             <button
-              onClick={saveFAQ}
+              onClick={() => {
+                saveFAQ();
+              }}
               className={`ml-3 h-10 rounded-lg px-4.5 py-2 text-sm font-bold text-white 
                 ${
                   isSaving
@@ -85,11 +85,12 @@ export default function Index() {
       )}
 
       <FAQList
+        refetch={refetch}
         FAQ={FAQ}
         newFAQs={newFAQs}
         setNewFAQs={setNewFAQs}
         isEditing={isEditing}
-        refetch={refetch}
+        setIsEditing={setIsEditing}
       />
     </>
   );

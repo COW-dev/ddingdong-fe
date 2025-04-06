@@ -38,4 +38,5 @@ export type FAQListProps = {
   setNewFAQs: React.Dispatch<React.SetStateAction<FAQItem[]>>;
   isEditing: boolean;
   refetch: () => void;
+  setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 };
