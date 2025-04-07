@@ -5,6 +5,7 @@ import Heading from '@/components/common/Heading';
 import FAQList from '@/components/faq/FAQList';
 import { useAllFaq } from '@/hooks/api/faq/useAllFaqAdmin';
 import { useCreateFaq } from '@/hooks/api/faq/useCreateFaq';
+import { FAQItem } from '@/types/faq';
 
 export default function Index() {
   const [cookies] = useCookies(['token', 'role']);
@@ -13,9 +14,7 @@ export default function Index() {
   const { mutate: createFaq, isLoading: isSaving } = useCreateFaq(refetch);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [newFAQs, setNewFAQs] = useState<{ question: string; reply: string }[]>(
-    [],
-  );
+  const [newFAQs, setNewFAQs] = useState<FAQItem[]>([]);
 
   const addFAQ = () => {
     setNewFAQs([...newFAQs, { question: '', reply: '' }]);
