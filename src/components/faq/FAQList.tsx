@@ -71,7 +71,7 @@ export default function FAQList({
                     <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   </div>
                   <input
-                    className="w-11/12 px-2"
+                    className="mx-1 w-11/12 focus:border-none focus:outline-none"
                     placeholder="질문을 입력해주세요"
                     value={item.question}
                     onChange={(e) =>
@@ -95,7 +95,7 @@ export default function FAQList({
                   <div className="font-bold text-blue-500">A.</div>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   <textarea
-                    className="w-full resize-none rounded-md border border-gray-200 bg-gray-50 p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full resize-none rounded-md border border-gray-200 bg-gray-50 p-2 focus:border focus:outline-none"
                     placeholder="답변을 입력해주세요"
                     value={item.reply}
                     rows={3}
