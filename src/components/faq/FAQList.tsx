@@ -19,14 +19,13 @@ export default function FAQList({
   newFAQs,
   setNewFAQs,
   isEditing,
-  refetch,
 }: FAQListProps) {
   const safeFAQ: FAQItemId[] = Array.isArray(FAQ?.data) ? FAQ?.data : [];
 
   const [cookies] = useCookies(['token', 'role']);
   const { token } = cookies;
 
-  const { mutate: deleteFaq, isLoading } = useDeleteFaq(refetch);
+  const { mutate: deleteFaq, isLoading } = useDeleteFaq();
 
   const { openModal, visible, closeModal, modalRef } = useModal();
 

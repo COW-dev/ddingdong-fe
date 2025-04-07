@@ -3,7 +3,7 @@ import toast from 'react-hot-toast';
 import { getAllFaq } from '@/apis/index';
 
 export const useAllFaq = () => {
-  return useQuery(['allFaqs'], () => getAllFaq(), {
+  return useQuery(['faqs'], () => getAllFaq(), {
     onError: (error) => {
       toast.error('FAQ 가져오기 실패');
     },

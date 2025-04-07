@@ -85,7 +85,6 @@ export default function Index() {
       )}
 
       <FAQList
-        refetch={refetch}
         FAQ={FAQ}
         newFAQs={newFAQs}
         setNewFAQs={setNewFAQs}
