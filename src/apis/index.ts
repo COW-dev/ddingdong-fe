@@ -819,14 +819,3 @@ export async function deleteFaq({
     },
   });
 }
-export async function updateFaq({ token, questionId, faqData }: UpdateFaq) {
-  const formData = new URLSearchParams();
-  formData.append('question', faqData.question);
-  formData.append('reply', faqData.reply);
-
-  return await api.patch(`/admin/questions/${questionId}`, formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}

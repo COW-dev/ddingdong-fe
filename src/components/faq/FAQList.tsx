@@ -12,6 +12,7 @@ import useModal from '@/hooks/common/useModal';
 import { FAQListProps, FAQItemId } from '@/types/faq';
 import AlertDialog from '../common/AlertDialog';
 import Modal from '../common/Modal';
+
 export default function FAQList({
   setIsEditing,
   FAQ,
