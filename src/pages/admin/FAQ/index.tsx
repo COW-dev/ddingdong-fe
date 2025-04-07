@@ -53,8 +53,8 @@ export default function Index() {
               }}
               className={`ml-3 h-10 rounded-lg px-4.5 py-2 text-sm font-bold text-white 
                 ${
-                  isSaving
-                    ? 'cursor-not-allowed bg-gray-500'
+                  isSaving || newFAQs.length === 0
+                    ? 'cursor-not-allowed bg-blue-300'
                     : 'bg-blue-500 hover:bg-blue-600'
                 }`}
               disabled={isSaving}
