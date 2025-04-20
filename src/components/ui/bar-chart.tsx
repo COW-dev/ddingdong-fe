@@ -59,7 +59,7 @@ export function BarGraph({ passedData }: Props) {
 
   let chartInstance: ChartJS | null = null;
 
-  const getChartData = () => {
+  const getChartData = (passedData: ChartItem[], barThickness: number) => {
     const labels = passedData.map((item) => item.label);
     const rates = passedData.map((item) => item.ratio);
     const counts = passedData.map((item) => item.count);
@@ -77,13 +77,18 @@ export function BarGraph({ passedData }: Props) {
     };
   };
 
+  const chartData = useMemo(
+    () => getChartData(passedData, barThickness),
+    [passedData, barThickness],
+  );
+
   const renderChart = () => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
     chartInstance = new ChartJS(canvasContext, {
       type: 'bar',
-      data: getChartData(),
+      data: chartData,
       options: {
         plugins: {
           legend: { display: false },
@@ -92,7 +97,7 @@ export function BarGraph({ passedData }: Props) {
             callbacks: {
               title: () => [],
               label: (data) => {
-                const counts = getChartData().counts;
+                const counts = chartData.counts;
                 return `${counts[data.dataIndex]}명`;
               },
             },
@@ -107,7 +112,7 @@ export function BarGraph({ passedData }: Props) {
               maxRotation: 0,
               autoSkip: false,
               callback: (value: string | number) => {
-                const label = String(getChartData().labels[value as number]);
+                const label = String(chartData.labels[value as number]);
                 return label.length > 4 ? label.substring(0, 3) + '..' : label;
               },
               font: { size: 14, weight: 'bold' as const },
@@ -116,7 +121,7 @@ export function BarGraph({ passedData }: Props) {
           },
           y: {
             display: false,
-            max: Math.max(...getChartData().datasets[0].data) + 20,
+            max: Math.max(...chartData.datasets[0].data) + 20,
           },
         },
       },
@@ -130,7 +135,7 @@ export function BarGraph({ passedData }: Props) {
             dataset.forEach((value, index) => {
               const meta = chart.getDatasetMeta(0);
               const bar = meta.data[index];
-              ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280'; // 최대값이면 파란색, 아니면 기본 색상
+              ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';
               ctx.font = 'bold 12px Arial';
               ctx.textAlign = 'center';
               ctx.fillText(`${value}%`, bar.x, bar.y - 10);
