@@ -41,7 +41,7 @@ export const navItems: {
     },
     {
       id: 6,
-      href: 'https://www.instagram.com/mju_u.th/',
+      href: 'https://www.instagram.com/mju_club_',
       image: InstaImage,
       content: '인스타그램',
     },

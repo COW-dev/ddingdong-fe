@@ -13,7 +13,6 @@ type Props = {
 
 export default function ApplicantInfo({ ...props }: Props) {
   const { formFieldAnswers } = props;
-  // fromFieldAnswers 배열을 돌면서 공통이외에 다른 것이 존재하는지 find 없다면 공통으로 설정
   const section = formFieldAnswers.find((answer) => answer.section !== '공통');
   const info = getApplicantInfo(props);
 

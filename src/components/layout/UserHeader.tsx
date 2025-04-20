@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion';
 import { navItems } from '@/constants/navItems';
-import NewYear from '../common/NewYear';
 
 export default function UserHeader() {
   const [hydrated, setHydrated] = useState(false);
@@ -59,9 +58,9 @@ export default function UserHeader() {
   const element = () => {
     return (
       <div className="flex w-full items-center justify-between px-6">
-        <Link href="/" className="inline-block pb-2">
+        <Link href="/" className="inline-block">
           <Image
-            src={'/new-year-logo.png'}
+            src={'/logo.png'}
             width={1544}
             height={380}
             priority
@@ -69,20 +68,15 @@ export default function UserHeader() {
             className="w-32"
           />
         </Link>
-        <div className="flex items-center space-x-2">
-          <div className="flex items-end">
-            <NewYear />
-          </div>
-          <button className="p-1" onClick={() => handleOpenDrawer()}>
-            <Image
-              src={MenuButton}
-              width={24}
-              height={24}
-              alt="menu"
-              className="h-5"
-            />
-          </button>
-        </div>
+        <button className="p-1" onClick={() => handleOpenDrawer()}>
+          <Image
+            src={MenuButton}
+            width={24}
+            height={24}
+            alt="menu"
+            className="h-5"
+          />
+        </button>
         <Drawer isOpen={isOpen} setIsOpen={setIsOpen}>
           <div className="flex flex-col items-start justify-center p-3">
             {Object.keys(navItems).map((category, index) =>
@@ -117,7 +111,7 @@ export default function UserHeader() {
                               target={category === 'SNS' ? '_blank' : '_self'}
                               rel="noopener noreferrer"
                               onClick={() => setIsOpen(false)}
-                              className="text-md flex items-center font-semibold text-gray-500 hover:text-new-year"
+                              className="text-md flex items-center font-semibold text-gray-500 hover:text-blue-500"
                             >
                               {item.image && (
                                 <Image
@@ -151,9 +145,9 @@ export default function UserHeader() {
           className="flex w-full max-w-6xl items-center px-6 md:px-16"
           ref={dropdownRef}
         >
-          <Link href="/" className="inline-block pb-2">
+          <Link href="/">
             <Image
-              src={'/new-year-logo.png'}
+              src={'/logo.png'}
               width={1544}
               height={380}
               priority
@@ -168,7 +162,7 @@ export default function UserHeader() {
                   {category === '동아리피드' ? (
                     <Link
                       href={navItems[category][0].href}
-                      className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-new-year focus:outline-none"
+                      className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-blue-500 focus:outline-none"
                     >
                       {category}
                     </Link>
@@ -176,7 +170,7 @@ export default function UserHeader() {
                     <div>
                       <button
                         onClick={() => handleDropdownToggle(category)}
-                        className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-new-year focus:outline-none"
+                        className="inline-block p-3 font-semibold text-gray-500 transition-colors hover:text-blue-500 focus:outline-none"
                       >
                         {category}
                       </button>
@@ -210,9 +204,6 @@ export default function UserHeader() {
                 </li>
               ))}
             </ul>
-            <div className="flex items-end">
-              <NewYear />
-            </div>
           </div>
         </div>
       </header>

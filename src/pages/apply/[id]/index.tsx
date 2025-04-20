@@ -49,11 +49,11 @@ export default function IndexPage() {
 
   useEffect(() => {
     if (!isLoading) {
-      if (sections && sections.length > 2) {
+      if (sections.length > 2) {
         setStep('SECTION');
       } else {
         setStep('QUESTION');
-        setSelectedRadio('공통');
+        setSelectedRadio(sections.length === 2 ? sections[1] : '공통');
       }
     }
   }, [sections, isLoading]);

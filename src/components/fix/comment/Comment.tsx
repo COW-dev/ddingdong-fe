@@ -57,7 +57,7 @@ function Comment({ info, fixZoneId }: CommentProps) {
       <div className="flex w-full justify-between">
         <div className="min-h-fit">
           <div className="flex gap-2">
-            <span className="font-bold">제40대 총동아리연합회 U:th</span>
+            <span className="font-bold">제41대 총동아리연합회 Mode</span>
             <time className="text-gray-500">{dayjs(createdAt).fromNow()}</time>
           </div>
           <textarea

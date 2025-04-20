@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+import TextareaAutosize from 'react-textarea-autosize';
 import DownLoad from '@/assets/download.svg';
 import { Answer } from '@/types/apply';
 import { downloadBlob } from '@/utils/file';
 import ApplyContentBox from './ApplyContentBox';
 import CheckBox from '../common/CheckBox';
 import Radio from '../common/Radio';
-
 export default function ApplyResult({ ...answers }: Answer) {
-  const { question, type, order, options, required, value, files } = answers;
+  const { question, type, order, options, required, section, value, files } =
+    answers;
 
   const downloadFile = async (url: string, filename: string) => {
     try {
@@ -51,9 +52,12 @@ export default function ApplyResult({ ...answers }: Answer) {
     }
     if (type === 'TEXT' || type === 'LONG_TEXT') {
       return (
-        <div className="text-base font-semibold text-gray-700 md:text-lg">
+        <TextareaAutosize
+          disabled
+          className="w-full bg-inherit text-base font-semibold text-gray-700 md:text-lg"
+        >
           {value}
-        </div>
+        </TextareaAutosize>
       );
     }
 
@@ -85,6 +89,7 @@ export default function ApplyResult({ ...answers }: Answer) {
   return (
     <ApplyContentBox className="flex flex-col gap-4">
       <div className="text-base font-semibold text-blue-600 md:text-xl md:font-bold">
+        {section}
         {order}. {question}
         <span className="text-red-600">{required && '*'}</span>
       </div>
