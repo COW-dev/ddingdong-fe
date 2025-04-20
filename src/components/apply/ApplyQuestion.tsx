@@ -13,10 +13,10 @@ export default function Question({ data }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="mb-7 max-h-[50vh] overflow-scroll rounded-md border border-[#E5E7EB] p-2 md:p-[14px]">
+    <div className="mb-7 max-h-[50vh] overflow-scroll rounded-md border border-[#E5E7EB] px-2 md:px-[14px]">
       <Accordion
         onToggle={() => setIsOpen(!isOpen)}
-        className="border-none"
+        className="border-none pt-2 md:pt-[14px]"
         visible={false}
         title={
           <>
@@ -53,9 +53,9 @@ function QuestionResponse({ data }: Props) {
       {isSingleType(type) ? (
         <>
           {type === 'FILE' && (
-            <span className="w-full p-2 text-right text-xs font-semibold text-gray-500 md:text-sm">
+            <div className="w-full p-2 text-left text-xs font-semibold text-gray-500 md:text-sm">
               * FILE 저장기능은 지원자 상세화면에서 지원해요
-            </span>
+            </div>
           )}
           <QuestionSingleContent id={id} type={type} />
         </>

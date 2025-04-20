@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
+import { getMyReportInfo } from '@/apis';
 import Accordion from '@/components/common/Accordion';
 import AlertDialog from '@/components/common/AlertDialog';
 import Heading from '@/components/common/Heading';
@@ -10,7 +11,7 @@ import Report from '@/components/report/detail/Report';
 import { useCurrentReports } from '@/hooks/api/club/useCurrentReports';
 import { useDeleteReport } from '@/hooks/api/club/useDeleteReport';
 import { useMyClub } from '@/hooks/api/club/useMyClub';
-import { useReportInfo } from '@/hooks/api/club/useReportInfo';
+import { useMyReportInfo } from '@/hooks/api/club/useMyReportInfo';
 import useModal from '@/hooks/common/useModal';
 import { ReportKey } from '@/types/report';
 
@@ -20,7 +21,7 @@ export default function Index({ term, name }: ReportKey) {
   const currentTermData = useCurrentReports(token).data?.data.term ?? 1;
   const { data: clubData } = useMyClub(token);
   const deleteMutation = useDeleteReport();
-  const reportData = useReportInfo({ term, name, token }).data?.data;
+  const reportData = useMyReportInfo({ term, token }).data?.data;
   if (!reportData) return;
 
   const handleClickDeleteButton = () => {
