@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import {
   Chart as ChartJS,
   PieController,
@@ -27,7 +27,9 @@ const PieChart = ({ passedData }: Props) => {
     };
   };
 
-  const getChartData = () => {
+  const chartData = useMemo(() => getChartData(passedData), [passedData]);
+
+  const getChartData = (passedData: ChartItem[]) => {
     const labels = passedData.map((item) =>
       item.label.length > 7
         ? `${item.label.slice(0, 6)}... (${item.count}명)`
@@ -65,7 +67,7 @@ const PieChart = ({ passedData }: Props) => {
     resizeChart();
     chartInstance = new ChartJS(canvasContext, {
       type: 'pie',
-      data: getChartData(),
+      data: chartData,
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -89,7 +91,7 @@ const PieChart = ({ passedData }: Props) => {
             callbacks: {
               title: () => [],
               label: (data) => {
-                const ratios = getChartData().ratios;
+                const ratios = chartData.ratios;
                 return `${ratios[data.dataIndex]}%`;
               },
             },

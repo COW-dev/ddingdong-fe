@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -43,7 +43,7 @@ const LineChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   let chartInstance: ChartJS | null = null;
 
-  const getChartData = () => {
+  const getChartData = (passedData: ApplyRate[]) => {
     const club =
       typeof window !== 'undefined'
         ? JSON.parse(localStorage.getItem('club') ?? '')
@@ -73,13 +73,15 @@ const LineChart = ({ passedData }: Props) => {
     };
   };
 
+  const chartData = useMemo(() => getChartData(passedData), [passedData]);
+
   const renderChart = () => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
     chartInstance = new ChartJS(canvasContext, {
       type: 'line',
-      data: getChartData(),
+      data: chartData,
       options: {
         responsive: true,
         plugins: {
@@ -89,7 +91,7 @@ const LineChart = ({ passedData }: Props) => {
             callbacks: {
               title: () => [],
               label: (data) => {
-                const counts = getChartData().rates;
+                const counts = chartData.rates;
                 return `${counts[data.dataIndex]}%`;
               },
             },
@@ -103,7 +105,7 @@ const LineChart = ({ passedData }: Props) => {
           y: {
             display: false,
             beginAtZero: true,
-            max: Math.max(...getChartData().datasets[0].data) + 20,
+            max: Math.max(...chartData.datasets[0].data) + 20,
           },
         },
       },
@@ -141,11 +143,11 @@ const LineChart = ({ passedData }: Props) => {
 export default LineChart;
 
 const lineChartStyle = {
-  borderColor: '#B0B0B0', // 연한 회색 선
-  borderWidth: 1.5, // 선 두께 조정
-  pointRadius: 6, // 포인트 크기
-  pointBackgroundColor: '#ffffff', // 마지막 점 강조
+  borderColor: '#B0B0B0',
+  borderWidth: 1.5,
+  pointRadius: 6,
+  pointBackgroundColor: '#ffffff',
   pointBorderColor: ['#B0B0B0', '#B0B0B0', '#3B82F6'],
-  pointBorderWidth: 2, // 포인트 테두리 두께
+  pointBorderWidth: 2,
   fill: false,
 };
