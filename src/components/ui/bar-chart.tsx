@@ -18,7 +18,7 @@ export default function BarChart({ passedData }: Props) {
   );
 }
 
-function getBgColorFromCount(passedData: ChartItem[]) {
+function getColorFromCount(passedData: ChartItem[]) {
   const sorteCountData = [...passedData].sort((a, b) => b.count - a.count);
   const colorMap = sorteCountData.map((item, index) => {
     if (index === 0) return '#3B82F6';
@@ -70,7 +70,7 @@ export function BarGraph({ passedData }: Props) {
       datasets: [
         {
           data: rates,
-          backgroundColor: getBgColorFromCount(passedData),
+          backgroundColor: getColorFromCount(passedData),
           barThickness,
         },
       ],
@@ -151,13 +151,15 @@ export function BarGraph({ passedData }: Props) {
 }
 
 function BarList({ passedData }: Props) {
+  const itemBorderColors = getColorFromCount(passedData);
+
   return (
     <div className="z-30 flex w-full flex-col gap-4">
       {passedData.map((item, index) => (
         <div
           key={index}
           className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm  text-[#6B7280] outline-none md:text-base"
-          style={{ borderColor: getBgColorFromCount(passedData)[index] }}
+          style={{ borderColor: itemBorderColors[index] }}
         >
           <span className="font-semibold">{item.label}</span>
           <span className="opacity-40">|</span>
