@@ -1,7 +1,8 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
+import { debounce } from './utils';
 
 ChartJS.register(BarController, BarElement, Tooltip);
 
@@ -38,24 +39,28 @@ function getColorFromCount(passedData: ChartItem[]) {
 export function BarGraph({ passedData }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const getBarThickness = useMemo(() => {
-    return typeof window !== 'undefined' && window.innerWidth >= 768 ? 30 : 20;
-  }, []);
-  const [barThickness, setBarThickness] = useState(getBarThickness);
+  const getBarThickness = () => {
+    if (typeof window === 'undefined') return 30;
+    return window.innerWidth >= 768 ? 30 : 20;
+  };
 
-  const handleResize = useCallback(() => {
-    setBarThickness(getBarThickness);
-  }, [getBarThickness]);
+  const [barThickness, setBarThickness] = useState(getBarThickness());
+
+  const handleResize = useMemo(() => {
+    return debounce(() => {
+      setBarThickness(getBarThickness());
+    }, 100);
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     renderChart();
     return () => chartInstance?.destroy();
   }, [passedData, barThickness]);
-
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
 
   let chartInstance: ChartJS | null = null;
 
@@ -158,7 +163,7 @@ function BarList({ passedData }: Props) {
       {passedData.map((item, index) => (
         <div
           key={index}
-          className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm  text-[#6B7280] outline-none md:text-base"
+          className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm text-[#6B7280] outline-none md:text-base"
           style={{ borderColor: itemBorderColors[index] }}
         >
           <span className="font-semibold">{item.label}</span>
