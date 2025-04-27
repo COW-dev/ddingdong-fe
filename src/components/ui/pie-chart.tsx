@@ -17,7 +17,7 @@ type Props = {
 
 const PieChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  let chartInstance: ChartJS | null = null;
+  const chartInstanceRef = useRef<ChartJS | null>(null);
 
   const getPieChartStyle = (ratios: number[]) => {
     return {
@@ -57,15 +57,15 @@ const PieChart = ({ passedData }: Props) => {
   };
 
   const renderChart = () => {
-    if (chartInstance) {
-      chartInstance.destroy();
-    }
-
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+
     resizeChart();
-    chartInstance = new ChartJS(canvasContext, {
+    chartInstanceRef.current = new ChartJS(canvasContext, {
       type: 'pie',
       data: chartData,
       options: {
@@ -105,7 +105,8 @@ const PieChart = ({ passedData }: Props) => {
     renderChart();
     window.addEventListener('resize', renderChart);
     return () => {
-      chartInstance?.destroy();
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
       window.removeEventListener('resize', renderChart);
     };
   }, [passedData]);

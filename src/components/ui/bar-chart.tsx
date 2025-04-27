@@ -38,7 +38,7 @@ function getColorFromCount(passedData: ChartItem[]) {
 
 export function BarGraph({ passedData }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
+  const chartInstanceRef = useRef<ChartJS | null>(null);
   const getBarThickness = () => {
     if (typeof window === 'undefined') return 30;
     return window.innerWidth >= 768 ? 30 : 20;
@@ -59,10 +59,11 @@ export function BarGraph({ passedData }: Props) {
 
   useEffect(() => {
     renderChart();
-    return () => chartInstance?.destroy();
+    return () => {
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
+    };
   }, [passedData, barThickness]);
-
-  let chartInstance: ChartJS | null = null;
 
   const getChartData = (passedData: ChartItem[], barThickness: number) => {
     const labels = passedData.map((item) => item.label);
@@ -91,7 +92,11 @@ export function BarGraph({ passedData }: Props) {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
-    chartInstance = new ChartJS(canvasContext, {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+
+    chartInstanceRef.current = new ChartJS(canvasContext, {
       type: 'bar',
       data: chartData,
       options: {

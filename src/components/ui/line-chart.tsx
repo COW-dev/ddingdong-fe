@@ -41,7 +41,7 @@ function calculateCompared(previous: ApplyRate, current: ApplyRate) {
 
 const LineChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  let chartInstance: ChartJS | null = null;
+  const chartInstanceRef = useRef<ChartJS | null>(null);
 
   const getChartData = (passedData: ApplyRate[]) => {
     const club =
@@ -79,7 +79,11 @@ const LineChart = ({ passedData }: Props) => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
-    chartInstance = new ChartJS(canvasContext, {
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.destroy();
+    }
+
+    chartInstanceRef.current = new ChartJS(canvasContext, {
       type: 'line',
       data: chartData,
       options: {
@@ -134,7 +138,10 @@ const LineChart = ({ passedData }: Props) => {
 
   useEffect(() => {
     renderChart();
-    return () => chartInstance?.destroy();
+    return () => {
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
+    };
   }, [passedData]);
 
   return <canvas ref={canvasRef} className="w-full" />;
