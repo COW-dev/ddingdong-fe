@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   Chart as ChartJS,
   PieController,
@@ -27,8 +27,6 @@ const PieChart = ({ passedData }: Props) => {
     };
   };
 
-  const chartData = useMemo(() => getChartData(passedData), [passedData]);
-
   const getChartData = (passedData: ChartItem[]) => {
     const labels = passedData.map((item) =>
       item.label.length > 7
@@ -47,6 +45,7 @@ const PieChart = ({ passedData }: Props) => {
       ],
     };
   };
+  const chartData = useMemo(() => getChartData(passedData), [passedData]);
 
   const resizeChart = () => {
     const { width, height } = canvasRef.current?.getBoundingClientRect() || {};
@@ -56,50 +55,51 @@ const PieChart = ({ passedData }: Props) => {
     }
   };
 
-  const renderChart = () => {
+  const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
     if (chartInstanceRef.current) {
-      chartInstanceRef.current.destroy();
-    }
-
-    resizeChart();
-    chartInstanceRef.current = new ChartJS(canvasContext, {
-      type: 'pie',
-      data: chartData,
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'right' as const,
-            align: 'center' as const,
-            labels: {
-              usePointStyle: true,
-              font: {
-                family: 'Pretendard',
-                size: 14,
+      chartInstanceRef.current.data = chartData;
+      chartInstanceRef.current.update();
+    } else {
+      resizeChart();
+      chartInstanceRef.current = new ChartJS(canvasContext, {
+        type: 'pie',
+        data: chartData,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right' as const,
+              align: 'center' as const,
+              labels: {
+                usePointStyle: true,
+                font: {
+                  family: 'Pretendard',
+                  size: 14,
+                },
+                color: '#1F2937',
               },
-              color: '#1F2937',
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              onClick: () => {},
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onClick: () => {},
-          },
-          tooltip: {
-            ...tooltip,
-            callbacks: {
-              title: () => [],
-              label: (data) => {
-                const ratios = chartData.ratios;
-                return `${ratios[data.dataIndex]}%`;
+            tooltip: {
+              ...tooltip,
+              callbacks: {
+                title: () => [],
+                label: (data) => {
+                  const ratios = chartData.ratios;
+                  return `${ratios[data.dataIndex]}%`;
+                },
               },
             },
           },
         },
-      },
-    });
-  };
+      });
+    }
+  }, [chartData]);
 
   useEffect(() => {
     renderChart();
@@ -109,7 +109,7 @@ const PieChart = ({ passedData }: Props) => {
       chartInstanceRef.current = null;
       window.removeEventListener('resize', renderChart);
     };
-  }, [passedData]);
+  }, [renderChart]);
 
   return (
     <canvas ref={canvasRef} className="flex h-auto w-full max-w-[400px]" />

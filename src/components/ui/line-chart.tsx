@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -75,66 +75,67 @@ const LineChart = ({ passedData }: Props) => {
 
   const chartData = useMemo(() => getChartData(passedData), [passedData]);
 
-  const renderChart = () => {
+  const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
     if (chartInstanceRef.current) {
-      chartInstanceRef.current.destroy();
-    }
-
-    chartInstanceRef.current = new ChartJS(canvasContext, {
-      type: 'line',
-      data: chartData,
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            ...tooltip,
-            callbacks: {
-              title: () => [],
-              label: (data) => {
-                const counts = chartData.rates;
-                return `${counts[data.dataIndex]}%`;
+      chartInstanceRef.current.data = chartData;
+      chartInstanceRef.current.update();
+    } else {
+      chartInstanceRef.current = new ChartJS(canvasContext, {
+        type: 'line',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              ...tooltip,
+              callbacks: {
+                title: () => [],
+                label: (data) => {
+                  const counts = chartData.rates;
+                  return `${counts[data.dataIndex]}%`;
+                },
               },
             },
           },
-        },
-        scales: {
-          x: {
-            offset: true,
-            grid: { display: false },
+          scales: {
+            x: {
+              offset: true,
+              grid: { display: false },
+            },
+            y: {
+              display: false,
+              beginAtZero: true,
+              max: Math.max(...chartData.datasets[0].data) + 20,
+            },
           },
-          y: {
-            display: false,
-            beginAtZero: true,
-            max: Math.max(...chartData.datasets[0].data) + 20,
-          },
         },
-      },
-      plugins: [
-        {
-          id: 'custom-text-plugin',
-          afterDatasetsDraw: (chart) => {
-            const { ctx, data } = chart;
-            const dataset = data.datasets[0].data as number[];
+        plugins: [
+          {
+            id: 'custom-text-plugin',
+            afterDatasetsDraw: (chart) => {
+              const { ctx, data } = chart;
+              const dataset = data.datasets[0].data as number[];
 
-            dataset.forEach((value, index) => {
-              const meta = chart.getDatasetMeta(0);
-              const bar = meta.data[index];
-              ctx.fillStyle =
-                index === dataset.length - 1 ? '#3B82F6' : '#6B7280';
-              ctx.font = 'bold 12px Arial';
-              ctx.textAlign = 'center';
-              ctx.fillText(`${value}명`, bar.x, bar.y - 15);
-              ctx.restore();
-            });
+              dataset.forEach((value, index) => {
+                const meta = chart.getDatasetMeta(0);
+                const bar = meta.data[index];
+                ctx.fillStyle =
+                  index === dataset.length - 1 ? '#3B82F6' : '#6B7280';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${value}명`, bar.x, bar.y - 15);
+                ctx.restore();
+              });
+            },
           },
-        },
-      ],
-    });
-  };
+        ],
+      });
+    }
+  }, [chartData]);
 
   useEffect(() => {
     renderChart();
@@ -142,7 +143,7 @@ const LineChart = ({ passedData }: Props) => {
       chartInstanceRef.current?.destroy();
       chartInstanceRef.current = null;
     };
-  }, [passedData]);
+  }, [renderChart]);
 
   return <canvas ref={canvasRef} className="w-full" />;
 };

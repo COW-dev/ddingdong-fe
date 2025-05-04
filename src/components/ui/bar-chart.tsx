@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
@@ -57,14 +57,6 @@ export function BarGraph({ passedData }: Props) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  useEffect(() => {
-    renderChart();
-    return () => {
-      chartInstanceRef.current?.destroy();
-      chartInstanceRef.current = null;
-    };
-  }, [passedData, barThickness]);
-
   const getChartData = (passedData: ChartItem[], barThickness: number) => {
     const labels = passedData.map((item) => item.label);
     const rates = passedData.map((item) => item.ratio);
@@ -88,74 +80,85 @@ export function BarGraph({ passedData }: Props) {
     [passedData, barThickness],
   );
 
-  const renderChart = () => {
+  const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
     if (chartInstanceRef.current) {
-      chartInstanceRef.current.destroy();
+      chartInstanceRef.current.data = chartData;
+      chartInstanceRef.current.update();
+    } else {
+      chartInstanceRef.current = new ChartJS(canvasContext, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              ...tooltip,
+              callbacks: {
+                title: () => [],
+                label: (data) => {
+                  const counts = chartData.counts;
+                  return `${counts[data.dataIndex]}명`;
+                },
+              },
+            },
+          },
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                maxRotation: 0,
+                autoSkip: false,
+                callback: (value: string | number) => {
+                  const label = String(chartData.labels[value as number]);
+                  return label.length > 4
+                    ? label.substring(0, 3) + '..'
+                    : label;
+                },
+                font: { size: 14, weight: 'bold' as const },
+                color: '#6B7280',
+              },
+            },
+            y: {
+              display: false,
+              max: Math.max(...chartData.datasets[0].data) + 20,
+            },
+          },
+        },
+        plugins: [
+          {
+            id: 'custom-text-plugin',
+            afterDatasetsDraw: (chart) => {
+              const { ctx, data } = chart;
+              const dataset = data.datasets[0].data as number[];
+              const maxValue = Math.max(...dataset);
+              dataset.forEach((value, index) => {
+                const meta = chart.getDatasetMeta(0);
+                const bar = meta.data[index];
+                ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${value}%`, bar.x, bar.y - 10);
+                ctx.restore();
+              });
+            },
+          },
+        ],
+      });
     }
+  }, [chartData]);
 
-    chartInstanceRef.current = new ChartJS(canvasContext, {
-      type: 'bar',
-      data: chartData,
-      options: {
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            ...tooltip,
-            callbacks: {
-              title: () => [],
-              label: (data) => {
-                const counts = chartData.counts;
-                return `${counts[data.dataIndex]}명`;
-              },
-            },
-          },
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: {
-              maxRotation: 0,
-              autoSkip: false,
-              callback: (value: string | number) => {
-                const label = String(chartData.labels[value as number]);
-                return label.length > 4 ? label.substring(0, 3) + '..' : label;
-              },
-              font: { size: 14, weight: 'bold' as const },
-              color: '#6B7280',
-            },
-          },
-          y: {
-            display: false,
-            max: Math.max(...chartData.datasets[0].data) + 20,
-          },
-        },
-      },
-      plugins: [
-        {
-          id: 'custom-text-plugin',
-          afterDatasetsDraw: (chart) => {
-            const { ctx, data } = chart;
-            const dataset = data.datasets[0].data as number[];
-            const maxValue = Math.max(...dataset);
-            dataset.forEach((value, index) => {
-              const meta = chart.getDatasetMeta(0);
-              const bar = meta.data[index];
-              ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';
-              ctx.font = 'bold 12px Arial';
-              ctx.textAlign = 'center';
-              ctx.fillText(`${value}%`, bar.x, bar.y - 10);
-              ctx.restore();
-            });
-          },
-        },
-      ],
-    });
-  };
+  useEffect(() => {
+    renderChart();
+    return () => {
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
+    };
+  }, [renderChart, barThickness]);
 
   return <canvas ref={canvasRef} className="w-full max-w-[400px]" />;
 }
