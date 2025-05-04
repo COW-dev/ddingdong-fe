@@ -59,7 +59,7 @@ const PieChart = ({ passedData }: Props) => {
       canvas.style.height = `${Math.min(height, maxSize)}px`;
 
       chartInstanceRef.current?.resize();
-    }, 100);
+    }, 20);
   }, []);
 
   const renderChart = useCallback(() => {
