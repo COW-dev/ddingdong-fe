@@ -29,15 +29,15 @@ export default function Accordion({
     <div
       id="accordion-flush"
       data-accordion="collapse"
-      data-active-classes=" bg-white dark:bg-gray-900 text-gray-900 "
+      data-active-classes="bg-white dark:bg-gray-900 text-gray-900"
       data-inactive-classes="text-gray-500 "
     >
-      <h2 id="accordion-flush-heading-1">
+      <h2 id="accordion-flush-heading-1" className="sticky top-0 bg-white p-4">
         <button
           type="button"
           data-te-collapse-init
           className={cn(
-            `flex w-full items-center justify-between border-b border-gray-200 p-4 text-left font-medium text-gray-500 ${
+            `flex w-full items-center justify-between border-b border-gray-200 text-left font-medium text-gray-500 ${
               open ? 'active' : ''
             }`,
             className,
@@ -47,7 +47,7 @@ export default function Accordion({
           aria-controls="accordion-flush-body-1"
           onClick={handleOpen}
         >
-          <span className=" text-lg text-black">{title}</span>
+          <span className="text-lg text-black">{title}</span>
           {open ? (
             <Image src={ArrowUp} alt="화살표" width={15} height={15} />
           ) : (

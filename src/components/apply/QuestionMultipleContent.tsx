@@ -1,9 +1,9 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
 import { useMultipleAnswer } from '@/hooks/api/apply/useMultipleAnswer';
-import BarChart from '../ui/bar-chart';
+import BarChart from '../common/bar-chart';
+import PieChart from '../common/pie-chart';
 import OptionModal from '../ui/OptionModal';
-import PieChart from '../ui/pie-chart';
 
 const componentMap = {
   RADIO: PieChart,
