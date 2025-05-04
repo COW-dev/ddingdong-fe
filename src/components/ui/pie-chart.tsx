@@ -8,6 +8,7 @@ import {
 } from 'chart.js';
 import { ChartItem } from '@/types/apply';
 import { tooltip } from './chart/tooltip';
+import { debounce } from './utils';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
@@ -47,28 +48,32 @@ const PieChart = ({ passedData }: Props) => {
   };
   const chartData = useMemo(() => getChartData(passedData), [passedData]);
 
-  const resizeChart = () => {
-    const { width, height } = canvasRef.current?.getBoundingClientRect() || {};
-    if (canvasRef.current) {
-      canvasRef.current.width = width || 0;
-      canvasRef.current.height = height || 0;
-    }
-  };
+  const handleResize = useMemo(() => {
+    const maxSize = 200;
+    return debounce(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      const { width, height } = canvas.getBoundingClientRect();
+      canvas.style.width = `${Math.min(width, maxSize)}px`;
+      canvas.style.height = `${Math.min(height, maxSize)}px`;
+
+      chartInstanceRef.current?.resize();
+    }, 100);
+  }, []);
 
   const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
-
     if (chartInstanceRef.current) {
       chartInstanceRef.current.data = chartData;
       chartInstanceRef.current.update();
     } else {
-      resizeChart();
       chartInstanceRef.current = new ChartJS(canvasContext, {
         type: 'pie',
         data: chartData,
         options: {
-          responsive: true,
+          responsive: false,
           maintainAspectRatio: false,
           plugins: {
             legend: {
@@ -103,13 +108,16 @@ const PieChart = ({ passedData }: Props) => {
 
   useEffect(() => {
     renderChart();
-    window.addEventListener('resize', renderChart);
     return () => {
       chartInstanceRef.current?.destroy();
       chartInstanceRef.current = null;
-      window.removeEventListener('resize', renderChart);
     };
   }, [renderChart]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <canvas ref={canvasRef} className="flex h-auto w-full max-w-[400px]" />
