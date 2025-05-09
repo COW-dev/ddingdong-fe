@@ -29,6 +29,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   const { data } = useAllClubs();
 
   const router = useRouter();
+  const { recruitStatus } = router.query;
 
   interface MoveToApply {
     (id: number): void;
@@ -119,7 +120,11 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           }`}
           disabled={!isRecruitmentPeriod}
         >
-          {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
+          {isRecruitmentPeriod
+            ? '지원하기'
+            : recruitStatus
+            ? recruitStatus
+            : '모집 마감'}
         </button>
       </div>
       <button
@@ -133,7 +138,11 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
         }`}
         disabled={!isRecruitmentPeriod}
       >
-        {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
+        {isRecruitmentPeriod
+          ? '지원하기'
+          : recruitStatus
+          ? recruitStatus
+          : '모집 마감'}
       </button>
     </>
   );
