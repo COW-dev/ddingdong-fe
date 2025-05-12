@@ -21,9 +21,7 @@ export default function FAQList({
   isEditing,
 }: FAQListProps) {
   const safeFAQ: FAQItemId[] = Array.isArray(FAQ?.data) ? FAQ?.data : [];
-
-  const [cookies] = useCookies(['token', 'role']);
-  const { token } = cookies;
+  const [{ token }] = useCookies(['token', 'role']);
 
   const { mutate: deleteFaq, isLoading } = useDeleteFaq();
 
@@ -37,14 +35,12 @@ export default function FAQList({
   };
 
   const confirmDelete = () => {
-    if (deleteQuestionId !== null) {
-      deleteFaq({ questionId: deleteQuestionId, token });
-      setIsEditing(false);
-      closeModal();
-    }
+    deleteFaq({ questionId: deleteQuestionId!, token });
+    setIsEditing(false);
+    closeModal();
   };
 
-  const cancelDelete = () => {
+  const cancelModal = () => {
     closeModal();
   };
 
@@ -165,20 +161,18 @@ export default function FAQList({
           ))
       )}
 
-      {visible && (
-        <Modal
-          visible={visible}
-          closeModal={closeModal}
-          closeButton={false}
-          modalRef={modalRef}
-        >
-          <AlertDialog
-            type="delete"
-            onConfirm={confirmDelete}
-            onCancel={cancelDelete}
-          />
-        </Modal>
-      )}
+      <Modal
+        visible={visible}
+        closeModal={closeModal}
+        closeButton={false}
+        modalRef={modalRef}
+      >
+        <AlertDialog
+          type="delete"
+          onConfirm={confirmDelete}
+          onCancel={cancelModal}
+        />
+      </Modal>
     </div>
   );
 }
