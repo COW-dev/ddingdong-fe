@@ -12,16 +12,18 @@ import { DeleteFaq } from '@/types/faq';
 export function useDeleteFaq(): UseMutationResult<
   void,
   AxiosError<ErrorType>,
-  DeleteFaq
+  DeleteFaq & { item: string }
 > {
   const queryClient = useQueryClient();
 
   return useMutation(
     async ({ questionId, token }) => await deleteFaq({ questionId, token }),
     {
-      onSuccess: () => {
+      onSuccess: (data, { item }) => {
         queryClient.invalidateQueries({ queryKey: ['faqsAdmin'] });
-        toast.success('삭제되었습니다');
+
+        toast.success(`${item}이 삭제되었습니다`);
+        console.log('FAQ 삭제 성공', item);
       },
       onError: (error) => {
         toast.error('FAQ 삭제를 실패하였습니다');

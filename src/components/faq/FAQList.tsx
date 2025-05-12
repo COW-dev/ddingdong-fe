@@ -28,16 +28,24 @@ export default function FAQList({
   const { openModal, visible, closeModal, modalRef } = useModal();
 
   const [deleteQuestionId, setDeleteQuestionId] = useState<number | null>(null);
+  const [deleteItem, setDeleteItem] = useState<FAQItemId | null>(null);
 
-  const isClickedDeleteButton = (questionId: number) => {
+  const isClickedDeleteButton = (questionId: number, item: FAQItemId) => {
     setDeleteQuestionId(questionId);
+    setDeleteItem(item);
     openModal();
   };
 
   const confirmDelete = () => {
-    deleteFaq({ questionId: deleteQuestionId!, token });
-    setIsEditing(false);
-    closeModal();
+    if (deleteItem) {
+      deleteFaq({
+        questionId: deleteQuestionId!,
+        item: JSON.stringify(deleteItem.question),
+        token,
+      });
+      setIsEditing(false);
+      closeModal();
+    }
   };
 
   const cancelModal = () => {
@@ -126,7 +134,7 @@ export default function FAQList({
                     </div>
                     <Trash2
                       className={'cursor-pointer text-red-400 '}
-                      onClick={() => isClickedDeleteButton(item.id ?? 0)}
+                      onClick={() => isClickedDeleteButton(item.id ?? 0, item)}
                     />
                   </AccordionTrigger>
                   <AccordionContent>

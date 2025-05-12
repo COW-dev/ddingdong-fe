@@ -5,7 +5,7 @@ import { createFaq } from '@/apis/index';
 export const useCreateFaq = (refetch: () => void) => {
   return useMutation(createFaq, {
     onSuccess: () => {
-      toast.success('FAQ 생성을 성공하였습니다');
+      toast.success('FAQ 성공적으로 생성했어요.');
       refetch();
     },
     onError: (error) => {
