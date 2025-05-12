@@ -26,16 +26,16 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
     formId,
   } = info;
 
-  const { data } = useAllClubs();
-
   const router = useRouter();
   const { recruitStatus } = router.query;
 
-  interface MoveToApply {
-    (id: number): void;
-  }
+  const status = {
+    APPLY: '지원하기',
+    RECRUITMENT_CLOSED: '모집 마감',
+    PENDING_STATUS: '모집 예정',
+  };
 
-  const moveToApply: MoveToApply = (id) => {
+  const moveToApply = (id: number) => {
     router.push(`/apply/${id}`);
   };
 
@@ -43,6 +43,13 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   const isRecruitmentPeriod =
     now.isAfter(dayjs(startDate).startOf('day')) &&
     now.isBefore(dayjs(endDate).endOf('day'));
+
+  const recruitmentStatusText = isRecruitmentPeriod
+    ? status.APPLY
+    : recruitStatus
+    ? recruitStatus
+    : status.RECRUITMENT_CLOSED;
+
   return (
     <>
       <div className="flex flex-col">
@@ -100,7 +107,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
                 </>
               )}
               {!startDate && !endDate && (
-                <p className="text-gray-500">모집예정</p>
+                <p className="text-gray-500">{status.PENDING_STATUS}</p>
               )}
             </div>
           </div>
@@ -120,11 +127,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           }`}
           disabled={!isRecruitmentPeriod}
         >
-          {isRecruitmentPeriod
-            ? '지원하기'
-            : recruitStatus
-            ? recruitStatus
-            : '모집 마감'}
+          {recruitmentStatusText}
         </button>
       </div>
       <button
@@ -138,11 +141,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
         }`}
         disabled={!isRecruitmentPeriod}
       >
-        {isRecruitmentPeriod
-          ? '지원하기'
-          : recruitStatus
-          ? recruitStatus
-          : '모집 마감'}
+        {recruitmentStatusText}
       </button>
     </>
   );
