@@ -48,6 +48,16 @@ export default function FAQList({
     setNewFAQs((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const handleChange = (
+    index: number,
+    field: 'question' | 'reply',
+    value: string,
+  ) => {
+    setNewFAQs((prev) =>
+      prev.map((faq, i) => (i === index ? { ...faq, [field]: value } : faq)),
+    );
+  };
+
   return (
     <div className="mt-10 flex flex-col items-center justify-center">
       {safeFAQ.length === 0 && newFAQs.length === 0 && (
@@ -70,13 +80,7 @@ export default function FAQList({
                     placeholder="질문을 입력해주세요"
                     value={item.question}
                     onChange={(e) =>
-                      setNewFAQs((prev) =>
-                        prev.map((faq, i) =>
-                          i === index
-                            ? { ...faq, question: e.target.value }
-                            : faq,
-                        ),
-                      )
+                      handleChange(index, 'question', e.target.value)
                     }
                   />
                   <Trash2
@@ -95,11 +99,7 @@ export default function FAQList({
                     value={item.reply}
                     rows={3}
                     onChange={(e) =>
-                      setNewFAQs((prev) =>
-                        prev.map((faq, i) =>
-                          i === index ? { ...faq, reply: e.target.value } : faq,
-                        ),
-                      )
+                      handleChange(index, 'reply', e.target.value)
                     }
                   />
                 </AccordionContent>
