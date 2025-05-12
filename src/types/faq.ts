@@ -7,7 +7,7 @@ export type Faq = {
 
 export type CreateFaq = {
   token: string;
-  faqData: object;
+  faqData: FAQItem;
 };
 
 export type DeleteFaq = {
