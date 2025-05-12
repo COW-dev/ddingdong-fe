@@ -6,7 +6,7 @@ export const useAllFaq = (token: string) => {
   return useQuery(['faqsAdmin'], () => getAllFaqAdmin(token), {
     enabled: !!token,
     onError: (error) => {
-      toast.error('FAQ 가져오기 실패');
+      toast.error('FAQ 정보를 가져오는데 실패했어요');
     },
   });
 };
