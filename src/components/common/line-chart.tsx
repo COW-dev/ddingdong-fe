@@ -31,7 +31,7 @@ function calculateCompared(previous: ApplyRate, current: ApplyRate) {
   const ratio =
     previous?.count === 0
       ? 0
-      : Number(((countDifference / previous.count) * 100).toFixed(2));
+      : Number(((countDifference / previous?.count) * 100).toFixed(2));
 
   return {
     ...current,
