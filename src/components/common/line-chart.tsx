@@ -29,7 +29,10 @@ type Props = {
 function calculateCompared(previous: ApplyRate, current: ApplyRate) {
   const countDifference = current?.count - previous?.count;
   const ratio =
-    previous?.count === 0 ? 0 : (countDifference / previous?.count) * 100;
+    previous?.count === 0
+      ? 0
+      : Number(((countDifference / previous.count) * 100).toFixed(2));
+
   return {
     ...current,
     comparedToBefore: {
