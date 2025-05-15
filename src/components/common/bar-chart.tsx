@@ -145,6 +145,7 @@ export function BarGraph({ passedData }: Props) {
               const dataset = data.datasets[0].data as number[];
               const maxValue = Math.max(...dataset);
               dataset.forEach((value, index) => {
+                ctx.save();
                 const meta = chart.getDatasetMeta(0);
                 const bar = meta.data[index];
                 ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';

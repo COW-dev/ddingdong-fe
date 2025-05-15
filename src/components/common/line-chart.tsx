@@ -132,6 +132,7 @@ const LineChart = ({ passedData }: Props) => {
               const dataset = data.datasets[0].data as number[];
 
               dataset.forEach((value, index) => {
+                ctx.save();
                 const meta = chart.getDatasetMeta(0);
                 const bar = meta.data[index];
                 ctx.fillStyle =
