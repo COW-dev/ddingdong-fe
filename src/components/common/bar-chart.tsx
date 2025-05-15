@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
+import { debounce } from '@/components/ui/utils';
+import { tooltip } from '@/constants/tooltip';
 import { ChartItem } from '@/types/apply';
-import { tooltip } from '../../constants/tooltip';
 
 ChartJS.register(BarController, BarElement, Tooltip);
 
@@ -18,7 +19,7 @@ export default function BarChart({ passedData }: Props) {
   );
 }
 
-function getBgColorFromCount(passedData: ChartItem[]) {
+function getColorFromCount(passedData: ChartItem[]) {
   const sorteCountData = [...passedData].sort((a, b) => b.count - a.count);
   const colorMap = sorteCountData.map((item, index) => {
     if (index === 0) return '#3B82F6';
@@ -37,29 +38,26 @@ function getBgColorFromCount(passedData: ChartItem[]) {
 
 export function BarGraph({ passedData }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const chartInstanceRef = useRef<ChartJS | null>(null);
+  const getBarThickness = () => {
+    if (typeof window === 'undefined') return 30;
+    return window.innerWidth >= 768 ? 30 : 20;
+  };
 
-  const getBarThickness = useMemo(() => {
-    return typeof window !== 'undefined' && window.innerWidth >= 768 ? 30 : 20;
+  const [barThickness, setBarThickness] = useState(getBarThickness());
+
+  const handleResize = useMemo(() => {
+    return debounce(() => {
+      setBarThickness(getBarThickness());
+    }, 100);
   }, []);
-  const [barThickness, setBarThickness] = useState(getBarThickness);
-
-  const handleResize = useCallback(() => {
-    setBarThickness(getBarThickness);
-  }, [getBarThickness]);
-
-  useEffect(() => {
-    renderChart();
-    return () => chartInstance?.destroy();
-  }, [passedData, barThickness]);
 
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [handleResize]);
+  }, []);
 
-  let chartInstance: ChartJS | null = null;
-
-  const getChartData = () => {
+  const getChartData = (passedData: ChartItem[], barThickness: number) => {
     const labels = passedData.map((item) => item.label);
     const rates = passedData.map((item) => item.ratio);
     const counts = passedData.map((item) => item.count);
@@ -70,98 +68,120 @@ export function BarGraph({ passedData }: Props) {
       datasets: [
         {
           data: rates,
-          backgroundColor: getBgColorFromCount(passedData),
+          backgroundColor: getColorFromCount(passedData),
           barThickness,
         },
       ],
     };
   };
 
-  const renderChart = () => {
+  const chartData = useMemo(
+    () => getChartData(passedData, barThickness),
+    [passedData, barThickness],
+  );
+
+  const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
-    chartInstance = new ChartJS(canvasContext, {
-      type: 'bar',
-      data: getChartData(),
-      options: {
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            ...tooltip,
-            callbacks: {
-              title: () => [],
-              label: (data) => {
-                const counts = getChartData().counts;
-                return `${counts[data.dataIndex]}명`;
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.data = chartData;
+      const tooltipCallbacks =
+        chartInstanceRef.current.options.plugins?.tooltip?.callbacks;
+      if (tooltipCallbacks) {
+        tooltipCallbacks.label = (data) => {
+          const counts = chartData.counts;
+          return `${counts[data.dataIndex]}명`;
+        };
+      }
+      chartInstanceRef.current.update();
+    } else {
+      chartInstanceRef.current = new ChartJS(canvasContext, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              ...tooltip,
+              callbacks: {
+                title: () => [],
+                label: (data) => {
+                  const counts = chartData.counts;
+                  return `${counts[data.dataIndex]}명`;
+                },
               },
             },
           },
-        },
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            grid: { display: false },
-            ticks: {
-              maxRotation: 0,
-              autoSkip: false,
-              callback: (value: string | number) => {
-                const label = String(getChartData().labels[value as number]);
-                return label.length > 4 ? label.substring(0, 3) + '..' : label;
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                maxRotation: 0,
+                autoSkip: false,
+                callback: (value: string | number) => {
+                  const label = String(chartData.labels[value as number]);
+                  return label.length > 4
+                    ? label.substring(0, 3) + '..'
+                    : label;
+                },
+                font: { size: 14, weight: 'bold' as const },
+                color: '#6B7280',
               },
-              font: { size: 14, weight: 'bold' as const },
-              color: '#6B7280',
+            },
+            y: {
+              display: false,
+              max: Math.max(...chartData.datasets[0].data) + 20,
             },
           },
-          y: {
-            display: false,
-            max: Math.max(...getChartData().datasets[0].data) + 20,
-          },
         },
-      },
-      plugins: [
-        {
-          id: 'custom-text-plugin',
-          afterDatasetsDraw: (chart) => {
-            const { ctx, data } = chart;
-            const dataset = data.datasets[0].data as number[];
-            const maxValue = Math.max(...dataset);
-            dataset.forEach((value, index) => {
-              const meta = chart.getDatasetMeta(0);
-              const bar = meta.data[index];
-              ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';
-              ctx.font = 'bold 12px Arial';
-              ctx.textAlign = 'center';
-              ctx.fillText(`${value}%`, bar.x, bar.y - 10);
-              ctx.restore();
-            });
+        plugins: [
+          {
+            id: 'custom-text-plugin',
+            afterDatasetsDraw: (chart) => {
+              const { ctx, data } = chart;
+              const dataset = data.datasets[0].data as number[];
+              const maxValue = Math.max(...dataset);
+              dataset.forEach((value, index) => {
+                ctx.save();
+                const meta = chart.getDatasetMeta(0);
+                const bar = meta.data[index];
+                ctx.fillStyle = value === maxValue ? '#3B82F6' : '#6B7280';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${value}%`, bar.x, bar.y - 10);
+                ctx.restore();
+              });
+            },
           },
-        },
-      ],
-    });
-  };
+        ],
+      });
+    }
+  }, [chartData]);
+
+  useEffect(() => {
+    renderChart();
+    return () => {
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
+    };
+  }, [renderChart, barThickness]);
 
   return <canvas ref={canvasRef} className="w-full max-w-[400px]" />;
 }
 
 function BarList({ passedData }: Props) {
+  const itemBorderColors = getColorFromCount(passedData);
+
   return (
     <div className="z-30 flex w-full flex-col gap-4">
       {passedData.map((item, index) => (
         <div
           key={index}
-          className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm  outline-none md:text-base"
-          style={{
-            backgroundColor:
-              getBgColorFromCount(passedData)[index] === '#E5E7EB'
-                ? 'white'
-                : getBgColorFromCount(passedData)[index],
-            color:
-              getBgColorFromCount(passedData)[index] === '#3B82F6'
-                ? 'white'
-                : '#6B7280',
-          }}
+          className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm text-[#6B7280] outline-none md:text-base"
+          style={{ borderColor: itemBorderColors[index] }}
         >
           <span className="font-semibold">{item.label}</span>
           <span className="opacity-40">|</span>
