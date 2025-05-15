@@ -67,6 +67,12 @@ const PieChart = ({ passedData }: Props) => {
     if (!canvasContext) return;
     if (chartInstanceRef.current) {
       chartInstanceRef.current.data = chartData;
+      const tooltipCallbacks =
+        chartInstanceRef.current.options.plugins?.tooltip?.callbacks;
+      if (tooltipCallbacks) {
+        tooltipCallbacks.label = (data) =>
+          `${chartData.ratios[data.dataIndex]}%`;
+      }
       chartInstanceRef.current.update();
     } else {
       chartInstanceRef.current = new ChartJS(canvasContext, {

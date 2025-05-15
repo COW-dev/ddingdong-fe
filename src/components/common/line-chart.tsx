@@ -84,6 +84,14 @@ const LineChart = ({ passedData }: Props) => {
 
     if (chartInstanceRef.current) {
       chartInstanceRef.current.data = chartData;
+      const tooltipCallbacks =
+        chartInstanceRef.current.options.plugins?.tooltip?.callbacks;
+      if (tooltipCallbacks) {
+        tooltipCallbacks.label = (data) => {
+          const counts = chartData.rates;
+          return `${counts[data.dataIndex]}%`;
+        };
+      }
       chartInstanceRef.current.update();
     } else {
       chartInstanceRef.current = new ChartJS(canvasContext, {
