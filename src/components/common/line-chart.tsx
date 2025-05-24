@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -29,7 +29,10 @@ type Props = {
 function calculateCompared(previous: ApplyRate, current: ApplyRate) {
   const countDifference = current?.count - previous?.count;
   const ratio =
-    previous?.count === 0 ? 0 : (countDifference / previous?.count) * 100;
+    previous?.count === 0
+      ? 0
+      : Number(((countDifference / previous?.count) * 100).toFixed(2));
+
   return {
     ...current,
     comparedToBefore: {
@@ -41,9 +44,9 @@ function calculateCompared(previous: ApplyRate, current: ApplyRate) {
 
 const LineChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  let chartInstance: ChartJS | null = null;
+  const chartInstanceRef = useRef<ChartJS | null>(null);
 
-  const getChartData = () => {
+  const getChartData = (passedData: ApplyRate[]) => {
     const club =
       typeof window !== 'undefined'
         ? JSON.parse(localStorage.getItem('club') ?? '')
@@ -73,67 +76,86 @@ const LineChart = ({ passedData }: Props) => {
     };
   };
 
-  const renderChart = () => {
+  const chartData = useMemo(() => getChartData(passedData), [passedData]);
+
+  const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
 
-    chartInstance = new ChartJS(canvasContext, {
-      type: 'line',
-      data: getChartData(),
-      options: {
-        responsive: true,
-        plugins: {
-          legend: { display: false },
-          tooltip: {
-            ...tooltip,
-            callbacks: {
-              title: () => [],
-              label: (data) => {
-                const counts = getChartData().rates;
-                return `${counts[data.dataIndex]}%`;
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.data = chartData;
+      const tooltipCallbacks =
+        chartInstanceRef.current.options.plugins?.tooltip?.callbacks;
+      if (tooltipCallbacks) {
+        tooltipCallbacks.label = (data) => {
+          const counts = chartData.rates;
+          return `${counts[data.dataIndex]}%`;
+        };
+      }
+      chartInstanceRef.current.update();
+    } else {
+      chartInstanceRef.current = new ChartJS(canvasContext, {
+        type: 'line',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              ...tooltip,
+              callbacks: {
+                title: () => [],
+                label: (data) => {
+                  const counts = chartData.rates;
+                  return `${counts[data.dataIndex]}%`;
+                },
               },
             },
           },
-        },
-        scales: {
-          x: {
-            offset: true,
-            grid: { display: false },
+          scales: {
+            x: {
+              offset: true,
+              grid: { display: false },
+            },
+            y: {
+              display: false,
+              beginAtZero: true,
+              max: Math.max(...chartData.datasets[0].data) + 20,
+            },
           },
-          y: {
-            display: false,
-            beginAtZero: true,
-            max: Math.max(...getChartData().datasets[0].data) + 20,
-          },
         },
-      },
-      plugins: [
-        {
-          id: 'custom-text-plugin',
-          afterDatasetsDraw: (chart) => {
-            const { ctx, data } = chart;
-            const dataset = data.datasets[0].data as number[];
+        plugins: [
+          {
+            id: 'custom-text-plugin',
+            afterDatasetsDraw: (chart) => {
+              const { ctx, data } = chart;
+              const dataset = data.datasets[0].data as number[];
 
-            dataset.forEach((value, index) => {
-              const meta = chart.getDatasetMeta(0);
-              const bar = meta.data[index];
-              ctx.fillStyle =
-                index === dataset.length - 1 ? '#3B82F6' : '#6B7280';
-              ctx.font = 'bold 12px Arial';
-              ctx.textAlign = 'center';
-              ctx.fillText(`${value}명`, bar.x, bar.y - 15);
-              ctx.restore();
-            });
+              dataset.forEach((value, index) => {
+                ctx.save();
+                const meta = chart.getDatasetMeta(0);
+                const bar = meta.data[index];
+                ctx.fillStyle =
+                  index === dataset.length - 1 ? '#3B82F6' : '#6B7280';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${value}명`, bar.x, bar.y - 15);
+                ctx.restore();
+              });
+            },
           },
-        },
-      ],
-    });
-  };
+        ],
+      });
+    }
+  }, [chartData]);
 
   useEffect(() => {
     renderChart();
-    return () => chartInstance?.destroy();
-  }, [passedData]);
+    return () => {
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
+    };
+  }, [renderChart]);
 
   return <canvas ref={canvasRef} className="w-full" />;
 };

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo, useCallback } from 'react';
 import {
   Chart as ChartJS,
   PieController,
@@ -6,8 +6,9 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+import { tooltip } from '@/constants/tooltip';
 import { ChartItem } from '@/types/apply';
-import { tooltip } from '../../constants/tooltip';
+import { debounce } from '../ui/utils';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
@@ -17,7 +18,7 @@ type Props = {
 
 const PieChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  let chartInstance: ChartJS | null = null;
+  const chartInstanceRef = useRef<ChartJS | null>(null);
 
   const getPieChartStyle = (ratios: number[]) => {
     return {
@@ -27,7 +28,7 @@ const PieChart = ({ passedData }: Props) => {
     };
   };
 
-  const getChartData = () => {
+  const getChartData = (passedData: ChartItem[]) => {
     const labels = passedData.map((item) =>
       item.label.length > 7
         ? `${item.label.slice(0, 6)}... (${item.count}명)`
@@ -45,68 +46,84 @@ const PieChart = ({ passedData }: Props) => {
       ],
     };
   };
+  const chartData = useMemo(() => getChartData(passedData), [passedData]);
 
-  const resizeChart = () => {
-    const { width, height } = canvasRef.current?.getBoundingClientRect() || {};
-    if (canvasRef.current) {
-      canvasRef.current.width = width || 0;
-      canvasRef.current.height = height || 0;
-    }
-  };
+  const handleResize = useMemo(() => {
+    const maxSize = 200;
+    return debounce(() => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
 
-  const renderChart = () => {
-    if (chartInstance) {
-      chartInstance.destroy();
-    }
+      const { width, height } = canvas.getBoundingClientRect();
+      canvas.style.width = `${Math.min(width, maxSize)}px`;
+      canvas.style.height = `${Math.min(height, maxSize)}px`;
 
+      chartInstanceRef.current?.resize();
+    }, 20);
+  }, []);
+
+  const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
     if (!canvasContext) return;
-
-    resizeChart();
-    chartInstance = new ChartJS(canvasContext, {
-      type: 'pie',
-      data: getChartData(),
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            position: 'right' as const,
-            align: 'center' as const,
-            labels: {
-              usePointStyle: true,
-              font: {
-                family: 'Pretendard',
-                size: 14,
+    if (chartInstanceRef.current) {
+      chartInstanceRef.current.data = chartData;
+      const tooltipCallbacks =
+        chartInstanceRef.current.options.plugins?.tooltip?.callbacks;
+      if (tooltipCallbacks) {
+        tooltipCallbacks.label = (data) =>
+          `${chartData.ratios[data.dataIndex]}%`;
+      }
+      chartInstanceRef.current.update();
+    } else {
+      chartInstanceRef.current = new ChartJS(canvasContext, {
+        type: 'pie',
+        data: chartData,
+        options: {
+          responsive: false,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'right' as const,
+              align: 'center' as const,
+              labels: {
+                usePointStyle: true,
+                font: {
+                  family: 'Pretendard',
+                  size: 14,
+                },
+                color: '#1F2937',
               },
-              color: '#1F2937',
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              onClick: () => {},
             },
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
-            onClick: () => {},
-          },
-          tooltip: {
-            ...tooltip,
-            callbacks: {
-              title: () => [],
-              label: (data) => {
-                const ratios = getChartData().ratios;
-                return `${ratios[data.dataIndex]}%`;
+            tooltip: {
+              ...tooltip,
+              callbacks: {
+                title: () => [],
+                label: (data) => {
+                  const ratios = chartData.ratios;
+                  return `${ratios[data.dataIndex]}%`;
+                },
               },
             },
           },
         },
-      },
-    });
-  };
+      });
+    }
+  }, [chartData]);
 
   useEffect(() => {
     renderChart();
-    window.addEventListener('resize', renderChart);
     return () => {
-      chartInstance?.destroy();
-      window.removeEventListener('resize', renderChart);
+      chartInstanceRef.current?.destroy();
+      chartInstanceRef.current = null;
     };
-  }, [passedData]);
+  }, [renderChart]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <canvas ref={canvasRef} className="flex h-auto w-full max-w-[550px]" />
