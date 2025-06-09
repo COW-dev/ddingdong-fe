@@ -15,8 +15,8 @@ export default function Index() {
   const termList = useReportTerms(token).data?.data;
 
   const filterPeriod = (term: number) => {
-    if (term > currentTerm) return BUTTON_TYPE.BEFORE;
-    else if (term === currentTerm) return BUTTON_TYPE.NOW;
+    //  if (term > currentTerm) return BUTTON_TYPE.BEFORE;
+    if (term === currentTerm) return BUTTON_TYPE.NOW;
     else return BUTTON_TYPE.AFTER;
   };
 
