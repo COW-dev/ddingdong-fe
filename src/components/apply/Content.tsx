@@ -119,19 +119,16 @@ export default function Content({
       {type === 'LONG_TEXT' && (
         <TextArea
           placeholder="서술형 응답 (최대 1,000자 이내)"
-          disabled={isClosed}
+          disabled={true}
         />
       )}
       {type === 'TEXT' && (
-        <TextArea
-          placeholder="단답형 응답 (최대 300자 이내)"
-          disabled={isClosed}
-        />
+        <TextArea placeholder="단답형 응답 (최대 300자 이내)" disabled={true} />
       )}
       {type === 'FILE' && (
         <FileUpload
           onFilesSelected={(files) => console.log(files)}
-          disabled={isClosed}
+          disabled={true}
         />
       )}
     </div>
