@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -10,6 +10,7 @@ import Field from '@/components/apply/Field';
 import FormEditButtons from '@/components/apply/FormEditButtons';
 import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
+import { useFormStore } from '@/store/form';
 import { FormState, FormField } from '@/types/form';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
@@ -24,20 +25,51 @@ type ManageFormType = {
 
 export default function ManageForm({ formData, id, onReset }: ManageFormType) {
   const router = useRouter();
+  const [formId, setFormId] = useState<string>('');
 
   const isPastStartDate = formData?.startDate
     ? new Date(formData.startDate) < new Date()
     : false;
 
-  const [mode, setMode] = useState<'view' | 'edit'>(
-    formData == undefined ? 'edit' : 'view',
-  );
+  const {
+    setServerForm,
+    getForm,
+    updateFormField,
+    isModified,
+    setMode,
+    getMode,
+    getFocusSection,
+    setFocusSection,
+    addField,
+    createNewForm,
+  } = useFormStore();
+
+  useEffect(() => {
+    if (id && formData) {
+      const idStr = id.toString();
+      setFormId(idStr);
+      setServerForm(idStr, {
+        title: formData.title ?? '',
+        description: formData.description ?? '',
+        hasInterview: formData.hasInterview ?? false,
+        sections: formData.sections ?? ['공통'],
+        startDate: formData.startDate ?? null,
+        endDate: formData.endDate ?? null,
+        formFields: formData.formFields ?? [],
+      });
+    } else if (!formData) {
+      const tempId = createNewForm();
+      setFormId(tempId);
+    }
+  }, [id, formData, setServerForm, createNewForm]);
+
+  const formState = getForm(formId);
+  const mode = getMode(formId);
+  const focusSection = getFocusSection(formId);
 
   const isDisabled = mode === 'view' || isPastStartDate;
-
   const isEditableRegardlessOfPeriod = mode === 'view';
 
-  const [focusSection, setFocusSection] = useState('공통');
   const baseField: FormField = {
     section: focusSection,
     options: ['옵션1'],
@@ -47,75 +79,37 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
     order: 0,
   };
 
-  const [formState, setFormState] = useState<FormState>({
-    title: formData?.title ?? '',
-    description: formData?.description ?? '',
-    hasInterview: formData?.hasInterview ?? false,
-    sections: formData?.sections ?? ['공통'],
-    startDate: formData?.startDate ?? null,
-    endDate: formData?.endDate ?? null,
-    formFields: formData?.formFields ?? [],
-  });
-
   const handleHasInterviewToggle = () => {
-    setFormState((prevState) => ({
-      ...prevState,
-      hasInterview: !prevState.hasInterview,
-    }));
+    updateFormField(formId, 'hasInterview', !formState?.hasInterview);
   };
 
   const handleTitleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      title: e.target.value,
-    }));
+    updateFormField(formId, 'title', e.target.value);
   };
 
   const handleDateChange = (date: any) => {
     const formattedEndDate = new Date(date.endDate).toISOString().split('T')[0];
-
-    setFormState((prevState) => ({
-      ...prevState,
-      endDate: formattedEndDate,
-      ...(isDisabled ? {} : { startDate: date.startDate }),
-    }));
+    updateFormField(formId, 'endDate', formattedEndDate);
+    if (!isDisabled) {
+      updateFormField(formId, 'startDate', date.startDate);
+    }
   };
 
   const handleDescriptionChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      description: e.target.value,
-    }));
+    updateFormField(formId, 'description', e.target.value);
   };
 
-  const addField = () => {
-    const newField: FormField = {
-      ...baseField,
-      order: formState.formFields.length + 1,
-    };
-
-    setFormState((prevState) => ({
-      ...prevState,
-      formFields: [...prevState.formFields, newField],
-    }));
+  const handleAddField = () => {
+    addField(formId, baseField);
   };
 
-  const deleteField = (section: string, index: number) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      formFields: prevState.formFields.filter(
-        (field) =>
-          !(
-            field.section === section &&
-            prevState.formFields.indexOf(field) === index
-          ),
-      ),
-    }));
-  };
+  if (!formState || !formId) {
+    return <div>데이터를 불러오는 중입니다.</div>;
+  }
 
   return (
     <div>
@@ -138,11 +132,19 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
         <FormEditButtons
           formData={formData ? formData : undefined}
           mode={mode}
-          setMode={setMode}
+          setMode={(newMode) => {
+            if (typeof newMode === 'function') {
+              const updatedMode = newMode(mode);
+              setMode(formId, updatedMode);
+            } else {
+              setMode(formId, newMode);
+            }
+          }}
           onReset={onReset ? onReset : () => undefined}
           formState={formState}
           id={id ? id : undefined}
           isPastStartDate={isPastStartDate}
+          formId={formId}
         />
       </div>
 
@@ -211,29 +213,33 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
 
       <div className="mt-6">
         <Sections
-          setFormState={setFormState}
           focusSection={focusSection}
           sections={formState.sections}
-          setFocusSection={setFocusSection}
+          setFocusSection={(section) => setFocusSection(formId, section)}
           isClosed={isDisabled}
-          formState={formState}
           baseField={baseField}
+          formId={formId}
         />
-        {focusSection == '공통' && <CommonQuestion disabled={true} />}
+        {focusSection == '공통' && (
+          <CommonQuestion disabled={true} formId={formId} />
+        )}
 
         {formState.formFields
           .filter((field: FormField) => field.section === focusSection)
-          .map((field, index) => {
+          .map((field) => {
+            const actualIndex = formState.formFields.findIndex(
+              (f) => f === field,
+            );
+
             return (
-              <div key={`${field.section}-${index}`}>
+              <div key={`${field.section}-${actualIndex}`}>
                 <Field
-                  key={`${field.section}-${index}`}
-                  index={index}
-                  deleteQuestion={() => deleteField(field.section, index)}
-                  setFormState={setFormState}
+                  key={`${field.section}-${actualIndex}`}
+                  index={actualIndex}
                   focusSection={focusSection}
                   isClosed={isDisabled}
                   fieldData={field}
+                  formId={formId}
                 />
               </div>
             );
@@ -241,7 +247,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
       </div>
       {!isDisabled && (
         <button
-          onClick={addField}
+          onClick={handleAddField}
           className="fixed bottom-24 right-[calc(10vw)] flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-[calc(5vw)] lg:right-[calc(2vw)]"
         >
           <Image src={AddForm} width={40} height={40} alt="질문 추가하기" />

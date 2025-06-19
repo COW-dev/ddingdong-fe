@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { InfoIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {
@@ -8,17 +8,17 @@ import {
   TooltipProvider,
 } from '@/components/ui/tooltip';
 import useModal from '@/hooks/common/useModal';
-import { FormState, QuestionField } from '@/types/form';
+import { useFormStore } from '@/store/form';
+import { QuestionField } from '@/types/form';
 import Prompt from './Prompt';
 
 type SectionsProps = {
   focusSection: string;
-  setFocusSection: Dispatch<SetStateAction<string>>;
+  setFocusSection: (section: string) => void;
   sections: string[];
   isClosed: boolean;
-  setFormState: React.Dispatch<React.SetStateAction<FormState>>;
-  formState: FormState;
   baseField: QuestionField;
+  formId: string;
 };
 
 export default function Sections({
@@ -26,10 +26,12 @@ export default function Sections({
   setFocusSection,
   sections,
   isClosed,
-  setFormState,
-  formState,
   baseField,
+  formId,
 }: SectionsProps) {
+  const { getForm, updateFormField, addField } = useFormStore();
+  const formState = getForm(formId);
+
   const [contextMenu, setContextMenu] = useState<{ section: string | null }>({
     section: null,
   });
@@ -37,6 +39,8 @@ export default function Sections({
   const [modalMode, setModalMode] = useState<'rename' | 'add' | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
   const { openModal, visible, closeModal, modalRef } = useModal();
+
+  if (!formState) return null;
 
   const handleContextMenu = (e: React.MouseEvent, sectionName: string) => {
     e.preventDefault();
@@ -59,18 +63,14 @@ export default function Sections({
       return;
     }
 
-    setFormState((prevState) => ({
-      ...prevState,
-      sections: [...prevState.sections, trimmedName],
-      formFields: [
-        ...prevState.formFields,
-        {
-          ...baseField,
-          section: trimmedName,
-          order: prevState.formFields.length + 1,
-        },
-      ],
-    }));
+    const newSections = [...formState.sections, trimmedName];
+    updateFormField(formId, 'sections', newSections);
+
+    addField(formId, {
+      ...baseField,
+      section: trimmedName,
+      order: formState.formFields.length + 1,
+    });
 
     setFocusSection(trimmedName);
   };
@@ -94,11 +94,8 @@ export default function Sections({
         : field,
     );
 
-    setFormState({
-      ...formState,
-      sections: newSections,
-      formFields: newFormFields,
-    });
+    updateFormField(formId, 'sections', newSections);
+    updateFormField(formId, 'formFields', newFormFields);
 
     toast.success('섹션 이름이 변경되었습니다.');
     setFocusSection(trimmedName);
@@ -113,11 +110,8 @@ export default function Sections({
       (field) => field.section !== sectionName,
     );
 
-    setFormState({
-      ...formState,
-      sections: newSections,
-      formFields: newFormFields,
-    });
+    updateFormField(formId, 'sections', newSections);
+    updateFormField(formId, 'formFields', newFormFields);
 
     toast.success('섹션이 삭제되었습니다.');
 

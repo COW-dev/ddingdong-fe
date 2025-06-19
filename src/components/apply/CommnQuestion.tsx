@@ -3,58 +3,24 @@ import { departmentInfo } from '@/constants/department';
 import BaseInput from './BaseInput';
 import { StepDropdown } from './StepDropdown';
 
-interface RequiredQuestions {
-  name: string;
-  studentNumber: string;
-  department: string;
-  phoneNumber: string;
-  email: string;
-}
-
 interface CommonQuestionProps {
   disabled?: boolean;
-  requiredQuestions?: RequiredQuestions;
-  setRequiredQuestions?: React.Dispatch<
-    React.SetStateAction<RequiredQuestions | Partial<RequiredQuestions>>
-  >;
+  formId: string;
 }
 
 export default function CommonQuestion({
   disabled = false,
-  requiredQuestions,
-  setRequiredQuestions,
+  formId,
 }: CommonQuestionProps) {
-  const nameRef = useRef(requiredQuestions?.name || '');
-  const studentNumberRef = useRef(requiredQuestions?.studentNumber || '');
-  const phoneNumberRef = useRef(requiredQuestions?.phoneNumber || '');
-  const emailRef = useRef(requiredQuestions?.email || '');
+  const nameRef = useRef('');
+  const studentNumberRef = useRef('');
+  const phoneNumberRef = useRef('');
+  const emailRef = useRef('');
+  const departmentRef = useRef('');
 
-  const handleBlur = useCallback(
-    (field: keyof RequiredQuestions, value: string) => {
-      if (setRequiredQuestions) {
-        setRequiredQuestions(
-          (prev) =>
-            ({
-              ...prev,
-              [field]: value ?? '',
-            } as RequiredQuestions),
-        );
-      }
-    },
-    [setRequiredQuestions],
-  );
-
-  const handleDepartmentChange = useCallback(
-    (selectedDept: string) => {
-      if (setRequiredQuestions) {
-        setRequiredQuestions((prev) => ({
-          ...prev,
-          department: selectedDept,
-        }));
-      }
-    },
-    [setRequiredQuestions],
-  );
+  const handleDepartmentChange = useCallback((selectedDept: string) => {
+    departmentRef.current = selectedDept;
+  }, []);
 
   return (
     <div className="mb-3 flex flex-col gap-5 rounded-lg border border-gray-200 px-6 py-7">
@@ -65,7 +31,6 @@ export default function CommonQuestion({
           disabled={disabled}
           defaultValue={nameRef.current}
           onChange={(e) => (nameRef.current = e.target.value)}
-          onBlur={() => handleBlur('name', nameRef.current)}
         />
         <BaseInput
           placeholder="학번을 입력해 주세요."
@@ -73,14 +38,13 @@ export default function CommonQuestion({
           disabled={disabled}
           defaultValue={studentNumberRef.current}
           onChange={(e) => (studentNumberRef.current = e.target.value)}
-          onBlur={() => handleBlur('studentNumber', studentNumberRef.current)}
         />
         <StepDropdown
           contents={departmentInfo}
           label={'학과'}
           disabled={disabled}
           selectItem={handleDepartmentChange}
-          selectedContent={requiredQuestions?.department || ''}
+          selectedContent={departmentRef.current}
         />
       </div>
 
@@ -91,7 +55,6 @@ export default function CommonQuestion({
           disabled={disabled}
           defaultValue={phoneNumberRef.current}
           onChange={(e) => (phoneNumberRef.current = e.target.value)}
-          onBlur={() => handleBlur('phoneNumber', phoneNumberRef.current)}
         />
         <BaseInput
           placeholder="이메일을 입력해 주세요."
@@ -99,7 +62,6 @@ export default function CommonQuestion({
           disabled={disabled}
           defaultValue={emailRef.current}
           onChange={(e) => (emailRef.current = e.target.value)}
-          onBlur={() => handleBlur('email', emailRef.current)}
         />
       </div>
 

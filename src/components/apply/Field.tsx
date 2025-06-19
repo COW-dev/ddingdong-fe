@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { Trash2 } from 'lucide-react';
-import { QuestionType, FormState, FormField } from '@/types/form';
+import { useFormStore } from '@/store/form';
+import { QuestionType, FormField } from '@/types/form';
 import BaseInput from './BaseInput';
 import Content from './Content';
 import Dropdown from './Dropdown';
@@ -10,19 +11,19 @@ type Props = {
   index: number;
   focusSection: string;
   isClosed?: boolean;
-  setFormState: React.Dispatch<React.SetStateAction<FormState>>;
-  deleteQuestion: (sectionName: string | undefined, index: number) => void;
   fieldData: FormField;
+  formId: string;
 };
 
 export default function Field({
   index,
   focusSection,
-  setFormState,
   isClosed,
-  deleteQuestion,
   fieldData,
+  formId,
 }: Props) {
+  const { updateField, deleteField } = useFormStore();
+
   const types: QuestionType[] = [
     'CHECK_BOX',
     'RADIO',
@@ -34,44 +35,43 @@ export default function Field({
   const selectedTypeRef = useRef<QuestionType>(fieldData.type as QuestionType);
   const enabledRef = useRef<boolean>(fieldData.required);
 
-  const updateField = useCallback(
+  const handleFieldUpdate = useCallback(
     (field: keyof FormField, value: any) => {
-      setFormState((prev) => ({
-        ...prev,
-        formFields: prev.formFields.map((fieldItem, fieldIndex) =>
-          fieldIndex === index ? { ...fieldItem, [field]: value } : fieldItem,
-        ),
-      }));
+      updateField(formId, index, { [field]: value });
     },
-    [index, setFormState],
+    [formId, index, updateField],
   );
 
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      updateField('question', e.target.value);
+      handleFieldUpdate('question', e.target.value);
     },
-    [updateField],
+    [handleFieldUpdate],
   );
 
   const handleTypeChange = useCallback(
     (value: QuestionType) => {
       selectedTypeRef.current = value;
-      updateField('type', value);
-      updateField(
+      handleFieldUpdate('type', value);
+      handleFieldUpdate(
         'options',
         ['RADIO', 'CHECK_BOX'].includes(value) ? ['옵션1'] : [],
       );
     },
-    [updateField],
+    [handleFieldUpdate],
   );
 
   const handleSwitchChange = useCallback(
     (value: boolean) => {
       enabledRef.current = value;
-      updateField('required', value);
+      handleFieldUpdate('required', value);
     },
-    [updateField],
+    [handleFieldUpdate],
   );
+
+  const handleDeleteQuestion = useCallback(() => {
+    deleteField(formId, focusSection, index);
+  }, [formId, focusSection, index, deleteField]);
 
   return (
     <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-8 px-6">
@@ -95,9 +95,9 @@ export default function Field({
         <Content
           index={index}
           type={selectedTypeRef.current}
-          setFormState={setFormState}
           isClosed={isClosed ?? false}
           fieldData={fieldData}
+          formId={formId}
         />
       </div>
 
@@ -112,7 +112,7 @@ export default function Field({
           </div>
           <Trash2
             className="cursor-pointer text-sm text-gray-500"
-            onClick={() => deleteQuestion(focusSection, index)}
+            onClick={handleDeleteQuestion}
           />
         </div>
       )}

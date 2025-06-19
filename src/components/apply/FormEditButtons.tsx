@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
 import { useUpdateFormDeadline } from '@/hooks/api/apply/useUpdateFormDeadline';
+import { useFormStore } from '@/store/form';
 import { FormState } from '@/types/form';
 
 type ModeType = 'view' | 'edit';
@@ -15,6 +16,7 @@ type Props = {
   formState: FormState;
   id: number | undefined;
   isPastStartDate: boolean;
+  formId: string;
 };
 
 export default function FormEditButtons({
@@ -25,8 +27,11 @@ export default function FormEditButtons({
   setMode,
   formState,
   id,
+  formId,
 }: Props) {
   const [{ token }] = useCookies(['token']);
+  const { saveChanges, updateFormId, resetToOriginal } = useFormStore();
+
   const newFormMutation = useNewForm(token);
   const updateFormMutation = useUpdateForm(setMode);
   const updateFormDeadlineMutation = useUpdateFormDeadline();
@@ -34,37 +39,66 @@ export default function FormEditButtons({
   const onClickEditButton = () => {
     setMode('edit');
   };
+
   const handleCreateForm = () => {
-    newFormMutation.mutate({
-      ...formState,
-      startDate: formState.startDate || '',
-      endDate: formState.endDate || '',
-    });
+    newFormMutation.mutate(
+      {
+        ...formState,
+        startDate: formState.startDate || '',
+        endDate: formState.endDate || '',
+      },
+      {
+        onSuccess: (response) => {
+          const newFormId = response.data.id;
+          updateFormId(formId, newFormId);
+          saveChanges(newFormId.toString());
+        },
+      },
+    );
   };
+
   const onClickCancelButton = () => {
+    if (id) {
+      resetToOriginal(formId);
+    }
     setMode('view');
     onReset();
   };
+
   const handleUpdateForm = () => {
     if (id === undefined) {
       return;
     }
     if (isPastStartDate) {
-      updateFormDeadlineMutation.mutate({
-        token,
-        formId: id,
-        endDate: formState.endDate || '',
-      });
-    } else {
-      updateFormMutation.mutate({
-        token,
-        formId: id,
-        formData: {
-          ...formState,
-          startDate: formState.startDate || '',
+      updateFormDeadlineMutation.mutate(
+        {
+          token,
+          formId: id,
           endDate: formState.endDate || '',
         },
-      });
+        {
+          onSuccess: () => {
+            saveChanges(formId);
+          },
+        },
+      );
+    } else {
+      updateFormMutation.mutate(
+        {
+          token,
+          formId: id,
+          formData: {
+            ...formState,
+            startDate: formState.startDate || '',
+            endDate: formState.endDate || '',
+          },
+        },
+        {
+          onSuccess: () => {
+            saveChanges(formId);
+          },
+        },
+      );
     }
   };
 

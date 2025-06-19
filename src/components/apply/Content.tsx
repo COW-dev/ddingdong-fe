@@ -1,6 +1,7 @@
 import { useCallback, useMemo } from 'react';
 import Image from 'next/image';
-import { FormField, FormState } from '@/types/form';
+import { useFormStore } from '@/store/form';
+import { FormField } from '@/types/form';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
 import CloseIcon from '../../assets/cancel.svg';
@@ -11,34 +12,29 @@ type Props = {
   index: number;
   type: string;
   fieldData: FormField;
-  setFormState: React.Dispatch<React.SetStateAction<FormState>>;
   isClosed: boolean;
+  formId: string;
 };
 
 export default function Content({
   index,
   type,
   fieldData,
-  setFormState,
   isClosed,
+  formId,
 }: Props) {
+  const { updateField } = useFormStore();
+
   const localOptions = useMemo(
     () => fieldData.options || ['옵션1'],
-    [fieldData.options],
+    [fieldData],
   );
 
   const updateOption = useCallback(
     (newOptions: string[]) => {
-      setFormState((prevState: FormState) => ({
-        ...prevState,
-        formFields: prevState.formFields.map((fieldItem, fieldIndex) =>
-          fieldIndex === index
-            ? { ...fieldItem, options: newOptions }
-            : fieldItem,
-        ),
-      }));
+      updateField(formId, index, { options: newOptions });
     },
-    [index, setFormState],
+    [formId, index, updateField],
   );
 
   const handleAddOption = useCallback(() => {

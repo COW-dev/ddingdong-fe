@@ -10,9 +10,9 @@ export function useNewForm(token: string) {
 
   return useMutation({
     mutationFn: (formData: CreateFormData) => createForm(token, formData),
-    onSuccess: () => {
+    onSuccess: async () => {
       toast.success('폼 생성을 성공하였습니다!');
-      router.push('/apply');
+      await router.push('/apply');
     },
     onError: (error: AxiosError<{ message?: string }>) => {
       const errorMessage =
