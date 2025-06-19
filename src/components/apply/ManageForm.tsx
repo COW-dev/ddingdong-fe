@@ -220,9 +220,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
           baseField={baseField}
           formId={formId}
         />
-        {focusSection == '공통' && (
-          <CommonQuestion disabled={true} formId={formId} />
-        )}
+        {focusSection == '공통' && <CommonQuestion disabled={true} />}
 
         {formState.formFields
           .filter((field: FormField) => field.section === focusSection)
