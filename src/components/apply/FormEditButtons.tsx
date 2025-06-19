@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import { useNewForm } from '@/hooks/api/apply/useNewForm';
 import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
 import { useUpdateFormDeadline } from '@/hooks/api/apply/useUpdateFormDeadline';
@@ -32,29 +33,31 @@ export default function FormEditButtons({
   const [{ token }] = useCookies(['token']);
   const { saveChanges, updateFormId, resetToOriginal } = useFormStore();
 
-  const newFormMutation = useNewForm(token);
-  const updateFormMutation = useUpdateForm(setMode);
+  const newFormMutation = useNewForm(token, updateFormId, saveChanges, formId);
+  const updateFormMutation = useUpdateForm(setMode, saveChanges, formId);
   const updateFormDeadlineMutation = useUpdateFormDeadline();
 
   const onClickEditButton = () => {
     setMode('edit');
   };
 
-  const handleCreateForm = () => {
-    newFormMutation.mutate(
-      {
-        ...formState,
-        startDate: formState.startDate || '',
-        endDate: formState.endDate || '',
-      },
-      {
-        onSuccess: (response) => {
-          const newFormId = response.data.id;
-          updateFormId(formId, newFormId);
-          saveChanges(newFormId.toString());
-        },
-      },
+  function checkFieldQuestionPresence() {
+    if (!formState.sections || !formState.formFields) return false;
+    return formState.sections.every((section) =>
+      formState.formFields.some((field) => field.section === section),
     );
+  }
+
+  const handleCreateForm = () => {
+    if (!checkFieldQuestionPresence()) {
+      toast.error('모든 필드에 질문을 하나 이상 추가해주세요.');
+      return;
+    }
+    newFormMutation.mutate({
+      ...formState,
+      startDate: formState.startDate || '',
+      endDate: formState.endDate || '',
+    });
   };
 
   const onClickCancelButton = () => {
@@ -69,36 +72,26 @@ export default function FormEditButtons({
     if (id === undefined) {
       return;
     }
+    if (!checkFieldQuestionPresence()) {
+      toast.error('모든 필드에 질문을 하나 이상 추가해주세요.');
+      return;
+    }
     if (isPastStartDate) {
-      updateFormDeadlineMutation.mutate(
-        {
-          token,
-          formId: id,
+      updateFormDeadlineMutation.mutate({
+        token,
+        formId: id,
+        endDate: formState.endDate || '',
+      });
+    } else {
+      updateFormMutation.mutate({
+        token,
+        formId: id,
+        formData: {
+          ...formState,
+          startDate: formState.startDate || '',
           endDate: formState.endDate || '',
         },
-        {
-          onSuccess: () => {
-            saveChanges(formId);
-          },
-        },
-      );
-    } else {
-      updateFormMutation.mutate(
-        {
-          token,
-          formId: id,
-          formData: {
-            ...formState,
-            startDate: formState.startDate || '',
-            endDate: formState.endDate || '',
-          },
-        },
-        {
-          onSuccess: () => {
-            saveChanges(formId);
-          },
-        },
-      );
+      });
     }
   };
 

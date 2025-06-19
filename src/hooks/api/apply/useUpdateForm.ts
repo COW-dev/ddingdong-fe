@@ -16,6 +16,8 @@ interface UpdateFormParams {
 
 export function useUpdateForm(
   setMode: (value: ModeType) => void,
+  saveChanges: (formId: string) => void,
+  formId: string,
   onReset?: () => void,
 ): UseMutationResult<unknown, AxiosError, UpdateFormParams> {
   const queryClient = useQueryClient();
@@ -25,16 +27,16 @@ export function useUpdateForm(
       return await updateForm(token, formId, formData);
     },
     {
-      onSuccess() {
+      onSuccess: () => {
         queryClient.invalidateQueries(['admin/apply']);
-        toast.success('폼 정보를 수정했어요.');
+        saveChanges(formId);
+        toast.success('지원서 정보를 수정했습니다.');
         setMode('view');
       },
       onError(error: AxiosError<{ message?: string }>) {
         const errorMessage =
-          error.response?.data?.message || '폼 정보 수정에 실패했습니다.';
+          error.response?.data?.message || '지원서 정보 수정에 실패했습니다.';
         toast.error(errorMessage);
-
         onReset?.();
       },
     },
