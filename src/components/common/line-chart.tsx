@@ -11,7 +11,6 @@ import {
 
 import { ApplyRate } from '@/types/apply';
 import { tooltip } from '../../constants/tooltip';
-import { MOCK_APPLYCANT } from '../apply/applicant.data';
 
 ChartJS.register(
   LineController,
@@ -26,44 +25,14 @@ type Props = {
   passedData: ApplyRate[];
 };
 
-function calculateCompared(previous: ApplyRate, current: ApplyRate) {
-  const countDifference = current?.count - previous?.count;
-  const ratio =
-    previous?.count === 0
-      ? 0
-      : Number(((countDifference / previous?.count) * 100).toFixed(2));
-
-  return {
-    ...current,
-    comparedToBefore: {
-      ratio: ratio,
-      value: countDifference,
-    },
-  };
-}
-
 const LineChart = ({ passedData }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
 
   const getChartData = (passedData: ApplyRate[]) => {
-    const club =
-      typeof window !== 'undefined'
-        ? JSON.parse(localStorage.getItem('club') ?? '')
-        : '';
-    const clubName = club.state?.club?.name.toUpperCase() ?? '';
-    const parsedApplicantData = [
-      MOCK_APPLYCANT[clubName],
-      calculateCompared(
-        MOCK_APPLYCANT[clubName],
-        passedData[passedData.length - 1],
-      ),
-    ];
-    const labels = parsedApplicantData.map((item) => item?.label);
-    const datas = parsedApplicantData.map((item) => item?.count);
-    const rates = parsedApplicantData.map(
-      (item) => item?.comparedToBefore.ratio,
-    );
+    const labels = passedData.map((item) => item?.label);
+    const datas = passedData.map((item) => item?.count);
+    const rates = passedData.map((item) => item?.comparedToBefore.ratio);
     return {
       labels,
       rates,
