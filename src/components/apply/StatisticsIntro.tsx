@@ -19,7 +19,7 @@ type Props = {
   applyId: number;
 };
 
-function calculateCompared(previous: ApplyRate, current: ApplyRate) {
+function calculateComparisonData(previous: ApplyRate, current: ApplyRate) {
   const countDifference = current?.count - previous?.count;
   const ratio =
     previous?.count === 0
@@ -47,21 +47,18 @@ const getClubNameFromStorage = (): string => {
   }
 };
 
-const isFirstApply = (data: ApplyRate[]): boolean => {
-  return data.length === 1;
-};
-
 const createComparisonData = (
   clubName: string,
   passedData: ApplyRate[],
 ): ApplyRate[] => {
   const MOCK_DATA = MOCK_APPLYCANT[clubName];
-  return [MOCK_DATA, calculateCompared(MOCK_DATA, passedData[0])];
+  return [MOCK_DATA, calculateComparisonData(MOCK_DATA, passedData[0])];
 };
 
 export default function StatisticsIntro({ applyId }: Props) {
   const [{ token }] = useCookies(['token']);
   const { data } = useApplyStatistics(applyId, token);
+  const isFirstApply = data?.data.applicantStatistics.length === 1;
 
   const sortDepartmentRanksByLabel = (): ChartItem[] => {
     if (!data?.data.departmentStatistics) return [];
@@ -73,9 +70,8 @@ export default function StatisticsIntro({ applyId }: Props) {
   };
 
   const getApplicantStatistics = (passedData: ApplyRate[]): ApplyRate[] => {
-    if (!isFirstApply(passedData)) {
-      return passedData;
-    }
+    if (!isFirstApply) return passedData;
+
     const clubName = getClubNameFromStorage();
     return createComparisonData(clubName, passedData);
   };
@@ -90,7 +86,7 @@ export default function StatisticsIntro({ applyId }: Props) {
         />
         <div className="m-3 flex justify-center">
           <h2 className="mr-1 text-center">최근 모집 대비 지원자 수</h2>
-          <ApplicantAnnounceIcon />
+          {isFirstApply && <ApplicantAnnounceIcon />}
         </div>
       </section>
       <section className="flex shrink flex-col items-center md:w-[400px]">
@@ -127,8 +123,8 @@ function ApplicantAnnounceIcon() {
           className="m-0 flex flex-col gap-0"
         >
           <p className="rounded-md bg-[#EFF6FF] p-2.5 text-xs">
-            신규 기능 개설로 기존(2024.09) <br />
-            동아리원을 이전 동아리원 수로 대체했어요
+            신규 기능 개설로 이전(2024.09) <br />
+            지원자 수는 동아리원 수를 가져왔어요
           </p>
         </TooltipContent>
       </Tooltip>
