@@ -69,11 +69,11 @@ export default function StatisticsIntro({ applyId }: Props) {
     );
   };
 
-  const getApplicantStatistics = (passedData: ApplyRate[]): ApplyRate[] => {
-    if (!isFirstApply) return passedData;
+  const getApplicantStatistics = (data: ApplyRate[]): ApplyRate[] => {
+    if (!isFirstApply) return data;
 
     const clubName = getClubNameFromStorage();
-    return createComparisonData(clubName, passedData);
+    return createComparisonData(clubName, data);
   };
 
   return (
