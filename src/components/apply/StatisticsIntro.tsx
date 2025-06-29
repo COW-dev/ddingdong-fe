@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
 import InfoIcon from '@/assets/info.svg';
 import BarChart from '@/components/common/bar-chart';
 import LineChart from '@/components/common/line-chart';
@@ -42,7 +43,7 @@ const getClubNameFromStorage = (): string => {
     const club = JSON.parse(localStorage.getItem('club') ?? '');
     return club.state?.club?.name.toUpperCase() ?? '';
   } catch (error) {
-    console.error('Failed to parse club data from localStorage:', error);
+    toast.error('동아리 정보를 가져오는데 실패했어요. 다시 로그인해주세요.');
     return '';
   }
 };
