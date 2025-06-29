@@ -7,27 +7,27 @@ import { ChartItem } from '@/types/apply';
 ChartJS.register(BarController, BarElement, Tooltip);
 
 type Props = {
-  passedData: ChartItem[];
+  data: ChartItem[];
 };
 
-export default function BarChart({ passedData }: Props) {
-  const isList = passedData.length > 5;
-  return isList ? (
-    <BarList passedData={passedData} />
-  ) : (
-    <BarGraph passedData={passedData} />
+export default function BarChart({ data }: Props) {
+  const isList = data.length > 5;
+  return (
+    <div className="w-full">
+      {isList ? <BarList data={data} /> : <BarGraph data={data} />}
+    </div>
   );
 }
 
-function getColorFromCount(passedData: ChartItem[]) {
-  const sorteCountData = [...passedData].sort((a, b) => b.count - a.count);
+function getColorFromCount(data: ChartItem[]) {
+  const sorteCountData = [...data].sort((a, b) => b.count - a.count);
   const colorMap = sorteCountData.map((item, index) => {
     if (index === 0) return '#3B82F6';
     if (index === 1 || index === 2) return '#DBEAFE';
     return '#E5E7EB';
   });
 
-  const backgroundColors = passedData.map((item) => {
+  const backgroundColors = data.map((item) => {
     const sortedIndex = sorteCountData.findIndex(
       (sortedItem) => sortedItem === item,
     );
@@ -36,7 +36,7 @@ function getColorFromCount(passedData: ChartItem[]) {
   return backgroundColors;
 }
 
-export function BarGraph({ passedData }: Props) {
+export function BarGraph({ data }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
   const getBarThickness = () => {
@@ -57,10 +57,10 @@ export function BarGraph({ passedData }: Props) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const getChartData = (passedData: ChartItem[], barThickness: number) => {
-    const labels = passedData.map((item) => item.label);
-    const rates = passedData.map((item) => item.ratio);
-    const counts = passedData.map((item) => item.count);
+  const getChartData = (data: ChartItem[], barThickness: number) => {
+    const labels = data.map((item) => item.label);
+    const rates = data.map((item) => item.ratio);
+    const counts = data.map((item) => item.count);
 
     return {
       labels,
@@ -68,7 +68,7 @@ export function BarGraph({ passedData }: Props) {
       datasets: [
         {
           data: rates,
-          backgroundColor: getColorFromCount(passedData),
+          backgroundColor: getColorFromCount(data),
           barThickness,
         },
       ],
@@ -76,8 +76,8 @@ export function BarGraph({ passedData }: Props) {
   };
 
   const chartData = useMemo(
-    () => getChartData(passedData, barThickness),
-    [passedData, barThickness],
+    () => getChartData(data, barThickness),
+    [data, barThickness],
   );
 
   const renderChart = useCallback(() => {
@@ -172,12 +172,12 @@ export function BarGraph({ passedData }: Props) {
   return <canvas ref={canvasRef} className="w-full max-w-[400px]" />;
 }
 
-function BarList({ passedData }: Props) {
-  const itemBorderColors = getColorFromCount(passedData);
+function BarList({ data }: Props) {
+  const itemBorderColors = getColorFromCount(data);
 
   return (
     <div className="z-30 flex w-full flex-col gap-4">
-      {passedData.map((item, index) => (
+      {data.map((item, index) => (
         <div
           key={index}
           className="flex w-full gap-2 rounded-xl border border-[#E5E7EB] bg-white p-5 text-sm text-[#6B7280] outline-none md:text-base"

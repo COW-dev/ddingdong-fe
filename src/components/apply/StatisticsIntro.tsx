@@ -50,10 +50,10 @@ const getClubNameFromStorage = (): string => {
 
 const createComparisonData = (
   clubName: string,
-  passedData: ApplyRate[],
+  data: ApplyRate[],
 ): ApplyRate[] => {
   const MOCK_DATA = MOCK_APPLYCANT[clubName];
-  return [MOCK_DATA, calculateComparisonData(MOCK_DATA, passedData[0])];
+  return [MOCK_DATA, calculateComparisonData(MOCK_DATA, data[0])];
 };
 
 export default function StatisticsIntro({ applyId }: Props) {
@@ -81,9 +81,7 @@ export default function StatisticsIntro({ applyId }: Props) {
     <div className="flex flex-col flex-wrap items-center gap-10 rounded-md border border-[#E5E7EB] p-6 text-base font-semibold text-[#4B5563] md:flex-row md:items-end md:justify-around md:p-8 md:text-xl md:font-bold">
       <section className="max-w-[250px] flex-none md:w-[300px]">
         <LineChart
-          passedData={getApplicantStatistics(
-            data?.data.applicantStatistics ?? [],
-          )}
+          data={getApplicantStatistics(data?.data.applicantStatistics ?? [])}
         />
         <div className="m-3 flex justify-center">
           <h2 className="mr-1 text-center">최근 모집 대비 지원자 수</h2>
@@ -92,7 +90,7 @@ export default function StatisticsIntro({ applyId }: Props) {
       </section>
       <section className="flex shrink flex-col items-center md:w-[400px]">
         <div>
-          <BarChart passedData={sortDepartmentRanksByLabel()} />
+          <BarChart data={sortDepartmentRanksByLabel()} />
         </div>
         <div className="relative flex items-center">
           <h2 className="m-3 text-center">지원 학과 TOP 5</h2>

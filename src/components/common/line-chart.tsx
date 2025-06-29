@@ -22,17 +22,17 @@ ChartJS.register(
 );
 
 type Props = {
-  passedData: ApplyRate[];
+  data: ApplyRate[];
 };
 
-const LineChart = ({ passedData }: Props) => {
+const LineChart = ({ data }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
 
-  const getChartData = (passedData: ApplyRate[]) => {
-    const labels = passedData.map((item) => item?.label);
-    const datas = passedData.map((item) => item?.count);
-    const rates = passedData.map((item) => item?.comparedToBefore.ratio);
+  const getChartData = (data: ApplyRate[]) => {
+    const labels = data.map((item) => item?.label);
+    const datas = data.map((item) => item?.count);
+    const rates = data.map((item) => item?.comparedToBefore.ratio);
     return {
       labels,
       rates,
@@ -45,7 +45,7 @@ const LineChart = ({ passedData }: Props) => {
     };
   };
 
-  const chartData = useMemo(() => getChartData(passedData), [passedData]);
+  const chartData = useMemo(() => getChartData(data), [data]);
 
   const renderChart = useCallback(() => {
     const canvasContext = canvasRef.current?.getContext('2d');
