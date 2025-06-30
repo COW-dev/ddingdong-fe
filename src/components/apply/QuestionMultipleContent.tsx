@@ -28,7 +28,7 @@ export default function QuestionMultipleContent({ type, id }: Props) {
           className="md:px-3 md:py-2 md:text-sm"
         />
       </div>
-      <ChartComponent passedData={data?.data.options ?? []} />
+      <ChartComponent data={data?.data.options ?? []} />
     </div>
   );
 }

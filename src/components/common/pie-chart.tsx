@@ -13,10 +13,10 @@ import { debounce } from '../ui/utils';
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
 type Props = {
-  passedData: ChartItem[];
+  data: ChartItem[];
 };
 
-const PieChart = ({ passedData }: Props) => {
+const PieChart = ({ data }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
 
@@ -28,13 +28,13 @@ const PieChart = ({ passedData }: Props) => {
     };
   };
 
-  const getChartData = (passedData: ChartItem[]) => {
-    const labels = passedData.map((item) =>
+  const getChartData = (data: ChartItem[]) => {
+    const labels = data.map((item) =>
       item.label.length > 7
         ? `${item.label.slice(0, 6)}... (${item.count}명)`
         : `${item.label} (${item.count}명)`,
     );
-    const ratios = passedData.map((item) => item.ratio);
+    const ratios = data.map((item) => item.ratio);
     return {
       labels,
       ratios,
@@ -46,7 +46,7 @@ const PieChart = ({ passedData }: Props) => {
       ],
     };
   };
-  const chartData = useMemo(() => getChartData(passedData), [passedData]);
+  const chartData = useMemo(() => getChartData(data), [data]);
 
   const handleResize = useMemo(() => {
     const maxSize = 200;
