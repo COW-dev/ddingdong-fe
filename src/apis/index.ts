@@ -798,11 +798,11 @@ export async function createFaq({
   question,
   reply,
 }: FAQItem & { token: string }) {
-  const formData = new URLSearchParams();
-  formData.append('question', question);
-  formData.append('reply', reply);
+  const urlEncodedData = new URLSearchParams();
+  urlEncodedData.append('question', question);
+  urlEncodedData.append('reply', reply);
 
-  return await api.post('/admin/questions', formData, {
+  return await api.post('/admin/questions', urlEncodedData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
