@@ -1,27 +1,100 @@
 import React from 'react';
-import { CreateFormData } from '@/types/form';
+import { useCookies } from 'react-cookie';
+import toast from 'react-hot-toast';
+import { useNewForm } from '@/hooks/api/apply/useNewForm';
+import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
+import { useUpdateFormDeadline } from '@/hooks/api/apply/useUpdateFormDeadline';
+import { useFormStore } from '@/store/form';
+import { FormState } from '@/types/form';
+
+type ModeType = 'view' | 'edit';
 
 type Props = {
-  formData?: CreateFormData;
-  isEditing: boolean;
-  isClosed: boolean;
+  formData: FormState | undefined;
+  mode: ModeType;
+  onReset: () => void;
+  setMode: React.Dispatch<React.SetStateAction<ModeType>>;
+  formState: FormState;
+  id: number | undefined;
   isPastStartDate: boolean;
-  handleCreateForm: () => void;
-  onClickEditButton: () => void;
-  onClickCancelButton: () => void;
-  handleUpdateForm: () => void;
+  formId: string;
 };
 
 export default function FormEditButtons({
-  formData,
-  isEditing,
-  isClosed,
   isPastStartDate,
-  handleCreateForm,
-  onClickEditButton,
-  onClickCancelButton,
-  handleUpdateForm,
+  formData,
+  mode,
+  onReset,
+  setMode,
+  formState,
+  id,
+  formId,
 }: Props) {
+  const [{ token }] = useCookies(['token']);
+  const { saveChanges, updateFormId, resetToOriginal } = useFormStore();
+
+  const newFormMutation = useNewForm(token, updateFormId, saveChanges, formId);
+  const updateFormMutation = useUpdateForm(setMode, saveChanges, formId);
+  const updateFormDeadlineMutation = useUpdateFormDeadline();
+
+  const onClickEditButton = () => {
+    setMode('edit');
+  };
+
+  function checkFieldQuestionPresence() {
+    if (!formState.sections || !formState.formFields) return false;
+    return formState.sections.every((section) =>
+      formState.formFields.some((field) => field.section === section),
+    );
+  }
+
+  const handleCreateForm = () => {
+    if (!checkFieldQuestionPresence()) {
+      toast.error('모든 필드에 질문을 하나 이상 추가해주세요.');
+      return;
+    }
+    newFormMutation.mutate({
+      ...formState,
+      startDate: formState.startDate || '',
+      endDate: formState.endDate || '',
+    });
+  };
+
+  const onClickCancelButton = () => {
+    if (id) {
+      resetToOriginal(formId);
+    }
+    setMode('view');
+    onReset();
+  };
+
+  const handleUpdateForm = () => {
+    if (id === undefined) {
+      return;
+    }
+    if (!checkFieldQuestionPresence()) {
+      toast.error('모든 필드에 질문을 하나 이상 추가해주세요.');
+      return;
+    }
+    if (isPastStartDate) {
+      updateFormDeadlineMutation.mutate({
+        token,
+        formId: id,
+        endDate: formState.endDate || '',
+      });
+    } else {
+      updateFormMutation.mutate({
+        token,
+        formId: id,
+        formData: {
+          ...formState,
+          startDate: formState.startDate || '',
+          endDate: formState.endDate || '',
+        },
+      });
+    }
+  };
+
   return (
     <div className="mt-7 flex items-center justify-between gap-2 text-lg">
       {!formData ? (
@@ -33,16 +106,10 @@ export default function FormEditButtons({
         </button>
       ) : (
         <>
-          {!isEditing ? (
+          {mode == 'view' ? (
             <button
-              onClick={
-                isClosed && isPastStartDate ? undefined : onClickEditButton
-              }
-              className={`${
-                isClosed && isPastStartDate
-                  ? 'cursor-not-allowed bg-gray-100 text-gray-400'
-                  : 'cursor-pointer bg-blue-100 text-blue-500 hover:bg-blue-200'
-              } rounded-xl px-4 py-2 font-semibold`}
+              onClick={onClickEditButton}
+              className="cursor-pointer rounded-xl bg-blue-100 px-4 py-2 font-semibold text-blue-500 hover:bg-blue-200"
             >
               수정하기
             </button>

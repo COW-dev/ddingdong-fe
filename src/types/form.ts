@@ -28,22 +28,6 @@ export interface QuestionField {
   section: string;
 }
 
-export type QuestionType =
-  | 'CHECK_BOX'
-  | 'RADIO'
-  | 'LONG_TEXT'
-  | 'TEXT'
-  | 'FILE';
-
-export interface FormField {
-  question: string;
-  type: QuestionType;
-  options: string[];
-  required: boolean;
-  order: number;
-  section: string;
-}
-
 export interface SectionFormField {
   section: string;
   questions: FormField[];
@@ -79,3 +63,39 @@ export interface FormBlockData {
   formStatus: '진행 전' | '진행 중' | '마감';
   onClick: () => void;
 }
+
+//new
+
+export type FormState = {
+  title: string;
+  description: string;
+  hasInterview: boolean;
+  sections: string[];
+  startDate: string | null;
+  endDate: string | null;
+  formFields: FormField[];
+};
+
+export type QuestionType =
+  | 'CHECK_BOX'
+  | 'RADIO'
+  | 'LONG_TEXT'
+  | 'TEXT'
+  | 'FILE';
+
+export type FormField = {
+  question: string;
+  type: QuestionType;
+  options: string[];
+  required: boolean;
+  order: number;
+  section: string;
+};
+
+export type ModeType = 'view' | 'edit';
+
+export type UpdateFormDeadlineParams = {
+  token: string;
+  formId: number;
+  endDate: string;
+};
