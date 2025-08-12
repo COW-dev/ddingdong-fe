@@ -9,20 +9,13 @@ import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
 
 type Props = {
-  index: number;
   type: string;
   fieldData: FormField;
   isClosed: boolean;
   formId: string;
 };
 
-export default function Content({
-  index,
-  type,
-  fieldData,
-  isClosed,
-  formId,
-}: Props) {
+export default function Content({ type, fieldData, isClosed, formId }: Props) {
   const { updateField } = useFormStore();
 
   const localOptions = useMemo(
@@ -32,9 +25,11 @@ export default function Content({
 
   const updateOption = useCallback(
     (newOptions: string[]) => {
-      updateField(formId, index, { options: newOptions });
+      if (fieldData.clientId) {
+        updateField(formId, fieldData.clientId, { options: newOptions });
+      }
     },
-    [formId, index, updateField],
+    [formId, fieldData.clientId, updateField],
   );
 
   const handleAddOption = useCallback(() => {

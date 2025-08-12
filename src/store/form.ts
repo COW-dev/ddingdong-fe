@@ -27,22 +27,49 @@ interface FormStore {
   getFocusSection: (formId: string) => string;
 
   addField: (formId: string, field: FormField) => void;
-  deleteField: (formId: string, section: string, index: number) => void;
+  deleteField: (formId: string, clientId: string) => void;
   updateField: (
     formId: string,
-    fieldIndex: number,
+    clientId: string,
     field: Partial<FormField>,
   ) => void;
 }
 
-const initialFormState: FormState = {
-  title: '',
-  description: '',
-  hasInterview: false,
-  sections: ['공통'],
-  startDate: null,
-  endDate: null,
-  formFields: [],
+const generateClientId = (index?: number) =>
+  `client_${Date.now()}${index !== undefined ? `_${index}` : ''}_${Math.random()
+    .toString(36)
+    .substr(2, 9)}`;
+
+const updateFormState = (
+  state: FormStore,
+  formId: string,
+  updatedForm: FormState,
+) => {
+  const isModified =
+    JSON.stringify(updatedForm) !== JSON.stringify(state.originalForms[formId]);
+  return {
+    forms: { ...state.forms, [formId]: updatedForm },
+    modifiedForms: isModified
+      ? new Set(Array.from(state.modifiedForms).concat(formId))
+      : new Set(Array.from(state.modifiedForms).filter((id) => id !== formId)),
+  };
+};
+
+const removeFormState = (state: FormStore, formId: string) => {
+  const { [formId]: _, ...forms } = state.forms;
+  const { [formId]: __, ...originalForms } = state.originalForms;
+  const { [formId]: ___, ...mode } = state.mode;
+  const { [formId]: ____, ...focusSection } = state.focusSection;
+
+  return {
+    forms,
+    originalForms,
+    mode,
+    focusSection,
+    modifiedForms: new Set(
+      Array.from(state.modifiedForms).filter((id) => id !== formId),
+    ),
+  };
 };
 
 export const useFormStore = create<FormStore>((set, get) => ({
@@ -53,15 +80,24 @@ export const useFormStore = create<FormStore>((set, get) => ({
   focusSection: {},
 
   setServerForm: (formId, formState) =>
-    set((state) => ({
-      forms: { ...state.forms, [formId]: formState },
-      originalForms: { ...state.originalForms, [formId]: formState },
-      modifiedForms: new Set(
-        Array.from(state.modifiedForms).filter((id) => id !== formId),
-      ),
-      mode: { ...state.mode, [formId]: 'view' },
-      focusSection: { ...state.focusSection, [formId]: '공통' },
-    })),
+    set((state) => {
+      const processedFormState = {
+        ...formState,
+        formFields: formState.formFields.map((field, index) => ({
+          ...field,
+          clientId: field.clientId || generateClientId(index),
+        })),
+      };
+      return {
+        forms: { ...state.forms, [formId]: processedFormState },
+        originalForms: { ...state.originalForms, [formId]: processedFormState },
+        modifiedForms: new Set(
+          Array.from(state.modifiedForms).filter((id) => id !== formId),
+        ),
+        mode: { ...state.mode, [formId]: 'view' },
+        focusSection: { ...state.focusSection, [formId]: '공통' },
+      };
+    }),
 
   getForm: (formId) => get().forms[formId],
 
@@ -69,20 +105,8 @@ export const useFormStore = create<FormStore>((set, get) => ({
     set((state) => {
       const currentForm = state.forms[formId];
       if (!currentForm) return state;
-
       const updatedForm = { ...currentForm, [field]: value };
-      const isModified =
-        JSON.stringify(updatedForm) !==
-        JSON.stringify(state.originalForms[formId]);
-
-      return {
-        forms: { ...state.forms, [formId]: updatedForm },
-        modifiedForms: isModified
-          ? new Set([...Array.from(state.modifiedForms), formId])
-          : new Set(
-              Array.from(state.modifiedForms).filter((id) => id !== formId),
-            ),
-      };
+      return updateFormState(state, formId, updatedForm);
     }),
 
   isModified: (formId) => get().modifiedForms.has(formId),
@@ -91,13 +115,7 @@ export const useFormStore = create<FormStore>((set, get) => ({
     set((state) => {
       const originalForm = state.originalForms[formId];
       if (!originalForm) return state;
-
-      return {
-        forms: { ...state.forms, [formId]: originalForm },
-        modifiedForms: new Set(
-          Array.from(state.modifiedForms).filter((id) => id !== formId),
-        ),
-      };
+      return updateFormState(state, formId, originalForm);
     }),
 
   saveChanges: (formId) =>
@@ -113,74 +131,47 @@ export const useFormStore = create<FormStore>((set, get) => ({
       .toString(36)
       .substr(2, 9)}`;
 
+    const initialFormState: FormState = {
+      title: '',
+      description: '',
+      hasInterview: false,
+      sections: ['공통'],
+      startDate: null,
+      endDate: null,
+      formFields: [],
+    };
+
     set((state) => ({
       forms: { ...state.forms, [tempId]: initialFormState },
       originalForms: { ...state.originalForms, [tempId]: initialFormState },
-      modifiedForms: new Set([...Array.from(state.modifiedForms), tempId]),
+      modifiedForms: new Set(Array.from(state.modifiedForms).concat(tempId)),
       mode: { ...state.mode, [tempId]: 'edit' },
       focusSection: { ...state.focusSection, [tempId]: '공통' },
     }));
-
     return tempId;
   },
 
   updateFormId: (oldId, newId) =>
     set((state) => {
-      const formState = state.forms[oldId];
-      const originalForm = state.originalForms[oldId];
-      const mode = state.mode[oldId];
-      const focusSection = state.focusSection[oldId];
-
-      if (!formState) return state;
-
-      const newForms = { ...state.forms };
-      const newOriginalForms = { ...state.originalForms };
-      const newMode = { ...state.mode };
-      const newFocusSection = { ...state.focusSection };
-
-      delete newForms[oldId];
-      delete newOriginalForms[oldId];
-      delete newMode[oldId];
-      delete newFocusSection[oldId];
-
-      newForms[newId.toString()] = formState;
-      newOriginalForms[newId.toString()] = originalForm;
-      newMode[newId.toString()] = mode;
-      newFocusSection[newId.toString()] = focusSection;
-
+      if (!state.forms[oldId]) return state;
+      const updated = removeFormState(state, oldId);
+      const newKey = newId.toString();
       return {
-        forms: newForms,
-        originalForms: newOriginalForms,
-        mode: newMode,
-        focusSection: newFocusSection,
-        modifiedForms: new Set(
-          Array.from(state.modifiedForms).filter((id) => id !== oldId),
-        ),
+        ...updated,
+        forms: { ...updated.forms, [newKey]: state.forms[oldId] },
+        originalForms: {
+          ...updated.originalForms,
+          [newKey]: state.originalForms[oldId],
+        },
+        mode: { ...updated.mode, [newKey]: state.mode[oldId] },
+        focusSection: {
+          ...updated.focusSection,
+          [newKey]: state.focusSection[oldId],
+        },
       };
     }),
 
-  removeForm: (formId) =>
-    set((state) => {
-      const newForms = { ...state.forms };
-      const newOriginalForms = { ...state.originalForms };
-      const newMode = { ...state.mode };
-      const newFocusSection = { ...state.focusSection };
-
-      delete newForms[formId];
-      delete newOriginalForms[formId];
-      delete newMode[formId];
-      delete newFocusSection[formId];
-
-      return {
-        forms: newForms,
-        originalForms: newOriginalForms,
-        mode: newMode,
-        focusSection: newFocusSection,
-        modifiedForms: new Set(
-          Array.from(state.modifiedForms).filter((id) => id !== formId),
-        ),
-      };
-    }),
+  removeForm: (formId) => set((state) => removeFormState(state, formId)),
 
   setMode: (formId, mode) =>
     set((state) => ({
@@ -200,85 +191,41 @@ export const useFormStore = create<FormStore>((set, get) => ({
     set((state) => {
       const currentForm = state.forms[formId];
       if (!currentForm) return state;
-
       const newField = {
         ...field,
+        clientId: field.clientId || generateClientId(),
         order: currentForm.formFields.length + 1,
       };
-
       const updatedForm = {
         ...currentForm,
         formFields: [...currentForm.formFields, newField],
       };
-
-      const isModified =
-        JSON.stringify(updatedForm) !==
-        JSON.stringify(state.originalForms[formId]);
-
-      return {
-        forms: { ...state.forms, [formId]: updatedForm },
-        modifiedForms: isModified
-          ? new Set([...Array.from(state.modifiedForms), formId])
-          : new Set(
-              Array.from(state.modifiedForms).filter((id) => id !== formId),
-            ),
-      };
+      return updateFormState(state, formId, updatedForm);
     }),
 
-  deleteField: (formId, section, index) =>
+  deleteField: (formId, clientId) =>
     set((state) => {
       const currentForm = state.forms[formId];
       if (!currentForm) return state;
-
-      const updatedFormFields = currentForm.formFields.filter(
-        (field, fieldIndex) =>
-          !(field.section === section && fieldIndex === index),
-      );
-
       const updatedForm = {
         ...currentForm,
-        formFields: updatedFormFields,
+        formFields: currentForm.formFields.filter(
+          (f) => f.clientId !== clientId,
+        ),
       };
-
-      const isModified =
-        JSON.stringify(updatedForm) !==
-        JSON.stringify(state.originalForms[formId]);
-
-      return {
-        forms: { ...state.forms, [formId]: updatedForm },
-        modifiedForms: isModified
-          ? new Set([...Array.from(state.modifiedForms), formId])
-          : new Set(
-              Array.from(state.modifiedForms).filter((id) => id !== formId),
-            ),
-      };
+      return updateFormState(state, formId, updatedForm);
     }),
 
-  updateField: (formId, fieldIndex, field) =>
+  updateField: (formId, clientId, field) =>
     set((state) => {
       const currentForm = state.forms[formId];
       if (!currentForm) return state;
-
-      const updatedFormFields = currentForm.formFields.map((f, index) =>
-        index === fieldIndex ? { ...f, ...field } : f,
-      );
-
       const updatedForm = {
         ...currentForm,
-        formFields: updatedFormFields,
+        formFields: currentForm.formFields.map((f) =>
+          f.clientId === clientId ? { ...f, ...field } : f,
+        ),
       };
-
-      const isModified =
-        JSON.stringify(updatedForm) !==
-        JSON.stringify(state.originalForms[formId]);
-
-      return {
-        forms: { ...state.forms, [formId]: updatedForm },
-        modifiedForms: isModified
-          ? new Set([...Array.from(state.modifiedForms), formId])
-          : new Set(
-              Array.from(state.modifiedForms).filter((id) => id !== formId),
-            ),
-      };
+      return updateFormState(state, formId, updatedForm);
     }),
 }));

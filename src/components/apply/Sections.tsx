@@ -68,6 +68,9 @@ export default function Sections({
 
     addField(formId, {
       ...baseField,
+      clientId: `field_${Date.now()}_${Math.random()
+        .toString(36)
+        .substr(2, 9)}`,
       section: trimmedName,
       order: formState.formFields.length + 1,
     });

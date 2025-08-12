@@ -1,17 +1,11 @@
-type Section = string;
-
 export interface CreateFormData {
   title: string;
   description?: string | null;
   startDate: string;
   endDate: string;
   hasInterview: boolean;
-  sections: Section[];
+  sections: string[];
   formFields: FormField[];
-}
-
-export interface ManageFormProps {
-  formData?: FormData;
 }
 
 export interface FormAnswer {
@@ -26,11 +20,6 @@ export interface QuestionField {
   required: boolean;
   order: number;
   section: string;
-}
-
-export interface SectionFormField {
-  section: string;
-  questions: FormField[];
 }
 
 export interface FormData {
@@ -64,8 +53,6 @@ export interface FormBlockData {
   onClick: () => void;
 }
 
-//new
-
 export type FormState = {
   title: string;
   description: string;
@@ -84,12 +71,14 @@ export type QuestionType =
   | 'FILE';
 
 export type FormField = {
+  id?: string | number;
   question: string;
   type: QuestionType;
   options: string[];
   required: boolean;
   order: number;
   section: string;
+  clientId?: string;
 };
 
 export type ModeType = 'view' | 'edit';

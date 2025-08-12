@@ -77,6 +77,7 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
     type: 'CHECK_BOX',
     required: true,
     order: 0,
+    clientId: `base_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
   };
 
   const handleHasInterviewToggle = () => {
@@ -224,24 +225,18 @@ export default function ManageForm({ formData, id, onReset }: ManageFormType) {
 
         {formState.formFields
           .filter((field: FormField) => field.section === focusSection)
-          .map((field) => {
-            const actualIndex = formState.formFields.findIndex(
-              (f) => f === field,
-            );
-
-            return (
-              <div key={`${field.section}-${actualIndex}`}>
-                <Field
-                  key={`${field.section}-${actualIndex}`}
-                  index={actualIndex}
-                  focusSection={focusSection}
-                  isClosed={isDisabled}
-                  fieldData={field}
-                  formId={formId}
-                />
-              </div>
-            );
-          })}
+          .map((field) => (
+            <div
+              key={`${field.section}-${field.clientId || field.id || 'temp'}`}
+            >
+              <Field
+                key={`${field.section}-${field.clientId || field.id || 'temp'}`}
+                isClosed={isDisabled}
+                fieldData={field}
+                formId={formId}
+              />
+            </div>
+          ))}
       </div>
       {!isDisabled && (
         <button

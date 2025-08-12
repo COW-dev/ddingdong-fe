@@ -8,20 +8,12 @@ import Dropdown from './Dropdown';
 import { Switch } from '../ui/switch';
 
 type Props = {
-  index: number;
-  focusSection: string;
   isClosed?: boolean;
   fieldData: FormField;
   formId: string;
 };
 
-export default function Field({
-  index,
-  focusSection,
-  isClosed,
-  fieldData,
-  formId,
-}: Props) {
+export default function Field({ isClosed, fieldData, formId }: Props) {
   const { updateField, deleteField } = useFormStore();
 
   const types: QuestionType[] = [
@@ -37,9 +29,11 @@ export default function Field({
 
   const handleFieldUpdate = useCallback(
     (field: keyof FormField, value: any) => {
-      updateField(formId, index, { [field]: value });
+      if (fieldData.clientId) {
+        updateField(formId, fieldData.clientId, { [field]: value });
+      }
     },
-    [formId, index, updateField],
+    [formId, fieldData.clientId, updateField],
   );
 
   const handleInputChange = useCallback(
@@ -70,8 +64,10 @@ export default function Field({
   );
 
   const handleDeleteQuestion = useCallback(() => {
-    deleteField(formId, focusSection, index);
-  }, [formId, focusSection, index, deleteField]);
+    if (fieldData.clientId) {
+      deleteField(formId, fieldData.clientId);
+    }
+  }, [formId, fieldData.clientId, deleteField]);
 
   return (
     <div className="mb-3 flex flex-col rounded-xl border border-gray-200 p-8 px-6">
@@ -93,7 +89,6 @@ export default function Field({
 
       <div className="py-4">
         <Content
-          index={index}
           type={selectedTypeRef.current}
           isClosed={isClosed ?? false}
           fieldData={fieldData}
