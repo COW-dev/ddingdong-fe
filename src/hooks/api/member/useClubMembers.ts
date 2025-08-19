@@ -5,7 +5,7 @@ import { MemberInfo } from '@/types/club';
 
 export function useClubMembers(token: string) {
   return useQuery<unknown, AxiosError, AxiosResponse<MemberInfo>>({
-    queryKey: ['/central/my/club-members'],
+    queryKey: ['admin/members'],
     queryFn: () => getClubMembers(token),
   });
 }

@@ -28,7 +28,9 @@ import {
   UpdateClub,
   UpdateMember,
   UpdateMyClub,
+  DeleteMember,
   MemberInfo,
+  AddMember,
 } from '@/types/club';
 import {
   DeleteDocument,
@@ -349,6 +351,22 @@ export async function updateMembers({ member, id, token }: UpdateMember) {
     headers: {
       Authorization: 'Bearer ' + token,
     },
+  });
+}
+
+export async function deleteMember({ id, token }: DeleteMember) {
+  return await api.delete(`/club-members/${id}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export function addMember(params: AddMember) {
+  const { token, member } = params;
+
+  return api.post('/club-members', member, {
+    headers: { Authorization: `Bearer ${token}` },
   });
 }
 

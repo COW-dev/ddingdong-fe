@@ -32,7 +32,7 @@ export default function ExcelDropdown() {
         id="dropdownHoverButton"
         data-dropdown-toggle="dropdownHover"
         data-dropdown-trigger="hover"
-        className="inline-flex w-20 items-center justify-center rounded-lg bg-green-100 py-2.5 text-center text-sm font-bold text-green-500 hover:bg-green-200 focus:outline-none md:w-32"
+        className="inline-flex w-24 items-center justify-center rounded-lg bg-green-100 py-2.5 text-center text-sm font-bold text-green-500 hover:bg-green-200 focus:outline-none md:w-32"
         type="button"
         onClick={handleClickExcel}
       >
