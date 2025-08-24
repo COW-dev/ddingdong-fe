@@ -44,12 +44,11 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
 
   const isRecruitmentPeriod = now.isAfter(start) && now.isBefore(end);
 
-  const isStartingWithin7Days =
-    now.isBefore(start) && start.diff(now, 'day', true) <= 7;
+  const isBeforeStart = now.isBefore(start);
 
   const label = isRecruitmentPeriod
     ? '지원하기'
-    : isStartingWithin7Days
+    : isBeforeStart
     ? '모집 예정'
     : '모집 마감';
 
