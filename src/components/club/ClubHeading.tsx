@@ -39,9 +39,20 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
   };
 
   const now = dayjs();
-  const isRecruitmentPeriod =
-    now.isAfter(dayjs(startDate).startOf('day')) &&
-    now.isBefore(dayjs(endDate).endOf('day'));
+  const start = dayjs(startDate).startOf('day');
+  const end = dayjs(endDate).endOf('day');
+
+  const isRecruitmentPeriod = now.isAfter(start) && now.isBefore(end);
+
+  const isStartingWithin7Days =
+    now.isBefore(start) && start.diff(now, 'day', true) <= 7;
+
+  const label = isRecruitmentPeriod
+    ? '지원하기'
+    : isStartingWithin7Days
+    ? '모집 예정'
+    : '모집 마감';
+
   return (
     <>
       <div className="flex flex-col">
@@ -119,7 +130,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
           }`}
           disabled={!isRecruitmentPeriod}
         >
-          {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
+          {label}
         </button>
       </div>
       <button
@@ -133,7 +144,7 @@ export default function ClubHeading({ info }: ClubHeadingProps) {
         }`}
         disabled={!isRecruitmentPeriod}
       >
-        {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
+        {label}
       </button>
     </>
   );
