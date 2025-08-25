@@ -51,7 +51,11 @@ import {
   NewFixComment,
 } from '@/types/fix';
 
-import { CreateFormData, ApplyData } from '@/types/form';
+import {
+  CreateFormData,
+  ApplyData,
+  UpdateFormDeadlineParams,
+} from '@/types/form';
 import {
   Notice,
   NoticeDetail,
@@ -805,6 +809,22 @@ export async function submitApplicationForm(
   formData: ApplyData,
 ) {
   return await api.post(`forms/${formId}/applications`, formData);
+}
+
+export async function updateFormDeadline(
+  token: string,
+  formId: number,
+  endDate: string,
+): Promise<AxiosResponse<UpdateFormDeadlineParams, unknown>> {
+  return await api.patch(
+    `central/my/forms/${formId}/deadline`,
+    { endDate },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
 }
 
 export async function getAllFaqAdmin(

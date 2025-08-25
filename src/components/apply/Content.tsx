@@ -1,96 +1,62 @@
 import { useCallback, useMemo } from 'react';
 import Image from 'next/image';
-import { QuestionType } from '@/types/form';
+import { useFormStore } from '@/store/form';
+import { FormField } from '@/types/form';
 import FileUpload from './FileUpload';
 import TextArea from './TextArea';
 import CloseIcon from '../../assets/cancel.svg';
 import EmptyCircle from '../../assets/empty-circle-check.svg';
 import EmptySquare from '../../assets/empty_square_check.svg';
 
-interface QuestionData {
-  question: string;
-  type: QuestionType;
-  options: string[];
-  required: boolean;
-  order: number;
-}
-
-interface FormField {
-  section: string;
-  questions: QuestionData[];
-}
-
-interface Props {
-  index: number;
+type Props = {
   type: string;
-  isEditing: boolean;
-  questionData: {
-    options: string[];
-  };
-  setFormField: (update: any) => void;
-  section: { section: string; questions: any[] };
+  fieldData: FormField;
   isClosed: boolean;
-}
+  formId: string;
+};
 
-export default function Content({
-  index,
-  type,
-  isEditing,
-  questionData,
-  setFormField,
-  isClosed,
-  section,
-}: Props) {
+export default function Content({ type, fieldData, isClosed, formId }: Props) {
+  const { updateField } = useFormStore();
+
   const localOptions = useMemo(
-    () => questionData.options || [],
-    [questionData.options],
+    () => fieldData.options || ['옵션1'],
+    [fieldData],
   );
 
   const updateOption = useCallback(
     (newOptions: string[]) => {
-      setFormField((prevState: FormField[]) =>
-        prevState.map((sec) =>
-          sec.section === section.section
-            ? {
-                ...sec,
-                questions: sec.questions.map((question, qIndex) =>
-                  qIndex === index
-                    ? { ...question, options: newOptions }
-                    : question,
-                ),
-              }
-            : sec,
-        ),
-      );
+      if (fieldData.clientId) {
+        updateField(formId, fieldData.clientId, { options: newOptions });
+      }
     },
-    [setFormField, section.section, index],
+    [formId, fieldData.clientId, updateField],
   );
 
   const handleAddOption = useCallback(() => {
-    if (isEditing && localOptions.length < 20) {
+    if (!isClosed && localOptions.length < 20) {
       updateOption([...localOptions, `옵션 ${localOptions.length + 1}`]);
     }
-  }, [isEditing, localOptions, updateOption]);
+  }, [isClosed, localOptions, updateOption]);
 
   const handleRemoveOption = useCallback(
     (optIndex: number) => {
-      if (isEditing && localOptions.length > 1) {
+      if (!isClosed && localOptions.length > 1) {
         updateOption(localOptions.filter((_, i) => i !== optIndex));
       }
     },
-    [isEditing, localOptions, updateOption],
+    [isClosed, localOptions, updateOption],
   );
 
   const handleOptionChange = useCallback(
     (optIndex: number, newValue: string) => {
-      if (isEditing) {
+      if (!isClosed) {
         const newOptions = localOptions.map((opt, i) =>
           i === optIndex ? newValue : opt,
         );
         updateOption(newOptions);
       }
     },
-    [isEditing, localOptions, updateOption],
+    [isClosed, localOptions, updateOption],
   );
 
   return (
@@ -114,17 +80,17 @@ export default function Content({
                   value={opt}
                   onChange={(e) => handleOptionChange(i, e.target.value)}
                   className="w-full bg-white px-3 font-semibold text-gray-500 outline-none"
-                  disabled={!isEditing || isClosed}
+                  disabled={isClosed}
                 />
               </div>
-              {isEditing && !isClosed && localOptions.length > 1 && (
+              {!isClosed && localOptions.length > 1 && (
                 <button onClick={() => handleRemoveOption(i)}>
                   <Image src={CloseIcon} alt="삭제" width={16} height={16} />
                 </button>
               )}
             </div>
           ))}
-          {isEditing && !isClosed && localOptions.length < 20 && (
+          {!isClosed && localOptions.length < 20 && (
             <button
               onClick={handleAddOption}
               className="mt-1 flex items-center gap-3 text-gray-300"
@@ -144,19 +110,16 @@ export default function Content({
       {type === 'LONG_TEXT' && (
         <TextArea
           placeholder="서술형 응답 (최대 1,000자 이내)"
-          disabled={isEditing}
+          disabled={true}
         />
       )}
       {type === 'TEXT' && (
-        <TextArea
-          placeholder="단답형 응답 (최대 300자 이내)"
-          disabled={isEditing}
-        />
+        <TextArea placeholder="단답형 응답 (최대 300자 이내)" disabled={true} />
       )}
       {type === 'FILE' && (
         <FileUpload
           onFilesSelected={(files) => console.log(files)}
-          disabled={isEditing}
+          disabled={true}
         />
       )}
     </div>

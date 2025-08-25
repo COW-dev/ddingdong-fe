@@ -1,290 +1,116 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
-import toast from 'react-hot-toast';
 import Datepicker from 'react-tailwindcss-datepicker';
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import arrow_left from '@/assets/arrow_left.svg';
 import BaseInput from '@/components/apply/BaseInput';
 import CommonQuestion from '@/components/apply/CommnQuestion';
-import Question from '@/components/apply/Question';
+import Field from '@/components/apply/Field';
+import FormEditButtons from '@/components/apply/FormEditButtons';
 import Sections from '@/components/apply/Sections';
 import TextArea from '@/components/apply/TextArea';
-import { useNewForm } from '@/hooks/api/apply/useNewForm';
-import { useUpdateForm } from '@/hooks/api/apply/useUpdateForm';
-import {
-  FormData,
-  QuestionType,
-  SectionFormField,
-  FormField,
-} from '@/types/form';
-import FormEditButtons from './FormEditButtons';
+import { useFormStore } from '@/store/form';
+import { FormState, FormField } from '@/types/form';
 import AddForm from '../../assets/add_form.svg';
 import square from '../../assets/checkbox.svg';
 import emptySquare from '../../assets/empty_square_check.svg';
 import Heading from '../common/Heading';
 
-interface Props {
-  formData?: FormData;
+type ManageFormType = {
+  formData?: FormState;
   id?: number;
   onReset?: () => void;
-}
-interface CategorizedFields {
-  [key: string]: FormField[];
-}
+};
 
-export default function ManageForm({ formData, id, onReset }: Props) {
+export default function ManageForm({ formData, id, onReset }: ManageFormType) {
   const router = useRouter();
-  const [{ token }] = useCookies(['token']);
-  const newFormMutation = useNewForm(token);
-  const [isEditing, setIsEditing] = useState(false);
-  const updateFormMutation = useUpdateForm(setIsEditing);
-
-  const [title, setTitle] = useState(formData?.title ? formData.title : '');
-  const [description, setDescription] = useState(
-    formData?.description ? formData.description : '',
-  );
-
-  useEffect(() => {
-    if (formData) {
-      const updatedFormFields = Object.keys(categorizeFormFields(formData)).map(
-        (section) => ({
-          section,
-          questions: categorizeFormFields(formData)[section].map((field) => ({
-            question: field.question,
-            type: field.type,
-            options: field.options || [],
-            required: field.required,
-            order: field.order,
-            section: field.section,
-          })),
-        }),
-      );
-
-      setFormField(updatedFormFields);
-    }
-  }, [formData]);
-
-  const handleCreateForm = () => {
-    if (!title) {
-      toast.error('지원서 제목을 입력하여주세요. ');
-    }
-
-    if (!description || description.length > 255) {
-      toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
-      return;
-    }
-
-    const formattedPostData = formatFormData();
-    newFormMutation.mutate(formattedPostData);
-  };
-
-  const handleUpdateForm = () => {
-    if (!id || !formData) {
-      toast.error('수정할 폼이 존재하지 않습니다.');
-      return;
-    }
-    if (!title) {
-      toast.error('지원서 제목을 입력하여주세요. ');
-    }
-
-    if (!description || description.length > 255) {
-      toast.error('지원서 설명은 255자 이내로 작성하여주세요.');
-      return;
-    }
-
-    const formattedPostData = formatFormData();
-
-    updateFormMutation.mutate({
-      token,
-      formId: id,
-      formData: formattedPostData,
-    });
-    setIsEditing(false);
-    setIsClosed(true);
-  };
-
-  const formatFormData = (): FormData => {
-    const formatDate = (date: Date | string | null) => {
-      if (!date) return '';
-      if (date instanceof Date) return date.toISOString().split('T')[0];
-      return new Date(date).toISOString().split('T')[0];
-    };
-
-    return {
-      title: title.trim(),
-      description: description.trim() || null,
-      startDate: formatDate(recruitPeriod.startDate),
-      endDate: formatDate(recruitPeriod.endDate),
-      hasInterview: isChecked ?? false,
-      sections: sections,
-      formFields: formField.flatMap((section) =>
-        section.questions.map(
-          (question): FormField => ({
-            question: question.question.trim(),
-            type: question.type as QuestionType,
-            options: question.options || [],
-            required: question.required,
-            order: question.order,
-            section: section.section,
-          }),
-        ),
-      ),
-    };
-  };
+  const [formId, setFormId] = useState<string>('');
 
   const isPastStartDate = formData?.startDate
     ? new Date(formData.startDate) < new Date()
     : false;
 
-  const [isClosed, setIsClosed] = useState(formData ? true : false);
-
-  const [isChecked, setIsChecked] = useState(formData?.hasInterview);
-
-  function categorizeFormFields(
-    formData: FormData | undefined,
-  ): CategorizedFields {
-    const categorizedFields: CategorizedFields = {};
-
-    (formData?.sections || []).forEach((section) => {
-      categorizedFields[section] = [];
-    });
-
-    (formData?.formFields || []).forEach((field) => {
-      if (field.section in categorizedFields) {
-        categorizedFields[field.section].push(field);
-      }
-    });
-
-    return categorizedFields;
-  }
-
-  const [modiformField, setmodiFormField] = useState(
-    Object.keys(categorizeFormFields(formData)).map((section) => ({
-      section,
-      questions: categorizeFormFields(formData)[section].map((field) => ({
-        question: field.question,
-        type: field.type,
-        options: field.options || ['옵션1'],
-        required: field.required,
-        order: field.order,
-        section,
-      })),
-    })),
-  );
-
-  const [focusSection, setFocusSection] = useState('공통');
-  const [sections, setSections] = useState(
-    formData ? formData.sections : ['공통'],
-  );
-  const [recruitPeriod, setRecruitPeriod] = useState<DateRangeType>({
-    startDate: null,
-    endDate: null,
-  });
+  const {
+    setServerForm,
+    getForm,
+    updateFormField,
+    isModified,
+    setMode,
+    getMode,
+    getFocusSection,
+    setFocusSection,
+    addField,
+    createNewForm,
+  } = useFormStore();
 
   useEffect(() => {
-    if (formData) {
-      setRecruitPeriod({
-        startDate: formData.startDate ? new Date(formData.startDate) : null,
-        endDate: formData.endDate ? new Date(formData.endDate) : null,
+    if (id && formData) {
+      const idStr = id.toString();
+      setFormId(idStr);
+      setServerForm(idStr, {
+        title: formData.title ?? '',
+        description: formData.description ?? '',
+        hasInterview: formData.hasInterview ?? false,
+        sections: formData.sections ?? ['공통'],
+        startDate: formData.startDate ?? null,
+        endDate: formData.endDate ?? null,
+        formFields: formData.formFields ?? [],
       });
+    } else if (!formData) {
+      const tempId = createNewForm();
+      setFormId(tempId);
     }
-  }, [formData]);
+  }, [id, formData, setServerForm, createNewForm]);
 
-  const baseQuestion: FormField[] = [
-    {
-      question: '',
-      type: 'RADIO',
-      options: ['옵션1'],
-      required: true,
-      order: 1,
-      section: '공통',
-    },
-  ];
+  const formState = getForm(formId);
+  const mode = getMode(formId);
+  const focusSection = getFocusSection(formId);
 
-  const [formField, setFormField] = useState<SectionFormField[]>(
-    formData
-      ? modiformField
-      : [
-          {
-            section: '공통',
-            questions: [
-              {
-                question: '',
-                type: 'RADIO',
-                options: ['옵션1'],
-                required: true,
-                order: 1,
-                section: '공통',
-              },
-            ],
-          },
-        ],
-  );
+  const isDisabled = mode === 'view' || isPastStartDate;
+  const isEditableRegardlessOfPeriod = mode === 'view';
 
-  const handleDateChange = (newValue: DateRangeType | null) => {
-    setRecruitPeriod(newValue ?? { startDate: null, endDate: null });
+  const baseField: FormField = {
+    section: focusSection,
+    options: ['옵션1'],
+    question: '',
+    type: 'CHECK_BOX',
+    required: true,
+    order: 0,
+    clientId: `base_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
   };
 
-  const deleteQuestion = (sectionName: string, questionIndex: number) => {
-    setFormField((prev) =>
-      prev.map((section) =>
-        section.section === sectionName
-          ? {
-              ...section,
-              questions: section.questions
-                .filter((_, qIndex) => qIndex !== questionIndex)
-                .map((question, newIndex) => ({
-                  ...question,
-                  order: newIndex + 1,
-                })),
-            }
-          : section,
-      ),
-    );
+  const handleHasInterviewToggle = () => {
+    updateFormField(formId, 'hasInterview', !formState?.hasInterview);
   };
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [newSectionName, setNewSectionName] = useState('');
-
-  const handleOpenModal = () => {
-    setNewSectionName('');
-    setModalVisible(true);
+  const handleTitleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    updateFormField(formId, 'title', e.target.value);
   };
 
-  const onClickEditButton = () => {
-    setIsEditing(true);
-    setIsClosed(false);
+  const handleDateChange = (date: any) => {
+    const formattedEndDate = new Date(date.endDate).toISOString().split('T')[0];
+    updateFormField(formId, 'endDate', formattedEndDate);
+    if (!isDisabled) {
+      updateFormField(formId, 'startDate', date.startDate);
+    }
   };
 
-  const onClickCancelButton = () => {
-    onReset?.();
+  const handleDescriptionChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    updateFormField(formId, 'description', e.target.value);
   };
 
-  const addQuestion = () => {
-    setFormField((prev) =>
-      prev.map((section) =>
-        section.section === focusSection
-          ? {
-              ...section,
-              questions: [
-                ...section.questions,
-                {
-                  question: '',
-                  type: 'RADIO',
-                  options: ['옵션1'],
-                  required: true,
-                  order: section.questions.length + 1,
-                  section: focusSection,
-                },
-              ],
-            }
-          : section,
-      ),
-    );
+  const handleAddField = () => {
+    addField(formId, baseField);
   };
+
+  if (!formState || !formId) {
+    return <div>데이터를 불러오는 중입니다.</div>;
+  }
 
   return (
     <div>
@@ -305,30 +131,45 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           <Heading>지원서 생성</Heading>
         </div>
         <FormEditButtons
-          formData={formData}
-          isEditing={isEditing}
-          isClosed={isClosed}
+          formData={formData ? formData : undefined}
+          mode={mode}
+          setMode={(newMode) => {
+            if (typeof newMode === 'function') {
+              const updatedMode = newMode(mode);
+              setMode(formId, updatedMode);
+            } else {
+              setMode(formId, newMode);
+            }
+          }}
+          onReset={onReset ? onReset : () => undefined}
+          formState={formState}
+          id={id ? id : undefined}
           isPastStartDate={isPastStartDate}
-          handleCreateForm={handleCreateForm}
-          onClickEditButton={onClickEditButton}
-          onClickCancelButton={onClickCancelButton}
-          handleUpdateForm={handleUpdateForm}
+          formId={formId}
         />
       </div>
 
-      <div className="flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold text-gray-500">
-        <div className="relative flex h-[20px] w-[20px] cursor-pointer items-center justify-center">
+      <div
+        className={`flex w-full items-center justify-end gap-2 pt-10 text-lg font-semibold ${
+          isDisabled ? 'cursor-not-allowed text-gray-400' : 'text-gray-500'
+        }`}
+      >
+        <div
+          className={`relative flex h-[20px] w-[20px] items-center justify-center ${
+            isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+          }`}
+        >
           <Image
             onClick={() => {
-              if (!isClosed) {
-                setIsChecked(!isChecked);
+              if (!isDisabled) {
+                handleHasInterviewToggle();
               }
             }}
-            src={isChecked ? square : emptySquare}
-            width={isChecked ? 18 : 22}
-            height={isChecked ? 18 : 22}
+            src={formState.hasInterview ? square : emptySquare}
+            width={formState.hasInterview ? 18 : 22}
+            height={formState.hasInterview ? 18 : 22}
             className={`object-contain ${
-              isClosed ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+              isDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
             }`}
             alt="checkBox"
           />
@@ -341,70 +182,65 @@ export default function ManageForm({ formData, id, onReset }: Props) {
           <BaseInput
             type="text"
             placeholder={'지원서 제목을 입력해주세요'}
-            value={title}
-            onChange={(
-              e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-            ) => setTitle(e.target.value)}
-            disabled={isClosed}
+            value={formState.title}
+            onChange={handleTitleChange}
+            disabled={isDisabled}
           />
 
           <div className="w-full rounded-lg border pt-1">
             <Datepicker
-              value={recruitPeriod}
-              useRange={false}
+              value={{
+                startDate: formState.startDate
+                  ? new Date(formState.startDate)
+                  : null,
+                endDate: formState.endDate ? new Date(formState.endDate) : null,
+              }}
+              useRange={true}
               minDate={new Date(new Date().getFullYear(), 0, 1)}
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
               onChange={handleDateChange}
               placeholder="모집 기간을 설정하세요"
-              disabled={isClosed}
+              disabled={isEditableRegardlessOfPeriod}
             />
           </div>
         </div>
         <TextArea
           placeholder="지원서 설명을 입력해 주세요 (최대 255자 이내)"
-          value={description}
-          onChange={(
-            e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
-          ) => setDescription(e.target.value)}
-          disabled={isClosed}
+          value={formState.description}
+          onChange={handleDescriptionChange}
+          disabled={isDisabled}
         />
       </div>
 
       <div className="mt-6">
         <Sections
-          addSection={handleOpenModal}
           focusSection={focusSection}
-          sections={sections}
-          setFocusSection={setFocusSection}
-          isClosed={isClosed}
-          formField={formField}
-          setFormField={setFormField}
-          setSections={setSections}
-          baseQuestion={baseQuestion}
+          sections={formState.sections}
+          setFocusSection={(section) => setFocusSection(formId, section)}
+          isClosed={isDisabled}
+          baseField={baseField}
+          formId={formId}
         />
         {focusSection == '공통' && <CommonQuestion disabled={true} />}
 
-        {formField
-          .filter((item) => item.section === focusSection)
-          .map((section) => (
-            <div key={section.section}>
-              {section.questions.map((question, qIndex) => (
-                <Question
-                  key={`${section.section}-${qIndex}`}
-                  index={qIndex}
-                  questionData={question}
-                  deleteQuestion={() => deleteQuestion(section.section, qIndex)}
-                  setFormField={setFormField}
-                  section={section}
-                  isClosed={isClosed}
-                />
-              ))}
+        {formState.formFields
+          .filter((field: FormField) => field.section === focusSection)
+          .map((field) => (
+            <div
+              key={`${field.section}-${field.clientId || field.id || 'temp'}`}
+            >
+              <Field
+                key={`${field.section}-${field.clientId || field.id || 'temp'}`}
+                isClosed={isDisabled}
+                fieldData={field}
+                formId={formId}
+              />
             </div>
           ))}
       </div>
-      {!isClosed && (
+      {!isDisabled && (
         <button
-          onClick={addQuestion}
+          onClick={handleAddField}
           className="fixed bottom-24 right-[calc(10vw)] flex items-center justify-center rounded-full bg-blue-500 p-1 shadow-lg transition-all duration-200 hover:bg-blue-600 md:right-[calc(5vw)] lg:right-[calc(2vw)]"
         >
           <Image src={AddForm} width={40} height={40} alt="질문 추가하기" />

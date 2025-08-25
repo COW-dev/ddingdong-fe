@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
 import { InfoIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 import {
@@ -7,38 +7,40 @@ import {
   TooltipContent,
   TooltipProvider,
 } from '@/components/ui/tooltip';
-import { SectionFormField, FormField } from '@/types/form';
-import Prompt from '../common/Prompt';
+import useModal from '@/hooks/common/useModal';
+import { useFormStore } from '@/store/form';
+import { QuestionField } from '@/types/form';
+import Prompt from './Prompt';
 
 type SectionsProps = {
   focusSection: string;
-  setFocusSection: Dispatch<SetStateAction<string>>;
+  setFocusSection: (section: string) => void;
   sections: string[];
-  setSections: Dispatch<SetStateAction<string[]>>;
-  formField: SectionFormField[];
-  setFormField: Dispatch<SetStateAction<SectionFormField[]>>;
   isClosed: boolean;
-  baseQuestion: Omit<FormField, 'section'>[];
-  addSection: () => void;
+  baseField: QuestionField;
+  formId: string;
 };
 
 export default function Sections({
   focusSection,
   setFocusSection,
-  setFormField,
   sections,
   isClosed,
-  formField,
-  setSections,
-  baseQuestion,
+  baseField,
+  formId,
 }: SectionsProps) {
+  const { getForm, updateFormField, addField } = useFormStore();
+  const formState = getForm(formId);
+
   const [contextMenu, setContextMenu] = useState<{ section: string | null }>({
     section: null,
   });
 
-  const [modalVisible, setModalVisible] = useState(false);
   const [modalMode, setModalMode] = useState<'rename' | 'add' | null>(null);
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const { openModal, visible, closeModal, modalRef } = useModal();
+
+  if (!formState) return null;
 
   const handleContextMenu = (e: React.MouseEvent, sectionName: string) => {
     e.preventDefault();
@@ -46,55 +48,6 @@ export default function Sections({
 
     setContextMenu({ section: sectionName });
     setFocusSection(sectionName);
-  };
-
-  const handleClickOutside = () => {
-    setContextMenu({ section: null });
-  };
-
-  const renameSection = (newName: string) => {
-    if (!selectedSection) return;
-
-    const trimmedName = newName.trim();
-    if (sections.includes(trimmedName)) {
-      toast.error('이미 존재하는 섹션입니다.');
-      return;
-    }
-
-    setFormField(
-      formField.map((section) =>
-        section.section === selectedSection
-          ? { ...section, section: trimmedName }
-          : section,
-      ),
-    );
-
-    setSections(
-      sections.map((section) =>
-        section === selectedSection ? trimmedName : section,
-      ),
-    );
-
-    setModalVisible(false);
-    setFocusSection(newName);
-  };
-
-  const deleteSection = (sectionName: string) => {
-    const updatedFormField = formField.filter(
-      (section) => section.section !== sectionName,
-    );
-    setFormField(updatedFormField);
-
-    const updatedSections = sections.filter(
-      (section) => section !== sectionName,
-    );
-    setSections(updatedSections);
-
-    if (focusSection === sectionName && updatedSections.length > 0) {
-      setFocusSection('공통');
-    } else if (updatedSections.length === 0) {
-      setFocusSection('');
-    }
   };
 
   const addNewSection = (sectionName: string) => {
@@ -105,36 +58,75 @@ export default function Sections({
       return;
     }
 
-    if (sections.includes(trimmedName)) {
+    if (formState.sections.includes(trimmedName)) {
       toast.error('이미 존재하는 섹션입니다.');
       return;
     }
 
-    setSections([...sections, trimmedName]);
+    const newSections = [...formState.sections, trimmedName];
+    updateFormField(formId, 'sections', newSections);
 
-    setFormField((prev) => [
-      ...prev,
-      {
-        section: trimmedName,
-        questions: baseQuestion.map((q) => ({
-          ...q,
-          section: trimmedName,
-        })),
-      },
-    ]);
+    addField(formId, {
+      ...baseField,
+      clientId: `field_${Date.now()}_${Math.random()
+        .toString(36)
+        .substr(2, 9)}`,
+      section: trimmedName,
+      order: formState.formFields.length + 1,
+    });
 
     setFocusSection(trimmedName);
   };
 
+  const renameSection = (newName: string) => {
+    if (!selectedSection) return;
+
+    const trimmedName = newName.trim();
+    if (formState.sections.includes(trimmedName)) {
+      toast.error('이미 존재하는 섹션입니다.');
+      return;
+    }
+
+    const newSections = formState.sections.map((section) =>
+      section === selectedSection ? trimmedName : section,
+    );
+
+    const newFormFields = formState.formFields.map((field) =>
+      field.section === selectedSection
+        ? { ...field, section: trimmedName }
+        : field,
+    );
+
+    updateFormField(formId, 'sections', newSections);
+    updateFormField(formId, 'formFields', newFormFields);
+
+    toast.success('섹션 이름이 변경되었습니다.');
+    setFocusSection(trimmedName);
+    closeModal();
+  };
+
+  const deleteSection = (sectionName: string) => {
+    const newSections = formState.sections.filter(
+      (section) => section !== sectionName,
+    );
+    const newFormFields = formState.formFields.filter(
+      (field) => field.section !== sectionName,
+    );
+
+    updateFormField(formId, 'sections', newSections);
+    updateFormField(formId, 'formFields', newFormFields);
+
+    toast.success('섹션이 삭제되었습니다.');
+
+    setFocusSection('공통');
+  };
+
   return (
     <TooltipProvider>
-      <div
-        onClick={handleClickOutside}
-        className="relative flex items-center overflow-x-scroll sm:overflow-visible"
-      >
+      <div className="relative flex items-center overflow-x-scroll sm:overflow-visible">
         <Prompt
-          visible={modalVisible}
-          closeModal={() => setModalVisible(false)}
+          visible={visible}
+          closeModal={closeModal}
           title={
             modalMode === 'rename'
               ? '변경할 이름을 입력해주세요.'
@@ -146,38 +138,39 @@ export default function Sections({
           cancelText="취소"
           closeButton={false}
           onConfirm={modalMode === 'rename' ? renameSection : addNewSection}
+          modalRef={modalRef as React.RefObject<HTMLDivElement>}
         />
 
         <div className="relative flex items-center gap-1 border-b-0 px-2 text-lg font-semibold">
-          {formField?.map((section, index) => (
-            <div key={index} className="relative whitespace-nowrap">
+          {formState.sections?.map((section, index) => (
+            <div key={index} className="relative">
               <div
                 className={`cursor-pointer rounded-md rounded-b-none border border-b-0 border-gray-200 px-3 py-1 ${
-                  focusSection === section.section
+                  focusSection === section
                     ? 'bg-blue-50 text-blue-500'
                     : 'bg-white text-gray-600 hover:bg-gray-50'
                 }`}
-                onClick={() => setFocusSection(section.section)}
-                onContextMenu={(e) => handleContextMenu(e, section.section)}
+                onClick={() => setFocusSection(section)}
+                onContextMenu={(e) => handleContextMenu(e, section)}
               >
-                {section.section}
+                {section}
               </div>
 
-              {contextMenu.section === section.section &&
-                section.section !== '공통' && (
-                  <ModifyButton
-                    onRename={() => {
-                      setSelectedSection(section.section);
-                      setModalMode('rename');
-                      setModalVisible(true);
-                      setContextMenu({ section: null });
-                    }}
-                    onDelete={() => {
-                      deleteSection(section.section);
-                      setContextMenu({ section: null });
-                    }}
-                  />
-                )}
+              {contextMenu.section === section && section !== '공통' && (
+                <ModifyButton
+                  onRename={() => {
+                    setSelectedSection(section);
+                    setModalMode('rename');
+                    openModal();
+                    setContextMenu({ section: null });
+                  }}
+                  onDelete={() => {
+                    deleteSection(section);
+                    setContextMenu({ section: null });
+                  }}
+                  disabled={!isClosed}
+                />
+              )}
             </div>
           ))}
 
@@ -185,7 +178,7 @@ export default function Sections({
             <div
               onClick={() => {
                 setModalMode('add');
-                setModalVisible(true);
+                openModal();
               }}
               className="cursor-pointer whitespace-nowrap rounded-md rounded-b-none border border-b-0 border-gray-200 bg-white px-3 py-1 font-semibold text-gray-600 hover:bg-gray-50"
             >
@@ -213,24 +206,30 @@ export default function Sections({
 export function ModifyButton({
   onRename,
   onDelete,
+  disabled = false,
 }: {
   onRename: () => void;
   onDelete: () => void;
+  disabled?: boolean;
 }) {
   return (
-    <div className="absolute left-0 top-full z-30 mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
-      <button
-        onClick={onRename}
-        className="whitespace-nowrap rounded-lg px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
-      >
-        이름 변경하기
-      </button>
-      <button
-        onClick={onDelete}
-        className="rounded-lg px-4 py-2 text-left text-red-500 hover:bg-gray-100"
-      >
-        삭제하기
-      </button>
-    </div>
+    <>
+      {disabled && (
+        <div className="absolute left-0 top-full z-30 mt-1 flex w-fit flex-col gap-2 rounded-lg bg-white p-2 shadow-md">
+          <button
+            onClick={onRename}
+            className="whitespace-nowrap rounded-lg px-4 py-2 text-left text-gray-700 hover:bg-gray-100"
+          >
+            이름 변경하기
+          </button>
+          <button
+            onClick={onDelete}
+            className="rounded-lg px-4 py-2 text-left text-red-500 hover:bg-gray-100"
+          >
+            삭제하기
+          </button>
+        </div>
+      )}
+    </>
   );
 }
