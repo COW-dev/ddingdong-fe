@@ -39,6 +39,7 @@ import {
   NewDocument,
 } from '@/types/document';
 
+import { UpdateFaq, FAQItem, Faq, DeleteFaq } from '@/types/faq';
 import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
 
 import {
@@ -804,4 +805,45 @@ export async function submitApplicationForm(
   formData: ApplyData,
 ) {
   return await api.post(`forms/${formId}/applications`, formData);
+}
+
+export async function getAllFaqAdmin(
+  token: string,
+): Promise<AxiosResponse<Faq[], unknown>> {
+  return await api.get('/admin/questions', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getAllFaq(): Promise<AxiosResponse<Faq[], unknown>> {
+  return await api.get('/questions');
+}
+
+export async function createFaq({
+  token,
+  question,
+  reply,
+}: FAQItem & { token: string }) {
+  const urlEncodedData = new URLSearchParams();
+  urlEncodedData.append('question', question);
+  urlEncodedData.append('reply', reply);
+
+  return await api.post('/admin/questions', urlEncodedData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function deleteFaq({
+  questionId,
+  token,
+}: DeleteFaq): Promise<void> {
+  return api.delete(`/admin/questions/${questionId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }

@@ -1,4 +1,5 @@
 import Head from 'next/head';
+
 import Heading from '@/components/common/Heading';
 import {
   Accordion,
@@ -6,9 +7,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { QnA } from '@/constants/qna';
+import { useAllFaq } from '@/hooks/api/faq/useAllFaq';
 
 export default function Index() {
+  const { data: FAQ } = useAllFaq();
+
   return (
     <>
       <Head>
@@ -19,19 +22,19 @@ export default function Index() {
       </div>
       <div>
         <div className="mt-10 flex flex-col items-center justify-center">
-          {QnA?.map((item, index) => (
+          {FAQ?.data?.map((item, index) => (
             <Accordion key={index} type="single" collapsible className="w-full">
               <AccordionItem value={`item-${index}`}>
                 <AccordionTrigger>
                   <span>Q</span>
                   <span className="text-blue-500">.</span>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  <span className="text-left">{item.Q}</span>
+                  <span className="text-left">{item.question}</span>
                 </AccordionTrigger>
                 <AccordionContent>
                   <span className=" font-bold text-blue-500">A.</span>
                   <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                  {item.A}
+                  {item.reply}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

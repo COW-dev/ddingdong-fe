@@ -22,7 +22,7 @@ export const navItems: {
     },
     {
       id: 3,
-      href: '/FAQ',
+      href: '/faq',
       content: 'FAQ',
     },
   ],
