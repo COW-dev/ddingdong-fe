@@ -825,6 +825,8 @@ export async function updateFormDeadline(
       },
     },
   );
+}
+
 export async function getAllFaqAdmin(
   token: string,
 ): Promise<AxiosResponse<Faq[], unknown>> {
