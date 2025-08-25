@@ -3,6 +3,7 @@ import { useCookies } from 'react-cookie';
 
 import ExcelDropdown from '@/components/common/ExelDropdown';
 import SearchBar from '@/components/home/SearchBar';
+import AddMemberButton from '@/components/member/AddMemberButton';
 import MemberInfo from '@/components/member/MemberInfo';
 import { useClubMembers } from '@/hooks/api/member/useClubMembers';
 import { Member } from '@/types/club';
@@ -27,7 +28,6 @@ export default function Index() {
             member.name.includes(keyword) ||
             member.studentNumber.includes(keyword) ||
             member.department.includes(keyword) ||
-            member.phoneNumber.includes(keyword) ||
             member.position.includes(keyword),
         ),
       );
@@ -49,7 +49,10 @@ export default function Index() {
           <span className="text-blue-500"> {members.length}명</span>
           입니다.
         </div>
-        <ExcelDropdown />
+        <div className="flex flex-col gap-2 md:flex-row">
+          <AddMemberButton />
+          <ExcelDropdown />
+        </div>
       </div>
 
       <div className="rounded-xl border-[1.5px] border-gray-100 p-5  ">

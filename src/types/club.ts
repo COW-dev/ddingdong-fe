@@ -73,6 +73,24 @@ export type UpdateMember = {
   member: Member;
 };
 
+export type DeleteMember = {
+  id: number;
+  token: string;
+};
+
+export type MemberData = {
+  name: string;
+  studentNumber: string;
+  phoneNumber: string;
+  position: string;
+  department: string;
+};
+
+export type AddMember = {
+  token: string;
+  member: MemberData;
+};
+
 export type UpdateMyClub = {
   name: string;
   tag: string;

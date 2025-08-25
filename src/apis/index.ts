@@ -28,7 +28,9 @@ import {
   UpdateClub,
   UpdateMember,
   UpdateMyClub,
+  DeleteMember,
   MemberInfo,
+  AddMember,
 } from '@/types/club';
 import {
   DeleteDocument,
@@ -37,6 +39,7 @@ import {
   NewDocument,
 } from '@/types/document';
 
+import { UpdateFaq, FAQItem, Faq, DeleteFaq } from '@/types/faq';
 import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
 
 import {
@@ -353,6 +356,22 @@ export async function updateMembers({ member, id, token }: UpdateMember) {
     headers: {
       Authorization: 'Bearer ' + token,
     },
+  });
+}
+
+export async function deleteMember({ id, token }: DeleteMember) {
+  return await api.delete(`/club-members/${id}`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export function addMember(params: AddMember) {
+  const { token, member } = params;
+
+  return api.post('/club-members', member, {
+    headers: { Authorization: `Bearer ${token}` },
   });
 }
 
@@ -806,4 +825,43 @@ export async function updateFormDeadline(
       },
     },
   );
+export async function getAllFaqAdmin(
+  token: string,
+): Promise<AxiosResponse<Faq[], unknown>> {
+  return await api.get('/admin/questions', {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+
+export async function getAllFaq(): Promise<AxiosResponse<Faq[], unknown>> {
+  return await api.get('/questions');
+}
+
+export async function createFaq({
+  token,
+  question,
+  reply,
+}: FAQItem & { token: string }) {
+  const urlEncodedData = new URLSearchParams();
+  urlEncodedData.append('question', question);
+  urlEncodedData.append('reply', reply);
+
+  return await api.post('/admin/questions', urlEncodedData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export async function deleteFaq({
+  questionId,
+  token,
+}: DeleteFaq): Promise<void> {
+  return api.delete(`/admin/questions/${questionId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 }
