@@ -12,7 +12,7 @@ import ApplicantList from '@/components/apply/ApplicantList';
 import AlertDialog from '@/components/common/AlertDialog';
 import Modal from '@/components/common/Modal';
 import Tabs from '@/components/feed/Tabs';
-import Loading from '@/components/loading/Loading';
+// import Loading from '@/components/loading/Loading';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -87,8 +87,8 @@ export default function Index() {
 
   if (isLoading || !applicationData) {
     return (
-      <div className="flex h-dvh w-full items-center justify-center">
-        <Loading />
+      <div className="h-dvh flex w-full items-center justify-center">
+        {/* <Loading /> */}
       </div>
     );
   }
@@ -103,7 +103,7 @@ export default function Index() {
               alt="back"
               width={40}
               height={40}
-              className="mb-1 size-6 md:mb-0.5 md:size-9"
+              className="size-6 md:size-9 mb-1 md:mb-0.5"
             />
             <h1 className="ml-3 text-2xl font-bold md:text-4xl">
               {applicationData.title}

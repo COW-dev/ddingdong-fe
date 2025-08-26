@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+import { withSentryConfig } from '@sentry/nextjs';
+
 const nextConfig = {
   images: {
     domains: [
@@ -12,13 +14,8 @@ const nextConfig = {
   reactStrictMode: true,
 };
 
-module.exports = nextConfig;
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const { withSentryConfig } = require('@sentry/nextjs');
-
-module.exports = withSentryConfig(
-  module.exports,
+export default withSentryConfig(
+  nextConfig,
   {
     silent: true,
     org: 'ddingdong-ng',
@@ -31,5 +28,8 @@ module.exports = withSentryConfig(
     hideSourceMaps: true,
     disableLogger: true,
     automaticVercelMonitors: true,
+    experimental: {
+      instrumentationHook: true,
+    },
   },
 );

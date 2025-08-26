@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Body1 } from 'ddingdong-design-system';
 import { deptCaptionColor } from '@/constants/color';
 
 type ClubProps = {
@@ -26,7 +27,7 @@ export default function ClubCard({
         className="flex h-full w-full justify-between p-5 md:p-6"
       >
         <div>
-          <div className="text-lg font-bold md:text-xl">{name}</div>
+          <Body1 weight="bold">{name}</Body1>
           <div className="flex items-center">
             <div
               className={`rounded-lg text-sm font-semibold ${deptCaptionColor[category]}`}

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { TooltipContent } from '@radix-ui/react-tooltip';
-import { AlertCircle } from 'lucide-react';
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
 import {
@@ -76,7 +75,7 @@ export default function Index() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <AlertCircle size={20} />
+                {/* <AlertCircle size={20} /> */}
               </TooltipTrigger>
               <TooltipContent className="mt-3 h-16" side="bottom" align="start">
                 <p className="whitespace-pre-line rounded-[10px] bg-blue-50 p-4 text-sm">

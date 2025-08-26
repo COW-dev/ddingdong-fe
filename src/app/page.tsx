@@ -1,4 +1,7 @@
+'use client';
+
 import { useEffect, useState } from 'react';
+
 import Slider from '@/components/common/Slider';
 import ClubCard from '@/components/home/ClubCard';
 import FilterCategory from '@/components/home/FilterCategory';
@@ -7,7 +10,7 @@ import FilterOption from '@/components/modal/FilterOption';
 import { useAllClubs } from '@/hooks/api/club/useAllClubs';
 import type { Club } from '@/types/club';
 
-export default function Home() {
+export default function HomePage() {
   const [keyword, setKeyword] = useState<string>('');
   const [hydrated, setHydrated] = useState(false);
   const [clubs, setClubs] = useState<Array<Club>>([]);

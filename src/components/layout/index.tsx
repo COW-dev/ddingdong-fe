@@ -1,4 +1,6 @@
-import { useRouter } from 'next/router';
+
+
+import { usePathname } from 'next/navigation';
 import AdminHeader from './AdminHeader';
 import Footer from './Footer';
 import UserHeader from './UserHeader';
@@ -8,10 +10,9 @@ type LayoutProps = {
 };
 
 export default function Layout({ children }: LayoutProps) {
-  const router = useRouter();
-  const curPath = router.pathname;
-  const isAdminPage = curPath.startsWith('/admin');
-  const isLoginPage = curPath.endsWith('/login');
+  const pathname = usePathname();
+  const isAdminPage = pathname.startsWith('/admin');
+  const isLoginPage = pathname.endsWith('/login');
 
   return (
     <>

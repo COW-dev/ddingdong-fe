@@ -8,7 +8,7 @@ import LeftArrow from '@/assets/leftArrow2.svg';
 import ApplicantInfo from '@/components/apply/ApplicantInfo';
 import ApplyContentBox from '@/components/apply/ApplyContentBox';
 import ApplyResult from '@/components/apply/ApplyResult';
-import Loading from '@/components/loading/Loading';
+// import Loading from '@/components/loading/';
 import { STATUS_TYPE } from '@/constants/apply';
 import { useApplicantInfo } from '@/hooks/api/apply/useApplicantInfo';
 import { useUpdateApplicantNote } from '@/hooks/api/apply/useUpdateApplicantNote';
@@ -44,7 +44,7 @@ export default function Index({ id, applicantId }: Props) {
   if (isLoading)
     return (
       <div className="flex h-full w-full justify-center p-6">
-        <Loading />
+        {/* <Loading /> */}
       </div>
     );
 
@@ -89,7 +89,7 @@ export default function Index({ id, applicantId }: Props) {
               alt="back"
               width={40}
               height={40}
-              className="mb-1 size-6 md:mb-0.5 md:size-9"
+              className="size-6 md:size-9 mb-1 md:mb-0.5"
             />
             <h1 className="ml-3 text-2xl font-bold md:text-4xl">
               {applicantData?.name}
