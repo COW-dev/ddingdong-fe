@@ -6,7 +6,7 @@ import '../styles/globals.css';
 import Providers from './providers';
 
 const pretendard = localFont({
-  src: '../../public/font/PretendardVariable.woff2',
+  src: './(assets)/font/PretendardVariable.woff2',
   display: 'swap',
   weight: '45 920',
   variable: '--font-pretendard',
@@ -43,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className={`${pretendard.variable}`}>
-      <body className={pretendard.className}>
+      <body>
         <Providers>{children}</Providers>
         {process.env.NODE_ENV === 'production' &&
           process.env.NEXT_PUBLIC_GA_ID && (
