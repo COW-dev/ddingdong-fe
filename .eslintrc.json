@@ -10,6 +10,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
     "plugin:import/recommended",
+    "next",
     "next/core-web-vitals",
     "prettier"
   ],
@@ -22,24 +23,68 @@
   },
   "plugins": ["react", "@typescript-eslint", "prettier", "import"],
   "rules": {
+    "import/no-unresolved": "off",
+    "no-undef": "off",
+    "no-redeclare": "off",
+    "no-duplicate-imports": "error",
+    "no-unused-vars": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/jsx-tag-spacing": 1,
+    "react/jsx-curly-brace-presence": [
+      "error",
+      { "props": "never", "children": "never" }
+    ],
+    "react/destructuring-assignment": [
+      "warn",
+      "always",
+      { "destructureInSignature": "always" }
+    ],
+    "react/no-unknown-property": ["error", { "ignore": ["css"] }],
     "import/order": [
       "error",
       {
-        "groups": ["builtin", "external", "internal"],
+        "groups": [
+          "external",
+          "builtin",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
         "pathGroups": [
-          { "pattern": "react", "group": "builtin", "position": "after" },
-          { "pattern": "react/**", "group": "builtin", "position": "after" },
-          { "pattern": "react-dom", "group": "builtin", "position": "after" },
-          { "pattern": "next", "group": "builtin", "position": "after" },
-          { "pattern": "next/**", "group": "builtin", "position": "after" }
+          {
+            "pattern": "next/**",
+            "group": "external",
+            "position": "before"
+          },
+              {
+            "pattern": "next",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/**",
+            "group": "internal"
+          },
+          {
+            "pattern": "./*",
+            "group": "sibling"
+          }
         ],
         "pathGroupsExcludedImportTypes": ["react", "react-dom", "next"],
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
-        }
+        },
+        "newlines-between": "always"
       }
     ]
   }
