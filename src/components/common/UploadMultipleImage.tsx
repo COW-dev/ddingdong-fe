@@ -6,7 +6,7 @@ import LeftArrow from '@/assets/leftArrow.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 import { UploadFile, UrlType } from '@/types';
 import ImagesController from './ImagesController';
-import Loading from '../loading/Loading';
+// import Loading from '../loading/Loading';
 
 type UploadImageProps = {
   isLoading: boolean;
@@ -62,7 +62,7 @@ export default function UploadMultipleImage({
   if (isLoading)
     return (
       <div className="flex h-full w-full justify-center p-6">
-        <Loading />
+        {/* <Loading /> */}
       </div>
     );
 

@@ -1,14 +1,19 @@
-import { useEffect, useState } from 'react';
+'use client';
+
 import Image from 'next/image';
-import resolveConfig from 'tailwindcss/resolveConfig';
+
+import { useEffect, useState } from 'react';
+
 import { useMediaQuery } from 'usehooks-ts';
+
 import Bin from '@/assets/bin-black.svg';
 import { Switch } from '@/components/ui/switch';
 import useModal from '@/hooks/common/useModal';
 import { BannerType } from '@/types/banner';
-import Modal from './Modal';
-import tailwindConfig from '../../../tailwind.config';
+
 import DeleteBanner from '../modal/banner/DeleteBanner';
+
+import Modal from './Modal';
 
 type BannerProps = {
   data: BannerType;
@@ -19,8 +24,7 @@ export default function Banner({ data, showEdit = false }: BannerProps) {
   const { id, webImageUrl, mobileImageUrl } = data;
   const { openModal, visible, closeModal, modalRef } = useModal();
 
-  const fullConfig = resolveConfig(tailwindConfig);
-  const breakPoint = `(min-width:${fullConfig.theme.screens.md})`;
+  const breakPoint = '(min-width: 768px)';
   const isDesktopViewport = useMediaQuery(breakPoint);
 
   const [isDesktop, setIsDesktop] = useState<boolean>(isDesktopViewport);
@@ -46,7 +50,7 @@ export default function Banner({ data, showEdit = false }: BannerProps) {
           <Image
             className="absolute right-2 top-2 cursor-pointer rounded-md bg-white p-2 opacity-80 hover:opacity-100"
             src={Bin}
-            alt={'휴지통 이미지'}
+            alt="휴지통 이미지"
             width={32}
             height={32}
             onClick={openModal}
@@ -71,7 +75,7 @@ export default function Banner({ data, showEdit = false }: BannerProps) {
       <Modal
         visible={visible}
         modalRef={modalRef}
-        title={'배너 삭제하기'}
+        title="배너 삭제하기"
         closeModal={closeModal}
       >
         <DeleteBanner id={id} closeModal={closeModal} />

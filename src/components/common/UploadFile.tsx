@@ -62,7 +62,7 @@ export default function UploadFile({
           <>
             <span className="ml-2 cursor-pointer">파일을 선택해주세요.</span>
             <input
-              className=" hidden"
+              className="hidden"
               id="file_input"
               name="uploadFile"
               type="file"

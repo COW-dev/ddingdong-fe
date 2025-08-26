@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import toast, { Toaster, useToasterStore } from 'react-hot-toast';
 
 export default function ToasterWithMax() {

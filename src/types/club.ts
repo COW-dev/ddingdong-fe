@@ -1,4 +1,3 @@
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 import { UrlType } from '.';
 
 export type Club = {

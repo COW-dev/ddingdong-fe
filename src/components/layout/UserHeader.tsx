@@ -140,7 +140,7 @@ export default function UserHeader() {
   return (
     <>
       {/* md */}
-      <header className="fixed z-20 hidden h-16 w-full items-center justify-center border-b bg-white md:flex md:h-18">
+      <header className="fixed z-20 hidden h-16 w-full items-center justify-center border-b border-b-gray-200 bg-white md:flex md:h-18">
         <div
           className="flex w-full max-w-6xl items-center px-6 md:px-16"
           ref={dropdownRef}

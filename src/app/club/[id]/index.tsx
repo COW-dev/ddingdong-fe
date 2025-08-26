@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
 import type { GetServerSideProps } from 'next/types';
-import BottomButton from '@/components/club/BottomButton';
+
 import ClubHeading from '@/components/club/ClubHeading';
 import ClubInfo from '@/components/club/ClubInfo';
 import ClubFeed from '@/components/feed/ClubFeed';
