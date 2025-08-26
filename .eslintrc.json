@@ -4,6 +4,7 @@
     "es2021": true,
     "node": true
   },
+  "ignorePatterns": ["next.config.*", "postcss.config.*"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
