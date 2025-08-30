@@ -4,7 +4,7 @@
     "es2021": true,
     "node": true
   },
-  "ignorePatterns": ["next.config.*", "postcss.config.*", "tailwind.config.ts"],
+  "ignorePatterns": ["next.config.*", "postcss.config.*", "tailwind.config.js"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
@@ -23,7 +23,7 @@
     "project": ["tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint", "prettier", "import"],
-    "settings": {
+  "settings": {
     "import/resolver": {
       "typescript": { "project": ["tsconfig.json"] },
       "node": { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
