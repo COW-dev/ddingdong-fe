@@ -1,12 +1,14 @@
 import localFont from 'next/font/local';
-import type { Metadata } from 'next';
+
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
+import { Metadata } from 'next';
 import '../styles/globals.css';
+
 import Providers from './providers';
 
 const pretendard = localFont({
-  src: './(assets)/font/PretendardVariable.woff2',
+  src: '../../public/font/PretendardVariable.woff2',
   display: 'swap',
   weight: '45 920',
   variable: '--font-pretendard',

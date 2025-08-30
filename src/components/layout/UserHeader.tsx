@@ -1,6 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+
+import { useEffect, useRef, useState } from 'react';
+
 import MenuButton from '@/assets/smMenu.svg';
 import Drawer from '@/components/common/Drawer';
 import {
@@ -60,7 +62,7 @@ export default function UserHeader() {
       <div className="flex w-full items-center justify-between px-6">
         <Link href="/" className="inline-block">
           <Image
-            src={'/logo.png'}
+            src="/logo.png"
             width={1544}
             height={380}
             priority
@@ -147,7 +149,7 @@ export default function UserHeader() {
         >
           <Link href="/">
             <Image
-              src={'/logo.png'}
+              src="/logo.png"
               width={1544}
               height={380}
               priority
@@ -175,7 +177,7 @@ export default function UserHeader() {
                         {category}
                       </button>
                       {openDropdown === category && (
-                        <ul className="z-100 absolute left-1/2 top-full mt-2 min-w-max -translate-x-1/2 transform rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+                        <ul className="absolute top-full left-1/2 z-100 mt-2 min-w-max -translate-x-1/2 transform rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
                           {navItems[category]?.map((item, idx) => (
                             <li key={idx}>
                               <Link

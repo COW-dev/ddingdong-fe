@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { Club } from '@/types';
 
 type FilterOptionProps = {
