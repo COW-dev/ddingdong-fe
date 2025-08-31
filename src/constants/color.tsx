@@ -1,7 +1,7 @@
 import { DeptCaptionColor } from '@/types';
 export type ItemsType = { title: string; color: string };
 
-export const CatogoryColor: ItemsType[] = [
+export const CategoryColor: ItemsType[] = [
   { title: '봉사', color: 'pink' },
   { title: '사회연구', color: 'orange' },
   { title: '연행예술', color: 'yellow' },

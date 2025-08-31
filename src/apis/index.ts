@@ -1,8 +1,8 @@
 import * as Sentry from '@sentry/react';
-import axios from 'axios';
-import type { AxiosError, AxiosResponse } from 'axios';
+import axios, { type AxiosError, type AxiosResponse } from 'axios';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
+
 import { PresignedUrlResponse } from '@/types';
 import {
   ApplicantDetail,
@@ -13,14 +13,8 @@ import {
   UpdateApplicantNote,
   UpdateApplicantStatus,
 } from '@/types/apply';
+import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import {
-  BannerType,
-  DeleteBanner,
-  NewBanner,
-  UpdateBanner,
-} from '@/types/banner';
-import {
-  Club,
   AdminClub,
   ClubDetail,
   NewClub,
@@ -38,9 +32,7 @@ import {
   DocumentDetail,
   NewDocument,
 } from '@/types/document';
-
 import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
-
 import {
   DeleteFixComment,
   Fix,
@@ -49,7 +41,6 @@ import {
   NewFix,
   NewFixComment,
 } from '@/types/fix';
-
 import { CreateFormData, ApplyData } from '@/types/form';
 import {
   Notice,
@@ -89,19 +80,10 @@ export async function login(authId: string, password: string) {
   return await api.post('/auth/sign-in', { authId, password });
 }
 
-export async function getAllClubs(): Promise<AxiosResponse<Club[], unknown>> {
-  return await api.get('/clubs');
-}
-
-export async function getAllBanners(): Promise<
-  AxiosResponse<BannerType[], unknown>
-> {
-  return await api.get('/banners');
-}
 export async function getApplyStatistics(
   applyId: number,
   token: string,
-): Promise<AxiosResponse<any, unknown>> {
+): Promise<AxiosResponse<unknown>> {
   return await api.get(`/central/my/forms/${applyId}/statistics`, {
     headers: {
       Authorization: 'Bearer ' + token,
@@ -112,7 +94,7 @@ export async function getApplyStatistics(
 export async function getMultipleAnswer(
   questionId: number,
   token: string,
-): Promise<AxiosResponse<any, unknown>> {
+): Promise<AxiosResponse<unknown>> {
   return await api.get(
     `/central/my/forms/statistics/multiple-choice?fieldId=${questionId}`,
     {
@@ -125,7 +107,7 @@ export async function getMultipleAnswer(
 export async function getSingleAnswer(
   questionId: number,
   token: string,
-): Promise<AxiosResponse<any, unknown>> {
+): Promise<AxiosResponse<unknown>> {
   return await api.get(
     `/central/my/forms/statistics/text?fieldId=${questionId}`,
     {
@@ -175,12 +157,6 @@ export async function getFixInfo(
     },
   });
   return await response.data;
-}
-
-export async function getClubInfo(
-  clubId: number,
-): Promise<AxiosResponse<ClubDetail, unknown>> {
-  return await api.get(`/clubs/${clubId}`);
 }
 
 export async function getAllNotices(

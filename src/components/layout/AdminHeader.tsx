@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+
 import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
 import { useClubStore } from '@/store/club';
@@ -24,7 +25,7 @@ export default function AdminHeader() {
       <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
         <Link href={isLoginPage ? '/login' : '/'} className="-ml-3">
           <Image
-            src={'/logo.png'}
+            src="/logo.png"
             width={1544}
             height={380}
             priority

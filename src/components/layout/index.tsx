@@ -1,6 +1,5 @@
-
-
 import { usePathname } from 'next/navigation';
+
 import AdminHeader from './AdminHeader';
 import Footer from './Footer';
 import UserHeader from './UserHeader';
@@ -16,13 +15,13 @@ export default function Layout({ children }: LayoutProps) {
 
   return (
     <>
-      <div className="flex min-h-screen w-full flex-col items-center justify-between bg-white text-gray-800">
-        {isAdminPage ? <AdminHeader /> : <UserHeader />}
+      {isAdminPage ? <AdminHeader /> : <UserHeader />}
+      <main className="flex min-h-screen w-full flex-col items-center bg-white text-gray-800">
         <div className="flex w-full max-w-6xl flex-col px-6 pt-22 md:px-16 md:pt-26">
           {children}
         </div>
-        {!isLoginPage && <Footer />}
-      </div>
+      </main>
+      {!isLoginPage && <Footer />}
     </>
   );
 }

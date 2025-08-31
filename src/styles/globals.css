@@ -1,12 +1,52 @@
 @import 'tailwindcss';
+@source '../../node_modules/ddingdong-design-system';
+
+@theme {
+  /* Primary colors */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #3b82f6;
+  --color-primary-400: #2563eb;
+
+  /* Gray colors */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #9ca3af;
+  --color-gray-400: #6b7280;
+  --color-gray-500: #4b5563;
+  --color-gray-600: #1f2937;
+
+  /* Red colors */
+  --color-red-50: #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #f87171;
+  --color-red-300: #ef4444;
+
+  /* Green colors */
+  --color-green-50: #dcfce7;
+  --color-green-100: #bbf7d0;
+  --color-green-200: #22c55e;
+  --color-green-300: #16a34a;
+
+  /* Single colors */
+  --color-orange: #f97316;
+  --color-yellow: #eab308;
+  --color-purple: #a855f7;
+  --color-white: #ffffff;
+  --color-black: #000000;
+}
 
 html {
+  font-family: Pretendard;
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
