@@ -33,9 +33,7 @@ export const useFilteredClubs = (
 
     if (filterOptions.sort) {
       if (filterOptions.sort === '동아리명')
-        return (filteredClubs = [...filteredClubs].sort((a, b) =>
-          a.name.localeCompare(b.name),
-        ));
+        return [...filteredClubs].sort((a, b) => a.name.localeCompare(b.name));
 
       if (filterOptions.sort === '카테고리') {
         const regularClubs = filteredClubs.filter(
