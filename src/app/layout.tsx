@@ -2,7 +2,7 @@ import localFont from 'next/font/local';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
-import { Metadata } from 'next';
+import { type Metadata } from 'next';
 import '../styles/globals.css';
 
 import Providers from './providers';

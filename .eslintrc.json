@@ -4,7 +4,7 @@
     "es2021": true,
     "node": true
   },
-  "ignorePatterns": ["next.config.*", "postcss.config.*", "tailwind.config.js"],
+  "ignorePatterns": ["next.config.*", "postcss.config.*", "tailwind.config.*"],
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
