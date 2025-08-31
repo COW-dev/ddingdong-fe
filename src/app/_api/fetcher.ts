@@ -13,8 +13,8 @@ const defaultOption: Options = {
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_URL;
 
-const expirationToken = (error: HTTPError) => {
-  removeToken();
+const expirationToken = async (error: HTTPError) => {
+  await removeToken();
   window.location.href = '/login';
   toast.error(`로그인 시간이 만료되었어요.`);
   return Promise.reject(error);
