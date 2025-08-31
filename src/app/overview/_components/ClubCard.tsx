@@ -4,23 +4,19 @@ import Link from 'next/link';
 
 import { Badge, Body1, Caption1, Card, Flex } from 'ddingdong-design-system';
 
+import { Club } from '@/app/_api/types/club';
 import { deptCaptionColor } from '@/constants/color';
 
-type ClubCardProps = {
-  id: number;
-  name: string;
-  tag: string;
-  category: string;
-  recruitStatus: string;
+const badgeVariantByStatus: Record<
+  Club['recruitStatus'],
+  'positive' | 'neutral'
+> = {
+  '모집 중': 'positive',
+  '모집 마감': 'neutral',
+  '모집 예정': 'neutral',
 };
 
-export function ClubCard({
-  id,
-  name,
-  tag,
-  category,
-  recruitStatus,
-}: ClubCardProps) {
+export function ClubCard({ id, name, tag, category, recruitStatus }: Club) {
   return (
     <Card as="li">
       <Link
@@ -40,7 +36,7 @@ export function ClubCard({
         </Flex>
         <Flex alignItems="center">
           <Badge
-            variant={recruitStatus === '모집 중' ? 'positive' : 'neutral'}
+            variant={badgeVariantByStatus[recruitStatus]}
             text={recruitStatus}
           />
         </Flex>

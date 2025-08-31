@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react';
+import * as Sentry from '@sentry/nextjs';
 import ky, { type Options, type ResponsePromise, HTTPError } from 'ky';
 import { toast } from 'react-hot-toast';
 
