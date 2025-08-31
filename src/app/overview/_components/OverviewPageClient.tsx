@@ -1,5 +1,6 @@
 'use client';
 import { useSuspenseQueries } from '@tanstack/react-query';
+import { Body3 } from 'ddingdong-design-system';
 
 import { bannerQueryOptions } from '@/app/_api/queries/banner';
 import { clubQueryOptions } from '@/app/_api/queries/club';
@@ -46,9 +47,13 @@ export function OverviewPageClient() {
       />
 
       <ClubContainer>
-        {filteredClubs?.map((club) => (
-          <ClubCard key={club.id} {...club} />
-        ))}
+        {filteredClubs.length === 0 ? (
+          <Body3 className="col-span-full py-10 text-center text-gray-400">
+            검색 결과가 없습니다.
+          </Body3>
+        ) : (
+          filteredClubs.map((club) => <ClubCard key={club.id} {...club} />)
+        )}
       </ClubContainer>
     </>
   );
