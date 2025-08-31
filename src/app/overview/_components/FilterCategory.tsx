@@ -22,15 +22,25 @@ export function FilterCategory({
   return (
     <Flex className="my-2 hidden w-full rounded-xl bg-gray-50 px-4 py-2 font-semibold text-gray-500 md:flex">
       <Body3
+        role="button"
+        tabIndex={0}
+        aria-pressed={option.length === 0}
         className={cn('cursor-pointer', option.length === 0 && 'text-blue-500')}
         onClick={() => onOptionSelect([])}
       >
         전체
       </Body3>
-      {CategoryColor.map((category, index) => (
+      {CategoryColor.map((category) => (
         <Body3
-          key={index}
+          role="button"
+          tabIndex={0}
+          aria-pressed={option.includes(category.title)}
+          key={category.title}
           onClick={() => filterCategory(category.title)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ')
+              filterCategory(category.title);
+          }}
           className={`cursor-pointer before:p-2 before:text-gray-300 before:content-['|'] ${
             option.includes(category.title) && 'text-blue-500'
           }`}
