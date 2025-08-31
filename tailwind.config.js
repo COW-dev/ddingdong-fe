@@ -7,7 +7,7 @@ export default {
     './app/**/*.{ts,tsx}',
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
-    './node_modules/ddingdong-design-system/**/*.{js,ts,jsx,tsx}',
+    './node_modules/ddingdong-design-system/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     container: {
