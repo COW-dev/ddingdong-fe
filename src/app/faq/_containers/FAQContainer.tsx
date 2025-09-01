@@ -1,5 +1,6 @@
-import { Flex } from 'ddingdong-design-system';
 import { ReactNode } from 'react';
+
+import { Flex } from 'ddingdong-design-system';
 
 export function FAQContainer({ children }: { children: ReactNode }) {
   return (

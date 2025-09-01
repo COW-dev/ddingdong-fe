@@ -1,8 +1,10 @@
 'use client';
 
 import { Accordion, Body1, Body2, Flex, Item } from 'ddingdong-design-system';
-import { FAQContainer } from '../_containers/FAQContainer';
+
 import { FAQ } from '@/app/_api/types/faq';
+
+import { FAQContainer } from '../_containers/FAQContainer';
 
 export function FAQAccordion({ FAQs }: { FAQs: FAQ[] }) {
   return (

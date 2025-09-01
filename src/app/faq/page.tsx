@@ -1,24 +1,28 @@
-'use client';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import { Metadata } from 'next';
 
-import Head from 'next/head';
-
-import { useQuery } from '@tanstack/react-query';
 import { faqQueryOptions } from '../_api/queries/faq';
-import { Title1 } from 'ddingdong-design-system';
-import { FAQAccordion } from './_components/FAQAccordion';
+import { FAQ } from '../_api/types/faq';
 
-export default function FaqPage() {
-  const { data: FAQs } = useQuery(faqQueryOptions.all());
+import { FAQPageClient } from './_components/FAQPageClient';
+
+export const metadata: Metadata = {
+  title: '띵동 - FAQ',
+};
+
+export default async function FaqPage() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(faqQueryOptions.all());
+  const FAQs = queryClient.getQueryData<FAQ[]>(faqQueryOptions.all().queryKey);
 
   return (
-    <>
-      <Head>
-        <title>띵동 - FAQ</title>
-      </Head>
-      <Title1 weight="bold" className="py-7 md:py-10">
-        FAQ
-      </Title1>
-      <FAQAccordion FAQs={FAQs ?? []} />
-    </>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <FAQPageClient FAQs={FAQs ?? []} />
+    </HydrationBoundary>
   );
 }
