@@ -16,3 +16,10 @@ export type Club = {
   tag: ClubTag;
   recruitStatus: RecruitStatus;
 };
+
+export type ClubProfile = {
+  id: string;
+  name: string;
+  profileImageOriginUrl: string;
+  profileImageCdnUrl: string;
+};

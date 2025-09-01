@@ -1,4 +1,5 @@
 import { queryOptions } from '@tanstack/react-query';
+
 import { fetcher } from '../fetcher';
 import { FAQ } from '../types/faq';
 
