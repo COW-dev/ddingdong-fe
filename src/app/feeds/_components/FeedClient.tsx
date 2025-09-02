@@ -12,7 +12,7 @@ import { ClubFeed } from './ClubFeed';
 
 export function FeedClient() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useSuspenseInfiniteQuery({ ...feedQueryOptions.all() });
+    useSuspenseInfiniteQuery(feedQueryOptions.all());
 
   const { observerTarget } = useInfiniteScroll({
     hasNextPage,
@@ -29,7 +29,12 @@ export function FeedClient() {
       ) : (
         <FeedContainer>
           <ClubFeed feeds={feedData} />
-          <div ref={observerTarget} className="h-5 w-full bg-transparent" />
+          <div
+            ref={observerTarget}
+            role="presentation"
+            aria-hidden="true"
+            className="h-5 w-full bg-transparent"
+          />
         </FeedContainer>
       )}
     </Flex>
