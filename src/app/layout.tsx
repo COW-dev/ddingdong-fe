@@ -31,11 +31,6 @@ export const metadata: Metadata = {
       media: '(prefers-color-scheme: dark)',
     },
   ],
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    userScalable: false,
-  },
 };
 
 export default function RootLayout({

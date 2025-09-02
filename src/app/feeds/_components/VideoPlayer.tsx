@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+
 import Hls from 'hls.js';
 
 type VideoPlayerProps = {
@@ -28,12 +29,12 @@ export default function VideoPlayer({ videoUrl }: VideoPlayerProps) {
 
   return (
     <video
-      className="w-full md:h-[450px]"
       ref={videoRef}
       controls
       autoPlay
       muted
       playsInline
+      className="w-full md:h-[400px]"
     />
   );
 }

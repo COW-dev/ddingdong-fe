@@ -32,7 +32,7 @@ import {
   DocumentDetail,
   NewDocument,
 } from '@/types/document';
-import { TotalFeed, FeedDetail, NewFeed, DeleteFeed } from '@/types/feed';
+import { TotalFeed, NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,
   Fix,
@@ -191,14 +191,6 @@ export async function createFeed({ token, ...feedData }: NewFeed) {
   });
 }
 
-export async function getAllFeeds(
-  currentCursorId: number | -1,
-): Promise<AxiosResponse<TotalFeed<'newestFeeds'>, unknown>> {
-  return await api.get(
-    `/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
-  );
-}
-
 export async function getMyFeeds(
   token: string,
   currentCursorId: number | -1,
@@ -220,12 +212,6 @@ export async function getClubFeed(
   return await api.get(
     `/clubs/${clubId}/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
   );
-}
-
-export async function getFeedDetail(
-  feedId: number,
-): Promise<AxiosResponse<FeedDetail, unknown>> {
-  return await api.get(`/feeds/${feedId}`);
 }
 
 export async function createNotice({ token, ...noticeData }: NewNotice) {
