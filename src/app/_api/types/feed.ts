@@ -8,7 +8,7 @@ export type FeedList = {
 
 export type Feed = {
   id: number;
-  feedType?: string;
+  feedType: 'IMAGE' | 'VIDEO';
   thumbnailCdnUrl: string;
   thumbnailOriginUrl: string;
 };
