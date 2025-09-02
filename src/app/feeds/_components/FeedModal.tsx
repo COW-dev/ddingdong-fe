@@ -27,7 +27,6 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
               <>
                 <Image
                   fill
-                  priority
                   src={feed.fileUrls.cdnUrl}
                   alt="동아리 피드"
                   sizes="(max-width: 768px) 100vw, 800px"
