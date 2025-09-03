@@ -28,16 +28,12 @@ export const downloadFile = async (url: string, filename: string) => {
 
 export const downloadAll = async (
   data: { originUrl: string; name: string }[],
-  onProgress?: (completed: number, total: number) => void,
 ) => {
   if (!data.length) {
     toast.error('다운로드할 파일이 없습니다.');
     return;
   }
-
   const totalFiles = data.length;
-  let completedFiles = 0;
-
   toast.success(`${totalFiles}개 파일 다운로드를 시작합니다.`);
 
   const downloads = data.map((file, index) => {
@@ -45,8 +41,6 @@ export const downloadAll = async (
       setTimeout(async () => {
         try {
           await downloadFile(file.originUrl, file.name);
-          completedFiles++;
-          onProgress?.(completedFiles, totalFiles);
         } catch {
           toast.error(`${file.name}파일 다운로드에 실패했어요. `);
         }
