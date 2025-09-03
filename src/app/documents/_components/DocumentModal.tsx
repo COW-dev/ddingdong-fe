@@ -50,7 +50,7 @@ export function DocumentModal({ id, isOpen, closeModal }: DocumentModalProps) {
               size="full"
               onClick={() => downloadAll(document.files)}
             >
-              <Body2 weight="semibold">모두 다운로드</Body2>
+              <Body2 weight="semibold">전체 다운로드</Body2>
             </Button>
           }
           right={
