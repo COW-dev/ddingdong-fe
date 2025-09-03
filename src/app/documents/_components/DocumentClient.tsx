@@ -29,6 +29,7 @@ export function DocumentClient() {
           ))
         )}
       </DocumentContainer>
+      {/* TODO : currentPage 버그, 1->2 페이지 전환 시 scrollTo 적용 */}
       {documents.documents.length > 1 && (
         <Pagination
           currentPage={currentPage}
