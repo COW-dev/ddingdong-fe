@@ -22,15 +22,15 @@ export function DocumentClient() {
       <Title1 weight="bold" className="py-7 md:py-10">
         자료실
       </Title1>
-      <DocumentContainer>
-        {documents.documents.length === 0 ? (
-          <Body1 className="text-gray-400">자료가 없습니다.</Body1>
-        ) : (
-          documents.documents.map((document) => (
+      {documents.documents.length === 0 ? (
+        <Body1 className="text-gray-400">자료가 없습니다.</Body1>
+      ) : (
+        <DocumentContainer>
+          {documents.documents.map((document) => (
             <DocumentItem key={document.id} document={document} />
-          ))
-        )}
-      </DocumentContainer>
+          ))}
+        </DocumentContainer>
+      )}
       {/* TODO : currentPage 버그, 1->2 페이지 전환 시 scrollTo 적용 */}
       {documents.totalPageCount > 1 && (
         <Pagination
