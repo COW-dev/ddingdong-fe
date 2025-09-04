@@ -21,8 +21,9 @@ export const downloadFile = async (url: string, filename: string) => {
     const response = await fetch(url);
     const blob = await response.blob();
     downloadBlob(blob, filename);
-  } catch {
+  } catch (err) {
     toast.error('파일 다운로드 중 오류가 발생했습니다.');
+    throw err;
   }
 };
 
@@ -38,13 +39,12 @@ export const downloadAll = async (
 
   const downloads = data.map((file, index) => {
     return new Promise<void>((resolve) => {
-      setTimeout(async () => {
-        try {
-          await downloadFile(file.originUrl, file.name);
-        } catch {
-          toast.error(`${file.name}파일 다운로드에 실패했어요. `);
-        }
-        resolve();
+      setTimeout(() => {
+        downloadFile(file.originUrl, file.name)
+          .catch(() => {
+            toast.error(`${file.name}파일 다운로드에 실패했어요. `);
+          })
+          .finally(resolve);
       }, index * 200);
     });
   });
