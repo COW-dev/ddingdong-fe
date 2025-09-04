@@ -26,13 +26,8 @@ import {
   MemberInfo,
   AddMember,
 } from '@/types/club';
-import {
-  DeleteDocument,
-  Document,
-  DocumentDetail,
-  NewDocument,
-} from '@/types/document';
-import { TotalFeed, NewFeed, DeleteFeed } from '@/types/feed';
+import { DeleteDocument, DocumentDetail, NewDocument } from '@/types/document';
+import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,
   Fix,
@@ -171,12 +166,6 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
-export async function getAllDocuments(
-  page: number,
-): Promise<AxiosResponse<Document, unknown>> {
-  return await api.get(`/documents?page=${page}&limit=10`);
-}
-
 export async function getDocumentInfo(
   documentId: number,
 ): Promise<AxiosResponse<DocumentDetail, unknown>> {
@@ -191,28 +180,28 @@ export async function createFeed({ token, ...feedData }: NewFeed) {
   });
 }
 
-export async function getMyFeeds(
-  token: string,
-  currentCursorId: number | -1,
-): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
-  return await api.get(
-    `/central/my/feeds?currentCursorId=${currentCursorId ?? -1}&size=12`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
+// export async function getMyFeeds(
+//   token: string,
+//   currentCursorId: number | -1,
+// ): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
+//   return await api.get(
+//     `/central/my/feeds?currentCursorId=${currentCursorId ?? -1}&size=12`,
+//     {
+//       headers: {
+//         Authorization: 'Bearer ' + token,
+//       },
+//     },
+//   );
+// }
 
-export async function getClubFeed(
-  clubId: number,
-  currentCursorId: number,
-): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
-  return await api.get(
-    `/clubs/${clubId}/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
-  );
-}
+// export async function getClubFeed(
+//   clubId: number,
+//   currentCursorId: number,
+// ): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
+//   return await api.get(
+//     `/clubs/${clubId}/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
+//   );
+// }
 
 export async function createNotice({ token, ...noticeData }: NewNotice) {
   return await api.post('/admin/notices', noticeData, {
