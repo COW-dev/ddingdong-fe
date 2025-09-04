@@ -3,12 +3,27 @@ import { withSentryConfig } from '@sentry/nextjs';
 
 const nextConfig = {
   images: {
-    domains: [
-      'ddn4vjj3ws13w.cloudfront.net',
-      'd2syrtcctrfiup.cloudfront.net',
-      'ddingdong-converted-file.s3.ap-northeast-2.amazonaws.com',
-      'ddingdong-file.s3.ap-northeast-2.amazonaws.com',
-      'github.com',
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ddn4vjj3ws13w.cloudfront.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'd2syrtcctrfiup.cloudfront.net',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ddingdong-converted-file.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ddingdong-file.s3.ap-northeast-2.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+      },
     ],
   },
   reactStrictMode: true,
