@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default async function DocumentsPage() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(documentQueryOptions.all());
+  await queryClient.prefetchQuery(documentQueryOptions.all(1));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

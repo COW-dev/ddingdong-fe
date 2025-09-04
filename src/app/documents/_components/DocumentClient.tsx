@@ -13,7 +13,9 @@ import { DocumentItem } from './DocumentItem';
 
 export function DocumentClient() {
   const [currentPage, setCurrentPage] = useState(1);
-  const { data: documents } = useSuspenseQuery(documentQueryOptions.all());
+  const { data: documents } = useSuspenseQuery(
+    documentQueryOptions.all(currentPage),
+  );
 
   return (
     <>
@@ -30,11 +32,14 @@ export function DocumentClient() {
         )}
       </DocumentContainer>
       {/* TODO : currentPage 버그, 1->2 페이지 전환 시 scrollTo 적용 */}
-      {documents.documents.length > 1 && (
+      {documents.totalPageCount > 1 && (
         <Pagination
           currentPage={currentPage}
           totalPages={documents.totalPageCount}
-          onPageChange={() => setCurrentPage((prev) => prev + 1)}
+          onPageChange={(page) => {
+            setCurrentPage(page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
           className="mt-10"
         />
       )}

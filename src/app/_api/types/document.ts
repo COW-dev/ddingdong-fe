@@ -17,7 +17,7 @@ export type DocumentDetail = {
 };
 
 export type DocumentFile = {
-  id: string;
+  id: number;
   name: string;
   originUrl: string;
   cdnUrl: string;
