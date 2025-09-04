@@ -21,7 +21,7 @@ export function DocumentItem({ document }: { document: Document }) {
         <Flex dir="col" gap={1}>
           <Body1>{document.title}</Body1>
           <Body3 weight="medium" className="text-gray-300">
-            {document.createdAt}
+            {new Date(document.createdAt).toLocaleDateString('ko-KR')}
           </Body3>
         </Flex>
         <Flex dir="row" alignItems="center" gap={1}>
