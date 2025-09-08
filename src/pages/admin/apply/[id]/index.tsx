@@ -26,17 +26,20 @@ import { useRegisterApplicant } from '@/hooks/api/apply/useRegisterApplicant';
 import useModal from '@/hooks/common/useModal';
 import { TabMenu } from '@/types/feed';
 import { filterApplicants } from '@/utils/filter';
+import ConfirmBanner from '@/components/modal/ConfirmModal';
 
 export default function Index() {
   const router = useRouter();
   const { id } = router.query;
   const [{ token }] = useCookies(['token']);
-  const getStorageKey = (id: string | string[] | undefined) =>
-    `apply-tab-${id}`;
 
-  const [activeTab, setActiveTab] = useState(() => {
+  const getStorageKey = (idParam: string | string[] | undefined) =>
+    `apply-tab-${idParam}`;
+
+  const [activeTab, setActiveTab] = useState<number>(() => {
     if (typeof window !== 'undefined') {
-      return sessionStorage.getItem(getStorageKey(id)) || 0;
+      const saved = sessionStorage.getItem(getStorageKey(id));
+      return saved ? Number(saved) : 0;
     }
     return 0;
   });
@@ -46,11 +49,19 @@ export default function Index() {
     sessionStorage.setItem(getStorageKey(id), String(index));
   };
 
-  const { data: data, isLoading } = useAllApplication(Number(id), token);
+  const { data, isLoading } = useAllApplication(Number(id), token);
   const deleteMutation = useDeleteApplication();
   const registerMutation = useRegisterApplicant();
 
+  // 삭제 모달
   const { openModal, visible, closeModal, modalRef } = useModal();
+  // 연동 확인 모달
+  const {
+    openModal: openConfirmModal,
+    visible: confirmVisible,
+    closeModal: closeConfirmModal,
+    modalRef: confirmModalRef,
+  } = useModal();
 
   const applicationData = data?.data;
 
@@ -114,6 +125,7 @@ export default function Index() {
           <Link href={`/apply/${id}/statistics`}>
             <Image src={Chart} alt="chart" width={32} height={32} />
           </Link>
+          {/* 데스크톱: 삭제 아이콘 → 삭제 모달 */}
           <Image
             src={Bin}
             alt="bin"
@@ -126,11 +138,10 @@ export default function Index() {
             <DropdownMenuTrigger className="mt-0.5 block items-center p-0 outline-none md:hidden">
               <Image
                 src={Etc}
-                alt="bin"
+                alt="menu"
                 width={32}
                 height={32}
-                onClick={openModal}
-                className=" cursor-pointer md:hidden"
+                className="cursor-pointer md:hidden"
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mt-2 flex min-w-[110px] translate-x-[-30px] flex-col items-center border-t-0 p-2 text-center font-semibold md:min-w-[120px]">
@@ -141,7 +152,7 @@ export default function Index() {
                 삭제
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={handleRegister}
+                onClick={openConfirmModal} 
                 className="w-full justify-center text-sm text-gray-500 md:text-base"
               >
                 명단 연동
@@ -153,6 +164,7 @@ export default function Index() {
           </DropdownMenu>
         </div>
       </div>
+
       <div
         className={`${
           applicationData.hasInterview ? 'mb-0 mt-11' : 'my-11'
@@ -174,7 +186,7 @@ export default function Index() {
         </div>
         <div className="flex flex-row items-center gap-2 md:gap-3">
           <button
-            onClick={handleRegister}
+            onClick={openConfirmModal}
             className="hidden rounded-xl bg-blue-100 font-bold text-blue-500 hover:bg-blue-200 md:block md:px-7 md:py-3.5 md:text-lg"
           >
             명단 연동하기
@@ -198,18 +210,40 @@ export default function Index() {
       ) : (
         <ApplicantList data={applicationData.formApplications ?? []} />
       )}
+
       <Link href={`/apply/${id}/edit`}>
         <button className="fixed bottom-10 right-5 flex h-12 items-center justify-center rounded-[100px] bg-blue-500 px-8 py-3 font-semibold text-white hover:bg-blue-600 md:bottom-20 md:right-20 md:px-10 md:py-4">
           지원서 양식 관리
         </button>
       </Link>
+
       <Modal
         visible={visible}
         modalRef={modalRef}
         closeButton={false}
         closeModal={closeModal}
       >
-        <AlertDialog onConfirm={handleDelete} onCancel={closeModal} />
+        <AlertDialog
+          type="delete"
+          target="지원서 전체"
+          onConfirm={handleDelete}
+          onCancel={closeModal}
+        />
+      </Modal>
+
+      <Modal
+        visible={confirmVisible}
+        modalRef={confirmModalRef}
+        closeButton={false}
+        closeModal={closeConfirmModal}
+      >
+        <ConfirmBanner
+          title="기존 인원이 초기화된 후, 신입 명단이 추가됩니다. 진행하시겠습니까?" 
+          callback={() => {
+            handleRegister();    
+          }}
+          closeModal={closeConfirmModal} 
+        />
       </Modal>
     </>
   );
@@ -219,7 +253,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   return {
     props: {
-      id: id,
+      id,
     },
   };
 };
