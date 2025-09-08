@@ -10,7 +10,7 @@ type AlertDialogProps = {
   onConfirm?: () => void;
   onCancel?: () => void;
   type?: keyof typeof DIALOG_TYPE;
-  target?: string; 
+  target?: string;
 };
 
 function AlertDialog({
@@ -19,10 +19,7 @@ function AlertDialog({
   type = 'delete',
   target = '',
 }: AlertDialogProps) {
-  const title = DIALOG_TYPE[type].title.replace(
-    '{target}',
-    target || '' 
-  );
+  const title = DIALOG_TYPE[type].title.replace('{target}', target || '');
 
   return (
     <>

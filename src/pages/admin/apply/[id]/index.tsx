@@ -13,6 +13,7 @@ import AlertDialog from '@/components/common/AlertDialog';
 import Modal from '@/components/common/Modal';
 import Tabs from '@/components/feed/Tabs';
 import Loading from '@/components/loading/Loading';
+import ConfirmBanner from '@/components/modal/ConfirmModal';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +27,6 @@ import { useRegisterApplicant } from '@/hooks/api/apply/useRegisterApplicant';
 import useModal from '@/hooks/common/useModal';
 import { TabMenu } from '@/types/feed';
 import { filterApplicants } from '@/utils/filter';
-import ConfirmBanner from '@/components/modal/ConfirmModal';
 
 export default function Index() {
   const router = useRouter();
@@ -152,7 +152,7 @@ export default function Index() {
                 삭제
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={openConfirmModal} 
+                onClick={openConfirmModal}
                 className="w-full justify-center text-sm text-gray-500 md:text-base"
               >
                 명단 연동
@@ -238,11 +238,11 @@ export default function Index() {
         closeModal={closeConfirmModal}
       >
         <ConfirmBanner
-          title="기존 인원이 초기화된 후, 신입 명단이 추가됩니다. 진행하시겠습니까?" 
+          title="기존 인원이 초기화된 후, 신입 명단이 추가됩니다. 진행하시겠습니까?"
           callback={() => {
-            handleRegister();    
+            handleRegister();
           }}
-          closeModal={closeConfirmModal} 
+          closeModal={closeConfirmModal}
         />
       </Modal>
     </>
