@@ -1,20 +1,5 @@
 import { UrlType } from '.';
 
-export type Club = {
-  id: number;
-  name: string;
-  category: string;
-  tag: string;
-  recruitStatus: string;
-};
-
-export type ClubProfile = {
-  id: string;
-  name: string;
-  profileImageOriginUrl: string;
-  profileImageCdnUrl: string;
-};
-
 export type AdminClub = {
   id: number;
   name: string;
