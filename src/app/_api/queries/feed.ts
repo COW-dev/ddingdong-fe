@@ -5,7 +5,7 @@ import { FeedDetail, FeedList } from '../types/feed';
 
 export const feedQueryKeys = {
   all: () => ['feed'],
-  detail: (feedId: number) => [...feedQueryKeys.all(), feedId],
+  detail: (feedId: number) => [...feedQueryKeys.all(), 'detail', feedId],
   clubFeed: (clubId: number) => [...feedQueryKeys.all(), 'club', clubId],
 };
 

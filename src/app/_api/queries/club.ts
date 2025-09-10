@@ -5,7 +5,7 @@ import { Club, ClubDetail } from '../types/club';
 
 export const clubQueryKeys = {
   all: () => ['clubs'],
-  details: (id: number) => ['clubs', id],
+  detail: (id: number) => [...clubQueryKeys.all(), id],
 };
 
 export const clubQueryOptions = {
@@ -16,7 +16,7 @@ export const clubQueryOptions = {
     }),
   detail: (id: number) =>
     queryOptions({
-      queryKey: clubQueryKeys.details(id),
+      queryKey: clubQueryKeys.detail(id),
       queryFn: () => fetcher.get<ClubDetail>(`clubs/${id}`),
     }),
 };
