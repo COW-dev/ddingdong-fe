@@ -1,11 +1,11 @@
 import { queryOptions } from '@tanstack/react-query';
 
 import { fetcher } from '../fetcher';
-import { Club } from '../types/club';
+import { Club, ClubDetail } from '../types/club';
 
 export const clubQueryKeys = {
   all: () => ['clubs'],
-  details: (id: string) => ['clubs', id],
+  detail: (id: number) => [...clubQueryKeys.all(), id],
 };
 
 export const clubQueryOptions = {
@@ -14,9 +14,9 @@ export const clubQueryOptions = {
       queryKey: clubQueryKeys.all(),
       queryFn: () => fetcher.get<Club[]>('clubs'),
     }),
-  details: (id: string) =>
+  detail: (id: number) =>
     queryOptions({
-      queryKey: clubQueryKeys.details(id),
-      queryFn: () => fetcher.get<Club>(`clubs/${id}`),
+      queryKey: clubQueryKeys.detail(id),
+      queryFn: () => fetcher.get<ClubDetail>(`clubs/${id}`),
     }),
 };
