@@ -1,8 +1,8 @@
 import { usePathname } from 'next/navigation';
 
+import { UserHeader } from './_components';
 import AdminHeader from './AdminHeader';
 import Footer from './Footer';
-import UserHeader from './UserHeader';
 
 type LayoutProps = {
   children: React.ReactNode;
