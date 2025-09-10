@@ -12,19 +12,20 @@ import { ClubDetailClient } from './_components/ClubDetailClient';
 export default async function ClubDetailPage({
   params,
 }: {
-  params: { id: number };
+  params: { id: string };
 }) {
   const { id } = await params;
+  const NumberId = Number(id);
   const queryClient = new QueryClient();
 
   await Promise.all([
-    queryClient.prefetchQuery(clubQueryOptions.detail(id)),
-    queryClient.prefetchQuery(feedQueryOptions.clubFeed(id)),
+    queryClient.prefetchQuery(clubQueryOptions.detail(NumberId)),
+    queryClient.prefetchQuery(feedQueryOptions.clubFeed(NumberId)),
   ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ClubDetailClient id={id} />
+      <ClubDetailClient id={NumberId} />
     </HydrationBoundary>
   );
 }
