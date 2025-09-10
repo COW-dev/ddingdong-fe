@@ -1,10 +1,11 @@
 import { ClubProfile } from './club';
 import { UrlType } from './common';
 
+type FeedKeys = 'newestFeeds' | 'clubFeeds';
+
 export type FeedList = {
-  newestFeeds: Feed[];
-  pagingInfo: PagingInfo;
-};
+  [K in FeedKeys]: Feed[];
+} & { pagingInfo: PagingInfo };
 
 export type Feed = {
   id: number;

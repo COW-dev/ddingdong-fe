@@ -1,3 +1,5 @@
+import { UrlType } from './common';
+
 export type RecruitStatus = '모집 중' | '모집 마감' | '모집 예정';
 export type ClubTag =
   | '봉사'
@@ -22,4 +24,24 @@ export type ClubProfile = {
   name: string;
   profileImageOriginUrl: string;
   profileImageCdnUrl: string;
+};
+
+export type ClubDetail = {
+  name: string;
+  tag: string;
+  category: string;
+  leader: string;
+  phoneNumber: string;
+  location: string;
+  isRecruit: boolean;
+  startDate?: string;
+  endDate?: string;
+  regularMeeting: string;
+  introduction: string;
+  activity: string;
+  ideal: string;
+  profileImage: UrlType;
+  introductionImage: UrlType;
+  token: string;
+  formId?: number;
 };

@@ -32,25 +32,6 @@ export type NewClub = {
   password: string;
   token?: string;
 };
-export type ClubDetail = {
-  name: string;
-  tag: string;
-  category: string;
-  leader: string;
-  phoneNumber: string;
-  location: string;
-  isRecruit: boolean;
-  startDate?: string;
-  endDate?: string;
-  regularMeeting: string;
-  introduction: string;
-  activity: string;
-  ideal: string;
-  profileImage: UrlType;
-  introductionImage: UrlType;
-  token: string;
-  formId?: number;
-};
 
 export type MemberInfo = {
   clubName: string;

@@ -20,7 +20,7 @@ export function FeedClient() {
     fetchNextPage,
   });
 
-  const feedData = data?.pages.flatMap((page) => page.newestFeeds) || [];
+  const feedData = data.pages.flatMap((page) => page.newestFeeds);
 
   return (
     <Flex justifyContent="center" alignItems="center" className="w-full">

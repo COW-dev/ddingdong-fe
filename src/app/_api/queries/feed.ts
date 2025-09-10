@@ -5,7 +5,8 @@ import { FeedDetail, FeedList } from '../types/feed';
 
 export const feedQueryKeys = {
   all: () => ['feed'],
-  detail: (feedId: number) => ['feed', feedId],
+  detail: (feedId: number) => [...feedQueryKeys.all(), feedId],
+  clubFeed: (clubId: number) => [...feedQueryKeys.all(), 'club', clubId],
 };
 
 export const feedQueryOptions = {
@@ -26,5 +27,13 @@ export const feedQueryOptions = {
     queryOptions({
       queryKey: feedQueryKeys.detail(feedId),
       queryFn: () => fetcher.get<FeedDetail>(`feeds/${feedId}`),
+    }),
+  clubFeed: (clubId: number) =>
+    queryOptions({
+      queryKey: feedQueryKeys.clubFeed(clubId),
+      queryFn: () =>
+        fetcher.get<FeedList>(
+          `clubs/${clubId}/feeds?currentCursorId=-1&size=9`,
+        ),
     }),
 };
