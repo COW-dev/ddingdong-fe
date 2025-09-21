@@ -1,7 +1,4 @@
-import * as Sentry from '@sentry/react';
-import axios, { type AxiosError, type AxiosResponse } from 'axios';
-import { Cookies } from 'react-cookie';
-import { toast } from 'react-hot-toast';
+import axios, { type AxiosResponse } from 'axios';
 
 import { PresignedUrlResponse } from '@/types';
 import {
@@ -55,25 +52,19 @@ import {
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
-export type ErrorType = {
-  status: number;
-  message: string;
-  timestamp: string;
-};
-
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
-export function removeToken() {
-  const cookies = new Cookies();
-  cookies.remove('token');
-  cookies.remove('role');
-}
-export async function login(authId: string, password: string) {
-  removeToken();
-  return await api.post('/auth/sign-in', { authId, password });
-}
+// export function removeToken() {
+//   const cookies = new Cookies();
+//   cookies.remove('token');
+//   cookies.remove('role');
+// }
+// export async function login(authId: string, password: string) {
+//   removeToken();
+//   return await api.post('/auth/sign-in', { authId, password });
+// }
 
 export async function getApplyStatistics(
   applyId: number,
@@ -678,33 +669,33 @@ export async function uploadPresignedUrl(
 }
 
 //error handling
-function expirationToken(error: AxiosError<ErrorType>) {
-  removeToken();
-  window.location.href = '/login';
-  toast.error(error.response?.data?.message ?? `로그인 시간이 만료되었어요.`);
-  return Promise.reject(error);
-}
+// function expirationToken(error: AxiosError<ErrorType>) {
+//   removeToken();
+//   window.location.href = '/login';
+//   toast.error(error.response?.data?.message ?? `로그인 시간이 만료되었어요.`);
+//   return Promise.reject(error);
+// }
 
-function fulfilledResponse(res: AxiosResponse) {
-  return res;
-}
-function rejectedResponse(error: AxiosError<ErrorType>) {
-  if (
-    error.response?.data?.status === 401 &&
-    error.response?.data?.message == '유효하지 않은 토큰입니다.'
-  ) {
-    return expirationToken(error);
-  }
-  if (error.code === 'ECONNABORTED') {
-    toast.error('네트워크 환경을 확인해주세요.');
-    return Promise.reject(error);
-  }
+// function fulfilledResponse(res: AxiosResponse) {
+//   return res;
+// }
+// function rejectedResponse(error: AxiosError<ErrorType>) {
+//   if (
+//     error.response?.data?.status === 401 &&
+//     error.response?.data?.message == '유효하지 않은 토큰입니다.'
+//   ) {
+//     return expirationToken(error);
+//   }
+//   if (error.code === 'ECONNABORTED') {
+//     toast.error('네트워크 환경을 확인해주세요.');
+//     return Promise.reject(error);
+//   }
 
-  Sentry.captureException(error);
-  return Promise.reject(error);
-}
+//   Sentry.captureException(error);
+//   return Promise.reject(error);
+// }
 
-api.interceptors.response.use(fulfilledResponse, rejectedResponse);
+// api.interceptors.response.use(fulfilledResponse, rejectedResponse);
 
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {
