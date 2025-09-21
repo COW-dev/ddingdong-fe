@@ -5,7 +5,7 @@ import { useCookie } from '@/app/_api/useCookie';
 import AdminPage from './_pages/Admin';
 
 export default function AdminHomePage() {
-  const { getRole } = useCookie();
+  const { cookie } = useCookie();
 
-  return <AdminPage role={getRole()} />;
+  return <AdminPage role={cookie.role} />;
 }
