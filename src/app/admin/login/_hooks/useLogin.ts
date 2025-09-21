@@ -13,7 +13,7 @@ export const useLogin = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const router = useRouter();
-  const loginMutation = useLoginMutation();
+  const { mutateAsync: loginMutation } = useLoginMutation();
   const { setCookies } = useCookie();
 
   const { setAuth } = useAuthStore();
@@ -40,22 +40,11 @@ export const useLogin = () => {
     if (!id || !password) {
       return toast.error('아이디와 비밀번호를 모두 입력해주세요.');
     }
-
-    loginMutation.mutate(
-      { id, password },
-      {
-        onSuccess: (response) => {
-          const { role, token } = response;
-          const authToken = token.split('Bearer ')[1];
-          setCookies(authToken, role);
-          setAuth({ role, token: authToken });
-          router.push('/');
-        },
-        onError: (error: Error) => {
-          toast.error(error.message);
-        },
-      },
-    );
+    const { role, token } = await loginMutation({ id, password });
+    const authToken = token.split('Bearer ')[1];
+    setCookies(authToken, role);
+    setAuth({ role, token: authToken });
+    router.push('/');
   };
 
   return {

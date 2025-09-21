@@ -25,16 +25,16 @@ export default function LoginPage() {
     handleLogin,
   } = useLogin();
 
-  const { getRefreshToken, resetCookie } = useCookie();
+  const { cookie, resetCookie } = useCookie();
 
   useEffect(() => {
     async function checkRefreshToken() {
-      if (await getRefreshToken()) {
+      if (await cookie.refresh_token) {
         resetCookie();
       }
     }
     checkRefreshToken();
-  }, [getRefreshToken, resetCookie]);
+  }, [cookie.refresh_token, resetCookie]);
 
   return (
     <Flex
