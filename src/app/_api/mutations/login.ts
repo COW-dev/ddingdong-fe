@@ -11,6 +11,7 @@ const login = async (id: string, password: string) => {
 
 export const useLoginMutation = () => {
   return useMutation({
+    mutationKey: ['login'],
     mutationFn: ({ id, password }: { id: string; password: string }) =>
       login(id, password),
   });
