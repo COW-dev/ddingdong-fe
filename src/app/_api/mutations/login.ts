@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { fetcher } from '../fetcher';
 import { LoginAPIResponse } from '../types/token';
 
-const login = async (id: string, password: string) => {
+const login = (id: string, password: string) => {
   return fetcher.post<LoginAPIResponse>('auth/sign-in', {
     json: { authId: id, password },
   });

@@ -16,10 +16,10 @@ export const useCookie = () => {
   };
 
   const resetCookie = () => {
-    removeCookie('token');
-    removeCookie('role');
-    removeCookie('refresh_token', { domain: '.mju.ac.kr' });
-    removeCookie('access_token', { domain: '.mju.ac.kr' });
+    removeCookie('token', { path: '/' });
+    removeCookie('role', { path: '/' });
+    removeCookie('refresh_token', { domain: '.mju.ac.kr', path: '/' });
+    removeCookie('access_token', { domain: '.mju.ac.kr', path: '/' });
   };
 
   return {
