@@ -4,11 +4,7 @@ import { toast } from 'react-hot-toast';
 
 import { useAuthStore } from '@/store/auth';
 
-type ErrorType = {
-  status: number;
-  message: string;
-  timestamp: string;
-};
+import { ErrorType } from './types/error';
 
 export class ApiError extends Error {
   constructor(
