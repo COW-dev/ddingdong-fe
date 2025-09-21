@@ -38,6 +38,7 @@ export default function LoginPage() {
 
   return (
     <Flex
+      as="section"
       dir="col"
       alignItems="center"
       justifyContent="start"
