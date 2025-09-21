@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import { Auth } from '@/types';
 
 type AuthStore = {
