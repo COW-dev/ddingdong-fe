@@ -1,6 +1,3 @@
-import InstaImage from '@/assets/InstaImage.svg';
-import KaKaoImage from '@/assets/kakaoImage.svg';
-
 export const navItems: {
   [key: string]: {
     id: number;
@@ -36,13 +33,11 @@ export const navItems: {
     {
       id: 5,
       href: 'https://pf.kakao.com/_ExmtkG',
-      image: KaKaoImage,
       content: '카카오톡',
     },
     {
       id: 6,
       href: 'https://www.instagram.com/mju_mode/',
-      image: InstaImage,
       content: '인스타그램',
     },
   ],

@@ -6,6 +6,8 @@ import { removeToken } from '@/apis';
 import { useAuthStore } from '@/store/auth';
 import { useClubStore } from '@/store/club';
 
+import { Header, NavigationItem } from './_components/Header';
+
 export default function AdminHeader() {
   const router = useRouter();
   const { resetAuth } = useAuthStore();
@@ -21,35 +23,22 @@ export default function AdminHeader() {
   };
 
   return (
-    <header className="fixed z-40 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
-      <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
-        <Link href={isLoginPage ? '/login' : '/'} className="-ml-3">
-          <Image
-            src="/logo.png"
-            width={1544}
-            height={380}
-            priority
-            alt="ddingdong"
-            className="w-36"
-          />
-        </Link>
-        {!isLoginPage && (
-          <nav className="-mr-4 md:block">
-            <ul className="flex">
-              <li>
-                <div className="flex w-full items-end">
-                  <button
-                    className="rounded-xl p-3 font-semibold text-gray-500 hover:text-blue-500"
-                    onClick={handleLogout}
-                  >
-                    로그아웃
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </nav>
-        )}
-      </div>
-    </header>
+    <Header>
+      <Link href={isLoginPage ? '/login' : '/'} className="-ml-3">
+        <Image
+          src="/logo.png"
+          width={1544}
+          height={380}
+          priority
+          alt="ddingdong"
+          className="w-36"
+        />
+      </Link>
+      {!isLoginPage && (
+        <div className="ml-auto">
+          <NavigationItem onClick={handleLogout}>로그아웃</NavigationItem>
+        </div>
+      )}
+    </Header>
   );
 }
