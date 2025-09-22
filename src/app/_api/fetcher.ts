@@ -2,9 +2,20 @@ import * as Sentry from '@sentry/nextjs';
 import ky, { type Options, type ResponsePromise, HTTPError } from 'ky';
 import { toast } from 'react-hot-toast';
 
-import { ErrorType } from '@/apis';
+import { useAuthStore } from '@/store/auth';
 
-import { getAccessToken, removeToken } from './accessToken';
+import { ErrorType } from './types/error';
+
+export class ApiError extends Error {
+  constructor(
+    public status: number,
+    public message: string,
+    public timestamp: string,
+  ) {
+    super(message);
+    this.name = 'ApiError';
+  }
+}
 
 const defaultOption: Options = {
   retry: 0,
@@ -14,7 +25,6 @@ const defaultOption: Options = {
 const API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_URL;
 
 const expirationToken = async (error: HTTPError) => {
-  await removeToken();
   window.location.href = '/login';
   toast.error(`로그인 시간이 만료되었어요.`);
   return Promise.reject(error);
@@ -28,22 +38,15 @@ export const instance = ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
-        const accessToken = await getAccessToken();
+        const token = useAuthStore.getState().auth.token;
 
-        if (accessToken) {
-          request.headers.set('Authorization', `Bearer ${accessToken.value}`);
+        if (token) {
+          request.headers.set('Authorization', `Bearer ${token}`);
         }
       },
     ],
     afterResponse: [
       async (_request, _options, response) => {
-        if (response.status === 401) {
-          const errorData: ErrorType = await response.json();
-          if (errorData?.message === '유효하지 않은 토큰입니다.') {
-            const error = new HTTPError(response, _request, _options);
-            return expirationToken(error);
-          }
-        }
         return response;
       },
     ],
@@ -51,10 +54,25 @@ export const instance = ky.create({
       async (error) => {
         if (error.name === 'TimeoutError') {
           toast.error('네트워크 환경을 확인해주세요.');
-          return Promise.reject(error);
         }
 
-        Sentry.captureException(error);
+        if (error instanceof HTTPError) {
+          const errorData: ErrorType = await error.response.json();
+          if (errorData.status === 401) {
+            if (errorData?.message === '유효하지 않은 토큰입니다.') {
+              return expirationToken(error);
+            }
+          }
+
+          const apiError = new ApiError(
+            errorData.status || error.response.status,
+            errorData.message || '서버 오류가 발생했습니다.',
+            errorData.timestamp || new Date().toISOString(),
+          );
+          Sentry.captureException(apiError);
+          return Promise.reject(apiError);
+        }
+
         return Promise.reject(error);
       },
     ],
@@ -66,7 +84,6 @@ export async function parseResponse<T>(response: ResponsePromise): Promise<T> {
   try {
     return await response.json<T>();
   } catch (error) {
-    toast.error('응답 처리 중 오류가 발생했습니다.');
     Sentry.captureException(error);
     throw error;
   }
