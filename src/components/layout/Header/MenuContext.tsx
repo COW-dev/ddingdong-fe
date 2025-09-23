@@ -1,6 +1,6 @@
 'use client';
 
-import { forwardRef, useId, useState } from 'react';
+import { useId, useState, type Ref } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -10,22 +10,24 @@ type Props = {
   children: React.ReactNode;
   className?: string;
   defaultOpen?: boolean;
+  containerRef?: Ref<HTMLDivElement>;
 };
 
-export const MenuContainer = forwardRef<HTMLDivElement, Props>(
-  ({ children, className, defaultOpen = false }, ref) => {
-    const [open, setOpen] = useState(defaultOpen);
-    const triggerId = useId();
-    const contentId = useId();
+export function MenuContainer({
+  children,
+  className,
+  defaultOpen = false,
+  containerRef,
+}: Props) {
+  const [open, setOpen] = useState(defaultOpen);
+  const triggerId = useId();
+  const contentId = useId();
 
-    return (
-      <MenuContext.Provider value={{ open, setOpen, triggerId, contentId }}>
-        <div ref={ref} className={cn('relative', className)}>
-          {children}
-        </div>
-      </MenuContext.Provider>
-    );
-  },
-);
-
-MenuContainer.displayName = 'MenuContainer';
+  return (
+    <MenuContext.Provider value={{ open, setOpen, triggerId, contentId }}>
+      <div ref={containerRef} className={cn('relative', className)}>
+        {children}
+      </div>
+    </MenuContext.Provider>
+  );
+}
