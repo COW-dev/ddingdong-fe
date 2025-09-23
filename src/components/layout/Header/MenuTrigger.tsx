@@ -16,13 +16,16 @@ export function MenuTrigger({
   'aria-label': ariaLabel = 'open-menu',
 }: Props) {
   const { open, setOpen, triggerId, contentId } = useMenuCtx();
+
   return (
     <button
       id={triggerId}
       aria-haspopup="menu"
-      aria-expanded={open}
+      aria-expanded={open ? 'true' : 'false'}
       aria-controls={contentId}
-      onClick={() => setOpen(!open)}
+      onMouseDown={() => {
+        setOpen(!open);
+      }}
       className={cn(
         'hover:text-primary-300 inline-flex items-center gap-2 rounded-md px-4 py-2 text-base font-semibold whitespace-nowrap text-neutral-500 transition-colors duration-200',
         className,
