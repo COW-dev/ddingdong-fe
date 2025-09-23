@@ -1,7 +1,4 @@
-import * as Sentry from '@sentry/react';
-import axios, { type AxiosError, type AxiosResponse } from 'axios';
-import { Cookies } from 'react-cookie';
-import { toast } from 'react-hot-toast';
+import axios, { type AxiosResponse } from 'axios';
 
 import { PresignedUrlResponse } from '@/types';
 import {
@@ -55,25 +52,9 @@ import {
 } from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
-export type ErrorType = {
-  status: number;
-  message: string;
-  timestamp: string;
-};
-
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
-
-export function removeToken() {
-  const cookies = new Cookies();
-  cookies.remove('token');
-  cookies.remove('role');
-}
-export async function login(authId: string, password: string) {
-  removeToken();
-  return await api.post('/auth/sign-in', { authId, password });
-}
 
 export async function getApplyStatistics(
   applyId: number,
@@ -166,12 +147,6 @@ export async function getNoticeInfo(
   return await api.get(`/notices/${noticeId}`);
 }
 
-export async function getDocumentInfo(
-  documentId: number,
-): Promise<AxiosResponse<DocumentDetail, unknown>> {
-  return await api.get(`/documents/${documentId}`);
-}
-
 export async function createFeed({ token, ...feedData }: NewFeed) {
   return await api.post('/central/my/feeds', feedData, {
     headers: {
@@ -179,29 +154,6 @@ export async function createFeed({ token, ...feedData }: NewFeed) {
     },
   });
 }
-
-// export async function getMyFeeds(
-//   token: string,
-//   currentCursorId: number | -1,
-// ): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
-//   return await api.get(
-//     `/central/my/feeds?currentCursorId=${currentCursorId ?? -1}&size=12`,
-//     {
-//       headers: {
-//         Authorization: 'Bearer ' + token,
-//       },
-//     },
-//   );
-// }
-
-// export async function getClubFeed(
-//   clubId: number,
-//   currentCursorId: number,
-// ): Promise<AxiosResponse<TotalFeed<'clubFeeds'>, unknown>> {
-//   return await api.get(
-//     `/clubs/${clubId}/feeds?currentCursorId=${currentCursorId ?? -1}&size=9`,
-//   );
-// }
 
 export async function createNotice({ token, ...noticeData }: NewNotice) {
   return await api.post('/admin/notices', noticeData, {
@@ -676,35 +628,6 @@ export async function uploadPresignedUrl(
     },
   });
 }
-
-//error handling
-function expirationToken(error: AxiosError<ErrorType>) {
-  removeToken();
-  window.location.href = '/login';
-  toast.error(error.response?.data?.message ?? `로그인 시간이 만료되었어요.`);
-  return Promise.reject(error);
-}
-
-function fulfilledResponse(res: AxiosResponse) {
-  return res;
-}
-function rejectedResponse(error: AxiosError<ErrorType>) {
-  if (
-    error.response?.data?.status === 401 &&
-    error.response?.data?.message == '유효하지 않은 토큰입니다.'
-  ) {
-    return expirationToken(error);
-  }
-  if (error.code === 'ECONNABORTED') {
-    toast.error('네트워크 환경을 확인해주세요.');
-    return Promise.reject(error);
-  }
-
-  Sentry.captureException(error);
-  return Promise.reject(error);
-}
-
-api.interceptors.response.use(fulfilledResponse, rejectedResponse);
 
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {

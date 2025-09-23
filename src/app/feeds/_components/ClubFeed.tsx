@@ -17,7 +17,7 @@ export function ClubFeed({ feeds }: { feeds: Feed[] }) {
 
   return (
     <>
-      {feeds.map((feed, index) => (
+      {feeds?.map((feed, index) => (
         <FeedImage
           key={feed.id}
           feed={feed}

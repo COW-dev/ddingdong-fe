@@ -1,6 +1,12 @@
 'use client';
 
-import { Accordion, Body1, Body2, Flex, Item } from 'ddingdong-design-system';
+import {
+  Accordion,
+  Body1,
+  Body2,
+  Flex,
+  AccordionItem,
+} from 'ddingdong-design-system';
 
 import { FAQ } from '@/app/_api/types/faq';
 
@@ -11,7 +17,7 @@ export function FAQAccordion({ FAQs }: { FAQs: FAQ[] }) {
     <FAQContainer>
       <Accordion type="single">
         {FAQs?.map((faq) => (
-          <Item
+          <AccordionItem
             key={faq.id}
             value={`item-${faq.id}`}
             trigger={
@@ -33,7 +39,7 @@ export function FAQAccordion({ FAQs }: { FAQs: FAQ[] }) {
               </Flex>
               <Body2>{faq.reply}</Body2>
             </Flex>
-          </Item>
+          </AccordionItem>
         ))}
       </Accordion>
     </FAQContainer>

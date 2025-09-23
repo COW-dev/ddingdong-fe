@@ -1,20 +1,5 @@
 import { UrlType } from '.';
 
-export type Club = {
-  id: number;
-  name: string;
-  category: string;
-  tag: string;
-  recruitStatus: string;
-};
-
-export type ClubProfile = {
-  id: string;
-  name: string;
-  profileImageOriginUrl: string;
-  profileImageCdnUrl: string;
-};
-
 export type AdminClub = {
   id: number;
   name: string;
@@ -31,25 +16,6 @@ export type NewClub = {
   authId: string;
   password: string;
   token?: string;
-};
-export type ClubDetail = {
-  name: string;
-  tag: string;
-  category: string;
-  leader: string;
-  phoneNumber: string;
-  location: string;
-  isRecruit: boolean;
-  startDate?: string;
-  endDate?: string;
-  regularMeeting: string;
-  introduction: string;
-  activity: string;
-  ideal: string;
-  profileImage: UrlType;
-  introductionImage: UrlType;
-  token: string;
-  formId?: number;
 };
 
 export type MemberInfo = {

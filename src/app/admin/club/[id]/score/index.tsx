@@ -1,9 +1,9 @@
 import { GetServerSideProps } from 'next/types';
+
 import { useCookies } from 'react-cookie';
 
 import AdminScore from '@/components/score/AdminScore';
 import ClubScore from '@/components/score/ClubScore';
-
 import { ROLE_TYPE } from '@/constants/text';
 
 type ScoreProps = {
