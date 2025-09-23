@@ -11,7 +11,7 @@ import {
   Menu,
   MenuTrigger,
   MenuItem,
-} from './Header';
+} from '../Header';
 
 type Props = {
   onItemClick?: () => void;
