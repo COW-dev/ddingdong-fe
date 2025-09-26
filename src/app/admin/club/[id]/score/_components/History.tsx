@@ -3,8 +3,8 @@ import { ScoreDetail } from '@/types/score';
 export default function History({ totalScore, scoreHistories }: ScoreDetail) {
   return (
     <>
-      <div className="mt-10 ">
-        <div className=" mb-2 flex flex-row justify-between ">
+      <div className="mt-10">
+        <div className="mb-2 flex flex-row justify-between">
           <span className="ml-2 text-lg font-semibold lg:text-xl">내역</span>
           <span className="text-lg font-bold text-blue-500 md:text-2xl">
             총점 : {scoreHistories ? totalScore + '점' : '0점'}
@@ -12,19 +12,19 @@ export default function History({ totalScore, scoreHistories }: ScoreDetail) {
         </div>
         <div
           className={`${
-            scoreHistories ? 'h-56 overflow-scroll md:h-88 ' : ''
+            scoreHistories ? 'h-56 overflow-scroll md:h-88' : ''
           } shadow-md sm:rounded-lg`}
         >
-          <table className="text-md w-full text-left text-gray-500 md:text-lg ">
+          <table className="text-md w-full text-left text-gray-500 md:text-lg">
             <thead className="text-md sticky top-0 bg-gray-50 text-gray-700 md:text-lg">
               <tr>
-                <th scope="col" className="px-3 md:px-6 md:py-3 ">
+                <th scope="col" className="px-3 md:px-6 md:py-3">
                   날짜
                 </th>
                 <th scope="col" className="px-2 py-3 md:px-6 md:py-3">
                   카테고리
                 </th>
-                <th scope="col" className=" md:px-5 md:py-3">
+                <th scope="col" className="md:px-5 md:py-3">
                   점수
                 </th>
               </tr>
@@ -32,7 +32,10 @@ export default function History({ totalScore, scoreHistories }: ScoreDetail) {
             <tbody>
               {scoreHistories ? (
                 scoreHistories.reverse().map((data, index) => (
-                  <tr key={index} className=" border-b bg-white">
+                  <tr
+                    key={index}
+                    className="border-b border-neutral-200 bg-white"
+                  >
                     <td className="px-3 py-2 md:px-6 md:py-4">
                       {data?.createdAt.split('T')[0]}
                     </td>
@@ -45,7 +48,7 @@ export default function History({ totalScore, scoreHistories }: ScoreDetail) {
                   </tr>
                 ))
               ) : (
-                <div className=" px-3 py-2 md:px-6 md:py-4">
+                <div className="px-3 py-2 md:px-6 md:py-4">
                   내역이 존재하지 않습니다.
                 </div>
               )}

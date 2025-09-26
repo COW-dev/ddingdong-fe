@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next/types';
 import { useCookies } from 'react-cookie';
 import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
-import History from '@/components/score/History';
+import History from '@/app/admin/club/[id]/score/_components/History';
 import { SCORE_TYPE } from '@/constants/score';
 import { useAllScore } from '@/hooks/api/score/useAllScore';
 import useModal from '@/hooks/common/useModal';
@@ -53,7 +53,7 @@ export default function AdminScore({ clubId }: ScoreProps) {
         totalScore={scoreData.totalScore}
         scoreHistories={scoreData.scoreHistories}
       />
-      <div className=" my-4 flex w-full flex-col items-center md:grid md:h-60 md:grid-cols-3 md:gap-4 ">
+      <div className="my-4 flex w-full flex-col items-center md:grid md:h-60 md:grid-cols-3 md:gap-4">
         {Object.entries(SCORE_TYPE).map(([, { icon, category }], index) => (
           <div
             onClick={() => handleOpenModal(category)}
