@@ -6,9 +6,9 @@ import { useCookie } from '@/app/_api/useCookie';
 import { useAuthStore } from '@/store/auth';
 import { useClubStore } from '@/store/club';
 
-import { Header, NavigationItem } from '../Header';
+import { Header, NavigationItem } from './Header';
 
-export default function AdminHeader() {
+export function AdminHeader() {
   const router = useRouter();
   const { resetAuth } = useAuthStore();
   const { resetClub } = useClubStore();

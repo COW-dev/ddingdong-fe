@@ -1,25 +1,35 @@
+import { Flex } from 'ddingdong-design-system';
+
+import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
-import { UserHeader } from './header-kit';
-import AdminHeader from './header-kit/AdminHeader';
+import { UserHeader } from './UserHeader';
 
 type LayoutProps = { children: React.ReactNode };
 
 export function Layout({ children }: LayoutProps) {
-  const host = window.location.hostname;
+  const host = typeof window !== 'undefined' ? window.location.hostname : '';
   const sub = host.split('.')[0];
   const isAdminHost = sub === 'admin';
 
-  const path = window.location.pathname;
+  const path = typeof window !== 'undefined' ? window.location.pathname : '';
   const isLoginPage = path.endsWith('/login');
 
   return (
     <>
       {isAdminHost ? <AdminHeader /> : <UserHeader />}
-      <main className="flex min-h-screen w-full flex-col items-center bg-white text-gray-800">
-        <div className="flex w-full max-w-6xl flex-col px-6 pt-22 md:px-16 md:pt-26">
+      <Flex
+        as="main"
+        dir="col"
+        alignItems="center"
+        className="min-h-screen w-full bg-white text-gray-800"
+      >
+        <Flex
+          dir="col"
+          className="w-full max-w-6xl px-6 pt-22 md:px-16 md:pt-26"
+        >
           {children}
-        </div>
-      </main>
+        </Flex>
+      </Flex>
       {!isLoginPage && <Footer />}
     </>
   );

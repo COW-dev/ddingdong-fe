@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Accordion, AccordionItem as Item } from 'ddingdong-design-system';
+import {
+  Accordion,
+  AccordionItem as Item,
+  Flex,
+} from 'ddingdong-design-system';
 
 import { navItems } from '@/constants/navItems';
 
@@ -11,7 +15,7 @@ import {
   Menu,
   MenuTrigger,
   MenuItem,
-} from '../Header';
+} from './Header';
 
 type Props = {
   onItemClick?: () => void;
@@ -21,7 +25,7 @@ type Props = {
 export function NavigationItems({ onItemClick, isMobile = false }: Props) {
   if (isMobile) {
     return (
-      <div className="flex flex-col items-start justify-center">
+      <Flex dir="col" alignItems="start" justifyContent="center">
         {Object.entries(navItems).map(([category, items]) => {
           if (!items || items.length === 0) return null;
 
@@ -29,8 +33,9 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
             const item = items[0];
             const isExternal = /^https?:\/\//.test(item.href);
             return (
-              <div
+              <Flex
                 key={category}
+                dir="col"
                 className="w-full border-b border-gray-200 px-2 py-4"
               >
                 <Link
@@ -43,7 +48,7 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
                 >
                   {category}
                 </Link>
-              </div>
+              </Flex>
             );
           }
 
@@ -53,11 +58,11 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
                 value={`item-${category}`}
                 trigger={<div className="w-full font-semibold">{category}</div>}
               >
-                <ul className="flex list-none flex-col space-y-4">
+                <Flex as="ul" dir="col" className="list-none space-y-4">
                   {items.map((item) => {
                     const isExternal = /^https?:\/\//.test(item.href);
                     return (
-                      <li key={item.id} className="flex-grow">
+                      <Flex as="li" key={item.id} className="flex-grow">
                         <Link
                           href={item.href}
                           onClick={onItemClick}
@@ -77,20 +82,20 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
                           )}
                           {item.content ?? category}
                         </Link>
-                      </li>
+                      </Flex>
                     );
                   })}
-                </ul>
+                </Flex>
               </Item>
             </Accordion>
           );
         })}
-      </div>
+      </Flex>
     );
   }
 
   return (
-    <div className="ml-auto flex items-center gap-4">
+    <Flex dir="row" alignItems="center" className="ml-auto gap-4">
       {Object.entries(navItems).map(([category, items]) => {
         if (items.length === 1) {
           const item = items[0];
@@ -132,6 +137,6 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
           </MenuContainer>
         );
       })}
-    </div>
+    </Flex>
   );
 }
