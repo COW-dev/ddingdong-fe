@@ -21,6 +21,7 @@ export class ApiError extends Error {
 const defaultOption: Options = {
   retry: 0,
   timeout: 30_000,
+  credentials: 'include',
 };
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_URL;
@@ -48,7 +49,7 @@ export const instance = ky.create({
   hooks: {
     beforeRequest: [
       async (request) => {
-        const token = useAuthStore.getState().auth.token;
+        const token = cookies.get('token');
 
         if (token) {
           request.headers.set('Authorization', `Bearer ${token}`);
