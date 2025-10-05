@@ -5,16 +5,9 @@ import { DashboardCard } from './DashboardCard';
 export function DashboardGrid({ role }: { role: string }) {
   const roleData = ROLE_DASHBOARD[role];
 
-  const cards = Object.entries(roleData).filter(([, value]) => {
-    if (role === 'ROLE_ADMIN') {
-      return value.title !== '공지사항 관리';
-    }
-    return true;
-  });
-
   return (
     <Grid>
-      {cards.map(([key, { route, title, subtitle }]) => (
+      {Object.entries(roleData).map(([key, { route, title, subtitle }]) => (
         <DashboardCard
           key={key}
           title={title}
