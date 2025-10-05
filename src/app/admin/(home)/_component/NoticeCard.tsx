@@ -39,12 +39,7 @@ export function NoticeCard({ role, noticeData }: NoticeCardProps) {
               href={`/notice/${notice.id}`}
               className="inline-block w-full pt-3 pb-4 transition-opacity hover:opacity-50 md:pt-3.5 md:pb-4.5"
             >
-              <Body1 className="block sm:hidden">
-                {notice.title?.length < 21
-                  ? notice?.title
-                  : notice.title?.substring(0, 21) + '..'}
-              </Body1>
-              <Body2 className="hidden sm:block">{notice.title}</Body2>
+              <Body2 className="line-clamp-1">{notice.title}</Body2>
               <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
                 {new Date(notice.createdAt).toLocaleDateString()}
               </Body3>

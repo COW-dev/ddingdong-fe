@@ -1,13 +1,6 @@
 import Link from 'next/link';
 
-import {
-  Body1,
-  Body2,
-  Body3,
-  Card,
-  Flex,
-  Title3,
-} from 'ddingdong-design-system';
+import { Body2, Body3, Card, Flex, Title3 } from 'ddingdong-design-system';
 
 import { Document } from '@/app/_api/types/document';
 import { ROLE_TYPE } from '@/constants/role';
@@ -42,12 +35,7 @@ export function DocumentCard({ role, documentData }: DocumentCardProps) {
               href="/documents"
               className="inline-block w-full pt-3 pb-4 transition-opacity hover:opacity-50 md:pt-3.5 md:pb-4.5"
             >
-              <Body1 className="block sm:hidden">
-                {document.title?.length < 21
-                  ? document?.title
-                  : document.title?.substring(0, 21) + '..'}
-              </Body1>
-              <Body2 className="hidden sm:block">{document.title}</Body2>
+              <Body2 className="line-clamp-1">{document.title}</Body2>
               <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
                 {new Date(document.createdAt).toLocaleDateString()}
               </Body3>
