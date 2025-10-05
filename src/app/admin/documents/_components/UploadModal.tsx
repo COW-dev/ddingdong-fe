@@ -39,7 +39,7 @@ export function UploadModal({ isOpen, closeModal }: UploadModalProps) {
 
   const handleDocumentUpload = () => {
     if (title.trim() === '' || fileIds.length === 0) {
-      alert('제목과 파일을 모두 입력해주세요.');
+      toast.error('제목과 파일을 모두 입력해주세요.');
       return;
     }
 
@@ -49,11 +49,6 @@ export function UploadModal({ isOpen, closeModal }: UploadModalProps) {
         onSuccess: () => {
           closeModal();
           resetAll();
-        },
-        onError: () => {
-          toast.error(
-            '자료실 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.',
-          );
         },
       },
     );
