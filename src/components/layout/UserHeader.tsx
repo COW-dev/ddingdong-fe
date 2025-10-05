@@ -76,7 +76,7 @@ export function UserHeader() {
               </Link>
               <Icon
                 name="close"
-                color="black"
+                color="white"
                 size={18}
                 onClick={closeModal}
                 className="cursor-pointer"
