@@ -3,8 +3,6 @@ import ky, { type Options, type ResponsePromise, HTTPError } from 'ky';
 import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 
-import { useAuthStore } from '@/store/auth';
-
 import { ErrorType } from './types/error';
 
 export class ApiError extends Error {
@@ -36,7 +34,6 @@ export const resetCookie = () => {
 };
 
 const expirationToken = async () => {
-  useAuthStore.getState().resetAuth();
   toast.error('로그인 시간이 만료되었어요.');
   resetCookie();
 };
