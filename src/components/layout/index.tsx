@@ -11,9 +11,6 @@ export default function Layout({ children }: Props) {
   const sub = host.split('.')[0];
   const isAdminHost = sub === 'admin';
 
-  const path = typeof window !== 'undefined' ? window.location.pathname : '';
-  const isLoginPage = path.endsWith('/login');
-
   return (
     <>
       {isAdminHost ? <AdminHeader /> : <UserHeader />}
@@ -30,7 +27,7 @@ export default function Layout({ children }: Props) {
           {children}
         </Flex>
       </Flex>
-      {!isLoginPage && <Footer />}
+      <Footer />
     </>
   );
 }
