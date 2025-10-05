@@ -13,7 +13,6 @@ import {
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import {
   AdminClub,
-  ClubDetail,
   NewClub,
   DeleteClub,
   UpdateClub,
@@ -23,7 +22,7 @@ import {
   MemberInfo,
   AddMember,
 } from '@/types/club';
-import { DeleteDocument, DocumentDetail, NewDocument } from '@/types/document';
+import { DeleteDocument, NewDocument } from '@/types/document';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,
@@ -320,15 +319,6 @@ export async function deleteFixComment({
 
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function getMyClub(
-  token: string,
-): Promise<AxiosResponse<ClubDetail, unknown>> {
-  return await api.get('/central/my', {
     headers: {
       Authorization: 'Bearer ' + token,
     },

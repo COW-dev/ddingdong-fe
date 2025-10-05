@@ -7,7 +7,7 @@ import CheckIcon from '@/assets/check-blue.svg';
 import EditIcon from '@/assets/modify.svg';
 import RightArrow from '@/assets/rightArrow.svg';
 
-import { Position } from '@/constants/text';
+import { Position } from '@/constants/position';
 import { useDeleteMember } from '@/hooks/api/member/useDeleteMember';
 import { useUpdateMembers } from '@/hooks/api/member/useUpdateMembers';
 import useModal from '@/hooks/common/useModal';
@@ -75,7 +75,7 @@ export default function MemberInfo({ member }: MemberInfoProps) {
     <>
       <li className="border-t border-gray-200 p-1">
         <div
-          className={`relative justify-center rounded-xl p-2 py-3 transition-colors hover:border-gray-200  ${
+          className={`relative justify-center rounded-xl p-2 py-3 transition-colors hover:border-gray-200 ${
             isEditing && `bg-gray-100`
           }`}
           key={member.id}
@@ -90,13 +90,13 @@ export default function MemberInfo({ member }: MemberInfoProps) {
             disabled={!isEditing}
           />
           <div className="text-sm text-gray-500">
-            <div className={`flex rounded-lg font-semibold `}>
+            <div className={`flex rounded-lg font-semibold`}>
               <input
                 type="text"
                 name="studentNumber"
                 placeholder="학번"
                 value={value.studentNumber}
-                className="text-md w-18  bg-inherit font-semibold outline-none"
+                className="text-md w-18 bg-inherit font-semibold outline-none"
                 onChange={(e) => handleChange(e)}
                 disabled={!isEditing}
               />
@@ -106,12 +106,12 @@ export default function MemberInfo({ member }: MemberInfoProps) {
                 name="department"
                 placeholder="학과"
                 value={value.department}
-                className="text-md ml-1  bg-inherit font-semibold outline-none"
+                className="text-md ml-1 bg-inherit font-semibold outline-none"
                 onChange={(e) => handleChange(e)}
                 disabled={!isEditing}
               />
             </div>
-            <div className={`flex rounded-lg font-semibold `}>
+            <div className={`flex rounded-lg font-semibold`}>
               <div className="flex pr-1">
                 <div
                   className={`text-md bg-inherit font-semibold outline-none ${
@@ -142,7 +142,7 @@ export default function MemberInfo({ member }: MemberInfoProps) {
             </div>
           </div>
 
-          <div className="absolute right-5 top-4">
+          <div className="absolute top-4 right-5">
             {isEditing ? (
               <div className="flex gap-2">
                 <Image

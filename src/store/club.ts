@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { ClubDetail } from '@/types/club';
+import { ClubDetail } from '@/app/_api/types/club';
 
 type ClubStore = {
   club: ClubDetail | null;

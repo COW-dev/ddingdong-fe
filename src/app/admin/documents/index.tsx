@@ -4,7 +4,7 @@ import Heading from '@/components/common/Heading';
 import Modal from '@/components/common/Modal';
 import DocumentList from '@/components/documents/DocumentList';
 import DocumentModal from '@/components/modal/DocumentModal';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 import useModal from '@/hooks/common/useModal';
 
 export default function Index() {
@@ -22,7 +22,7 @@ export default function Index() {
       <Head>
         <title>띵동 - 자료실</title>
       </Head>
-      <div className=" flex items-end justify-between ">
+      <div className="flex items-end justify-between">
         <Heading>자료실</Heading>
         <div>
           <button
