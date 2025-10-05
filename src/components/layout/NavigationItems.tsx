@@ -36,12 +36,12 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
               <Flex
                 key={category}
                 dir="col"
-                className="w-full border-b border-gray-200 px-2 py-4"
+                className="w-full border-b border-gray-200 px-2 py-4 hover:bg-gray-50"
               >
                 <Link
                   href={item.href}
                   onClick={onItemClick}
-                  className="w-full p-4 font-semibold"
+                  className="w-full px-4 font-semibold"
                   {...(isExternal
                     ? { target: '_blank', rel: 'noopener noreferrer' }
                     : {})}

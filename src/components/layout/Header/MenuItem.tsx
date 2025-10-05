@@ -31,7 +31,7 @@ export function MenuItem({
 }: Props) {
   const { setOpen } = useMenuCtx();
   const common = cn(
-    'flex w-full items-center font-semibold gap-3 whitespace-nowrap px-4 py-2 text-gray-400 transition-colors duration-150 hover:bg-gray-50 hover:text-gray-500',
+    'flex w-full items-center font-semibold gap-3 whitespace-nowrap px-4 py-2 text-gray-400 transition-colors duration-150 hover:bg-gray-100 ',
     disabled && 'pointer-events-none opacity-50',
     className,
   );

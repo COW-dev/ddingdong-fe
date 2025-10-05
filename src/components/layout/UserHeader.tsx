@@ -18,7 +18,7 @@ export function UserHeader() {
   const logoDesktop = 'w-40 md:w-44';
 
   const headerMobile = 'flex h-16 md:hidden';
-  const logoMobile = 'w-35 md:w-44';
+  const logoMobile = 'w-32';
 
   return (
     <>
@@ -70,11 +70,11 @@ export function UserHeader() {
             />
           </Link>
           <button onClick={openModal} aria-label="Open navigation drawer">
-            <Icon name="list" />
+            <Icon name="list" size={30} color="black" />
           </button>
 
           <Drawer isOpen={isOpen} onClose={closeModal}>
-            <div className="bg-primary-300 w-full min-w-[300px] px-6 py-4 pt-6">
+            <div className="bg-primary-300 flex w-[380px] items-center justify-between px-6 py-4 pt-4 sm:w-[510px]">
               <Link href="/" className="inline-block">
                 <Image
                   src="/m_logo.png"
@@ -82,9 +82,16 @@ export function UserHeader() {
                   height={380}
                   priority
                   alt="ddingdong"
-                  className="w-30 md:w-44"
+                  className="w-30"
                 />
               </Link>
+              <Icon
+                name="close"
+                color="black"
+                size={18}
+                onClick={closeModal}
+                className="cursor-pointer"
+              />
             </div>
             <NavigationItems onItemClick={closeModal} isMobile />
           </Drawer>
