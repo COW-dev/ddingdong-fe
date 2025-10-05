@@ -1,13 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Body1, Pagination, Title1 } from 'ddingdong-design-system';
 
 import { documentQueryOptions } from '@/app/_api/queries/document';
-
-import DocumentContainer from '../_containers/DocumentContainer';
 
 import { DocumentItem } from './DocumentItem';
 
@@ -32,17 +30,19 @@ export function DocumentClient() {
         </DocumentContainer>
       )}
       {/* TODO : currentPage 버그, 1->2 페이지 전환 시 scrollTo 적용 */}
-      {documents.totalPageCount > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={documents.totalPageCount}
-          onPageChange={(page) => {
-            setCurrentPage(page);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }}
-          className="mt-10"
-        />
-      )}
+      <Pagination
+        currentPage={currentPage}
+        totalPages={documents.totalPageCount}
+        onPageChange={(page) => {
+          setCurrentPage(page);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+        className="mt-10"
+      />
     </>
   );
+}
+
+function DocumentContainer({ children }: PropsWithChildren) {
+  return <ul className="mt-4 w-full">{children}</ul>;
 }
