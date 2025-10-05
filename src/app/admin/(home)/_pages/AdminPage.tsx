@@ -34,7 +34,7 @@ export default function AdminPage({ role }: { role: string }) {
 
   useClubStore((state) => state.setClub);
 
-  if (!ROLE_DASHBOARD[role]) return;
+  if (!ROLE_DASHBOARD[role]) return null;
 
   return (
     <Flex dir="col">

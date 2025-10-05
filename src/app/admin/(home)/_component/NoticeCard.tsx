@@ -33,27 +33,24 @@ export function NoticeCard({ role, noticeData }: NoticeCardProps) {
         </Link>
       </Flex>
       <NoticeContainer>
-        {noticeData
-          .slice(0, 3)
-          .splice(0)
-          .map((notice) => (
-            <NoticeWrapper key={notice.id}>
-              <Link
-                href={`/notice/${notice.id}`}
-                className="inline-block w-full pt-3 pb-4 transition-opacity hover:opacity-50 md:pt-3.5 md:pb-4.5"
-              >
-                <Body1 className="block sm:hidden">
-                  {notice.title?.length < 21
-                    ? notice?.title
-                    : notice.title?.substring(0, 21) + '..'}
-                </Body1>
-                <Body2 className="hidden sm:block">{notice.title}</Body2>
-                <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
-                  {new Date(notice.createdAt).toLocaleDateString()}
-                </Body3>
-              </Link>
-            </NoticeWrapper>
-          ))}
+        {noticeData.slice(0, 3).map((notice) => (
+          <NoticeWrapper key={notice.id}>
+            <Link
+              href={`/notice/${notice.id}`}
+              className="inline-block w-full pt-3 pb-4 transition-opacity hover:opacity-50 md:pt-3.5 md:pb-4.5"
+            >
+              <Body1 className="block sm:hidden">
+                {notice.title?.length < 21
+                  ? notice?.title
+                  : notice.title?.substring(0, 21) + '..'}
+              </Body1>
+              <Body2 className="hidden sm:block">{notice.title}</Body2>
+              <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
+                {new Date(notice.createdAt).toLocaleDateString()}
+              </Body3>
+            </Link>
+          </NoticeWrapper>
+        ))}
       </NoticeContainer>
     </Card>
   );

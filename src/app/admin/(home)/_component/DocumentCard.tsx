@@ -20,7 +20,7 @@ type DocumentCardProps = {
 };
 
 export function DocumentCard({ role, documentData }: DocumentCardProps) {
-  if (role !== ROLE_TYPE.ROLE_CLUB) return;
+  if (role !== ROLE_TYPE.ROLE_CLUB) return null;
 
   return (
     <Card className="mt-4 hover:bg-transparent md:mt-8">
@@ -36,27 +36,24 @@ export function DocumentCard({ role, documentData }: DocumentCardProps) {
         </Link>
       </Flex>
       <DocumentContainer>
-        {documentData
-          ?.slice(0, 3)
-          .splice(0)
-          .map((document) => (
-            <DocumentWrapper key={document.id}>
-              <Link
-                href="/documents"
-                className="inline-block w-full pt-3 pb-4 transition-opacity hover:opacity-50 md:pt-3.5 md:pb-4.5"
-              >
-                <Body1 className="block sm:hidden">
-                  {document.title?.length < 21
-                    ? document?.title
-                    : document.title?.substring(0, 21) + '..'}
-                </Body1>
-                <Body2 className="hidden sm:block">{document.title}</Body2>
-                <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
-                  {new Date(document.createdAt).toLocaleDateString()}
-                </Body3>
-              </Link>
-            </DocumentWrapper>
-          ))}
+        {documentData?.slice(0, 3).map((document) => (
+          <DocumentWrapper key={document.id}>
+            <Link
+              href="/documents"
+              className="inline-block w-full pt-3 pb-4 transition-opacity hover:opacity-50 md:pt-3.5 md:pb-4.5"
+            >
+              <Body1 className="block sm:hidden">
+                {document.title?.length < 21
+                  ? document?.title
+                  : document.title?.substring(0, 21) + '..'}
+              </Body1>
+              <Body2 className="hidden sm:block">{document.title}</Body2>
+              <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
+                {new Date(document.createdAt).toLocaleDateString()}
+              </Body3>
+            </Link>
+          </DocumentWrapper>
+        ))}
       </DocumentContainer>
     </Card>
   );
