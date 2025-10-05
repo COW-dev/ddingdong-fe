@@ -37,7 +37,7 @@ export function DocumentCard({ role, documentData }: DocumentCardProps) {
             >
               <Body2 className="line-clamp-1">{document.title}</Body2>
               <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
-                {new Date(document.createdAt).toLocaleDateString()}
+                {new Date(document.createdAt).toLocaleDateString('ko-KR')}
               </Body3>
             </Link>
           </DocumentWrapper>

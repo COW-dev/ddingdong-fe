@@ -1,13 +1,6 @@
 import Link from 'next/link';
 
-import {
-  Card,
-  Title3,
-  Body1,
-  Body2,
-  Body3,
-  Flex,
-} from 'ddingdong-design-system';
+import { Card, Title3, Body2, Body3, Flex } from 'ddingdong-design-system';
 
 import { NoticeTitle } from '@/app/_api/types/notice';
 
@@ -41,7 +34,7 @@ export function NoticeCard({ role, noticeData }: NoticeCardProps) {
             >
               <Body2 className="line-clamp-1">{notice.title}</Body2>
               <Body3 weight="medium" className="mt-0.5 mb-2 text-gray-400">
-                {new Date(notice.createdAt).toLocaleDateString()}
+                {new Date(notice.createdAt).toLocaleDateString('ko-KR')}
               </Body3>
             </Link>
           </NoticeWrapper>
