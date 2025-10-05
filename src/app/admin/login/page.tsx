@@ -1,4 +1,7 @@
 'use client';
+
+import { useRouter } from 'next/navigation';
+
 import { useEffect } from 'react';
 
 import {
@@ -26,16 +29,18 @@ export default function LoginPage() {
   } = useLogin();
 
   const { cookie, resetCookie } = useCookie();
+  const router = useRouter();
+  useEffect(() => {
+    if (cookie.token && cookie.role) {
+      router.replace('/');
+    }
+  }, [cookie.token, cookie.role, router]);
 
   useEffect(() => {
-    async function checkRefreshToken() {
-      if (await cookie.refresh_token) {
-        resetCookie();
-      }
+    if (cookie.refresh_token) {
+      resetCookie();
     }
-    checkRefreshToken();
   }, [cookie.refresh_token, resetCookie]);
-
   return (
     <Flex
       as="section"
