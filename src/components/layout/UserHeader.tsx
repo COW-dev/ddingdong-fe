@@ -58,7 +58,11 @@ export function UserHeader() {
               className="w-32"
             />
           </Link>
-          <button onClick={openModal} aria-label="Open navigation drawer">
+          <button
+            onClick={openModal}
+            type="button"
+            aria-label="Open navigation drawer"
+          >
             <Icon name="list" size={29} color="black" />
           </button>
 

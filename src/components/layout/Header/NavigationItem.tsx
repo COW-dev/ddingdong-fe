@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 
 type Props = {
   href?: string;
-  onClick?: MouseEventHandler<HTMLButtonElement | HTMLAnchorElement>;
+  onClick?: MouseEventHandler<HTMLElement>;
   active?: boolean;
   className?: string;
   children: ReactNode;
@@ -34,12 +34,8 @@ export function NavigationItem({
     return (
       <Link
         href={href}
-        onClick={onClick as MouseEventHandler<HTMLAnchorElement>}
+        onClick={onClick}
         className={cn(base, color, className)}
-        aria-current={active ? 'page' : undefined}
-        {...(isExternal
-          ? { target: '_blank', rel: 'noopener noreferrer' }
-          : {})}
       >
         <Body3 weight="semibold">{children}</Body3>
       </Link>
@@ -49,7 +45,7 @@ export function NavigationItem({
   return (
     <button
       type="button"
-      onClick={onClick as MouseEventHandler<HTMLButtonElement>}
+      onClick={onClick}
       className={cn(base, color, className)}
     >
       <Body3 weight="semibold">{children}</Body3>
