@@ -51,7 +51,6 @@ export function NavigationItem({
       type="button"
       onClick={onClick as MouseEventHandler<HTMLButtonElement>}
       className={cn(base, color, className)}
-      aria-current={active ? 'page' : undefined}
     >
       <Body3 weight="semibold">{children}</Body3>
     </button>
