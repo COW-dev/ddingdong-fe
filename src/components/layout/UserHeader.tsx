@@ -12,7 +12,6 @@ export function UserHeader() {
 
   const headerBase =
     'fixed w-full items-center justify-center border-b border-gray-200 bg-white';
-  const logoBase = '';
 
   const headerDesktop = 'z-20 hidden h-16 md:flex md:h-18';
   const containerDesktop = 'max-w-6xl md:px-16';
@@ -38,7 +37,7 @@ export function UserHeader() {
               height={380}
               priority
               alt="ddingdong"
-              className={cn(logoBase, logoDesktop)}
+              className={logoDesktop}
             />
           </Link>
           <Flex
@@ -67,7 +66,7 @@ export function UserHeader() {
               height={380}
               priority
               alt="ddingdong"
-              className={cn(logoBase, logoMobile)}
+              className={logoMobile}
             />
           </Link>
           <button onClick={openModal} aria-label="Open navigation drawer">
