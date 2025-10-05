@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
+import { useQueries, useQuery } from '@tanstack/react-query';
 import { Flex } from 'ddingdong-design-system';
 
 import { bannerQueryOptions } from '@/app/_api/queries/banner';
@@ -18,13 +18,13 @@ import { NoticeCard } from '../_component/NoticeCard';
 import { ROLE_DASHBOARD } from '../_constants/dashboard';
 
 export default function AdminPage({ role }: { role: string }) {
-  const { data: myClubData, isLoading } = useQuery({
+  const { data: myClubData } = useQuery({
     ...clubQueryOptions.my(),
-    enabled: role === ROLE_TYPE.ROLE_CLUB,
+    enabled: Boolean(role) && role === ROLE_TYPE.ROLE_CLUB,
   });
 
   const [{ data: documentData }, { data: noticeData }, { data: bannerData }] =
-    useSuspenseQueries({
+    useQueries({
       queries: [
         documentQueryOptions.all(1),
         noticeQueryOptions.all(1),
@@ -34,7 +34,6 @@ export default function AdminPage({ role }: { role: string }) {
 
   useClubStore((state) => state.setClub);
 
-  if (isLoading) return null;
   if (!ROLE_DASHBOARD[role]) return;
 
   return (
@@ -45,11 +44,11 @@ export default function AdminPage({ role }: { role: string }) {
         />
       </Flex>
       <div className="mt-7">
-        <ClubCarousel bannerData={bannerData} />
+        <ClubCarousel bannerData={bannerData ?? []} />
       </div>
       <DashboardGrid role={role} />
-      <NoticeCard role={role} noticeData={noticeData.notices} />
-      <DocumentCard role={role} documentData={documentData.documents} />
+      <NoticeCard role={role} noticeData={noticeData?.notices ?? []} />
+      <DocumentCard role={role} documentData={documentData?.documents ?? []} />
     </Flex>
   );
 }
