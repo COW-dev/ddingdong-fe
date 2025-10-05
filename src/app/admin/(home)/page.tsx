@@ -1,8 +1,12 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
 import { useCookie } from '@/app/_api/useCookie';
 
-import AdminPage from './_pages/Admin';
+const AdminPage = dynamic(() => import('./_pages/AdminPage'), {
+  ssr: false,
+});
 
 export default function AdminHomePage() {
   const { cookie } = useCookie();

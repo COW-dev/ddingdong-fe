@@ -4,7 +4,7 @@ import { useCookies } from 'react-cookie';
 
 import AdminScore from '@/components/score/AdminScore';
 import ClubScore from '@/components/score/ClubScore';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 
 type ScoreProps = {
   clubId: number;

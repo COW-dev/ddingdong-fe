@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import toast from 'react-hot-toast';
 import Admin from '@/assets/admin.jpg';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 import { useNewFixComment } from '@/hooks/api/fixzone/useNewFixComment';
 import { Comment as CommentType } from '@/types/fix';
 import { adjustTextareaHeight } from '@/utils/change';

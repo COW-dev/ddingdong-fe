@@ -1,4 +1,5 @@
 'use client';
+
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { Body3 } from 'ddingdong-design-system';
 

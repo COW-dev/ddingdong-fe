@@ -10,7 +10,7 @@ import RightArrow from '@/assets/rightArrow.svg';
 import NeutralButton from '@/components/common/NeutralButton';
 import UploadMultipleFile from '@/components/common/UploadMultipleFiles';
 import UploadMultipleImage from '@/components/common/UploadMultipleImage';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 import { useDeleteNotice } from '@/hooks/api/notice/useDeleteNotice';
 import { useNoticeInfo } from '@/hooks/api/notice/useNoticeInfo';
 import { useUpdateNotice } from '@/hooks/api/notice/useUpdateNotice';
@@ -72,7 +72,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
             href={word}
             target="_blank"
             rel="noopener noreferrer"
-            className="truncate whitespace-pre-line pr-1 underline underline-offset-1"
+            className="truncate pr-1 whitespace-pre-line underline underline-offset-1"
           >
             {word}
           </a>
@@ -191,7 +191,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
           </button>
           <button
             onClick={isEditing ? handleSubmit : handleClickDelete}
-            className={`p-2  md:ml-0.5 ${
+            className={`p-2 md:ml-0.5 ${
               isEditing ? `text-blue-500` : `text-red-500`
             }`}
           >
@@ -228,7 +228,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                     height={30}
                     alt="leftButton"
                     onClick={() => setPresentIndex(presentIndex - 1)}
-                    className="absolute left-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
+                    className="absolute top-1/2 left-2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
                   />
                 )}
                 {sortedImages[presentIndex] && (
@@ -248,7 +248,7 @@ export default function Index({ noticeId }: NoticeDetailProps) {
                     height={30}
                     alt="rightButton"
                     onClick={() => setPresentIndex(presentIndex + 1)}
-                    className="absolute right-2 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
+                    className="absolute top-1/2 right-2 z-10 -translate-y-1/2 cursor-pointer rounded-3xl bg-slate-100 opacity-50 transition-all duration-300 ease-in-out hover:opacity-100"
                   />
                 )}
               </div>

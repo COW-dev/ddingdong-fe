@@ -6,7 +6,7 @@ import { useCookies } from 'react-cookie';
 import Admin from '@/assets/admin.jpg';
 import Bin from '@/assets/bin-red.svg';
 import AlertDialog from '@/components/common/AlertDialog';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 import { useDeleteFixComment } from '@/hooks/api/fixzone/useDeleteFixComment';
 import useModal from '@/hooks/common/useModal';
 import { Comment as CommentType } from '@/types/fix';

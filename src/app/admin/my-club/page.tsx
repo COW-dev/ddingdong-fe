@@ -1,19 +1,23 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+'use client';
 import Head from 'next/head';
 import Image from 'next/image';
+
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import { useCookies } from 'react-cookie';
 import TextareaAutosize from 'react-textarea-autosize';
+
 import AdminClubHeading from '@/components/admin-club/AdminClubHeading';
 import ClubInfoForm from '@/components/admin-club/ClubInfoForm';
 import UploadImage from '@/components/common/UploadImage';
 import Loading from '@/components/loading/Loading';
-import { useMyClub } from '@/hooks/api/club/useMyClub';
+// import { useMyClub } from '@/hooks/api/club/useMyClub';
 import { useUpdateMyClub } from '@/hooks/api/club/useUpdateMyClub';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { UploadFile } from '@/types';
-import { ClubDetail } from '@/types/club';
+// import { ClubDetail } from '@/types/club';
 
-const initialClubData: ClubDetail = {
+const initialClubData = {
   name: '',
   tag: '',
   category: '',
@@ -30,8 +34,8 @@ const initialClubData: ClubDetail = {
   token: '',
 };
 
-export default function Index() {
-  const [clubData, setClubData] = useState<ClubDetail>(initialClubData);
+export default function MyPage() {
+  const [clubData, setClubData] = useState(initialClubData);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
@@ -129,7 +133,7 @@ export default function Index() {
       <Head>
         <title>{`띵동 어드민 - ${clubData?.name}`}</title>
       </Head>
-      <div className=" flex items-end justify-between">
+      <div className="flex items-end justify-between">
         <AdminClubHeading
           clubName={clubData.name}
           category={clubData.category}
@@ -188,7 +192,7 @@ export default function Index() {
           </div>
           {isEditing ? (
             isIntroductionLoading ? (
-              <div className=" flex w-full items-center justify-center">
+              <div className="flex w-full items-center justify-center">
                 <Loading className="w-54" />
               </div>
             ) : (
@@ -197,7 +201,7 @@ export default function Index() {
                 setImage={setIntroductionImageFile}
                 imageUrls={clubData.introductionImage}
                 setNoticeData={setClubData}
-                urlsName={`introductionImage`}
+                urlsName="introductionImage"
                 onAdd={handleIntroductionImage}
               />
             )
@@ -215,14 +219,14 @@ export default function Index() {
               alt="동아리 소개 이미지"
             />
           ) : (
-            <div className="mb-5 mt-2 flex h-30 w-full flex-col items-center justify-center rounded-xl border border-gray-100 bg-gray-50 p-4 outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg">
+            <div className="mt-2 mb-5 flex h-30 w-full flex-col items-center justify-center rounded-xl border border-gray-100 bg-gray-50 p-4 outline-none md:mt-3 md:mb-6 md:p-5 md:text-lg">
               <div className="text-sm text-gray-500">
                 동아리 소개 이미지가 없습니다.
               </div>
             </div>
           )}
 
-          <div className=" text-lg font-bold md:text-xl">
+          <div className="text-lg font-bold md:text-xl">
             우리 동아리를 소개할게요
           </div>
           <TextareaAutosize
@@ -233,7 +237,7 @@ export default function Index() {
             onChange={(e) => handleTextareaChange(e)}
             className={`${
               !isEditing && 'opacity-60'
-            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
+            } mt-2 mb-5 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-3 md:mb-6 md:p-5 md:text-lg`}
           />
           <div className="text-lg font-bold md:text-xl">이런 활동을 해요</div>
           <TextareaAutosize
@@ -244,7 +248,7 @@ export default function Index() {
             onChange={(e) => handleTextareaChange(e)}
             className={`${
               !isEditing && 'opacity-60'
-            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
+            } mt-2 mb-5 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-3 md:mb-6 md:p-5 md:text-lg`}
           />
           <div className="text-lg font-bold md:text-xl">
             이런 분과 함께하고 싶어요
@@ -257,7 +261,7 @@ export default function Index() {
             onChange={(e) => handleTextareaChange(e)}
             className={`${
               !isEditing && 'opacity-60'
-            } mb-5 mt-2 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mb-6 md:mt-3 md:p-5 md:text-lg`}
+            } mt-2 mb-5 w-full resize-none rounded-xl border border-gray-100 bg-gray-50 p-4 text-base font-medium outline-none md:mt-3 md:mb-6 md:p-5 md:text-lg`}
           />
         </div>
       </form>

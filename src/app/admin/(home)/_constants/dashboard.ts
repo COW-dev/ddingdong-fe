@@ -1,11 +1,4 @@
-type RoleType = {
-  ROLE_ADMIN: string;
-  ROLE_CLUB: string;
-};
-export const ROLE_TYPE: RoleType = {
-  ROLE_ADMIN: 'ROLE_ADMIN',
-  ROLE_CLUB: 'ROLE_CLUB',
-};
+import { ROLE_TYPE, RoleType } from '@/constants/role';
 
 type NavBox = {
   title: string;
@@ -13,7 +6,7 @@ type NavBox = {
   route: string;
 };
 
-type RoleText = {
+type RoleDashboard = {
   [K in RoleType[keyof RoleType]]: {
     club: NavBox;
     report: NavBox;
@@ -23,13 +16,13 @@ type RoleText = {
     notice: NavBox;
     documents: NavBox;
     FAQ?: NavBox;
-    feed: NavBox;
+    feed?: NavBox;
     banner?: NavBox;
     apply?: NavBox;
   };
 };
 
-export const ROLE_TEXT: RoleText = {
+export const ROLE_DASHBOARD: RoleDashboard = {
   [ROLE_TYPE.ROLE_ADMIN]: {
     club: {
       title: '동아리 관리',
@@ -60,11 +53,7 @@ export const ROLE_TEXT: RoleText = {
       subtitle: '총동아리연합회 및 동아리에게 자주 물어보는 질문을 관리해요.',
       route: '/faq',
     },
-    feed: {
-      title: '동아리 피드 업로드',
-      subtitle: '동아리의 활동 사진 및 영상을 업로드하고 홍보해요.',
-      route: '/feed',
-    },
+
     banner: {
       title: '배너 관리',
       subtitle: '띵동의 모바일/웹 버전 배너를 관리해요',
@@ -116,13 +105,4 @@ export const ROLE_TEXT: RoleText = {
       route: '/apply',
     },
   },
-};
-
-export type PositionType = {
-  [key: string]: string;
-};
-export const Position: PositionType = {
-  동아리원: 'MEMBER',
-  임원: 'EXECUTIVE',
-  회장: 'LEADER',
 };
