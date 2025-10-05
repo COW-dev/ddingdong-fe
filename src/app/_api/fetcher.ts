@@ -1,5 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
 import ky, { type Options, type ResponsePromise, HTTPError } from 'ky';
+import { Cookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
 
 import { useAuthStore } from '@/store/auth';
@@ -24,10 +25,19 @@ const defaultOption: Options = {
 
 const API_ENDPOINT = process.env.NEXT_PUBLIC_BASE_URL;
 
-const expirationToken = async (error: HTTPError) => {
-  window.location.href = '/login';
-  toast.error(`로그인 시간이 만료되었어요.`);
-  return Promise.reject(error);
+const cookies = new Cookies();
+
+export const resetCookie = () => {
+  cookies.remove('token', { path: '/' });
+  cookies.remove('role', { path: '/' });
+  cookies.remove('refresh_token', { domain: '.mju.ac.kr', path: '/' });
+  cookies.remove('access_token', { domain: '.mju.ac.kr', path: '/' });
+};
+
+const expirationToken = async () => {
+  useAuthStore.getState().resetAuth();
+  toast.error('로그인 시간이 만료되었어요.');
+  resetCookie();
 };
 
 export const instance = ky.create({
@@ -52,35 +62,33 @@ export const instance = ky.create({
     ],
     beforeError: [
       async (error) => {
-        if (error.name === 'TimeoutError') {
-          toast.error('네트워크 환경을 확인해주세요.');
-        }
-
         if (error instanceof HTTPError) {
           const errorData: ErrorType = await error.response.json();
-          if (errorData.status === 401) {
-            if (errorData?.message === '유효하지 않은 토큰입니다.') {
-              return expirationToken(error);
-            }
-          }
 
           const apiError = new ApiError(
             errorData.status || error.response.status,
             errorData.message || '서버 오류가 발생했습니다.',
             errorData.timestamp || new Date().toISOString(),
           );
+
+          if (
+            apiError.status === 401 &&
+            apiError.message === '유효하지 않은 토큰입니다.'
+          ) {
+            await expirationToken();
+            return error;
+          }
           Sentry.captureException(apiError);
-          return Promise.reject(apiError);
         }
 
-        return Promise.reject(error);
+        return error;
       },
     ],
   },
   ...defaultOption,
 });
 
-export async function parseResponse<T>(response: ResponsePromise): Promise<T> {
+export async function parseResponse<T>(response: ResponsePromise) {
   try {
     return await response.json<T>();
   } catch (error) {
