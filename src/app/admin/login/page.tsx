@@ -1,7 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
 import { useEffect } from 'react';
 
 import {
@@ -29,12 +27,6 @@ export default function LoginPage() {
   } = useLogin();
 
   const { cookie, resetCookie } = useCookie();
-  const router = useRouter();
-  useEffect(() => {
-    if (cookie.token && cookie.role) {
-      router.replace('/');
-    }
-  }, [cookie.token, cookie.role, router]);
 
   useEffect(() => {
     if (cookie.refresh_token) {
