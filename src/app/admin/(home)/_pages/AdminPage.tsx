@@ -1,6 +1,6 @@
 'use client';
 
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
 import { Flex } from 'ddingdong-design-system';
 
 import { bannerQueryOptions } from '@/app/_api/queries/banner';
@@ -24,7 +24,7 @@ export default function AdminPage({ role }: { role: string }) {
   });
 
   const [{ data: documentData }, { data: noticeData }, { data: bannerData }] =
-    useQueries({
+    useSuspenseQueries({
       queries: [
         documentQueryOptions.all(1),
         noticeQueryOptions.all(1),
@@ -44,11 +44,11 @@ export default function AdminPage({ role }: { role: string }) {
         />
       </Flex>
       <div className="mt-7">
-        <ClubCarousel bannerData={bannerData ?? []} />
+        <ClubCarousel bannerData={bannerData} />
       </div>
       <DashboardGrid role={role} />
-      <NoticeCard role={role} noticeData={noticeData?.notices ?? []} />
-      <DocumentCard role={role} documentData={documentData?.documents ?? []} />
+      <NoticeCard role={role} noticeData={noticeData?.notices} />
+      <DocumentCard role={role} documentData={documentData?.documents} />
     </Flex>
   );
 }
