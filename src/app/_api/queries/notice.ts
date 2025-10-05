@@ -4,13 +4,13 @@ import { fetcher } from '../fetcher';
 import { AllNoticeAPIResponse } from '../types/notice';
 
 export const noticeQueryKeys = {
-  all: () => ['notices'],
+  all: (page: number) => ['notices', page],
 };
 
 export const noticeQueryOptions = {
   all: (page: number) =>
     queryOptions({
-      queryKey: noticeQueryKeys.all(),
+      queryKey: noticeQueryKeys.all(page),
       queryFn: () =>
         fetcher.get<AllNoticeAPIResponse>(`notices?page=${page}&limit=10`),
     }),
