@@ -1,4 +1,4 @@
-import { ROLE_DASHBOARD } from '../_constants/text';
+import { ROLE_DASHBOARD } from '../_constants/dashboard';
 
 import { DashboardCard } from './DashboardCard';
 

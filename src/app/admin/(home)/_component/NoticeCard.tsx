@@ -11,7 +11,7 @@ import {
 
 import { NoticeTitle } from '@/app/_api/types/notice';
 
-import { ROLE_DASHBOARD } from '../_constants/text';
+import { ROLE_DASHBOARD } from '../_constants/dashboard';
 
 type NoticeCardProps = {
   role: string;

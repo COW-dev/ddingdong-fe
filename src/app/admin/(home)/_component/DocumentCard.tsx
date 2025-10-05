@@ -12,7 +12,7 @@ import {
 import { Document } from '@/app/_api/types/document';
 import { ROLE_TYPE } from '@/constants/role';
 
-import { ROLE_DASHBOARD } from '../_constants/text';
+import { ROLE_DASHBOARD } from '../_constants/dashboard';
 
 type DocumentCardProps = {
   role: string;

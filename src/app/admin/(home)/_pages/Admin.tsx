@@ -15,7 +15,7 @@ import { AdminGreeting } from '../_component/AdminGreeting';
 import { DashboardGrid } from '../_component/DashboardGrid';
 import { DocumentCard } from '../_component/DocumentCard';
 import { NoticeCard } from '../_component/NoticeCard';
-import { ROLE_DASHBOARD } from '../_constants/text';
+import { ROLE_DASHBOARD } from '../_constants/dashboard';
 
 export default function AdminPage({ role }: { role: string }) {
   const { data: myClubData, isLoading } = useQuery({
