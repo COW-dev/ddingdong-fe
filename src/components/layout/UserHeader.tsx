@@ -3,32 +3,21 @@ import Link from 'next/link';
 
 import { usePortal, Icon, Drawer, Flex } from 'ddingdong-design-system';
 
-import { cn } from '@/lib/utils';
-
+import { Header } from './Header';
 import { NavigationItems } from './NavigationItems';
 
 export function UserHeader() {
   const { isOpen, openModal, closeModal } = usePortal();
 
-  const headerBase =
-    'fixed w-full items-center justify-center border-b border-gray-200 bg-white';
-
-  const headerDesktop = 'z-20 hidden h-16 md:flex md:h-18';
-  const containerDesktop = 'max-w-6xl md:px-16';
-  const logoDesktop = 'w-40 md:w-44';
-
-  const headerMobile = 'flex h-16 md:hidden';
-  const logoMobile = 'w-32';
-
   return (
     <>
       {/* 데스크탑 */}
-      <header className={cn(headerBase, headerDesktop)}>
+      <Header className="hidden md:flex">
         <Flex
           dir="row"
           alignItems="center"
           justifyContent="center"
-          className={cn(containerDesktop, 'w-full')}
+          className="w-full"
         >
           <Link href="/" className="inline-block">
             <Image
@@ -37,7 +26,7 @@ export function UserHeader() {
               height={380}
               priority
               alt="ddingdong"
-              className={logoDesktop}
+              className="w-40 md:w-44"
             />
           </Link>
           <Flex
@@ -49,15 +38,15 @@ export function UserHeader() {
             <NavigationItems />
           </Flex>
         </Flex>
-      </header>
+      </Header>
 
       {/* 모바일 */}
-      <header className={cn(headerBase, headerMobile)}>
+      <Header className="z-0 flex md:hidden">
         <Flex
           dir="row"
           alignItems="center"
           justifyContent="between"
-          className="w-full px-6"
+          className="w-full"
         >
           <Link href="/" className="inline-block">
             <Image
@@ -66,11 +55,11 @@ export function UserHeader() {
               height={380}
               priority
               alt="ddingdong"
-              className={logoMobile}
+              className="w-32"
             />
           </Link>
           <button onClick={openModal} aria-label="Open navigation drawer">
-            <Icon name="list" size={30} color="black" />
+            <Icon name="list" size={29} color="black" />
           </button>
 
           <Drawer isOpen={isOpen} onClose={closeModal}>
@@ -96,7 +85,7 @@ export function UserHeader() {
             <NavigationItems onItemClick={closeModal} isMobile />
           </Drawer>
         </Flex>
-      </header>
+      </Header>
     </>
   );
 }

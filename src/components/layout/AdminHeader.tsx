@@ -24,15 +24,15 @@ export function AdminHeader() {
   };
 
   return (
-    <Header>
-      <Link href={isLoginPage ? '/login' : '/'} className="-ml-3">
+    <Header className="px-3 md:px-13">
+      <Link href={isLoginPage ? '/login' : '/'} className="inline-block">
         <Image
           src="/logo.png"
           width={1544}
           height={380}
           priority
           alt="ddingdong"
-          className="w-36 px-4 md:px-0"
+          className="w-36"
         />
       </Link>
       {!isLoginPage && (

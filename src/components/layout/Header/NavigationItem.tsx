@@ -24,7 +24,7 @@ export function NavigationItem({
   children,
 }: Props) {
   const base =
-    'inline-flex items-center gap-2 rounded-md px-4 py-2 whitespace-nowrap transition-colors duration-200';
+    'inline-flex items-center gap-2 rounded-md px-2 py-2 whitespace-nowrap transition-colors duration-200';
   const color = active
     ? 'text-primary-500'
     : 'text-neutral-500 hover:text-primary-300';

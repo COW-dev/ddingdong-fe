@@ -17,11 +17,11 @@ export function Header({ children, className }: Props) {
   return (
     <header
       className={cn(
-        'fixed top-0 z-40 w-full border-b border-gray-200 bg-white',
+        'fixed top-0 left-0 z-10 w-full border-b border-gray-200 bg-white px-6 md:z-20',
         className,
       )}
     >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center px-4 md:px-8">
+      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between md:h-[72px] md:px-16">
         {children}
       </div>
     </header>
