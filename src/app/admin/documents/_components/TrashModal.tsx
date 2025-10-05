@@ -31,8 +31,8 @@ export function TrashModal({
         className="w-[80vw] md:w-[380px]"
       >
         <Flex dir="col" alignItems="center" className="w-full py-2">
-          <Body1 as="span" className="text-blue-700" weight="bold">
-            {title}
+          <Body1 as="span" className="text-gray-500" weight="bold">
+            "{title}"
           </Body1>
           <Body1>자료를 삭제하시겠습니까?</Body1>
         </Flex>
@@ -40,20 +40,20 @@ export function TrashModal({
         <DoubleButton
           left={
             <Button variant="tertiary" size="full" onClick={closeModal}>
-              <Body2>닫기</Body2>
+              <Body2 weight="bold">닫기</Body2>
             </Button>
           }
           right={
             <Button
               variant="primary"
-              color="blue"
+              color="red"
               size="full"
               onClick={() => {
                 onDelete();
                 closeModal();
               }}
             >
-              <Body2 weight="semibold">삭제하기</Body2>
+              <Body2 weight="bold">삭제하기</Body2>
             </Button>
           }
         />
