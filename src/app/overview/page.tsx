@@ -7,7 +7,7 @@ import {
 import { bannerQueryOptions } from '../_api/queries/banner';
 import { clubQueryOptions } from '../_api/queries/club';
 
-import { OverviewPageClient } from './_components/OverviewPageClient';
+import { OverviewClientPage } from './_pages/OverviewClientPage';
 
 export default async function OverviewPage() {
   const queryClient = new QueryClient({
@@ -26,7 +26,7 @@ export default async function OverviewPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <OverviewPageClient />
+      <OverviewClientPage />
     </HydrationBoundary>
   );
 }

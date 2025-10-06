@@ -8,7 +8,7 @@ import { Metadata } from 'next';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { feedQueryOptions } from '@/app/_api/queries/feed';
 
-import { ClubDetailClient } from './_components/ClubDetailClient';
+import { ClubDetailClientPage } from './_pages/ClubDetailClientPage';
 
 export async function generateMetadata({
   params,
@@ -45,7 +45,7 @@ export default async function ClubDetailPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ClubDetailClient id={clubId} />
+      <ClubDetailClientPage id={clubId} />
     </HydrationBoundary>
   );
 }
