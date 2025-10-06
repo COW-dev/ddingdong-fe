@@ -32,7 +32,7 @@ export function TrashModal({
       >
         <Flex dir="col" alignItems="center" className="w-full py-2">
           <Body1 as="span" className="text-gray-500" weight="bold">
-            "{title}"
+            &quot;{title}&quot;
           </Body1>
           <Body1>자료를 삭제하시겠습니까?</Body1>
         </Flex>
