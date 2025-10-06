@@ -34,7 +34,7 @@ export function DeleteModal({
             className="max-w-full truncate text-center text-gray-500"
             weight="bold"
           >
-            {title}를
+            {title}
           </Body1>
           <Body1>삭제하시겠습니까?</Body1>
         </Flex>
