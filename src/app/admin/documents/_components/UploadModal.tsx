@@ -75,17 +75,13 @@ export function UploadModal({ isOpen, closeModal }: UploadModalProps) {
         {!isLoading && files.length > 0 && (
           <Flex dir="col" gap={2} className="ml-2">
             {files.map((item) => (
-              <Flex
-                key={item.name}
-                alignItems="center"
-                justifyContent="between"
-              >
+              <Flex key={item.id} alignItems="center" justifyContent="between">
                 <Body3 className="text-gray-500">{item.name}</Body3>
                 <IconButton
                   iconName="close"
                   size={16}
                   color="gray"
-                  onClick={() => handleDeleteFile(item.name)}
+                  onClick={() => handleDeleteFile(item.id)}
                 />
               </Flex>
             ))}

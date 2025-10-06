@@ -34,8 +34,8 @@ export const useDocument = () => {
     setFiles((prev) => [...prev, ...newRecords]);
   };
 
-  const handleDeleteFile = (fileName: string) => {
-    setFiles((prev) => prev.filter((file) => file.name !== fileName));
+  const handleDeleteFile = (fileId: string) => {
+    setFiles((prev) => prev.filter((file) => file.id !== fileId));
   };
 
   const resetAll = () => {
