@@ -1,6 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
 
-import { PresignedUrlResponse } from '@/types';
 import {
   ApplicantDetail,
   Application,
@@ -22,7 +21,6 @@ import {
   MemberInfo,
   AddMember,
 } from '@/types/club';
-import { DeleteDocument, NewDocument } from '@/types/document';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,
@@ -34,7 +32,6 @@ import {
 } from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
 import {
-  Notice,
   NoticeDetail,
   DeleteNotice,
   NewNotice,
@@ -134,12 +131,6 @@ export async function getFixInfo(
   return await response.data;
 }
 
-export async function getAllNotices(
-  page: number,
-): Promise<AxiosResponse<Notice, unknown>> {
-  return await api.get(`/notices?page=${page}&limit=10`);
-}
-
 export async function getNoticeInfo(
   noticeId: number,
 ): Promise<AxiosResponse<NoticeDetail, unknown>> {
@@ -188,13 +179,6 @@ export async function createBanner({ token, ...bannerData }: NewBanner) {
 
 export async function createFix({ token, post }: NewFix) {
   return await api.post('/central/fix-zones', post, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function createDocument({ token, ...documentData }: NewDocument) {
-  return await api.post('/admin/documents', documentData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -288,13 +272,7 @@ export async function deleteNotice({ noticeId, token }: DeleteNotice) {
     },
   });
 }
-export async function deleteDocument({ documentId, token }: DeleteDocument) {
-  return await api.delete(`/admin/documents/${documentId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
+
 export async function deleteClub({ clubId, token }: DeleteClub) {
   return await api.delete(`/admin/clubs/${clubId}`, {
     headers: {
@@ -588,36 +566,13 @@ export async function deleteApplication({ formId, token }: DeleteApplication) {
   });
 }
 
-export async function getPresignedUrl(
-  fileName: string,
-  token: string,
-): Promise<AxiosResponse<PresignedUrlResponse>> {
-  return await api.get(`/file/upload-url?fileName=${fileName}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getPresignedUrlForm(
-  fileName: string,
-): Promise<AxiosResponse<PresignedUrlResponse>> {
-  return await api.get(
-    `/file/upload-url/form-application?fileName=${fileName}`,
-  );
-}
-
-export async function uploadPresignedUrl(
-  file: File,
-  uploadUrl: string,
-  contentType: string,
-) {
-  return await api.put(uploadUrl, file, {
-    headers: {
-      'Content-Type': contentType,
-    },
-  });
-}
+// export async function getPresignedUrlForm(
+//   fileName: string,
+// ): Promise<AxiosResponse<PresignedUrlResponse>> {
+//   return await api.get(
+//     `/file/upload-url/form-application?fileName=${fileName}`,
+//   );
+// }
 
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {

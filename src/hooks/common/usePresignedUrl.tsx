@@ -1,22 +1,23 @@
-import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useCookies } from 'react-cookie';
 import { toast } from 'react-hot-toast';
-import { getPresignedUrl, uploadPresignedUrl } from '@/apis';
-import { UploadFile } from '@/types';
+
+import { getPresignedUrl, uploadPresignedUrl } from '@/app/_api/services/file';
+import { UploadFile } from '@/app/_api/types/file';
 
 export function usePresignedUrl() {
-  const [{ token }] = useCookies(['token']);
+  const uploadFile = useMutation<UploadFile, Error, File>({
+    mutationFn: async (file: File) => {
+      const { id, uploadUrl, contentType } = await getPresignedUrl(
+        encodeURIComponent(file.name),
+      );
 
-  const uploadFile = useMutation(async (file: File): Promise<UploadFile> => {
-    const { data } = await getPresignedUrl(
-      encodeURIComponent(file.name),
-      token,
-    );
-    const { id, contentType, uploadUrl } = data;
-
-    await uploadPresignedUrl(file, uploadUrl, contentType);
-    return { id, file, contentType };
+      await uploadPresignedUrl(file, uploadUrl, contentType);
+      return { id, file, contentType };
+    },
+    onError: (error, variables, context) => {
+      console.error('❌ 업로드 실패:', error, variables, context);
+      toast.error('파일 업로드 중 문제가 발생했어요.');
+    },
   });
 
   const handleError = (fileNames: string[]) => {
@@ -53,23 +54,22 @@ export function usePresignedUrl() {
     try {
       return await uploadFile.mutateAsync(file);
     } catch (e) {
+      console.error('❌ getPresignedId Error:', e);
+
       handleError([file.name]);
     }
   };
 
-  const getPresignedIds = useCallback(
-    async (files: File[]) => {
-      const results = await Promise.allSettled(
-        files.map((file) => uploadFile.mutateAsync(file)),
-      );
-      return handlePartialUpload(results, files);
-    },
-    [uploadFile],
-  );
+  const getPresignedIds = async (files: File[]) => {
+    const results = await Promise.allSettled(
+      files.map((file) => uploadFile.mutateAsync(file)),
+    );
+    return handlePartialUpload(results, files);
+  };
 
   return {
     getPresignedIds,
     getPresignedId,
-    isLoading: uploadFile.isLoading,
+    isLoading: uploadFile.isPending,
   };
 }

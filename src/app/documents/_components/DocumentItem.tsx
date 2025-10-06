@@ -25,7 +25,7 @@ export function DocumentItem({ document }: { document: Document }) {
           </Body3>
         </Flex>
         <Flex dir="row" alignItems="center" gap={1}>
-          <Icon name="download" size={24} />
+          <Icon name="download" color="black" size={24} />
         </Flex>
       </Flex>
       <DocumentModal
