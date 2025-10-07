@@ -25,7 +25,7 @@ export function NewFAQAccordion({
   return (
     <FAQContainer>
       <Accordion type="single" className="w-full">
-        {newFAQs?.map((faq) => (
+        {newFAQs.map((faq) => (
           <Flex
             key={faq.id}
             justifyContent="between"
