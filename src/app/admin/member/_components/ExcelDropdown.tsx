@@ -19,12 +19,18 @@ import { UploadModal } from './UploadModal';
 export function ExcelDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const { isOpen: isUploadModalOpen, openModal, closeModal } = usePortal();
-  const { data: excelBlob } = useQuery(memberQueryOptions.excel());
+  const { refetch: refetchExcel } = useQuery({
+    ...memberQueryOptions.excel(),
+    enabled: false,
+    staleTime: Infinity,
+  });
 
-  const handleDownloadMemberExcel = () => {
-    if (!excelBlob) return;
+  const handleDownloadMemberExcel = async () => {
+    if (!refetchExcel) return;
+    const { data } = await refetchExcel();
+    if (!data) return;
+    downloadBlob(data, '동아리원 명단.xlsx');
     setIsOpen(false);
-    downloadBlob(excelBlob, '동아리원 명단.xlsx');
   };
 
   const handleOpenModal = () => {
