@@ -13,9 +13,6 @@ const addMember = async (data: AddMemberAPIRequest) =>
 
 const uploadMemberExcel = async (formData: FormData) =>
   fetcher.post('central/my/club-members', {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
     body: formData,
   });
 
