@@ -4,11 +4,11 @@ import { useSuspenseQueries } from '@tanstack/react-query';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { feedQueryOptions } from '@/app/_api/queries/feed';
 
-import { ClubHeading } from './ClubHeading';
-import { ClubInfo } from './ClubInfo';
-import { ClubTabs } from './ClubTabs';
+import { ClubHeading } from '../_components/ClubHeading';
+import { ClubInfo } from '../_components/ClubInfo';
+import { ClubTabs } from '../_components/ClubTabs';
 
-export const ClubDetailClient = ({ id }: { id: number }) => {
+export const ClubDetailClientPage = ({ id }: { id: number }) => {
   const [{ data: clubData }, { data: feedData }] = useSuspenseQueries({
     queries: [clubQueryOptions.detail(id), feedQueryOptions.clubFeed(id)],
   });

@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 
 import { documentQueryOptions } from '../_api/queries/document';
 
-import { DocumentClient } from './_components/DocumentClient';
+import { DocumentClientPage } from './_pages/DocumentClientPage';
 
 export const metadata: Metadata = {
   title: '띵동 - 자료실',
@@ -19,7 +19,7 @@ export default async function DocumentsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <DocumentClient />
+      <DocumentClientPage />
     </HydrationBoundary>
   );
 }

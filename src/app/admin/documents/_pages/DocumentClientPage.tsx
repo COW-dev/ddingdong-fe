@@ -16,10 +16,10 @@ import {
 import { documentQueryOptions } from '@/app/_api/queries/document';
 import { RoleType } from '@/constants/role';
 
-import { DocumentItem } from './DocumentItem';
-import { UploadModal } from './UploadModal';
+import { DocumentItem } from '../_components/DocumentItem';
+import { UploadModal } from '../_components/UploadModal';
 
-export function DocumentList({ role }: { role: keyof RoleType }) {
+export function DocumentClientPage({ role }: { role: keyof RoleType }) {
   const [currentPage, setCurrentPage] = useState(1);
   const { isOpen, openModal, closeModal } = usePortal();
   const { data: documentData } = useSuspenseQuery(

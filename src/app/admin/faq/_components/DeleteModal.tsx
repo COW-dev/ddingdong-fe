@@ -7,21 +7,19 @@ import {
   Modal,
 } from 'ddingdong-design-system';
 
-import { Document } from '@/app/_api/types/document';
-
-type TrashModalProps = {
-  title: Document['title'];
+type DeleteModalProps = {
+  title: string;
   isOpen: boolean;
   closeModal: VoidFunction;
-  onDelete: VoidFunction;
+  onDeleteFaq: VoidFunction;
 };
 
-export function TrashModal({
+export function DeleteModal({
   title,
   isOpen,
   closeModal,
-  onDelete,
-}: TrashModalProps) {
+  onDeleteFaq,
+}: DeleteModalProps) {
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Flex
@@ -30,11 +28,15 @@ export function TrashModal({
         gap={4}
         className="w-[80vw] md:w-[380px]"
       >
-        <Flex dir="col" alignItems="center" className="w-full py-2">
-          <Body1 as="span" className="text-gray-500" weight="bold">
-            &quot;{title}&quot;
+        <Flex dir="col" alignItems="center" className="box-border w-full py-2">
+          <Body1
+            as="span"
+            className="max-w-full truncate text-center text-gray-500"
+            weight="bold"
+          >
+            {title}
           </Body1>
-          <Body1>자료를 삭제하시겠습니까?</Body1>
+          <Body1>삭제하시겠습니까?</Body1>
         </Flex>
 
         <DoubleButton
@@ -48,10 +50,7 @@ export function TrashModal({
               variant="primary"
               color="red"
               size="full"
-              onClick={() => {
-                onDelete();
-                closeModal();
-              }}
+              onClick={onDeleteFaq}
             >
               <Body2 weight="bold">삭제하기</Body2>
             </Button>

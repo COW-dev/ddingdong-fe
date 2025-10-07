@@ -8,9 +8,9 @@ import { useInfiniteScroll } from '@/hooks/common/useInfiniteScroll';
 
 import { FeedContainer } from '../_containers/FeedContainer';
 
-import { ClubFeed } from './ClubFeed';
+import { ClubFeed } from '../_components/ClubFeed';
 
-export function FeedClient() {
+export function FeedClientPage() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useSuspenseInfiniteQuery(feedQueryOptions.all());
 

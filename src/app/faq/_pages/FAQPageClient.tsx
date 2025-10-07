@@ -3,7 +3,7 @@ import { Title1 } from 'ddingdong-design-system';
 
 import { FAQ } from '@/app/_api/types/faq';
 
-import { FAQAccordion } from './FAQAccordion';
+import { FAQAccordion } from '../_components/FAQAccordion';
 
 export function FAQPageClient({ FAQs }: { FAQs: FAQ[] }) {
   return (

@@ -11,13 +11,13 @@ import { useClubFilter } from '../_hooks/useClubFilter';
 import { useClubSearch } from '../_hooks/useClubSearch';
 import { useFilteredClubs } from '../_hooks/useFilteredClubs';
 
-import { ClubCard } from './ClubCard';
-import { ClubCarousel } from './ClubCarousel';
-import { ClubFilter } from './ClubFilter';
-import { FilterCategory } from './FilterCategory';
-import { SearchBar } from './SearchBar';
+import { ClubCard } from '../_components/ClubCard';
+import { ClubCarousel } from '../_components/ClubCarousel';
+import { ClubFilter } from '../_components/ClubFilter';
+import { FilterCategory } from '../_components/FilterCategory';
+import { SearchBar } from '../_components/SearchBar';
 
-export function OverviewPageClient() {
+export function OverviewClientPage() {
   const [{ data: clubData }, { data: bannerData }] = useSuspenseQueries({
     queries: [clubQueryOptions.all(), bannerQueryOptions.all()],
   });

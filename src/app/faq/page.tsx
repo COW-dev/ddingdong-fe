@@ -8,7 +8,7 @@ import { Metadata } from 'next';
 import { faqQueryOptions } from '../_api/queries/faq';
 import { FAQ } from '../_api/types/faq';
 
-import { FAQPageClient } from './_components/FAQPageClient';
+import { FAQPageClient } from './_pages/FAQPageClient';
 
 export const metadata: Metadata = {
   title: '띵동 - FAQ',

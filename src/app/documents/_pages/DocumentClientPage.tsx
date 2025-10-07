@@ -7,9 +7,9 @@ import { Body1, Pagination, Title1 } from 'ddingdong-design-system';
 
 import { documentQueryOptions } from '@/app/_api/queries/document';
 
-import { DocumentItem } from './DocumentItem';
+import { DocumentItem } from '../_components/DocumentItem';
 
-export function DocumentClient() {
+export function DocumentClientPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const { data: documents } = useSuspenseQuery(
     documentQueryOptions.all(currentPage),

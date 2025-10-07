@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 
 import { feedQueryOptions } from '../_api/queries/feed';
 
-import { FeedClient } from './_components/FeedClient';
+import { FeedClientPage } from './_pages/FeedClientPage';
 
 export const metadata: Metadata = {
   title: '띵동 - 동아리 피드',
@@ -19,7 +19,7 @@ export default async function FeedPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <FeedClient />
+      <FeedClientPage />
     </HydrationBoundary>
   );
 }
