@@ -36,7 +36,10 @@ export const useAddClubMember = () => {
     }));
   };
 
-  const handleMemberInfoSelect = (name: string, value: string) => {
+  const handleMemberInfoSelect = <K extends keyof MemberForm>(
+    name: K,
+    value: MemberForm[K],
+  ) => {
     setMemberInfo((prev) => ({
       ...prev,
       [name]: value,
