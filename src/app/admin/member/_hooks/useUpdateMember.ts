@@ -3,7 +3,7 @@ import { ChangeEvent, useState } from 'react';
 import { Member } from '@/app/_api/types/member';
 import { Position } from '@/constants/position';
 
-export const useUploadMemberInfo = (member: Member) => {
+export const useUpdateMember = (member: Member) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [memberInfo, setMemberInfo] = useState<Member>(member);
   const [positionNum, setPositionNum] = useState<number>(0);

@@ -11,7 +11,7 @@ import {
 import { Member } from '@/app/_api/types/member';
 import { Position } from '@/constants/position';
 
-import { useUploadMemberInfo } from '../_hooks/useUpdateMemberInfo';
+import { useUpdateMember } from '../_hooks/useUpdateMember';
 
 import { DeleteModal } from './DeleteModal';
 
@@ -31,7 +31,7 @@ export default function MemberInfo({ member }: MemberInfoProps) {
     handleReset,
     handleMemberInfoChange,
     handlePositionNum,
-  } = useUploadMemberInfo(member);
+  } = useUpdateMember(member);
 
   function handleSubmit() {
     if (!member.id) return;
@@ -179,7 +179,7 @@ export default function MemberInfo({ member }: MemberInfoProps) {
         name={memberInfo.name}
         isOpen={isDeleteModalVisible}
         onDelete={handleDeleteConfirm}
-        closeModal={closeModal}
+        onClose={closeModal}
       />
     </>
   );
