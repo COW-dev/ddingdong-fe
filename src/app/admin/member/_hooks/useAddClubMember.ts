@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { Member } from '@/app/_api/types/member';
 
@@ -22,11 +22,10 @@ export const useAddClubMember = () => {
     });
   };
 
-  const handleResetMemberInfo = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const handleResetMemberInfo = (name: keyof MemberForm) => {
     setMemberInfo((prev) => ({
       ...prev,
-      [e.currentTarget.name]: '',
+      [name]: '',
     }));
   };
 

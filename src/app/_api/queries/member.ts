@@ -13,10 +13,12 @@ export const memberQueryOptions = {
     queryOptions({
       queryKey: memberQueryKeys.all(),
       queryFn: () => fetcher.get<MemberAPIResponse>('central/my/club-members'),
+      staleTime: 60_000,
     }),
   excel: () =>
     queryOptions({
       queryKey: memberQueryKeys.excel(),
       queryFn: () => fetcher.getBlob<Blob>('central/my/club-members/excel'),
+      staleTime: 60_000,
     }),
 };

@@ -61,10 +61,11 @@ export function AddModal({ isOpen, onClose }: AddModalProps) {
           </Body2>
           <Input
             id="name"
+            name="name"
             placeholder="이름을 입력해주세요."
             value={memberInfo?.name}
             onChange={handleMemberInfoChange}
-            onClickReset={() => handleResetMemberInfo}
+            onClickReset={() => handleResetMemberInfo('name')}
           />
         </Flex>
         <Flex dir="col" gap={2}>
@@ -73,10 +74,11 @@ export function AddModal({ isOpen, onClose }: AddModalProps) {
           </Body2>
           <Input
             id="studentNumber"
+            name="studentNumber"
             placeholder="학번을 입력해주세요."
             value={memberInfo?.studentNumber}
             onChange={handleMemberInfoChange}
-            onClickReset={() => handleResetMemberInfo}
+            onClickReset={() => handleResetMemberInfo('studentNumber')}
           />
         </Flex>
         <Flex dir="col" gap={2} className="w-full">
@@ -90,7 +92,6 @@ export function AddModal({ isOpen, onClose }: AddModalProps) {
               handleMemberInfoSelect('department', option)
             }
             defaultValue="학과를 선택해주세요."
-            className="w-100"
           >
             {Object.entries(departmentInfo).map(([group, departments]) => (
               <Fragment key={group}>
@@ -109,10 +110,11 @@ export function AddModal({ isOpen, onClose }: AddModalProps) {
           </Body2>
           <Input
             id="phoneNumber"
+            name="phoneNumber"
             placeholder="전화번호를 입력해주세요."
             value={memberInfo?.phoneNumber}
             onChange={handleMemberInfoChange}
-            onClickReset={() => handleResetMemberInfo}
+            onClickReset={() => handleResetMemberInfo('phoneNumber')}
           />
         </Flex>
         <Flex dir="col" gap={2}>
