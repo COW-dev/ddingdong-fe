@@ -153,7 +153,7 @@ export function AddModal({ isOpen, onClose }: AddModalProps) {
               size="full"
               onClick={handleSaveMember}
             >
-              <Body2 weight="semibold">업로드</Body2>
+              <Body2 weight="semibold">추가하기</Body2>
             </Button>
           }
         />
