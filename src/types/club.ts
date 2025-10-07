@@ -1,4 +1,4 @@
-import { UrlType } from '.';
+import { UrlType } from '@/app/_api/types/common';
 
 export type AdminClub = {
   id: number;
@@ -16,44 +16,6 @@ export type NewClub = {
   authId: string;
   password: string;
   token?: string;
-};
-
-export type MemberInfo = {
-  clubName: string;
-  clubMembers: Member[];
-};
-
-export type Member = {
-  id?: number;
-  name: string;
-  studentNumber: string;
-  phoneNumber: string;
-  position: string;
-  department: string;
-};
-
-export type UpdateMember = {
-  id: number;
-  token: string;
-  member: Member;
-};
-
-export type DeleteMember = {
-  id: number;
-  token: string;
-};
-
-export type MemberData = {
-  name: string;
-  studentNumber: string;
-  phoneNumber: string;
-  position: string;
-  department: string;
-};
-
-export type AddMember = {
-  token: string;
-  member: MemberData;
 };
 
 export type UpdateMyClub = {
