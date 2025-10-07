@@ -21,7 +21,7 @@ type UploadModalProps = {
 };
 
 export function UploadModal({ isOpen, onClose }: UploadModalProps) {
-  const { mutate: uploadMutation } = useUploadMemberExcel();
+  const { mutate: uploadMutation, isPending } = useUploadMemberExcel();
   const { file, handleChangeFiles, handleDeleteFile, resetAll } =
     useMemberExcelFile();
 
@@ -84,7 +84,9 @@ export function UploadModal({ isOpen, onClose }: UploadModalProps) {
               variant="primary"
               color="blue"
               size="full"
+              disabled={!file}
               onClick={handleDocumentUpload}
+              isLoading={isPending}
             >
               <Body2 weight="semibold">업로드</Body2>
             </Button>
