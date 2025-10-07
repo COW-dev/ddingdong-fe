@@ -10,17 +10,17 @@ import {
 type DeleteModalProps = {
   name: string;
   isOpen: boolean;
-  closeModal: () => void;
-  onDelete: () => void;
+  onClose: VoidFunction;
+  onDelete: VoidFunction;
 };
 export function DeleteModal({
   name,
   isOpen,
-  closeModal,
+  onClose,
   onDelete,
 }: DeleteModalProps) {
   return (
-    <Modal isOpen={isOpen} closeModal={closeModal}>
+    <Modal isOpen={isOpen} closeModal={onClose}>
       <Flex
         dir="col"
         alignItems="center"
@@ -36,7 +36,7 @@ export function DeleteModal({
 
         <DoubleButton
           left={
-            <Button variant="tertiary" size="full" onClick={closeModal}>
+            <Button variant="tertiary" size="full" onClick={onClose}>
               <Body2 weight="bold">닫기</Body2>
             </Button>
           }
@@ -45,10 +45,7 @@ export function DeleteModal({
               variant="primary"
               color="red"
               size="full"
-              onClick={() => {
-                onDelete();
-                closeModal();
-              }}
+              onClick={onDelete}
             >
               <Body2 weight="bold">삭제하기</Body2>
             </Button>
