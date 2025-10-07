@@ -9,7 +9,7 @@ export const useFAQ = () => {
   const [editMode, setEditMode] = useState(false);
   const [newFAQs, setNewFAQs] = useState<FAQ[]>([]);
 
-  const { mutate: addFaq } = useAddFaq();
+  const { mutateAsync: addFaq } = useAddFaq();
 
   const handleAddNewFAQ = () => {
     const newFAQ: FAQ = {
