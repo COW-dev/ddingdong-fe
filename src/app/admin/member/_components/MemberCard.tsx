@@ -23,6 +23,7 @@ export function MemberCard({ memberInfo }: MemberCardProps) {
       memberInfo.filter(
         (m) =>
           m.name.includes(debouncedSearch) ||
+          m.department.includes(debouncedSearch) ||
           m.studentNumber.includes(debouncedSearch),
       ),
     [debouncedSearch, memberInfo],
