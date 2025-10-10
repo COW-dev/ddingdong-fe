@@ -42,7 +42,7 @@ export default function DeleteClub({ id, name, closeModal }: Prop) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="m-auto w-[70vw] max-w-[640px]">
+    <form onSubmit={handleSubmit} className="m-auto w-[60vw] max-w-[500px]">
       <ModalHeader title="동아리 삭제하기" onClose={closeModal} />
 
       <Flex
