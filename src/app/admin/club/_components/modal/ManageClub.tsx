@@ -1,12 +1,9 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { Caption1, Flex } from 'ddingdong-design-system';
+import { Button, Flex, DoubleButton } from 'ddingdong-design-system';
 
-import Bin from '@/assets/bin-black.svg';
-import Score from '@/assets/score.svg';
 import { ModalType } from '@/types';
 
 import DeleteClub from './DeleteClub';
@@ -26,6 +23,8 @@ export default function ManageClub({
   closeModal,
   handleModal,
 }: Prop) {
+  const router = useRouter();
+
   function handleClickDelete() {
     handleModal({
       title: '동아리 삭제하기',
@@ -34,45 +33,33 @@ export default function ManageClub({
   }
 
   return (
-    <Flex dir="col" alignItems="center" className="w-[80vw] max-w-[500px]">
-      <ModalHeader title="동아리 생성하기" onClose={closeModal} />
+    <Flex dir="col" alignItems="center" className="max-w-[350px]">
+      <ModalHeader title="동아리 관리하기" onClose={closeModal} />
 
-      <Flex dir="row" className="w-full" justifyContent="center">
-        <Link key={id} href={`/club/${id}/score`} className="w-full">
-          <Flex
-            dir="col"
-            alignItems="center"
-            justifyContent="center"
-            className="w-full"
-          >
-            <Image
-              src={Score}
-              alt="동아리 점수"
-              width={80}
-              height={80}
-              className="m-auto"
-            />
-            <Caption1 className="mt-4 text-gray-700">동아리 점수 수정</Caption1>
-          </Flex>
-        </Link>
-
-        <Flex
-          dir="col"
-          alignItems="center"
-          justifyContent="center"
-          onClick={handleClickDelete}
-          className="w-full cursor-pointer border-l-2 border-gray-200 text-gray-700"
-        >
-          <Image
-            src={Bin}
-            alt="동아리 삭제"
-            width={80}
-            height={80}
-            className="m-auto"
-          />
-          <Caption1 className="mt-4 text-gray-700">동아리 삭제</Caption1>
-        </Flex>
-      </Flex>
+      <div className="flex w-full flex-row items-center justify-between">
+        <DoubleButton
+          left={
+            <Button
+              color="blue"
+              size="md"
+              variant="primary"
+              onClick={() => router.push(`/club/${id}/score`)}
+            >
+              동아리 점수
+            </Button>
+          }
+          right={
+            <Button
+              color="red"
+              size="md"
+              variant="secondary"
+              onClick={handleClickDelete}
+            >
+              동아리 삭제
+            </Button>
+          }
+        />
+      </div>
     </Flex>
   );
 }
