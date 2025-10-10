@@ -45,3 +45,11 @@ export type ClubDetail = {
   token: string;
   formId?: number;
 };
+
+export type AdminClub = {
+  id: number;
+  name: string;
+  category: string;
+  score: number;
+  profileImage: UrlType;
+};
