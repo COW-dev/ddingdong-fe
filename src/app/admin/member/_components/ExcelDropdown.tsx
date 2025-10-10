@@ -18,8 +18,9 @@ import { UploadModal } from './UploadModal';
 
 export function ExcelDropdown() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { isOpen: isUploadModalOpen, openModal, closeModal } = usePortal();
-  const { refetch: refetchExcel } = useQuery({
+  const { refetch: refetchExcel, isFetching } = useQuery({
     ...memberQueryOptions.excel(),
     enabled: false,
     staleTime: Infinity,
@@ -27,10 +28,16 @@ export function ExcelDropdown() {
 
   const handleDownloadMemberExcel = async () => {
     if (!refetchExcel) return;
-    const { data } = await refetchExcel();
-    if (!data) return;
-    downloadBlob(data, '동아리원 명단.xlsx');
-    setIsOpen(false);
+    if (isDownloading || isFetching) return;
+    try {
+      setIsDownloading(true);
+      const { data } = await refetchExcel();
+      if (!data) return;
+      downloadBlob(data, '동아리원 명단.xlsx');
+    } finally {
+      setIsDownloading(false);
+      setIsOpen(false);
+    }
   };
 
   const handleOpenModal = () => {
@@ -81,7 +88,10 @@ export function ExcelDropdown() {
           )}
         >
           <div className="m-2">
-            <DropdownItem onClick={handleDownloadMemberExcel}>
+            <DropdownItem
+              onClick={handleDownloadMemberExcel}
+              isLoading={isDownloading || isFetching}
+            >
               동아리원 다운받기
             </DropdownItem>
             <DropdownItem onClick={handleOpenModal}>
@@ -97,17 +107,25 @@ export function ExcelDropdown() {
 
 function DropdownItem({
   onClick,
+  isLoading,
   children,
 }: {
   onClick: () => void;
+  isLoading?: boolean;
   children: ReactNode;
 }) {
   return (
     <Flex
       as="button"
-      alignItems="center"
-      onClick={onClick}
-      className="w-full gap-2 rounded-lg p-2 text-center hover:bg-gray-100 focus:bg-gray-100"
+      justifyContent="center"
+      onClick={() => {
+        if (isLoading) return;
+        onClick();
+      }}
+      className={cn(
+        'w-full gap-2 rounded-lg p-2 text-center hover:bg-gray-100 focus:bg-gray-100',
+        isLoading && 'pointer-events-none cursor-not-allowed opacity-50',
+      )}
     >
       <Caption1>{children}</Caption1>
     </Flex>
