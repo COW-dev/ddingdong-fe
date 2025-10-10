@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Cancel from '@/assets/cancel-white.svg';
 
 type DrawerProps = {
   children: React.ReactNode;
@@ -12,7 +11,7 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
   return (
     <main
       className={
-        ' fixed inset-0 z-10 transform overflow-hidden bg-gray-900 bg-opacity-25 ease-in-out ' +
+        'bg-opacity-25 fixed inset-0 z-10 transform overflow-hidden bg-gray-900 ease-in-out ' +
         (isOpen
           ? 'translate-x-0 opacity-100 transition-opacity duration-500'
           : 'translate-x-full opacity-0 delay-500')
@@ -20,8 +19,8 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
     >
       <section
         className={
-          ' delay-400 absolute right-0 top-0 h-full w-screen max-w-lg transform bg-white shadow-xl transition-all duration-500 ease-in-out  ' +
-          (isOpen ? ' translate-x-0 ' : ' translate-x-full ')
+          'absolute top-0 right-0 h-full w-screen max-w-lg transform bg-white shadow-xl transition-all delay-400 duration-500 ease-in-out ' +
+          (isOpen ? ' translate-x-0' : ' translate-x-full')
         }
       >
         <article className="relative flex h-16 w-full justify-between">
@@ -32,22 +31,14 @@ export default function Drawer({ children, isOpen, setIsOpen }: DrawerProps) {
               height={700}
               priority
               alt="ddingdong"
-              className=" w-32"
+              className="w-32"
             />
             <button
               className=""
               onClick={() => {
                 setIsOpen(false);
               }}
-            >
-              <Image
-                src={Cancel}
-                width={24}
-                height={24}
-                alt="cancel"
-                className="h-5"
-              />
-            </button>
+            ></button>
           </header>
         </article>
         {children}

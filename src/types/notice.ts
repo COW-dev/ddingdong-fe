@@ -9,17 +9,6 @@ export type NoticeDetail = {
   files: UrlType[];
 };
 
-export type Notice = {
-  notices: NoticeTitle[];
-  totalPage: number;
-};
-
-export type NoticeTitle = {
-  id: number;
-  title: string;
-  createdAt: string;
-};
-
 export type NewNotice = {
   title: string;
   content: string;

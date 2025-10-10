@@ -1,3 +1,8 @@
+export type DocumentAPIRequest = {
+  title: string;
+  fileIds: string[];
+};
+
 export type DocumentList = {
   documents: Document[];
   totalPageCount: number;

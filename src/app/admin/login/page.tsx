@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect } from 'react';
 
 import {
@@ -28,14 +29,10 @@ export default function LoginPage() {
   const { cookie, resetCookie } = useCookie();
 
   useEffect(() => {
-    async function checkRefreshToken() {
-      if (await cookie.refresh_token) {
-        resetCookie();
-      }
+    if (cookie.refresh_token) {
+      resetCookie();
     }
-    checkRefreshToken();
   }, [cookie.refresh_token, resetCookie]);
-
   return (
     <Flex
       as="section"

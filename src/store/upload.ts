@@ -23,6 +23,7 @@ export const useUploadStore = create<UploadStore>((set) => ({
 
   removeVideoUpload: (id) =>
     set((state) => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { [id]: _, ...rest } = state.videoUploads;
       return { videoUploads: rest };
     }),

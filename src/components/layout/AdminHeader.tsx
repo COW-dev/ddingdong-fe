@@ -2,20 +2,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { removeToken } from '@/apis';
-import { useAuthStore } from '@/store/auth';
 import { useClubStore } from '@/store/club';
 
 export default function AdminHeader() {
   const router = useRouter();
-  const { resetAuth } = useAuthStore();
+
   const { resetClub } = useClubStore();
   const curPath = router.pathname;
   const isLoginPage = curPath.endsWith('login');
 
   const handleLogout = () => {
-    removeToken();
-    resetAuth();
     resetClub();
     router.push('/login');
   };

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import ScoreList from '@/components/score/ScoreList';
 import { SCORE_TYPE } from '@/constants/score';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 import { useNewScore } from '@/hooks/api/score/useNewScore';
 import { ScoreHistory } from '@/types/score';
 

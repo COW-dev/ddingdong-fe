@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useLoginMutation } from '@/app/_api/mutations/login';
-import { useAuthStore } from '@/store/auth';
 
 import { useCookie } from '../../../_api/useCookie';
 
@@ -15,8 +14,6 @@ export const useLogin = () => {
   const router = useRouter();
   const { mutateAsync: loginMutation } = useLoginMutation();
   const { setCookies } = useCookie();
-
-  const { setAuth } = useAuthStore();
 
   const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -43,7 +40,6 @@ export const useLogin = () => {
     const { role, token } = await loginMutation({ id, password });
     const authToken = token.split('Bearer ')[1];
     setCookies(authToken, role);
-    setAuth({ role, token: authToken });
     router.push('/');
   };
 

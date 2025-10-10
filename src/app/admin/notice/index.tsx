@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 import Write from '@/assets/write.svg';
 import Heading from '@/components/common/Heading';
 import NoticeList from '@/components/common/NoticeList';
-import { ROLE_TYPE } from '@/constants/text';
+import { ROLE_TYPE } from '@/constants/position';
 
 export default function Index() {
   const [{ role }] = useCookies(['role']);
