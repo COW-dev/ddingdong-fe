@@ -61,7 +61,7 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
 
   return (
     <form
-      className="w-full"
+      className="max-h-[70vh] w-auto max-w-[60vh] overflow-y-auto px-1"
       onSubmit={(e) => {
         e.preventDefault();
         handleSubmit();
@@ -86,19 +86,18 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
         />
       </Flex>
 
-      <Flex dir="col" className="w-full gap-0 md:flex-row md:gap-2">
+      <Flex dir="col" className="mb-2 w-full items-center gap-2 md:flex-row">
         <LabeledSelect
           id="category"
           label="카테고리"
           value={form.values.category}
           onChange={form.register('category').onChange}
           options={CATEGORY_OPTIONS}
-          className="mb-2 w-full"
         />
         <LabeledInput
           field={getField('tag')}
           {...form.register('tag')}
-          className="mb-2 w-full"
+          className="w-full"
         />
       </Flex>
 
