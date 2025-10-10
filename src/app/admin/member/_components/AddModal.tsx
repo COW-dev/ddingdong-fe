@@ -12,10 +12,10 @@ import {
 } from 'ddingdong-design-system';
 import { toast } from 'react-hot-toast';
 
+import { useAddMember } from '@/app/_api/mutations/member';
 import { departmentInfo } from '@/constants/department';
 import { Position } from '@/constants/position';
 
-import { useAddMember } from '../../../_api/mutations/member';
 import { useAddClubMember } from '../_hooks/useAddClubMember';
 
 type AddModalProps = {
@@ -35,6 +35,17 @@ export function AddModal({ isOpen, onClose }: AddModalProps) {
 
   const handleSaveMember = () => {
     if (!memberInfo) return;
+
+    if (
+      !memberInfo.name ||
+      !memberInfo.studentNumber ||
+      !memberInfo.department ||
+      !memberInfo.phoneNumber
+    ) {
+      toast.error('모든 필수 항목을 입력해주세요.');
+      return;
+    }
+
     addMember(
       { member: memberInfo },
       {

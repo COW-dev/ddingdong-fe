@@ -3,29 +3,25 @@ import { ChangeEvent, useState } from 'react';
 import { Member } from '@/app/_api/types/member';
 
 type MemberForm = Omit<Member, 'id'>;
+
+const INITIAL_MEMBER_INFO: MemberForm = {
+  name: '',
+  studentNumber: '',
+  position: 'MEMBER',
+  phoneNumber: '',
+  department: '',
+};
 export const useAddClubMember = () => {
-  const [memberInfo, setMemberInfo] = useState<MemberForm>({
-    name: '',
-    studentNumber: '',
-    position: 'MEMBER',
-    phoneNumber: '',
-    department: '',
-  });
+  const [memberInfo, setMemberInfo] = useState<MemberForm>(INITIAL_MEMBER_INFO);
 
   const resetMemberInfo = () => {
-    setMemberInfo({
-      name: '',
-      studentNumber: '',
-      position: 'MEMBER',
-      phoneNumber: '',
-      department: '',
-    });
+    setMemberInfo(INITIAL_MEMBER_INFO);
   };
 
   const handleResetMemberInfo = (name: keyof MemberForm) => {
     setMemberInfo((prev) => ({
       ...prev,
-      [name]: '',
+      [name]: INITIAL_MEMBER_INFO[name],
     }));
   };
 
