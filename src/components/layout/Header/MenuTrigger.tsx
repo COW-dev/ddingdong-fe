@@ -5,8 +5,8 @@ import { cn } from '@/lib/utils';
 import { useMenuCtx } from './uesMenuCtx';
 
 type Props = {
-  children?: React.ReactNode;
   className?: string;
+  children?: React.ReactNode;
   'aria-label'?: string;
 };
 
