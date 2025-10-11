@@ -1,20 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Flex } from 'ddingdong-design-system';
 
-const HIDE_PATHS = ['/login'];
+import { Caption1, Flex } from 'ddingdong-design-system';
 
-export default function FooterGate() {
-  const pathname = usePathname() ?? '';
-  const shouldHide = HIDE_PATHS.some(
-    (p) => pathname === p || pathname.endsWith(p),
-  );
-  if (shouldHide) return null;
-
-  const year = new Date().getFullYear();
-
+export default function Footer() {
   return (
     <Flex
       as="footer"
@@ -35,9 +25,9 @@ export default function FooterGate() {
           개인정보 처리방침
         </Link>
 
-        <div className="mt-2 text-xs font-medium text-gray-500 md:text-sm">
-          © {year} ddingdong. All Rights Reserved
-        </div>
+        <Caption1 className="mt-2 text-xs font-medium text-gray-500 md:text-sm">
+          © ddingdong. All Rights Reserved
+        </Caption1>
 
         <address className="mt-1 text-xs text-gray-400 not-italic md:text-sm">
           E-mail:{' '}
