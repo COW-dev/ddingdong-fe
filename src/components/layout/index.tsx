@@ -4,12 +4,15 @@ import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
 import { UserHeader } from './UserHeader';
 
-type Props = { children: React.ReactNode };
+type LayoutProps = { children: React.ReactNode };
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children }: LayoutProps) {
   const host = typeof window !== 'undefined' ? window.location.hostname : '';
   const sub = host.split('.')[0];
   const isAdminHost = sub === 'admin';
+
+  const href = window.location.href;
+  const isLoginPage = href.includes('/login');
 
   return (
     <>
@@ -27,7 +30,7 @@ export default function Layout({ children }: Props) {
           {children}
         </Flex>
       </Flex>
-      <Footer />
+      {!isLoginPage && <Footer />}
     </>
   );
 }
