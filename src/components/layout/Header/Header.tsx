@@ -1,15 +1,11 @@
 'use client';
 
+import { Flex } from 'ddingdong-design-system';
+
 import { cn } from '@/lib/utils';
 
 export type Props = {
-  /**
-   * The content to display inside the header.
-   */
   children: React.ReactNode;
-  /**
-   * Additional CSS classes to apply to the header.
-   */
   className?: string;
 };
 
@@ -21,9 +17,15 @@ export function Header({ children, className }: Props) {
         className,
       )}
     >
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between md:h-[72px] md:px-16">
+      <Flex
+        as="div"
+        dir="row"
+        alignItems="center"
+        justifyContent="between"
+        className="mx-auto h-16 w-full max-w-6xl md:h-[72px] md:px-16"
+      >
         {children}
-      </div>
+      </Flex>
     </header>
   );
 }

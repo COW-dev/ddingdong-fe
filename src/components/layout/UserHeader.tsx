@@ -68,7 +68,12 @@ export function UserHeader() {
           </button>
 
           <Drawer isOpen={isOpen} onClose={closeModal}>
-            <div className="bg-primary-300 flex w-[380px] items-center justify-between px-6 py-4 pt-4 sm:w-[510px]">
+            <Flex
+              dir="row"
+              alignItems="center"
+              justifyContent="between"
+              className="bg-primary-300 w-[380px] px-6 py-4 pt-4 sm:w-[510px]"
+            >
               <Link href="/" className="inline-block">
                 <Image
                   src="/m_logo.png"
@@ -79,6 +84,7 @@ export function UserHeader() {
                   className="w-30"
                 />
               </Link>
+
               <Icon
                 name="close"
                 color="white"
@@ -86,7 +92,8 @@ export function UserHeader() {
                 onClick={closeModal}
                 className="cursor-pointer"
               />
-            </div>
+            </Flex>
+
             <NavigationItems onItemClick={closeModal} isMobile />
           </Drawer>
         </Flex>
