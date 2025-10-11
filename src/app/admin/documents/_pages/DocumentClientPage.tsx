@@ -29,7 +29,7 @@ export function DocumentClientPage({ role }: { role: keyof RoleType }) {
   return (
     <>
       <Flex justifyContent="between" alignItems="center">
-        <Title1 weight="bold" className="py-7 md:py-10">
+        <Title1 as="h1" weight="bold" className="py-7 md:py-10">
           자료실
         </Title1>
         {role === 'ROLE_ADMIN' && (

@@ -15,11 +15,7 @@ import {
   NewClub,
   DeleteClub,
   UpdateClub,
-  UpdateMember,
   UpdateMyClub,
-  DeleteMember,
-  MemberInfo,
-  AddMember,
 } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
@@ -210,58 +206,6 @@ export async function updateNotice({
     headers: {
       Authorization: 'Bearer ' + token,
     },
-  });
-}
-
-export async function getClubMembers(
-  token: string,
-): Promise<AxiosResponse<MemberInfo, unknown>> {
-  return await api.get('/central/my/club-members', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function uploadMembers(formdata: FormData) {
-  const token = formdata.get('token');
-  return await api.post('/central/my/club-members', formdata, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateMembers({ member, id, token }: UpdateMember) {
-  return await api.patch(`/central/my/club-members/${id}`, member, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function deleteMember({ id, token }: DeleteMember) {
-  return await api.delete(`/club-members/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export function addMember(params: AddMember) {
-  const { token, member } = params;
-
-  return api.post('/club-members', member, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-}
-
-export async function getMemberFile(token: string) {
-  return await api.get('/central/my/club-members/excel', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-    responseType: 'blob',
   });
 }
 
@@ -565,14 +509,6 @@ export async function deleteApplication({ formId, token }: DeleteApplication) {
     },
   });
 }
-
-// export async function getPresignedUrlForm(
-//   fileName: string,
-// ): Promise<AxiosResponse<PresignedUrlResponse>> {
-//   return await api.get(
-//     `/file/upload-url/form-application?fileName=${fileName}`,
-//   );
-// }
 
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {

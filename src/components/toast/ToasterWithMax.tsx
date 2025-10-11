@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import toast, { Toaster, useToasterStore } from 'react-hot-toast';
+import { useEffect } from 'react';
+
+import { toast, Toaster, useToasterStore } from 'react-hot-toast';
 
 export default function ToasterWithMax() {
   const { toasts } = useToasterStore();
-  const [toastLimit, setToastLimit] = useState<number>(2);
+  const toastLimit = 2;
 
   useEffect(() => {
     toasts

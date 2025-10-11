@@ -8,7 +8,7 @@ import { FAQAccordion } from '../_components/FAQAccordion';
 export function FAQPageClient({ FAQs }: { FAQs: FAQ[] }) {
   return (
     <>
-      <Title1 weight="bold" className="py-7 md:py-10">
+      <Title1 as="h1" weight="bold" className="py-7 md:py-10">
         FAQ
       </Title1>
       <FAQAccordion FAQs={FAQs ?? []} />
