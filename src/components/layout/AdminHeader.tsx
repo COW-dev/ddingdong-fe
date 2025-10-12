@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
 import { useCookie } from '@/app/_api/useCookie';
-
 import { useClubStore } from '@/store/club';
 
 import { Header, NavigationItem } from './Header';
@@ -37,7 +36,9 @@ export function AdminHeader() {
       </Link>
       {!isLoginPage && (
         <div className="ml-auto">
-          <NavigationItem onClick={handleLogout}>로그아웃</NavigationItem>
+          <NavigationItem href="/login" onClick={handleLogout}>
+            로그아웃
+          </NavigationItem>
         </div>
       )}
     </Header>
