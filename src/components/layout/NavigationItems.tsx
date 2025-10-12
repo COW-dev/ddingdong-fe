@@ -99,15 +99,12 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
       {Object.entries(navItems).map(([category, items]) => {
         if (items.length === 1) {
           const item = items[0];
-          const isExternal = /^https?:\/\//.test(item.href);
+
           return (
             <NavigationItem
               key={category}
               href={item.href}
               onClick={onItemClick}
-              {...(isExternal
-                ? { target: '_blank', rel: 'noopener noreferrer' }
-                : {})}
             >
               {category}
             </NavigationItem>
@@ -125,9 +122,8 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
                     key={item.id}
                     href={item.href}
                     onClick={onItemClick}
-                    {...(isExternal
-                      ? { target: '_blank', rel: 'noopener noreferrer' }
-                      : {})}
+                    target={isExternal ? '_blank' : '_self'}
+                    rel="noopener noreferrer"
                   >
                     {item.content}
                   </MenuItem>

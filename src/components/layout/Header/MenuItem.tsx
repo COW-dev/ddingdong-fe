@@ -13,8 +13,9 @@ import { useMenuCtx } from './uesMenuCtx';
 export type Props = {
   children: ReactNode;
   onClick?: () => void;
-  href?: string;
-  target?: string;
+  href: string;
+  rel?: string;
+  target?: '_blank' | '_self';
   icon?: IconName;
   className?: string;
   disabled?: boolean;
@@ -24,14 +25,16 @@ export function MenuItem({
   children,
   onClick,
   href,
-  target,
+  rel,
+  target = '_self',
   icon,
   className,
   disabled,
 }: Props) {
   const { setOpen } = useMenuCtx();
+
   const common = cn(
-    'flex w-full items-center font-semibold gap-3 whitespace-nowrap px-4 py-2 text-gray-400 transition-colors duration-150 hover:bg-gray-100 ',
+    'flex w-full items-center font-semibold gap-3 whitespace-nowrap px-4 py-2 text-gray-400 transition-colors duration-150 hover:bg-gray-100',
     disabled && 'pointer-events-none opacity-50',
     className,
   );
@@ -41,6 +44,7 @@ export function MenuItem({
       <Link
         href={href}
         target={target}
+        rel={rel}
         className={common}
         role="menuitem"
         onClick={() => setOpen(false)}
