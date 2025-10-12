@@ -23,12 +23,17 @@ type Props = {
 };
 
 export function NavigationItems({ onItemClick, isMobile = false }: Props) {
+  const entries = Object.entries(navItems).filter(
+    ([, items]) => (items?.length ?? 0) > 0,
+  ) as [
+    string,
+    { id: string | number; href: string; content?: string; image?: string }[],
+  ][];
+
   if (isMobile) {
     return (
       <Flex dir="col" alignItems="start" justifyContent="center">
-        {Object.entries(navItems).map(([category, items]) => {
-          if (!items || items.length === 0) return null;
-
+        {entries.map(([category, items]) => {
           if (items.length === 1) {
             const item = items[0];
             const isExternal = /^https?:\/\//.test(item.href);
@@ -96,10 +101,9 @@ export function NavigationItems({ onItemClick, isMobile = false }: Props) {
 
   return (
     <Flex dir="row" alignItems="center" className="ml-auto gap-4">
-      {Object.entries(navItems).map(([category, items]) => {
+      {entries.map(([category, items]) => {
         if (items.length === 1) {
           const item = items[0];
-
           return (
             <NavigationItem
               key={category}
