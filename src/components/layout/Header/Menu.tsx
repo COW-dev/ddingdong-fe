@@ -19,7 +19,6 @@ export function Menu({ children, className }: Props) {
   useClickOutside({
     ref: menuRef,
     handler: () => setOpen(false),
-    enabled: open,
   });
 
   if (!open) return null;
