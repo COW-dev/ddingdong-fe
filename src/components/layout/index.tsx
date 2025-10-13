@@ -1,3 +1,7 @@
+'use client';
+
+import { usePathname } from 'next/navigation';
+
 import { Flex } from 'ddingdong-design-system';
 
 import { AdminHeader } from './AdminHeader';
@@ -7,12 +11,11 @@ import { UserHeader } from './UserHeader';
 type LayoutProps = { children: React.ReactNode };
 
 export default function Layout({ children }: LayoutProps) {
+  const pathname = usePathname();
   const host = typeof window !== 'undefined' ? window.location.hostname : '';
   const sub = host.split('.')[0];
   const isAdminHost = sub === 'admin';
-
-  const href = window.location.href;
-  const isLoginPage = href.includes('/login');
+  const isLoginPage = pathname?.includes('/login');
 
   return (
     <>
