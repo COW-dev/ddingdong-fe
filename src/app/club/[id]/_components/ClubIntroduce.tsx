@@ -1,8 +1,7 @@
-import Image from 'next/image';
-
 import { Body1, Body2, Flex } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 type ClubIntroduceProps = Pick<
   ClubDetail,
@@ -23,7 +22,8 @@ export const ClubIntroduce = ({
             동아리 소개 이미지
           </Body1>
           <Flex justifyContent="center" className="rounded-2xl">
-            <Image
+            <OptimizedImage
+              priority
               src={introductionImage.originUrl}
               width={1000}
               height={500}
