@@ -15,7 +15,7 @@ export type Props = {
   onClick?: () => void;
   href: string;
   rel?: string;
-  target?: '_blank' | '_self';
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>['target'];
   icon?: IconName;
   className?: string;
   disabled?: boolean;
