@@ -17,6 +17,7 @@ import { toast } from 'react-hot-toast';
 
 import { ApiError } from '@/app/_api/fetcher';
 import { useUpdateNotice } from '@/app/_api/mutations/notice';
+import { Loading } from '@/components/loading/Loading';
 import { createImageOrder } from '@/utils/change';
 
 import { useEditNotice } from '../_hooks/useEditNotice';
@@ -125,6 +126,11 @@ export default function NoticeEditClientPage({
             }
           />
         </Flex>
+        {isUploading && (
+          <Flex justifyContent="center" className="h-full w-full p-4">
+            <Loading />
+          </Flex>
+        )}
         {files.length > 0 && (
           <Flex dir="col" gap={2} className="mt-2 ml-2">
             {files.map((file, idx) => (
