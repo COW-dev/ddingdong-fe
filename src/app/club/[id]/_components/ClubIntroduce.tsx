@@ -16,7 +16,7 @@ export const ClubIntroduce = ({
 }: ClubIntroduceProps) => {
   return (
     <main className="w-full">
-      {introductionImage?.originUrl && (
+      {introductionImage?.cdnUrl && (
         <section className="mt-6 md:mt-8">
           <Body1 weight="bold" className="my-2">
             동아리 소개 이미지
@@ -24,7 +24,8 @@ export const ClubIntroduce = ({
           <Flex justifyContent="center" className="rounded-2xl">
             <OptimizedImage
               priority
-              src={introductionImage.originUrl}
+              isSkeleton
+              src={introductionImage.cdnUrl}
               width={1000}
               height={500}
               alt="동아리 소개 사진"
