@@ -6,15 +6,16 @@ import { Body3 } from 'ddingdong-design-system';
 import { bannerQueryOptions } from '@/app/_api/queries/banner';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 
+import { ClubContainer } from '../_containers/ClubContainer';
+import { useClubFilter } from '../_hooks/useClubFilter';
+import { useClubSearch } from '../_hooks/useClubSearch';
+import { useFilteredClubs } from '../_hooks/useFilteredClubs';
+
 import { ClubCard } from '../_components/ClubCard';
 import { ClubCarousel } from '../_components/ClubCarousel';
 import { ClubFilter } from '../_components/ClubFilter';
 import { FilterCategory } from '../_components/FilterCategory';
 import { SearchBar } from '../_components/SearchBar';
-import { ClubContainer } from '../_containers/ClubContainer';
-import { useClubFilter } from '../_hooks/useClubFilter';
-import { useClubSearch } from '../_hooks/useClubSearch';
-import { useFilteredClubs } from '../_hooks/useFilteredClubs';
 
 export function OverviewClientPage() {
   const [{ data: clubData }, { data: bannerData }] = useSuspenseQueries({
