@@ -1,5 +1,5 @@
+import { UrlType } from '@/app/_api/types/common';
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
-import { UrlType } from '.';
 
 export type StudentInfo = {
   name: string;
@@ -26,12 +26,6 @@ export type CurrentReport = {
   currentTerm: string;
 };
 
-export type ActivityReportTerm = {
-  term: number;
-  startDate: string;
-  endDate: string;
-};
-
 export type EditReport = {
   //form(편집)에 사용되는 Report type
   term: number;
@@ -55,19 +49,6 @@ export type SubmitReport = {
   endDate: string | null;
   content: string;
   imageId: string | null;
-  participants: StudentInfo[];
-};
-
-export type ReportResponse = {
-  //server로부터 전달받는 report type
-  id: number;
-  createdAt: string;
-  name: string;
-  content: string;
-  place: string;
-  startDate: string;
-  endDate: string;
-  image: UrlType;
   participants: StudentInfo[];
 };
 

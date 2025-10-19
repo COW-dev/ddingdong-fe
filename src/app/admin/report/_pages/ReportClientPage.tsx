@@ -13,8 +13,8 @@ export function ReportClientPage() {
 
   return (
     <>
-      <Title1 weight="bold" className="py-7">
-        활동 보고서 작성
+      <Title1 weight="bold" className="py-7 md:py-10">
+        활동보고서 작성
       </Title1>
       <ReportCardContainer>
         {terms.map((termInfo) => (
