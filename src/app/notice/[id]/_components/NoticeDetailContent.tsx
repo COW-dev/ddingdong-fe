@@ -14,6 +14,7 @@ export function NoticeDetailContent({
   images,
 }: NoticeDetailContentProps) {
   const sortedImages = sortByOrder(images ?? []);
+
   return (
     <NoticeDetailContainer>
       {sortedImages.length > 0 && (

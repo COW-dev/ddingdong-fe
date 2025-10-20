@@ -3,23 +3,23 @@ import { PropsWithChildren, Fragment } from 'react';
 import { Body3, Flex, Icon } from 'ddingdong-design-system';
 
 import { UrlType } from '@/app/_api/types/file';
+import { downloadFile } from '@/app/documents/_utils/downloadFile';
 
 export function NoticeDetailFile({ files }: { files: UrlType[] }) {
   return (
     <NoticeDetailFileContainer>
       {files.map((file) => (
         <Fragment key={file.id}>
-          <a
-            href={file.originUrl}
-            download
-            target="_blank"
-            className="flex items-center gap-1"
+          <div
+            role="button"
+            onClick={() => downloadFile(file.cdnUrl, file.fileName ?? '')}
+            className="flex cursor-pointer items-center gap-1"
           >
             <Icon name="download" color="gray" size={18} />
             <Body3 weight="medium" className="my-2 text-gray-400">
               {file.fileName}
             </Body3>
-          </a>
+          </div>
         </Fragment>
       ))}
     </NoticeDetailFileContainer>
