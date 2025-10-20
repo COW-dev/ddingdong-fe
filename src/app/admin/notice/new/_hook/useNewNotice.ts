@@ -17,7 +17,7 @@ export const useNewNotice = () => {
     content: '',
   });
   const [files, setFiles] = useState<UploadRecord[]>([]);
-  const [imageIds, setImageIds] = useState<UploadRecord[]>([]);
+  const [images, setImages] = useState<UploadRecord[]>([]);
 
   const { getPresignedIds: getImagePresignedId, isLoading: isImageLoading } =
     usePresignedUrl();
@@ -38,9 +38,10 @@ export const useNewNotice = () => {
       name: file.name,
       file,
     }));
-    setImageIds((prev) => [...prev, ...uploadIds]);
-    return uploadInfo;
+    setImages((prev) => [...prev, ...uploadIds]);
   };
+
+  console.log('ima', images);
 
   const handleClickFileUpload = async (files: File[]) => {
     const uploadInfo = await getFilePresignedId(files);
@@ -50,7 +51,6 @@ export const useNewNotice = () => {
       file,
     }));
     setFiles((prev) => [...prev, ...uploadIds]);
-    return uploadInfo;
   };
 
   const handleClickFileDelete = (fileName: string) => {
@@ -60,7 +60,7 @@ export const useNewNotice = () => {
   return {
     noticeData,
     files,
-    imageIds,
+    images,
     isUploading,
     handleChangeNoticeData,
     handleClickImageUpload,

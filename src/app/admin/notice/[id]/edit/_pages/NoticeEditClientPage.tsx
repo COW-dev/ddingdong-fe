@@ -35,6 +35,7 @@ export default function NoticeEditClientPage({
     files,
     imageIds,
     isUploading,
+
     handleChangeNoticeData,
     handleClickImageUpload,
     handleClickFileUpload,
@@ -98,19 +99,20 @@ export default function NoticeEditClientPage({
 
         <Flex className="mt-6 min-h-80 overflow-y-scroll">
           <MediaUpload
-            key={imageIds.map((img) => img.id).join(',')}
             multiple
-            initialPreviewUrls={imageIds.map((img) => img.cdnUrl)}
-            initialFiles={imageIds.map(
+            key={imageIds.map((img) => img.id).join(',')}
+            previewUrls={imageIds.map((img) => img.cdnUrl)}
+            previewFiles={imageIds.map(
               (img) => new File([], img.fileName ?? ''),
             )}
-            onFileUpload={(files) => handleClickImageUpload(files)}
+            onFileUpload={(files) => handleClickImageUpload(files ?? [])}
           />
         </Flex>
         <textarea
           name="content"
           value={noticeEditData.content}
           rows={8}
+          maxLength={255}
           spellCheck={false}
           placeholder="내용을 입력하세요"
           className="mt-6 h-auto w-full resize-none overflow-hidden rounded-none border-b border-gray-200 pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-8 md:pb-3 md:text-lg"

@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 
 import {
   Body3,
@@ -28,7 +28,7 @@ export default function NoticeNewPage() {
   const {
     noticeData,
     files,
-    imageIds,
+    images,
     isUploading,
     handleChangeNoticeData,
     handleClickImageUpload,
@@ -48,7 +48,7 @@ export default function NoticeNewPage() {
         title: noticeData.title,
         content: noticeData.content,
         files: createImageOrder(files.map((file) => file.id)),
-        images: createImageOrder(imageIds.map((image) => image.id)),
+        images: createImageOrder(images.map((image) => image.id)),
       },
       {
         onSuccess: () => {
@@ -75,14 +75,17 @@ export default function NoticeNewPage() {
           value={noticeData.title}
           rows={1}
           spellCheck={false}
-          className="w-full resize-none rounded-none border-b border-gray-200 pb-2 text-xl font-semibold outline-none placeholder:text-gray-300 md:text-2xl"
+          className="z-10 w-full resize-none rounded-none border-b border-gray-200 pb-2 text-xl font-semibold outline-none placeholder:text-gray-300 md:text-2xl"
           placeholder="제목"
           onChange={(e) => handleChangeNoticeData(e)}
         />
         <Flex className="mt-6 min-h-80 overflow-y-scroll">
           <MediaUpload
             multiple
-            onFileUpload={(files) => handleClickImageUpload(files ?? [])}
+            previewFiles={images.map((image) => image.file)}
+            onFileChange={(files: File[] | null) => {
+              handleClickImageUpload(files ?? []);
+            }}
           />
         </Flex>
         <textarea
@@ -91,7 +94,7 @@ export default function NoticeNewPage() {
           rows={8}
           spellCheck={false}
           placeholder="내용을 입력하세요"
-          className="mt-6 h-auto w-full resize-none overflow-hidden overflow-y-scroll rounded-none border-b border-gray-200 pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-8 md:pb-3 md:text-lg"
+          className="z-10 mt-6 h-auto w-full resize-none overflow-hidden overflow-y-scroll rounded-none border-b border-gray-200 pb-2 text-base font-medium outline-none placeholder:text-gray-300 md:mt-6 md:pb-3 md:text-lg"
           onChange={(e) => handleChangeNoticeData(e)}
         />
         <Flex className="mt-6">

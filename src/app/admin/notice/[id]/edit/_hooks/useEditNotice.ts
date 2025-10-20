@@ -13,6 +13,7 @@ export const useEditNotice = (noticeId: number) => {
   );
   const [noticeEditData, setNoticeEditData] = useState(noticeData);
   const [files, setFiles] = useState<UrlType[]>(noticeEditData.files);
+  // const [images, setImages] = useState<File[]>([]);
   const [imageIds, setImageIds] = useState<UrlType[]>(
     sortByOrder(noticeEditData.images),
   );
@@ -74,14 +75,21 @@ export const useEditNotice = (noticeId: number) => {
   const handleClickFileDelete = (fileName: string) => {
     setFiles((prev) => prev.filter((file) => file.fileName !== fileName));
   };
+
+  const handleClickImageDelete = (value: string) => {
+    setImageIds((prev) => prev.filter((image) => image.id !== value));
+  };
+
   return {
     noticeEditData,
     imageIds,
     files,
     isUploading,
+    // setImages,
     handleChangeNoticeData,
     handleClickImageUpload,
     handleClickFileUpload,
     handleClickFileDelete,
+    handleClickImageDelete,
   };
 };
