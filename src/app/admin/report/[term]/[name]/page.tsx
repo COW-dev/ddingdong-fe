@@ -1,0 +1,42 @@
+import { clubQueryOptions } from '@/app/_api/queries/club';
+import { reportQueryOptions } from '@/app/_api/queries/report';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import { ReportDetailClientPage } from './_pages/ReportDetailClientPage';
+import { Metadata } from 'next';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { term: string; name: string };
+}): Promise<Metadata> {
+  const { term, name } = params;
+
+  return {
+    title: `띵동 - ${name} ${term}주차 활동보고서`,
+    description: `${name ?? '동아리'}의 ${term}주차 활동보고서 페이지입니다.`,
+  };
+}
+
+export default async function ReportTermNamePage({
+  params,
+}: {
+  params: { term: string; name: string };
+}) {
+  const { term, name } = await params;
+  const queryClient = new QueryClient();
+  await Promise.all([
+    reportQueryOptions.currentTerm(),
+    clubQueryOptions.my(),
+    reportQueryOptions.termReport(Number(term)),
+  ]);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ReportDetailClientPage term={Number(term)} name={name} />
+    </HydrationBoundary>
+  );
+}
