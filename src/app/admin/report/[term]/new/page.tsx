@@ -19,5 +19,5 @@ export default function ReportNewPage({
   params: { term: string };
 }) {
   const { term } = params;
-  return <ReportNewClientPage term={term} />;
+  return <ReportNewClientPage term={Number(term)} />;
 }

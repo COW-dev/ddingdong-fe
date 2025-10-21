@@ -18,12 +18,15 @@ import { parseDate } from '@/utils/parse';
 import { ReportCardContainer } from '../../_containers/ReportCardContainer';
 
 export function ReportClientPage() {
-  const [{ data: currentTerm }, { data: terms }] = useSuspenseQueries({
+  // const [{ data: currentTerm }, { data: terms }] = useSuspenseQueries({
+  const [{ data: temp }, { data: terms }] = useSuspenseQueries({
     queries: [reportQueryOptions.currentTerm(), reportQueryOptions.terms()],
   });
+  const currentTerm = { term: 5 };
 
   const filterPeriod = (term: number) => {
-    if (term === Number(currentTerm)) return BUTTON_TYPE.NOW;
+    if (term > currentTerm.term) return BUTTON_TYPE.BEFORE;
+    if (term === currentTerm.term) return BUTTON_TYPE.NOW;
     else return BUTTON_TYPE.AFTER;
   };
 
@@ -44,11 +47,7 @@ export function ReportClientPage() {
               }`}
             >
               <Link href={`/report/admin/${term}`} data-item={term}>
-                <Flex
-                  alignItems="center"
-                  justifyContent="between"
-                  className="h-full w-full"
-                >
+                <Flex alignItems="center" justifyContent="between">
                   <div>
                     <Title3 weight="bold">{term}회차</Title3>
                     <Body3 className="text-gray-400">
