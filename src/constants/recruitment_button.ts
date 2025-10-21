@@ -1,24 +1,20 @@
 type ButtonType = 'BEFORE' | 'NOW' | 'AFTER';
 type ButtonTypeDetails = {
   text: string;
-  color: string;
-  background_color: string;
+  variant: 'neutral' | 'positive' | 'negative';
 };
 
 export const BUTTON_TYPE: Record<ButtonType, ButtonTypeDetails> = {
   BEFORE: {
     text: '진행 전',
-    color: 'text-gray-400',
-    background_color: 'bg-gray-50',
+    variant: 'neutral',
   },
   NOW: {
     text: '진행 중',
-    color: 'text-green-400',
-    background_color: 'bg-green-50',
+    variant: 'positive',
   },
   AFTER: {
     text: '마감',
-    color: 'text-red-400',
-    background_color: 'bg-red-50',
+    variant: 'negative',
   },
 };
