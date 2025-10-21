@@ -22,15 +22,13 @@ import { reportQueryOptions } from '@/app/_api/queries/report';
 import Report from '@/app/admin/report/[term]/[name]/_components/Report';
 import { DeleteModal } from '../_components/DeleteModal';
 
-type ReportDetailClientPageProps = {
-  term: number;
-  name: string;
-};
-
 export function ReportDetailClientPage({
   term,
   name,
-}: ReportDetailClientPageProps) {
+}: {
+  term: number;
+  name: string;
+}) {
   const { isOpen, openModal, closeModal } = usePortal();
   const currentTerm = { term: 5 };
   // const [{ data: currentTerm }, { data: myClubData }, { data: reports }] =

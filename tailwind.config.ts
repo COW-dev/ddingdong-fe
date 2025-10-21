@@ -6,7 +6,9 @@ const config = {
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './node_modules/ddingdong-design-system/dist/**/*.{js,ts,jsx,tsx}',
+    './node_modules/react-tailwindcss-datepicker/**/*.{js,ts,jsx,tsx}',
   ],
+  safelist: ['grid-cols-7', 'rotate-45'],
   theme: {
     container: {
       center: true,
