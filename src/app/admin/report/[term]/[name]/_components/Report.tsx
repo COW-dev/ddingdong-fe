@@ -6,10 +6,9 @@ import { Body2, Body3, Flex, Icon } from 'ddingdong-design-system';
 
 type Props = {
   reportData: ReportResponse;
-  term: number;
 };
 
-export default function Report({ reportData, term }: Props) {
+export default function Report({ reportData }: Props) {
   const {
     place,
     startDate,
@@ -31,7 +30,7 @@ export default function Report({ reportData, term }: Props) {
       justifyContent="between"
       className="flex-col-reverse md:flex-row"
     >
-      <Flex dir="col" className="gap-4 py-2">
+      <Flex dir="col" className="w-80 gap-4 py-2">
         <Flex justifyContent="between" alignItems="center" className="flex-1">
           <Flex
             alignItems="center"
@@ -76,10 +75,10 @@ export default function Report({ reportData, term }: Props) {
       </Flex>
       <Image
         src={image}
-        className={`object-cover`}
+        className="object-cover"
         alt="reportImage"
         priority
-        width={300}
+        width={320}
         height={300}
       />
     </Flex>

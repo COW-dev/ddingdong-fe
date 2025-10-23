@@ -14,11 +14,7 @@ export const metadata: Metadata = {
 
 export default async function ReportPage() {
   const queryClient = new QueryClient();
-
-  await Promise.all([
-    queryClient.prefetchQuery(reportQueryOptions.terms()),
-    queryClient.prefetchQuery(reportQueryOptions.currentTerm()),
-  ]);
+  await queryClient.prefetchQuery(reportQueryOptions.terms());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

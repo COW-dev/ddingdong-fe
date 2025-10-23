@@ -1,48 +1,47 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Club } from '@/app/_api/types/club';
-import { Caption1, Flex } from 'ddingdong-design-system';
-import clsx from 'clsx';
+import { Caption1, cn, Flex } from 'ddingdong-design-system';
 
+type FilterKey = 'all' | 'submit' | 'unSubmit';
 type FilterOptionProps = {
-  filterOption: {
-    all?: Club[];
-    submit?: Club[];
-    unSubmit?: Club[];
-  };
+  filterOption: Record<FilterKey, Club[]>;
   setFilteredClub: (clubs: Club[]) => void;
 };
 
-const FILTERS = [
+const FILTERS: { key: FilterKey; label: string }[] = [
   { key: 'all', label: '전체' },
   { key: 'submit', label: '제출완료' },
   { key: 'unSubmit', label: '미제출' },
-] as const;
+];
 
 export default function FilterOption({
-  setFilteredClub,
   filterOption,
+  setFilteredClub,
 }: FilterOptionProps) {
-  const [option, setOption] = useState<'all' | 'submit' | 'unSubmit'>('all');
+  const [selected, setSelected] = useState<FilterKey>('all');
 
-  const handleClickOption = (key: 'all' | 'submit' | 'unSubmit') => {
-    setOption(key);
-    const clubs = filterOption[key];
-    if (clubs) setFilteredClub(clubs);
-  };
+  const handleSelect = useCallback(
+    (key: FilterKey) => {
+      setSelected(key);
+      setFilteredClub(filterOption[key]);
+    },
+    [filterOption, setFilteredClub],
+  );
 
   return (
-    <Flex className="gap-2 p-4 text-gray-400">
-      {FILTERS.map(({ key, label }, index) => (
+    <Flex className="gap-3 p-4 text-gray-400">
+      {FILTERS.map(({ key, label }) => (
         <Caption1
+          weight="semibold"
           key={key}
-          onClick={() => handleClickOption(key)}
-          className={clsx(
+          onClick={() => handleSelect(key)}
+          className={cn(
             'cursor-pointer',
             key !== 'unSubmit' &&
-              "after:pl-2 after:text-gray-300 after:content-['|']",
-            option === key && 'text-blue-500',
+              "after:pl-3 after:text-gray-300 after:content-['|']",
+            selected === key && 'text-blue-500',
           )}
         >
           {label}

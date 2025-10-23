@@ -1,6 +1,7 @@
 import { Avatar, Body2, Flex, Title1 } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
+import Mode from '@/assets/admin.jpg';
 import { deptCaptionColor } from '@/constants/color';
 
 type ClubHeadingProps = Pick<
@@ -19,7 +20,7 @@ export const ClubHeading = ({
       <Flex alignItems="end" gap={3}>
         <Flex alignItems="center" className="h-auto object-contain">
           <Avatar
-            src={profileImage?.cdnUrl}
+            src={profileImage?.cdnUrl ?? Mode.src}
             alt={name}
             size="lg"
             className="size-20"

@@ -2,7 +2,7 @@ import { StudentInfo } from '@/types';
 import { UrlType } from './common';
 
 export type CurrentTerm = {
-  term: string;
+  term: number;
 };
 
 export type Term = {

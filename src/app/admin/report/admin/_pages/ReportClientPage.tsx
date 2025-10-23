@@ -1,34 +1,15 @@
 'use client';
 
-import Link from 'next/link';
-
-import { useSuspenseQueries } from '@tanstack/react-query';
-import {
-  Badge,
-  Body3,
-  Card,
-  Flex,
-  Title1,
-  Title3,
-} from 'ddingdong-design-system';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Title1 } from 'ddingdong-design-system';
 
 import { reportQueryOptions } from '@/app/_api/queries/report';
-import { BUTTON_TYPE } from '@/constants/recruitment_button';
-import { parseDate } from '@/utils/parse';
+
 import { ReportCardContainer } from '../../_containers/ReportCardContainer';
+import { ReportCard } from '../_components/ReportCard';
 
 export function ReportClientPage() {
-  // const [{ data: currentTerm }, { data: terms }] = useSuspenseQueries({
-  const [{ data: temp }, { data: terms }] = useSuspenseQueries({
-    queries: [reportQueryOptions.currentTerm(), reportQueryOptions.terms()],
-  });
-  const currentTerm = { term: 5 };
-
-  const filterPeriod = (term: number) => {
-    if (term > currentTerm.term) return BUTTON_TYPE.BEFORE;
-    if (term === currentTerm.term) return BUTTON_TYPE.NOW;
-    else return BUTTON_TYPE.AFTER;
-  };
+  const { data: terms } = useSuspenseQuery(reportQueryOptions.terms());
 
   return (
     <>
@@ -37,31 +18,7 @@ export function ReportClientPage() {
       </Title1>
       <ReportCardContainer>
         {terms?.map((termInfo) => {
-          const { term, startDate, endDate } = termInfo;
-          return (
-            <Card
-              key={term}
-              className={`mb-3 ${
-                filterPeriod(term) === BUTTON_TYPE.BEFORE &&
-                'pointer-events-none cursor-not-allowed text-gray-300'
-              }`}
-            >
-              <Link href={`/report/admin/${term}`} data-item={term}>
-                <Flex alignItems="center" justifyContent="between">
-                  <div>
-                    <Title3 weight="bold">{term}회차</Title3>
-                    <Body3 className="text-gray-400">
-                      {parseDate(startDate)} - {parseDate(endDate)}
-                    </Body3>
-                  </div>
-                  <Badge
-                    variant={filterPeriod(term).variant}
-                    text={filterPeriod(term).text}
-                  />
-                </Flex>
-              </Link>
-            </Card>
-          );
+          return <ReportCard termInfo={termInfo} key={termInfo.term} />;
         })}
       </ReportCardContainer>
     </>

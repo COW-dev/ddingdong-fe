@@ -46,7 +46,9 @@ export const reportQueryOptions = {
     queryOptions({
       queryKey: reportQueryKeys.termReport(term),
       queryFn: () =>
-        fetcher.get<ReportResponse[]>(`central/activity-reports?term=${term}`),
+        fetcher.get<[ReportResponse, ReportResponse]>(
+          `central/activity-reports?term=${term}`,
+        ),
       staleTime: 60_000,
     }),
 
