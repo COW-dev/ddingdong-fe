@@ -10,7 +10,7 @@ export default {
     './node_modules/ddingdong-design-system/dist/**/*.{js,ts,jsx,tsx}',
     './node_modules/react-tailwindcss-datepicker/**/*.{js,ts,jsx,tsx}',
   ],
-  safelist: ['grid-cols-7', 'rotate-45'],
+  safelist: ['grid-cols-7', 'rotate-45', 'ml-[1.2rem]'],
   theme: {
     container: {
       center: true,

@@ -1,3 +1,4 @@
+'use client';
 import {
   usePortal,
   DoubleButton,
@@ -5,17 +6,29 @@ import {
   Body2,
   Flex,
 } from 'ddingdong-design-system';
-import { Link } from 'lucide-react';
 import React, { PropsWithChildren } from 'react';
 import { DeleteModal } from './DeleteModal';
 import { useDeleteReport } from '@/app/_api/mutations/report';
+import { reportQueryOptions } from '@/app/_api/queries/report';
+import { useSuspenseQueries } from '@tanstack/react-query';
+import { clubQueryOptions } from '@/app/_api/queries/club';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export function EditButton({ term }: { term: number }) {
-  const currentTerm = { term: 5 };
+  const [{ data: currentTerm }, { data: myClubData }] = useSuspenseQueries({
+    queries: [reportQueryOptions.currentTerm(), clubQueryOptions.my()],
+  });
 
   const { isOpen, openModal, closeModal } = usePortal();
 
   const deleteMutation = useDeleteReport();
+  const router = useRouter();
+  const handleClickDelete = () => {
+    deleteMutation.mutate(term);
+    router.back();
+  };
+
   return (
     <>
       <EditButtonContainer>
@@ -31,7 +44,7 @@ export function EditButton({ term }: { term: number }) {
             </Button>
           }
           right={
-            <Link href={`/report/${term}/${name}/fix`}>
+            <Link href={`/report/${term}/${myClubData.name}/fix`}>
               <Button
                 variant="primary"
                 color="blue"
@@ -46,7 +59,7 @@ export function EditButton({ term }: { term: number }) {
       <DeleteModal
         isOpen={isOpen}
         closeModal={closeModal}
-        onDeleteReport={() => deleteMutation.mutate(term)}
+        onDeleteReport={handleClickDelete}
       />
     </>
   );

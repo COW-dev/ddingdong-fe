@@ -1,3 +1,4 @@
+'use client';
 import { deptCaptionColor } from '@/constants/color';
 import { Title3, Flex, Caption1, Badge } from 'ddingdong-design-system';
 import { CustomCardProps, CustomCard } from '../../../_components/Card';

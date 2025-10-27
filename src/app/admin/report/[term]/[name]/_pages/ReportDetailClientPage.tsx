@@ -1,28 +1,11 @@
 'use client';
 
-import Link from 'next/link';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Flex, Title1, Body3 } from 'ddingdong-design-system';
 
-import { useSuspenseQueries } from '@tanstack/react-query';
-import {
-  Accordion,
-  AccordionItem,
-  DoubleButton,
-  Button,
-  Body2,
-  usePortal,
-  Flex,
-  Title1,
-  Body3,
-  Title3,
-} from 'ddingdong-design-system';
-
-import { useDeleteReport } from '@/app/_api/mutations/report';
-import { clubQueryOptions } from '@/app/_api/queries/club';
 import { reportQueryOptions } from '@/app/_api/queries/report';
-import Report from '@/app/admin/report/[term]/[name]/_components/Report';
-import { DeleteModal } from '../_components/DeleteModal';
 import { BackHeader } from '../../../_components/BackHeader';
-import ReportItem from '@/components/report/ReportItem';
+import ReportBundle from '../_components/ReportBundle';
 import { EditButton } from '../_components/EditButton';
 
 export function ReportDetailClientPage({
@@ -32,16 +15,9 @@ export function ReportDetailClientPage({
   term: number;
   name: string;
 }) {
-  const currentTerm = { term: 5 };
-  // const [{ data: currentTerm }, { data: myClubData }, { data: reports }] =
-  const [{ data: temp }, { data: myClubData }, { data: reports }] =
-    useSuspenseQueries({
-      queries: [
-        reportQueryOptions.currentTerm(),
-        clubQueryOptions.my(),
-        reportQueryOptions.termReport(term),
-      ],
-    });
+  const { data: reports } = useSuspenseQuery(
+    reportQueryOptions.termReport(term),
+  );
 
   return (
     <>
@@ -57,7 +33,7 @@ export function ReportDetailClientPage({
         </div>
         <Body3 weight="normal">제출일시 {reports[0]?.createdAt}</Body3>
       </Flex>
-      <ReportItem reports={reports} />
+      <ReportBundle reports={reports} />
       <EditButton term={term} />
     </>
   );

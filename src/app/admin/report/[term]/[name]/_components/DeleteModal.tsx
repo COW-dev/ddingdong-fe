@@ -1,3 +1,4 @@
+'use client';
 import {
   Body1,
   Body2,
@@ -7,17 +8,13 @@ import {
   Modal,
 } from 'ddingdong-design-system';
 
-type DeleteModalProps = {
+type Props = {
   isOpen: boolean;
   closeModal: VoidFunction;
   onDeleteReport: VoidFunction;
 };
 
-export function DeleteModal({
-  isOpen,
-  closeModal,
-  onDeleteReport,
-}: DeleteModalProps) {
+export function DeleteModal({ isOpen, closeModal, onDeleteReport }: Props) {
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Flex

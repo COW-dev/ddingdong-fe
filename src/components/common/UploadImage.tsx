@@ -2,11 +2,12 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Camera from '@/assets/camera.svg';
 import Cancel from '@/assets/cancel.svg';
-import { UploadFile, UrlType } from '@/types';
-import { ClubDetail } from '@/types/club';
 import { NoticeDetail } from '@/types/notice';
 import { EditReport } from '@/types/report';
 import { cn } from '../ui/utils';
+import { ClubDetail } from '@/app/_api/types/club';
+import { UrlType } from '@/app/_api/types/common';
+import { UploadFile } from '@/app/_api/types/file';
 
 type UploadImageProps = {
   image?: File | null;
@@ -91,12 +92,12 @@ export default function UploadImage({
       ) : (
         <label
           htmlFor={`dropzone-file-${id}`}
-          className=" dar flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
+          className="dar flex h-64 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-none border-gray-300 bg-gray-50 hover:bg-gray-100"
         >
-          <div className="flex flex-col items-center justify-center pb-6 pt-5 text-gray-400">
+          <div className="flex flex-col items-center justify-center pt-5 pb-6 text-gray-400">
             <Image src={Camera} width={30} height={30} alt="upload" />
             <p className="m-2 text-sm">Click to ImageUpload</p>
-            <p className=" text-xs text-gray-400">
+            <p className="text-xs text-gray-400">
               SVG, PNG, JPG (MAX. 800x400px)
             </p>
           </div>

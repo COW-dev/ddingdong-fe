@@ -51,7 +51,6 @@ export const reportQueryOptions = {
         ),
       staleTime: 60_000,
     }),
-
   termReports: (term: number) =>
     queryOptions({
       queryKey: reportQueryKeys.termReports(term),

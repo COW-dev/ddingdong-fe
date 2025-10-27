@@ -24,7 +24,7 @@ export default async function ReportAdminTermPage({
 }: {
   params: { term: string };
 }) {
-  const { term } = params;
+  const { term } = await params;
 
   const queryClient = new QueryClient();
   await Promise.all([

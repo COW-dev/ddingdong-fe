@@ -55,8 +55,3 @@ html {
   -webkit-tap-highlight-color: transparent;
   --muted-foreground: 215.4 16.3% 46.9%;
 }
-
-.datePickerCustomCss > div > div {
-  left: 1rem;
-  top: -0.6rem;
-}

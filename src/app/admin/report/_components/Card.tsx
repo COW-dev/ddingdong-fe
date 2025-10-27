@@ -41,7 +41,7 @@ export function CustomCard({
 type ReportTermCardProps = Omit<CustomCardProps, 'description' | 'title'> & {
   termInfo: Term;
 };
-export function ReportTermCard({ termInfo }: ReportTermCardProps) {
+export function ReportTermCard({ termInfo, ...args }: ReportTermCardProps) {
   const { term, startDate, endDate } = termInfo;
 
   return (
@@ -52,6 +52,7 @@ export function ReportTermCard({ termInfo }: ReportTermCardProps) {
           {parseDate(startDate)} - {parseDate(endDate)}
         </Caption1>
       }
+      {...args}
     />
   );
 }

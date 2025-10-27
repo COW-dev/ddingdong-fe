@@ -1,3 +1,4 @@
+'use client';
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { Badge } from 'ddingdong-design-system';
 

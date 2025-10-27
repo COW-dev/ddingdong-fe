@@ -1,8 +1,15 @@
+'use client';
 import Image from 'next/image';
 import UnSubmitImage from '@/assets/unsubmit_announce.png';
 
 import { ReportResponse } from '@/app/_api/types/report';
-import { Body2, Body3, Flex, Icon } from 'ddingdong-design-system';
+import { Body3, Flex, Icon } from 'ddingdong-design-system';
+import {
+  ReportContiner,
+  ReportHeaderContainer,
+  ReportContentContainer,
+} from '../_containers/ReportContainer';
+import { StudentInfo } from '@/types/report';
 
 type Props = {
   reportData: ReportResponse;
@@ -18,86 +25,80 @@ export default function Report({ reportData }: Props) {
     participants,
   } = reportData;
 
-  const image = responseImage?.originUrl
-    ? responseImage.originUrl
-    : UnSubmitImage;
-
+  const image = responseImage?.originUrl ?? UnSubmitImage;
   const hasParticipants = participants?.some((p) => p.name?.trim());
 
   return (
-    <Flex
-      alignItems="center"
-      justifyContent="between"
-      className="flex-col-reverse md:flex-row"
-    >
-      <Flex dir="col" className="w-80 gap-4 py-2">
-        <Flex justifyContent="between" alignItems="center" className="flex-1">
-          <Flex
-            alignItems="center"
-            className="h-8 gap-2 rounded-xl border-[1.5px] border-gray-100 px-2 whitespace-nowrap"
-          >
-            <Icon name="pin" size={20} />
-            <Body3 className="text-gray-400">
-              {place === '' ? '장소없음' : place}
-            </Body3>
-          </Flex>
-          <Body3>
-            {startDate ? (
-              <>
-                일자 {startDate}
-                {startDate.split(' ')[1]}~{endDate.split(' ')[1]}
-              </>
-            ) : (
-              <span className="text-gray-300">일자없음</span>
-            )}
-          </Body3>
-        </Flex>
-        <Section title="활동 참여 인원">
+    <ReportContiner>
+      <Flex dir="col" className="w-full gap-4 py-2">
+        <ReportHeaderContainer>
+          <Place place={place} />
+          <Date start={startDate} end={endDate} />
+        </ReportHeaderContainer>
+        <ReportContentContainer title="활동 참여 인원">
           {hasParticipants ? (
-            <ul className="space-y-1">
-              {participants?.map(({ name, studentId, department }, idx) =>
-                name?.trim() ? (
-                  <Body3 key={idx} className="text-gray-400">
-                    {name} | {studentId} | {department}
-                  </Body3>
-                ) : null,
-              )}
-            </ul>
+            <ParticipantsList participants={participants} />
           ) : (
-            <Body3 className="text-gray-400">작성된 내용이 없습니다.</Body3>
+            <EmptyText />
           )}
-        </Section>
-        <Section title="활동 내용">
-          <Body3 className="text-gray-400">
-            {!content?.trim() ? '작성된 내용이 없습니다.' : content}
-          </Body3>
-        </Section>
+        </ReportContentContainer>
+        <ReportContentContainer title="활동 내용">
+          {content?.trim() ? <Body3>{content}</Body3> : <EmptyText />}
+        </ReportContentContainer>
       </Flex>
       <Image
         src={image}
-        className="object-cover"
+        className="h-80 w-80 rounded-2xl object-cover"
         alt="reportImage"
         priority
         width={320}
         height={300}
       />
+    </ReportContiner>
+  );
+}
+
+function EmptyText({ text }: { text?: string }) {
+  return (
+    <Body3 className="text-gray-300">{text ?? '작성된 내용이 없습니다.'}</Body3>
+  );
+}
+
+function ParticipantsList({ participants }: { participants?: StudentInfo[] }) {
+  return (
+    <ul className="space-y-1">
+      {participants?.map(
+        ({ name, studentId, department }, index) =>
+          name?.trim() && (
+            <Body3 key={index}>
+              {name} | {studentId} | {department}
+            </Body3>
+          ),
+      )}
+    </ul>
+  );
+}
+
+function Place({ place }: { place: string }) {
+  return (
+    <Flex
+      alignItems="center"
+      className="w-fit gap-2 rounded-xl border-[1.5px] border-gray-100 bg-gray-100 p-1.5 px-2.5"
+    >
+      <Icon name="pin" size={20} />
+      {place?.trim() ? <Body3>{place}</Body3> : <EmptyText text="장소 없음" />}
     </Flex>
   );
 }
 
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
+function Date({ start, end }: { start?: string; end?: string }) {
+  if (!start) {
+    return <EmptyText text="일시 없음" />;
+  }
+  const endTime = end?.split(' ')[1];
   return (
-    <Flex dir="col" className="gap-2">
-      <Body2 weight="semibold" className="text-blue-500">
-        {title}
-      </Body2>
-      {children}
-    </Flex>
+    <Body3>
+      일시 {start}~{endTime}
+    </Body3>
   );
 }

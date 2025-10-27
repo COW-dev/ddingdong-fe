@@ -1,4 +1,5 @@
-import { EditReport, ReportResponse, SubmitReport } from '@/types/report';
+import { ReportResponse } from '@/app/_api/types/report';
+import { EditReport, SubmitReport } from '@/types/report';
 
 export function parseDate(date: string): string {
   const year = date.substring(2, 4);
@@ -22,8 +23,12 @@ export const parseNewReportToReport = (
     report;
   return {
     term,
-    startDate: date.startDate ? date.startDate + ' ' + startTime : null,
-    endDate: date.startDate ? date.startDate + ' ' + endTime : null,
+    startDate: date.startDate
+      ? date.startDate.toISOString().split('T')[0] + ' ' + startTime
+      : null,
+    endDate: date.startDate
+      ? date.startDate.toISOString().split('T')[0] + ' ' + endTime
+      : null,
     place,
     content,
     participants,
@@ -53,9 +58,12 @@ export const parseReportResponseToEditReport = (
     term,
     place,
     content,
-    date: { startDate, endDate },
-    startTime,
-    endTime,
+    date: {
+      startDate: startDate ? new Date(startDate) : null,
+      endDate: endDate ? new Date(endDate) : null,
+    },
+    startTime: startTime || null,
+    endTime: endTime || null,
     participants,
     image,
     imageId: image?.id ?? null,

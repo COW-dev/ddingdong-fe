@@ -13,7 +13,7 @@ export async function generateMetadata({
 }: {
   params: { term: string; name: string };
 }): Promise<Metadata> {
-  const { term, name } = params;
+  const { term, name } = await params;
 
   return {
     title: `띵동 - ${name} ${term}주차 활동보고서`,
@@ -28,11 +28,7 @@ export default async function ReportTermNamePage({
 }) {
   const { term, name } = await params;
   const queryClient = new QueryClient();
-  await Promise.all([
-    reportQueryOptions.currentTerm(),
-    clubQueryOptions.my(),
-    reportQueryOptions.termReport(Number(term)),
-  ]);
+  await queryClient.prefetchQuery(reportQueryOptions.termReport(Number(term)));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

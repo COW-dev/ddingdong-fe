@@ -13,7 +13,7 @@ export async function generateMetadata({
 }: {
   params: { term: string; name: string };
 }): Promise<Metadata> {
-  const { term, name } = params;
+  const { term, name } = await params;
 
   return {
     title: `띵동 - ${name} ${term}주차 활동보고서 수정하기`,

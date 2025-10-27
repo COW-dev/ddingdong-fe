@@ -1,3 +1,4 @@
+'use client';
 import { Flex, IconButton, Title3 } from 'ddingdong-design-system';
 import { useRouter } from 'next/navigation';
 

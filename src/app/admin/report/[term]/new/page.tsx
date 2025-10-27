@@ -7,17 +7,17 @@ export async function generateMetadata({
 }: {
   params: { term: string };
 }): Promise<Metadata> {
-  const { term } = params;
+  const { term } = await params;
   return {
     title: `띵동 - ${term}주차 활동보고서 작성`,
   };
 }
 
-export default function ReportNewPage({
+export default async function ReportNewPage({
   params,
 }: {
   params: { term: string };
 }) {
-  const { term } = params;
+  const { term } = await params;
   return <ReportNewClientPage term={Number(term)} />;
 }
