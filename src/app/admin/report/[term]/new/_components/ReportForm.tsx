@@ -1,19 +1,27 @@
 'use client';
 import { Dispatch, SetStateAction } from 'react';
-import Datepicker from 'react-tailwindcss-datepicker';
-import { EditReport } from '@/types/report';
+
 import {
-  Body2,
   Flex,
   Input,
   MediaUpload,
   TextArea,
   usePortal,
 } from 'ddingdong-design-system';
+import Datepicker from 'react-tailwindcss-datepicker';
+
+import { EditReport } from '@/types/report';
+
 import { Loading } from '../../../../../../components/loading/Loading';
-import ParticipantModal from './ParticipantModal';
+import {
+  ReportFormContentContainer,
+  ReportFormContentWapper,
+  ReportFormContiner,
+} from '../_containers/ReportFormContainer';
 import { useReportImage } from '../_hooks/useReportImage';
 import { useReportInput } from '../_hooks/useReportInput';
+
+import ParticipantModal from './ParticipantModal';
 
 type Props = {
   report: EditReport;
@@ -22,96 +30,93 @@ type Props = {
 };
 
 export default function ReportForm({ setValue, report, setIsEditing }: Props) {
-  const { date, participants, place, content, startTime, endTime } = report;
+  const { date, participants, place, startTime, endTime, content } = report;
   const { isOpen, openModal, closeModal } = usePortal();
   const { mediaPreviewUrls, mediaPreviewFiles, isLoading, handleFileChange } =
     useReportImage({ report, setValue, setIsEditing });
-  const { handleChange, handleDateChange } = useReportInput({ setValue });
+  const { handleChange, handleDateChange, handleReset } = useReportInput({
+    setValue,
+  });
 
   return (
     <>
-      <Flex
-        alignItems="center"
-        justifyContent="between"
-        className="flex-col md:m-3 md:flex-row"
-      >
-        <Flex dir="col" className="w-full gap-4 md:w-2/3">
-          <Flex alignItems="center" className="mb-3 flex-col gap-2 md:flex-row">
-            <Datepicker
-              value={date}
-              onChange={handleDateChange}
-              useRange={false}
-              asSingle
-              minDate={new Date(new Date().getFullYear(), 0, 1)}
-              maxDate={new Date(new Date().getFullYear(), 11, 31)}
-              inputClassName="w-full px-4 py-3 bg-white text-sm border-[1.5px] border-gray-100 rounded-xl md:pb-3 placeholder:text-sm outline-none md:text-base"
-            />
-            <Input
-              name="place"
-              type="text"
-              placeholder="활동장소"
-              value={place}
-              onChange={handleChange}
-              onClickReset={() => {}}
-            />
-          </Flex>
-          <div>
-            <div className="mb-3 flex items-center justify-between">
-              <Body2 className="text-blue-500">활동 시간</Body2>
-            </div>
-            <Flex
-              alignItems="center"
-              className="mb-3 flex-col gap-2 md:flex-row"
-            >
+      <ReportFormContiner>
+        <Flex dir="col" gap={6} className="w-full grow md:min-w-1/2">
+          <ReportFormContentContainer>
+            <ReportFormContentWapper>
+              <Datepicker
+                value={date}
+                onChange={handleDateChange}
+                popupClassName="md:max-w-[308px] md:w-[308px] w-full transition-all ease-out duration-300 absolute z-10 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden customDatePickerWidth"
+                useRange={false}
+                asSingle
+                minDate={new Date(new Date().getFullYear(), 0, 1)}
+                maxDate={new Date(new Date().getFullYear(), 11, 31)}
+                inputClassName="w-full rounded-xl border-none bg-white px-4 py-3.5 outline-1 outline-gray-200 focus:ring-4 focus:ring-blue-200 focus:outline-blue-500"
+              />
+              <Input
+                name="place"
+                type="text"
+                placeholder="활동장소"
+                value={place ?? ''}
+                onChange={handleChange}
+                onClickReset={() => handleReset('place')}
+              />
+            </ReportFormContentWapper>
+          </ReportFormContentContainer>
+          <ReportFormContentContainer title="활동시간">
+            <ReportFormContentWapper>
               <Input
                 name="startTime"
                 type="time"
-                onClickReset={() => {}}
+                onClickReset={() => handleReset('startTime')}
                 value={startTime ?? ''}
                 onChange={handleChange}
+                className={startTime ? 'customHideClock' : ''}
               />
               <Input
                 name="endTime"
                 type="time"
-                onClickReset={() => {}}
+                onClickReset={() => handleReset('endTime')}
                 value={endTime ?? ''}
                 onChange={handleChange}
+                className={endTime ? 'customHideClock' : ''}
               />
-            </Flex>
-          </div>
-
-          <div onClick={openModal}>
-            <Body2 className="text-blue-500">활동 참여 인원</Body2>
+            </ReportFormContentWapper>
+          </ReportFormContentContainer>
+          <ReportFormContentContainer title="활동 참여 인원">
             <TextArea
               readOnly
+              onClick={openModal}
+              rows={5}
               value={participants
                 .filter((p) => p.name !== '')
                 .map((p) => `${p.name} | ${p.department} | ${p.studentId}`)
                 .join('\n')}
             />
-          </div>
-
-          <div>
-            <Body2 className="text-blue-500">활동 내용</Body2>
-            <TextArea name="content" value={content} onChange={handleChange} />
-          </div>
-        </Flex>
-
-        <div className="h-1/2 w-full md:ml-2 md:w-1/2">
-          {isLoading ? (
-            <div className="flex w-full items-center justify-center">
-              <Loading className="w-54" />
-            </div>
-          ) : (
-            <MediaUpload
-              acceptedFormats={['image/*', 'video/*']}
-              previewUrls={mediaPreviewUrls}
-              previewFiles={mediaPreviewFiles}
-              onFileChange={handleFileChange}
+          </ReportFormContentContainer>
+          <ReportFormContentContainer title="활동 내용">
+            <TextArea
+              name="content"
+              value={content ?? ''}
+              onChange={handleChange}
             />
-          )}
-        </div>
-      </Flex>
+          </ReportFormContentContainer>
+        </Flex>
+        {isLoading ? (
+          <Flex alignItems="center">
+            <Loading className="w-54" />
+          </Flex>
+        ) : (
+          <MediaUpload
+            acceptedFormats={['image/*', 'video/*']}
+            previewUrls={mediaPreviewUrls}
+            previewFiles={mediaPreviewFiles}
+            onFileChange={handleFileChange}
+            className="flex items-center justify-center md:h-118"
+          />
+        )}
+      </ReportFormContiner>
       <ParticipantModal
         data={participants}
         setData={setValue}

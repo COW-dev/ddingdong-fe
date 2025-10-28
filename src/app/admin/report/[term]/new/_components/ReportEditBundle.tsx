@@ -1,19 +1,18 @@
-'use client';
-
 import { Accordion, AccordionItem, Body3 } from 'ddingdong-design-system';
 
-import { useReport } from '../_hooks/useReport';
 import { EditReport } from '@/types/report';
 
-import ReportForm from './ReportForm';
+import { useReport } from '../_hooks/useReport';
+
 import EditButton from './EditButton';
+import ReportForm from './ReportForm';
 
 type Props = {
   report?: [EditReport, EditReport];
   term: number;
 };
 
-export default function ReportEditBundle({ report }: Props) {
+export default function ReportEditBundle({ report, term }: Props) {
   const isEditMode = !!report;
 
   const {
@@ -25,11 +24,11 @@ export default function ReportEditBundle({ report }: Props) {
     submitCreate,
     submitUpdate,
     setIsEditing,
-  } = useReport(report);
+  } = useReport(term, report);
 
   return (
     <form onSubmit={isEditMode ? submitUpdate : submitCreate}>
-      <Accordion type="multiple" defaultValue={['1']}>
+      <Accordion type="multiple" defaultValue={['1', '2']}>
         <AccordionItem value="1" trigger={<Body3>활동1</Body3>}>
           <ReportForm
             report={reportOne}

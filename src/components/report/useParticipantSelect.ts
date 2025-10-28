@@ -1,20 +1,16 @@
 import { useState, useEffect } from 'react';
-import { StudentInfo } from '@/types/report';
-import { Member } from '@/app/_api/types/member';
 
-type UseParticipantSelectProps = {
+import { Member } from '@/app/_api/types/member';
+import { StudentInfo } from '@/types/report';
+
+type Props = {
   name?: string;
   setData: (updateFn: (prev: StudentInfo[]) => StudentInfo[]) => void;
   members: Member[];
   id: number;
 };
 
-export function useParticipantSelect({
-  name,
-  setData,
-  members,
-  id,
-}: UseParticipantSelectProps) {
+export function useParticipantSelect({ name, setData, members, id }: Props) {
   const [keyword, setKeyword] = useState(name || '');
   const [filteredList, setFilteredList] = useState(members);
   const [isEditing, setIsEditing] = useState(false);

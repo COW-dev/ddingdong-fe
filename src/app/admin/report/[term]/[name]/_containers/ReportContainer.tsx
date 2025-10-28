@@ -3,10 +3,7 @@ import { PropsWithChildren } from 'react';
 
 export function ReportContiner({ children }: PropsWithChildren) {
   return (
-    <Flex
-      alignItems="center"
-      className="m-auto max-w-100 flex-col-reverse gap-2 text-gray-400 md:max-w-full md:flex-row"
-    >
+    <Flex className="m-auto max-w-100 flex-col-reverse gap-2 text-gray-400 md:max-w-full md:flex-row">
       {children}
     </Flex>
   );

@@ -6,8 +6,9 @@ import {
   Caption1,
   Flex,
 } from 'ddingdong-design-system';
-import Report from '@/app/admin/report/[term]/[name]/_components/Report';
+
 import { ReportResponse } from '@/app/_api/types/report';
+import Report from '@/app/admin/report/[term]/[name]/_components/Report';
 
 export default function ReportBundle({
   reports,
@@ -17,12 +18,16 @@ export default function ReportBundle({
   if (!reports) return <NoReportMessage />;
 
   return (
-    <Accordion defaultValue={['1']} type="multiple" className="mt-5 md:mt-10">
+    <Accordion
+      defaultValue={['1', '2']}
+      type="multiple"
+      className="mt-5 md:mt-10"
+    >
       <AccordionItem value="1" trigger={<Body3>활동1</Body3>}>
-        <Report reportData={reports[0]} />
+        <Report report={reports[0]} />
       </AccordionItem>
       <AccordionItem value="2" trigger={<Body3>활동2</Body3>}>
-        <Report reportData={reports[1]} />
+        <Report report={reports[1]} />
       </AccordionItem>
     </Accordion>
   );

@@ -1,11 +1,10 @@
 'use client';
-import { Dispatch, SetStateAction, useState } from 'react';
+
 import Link from 'next/link';
-import ParticipantSelect from '@/app/admin/report/[term]/new/_components/ParticipantSelect';
-import { StudentInfo } from '@/types';
-import { EditReport } from '@/types/report';
+
+import { Dispatch, SetStateAction, useState } from 'react';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { memberQueryOptions } from '@/app/_api/queries/member';
 import {
   Body2,
   Button,
@@ -15,6 +14,11 @@ import {
   Modal,
   Title3,
 } from 'ddingdong-design-system';
+
+import { memberQueryOptions } from '@/app/_api/queries/member';
+import ParticipantSelect from '@/app/admin/report/[term]/new/_components/ParticipantSelect';
+import { StudentInfo } from '@/types';
+import { EditReport } from '@/types/report';
 
 type Props = {
   data: StudentInfo[];

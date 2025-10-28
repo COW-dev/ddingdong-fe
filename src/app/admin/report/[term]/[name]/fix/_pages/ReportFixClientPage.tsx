@@ -1,10 +1,12 @@
 'use client';
 
-import { Title1 } from 'ddingdong-design-system';
-import ReportEditBundle from '@/app/admin/report/[term]/new/_components/ReportEditBundle';
-import { parseReportResponseToEditReport } from '@/utils/parse';
-import { reportQueryOptions } from '@/app/_api/queries/report';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { Title1 } from 'ddingdong-design-system';
+
+import { reportQueryOptions } from '@/app/_api/queries/report';
+import ReportEditBundle from '@/app/admin/report/[term]/new/_components/ReportEditBundle';
+
+import { parseReportResponseToEditReport } from '../../../new/_utils/parseReport';
 
 export function ReportFixClientPage({ term }: { term: number; name: string }) {
   const { data: reportDataList } = useSuspenseQuery(

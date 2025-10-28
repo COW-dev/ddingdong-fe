@@ -1,8 +1,12 @@
+'use client';
 import { Dispatch, SetStateAction } from 'react';
-import { StudentInfo } from '@/types/report';
-import { Member } from '@/app/_api/types/member';
-import { useParticipantSelect } from '../../../../../../components/report/useParticipantSelect';
+
 import { Caption1, Flex } from 'ddingdong-design-system';
+
+import { Member } from '@/app/_api/types/member';
+import { StudentInfo } from '@/types/report';
+
+import { useParticipantSelect } from '../../../../../../components/report/useParticipantSelect';
 
 type Props = {
   name?: string;

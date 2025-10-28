@@ -1,5 +1,5 @@
-'use client';
 import { Dispatch, SetStateAction, useState } from 'react';
+
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { EditReport } from '@/types/report';
 
@@ -17,16 +17,16 @@ export const useReportImage = ({
   const { image } = report;
   const { getPresignedId, isLoading } = usePresignedUrl();
 
+  const [mediaPreviewFiles, setMediaPreviewFiles] = useState<File[] | null>([]);
   const [mediaPreviewUrls, setMediaPreviewUrls] = useState<string[]>(
     image?.cdnUrl ? [image.cdnUrl] : [],
   );
-  const [mediaPreviewFiles, setMediaPreviewFiles] = useState<File[] | null>([]);
 
-  const handleChangeImage = async (files: File[] | null, urls: string[]) => {
+  const handleChangeImage = async (files: File[] | null) => {
     if (!files) {
       return setValue((prev) => ({
         ...prev,
-        imageId: null,
+        imageId: undefined,
       }));
     }
 
@@ -47,7 +47,7 @@ export const useReportImage = ({
     setIsEditing(true);
     setMediaPreviewUrls(urls);
     setMediaPreviewFiles(files);
-    handleChangeImage(files, urls);
+    handleChangeImage(files);
     setIsEditing(false);
   };
 

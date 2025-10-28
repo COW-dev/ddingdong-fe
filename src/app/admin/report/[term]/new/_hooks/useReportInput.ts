@@ -1,9 +1,10 @@
-'use client';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+
 import {
-  DateRangeType,
   DateValueType,
+  DateRangeType,
 } from 'react-tailwindcss-datepicker/dist/types';
+
 import { EditReport } from '@/types/report';
 
 type UseReportInputProps = {
@@ -20,24 +21,23 @@ export const useReportInput = ({ setValue }: UseReportInputProps) => {
     }));
   };
 
-  const handleDateChange = (selectedDate: DateValueType) => {
+  const handleDateChange = (date: DateValueType) => {
     setValue((prev) => ({
       ...prev,
-      date: selectedDate as DateRangeType,
+      date: date as DateRangeType,
     }));
   };
 
-  const handleTimeReset = () => {
+  const handleReset = (name: string) => {
     setValue((prev) => ({
       ...prev,
-      startTime: null,
-      endTime: null,
+      [name]: null,
     }));
   };
 
   return {
     handleChange,
     handleDateChange,
-    handleTimeReset,
+    handleReset,
   };
 };

@@ -4,9 +4,10 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Flex, Title1, Body3 } from 'ddingdong-design-system';
 
 import { reportQueryOptions } from '@/app/_api/queries/report';
+
 import { BackHeader } from '../../../_components/BackHeader';
-import ReportBundle from '../_components/ReportBundle';
 import { EditButton } from '../_components/EditButton';
+import ReportBundle from '../_components/ReportBundle';
 
 export function ReportDetailClientPage({
   term,

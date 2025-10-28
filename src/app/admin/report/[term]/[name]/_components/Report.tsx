@@ -12,10 +12,10 @@ import {
 import { StudentInfo } from '@/types/report';
 
 type Props = {
-  reportData: ReportResponse;
+  report: ReportResponse;
 };
 
-export default function Report({ reportData }: Props) {
+export default function Report({ report }: Props) {
   const {
     place,
     startDate,
@@ -23,14 +23,14 @@ export default function Report({ reportData }: Props) {
     content,
     image: responseImage,
     participants,
-  } = reportData;
+  } = report;
 
   const image = responseImage?.originUrl ?? UnSubmitImage;
   const hasParticipants = participants?.some((p) => p.name?.trim());
 
   return (
     <ReportContiner>
-      <Flex dir="col" className="w-full gap-4 py-2">
+      <Flex dir="col" className="w-full gap-6 py-2">
         <ReportHeaderContainer>
           <Place place={place} />
           <Date start={startDate} end={endDate} />
@@ -46,14 +46,16 @@ export default function Report({ reportData }: Props) {
           {content?.trim() ? <Body3>{content}</Body3> : <EmptyText />}
         </ReportContentContainer>
       </Flex>
-      <Image
-        src={image}
-        className="h-80 w-80 rounded-2xl object-cover"
-        alt="reportImage"
-        priority
-        width={320}
-        height={300}
-      />
+      <Flex className="overflow-hidden">
+        <Image
+          src={image}
+          className="object-contain"
+          alt="activeReport"
+          priority
+          width={400}
+          height={400}
+        />
+      </Flex>
     </ReportContiner>
   );
 }
@@ -83,9 +85,9 @@ function Place({ place }: { place: string }) {
   return (
     <Flex
       alignItems="center"
-      className="w-fit gap-2 rounded-xl border-[1.5px] border-gray-100 bg-gray-100 p-1.5 px-2.5"
+      className="w-fit rounded-xl border-[1.5px] border-gray-100 bg-gray-100 p-1 pr-2.5"
     >
-      <Icon name="pin" size={20} />
+      <Icon name="locate" size={25} />
       {place?.trim() ? <Body3>{place}</Body3> : <EmptyText text="장소 없음" />}
     </Flex>
   );
