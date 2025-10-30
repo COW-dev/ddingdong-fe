@@ -247,14 +247,6 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   });
 }
 
-export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
-  return await api.patch('/central/my', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function updateFixComplete({ id, token }: FixComplete) {
   return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
