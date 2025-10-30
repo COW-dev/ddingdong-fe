@@ -71,6 +71,7 @@ export function OptimizedImage({
         srcSet={srcSet}
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
+        decoding={priority ? 'sync' : 'async'}
         onLoad={handleLoad}
         onError={handleError}
         className={cn(
