@@ -33,9 +33,8 @@ export default function NoticeEditClientPage({
   const {
     noticeEditData,
     files,
-    imageIds,
     isUploading,
-
+    images,
     handleChangeNoticeData,
     handleClickImageUpload,
     handleClickFileUpload,
@@ -59,8 +58,8 @@ export default function NoticeEditClientPage({
             ? createImageOrder(files.map((file) => file.id ?? ''))
             : null,
         images:
-          imageIds.length > 0
-            ? createImageOrder(imageIds.map((image) => image.id ?? ''))
+          images.length > 0
+            ? createImageOrder(images.map((image) => image.id ?? ''))
             : null,
       },
       {
@@ -100,12 +99,12 @@ export default function NoticeEditClientPage({
         <Flex className="mt-6 min-h-80 overflow-y-scroll">
           <MediaUpload
             multiple
-            key={imageIds.map((img) => img.id).join(',')}
-            previewUrls={imageIds.map((img) => img.cdnUrl)}
-            previewFiles={imageIds.map(
-              (img) => new File([], img.fileName ?? ''),
-            )}
-            onFileUpload={(files) => handleClickImageUpload(files ?? [])}
+            key={images.map((img) => img.id).join(',')}
+            previewUrls={images.map((image) => image.previewUrl)}
+            previewFiles={images.map((image) => image.file)}
+            onFileChange={(files: File[] | null, urls: string[]) => {
+              handleClickImageUpload(files ?? [], urls);
+            }}
           />
         </Flex>
         <textarea

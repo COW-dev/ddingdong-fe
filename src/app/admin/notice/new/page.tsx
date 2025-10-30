@@ -2,8 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 
-import { FormEvent, useState } from 'react';
-
 import {
   Body3,
   Button,
@@ -29,14 +27,17 @@ export default function NoticeNewPage() {
     noticeData,
     files,
     images,
-    isUploading,
+    isImageLoading,
+    isFileLoading,
     handleChangeNoticeData,
     handleClickImageUpload,
     handleClickFileUpload,
     handleClickFileDelete,
   } = useNewNotice();
 
-  const handleNoticeSubmit = (e: FormEvent) => {
+  const isUploading = isImageLoading || isFileLoading;
+
+  const handleNoticeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!noticeData.title || !noticeData.content) {
       toast.error('모든 필드를 입력해주세요.');
@@ -69,7 +70,7 @@ export default function NoticeNewPage() {
       <Title1 weight="bold" className="py-7 md:py-10">
         공지사항 작성하기
       </Title1>
-      <Flex as="form" dir="col" onSubmit={handleNoticeSubmit}>
+      <form className="flex flex-col" onSubmit={handleNoticeSubmit}>
         <textarea
           name="title"
           value={noticeData.title}
@@ -80,13 +81,20 @@ export default function NoticeNewPage() {
           onChange={(e) => handleChangeNoticeData(e)}
         />
         <Flex className="mt-6 min-h-80 overflow-y-scroll">
-          <MediaUpload
-            multiple
-            previewFiles={images.map((image) => image.file)}
-            onFileChange={(files: File[] | null) => {
-              handleClickImageUpload(files ?? []);
-            }}
-          />
+          {isImageLoading ? (
+            <Flex justifyContent="center" className="h-full w-full p-4">
+              <Loading />
+            </Flex>
+          ) : (
+            <MediaUpload
+              multiple
+              previewFiles={images.map((image) => image.file)}
+              previewUrls={images.map((image) => image.previewUrl)}
+              onFileChange={(files: File[] | null, urls: string[]) => {
+                handleClickImageUpload(files ?? [], urls);
+              }}
+            />
+          )}
         </Flex>
         <textarea
           name="content"
@@ -107,7 +115,7 @@ export default function NoticeNewPage() {
             }
           />
         </Flex>
-        {isUploading && (
+        {isFileLoading && (
           <Flex justifyContent="center" className="h-full w-full p-4">
             <Loading />
           </Flex>
@@ -138,7 +146,7 @@ export default function NoticeNewPage() {
             작성하기
           </Button>
         </Flex>
-      </Flex>
+      </form>
     </>
   );
 }

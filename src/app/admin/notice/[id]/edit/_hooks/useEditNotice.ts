@@ -7,15 +7,21 @@ import { UrlType } from '@/app/_api/types/file';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { sortByOrder } from '@/utils/change';
 
+import { UploadRecord } from '../../../new/_hook/useNewNotice';
+
 export const useEditNotice = (noticeId: number) => {
   const { data: noticeData } = useSuspenseQuery(
     noticeQueryOptions.detail(noticeId),
   );
   const [noticeEditData, setNoticeEditData] = useState(noticeData);
   const [files, setFiles] = useState<UrlType[]>(noticeEditData.files);
-  // const [images, setImages] = useState<File[]>([]);
-  const [imageIds, setImageIds] = useState<UrlType[]>(
-    sortByOrder(noticeEditData.images),
+  const [images, setImages] = useState<UploadRecord[]>(
+    sortByOrder(noticeEditData.images).map((image) => ({
+      id: image.id ?? '0',
+      name: image.fileName ?? '',
+      previewUrl: image.cdnUrl,
+      file: new File([], image.fileName ?? ''),
+    })),
   );
 
   const { getPresignedIds: getImagePresignedId, isLoading: isImageLoading } =
@@ -31,27 +37,32 @@ export const useEditNotice = (noticeId: number) => {
     setNoticeEditData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleClickImageUpload = async (files: File[] | null) => {
-    if (!files || files.length === 0) {
-      setImageIds([]);
+  const handleClickImageUpload = async (
+    files: File[] | null,
+    urls: string[] | null,
+  ) => {
+    if (!files || !urls) {
+      setImages([]);
       return [];
     }
 
     const newFiles = files.filter((file) => file.size > 0);
     if (newFiles.length === 0) {
-      return [];
+      return setImages((prev) => {
+        const fileNames = files.map((file) => file.name);
+        return prev.filter((item) => fileNames.includes(item.name ?? ''));
+      });
     }
 
     const uploadInfo = await getImagePresignedId(newFiles);
-    setImageIds((prev) => [
+    setImages((prev) => [
       ...prev,
-      ...uploadInfo.map(({ id, file }) => {
-        const previewUrl = URL.createObjectURL(file);
+      ...uploadInfo.map(({ id, file }, index) => {
         return {
           id,
-          fileName: file.name,
-          cdnUrl: previewUrl,
-          originUrl: previewUrl,
+          name: file.name,
+          previewUrl: urls[index],
+          file,
         };
       }),
     ]);
@@ -76,20 +87,15 @@ export const useEditNotice = (noticeId: number) => {
     setFiles((prev) => prev.filter((file) => file.fileName !== fileName));
   };
 
-  const handleClickImageDelete = (value: string) => {
-    setImageIds((prev) => prev.filter((image) => image.id !== value));
-  };
-
   return {
     noticeEditData,
-    imageIds,
+
     files,
     isUploading,
-    // setImages,
+    images,
     handleChangeNoticeData,
     handleClickImageUpload,
     handleClickFileUpload,
     handleClickFileDelete,
-    handleClickImageDelete,
   };
 };
