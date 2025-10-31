@@ -5,7 +5,7 @@ import { Title1 } from 'ddingdong-design-system';
 
 import { reportQueryOptions } from '@/app/_api/queries/report';
 
-import ReportEditBundle from '../../../new/_components/ReportEditBundle';
+import ReportFormBundle from '../../../new/_components/ReportFormBundle';
 import { parseReport } from '../_utils/parse';
 
 export function ReportFixClientPage({ term }: { term: number; name: string }) {
@@ -21,7 +21,7 @@ export function ReportFixClientPage({ term }: { term: number; name: string }) {
       <Title1 weight="bold" className="py-7 md:py-10">
         활동보고서 수정
       </Title1>
-      <ReportEditBundle report={[reportOne, reportTwo]} term={term} />
+      <ReportFormBundle report={[reportOne, reportTwo]} term={term} />
     </>
   );
 }

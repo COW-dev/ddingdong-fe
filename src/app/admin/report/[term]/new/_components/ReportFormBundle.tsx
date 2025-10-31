@@ -13,7 +13,7 @@ type Props = {
   term: number;
 };
 
-export default function ReportEditBundle({ report, term }: Props) {
+export default function ReportFormBundle({ report, term }: Props) {
   const isEditMode = !!report;
 
   const {
