@@ -3,13 +3,7 @@ import Image from 'next/image';
 
 import { ChangeEvent } from 'react';
 
-import {
-  Body3,
-  Caption1,
-  cn,
-  Flex,
-  MediaUpload,
-} from 'ddingdong-design-system';
+import { Body3, Caption1, Flex, MediaUpload } from 'ddingdong-design-system';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import { ClubDetail } from '@/app/_api/types/club';

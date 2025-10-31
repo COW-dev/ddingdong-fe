@@ -22,6 +22,7 @@ export default function ClubDetailClientPage() {
     setClub,
     isEditing,
     handleChange,
+    handleReset,
     handleClickEdit,
     handleClickCancel,
     handleClickSubmit,
@@ -35,6 +36,7 @@ export default function ClubDetailClientPage() {
           setClub={setClub}
           isEditing={isEditing}
           onChange={handleChange}
+          onReset={handleReset}
         />
         <EditActionButtons
           isEditing={isEditing}
@@ -48,6 +50,7 @@ export default function ClubDetailClientPage() {
         setClub={setClub}
         isEditing={isEditing}
         onChange={handleChange}
+        onReset={handleReset}
       />
       <ClubIntroductionForm
         club={club}

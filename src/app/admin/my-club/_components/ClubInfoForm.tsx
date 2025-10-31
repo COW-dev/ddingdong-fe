@@ -1,9 +1,11 @@
 'use client';
 import { ChangeEvent, ComponentProps, Dispatch, SetStateAction } from 'react';
-import toast from 'react-hot-toast';
-import { validator } from '@/utils/validator';
+
 import { Body2, Flex, Input } from 'ddingdong-design-system';
+import toast from 'react-hot-toast';
+
 import { ClubDetail } from '@/app/_api/types/club';
+import { validator } from '@/utils/validator';
 
 type ClubInfoFormProps = {
   club: ClubDetail;
@@ -12,6 +14,7 @@ type ClubInfoFormProps = {
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
+  onReset: (name: string) => void;
 };
 
 export default function ClubInfoForm({
@@ -19,6 +22,7 @@ export default function ClubInfoForm({
   setClub,
   isEditing,
   onChange,
+  onReset,
 }: ClubInfoFormProps) {
   const { leader, phoneNumber, location, regularMeeting } = club;
 
@@ -36,7 +40,7 @@ export default function ClubInfoForm({
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-6">
       <CustomInput
         label="회장"
-        onClickReset={() => {}}
+        onClickReset={() => onReset('leader')}
         name="leader"
         value={leader}
         onChange={onChange}
@@ -45,7 +49,7 @@ export default function ClubInfoForm({
       <CustomInput
         label="연락처"
         name="phoneNumber"
-        onClickReset={() => {}}
+        onClickReset={() => onReset('phoneNumber')}
         placeholder="ex) 010-1234-1234"
         value={phoneNumber}
         onChange={onChange}
@@ -56,7 +60,7 @@ export default function ClubInfoForm({
       />
       <CustomInput
         label="동아리방"
-        onClickReset={() => {}}
+        onClickReset={() => onReset('location')}
         name="location"
         placeholder="ex) S0000"
         value={location}
@@ -68,7 +72,7 @@ export default function ClubInfoForm({
       />
       <CustomInput
         label="정기모임"
-        onClickReset={() => {}}
+        onClickReset={() => onReset('regularMeeting')}
         name="regularMeeting"
         value={regularMeeting}
         onChange={onChange}
@@ -81,8 +85,6 @@ export default function ClubInfoForm({
 function CustomInput({
   label,
   isEditing,
-  onClickReset,
-  children,
   value,
   ...props
 }: {
@@ -97,9 +99,9 @@ function CustomInput({
         {label}
       </Body2>
       {isEditing ? (
-        <Input value={value} {...props} onClickReset={onClickReset} />
+        <Input value={value} {...props} />
       ) : (
-        <div className="w-full rounded-xl px-4 py-3.5 outline-1 outline-gray-200">
+        <div className="h-13 w-full rounded-xl px-4 py-3.5 outline-1 outline-gray-200">
           {value}
         </div>
       )}

@@ -1,7 +1,9 @@
 import { ChangeEvent, useState } from 'react';
-import { ClubDetail } from '@/app/_api/types/club';
-import { useUpdateClub } from '@/app/_api/mutations/club';
+
 import { toast } from 'react-hot-toast';
+
+import { useUpdateClub } from '@/app/_api/mutations/club';
+import { ClubDetail } from '@/app/_api/types/club';
 
 export const useClubEdit = (initialData: ClubDetail) => {
   const [club, setClub] = useState<ClubDetail>(initialData);
@@ -15,6 +17,13 @@ export const useClubEdit = (initialData: ClubDetail) => {
     setClub((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
+    }));
+  }
+
+  function handleReset(name: string) {
+    setClub((prev) => ({
+      ...prev,
+      [name]: '',
     }));
   }
 
@@ -47,6 +56,7 @@ export const useClubEdit = (initialData: ClubDetail) => {
     setClub,
     isEditing,
     handleChange,
+    handleReset,
     handleClickEdit,
     handleClickCancel,
     handleClickSubmit,
