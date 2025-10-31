@@ -1,5 +1,4 @@
-import { UrlType } from './common';
-
+import { UrlType } from './file';
 export type RecruitStatus = '모집 중' | '모집 마감' | '모집 예정';
 export type ClubTag =
   | '봉사'
