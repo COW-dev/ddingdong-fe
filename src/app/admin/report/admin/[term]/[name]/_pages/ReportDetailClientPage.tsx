@@ -41,7 +41,16 @@ export function ReportDetailClientPage({
           </Title1>
           <BackHeader title={`${term}회차 / ${name}`} />
         </div>
-        <Body3 weight="normal">제출일시 {reports[0]?.createdAt}</Body3>
+        <Body3 weight="normal">
+          <Body3
+            as="span"
+            weight="normal"
+            className="text-right max-sm:block md:mr-1"
+          >
+            제출일시
+          </Body3>
+          {reports[0]?.createdAt}
+        </Body3>
       </Flex>
       <ReportBundle reports={reports} />
     </>

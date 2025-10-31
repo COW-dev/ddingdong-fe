@@ -21,7 +21,7 @@ export function DeleteModal({ isOpen, closeModal, onDeleteReport }: Props) {
         dir="col"
         alignItems="center"
         gap={4}
-        className="w-[80vw] md:w-[380px]"
+        className="w-[80vw] max-w-[380px]"
       >
         <Body1>삭제하시겠습니까?</Body1>
         <DoubleButton

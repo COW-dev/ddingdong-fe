@@ -34,7 +34,7 @@ export const useReport = (term: number, reports?: [EditReport, EditReport]) => {
     event.preventDefault();
 
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 모두 선택해주세요.');
+      return toast.error('날짜와 시간은 일부만 저장할 수 없어요.');
 
     setIsEditing(true);
     const payload = createPairReport(term);
@@ -55,7 +55,7 @@ export const useReport = (term: number, reports?: [EditReport, EditReport]) => {
   const submitUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간을 모두 선택해주세요.');
+      return toast.error('날짜와 시간은 일부만 저장할 수 없어요.');
 
     setIsEditing(true);
     const payload = createPairReport(term);
