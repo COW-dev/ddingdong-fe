@@ -4,13 +4,13 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { memberQueryOptions } from '@/app/_api/queries/member';
 import { Member } from '@/app/_api/types/member';
-import { StudentInfo } from '@/types/report';
+import { ReportMember } from '@/app/_api/types/report';
 
 import { EMPTY_PARTICIPANT } from '../_components/ParticipantModal';
 
 type Props = {
   name?: string;
-  setData: Dispatch<SetStateAction<StudentInfo[]>>;
+  setData: Dispatch<SetStateAction<ReportMember[]>>;
   id: number;
 };
 
@@ -30,7 +30,7 @@ export function useParticipantSelect({ name, setData, id }: Props) {
     }
   }, [keyword, members]);
 
-  const updateParticipant = (newParticipant: StudentInfo) => {
+  const updateParticipant = (newParticipant: ReportMember) => {
     setData((prev) =>
       prev.map((participant, index) =>
         index === id ? newParticipant : participant,

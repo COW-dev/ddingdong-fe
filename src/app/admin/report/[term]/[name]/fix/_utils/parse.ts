@@ -1,16 +1,15 @@
-import { ReportResponse } from '@/app/_api/types/report';
-import { EditReport } from '@/types/report';
+import { ReportAPIResponse, Report } from '@/app/_api/types/report';
 
-const parseStringDateToRangeDate = (start: string, end: string) => {
+const parseRangeDate = (start: string, end: string) => {
   const [startDate, startTime] = start?.split(' ') ?? ['', ''];
   const [endDate, endTime] = end?.split(' ') ?? ['', ''];
   return { startDate, startTime, endDate, endTime };
 };
 
-export const parseReportResponseToEditReport = (
-  activityReportRequests: ReportResponse,
+export const parseReport = (
+  activityReportRequests: ReportAPIResponse,
   term: number,
-): EditReport => {
+): Report => {
   const {
     startDate: start,
     endDate: end,
@@ -18,10 +17,7 @@ export const parseReportResponseToEditReport = (
     ...props
   } = activityReportRequests;
 
-  const { startDate, startTime, endDate, endTime } = parseStringDateToRangeDate(
-    start,
-    end,
-  );
+  const { startDate, startTime, endDate, endTime } = parseRangeDate(start, end);
 
   return {
     term,

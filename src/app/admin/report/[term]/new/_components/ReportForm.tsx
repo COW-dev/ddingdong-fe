@@ -10,7 +10,7 @@ import {
 } from 'ddingdong-design-system';
 import Datepicker from 'react-tailwindcss-datepicker';
 
-import { EditReport } from '@/types/report';
+import { Report } from '@/app/_api/types/report';
 
 import { Loading } from '../../../../../../components/loading/Loading';
 import {
@@ -24,8 +24,8 @@ import { useReportInput } from '../_hooks/useReportInput';
 import ParticipantModal from './ParticipantModal';
 
 type Props = {
-  report: EditReport;
-  setValue: Dispatch<SetStateAction<EditReport>>;
+  report: Report;
+  setValue: Dispatch<SetStateAction<Report>>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 

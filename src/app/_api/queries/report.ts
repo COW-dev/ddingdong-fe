@@ -5,7 +5,7 @@ import {
   CurrentTerm,
   Term,
   MyReport,
-  ReportResponse,
+  ReportAPIResponse,
   TermReport,
 } from '../types/report';
 
@@ -47,7 +47,7 @@ export const reportQueryOptions = {
     queryOptions({
       queryKey: reportQueryKeys.termReport(term),
       queryFn: () =>
-        fetcher.get<[ReportResponse, ReportResponse]>(
+        fetcher.get<[ReportAPIResponse, ReportAPIResponse]>(
           `central/activity-reports?term=${term}`,
         ),
       staleTime: 60_000,
@@ -63,7 +63,7 @@ export const reportQueryOptions = {
     queryOptions({
       queryKey: reportQueryKeys.report(term, clubId),
       queryFn: () =>
-        fetcher.get<[ReportResponse, ReportResponse]>(
+        fetcher.get<[ReportAPIResponse, ReportAPIResponse]>(
           `admin/activity-reports/clubs/${clubId}?term=${term}`,
         ),
       staleTime: 60_000,

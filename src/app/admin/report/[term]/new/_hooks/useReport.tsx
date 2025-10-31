@@ -9,12 +9,12 @@ import {
   useCreateReportMutation,
   useUpdateReportsMutation,
 } from '@/app/_api/mutations/report';
-import { EditReport, SubmitReport } from '@/types/report';
+import { Report, ReportAPIRequest } from '@/app/_api/types/report';
 
-import { parseNewReportToReport } from '../_utils/parseReport';
+import { parseRequest } from '../_utils/parse';
 import { validateDate } from '../_utils/validateReport';
 
-export const useReport = (term: number, reports?: [EditReport, EditReport]) => {
+export const useReport = (term: number, reports?: [Report, Report]) => {
   const router = useRouter();
 
   const [reportOne, setReportOne] = useState(reports?.[0] ?? EMPTY_DATA);
@@ -24,9 +24,11 @@ export const useReport = (term: number, reports?: [EditReport, EditReport]) => {
   const { mutate: createMutation } = useCreateReportMutation();
   const { mutate: updateMutation } = useUpdateReportsMutation();
 
-  const createPairReport = (term: number): [SubmitReport, SubmitReport] => {
-    const parseReportOne = parseNewReportToReport(term, reportOne);
-    const parseReportTwo = parseNewReportToReport(term, reportTwo);
+  const createPairReport = (
+    term: number,
+  ): [ReportAPIRequest, ReportAPIRequest] => {
+    const parseReportOne = parseRequest(term, reportOne);
+    const parseReportTwo = parseRequest(term, reportTwo);
     return [parseReportOne, parseReportTwo];
   };
 
@@ -92,8 +94,7 @@ export const useReport = (term: number, reports?: [EditReport, EditReport]) => {
   };
 };
 
-export const EMPTY_DATA: EditReport = {
+export const EMPTY_DATA: Report = {
   date: { startDate: null, endDate: null },
-  uploadFiles: null,
   participants: [],
 };

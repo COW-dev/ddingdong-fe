@@ -14,19 +14,18 @@ import {
   Title3,
 } from 'ddingdong-design-system';
 
+import { Report, ReportMember } from '@/app/_api/types/report';
 import ParticipantSelect from '@/app/admin/report/[term]/new/_components/ParticipantSelect';
-import { StudentInfo } from '@/types';
-import { EditReport } from '@/types/report';
 
-export const EMPTY_PARTICIPANT: StudentInfo = {
+export const EMPTY_PARTICIPANT: ReportMember = {
   name: '',
   studentId: '',
   department: '',
 };
 
 type Props = {
-  data: StudentInfo[];
-  setData: Dispatch<SetStateAction<EditReport>>;
+  data: ReportMember[];
+  setData: Dispatch<SetStateAction<Report>>;
   closeModal: () => void;
   isOpen: boolean;
 };
@@ -37,7 +36,7 @@ export default function ParticipantModal({
   setData,
   closeModal,
 }: Props) {
-  const [participants, setParticipants] = useState<StudentInfo[]>(
+  const [participants, setParticipants] = useState<ReportMember[]>(
     data.length > 0 ? data : Array(5).fill({ ...EMPTY_PARTICIPANT }),
   );
 

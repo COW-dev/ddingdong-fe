@@ -1,9 +1,9 @@
-import { EditReport, SubmitReport } from '@/types/report';
+import { Report, ReportAPIRequest } from '@/app/_api/types/report';
 
-export const parseNewReportToReport = (
+export const parseRequest = (
   term: number,
-  report: EditReport,
-): SubmitReport => {
+  report: Report,
+): ReportAPIRequest => {
   const { date, startTime, endTime, ...props } = report;
   return {
     ...props,

@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
+import { Report } from '@/app/_api/types/report';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
-import { EditReport } from '@/types/report';
 
 type Props = {
-  report: EditReport;
-  setValue: Dispatch<SetStateAction<EditReport>>;
+  report: Report;
+  setValue: Dispatch<SetStateAction<Report>>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 

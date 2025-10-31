@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { SubmitReport } from '@/types/report';
+import { ReportAPIRequest } from '@/app/_api/types/report';
 
 import { fetcher } from '../fetcher';
 import { reportQueryKeys } from '../queries/report';
@@ -24,7 +24,9 @@ export const useDeleteReport = () => {
   });
 };
 
-const createReports = (activityReportRequests: [SubmitReport, SubmitReport]) =>
+const createReports = (
+  activityReportRequests: [ReportAPIRequest, ReportAPIRequest],
+) =>
   fetcher.post('central/my/activity-reports', {
     json: { activityReportRequests },
   });
@@ -33,8 +35,9 @@ export const useCreateReportMutation = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ['createReport'],
-    mutationFn: (activityReportRequests: [SubmitReport, SubmitReport]) =>
-      createReports(activityReportRequests),
+    mutationFn: (
+      activityReportRequests: [ReportAPIRequest, ReportAPIRequest],
+    ) => createReports(activityReportRequests),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.my()] });
     },
@@ -43,7 +46,7 @@ export const useCreateReportMutation = () => {
 
 const updateReports = (
   term: number,
-  activityReportRequests: [SubmitReport, SubmitReport],
+  activityReportRequests: [ReportAPIRequest, ReportAPIRequest],
 ) =>
   fetcher.patch(`central/my/activity-reports?term=${term}`, {
     json: { activityReportRequests },
@@ -58,7 +61,7 @@ export const useUpdateReportsMutation = () => {
       activityReportRequests,
     }: {
       term: number;
-      activityReportRequests: [SubmitReport, SubmitReport];
+      activityReportRequests: [ReportAPIRequest, ReportAPIRequest];
     }) => updateReports(term, activityReportRequests),
     onSuccess: () => {
       queryClient.invalidateQueries({

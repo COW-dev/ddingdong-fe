@@ -5,10 +5,10 @@ import {
   DateRangeType,
 } from 'react-tailwindcss-datepicker/dist/types';
 
-import { EditReport } from '@/types/report';
+import { Report } from '@/app/_api/types/report';
 
 type Props = {
-  setValue: Dispatch<SetStateAction<EditReport>>;
+  setValue: Dispatch<SetStateAction<Report>>;
 };
 
 export const useReportInput = ({ setValue }: Props) => {

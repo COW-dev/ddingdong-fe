@@ -7,13 +7,13 @@ import {
   Flex,
 } from 'ddingdong-design-system';
 
-import { ReportResponse } from '@/app/_api/types/report';
+import { ReportAPIResponse } from '@/app/_api/types/report';
 import Report from '@/app/admin/report/[term]/[name]/_components/Report';
 
 export default function ReportBundle({
   reports,
 }: {
-  reports: [ReportResponse, ReportResponse];
+  reports: [ReportAPIResponse, ReportAPIResponse];
 }) {
   if (!reports) return <NoReportMessage />;
 

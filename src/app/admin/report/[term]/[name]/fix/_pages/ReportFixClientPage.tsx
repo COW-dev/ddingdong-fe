@@ -6,15 +6,15 @@ import { Title1 } from 'ddingdong-design-system';
 import { reportQueryOptions } from '@/app/_api/queries/report';
 
 import ReportEditBundle from '../../../new/_components/ReportEditBundle';
-import { parseReportResponseToEditReport } from '../_utils/parseReport';
+import { parseReport } from '../_utils/parse';
 
 export function ReportFixClientPage({ term }: { term: number; name: string }) {
-  const { data: reportDataList } = useSuspenseQuery(
+  const { data: reports } = useSuspenseQuery(
     reportQueryOptions.termReport(term),
   );
 
-  const reportOne = parseReportResponseToEditReport(reportDataList[0], term);
-  const reportTwo = parseReportResponseToEditReport(reportDataList[1], term);
+  const reportOne = parseReport(reports[0], term);
+  const reportTwo = parseReport(reports[1], term);
 
   return (
     <>

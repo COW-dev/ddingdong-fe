@@ -1,7 +1,7 @@
 'use client';
 import { Accordion, AccordionItem, Body3 } from 'ddingdong-design-system';
 
-import { EditReport } from '@/types/report';
+import { Report } from '@/app/_api/types/report';
 
 import { useReport } from '../_hooks/useReport';
 
@@ -9,7 +9,7 @@ import EditButton from './EditButton';
 import ReportForm from './ReportForm';
 
 type Props = {
-  report?: [EditReport, EditReport];
+  report?: [Report, Report];
   term: number;
 };
 

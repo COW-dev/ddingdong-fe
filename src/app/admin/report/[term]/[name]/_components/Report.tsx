@@ -3,9 +3,8 @@ import Image from 'next/image';
 
 import { Body3, Flex, Icon } from 'ddingdong-design-system';
 
-import { ReportResponse } from '@/app/_api/types/report';
+import { ReportAPIResponse, ReportMember } from '@/app/_api/types/report';
 import UnSubmitImage from '@/assets/unsubmit_announce.png';
-import { StudentInfo } from '@/types/report';
 
 import {
   ReportContiner,
@@ -14,7 +13,7 @@ import {
 } from '../_containers/ReportContainer';
 
 type Props = {
-  report: ReportResponse;
+  report: ReportAPIResponse;
 };
 
 export default function Report({ report }: Props) {
@@ -68,7 +67,7 @@ function EmptyText({ text }: { text?: string }) {
   );
 }
 
-function ParticipantsList({ participants }: { participants?: StudentInfo[] }) {
+function ParticipantsList({ participants }: { participants?: ReportMember[] }) {
   return (
     <ul className="space-y-1">
       {participants?.map(

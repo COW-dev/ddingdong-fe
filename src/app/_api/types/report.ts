@@ -1,5 +1,11 @@
-import { StudentInfo } from '@/types';
+import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+
 import { UrlType } from './common';
+import { Member } from './member';
+
+export type ReportMember = Pick<Member, 'department' | 'name'> & {
+  studentId: string;
+};
 
 export type CurrentTerm = {
   term: number;
@@ -25,8 +31,7 @@ export type TermReport = {
   activityReports: [number, number];
 };
 
-export type ReportResponse = {
-  //server로부터 전달받는 report type
+export type ReportAPIResponse = {
   id: number;
   createdAt: string;
   name: string;
@@ -35,5 +40,27 @@ export type ReportResponse = {
   startDate: string;
   endDate: string;
   image: UrlType;
-  participants: StudentInfo[];
+  participants: ReportMember[];
+};
+
+export type ReportAPIRequest = {
+  term: number;
+  place?: string;
+  startDate?: string;
+  endDate?: string;
+  content?: string;
+  imageId?: string;
+  participants: ReportMember[];
+};
+
+export type Report = {
+  term?: number;
+  date: DateRangeType;
+  place?: string;
+  startTime?: string;
+  endTime?: string;
+  content?: string;
+  image?: UrlType;
+  participants: ReportMember[];
+  imageId?: string;
 };
