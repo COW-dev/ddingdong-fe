@@ -4,6 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Title1 } from 'ddingdong-design-system';
 
 import { reportQueryOptions } from '@/app/_api/queries/report';
+
 import ReportEditBundle from '../../../new/_components/ReportEditBundle';
 import { parseReportResponseToEditReport } from '../_utils/parseReport';
 

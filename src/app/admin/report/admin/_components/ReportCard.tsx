@@ -1,8 +1,10 @@
 'use client';
-import { Term } from '@/app/_api/types/report';
-import { useTerm } from '../../_hooks/useTerm';
 import { Badge } from 'ddingdong-design-system';
+
+import { Term } from '@/app/_api/types/report';
+
 import { ReportTermCard } from '../../_components/Card';
+import { useTerm } from '../../_hooks/useTerm';
 
 export function ReportCard({ termInfo }: { termInfo: Term }) {
   const { term } = termInfo;

@@ -5,6 +5,7 @@ import { Caption1, Flex, Input } from 'ddingdong-design-system';
 
 import { Member } from '@/app/_api/types/member';
 import { StudentInfo } from '@/types/report';
+
 import { useParticipantSelect } from '../_hooks/useParticipantSelect';
 
 type Props = {

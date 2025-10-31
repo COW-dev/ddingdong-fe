@@ -1,12 +1,12 @@
 'use client';
 
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Flex, Title1, Body3 } from 'ddingdong-design-system';
 
+import { reportQueryOptions } from '@/app/_api/queries/report';
 import ReportBundle from '@/app/admin/report/[term]/[name]/_components/ReportBundle';
 import { BackHeader } from '@/app/admin/report/_components/BackHeader';
-import { reportQueryOptions } from '@/app/_api/queries/report';
 import { TermReport } from '@/types/report';
-import { useSuspenseQuery } from '@tanstack/react-query';
 
 export function getClubId(reports: TermReport[], name: string) {
   const club = reports.find((item) => item.club.name === name);

@@ -1,12 +1,14 @@
-import { ReportTermClientPage } from './_pages/ReportTermClientPage';
-import { Metadata } from 'next';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
+
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { reportQueryOptions } from '@/app/_api/queries/report';
+
+import { ReportTermClientPage } from './_pages/ReportTermClientPage';
 
 export async function generateMetadata({
   params,

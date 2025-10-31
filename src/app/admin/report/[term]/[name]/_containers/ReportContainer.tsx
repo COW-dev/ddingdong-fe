@@ -1,5 +1,6 @@
-import { Body2, Flex } from 'ddingdong-design-system';
 import { PropsWithChildren } from 'react';
+
+import { Body2, Flex } from 'ddingdong-design-system';
 
 export function ReportContiner({ children }: PropsWithChildren) {
   return (

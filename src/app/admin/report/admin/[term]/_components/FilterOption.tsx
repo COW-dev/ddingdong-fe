@@ -1,8 +1,10 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { Club } from '@/app/_api/types/club';
+
 import { Caption1, cn, Flex } from 'ddingdong-design-system';
+
+import { Club } from '@/app/_api/types/club';
 
 type FilterKey = 'all' | 'submit' | 'unSubmit';
 const FILTERS: { key: FilterKey; label: string }[] = [

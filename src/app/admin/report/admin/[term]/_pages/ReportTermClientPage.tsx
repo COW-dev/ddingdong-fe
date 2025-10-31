@@ -2,14 +2,15 @@
 
 import { useSuspenseQueries } from '@tanstack/react-query';
 import { Title1 } from 'ddingdong-design-system';
+
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { reportQueryOptions } from '@/app/_api/queries/report';
-import { Club } from '@/app/_api/types/club';
-import FilterOption from '../_components/FilterOption';
-import { ReportCardContainer } from '../../../_containers/ReportCardContainer';
+
 import { BackHeader } from '../../../_components/BackHeader';
-import { useReportFilter } from '../_hooks/useReportFilter';
+import { ReportCardContainer } from '../../../_containers/ReportCardContainer';
+import FilterOption from '../_components/FilterOption';
 import { ReportCard } from '../_components/ReportCard';
+import { useReportFilter } from '../_hooks/useReportFilter';
 
 export function ReportTermClientPage({ term }: { term: number }) {
   const [{ data: clubs }, { data: termReports }] = useSuspenseQueries({

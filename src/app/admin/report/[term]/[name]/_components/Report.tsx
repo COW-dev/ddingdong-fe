@@ -1,15 +1,17 @@
 'use client';
 import Image from 'next/image';
-import UnSubmitImage from '@/assets/unsubmit_announce.png';
+
+import { Body3, Flex, Icon } from 'ddingdong-design-system';
 
 import { ReportResponse } from '@/app/_api/types/report';
-import { Body3, Flex, Icon } from 'ddingdong-design-system';
+import UnSubmitImage from '@/assets/unsubmit_announce.png';
+import { StudentInfo } from '@/types/report';
+
 import {
   ReportContiner,
   ReportHeaderContainer,
   ReportContentContainer,
 } from '../_containers/ReportContainer';
-import { StudentInfo } from '@/types/report';
 
 type Props = {
   report: ReportResponse;

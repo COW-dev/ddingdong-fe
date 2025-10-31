@@ -1,5 +1,6 @@
-import { reportQueryOptions } from '@/app/_api/queries/report';
 import { useSuspenseQuery } from '@tanstack/react-query';
+
+import { reportQueryOptions } from '@/app/_api/queries/report';
 
 export const useTerm = (term: number) => {
   const { data: currentTerm } = useSuspenseQuery(

@@ -12,13 +12,13 @@ import {
   Body2,
   Flex,
 } from 'ddingdong-design-system';
+import toast from 'react-hot-toast';
 
 import { useDeleteReport } from '@/app/_api/mutations/report';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { reportQueryOptions } from '@/app/_api/queries/report';
 
 import { DeleteModal } from './DeleteModal';
-import toast from 'react-hot-toast';
 
 export function EditButton({ term }: { term: number }) {
   const [{ data: currentTerm }, { data: myClubData }] = useSuspenseQueries({

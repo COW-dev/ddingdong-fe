@@ -5,7 +5,9 @@ import { Badge } from 'ddingdong-design-system';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { reportQueryOptions } from '@/app/_api/queries/report';
 import { Term } from '@/app/_api/types/report';
+
 import { useTerm } from '../_hooks/useTerm';
+
 import { ReportTermCard } from './Card';
 
 export function ReportCard({ termInfo }: { termInfo: Term }) {

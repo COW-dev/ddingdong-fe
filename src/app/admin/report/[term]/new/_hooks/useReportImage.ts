@@ -3,17 +3,13 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { EditReport } from '@/types/report';
 
-type UseReportImageProps = {
+type Props = {
   report: EditReport;
   setValue: Dispatch<SetStateAction<EditReport>>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
-export const useReportImage = ({
-  report,
-  setValue,
-  setIsEditing,
-}: UseReportImageProps) => {
+export const useReportImage = ({ report, setValue, setIsEditing }: Props) => {
   const { image } = report;
   const { getPresignedId, isLoading } = usePresignedUrl();
 

@@ -4,6 +4,7 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { Metadata } from 'next';
+
 import { reportQueryOptions } from '@/app/_api/queries/report';
 
 import { ReportClientPage } from './_pages/ReportClientPage';

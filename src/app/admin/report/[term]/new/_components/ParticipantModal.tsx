@@ -1,7 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+
 import { Dispatch, SetStateAction, useState } from 'react';
+
 import {
   Body2,
   Button,
@@ -55,6 +57,7 @@ export default function ParticipantModal({
           <Caption1 className="text-gray-500">이름</Caption1>
           {participants.map((participant, index) => (
             <ParticipantSelect
+              key={index}
               name={participant.name}
               setData={setParticipants}
               id={index}

@@ -7,11 +7,11 @@ import {
 
 import { EditReport } from '@/types/report';
 
-type UseReportInputProps = {
+type Props = {
   setValue: Dispatch<SetStateAction<EditReport>>;
 };
 
-export const useReportInput = ({ setValue }: UseReportInputProps) => {
+export const useReportInput = ({ setValue }: Props) => {
   const handleChange = (
     event: ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLInputElement>,
   ) => {

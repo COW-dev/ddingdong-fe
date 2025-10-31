@@ -4,8 +4,10 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import { Metadata } from 'next';
-import { ReportClientPage } from './_pages/ReportClientPage';
+
 import { reportQueryOptions } from '@/app/_api/queries/report';
+
+import { ReportClientPage } from './_pages/ReportClientPage';
 
 export const metadata: Metadata = {
   title: '띵동 - 활동보고서',

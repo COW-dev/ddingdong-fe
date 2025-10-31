@@ -1,8 +1,11 @@
+import Link from 'next/link';
+
+import React from 'react';
+
+import { Card, Flex, Title3, Caption1 } from 'ddingdong-design-system';
+
 import { Term } from '@/app/_api/types/report';
 import { parseDate } from '@/utils/parse';
-import { Card, Flex, Title3, Caption1 } from 'ddingdong-design-system';
-import Link from 'next/link';
-import React from 'react';
 
 export type CustomCardProps = {
   description?: React.ReactNode;
