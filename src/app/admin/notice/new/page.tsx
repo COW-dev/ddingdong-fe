@@ -40,7 +40,7 @@ export default function NoticeNewPage() {
   const handleNoticeSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!noticeData.title || !noticeData.content) {
-      toast.error('모든 필드를 입력해주세요.');
+      toast.error('제목과 내용을 입력해주세요.');
       return;
     }
 
@@ -59,6 +59,7 @@ export default function NoticeNewPage() {
         onError: (error) => {
           if (error instanceof ApiError) {
             toast.error(error.message);
+            return;
           }
           toast.error('공지사항 작성에 실패했습니다.');
         },

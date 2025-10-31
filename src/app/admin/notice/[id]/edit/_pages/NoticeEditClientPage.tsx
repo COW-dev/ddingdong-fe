@@ -44,7 +44,7 @@ export default function NoticeEditClientPage({
   const handleNoticeSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!noticeEditData.title || !noticeEditData.content) {
-      toast.error('모든 필드를 입력해주세요.');
+      toast.error('제목과 내용을 입력해주세요.');
       return;
     }
 
@@ -70,6 +70,7 @@ export default function NoticeEditClientPage({
         onError: (error) => {
           if (error instanceof ApiError) {
             toast.error(error.message);
+            return;
           }
           toast.error('공지사항 수정에 실패했습니다.');
         },
@@ -80,7 +81,7 @@ export default function NoticeEditClientPage({
   return (
     <>
       <Flex justifyContent="between" alignItems="end" className="py-7 md:py-10">
-        <Title1 weight="bold">공지사항 작성하기</Title1>
+        <Title1 weight="bold">공지사항 수정하기</Title1>
         <Body3 className="text-gray-400">
           {new Date(noticeEditData.createdAt ?? '').toLocaleString()}
         </Body3>

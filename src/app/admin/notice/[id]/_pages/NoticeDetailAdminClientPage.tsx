@@ -48,6 +48,7 @@ export function NoticeDetailAdminClientPage({
       onError: (error) => {
         if (error instanceof ApiError) {
           toast.error(error.message);
+          return;
         }
         toast.error('공지사항 삭제에 실패했어요.');
       },

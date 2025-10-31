@@ -5,11 +5,12 @@ import { Button, IconButton } from 'ddingdong-design-system';
 import { ROLE_TYPE, RoleType } from '@/constants/role';
 
 export function NewActionButton({ role }: { role: keyof RoleType }) {
+  if (role === ROLE_TYPE.ROLE_CLUB) {
+    return null;
+  }
+
   return (
-    <Link
-      href="/notice/new"
-      className={role === ROLE_TYPE.ROLE_CLUB ? 'invisible' : ''}
-    >
+    <Link href="/notice/new">
       <IconButton
         iconName="write"
         color="primary"
