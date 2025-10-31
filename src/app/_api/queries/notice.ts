@@ -5,7 +5,7 @@ import { AllNoticeAPIResponse, NoticeDetailAPIResponse } from '../types/notice';
 
 export const noticeQueryKeys = {
   all: (page: number) => ['notices', page],
-  detail: (id: number) => ['notice', id],
+  detail: (id: number) => [noticeQueryKeys.all(1), id],
 };
 
 export const noticeQueryOptions = {
