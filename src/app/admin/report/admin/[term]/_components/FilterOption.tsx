@@ -5,21 +5,17 @@ import { Club } from '@/app/_api/types/club';
 import { Caption1, cn, Flex } from 'ddingdong-design-system';
 
 type FilterKey = 'all' | 'submit' | 'unSubmit';
-type FilterOptionProps = {
-  filterOption: Record<FilterKey, Club[]>;
-  setFilteredClub: (clubs: Club[]) => void;
-};
-
 const FILTERS: { key: FilterKey; label: string }[] = [
   { key: 'all', label: '전체' },
   { key: 'submit', label: '제출완료' },
   { key: 'unSubmit', label: '미제출' },
 ];
 
-export default function FilterOption({
-  filterOption,
-  setFilteredClub,
-}: FilterOptionProps) {
+type Props = {
+  filterOption: Record<FilterKey, Club[]>;
+  setFilteredClub: (clubs: Club[]) => void;
+};
+export default function FilterOption({ filterOption, setFilteredClub }: Props) {
   const [selected, setSelected] = useState<FilterKey>('all');
 
   const handleSelect = useCallback(

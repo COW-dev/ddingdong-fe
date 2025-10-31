@@ -18,6 +18,7 @@ import { clubQueryOptions } from '@/app/_api/queries/club';
 import { reportQueryOptions } from '@/app/_api/queries/report';
 
 import { DeleteModal } from './DeleteModal';
+import toast from 'react-hot-toast';
 
 export function EditButton({ term }: { term: number }) {
   const [{ data: currentTerm }, { data: myClubData }] = useSuspenseQueries({
@@ -31,6 +32,7 @@ export function EditButton({ term }: { term: number }) {
   const handleClickDelete = () => {
     deleteMutation.mutate(term);
     router.back();
+    toast.success('활동보고서를 삭제했어요.');
   };
 
   return (

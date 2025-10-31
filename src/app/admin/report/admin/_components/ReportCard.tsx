@@ -1,3 +1,4 @@
+'use client';
 import { Term } from '@/app/_api/types/report';
 import { useTerm } from '../../_hooks/useTerm';
 import { Badge } from 'ddingdong-design-system';

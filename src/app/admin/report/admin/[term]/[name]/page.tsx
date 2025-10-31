@@ -3,10 +3,7 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import {
-  getClubId,
-  ReportDetailClientPage,
-} from './_pages/ReportDetailClientPage';
+import { ReportDetailClientPage } from './_pages/ReportDetailClientPage';
 
 import { Metadata } from 'next';
 import { reportQueryOptions } from '@/app/_api/queries/report';

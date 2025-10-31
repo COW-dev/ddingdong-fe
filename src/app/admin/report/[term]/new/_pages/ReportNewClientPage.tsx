@@ -1,5 +1,4 @@
 'use client';
-
 import { Title1 } from 'ddingdong-design-system';
 
 import ReportEditBundle from '@/app/admin/report/[term]/new/_components/ReportEditBundle';

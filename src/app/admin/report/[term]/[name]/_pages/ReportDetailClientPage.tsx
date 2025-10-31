@@ -1,7 +1,7 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Flex, Title1, Body3, Caption1 } from 'ddingdong-design-system';
+import { Flex, Title1, Body3 } from 'ddingdong-design-system';
 
 import { reportQueryOptions } from '@/app/_api/queries/report';
 

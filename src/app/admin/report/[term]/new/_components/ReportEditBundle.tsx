@@ -1,3 +1,4 @@
+'use client';
 import { Accordion, AccordionItem, Body3 } from 'ddingdong-design-system';
 
 import { EditReport } from '@/types/report';

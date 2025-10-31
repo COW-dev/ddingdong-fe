@@ -4,13 +4,13 @@ import { Title3, Flex, Caption1, Badge } from 'ddingdong-design-system';
 import { CustomCardProps, CustomCard } from '../../../_components/Card';
 import { Club } from '@/types';
 
-type ReportCardProps = Omit<CustomCardProps, 'description' | 'title'> & {
+type Props = Omit<CustomCardProps, 'description' | 'title'> & {
   club: Club;
   term: number;
   isSubmitted: boolean;
 };
 
-export function ReportCard({ term, club, isSubmitted }: ReportCardProps) {
+export function ReportCard({ term, club, isSubmitted }: Props) {
   const { name, category, tag } = club;
   const badgeVariant = isSubmitted ? 'positive' : 'negative';
   const badgeText = isSubmitted ? '제출완료' : '미제출';

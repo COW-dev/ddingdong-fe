@@ -1,10 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-
 import { Dispatch, SetStateAction, useState } from 'react';
-
-import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   Body2,
   Button,
@@ -15,10 +12,15 @@ import {
   Title3,
 } from 'ddingdong-design-system';
 
-import { memberQueryOptions } from '@/app/_api/queries/member';
 import ParticipantSelect from '@/app/admin/report/[term]/new/_components/ParticipantSelect';
 import { StudentInfo } from '@/types';
 import { EditReport } from '@/types/report';
+
+export const EMPTY_PARTICIPANT: StudentInfo = {
+  name: '',
+  studentId: '',
+  department: '',
+};
 
 type Props = {
   data: StudentInfo[];
@@ -33,9 +35,8 @@ export default function ParticipantModal({
   setData,
   closeModal,
 }: Props) {
-  const { data: members } = useSuspenseQuery(memberQueryOptions.all());
   const [participants, setParticipants] = useState<StudentInfo[]>(
-    data.length > 0 ? data : Array(5).fill(EMPTY_PARTICIPANT),
+    data.length > 0 ? data : Array(5).fill({ ...EMPTY_PARTICIPANT }),
   );
 
   const handleSubmit = () => {
@@ -49,22 +50,18 @@ export default function ParticipantModal({
         <Title3 weight="bold" className="text-gray-300">
           활동 명단 작성하기
         </Title3>
-        <Flex dir="col" as="ul" className="gap-2">
+
+        <Flex as="ul" dir="col" className="gap-2">
           <Caption1 className="text-gray-500">이름</Caption1>
-          {[0, 1, 2, 3, 4].map((index) => (
-            <li
-              key={index}
-              className="rounded-xl bg-gray-50 py-1.5 text-gray-500"
-            >
-              <ParticipantSelect
-                name={participants[index].name}
-                setData={setParticipants}
-                members={members?.clubMembers}
-                id={index}
-              />
-            </li>
+          {participants.map((participant, index) => (
+            <ParticipantSelect
+              name={participant.name}
+              setData={setParticipants}
+              id={index}
+            />
           ))}
         </Flex>
+
         <Caption1 weight="normal" className="text-gray-300">
           명단이 보여지지 않는다면
           <Link href="/member" className="pl-1 text-blue-500">
@@ -72,6 +69,7 @@ export default function ParticipantModal({
           </Link>
           을 진행해주세요
         </Caption1>
+
         <DoubleButton
           left={
             <Button variant="tertiary" size="md" onClick={closeModal}>
@@ -93,9 +91,3 @@ export default function ParticipantModal({
     </Modal>
   );
 }
-
-const EMPTY_PARTICIPANT: StudentInfo = {
-  name: '',
-  studentId: '',
-  department: '',
-};

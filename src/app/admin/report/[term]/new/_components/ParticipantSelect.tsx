@@ -1,60 +1,49 @@
 'use client';
 import { Dispatch, SetStateAction } from 'react';
 
-import { Caption1, Flex } from 'ddingdong-design-system';
+import { Caption1, Flex, Input } from 'ddingdong-design-system';
 
 import { Member } from '@/app/_api/types/member';
 import { StudentInfo } from '@/types/report';
-
-import { useParticipantSelect } from '../../../../../../components/report/useParticipantSelect';
+import { useParticipantSelect } from '../_hooks/useParticipantSelect';
 
 type Props = {
   name?: string;
   setData: Dispatch<SetStateAction<StudentInfo[]>>;
-  members?: Array<Member>;
   id: number;
 };
 
-export default function ParticipantSelect({
-  name,
-  setData,
-  members = [],
-  id,
-}: Props) {
+export default function ParticipantSelect({ name, setData, id }: Props) {
   const {
     keyword,
     filteredList,
     isEditing,
     handleKeywordChange,
-    handleFocus,
     handleBlur,
     handleSelectMember,
   } = useParticipantSelect({
     name,
     setData,
-    members,
     id,
   });
 
   return (
-    <div className="relative">
-      <input
-        type="text"
+    <li className="relative">
+      <Input
         value={keyword}
         onChange={(e) => handleKeywordChange(e.target.value)}
-        className="px-4 py-2 outline-none"
-        onFocus={handleFocus}
         onBlur={handleBlur}
+        onClickReset={() => handleKeywordChange('')}
       />
       <div
         className={`${
           !isEditing && `hidden`
         } fixed z-10 mt-2 h-fit max-h-[50vh] w-56 overflow-scroll rounded-md border border-gray-100 bg-white shadow-lg`}
       >
-        <div tabIndex={0} onFocus={handleFocus} onBlur={handleBlur}>
-          {filteredList?.map((item) => (
+        <div tabIndex={0} onBlur={handleBlur}>
+          {filteredList?.map((item, index) => (
             <Flex
-              key={item.studentNumber}
+              key={index}
               className="gap-5 p-4 hover:bg-gray-50"
               onMouseDown={() => handleSelectMember(item)}
             >
@@ -66,6 +55,6 @@ export default function ParticipantSelect({
           ))}
         </div>
       </div>
-    </div>
+    </li>
   );
 }
