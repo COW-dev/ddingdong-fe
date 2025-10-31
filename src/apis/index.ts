@@ -33,15 +33,6 @@ import {
   NewNotice,
   UpdateNotice,
 } from '@/types/notice';
-import {
-  ReportResponse,
-  MyReportList,
-  CurrentReport,
-  DeleteReport,
-  ActivityReportTerm,
-  SubmitReport,
-  TermReport,
-} from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
@@ -277,36 +268,6 @@ export async function updateClub({ id, score, token }: UpdateClub) {
       Authorization: 'Bearer ' + token,
     },
   });
-}
-export async function createReport(
-  activityReportRequests: [SubmitReport, SubmitReport],
-  token: string,
-) {
-  return await api.post(
-    '/central/my/activity-reports',
-    { activityReportRequests },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function updateReports(
-  activityReportRequests: [SubmitReport, SubmitReport],
-  token: string,
-) {
-  const { term } = activityReportRequests[0];
-  return await api.patch(
-    `/central/my/activity-reports?term=${term}`,
-    { activityReportRequests },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
 }
 
 export async function getNewScores(

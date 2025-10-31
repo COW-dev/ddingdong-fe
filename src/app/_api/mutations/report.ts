@@ -1,11 +1,11 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { SubmitReport } from '@/types/report';
 
 import { fetcher } from '../fetcher';
 import { reportQueryKeys } from '../queries/report';
-import { SubmitReport } from '@/types/report';
 
 const deleteReport = (term: number) =>
   fetcher.delete(`central/my/activity-reports?term=${term}`);
