@@ -47,7 +47,6 @@ export default function ClubDetailClientPage() {
       </ClubHeadingContainer>
       <ClubInfoForm
         club={club}
-        setClub={setClub}
         isEditing={isEditing}
         onChange={handleChange}
         onReset={handleReset}

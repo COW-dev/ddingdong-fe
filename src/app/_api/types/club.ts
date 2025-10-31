@@ -33,15 +33,28 @@ export type ClubDetail = {
   leader: string;
   phoneNumber: string;
   location: string;
-  isRecruit: boolean;
-  startDate?: string;
-  endDate?: string;
   regularMeeting: string;
   introduction: string;
   activity: string;
   ideal: string;
   profileImage: UrlType;
   introductionImage: UrlType;
-  token: string;
+  startDate?: string;
+  endDate?: string;
   formId?: number;
+};
+
+export type UpdateClubDetailAPIRequest = {
+  name: string;
+  tag: string;
+  clubLeader: string;
+  phoneNumber: string | null;
+  location: string | null;
+  regularMeeting: string;
+  introduction: string;
+  activity: string;
+  ideal: string | null;
+  formUrl: string | null;
+  profileImageId: string | null;
+  introductionImageId: string | null;
 };

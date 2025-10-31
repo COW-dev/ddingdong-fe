@@ -2,7 +2,7 @@
 
 import { Body3, Button, DoubleButton } from 'ddingdong-design-system';
 
-type EditActionButtonsProps = {
+type Props = {
   isEditing: boolean;
   onEdit: () => void;
   onCancel: () => void;
@@ -14,11 +14,12 @@ export function EditActionButtons({
   onEdit,
   onCancel,
   onSubmit,
-}: EditActionButtonsProps) {
+}: Props) {
   if (isEditing) {
     return (
       <div>
         <DoubleButton
+          className="flex max-sm:flex-col"
           left={
             <Button variant="tertiary" size="sm" onClick={onCancel}>
               <Body3>취소</Body3>

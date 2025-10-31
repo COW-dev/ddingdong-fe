@@ -10,13 +10,7 @@ import {
   UpdateApplicantStatus,
 } from '@/types/apply';
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
-import {
-  AdminClub,
-  NewClub,
-  DeleteClub,
-  UpdateClub,
-  UpdateMyClub,
-} from '@/types/club';
+import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,

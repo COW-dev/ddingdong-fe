@@ -6,6 +6,7 @@ import {
 import { Metadata } from 'next';
 
 import { clubQueryOptions } from '@/app/_api/queries/club';
+
 import ClubDetailClientPage from './_pages/ClubDetailClientPage';
 
 export const metadata: Metadata = {

@@ -1,21 +1,24 @@
 'use client';
 
 import Image from 'next/image';
+
 import { ChangeEvent } from 'react';
+
+import { Flex } from 'ddingdong-design-system';
+
+import { ClubDetail } from '@/app/_api/types/club';
+import { UrlType } from '@/app/_api/types/common';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
-import { Flex } from 'ddingdong-design-system';
+
 import { useClubImage } from '../_hooks/useClubImage';
-import { UrlType } from '@/app/_api/types/common';
 
 type AvatarUploadProps = {
-  isEditing: boolean;
   profileImage: UrlType;
-  setClub: React.Dispatch<React.SetStateAction<any>>;
+  setClub: React.Dispatch<React.SetStateAction<ClubDetail>>;
 };
 
 export default function AvatarUpload({
-  isEditing,
   profileImage,
   setClub,
 }: AvatarUploadProps) {
@@ -55,7 +58,7 @@ export default function AvatarUpload({
       ) : (
         <label
           htmlFor="uploadAvatar"
-          className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white p-3 text-gray-300 md:h-24 md:w-24"
+          className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white p-3 text-gray-300"
         >
           <Image src={ImageInput} width={35} height={35} alt="logo select" />
           <input
@@ -64,7 +67,6 @@ export default function AvatarUpload({
             accept="image/*"
             className="hidden"
             onChange={handleCustomFileChange}
-            disabled={!isEditing}
           />
         </label>
       )}

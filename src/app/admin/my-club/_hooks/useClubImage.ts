@@ -1,9 +1,8 @@
-import { useMemberExcelFile } from './../../member/_hooks/useMemberExcelFile';
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 import { ClubDetail } from '@/app/_api/types/club';
 import { UrlType } from '@/app/_api/types/file';
+import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
 
 export const useClubImage = (
   image: UrlType,
@@ -26,18 +25,17 @@ export const useClubImage = (
 
     try {
       const uploadInfo = await getPresignedId(files[0]);
+      if (!uploadInfo) return;
 
-      const urlType = {
-        id: uploadInfo?.id,
-        originUrl: 'string',
-        cdnUrl: 'string',
-      };
-      if (uploadInfo?.id) {
-        setClub((prev) => ({
-          ...prev,
-          [key]: urlType,
-        }));
-      }
+      const url = URL.createObjectURL(uploadInfo.file);
+      setClub((prev) => ({
+        ...prev,
+        [key]: {
+          id: uploadInfo?.id,
+          originUrl: url,
+          cdnUrl: url,
+        },
+      }));
     } catch (error) {
       console.error('이미지 업로드 실패:', error);
     }

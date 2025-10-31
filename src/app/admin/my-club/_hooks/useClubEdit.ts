@@ -39,16 +39,25 @@ export const useClubEdit = (initialData: ClubDetail) => {
   const handleClickSubmit = () => {
     const requestData = {
       ...club,
+      location: club.location || null,
+      phoneNumber: club.phoneNumber || null,
       clubLeader: club.leader,
-      profileImageId: club.profileImage.id ?? null,
-      introductionImageId: club.introductionImage.id ?? null,
-      startRecruitPeriod: '',
-      endRecruitPeriod: '',
+      profileImageId: club.profileImage?.id ?? null,
+      introductionImageId: club.introductionImage?.id ?? null,
       formUrl: '',
     };
-    updateClub(requestData);
-    setIsEditing(false);
-    toast.success('동아리 정보를 수정했어요.');
+
+    updateClub(requestData, {
+      onSuccess: () => {
+        setIsEditing(false);
+        toast.success('동아리 정보를 수정했어요.');
+      },
+      onError: (error) => {
+        if (error instanceof Error) {
+          toast.error(error.message);
+        }
+      },
+    });
   };
 
   return {

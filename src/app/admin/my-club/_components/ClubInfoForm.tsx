@@ -2,14 +2,11 @@
 import { ChangeEvent, ComponentProps, Dispatch, SetStateAction } from 'react';
 
 import { Body2, Flex, Input } from 'ddingdong-design-system';
-import toast from 'react-hot-toast';
 
 import { ClubDetail } from '@/app/_api/types/club';
-import { validator } from '@/utils/validator';
 
-type ClubInfoFormProps = {
+type Props = {
   club: ClubDetail;
-  setClub: Dispatch<SetStateAction<ClubDetail>>;
   isEditing: boolean;
   onChange: (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -19,22 +16,11 @@ type ClubInfoFormProps = {
 
 export default function ClubInfoForm({
   club,
-  setClub,
   isEditing,
   onChange,
   onReset,
-}: ClubInfoFormProps) {
+}: Props) {
   const { leader, phoneNumber, location, regularMeeting } = club;
-
-  function handleValueValidate(object: { type: string; value: string }) {
-    if (object.value && !validator(object)) {
-      toast.error('형식에 맞춰 재입력해주세요.');
-      setClub((prev) => ({
-        ...prev,
-        [object.type]: '',
-      }));
-    }
-  }
 
   return (
     <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-6">
@@ -54,9 +40,6 @@ export default function ClubInfoForm({
         value={phoneNumber}
         onChange={onChange}
         isEditing={isEditing}
-        onBlur={() =>
-          handleValueValidate({ type: 'phoneNumber', value: phoneNumber })
-        }
       />
       <CustomInput
         label="동아리방"
@@ -66,9 +49,6 @@ export default function ClubInfoForm({
         value={location}
         onChange={onChange}
         isEditing={isEditing}
-        onBlur={() =>
-          handleValueValidate({ type: 'location', value: location })
-        }
       />
       <CustomInput
         label="정기모임"

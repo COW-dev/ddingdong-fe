@@ -1,9 +1,11 @@
-import { Flex } from 'ddingdong-design-system';
 import { PropsWithChildren } from 'react';
+
+import { Flex } from 'ddingdong-design-system';
 
 export function ClubContainer({ children }: PropsWithChildren) {
   return <Flex dir="col">{children}</Flex>;
 }
+
 export function ClubHeadingContainer({ children }: PropsWithChildren) {
   return (
     <Flex alignItems="center" justifyContent="between">

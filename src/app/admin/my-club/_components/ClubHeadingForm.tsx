@@ -40,11 +40,7 @@ export default function AdminClubHeading({
 
   return (
     <Flex alignItems="center" gap={3} className="relative py-7">
-      <AvatarUpload
-        isEditing={isEditing}
-        profileImage={profileImage}
-        setClub={setClub}
-      />
+      <AvatarUpload profileImage={profileImage} setClub={setClub} />
       <div>
         <Title1 weight="bold">{clubName}</Title1>
         <Flex alignItems="center">
@@ -52,7 +48,7 @@ export default function AdminClubHeading({
           <Body2 weight="normal" className="px-1.5 text-gray-300">
             |
           </Body2>
-          <div className="w-2/3">
+          <div className="w-24 md:w-2/3">
             <Input
               onClickReset={() => onReset('tag')}
               name="tag"
