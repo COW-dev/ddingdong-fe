@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 
 import { toast, Toaster, useToasterStore } from 'react-hot-toast';
 
-export default function ToasterWithMax() {
+export function ToasterWithMax() {
   const { toasts } = useToasterStore();
   const toastLimit = 2;
 
