@@ -95,25 +95,6 @@ export async function getAdminAllClubs(
     },
   });
 }
-export async function getAdminAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getClubAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/central/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
 
 export async function getFixInfo(
   token: string,
