@@ -18,14 +18,7 @@ import {
   UpdateMyClub,
 } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
-import {
-  DeleteFixComment,
-  Fix,
-  FixComplete,
-  FixDetailInfo,
-  NewFix,
-  NewFixComment,
-} from '@/types/fix';
+import { NewFix } from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
 import {
   NoticeDetail,
@@ -96,18 +89,6 @@ export async function getAdminAllClubs(
   });
 }
 
-export async function getFixInfo(
-  token: string,
-  id: number,
-): Promise<FixDetailInfo> {
-  const response = await api.get(`/central/fix-zones/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  return await response.data;
-}
-
 export async function getNoticeInfo(
   noticeId: number,
 ): Promise<AxiosResponse<NoticeDetail, unknown>> {
@@ -162,22 +143,6 @@ export async function createFix({ token, post }: NewFix) {
   });
 }
 
-export async function createFixComment({
-  fixZoneId,
-  token,
-  content,
-}: NewFixComment) {
-  return await api.post(
-    `/admin/fix-zones/${fixZoneId}/comments`,
-    { content },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
 export async function updateNotice({
   noticeId,
   token,
@@ -205,20 +170,6 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
     },
   });
 }
-export async function deleteFixComment({
-  fixZoneId,
-  commentId,
-  token,
-}: DeleteFixComment) {
-  return await api.delete(
-    `/admin/fix-zones/${fixZoneId}/comments/${commentId}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
 
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
@@ -230,14 +181,6 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
 
 export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
   return await api.patch('/central/my', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateFixComplete({ id, token }: FixComplete) {
-  return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

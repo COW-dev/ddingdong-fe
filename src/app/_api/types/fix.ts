@@ -1,3 +1,5 @@
+import { UrlType } from './file';
+
 export type Fix = {
   id: number;
   clubLocation: string;
@@ -6,4 +8,19 @@ export type Fix = {
   content: string;
   isCompleted: boolean;
   requestedAt: string;
+};
+
+export type Comment = {
+  id: number;
+  commentor: {
+    name: string;
+    profileImageUrl: UrlType;
+  };
+  content: string;
+  createdAt: string;
+};
+
+export type DetailFix = Fix & {
+  images: UrlType[];
+  comments: Comment[];
 };
