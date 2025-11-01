@@ -5,7 +5,7 @@ import { ComponentProps, useState } from 'react';
 
 import { Skeleton } from 'ddingdong-design-system';
 
-import { cn } from '../ui/utils';
+import { cn } from '../../utils/cn';
 
 type OptimizedImageProps = {
   src?: string;
