@@ -5,9 +5,8 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Badge, Body1, Caption1 } from 'ddingdong-design-system';
 
 import { fixQueryOptions } from '@/app/_api/queries/fix';
+import { Fix } from '@/app/_api/types/fix';
 import EmptyText from '@/app/admin/fix/_component/EmptyText';
-import { Fix } from '@/types/fix';
-import { sortFixZone } from '@/utils/change';
 
 import {
   FixItemContainer,
@@ -22,7 +21,7 @@ export default function FixItemList({
     | ReturnType<typeof fixQueryOptions.all>;
 }) {
   const { data: posts } = useSuspenseQuery(queryOptions);
-  const sortedPosts = sortFixZone(posts);
+  const sortedPosts = sortPosts(posts);
 
   if (posts.length === 0) return <EmptyText />;
 
@@ -55,4 +54,16 @@ function FixItem({ data }: { data: Fix }) {
       />
     </FixItemContainer>
   );
+}
+
+function sortPosts(posts: Fix[]): Fix[] {
+  return [...posts].sort((a, b) => {
+    if (a.isCompleted !== b.isCompleted) {
+      return Number(a.isCompleted) - Number(b.isCompleted);
+    }
+
+    const dateA = new Date(a.requestedAt).getTime();
+    const dateB = new Date(b.requestedAt).getTime();
+    return dateB - dateA;
+  });
 }

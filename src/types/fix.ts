@@ -1,14 +1,6 @@
-import { OrderUUID, UrlType } from '.';
+import { Fix } from '@/app/_api/types/fix';
 
-export type Fix = {
-  id: number;
-  clubLocation: string;
-  clubName: string;
-  title: string;
-  content: string;
-  isCompleted: boolean;
-  requestedAt: string;
-};
+import { OrderUUID, UrlType } from '.';
 
 export type Comment = {
   id: number;

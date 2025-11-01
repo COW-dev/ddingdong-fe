@@ -1,8 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { Fix } from '@/types/fix';
-
 import { fetcher } from '../fetcher';
+import { Fix } from '../types/fix';
 export const fixQueryKeys = {
   all: () => ['fix'],
   my: () => [...fixQueryKeys.all(), 'my'],
