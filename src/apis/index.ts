@@ -10,13 +10,7 @@ import {
   UpdateApplicantStatus,
 } from '@/types/apply';
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
-import {
-  AdminClub,
-  NewClub,
-  DeleteClub,
-  UpdateClub,
-  UpdateMyClub,
-} from '@/types/club';
+import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,
@@ -27,15 +21,6 @@ import {
   NewFixComment,
 } from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
-import {
-  ReportResponse,
-  MyReportList,
-  CurrentReport,
-  DeleteReport,
-  ActivityReportTerm,
-  SubmitReport,
-  TermReport,
-} from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
@@ -207,14 +192,6 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   });
 }
 
-export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
-  return await api.patch('/central/my', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function updateFixComplete({ id, token }: FixComplete) {
   return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
@@ -238,107 +215,7 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(
-  activityReportRequests: [SubmitReport, SubmitReport],
-  token: string,
-) {
-  return await api.post(
-    '/central/my/activity-reports',
-    { activityReportRequests },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
 
-export async function getMyReportInfo(
-  term: number,
-  token: string,
-): Promise<AxiosResponse<ReportResponse[], unknown>> {
-  return await api.get(`/central/activity-reports?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getReportInfo(
-  term: number,
-  clubId: number,
-  token: string,
-): Promise<AxiosResponse<ReportResponse[], unknown>> {
-  return await api.get(`/admin/activity-reports/clubs/${clubId}?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getMyReportLists(
-  token: string,
-): Promise<AxiosResponse<MyReportList[], unknown>> {
-  return await api.get('/central/my/activity-reports', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getReportTerms(
-  token: string,
-): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
-  return await api.get('/central/activity-reports/term', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getCurrentReports(
-  token: string,
-): Promise<AxiosResponse<CurrentReport, unknown>> {
-  return await api.get('/central/activity-reports/current-term', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateReports(
-  activityReportRequests: [SubmitReport, SubmitReport],
-  token: string,
-) {
-  const { term } = activityReportRequests[0];
-  return await api.patch(
-    `/central/my/activity-reports?term=${term}`,
-    { activityReportRequests },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function getTermReports(
-  term: number,
-  token: string,
-): Promise<AxiosResponse<TermReport[], unknown>> {
-  return await api.get(`/admin/activity-reports?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function deleteReport({ term, token }: DeleteReport) {
-  return await api.delete(`/central/my/activity-reports?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
 export async function getNewScores(
   token: string,
   id: number,

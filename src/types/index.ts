@@ -32,16 +32,6 @@ export type LoginResponse = {
   token: string;
 };
 
-export type StudentInfo = {
-  name: string;
-  studentId: string;
-  department: string;
-};
-
-export type CurrentReport = {
-  currentTerm: string;
-};
-
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
 export type ModalType = { title: React.ReactNode; content: React.ReactNode };

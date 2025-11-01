@@ -18,24 +18,6 @@ export type NewClub = {
   token?: string;
 };
 
-export type UpdateMyClub = {
-  name: string;
-  tag: string;
-  clubLeader: string;
-  phoneNumber: string;
-  location: string;
-  startRecruitPeriod: string | null;
-  endRecruitPeriod: string | null;
-  regularMeeting: string;
-  introduction: string;
-  activity: string;
-  ideal: string | null;
-  formUrl: string | null;
-  profileImageId: string | null;
-  introductionImageId: string | null;
-  token: string;
-};
-
 export type UpdateClub = {
   id: number;
   score: number;
