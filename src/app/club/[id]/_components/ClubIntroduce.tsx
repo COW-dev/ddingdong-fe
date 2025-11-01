@@ -1,8 +1,7 @@
-import Image from 'next/image';
-
 import { Body1, Body2, Flex } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 type ClubIntroduceProps = Pick<
   ClubDetail,
@@ -17,14 +16,16 @@ export const ClubIntroduce = ({
 }: ClubIntroduceProps) => {
   return (
     <main className="w-full">
-      {introductionImage?.originUrl && (
+      {introductionImage?.cdnUrl && (
         <section className="mt-6 md:mt-8">
           <Body1 weight="bold" className="my-2">
             동아리 소개 이미지
           </Body1>
           <Flex justifyContent="center" className="rounded-2xl">
-            <Image
-              src={introductionImage.originUrl}
+            <OptimizedImage
+              priority
+              isSkeleton
+              src={introductionImage.cdnUrl}
               width={1000}
               height={500}
               alt="동아리 소개 사진"

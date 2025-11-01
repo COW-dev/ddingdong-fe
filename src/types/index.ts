@@ -32,8 +32,6 @@ export type LoginResponse = {
   token: string;
 };
 
-export type OrderUUID = { id: string; order: number };
-
 export type Auth = Pick<LoginResponse, 'role' | 'token'>;
 
 export type ModalType = { title: React.ReactNode; content: React.ReactNode };

@@ -21,12 +21,6 @@ import {
   NewFixComment,
 } from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
-import {
-  NoticeDetail,
-  DeleteNotice,
-  NewNotice,
-  UpdateNotice,
-} from '@/types/notice';
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
@@ -112,22 +106,8 @@ export async function getFixInfo(
   return await response.data;
 }
 
-export async function getNoticeInfo(
-  noticeId: number,
-): Promise<AxiosResponse<NoticeDetail, unknown>> {
-  return await api.get(`/notices/${noticeId}`);
-}
-
 export async function createFeed({ token, ...feedData }: NewFeed) {
   return await api.post('/central/my/feeds', feedData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function createNotice({ token, ...noticeData }: NewNotice) {
-  return await api.post('/admin/notices', noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -180,26 +160,6 @@ export async function createFixComment({
       },
     },
   );
-}
-
-export async function updateNotice({
-  noticeId,
-  token,
-  ...noticeData
-}: UpdateNotice) {
-  return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function deleteNotice({ noticeId, token }: DeleteNotice) {
-  return await api.delete(`/admin/notices/${noticeId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
 }
 
 export async function deleteClub({ clubId, token }: DeleteClub) {
