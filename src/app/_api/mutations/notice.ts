@@ -19,7 +19,7 @@ export const useAddNotice = () => {
     mutationFn: (noticeData: NewNoticeAPIRequest) => addNotice(noticeData),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [...noticeQueryKeys.all(1)],
+        queryKey: ['notices'],
       });
     },
   });
