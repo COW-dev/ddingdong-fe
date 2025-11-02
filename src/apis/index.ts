@@ -1,6 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
 
-import { PresignedUrlResponse } from '@/types';
 import {
   ApplicantDetail,
   Application,
@@ -11,18 +10,7 @@ import {
   UpdateApplicantStatus,
 } from '@/types/apply';
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
-import {
-  AdminClub,
-  NewClub,
-  DeleteClub,
-  UpdateClub,
-  UpdateMember,
-  UpdateMyClub,
-  DeleteMember,
-  MemberInfo,
-  AddMember,
-} from '@/types/club';
-import { DeleteDocument, NewDocument } from '@/types/document';
+import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import {
   DeleteFixComment,
@@ -33,22 +21,6 @@ import {
   NewFixComment,
 } from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
-import {
-  Notice,
-  NoticeDetail,
-  DeleteNotice,
-  NewNotice,
-  UpdateNotice,
-} from '@/types/notice';
-import {
-  ReportResponse,
-  MyReportList,
-  CurrentReport,
-  DeleteReport,
-  ActivityReportTerm,
-  SubmitReport,
-  TermReport,
-} from '@/types/report';
 import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
@@ -134,28 +106,8 @@ export async function getFixInfo(
   return await response.data;
 }
 
-export async function getAllNotices(
-  page: number,
-): Promise<AxiosResponse<Notice, unknown>> {
-  return await api.get(`/notices?page=${page}&limit=10`);
-}
-
-export async function getNoticeInfo(
-  noticeId: number,
-): Promise<AxiosResponse<NoticeDetail, unknown>> {
-  return await api.get(`/notices/${noticeId}`);
-}
-
 export async function createFeed({ token, ...feedData }: NewFeed) {
   return await api.post('/central/my/feeds', feedData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function createNotice({ token, ...noticeData }: NewNotice) {
-  return await api.post('/admin/notices', noticeData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -193,13 +145,6 @@ export async function createFix({ token, post }: NewFix) {
     },
   });
 }
-export async function createDocument({ token, ...documentData }: NewDocument) {
-  return await api.post('/admin/documents', documentData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
 
 export async function createFixComment({
   fixZoneId,
@@ -217,84 +162,6 @@ export async function createFixComment({
   );
 }
 
-export async function updateNotice({
-  noticeId,
-  token,
-  ...noticeData
-}: UpdateNotice) {
-  return await api.patch(`/admin/notices/${noticeId}`, noticeData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getClubMembers(
-  token: string,
-): Promise<AxiosResponse<MemberInfo, unknown>> {
-  return await api.get('/central/my/club-members', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function uploadMembers(formdata: FormData) {
-  const token = formdata.get('token');
-  return await api.post('/central/my/club-members', formdata, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateMembers({ member, id, token }: UpdateMember) {
-  return await api.patch(`/central/my/club-members/${id}`, member, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function deleteMember({ id, token }: DeleteMember) {
-  return await api.delete(`/club-members/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export function addMember(params: AddMember) {
-  const { token, member } = params;
-
-  return api.post('/club-members', member, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-}
-
-export async function getMemberFile(token: string) {
-  return await api.get('/central/my/club-members/excel', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-    responseType: 'blob',
-  });
-}
-
-export async function deleteNotice({ noticeId, token }: DeleteNotice) {
-  return await api.delete(`/admin/notices/${noticeId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function deleteDocument({ documentId, token }: DeleteDocument) {
-  return await api.delete(`/admin/documents/${documentId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
 export async function deleteClub({ clubId, token }: DeleteClub) {
   return await api.delete(`/admin/clubs/${clubId}`, {
     headers: {
@@ -325,14 +192,6 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   });
 }
 
-export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
-  return await api.patch('/central/my', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function updateFixComplete({ id, token }: FixComplete) {
   return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
@@ -356,107 +215,7 @@ export async function updateClub({ id, score, token }: UpdateClub) {
     },
   });
 }
-export async function createReport(
-  activityReportRequests: [SubmitReport, SubmitReport],
-  token: string,
-) {
-  return await api.post(
-    '/central/my/activity-reports',
-    { activityReportRequests },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
 
-export async function getMyReportInfo(
-  term: number,
-  token: string,
-): Promise<AxiosResponse<ReportResponse[], unknown>> {
-  return await api.get(`/central/activity-reports?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getReportInfo(
-  term: number,
-  clubId: number,
-  token: string,
-): Promise<AxiosResponse<ReportResponse[], unknown>> {
-  return await api.get(`/admin/activity-reports/clubs/${clubId}?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getMyReportLists(
-  token: string,
-): Promise<AxiosResponse<MyReportList[], unknown>> {
-  return await api.get('/central/my/activity-reports', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getReportTerms(
-  token: string,
-): Promise<AxiosResponse<ActivityReportTerm, unknown>> {
-  return await api.get('/central/activity-reports/term', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getCurrentReports(
-  token: string,
-): Promise<AxiosResponse<CurrentReport, unknown>> {
-  return await api.get('/central/activity-reports/current-term', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateReports(
-  activityReportRequests: [SubmitReport, SubmitReport],
-  token: string,
-) {
-  const { term } = activityReportRequests[0];
-  return await api.patch(
-    `/central/my/activity-reports?term=${term}`,
-    { activityReportRequests },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function getTermReports(
-  term: number,
-  token: string,
-): Promise<AxiosResponse<TermReport[], unknown>> {
-  return await api.get(`/admin/activity-reports?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function deleteReport({ term, token }: DeleteReport) {
-  return await api.delete(`/central/my/activity-reports?term=${term}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
 export async function getNewScores(
   token: string,
   id: number,
@@ -584,37 +343,6 @@ export async function deleteApplication({ formId, token }: DeleteApplication) {
   return await api.delete(`/central/my/forms/${formId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getPresignedUrl(
-  fileName: string,
-  token: string,
-): Promise<AxiosResponse<PresignedUrlResponse>> {
-  return await api.get(`/file/upload-url?fileName=${fileName}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getPresignedUrlForm(
-  fileName: string,
-): Promise<AxiosResponse<PresignedUrlResponse>> {
-  return await api.get(
-    `/file/upload-url/form-application?fileName=${fileName}`,
-  );
-}
-
-export async function uploadPresignedUrl(
-  file: File,
-  uploadUrl: string,
-  contentType: string,
-) {
-  return await api.put(uploadUrl, file, {
-    headers: {
-      'Content-Type': contentType,
     },
   });
 }

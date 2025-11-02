@@ -1,6 +1,5 @@
 import { ClubProfile } from './club';
-import { UrlType } from './common';
-
+import { UrlType } from './file';
 type FeedKeys = 'newestFeeds' | 'clubFeeds';
 
 export type FeedList = {

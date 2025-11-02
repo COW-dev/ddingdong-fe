@@ -80,7 +80,7 @@ export const ClubInfo = ({
         size="lg"
         onClick={() => moveToApply(Number(formId))}
         disabled={!isRecruitmentPeriod}
-        className="text-md fixed bottom-6 h-14 w-[90%] font-semibold lg:static lg:w-[25%]"
+        className="text-md fixed right-6 bottom-6 left-6 z-100 h-14 font-semibold lg:static lg:right-auto lg:left-auto lg:w-[25%] lg:self-center"
       >
         {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
       </Button>

@@ -1,4 +1,4 @@
-import { UrlType } from './common';
+import { UrlType } from './file';
 
 export type BannerType = {
   id: number;

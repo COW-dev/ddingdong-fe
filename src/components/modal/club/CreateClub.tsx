@@ -80,7 +80,7 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
             onChange={(e) => handleChange(e)}
           />
         </div>
-        <div className="mb-2 w-full ">
+        <div className="mb-2 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">
             대표자
           </label>
@@ -94,9 +94,9 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
           />
         </div>
 
-        <div className="mr-3  flex flex-row">
-          <div className="mb-2 w-full ">
-            <label className="inline-block w-20  font-semibold text-gray-500">
+        <div className="mr-3 flex flex-row">
+          <div className="mb-2 w-full">
+            <label className="inline-block w-20 font-semibold text-gray-500">
               카테고리
             </label>
             <ColorSelect
@@ -119,7 +119,7 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
             />
           </div>
         </div>
-        <div className="mb-2 w-full ">
+        <div className="mb-2 w-full">
           <label className="inline-block w-20 font-semibold text-gray-500">
             아이디
           </label>
@@ -133,7 +133,7 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
           />
         </div>
         <div
-          className="mb-2 w-full "
+          className="mb-2 w-full"
           onBlur={() =>
             handlePasswordValidate({ type: 'password', value: password })
           }
@@ -154,7 +154,7 @@ export default function CreateClub({ closeModal }: CreateClubProp) {
         <button
           type="submit"
           disabled={handleValidate(clubData)}
-          className={` w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors  hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg ${
+          className={`w-full rounded-xl bg-blue-500 py-4 font-bold text-white transition-colors hover:bg-blue-600 sm:mt-5 sm:py-4 sm:text-lg ${
             handleValidate(clubData) &&
             `cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200`
           }`}

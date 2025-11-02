@@ -36,6 +36,10 @@ export const resetCookie = () => {
 const expirationToken = async () => {
   toast.error('로그인 시간이 만료되었어요.');
   resetCookie();
+
+  if (typeof window !== 'undefined') {
+    window.location.href = '/login';
+  }
 };
 
 export const instance = ky.create({
@@ -74,9 +78,11 @@ export const instance = ky.create({
             apiError.message === '유효하지 않은 토큰입니다.'
           ) {
             await expirationToken();
-            return error;
+            throw apiError;
           }
+
           Sentry.captureException(apiError);
+          throw apiError;
         }
 
         return error;
@@ -86,8 +92,12 @@ export const instance = ky.create({
   ...defaultOption,
 });
 
-export async function parseResponse<T>(response: ResponsePromise) {
+export async function parseResponse<T>(
+  response: ResponsePromise,
+  type: 'json' | 'blob' = 'json',
+): Promise<T> {
   try {
+    if (type === 'blob') return (await response.blob()) as T;
     return await response.json<T>();
   } catch (error) {
     Sentry.captureException(error);
@@ -98,6 +108,8 @@ export async function parseResponse<T>(response: ResponsePromise) {
 export const fetcher = {
   get: <T>(pathname: string, options?: Options) =>
     parseResponse<T>(instance.get(pathname, options)),
+  getBlob: <T>(pathname: string, options?: Options) =>
+    parseResponse<T>(instance.get(pathname, options), 'blob'),
   post: <T>(pathname: string, options?: Options) =>
     parseResponse<T>(instance.post(pathname, options)),
   put: <T>(pathname: string, options?: Options) =>
