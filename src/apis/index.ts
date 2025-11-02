@@ -135,14 +135,6 @@ export async function createBanner({ token, ...bannerData }: NewBanner) {
   });
 }
 
-export async function createFix({ token, post }: NewFix) {
-  return await api.post('/central/fix-zones', post, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function updateNotice({
   noticeId,
   token,

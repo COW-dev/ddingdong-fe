@@ -17,7 +17,7 @@ export default function FixClientPage({ role }: { role: keyof RoleType }) {
         </Title1>
         {role === 'ROLE_CLUB' && (
           <Link href="/fix/new">
-            <Button size="md" variant="primary" color="blue">
+            <Button size="md" variant="secondary" color="blue">
               <Body3 weight="bold">신청하기</Body3>
             </Button>
           </Link>
