@@ -33,7 +33,9 @@ export default function Layout({ children }: LayoutProps) {
           {children}
         </Flex>
       </Flex>
+        </Flex>
+      </Flex>
       {!isLoginPage && <Footer />}
-    </>
+    </Flex>
   );
 }
