@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { fetcher } from '../fetcher';
 import { fixQueryKeys } from '../queries/fix';
-import { NewFix } from '@/types/fix';
+import { FixAPIRequest } from '../types/fix';
 
 const resolveFix = (id: number) =>
   fetcher.patch(`admin/fix-zones/${id}?fixZoneId=${id}`);
@@ -58,15 +58,15 @@ export const useCreateComment = (postId: number) => {
   });
 };
 
-const createFix = (post: NewFix) =>
+const createFix = (post: FixAPIRequest) =>
   fetcher.post(`central/fix-zones`, {
-    json: { post },
+    json: post,
   });
 
 export const useCreateFix = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (post: NewFix) => createFix(post),
+    mutationFn: (post: FixAPIRequest) => createFix(post),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [...fixQueryKeys.my()],

@@ -12,7 +12,6 @@ import {
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
-import { NewFix } from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -67,43 +66,6 @@ export async function getAdminAllClubs(
     },
   });
 }
-export async function getAdminAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getClubAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/central/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getFixInfo(
-  token: string,
-  id: number,
-): Promise<FixDetailInfo> {
-  const response = await api.get(`/central/fix-zones/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  return await response.data;
-}
-
-export async function getNoticeInfo(
-  noticeId: number,
-): Promise<AxiosResponse<NoticeDetail, unknown>> {
-  return await api.get(`/notices/${noticeId}`);
-}
 
 export async function createFeed({ token, ...feedData }: NewFeed) {
   return await api.post('/central/my/feeds', feedData, {
@@ -155,14 +117,6 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
 
 export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
   return await api.patch('/central/my', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateFixComplete({ id, token }: FixComplete) {
-  return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

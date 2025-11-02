@@ -3,11 +3,14 @@ import { ChangeEvent, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
-import { EditFix } from '@/types/fix';
-import { createImageOrder } from '@/utils/change';
-import { useCreateFix } from '@/app/_api/mutations/fix';
 
-const INIT_POST: EditFix = {
+import { useCreateFix } from '@/app/_api/mutations/fix';
+import { UploadRecord } from '@/app/admin/notice/new/_hook/useNewNotice';
+import { useRouter } from 'next/navigation';
+import { ApiError } from '@/app/_api/fetcher';
+import { FixAPIRequest } from '@/app/_api/types/fix';
+
+const INIT_POST: FixAPIRequest = {
   title: '',
   content: '',
   images: null,
@@ -15,41 +18,77 @@ const INIT_POST: EditFix = {
 
 export const useFix = () => {
   const mutation = useCreateFix();
-  const [post, setPost] = useState<EditFix>(INIT_POST);
+  const router = useRouter();
+  const [images, setImages] = useState<UploadRecord[]>([]);
+  const [post, setPost] = useState<FixAPIRequest>(INIT_POST);
   const { getPresignedIds, isLoading } = usePresignedUrl();
 
   const handleChange = (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => {
-    setPost((prev: EditFix) => ({
+    setPost((prev: FixAPIRequest) => ({
       ...prev,
       [event.target.name]: event.target.value,
     }));
   };
 
-  // const handleClickUpload = async (files: File[]) => {
-  //   const uploadInfo = await getPresignedIds(files);
-  //   const uploadIds = uploadInfo.map(({ id }) => id);
-  //   setPost((prev) => ({
-  //     ...prev,
-  //     images: prev.images === null ? uploadIds : [...prev.images, ...uploadIds],
-  //   }));
-  //   return uploadInfo;
-  // };
+  const handleClickImageUpload = async (
+    files: File[] | null,
+    urls: string[] | null,
+  ) => {
+    if (!files || !urls) {
+      setImages([]);
+      return [];
+    }
+
+    const newFiles = files.filter((file) => file.size > 0);
+    if (newFiles.length === 0) {
+      return setImages((prev) => {
+        const fileNames = files.map((file) => file.name);
+        return prev?.filter((item) => fileNames.includes(item.name ?? ''));
+      });
+    }
+
+    const uploadInfo = await getPresignedIds(newFiles);
+    setImages((prev) => [
+      ...prev,
+      ...uploadInfo.map(({ id, file }, index) => {
+        return {
+          id,
+          name: file.name,
+          previewUrl: urls[index],
+          file,
+        };
+      }),
+    ]);
+    return uploadInfo;
+  };
 
   const handleSubmit = () => {
     if (post.title === '') return toast('제목을 입력해주세요.');
-    const submitData = {
+    const submitData: FixAPIRequest = {
       ...post,
-      images: createImageOrder(post.images),
+      images: images.map((image, index) => ({ id: image.id, order: index })),
     };
-    mutation.mutate({ post: submitData });
+    mutation.mutate(submitData, {
+      onSuccess: () => {
+        toast.success('시설보수 요청사항이 접수되었어요.');
+        router.push('/fix');
+      },
+      onError: (error) => {
+        if (error instanceof ApiError) {
+          return toast.error(error.message);
+        }
+      },
+    });
   };
 
   return {
     post,
+    images,
     isLoading,
     handleChange,
     handleSubmit,
+    handleClickImageUpload,
   };
 };

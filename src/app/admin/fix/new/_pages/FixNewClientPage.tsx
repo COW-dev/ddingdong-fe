@@ -17,11 +17,11 @@ export default function FixNewClientPage() {
   const router = useRouter();
   const {
     post,
+    images,
     isLoading,
-    handleChange,
-    handleClickDelete,
-    handleClickUpload,
     handleSubmit,
+    handleChange,
+    handleClickImageUpload,
   } = useFix();
 
   return (
@@ -37,7 +37,7 @@ export default function FixNewClientPage() {
             name="title"
             spellCheck={false}
             placeholder="[동아리명] 제목을 입력하세요."
-            onChange={(event) => handleChange(event)}
+            onChange={handleChange}
           />
           <TextArea
             value={post.content}
@@ -45,16 +45,19 @@ export default function FixNewClientPage() {
             spellCheck={false}
             rows={4}
             placeholder="내용을 입력하세요."
-            onChange={(event) => handleChange(event)}
+            onChange={handleChange}
           />
         </Flex>
         <div className="flex-1">
-          {/* <UploadMultipleImage
-              isLoading={isLoading}
-              onDelete={handleClickDelete}
-              onAdd={handleClickUpload}
-            /> */}
-          <MediaUpload />
+          <MediaUpload
+            multiple
+            key={images.map((img) => img.id).join(',')}
+            previewUrls={images.map((image) => image.previewUrl)}
+            previewFiles={images.map((image) => image.file)}
+            onFileChange={(files: File[] | null, urls: string[]) => {
+              handleClickImageUpload(files ?? [], urls);
+            }}
+          />
         </div>
       </Card>
       <DoubleButton

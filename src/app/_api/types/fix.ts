@@ -1,3 +1,4 @@
+import { OrderUUID } from './common';
 import { UrlType } from './file';
 
 export type Fix = {
@@ -8,6 +9,12 @@ export type Fix = {
   content: string;
   isCompleted: boolean;
   requestedAt: string;
+};
+
+export type FixAPIRequest = {
+  title: string;
+  content: string;
+  images: OrderUUID[] | null;
 };
 
 export type Comment = {
