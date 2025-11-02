@@ -1,7 +1,5 @@
 'use client';
 
-import Image from 'next/image';
-
 import {
   Carousel,
   CarouselContent,
@@ -9,6 +7,7 @@ import {
 } from 'ddingdong-design-system';
 
 import { BannerType } from '@/app/_api/types/banner';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 export function ClubCarousel({ bannerData }: { bannerData: BannerType[] }) {
   return (
@@ -16,14 +15,24 @@ export function ClubCarousel({ bannerData }: { bannerData: BannerType[] }) {
       <CarouselContent className="h-56">
         {bannerData.map((banner, index) => (
           <CarouselItem key={banner.id}>
-            <div className="relative h-56 w-full overflow-hidden rounded-lg">
-              <Image
-                fill
+            <div className="relative hidden items-center justify-center overflow-hidden rounded-lg md:flex md:h-[224px]">
+              <OptimizedImage
                 priority={index === 0}
+                width={1024}
+                height={224}
                 src={banner.webImageUrl.cdnUrl}
-                alt={`배너 ${index}`}
-                className="object-scale-down"
-                sizes="(min-width: 768px) 800px, 100vw"
+                alt={`배너 ${index + 1}`}
+                className="absolute h-full w-full object-scale-down"
+              />
+            </div>
+            <div className="relative flex h-[224px] w-full items-center justify-center overflow-hidden rounded-lg md:hidden">
+              <OptimizedImage
+                priority={index === 0}
+                width={342}
+                height={224}
+                src={banner.mobileImageUrl.cdnUrl}
+                alt={`배너 ${index + 1}`}
+                className="absolute h-full w-full object-scale-down"
               />
             </div>
           </CarouselItem>

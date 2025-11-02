@@ -1,6 +1,4 @@
-import { RefObject } from 'react';
-
-import { UrlType } from '@/app/_api/types/common';
+import { UrlType } from '@/app/_api/types/file';
 
 export function createImageOrder(uuids: string[] | null) {
   if (!uuids) return null;

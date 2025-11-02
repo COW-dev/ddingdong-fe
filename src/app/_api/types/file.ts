@@ -7,7 +7,8 @@ export type PresignedUrlResponse = {
 export type UploadFile = {
   id: string;
   file: File;
-  [x: string]: string | File;
+  contentType?: string;
+  [x: string]: string | File | undefined;
 };
 
 export type UrlType = {

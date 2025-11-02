@@ -3,19 +3,30 @@ import { toast } from 'react-hot-toast';
 
 import { getPresignedUrl, uploadPresignedUrl } from '@/app/_api/services/file';
 import { UploadFile } from '@/app/_api/types/file';
+import { optimizeImage } from '@/utils/imageOptimizer';
 
 export function usePresignedUrl() {
   const uploadFile = useMutation<UploadFile, Error, File>({
-    mutationFn: async (file: File) => {
-      const { id, uploadUrl, contentType } = await getPresignedUrl(
-        encodeURIComponent(file.name),
-      );
+    mutationFn: async (originalFile: File) => {
+      let fileToUpload = originalFile;
+      if (originalFile.type.startsWith('image/')) {
+        const result = await optimizeImage(originalFile, 0.75);
+        fileToUpload = result.file;
+      }
 
-      await uploadPresignedUrl(file, uploadUrl, contentType);
-      return { id, file, contentType };
+      const { id, uploadUrl, contentType } = await getPresignedUrl(
+        encodeURIComponent(fileToUpload.name),
+      );
+      await uploadPresignedUrl(fileToUpload, uploadUrl, contentType);
+
+      return {
+        id,
+        file: fileToUpload,
+        contentType,
+      };
     },
     onError: (error, variables, context) => {
-      console.error('❌ 업로드 실패:', error, variables, context);
+      console.error('업로드 실패:', error, variables, context);
       toast.error('파일 업로드 중 문제가 발생했어요.');
     },
   });

@@ -36,6 +36,10 @@ export const resetCookie = () => {
 const expirationToken = async () => {
   toast.error('로그인 시간이 만료되었어요.');
   resetCookie();
+
+  if (typeof window !== 'undefined') {
+    window.location.href = '/login';
+  }
 };
 
 export const instance = ky.create({

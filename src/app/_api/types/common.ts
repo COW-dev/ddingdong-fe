@@ -4,10 +4,4 @@ export type PresignedUrlResponse = {
   contentType: string;
 };
 
-export type UrlType = {
-  id?: string;
-  order?: number;
-  fileName?: string;
-  originUrl: string;
-  cdnUrl: string;
-};
+export type OrderUUID = { id: string; order: number };
