@@ -1,27 +1,22 @@
 'use client';
 
-import Image from 'next/image';
-
 import { ChangeEvent } from 'react';
 
 import { Flex } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
-import { UrlType } from '@/app/_api/types/common';
 import Camera from '@/assets/camera.svg';
 import ImageInput from '@/assets/imageInput.svg';
 
 import { useClubImage } from '../_hooks/useClubImage';
+import { UrlType } from '@/app/_api/types/file';
 
-type AvatarUploadProps = {
+type Props = {
   profileImage: UrlType;
   setClub: React.Dispatch<React.SetStateAction<ClubDetail>>;
 };
 
-export default function AvatarUpload({
-  profileImage,
-  setClub,
-}: AvatarUploadProps) {
+export default function AvatarUpload({ profileImage, setClub }: Props) {
   const { mediaPreviewUrls, handleFileChange } = useClubImage(
     profileImage,
     setClub,
@@ -38,15 +33,14 @@ export default function AvatarUpload({
     <Flex alignItems="center" justifyContent="center" className="relative">
       {mediaPreviewUrls.length > 0 ? (
         <>
-          <Image
+          <img
             src={mediaPreviewUrls[0]}
             width={80}
             height={80}
             alt="club logo"
-            priority
             className="h-20 w-20 rounded-full border border-gray-200 object-cover"
           />
-          <Image
+          <img
             src={Camera}
             onClick={() => handleFileChange(null, [])}
             width={20}
@@ -60,7 +54,7 @@ export default function AvatarUpload({
           htmlFor="uploadAvatar"
           className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white p-3 text-gray-300"
         >
-          <Image src={ImageInput} width={35} height={35} alt="logo select" />
+          <img src={ImageInput} width={35} height={35} alt="logo select" />
           <input
             id="uploadAvatar"
             type="file"

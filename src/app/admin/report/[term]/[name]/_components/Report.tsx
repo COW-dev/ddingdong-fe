@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 
 import { Body3, Flex, Icon } from 'ddingdong-design-system';
 
@@ -48,11 +47,10 @@ export default function Report({ report }: Props) {
         </ReportContentContainer>
       </Flex>
       <Flex className="overflow-hidden">
-        <Image
+        <img
           src={image}
           className="object-contain"
           alt="activeReport"
-          priority
           width={400}
           height={400}
         />
