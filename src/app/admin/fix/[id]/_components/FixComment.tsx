@@ -1,11 +1,15 @@
 'use client';
 import { PropsWithChildren } from 'react';
-import Admin from '@/assets/admin.jpg';
-import CommentItem from './CommentItem';
+
 import { Avatar, Button, Flex, TextArea } from 'ddingdong-design-system';
-import { RoleType } from '@/constants/role';
-import { useComment } from '../_hooks/useComment';
+
 import { Comment } from '@/app/_api/types/fix';
+import Admin from '@/assets/admin.jpg';
+import { RoleType } from '@/constants/role';
+
+import { useComment } from '../_hooks/useComment';
+
+import CommentItem from './CommentItem';
 
 export default function FixComment({
   comments,
@@ -40,7 +44,7 @@ function CreateComment({ id }: { id: number }) {
         rows={1}
         maxLength={255}
         onChange={handleChangeMessage}
-        className="min-w-[70vw] max-sm:min-w-80"
+        className="min-w-[70vw] max-sm:min-w-[60vw]"
       />
       <Button
         type="button"

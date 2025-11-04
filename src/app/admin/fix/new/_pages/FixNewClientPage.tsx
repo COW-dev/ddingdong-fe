@@ -1,6 +1,6 @@
 'use client';
-import { useFix } from '../_hooks/useFix';
 import { useRouter } from 'next/navigation';
+
 import {
   Body2,
   Button,
@@ -12,6 +12,8 @@ import {
   TextArea,
   Title1,
 } from 'ddingdong-design-system';
+
+import { useFix } from '../_hooks/useFix';
 
 export default function FixNewClientPage() {
   const router = useRouter();
@@ -43,13 +45,14 @@ export default function FixNewClientPage() {
             value={post.content}
             name="content"
             spellCheck={false}
-            rows={4}
             placeholder="내용을 입력하세요."
             onChange={handleChange}
+            className="md:h-104"
           />
         </Flex>
         <div className="flex-1">
           <MediaUpload
+            className="flex items-center justify-center md:h-118"
             multiple
             key={images.map((img) => img.id).join(',')}
             previewUrls={images.map((image) => image.previewUrl)}
