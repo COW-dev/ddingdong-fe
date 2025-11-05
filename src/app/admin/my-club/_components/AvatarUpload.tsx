@@ -2,14 +2,12 @@
 
 import { ChangeEvent } from 'react';
 
-import { Flex } from 'ddingdong-design-system';
+import { Flex, Icon, IconButton } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
-import Camera from '@/assets/camera.svg';
-import ImageInput from '@/assets/imageInput.svg';
+import { UrlType } from '@/app/_api/types/file';
 
 import { useClubImage } from '../_hooks/useClubImage';
-import { UrlType } from '@/app/_api/types/file';
 
 type Props = {
   profileImage: UrlType;
@@ -40,13 +38,12 @@ export default function AvatarUpload({ profileImage, setClub }: Props) {
             alt="club logo"
             className="h-20 w-20 rounded-full border border-gray-200 object-cover"
           />
-          <img
-            src={Camera}
-            onClick={() => handleFileChange(null, [])}
-            width={20}
-            height={20}
-            alt="reset"
+          <IconButton
+            iconName="camera"
+            color="gray"
             className="absolute start-16 top-0.5 cursor-pointer opacity-40"
+            size={20}
+            onClick={() => handleFileChange(null, [])}
           />
         </>
       ) : (
@@ -54,7 +51,7 @@ export default function AvatarUpload({ profileImage, setClub }: Props) {
           htmlFor="uploadAvatar"
           className="flex h-20 w-20 cursor-pointer items-center justify-center rounded-full border border-gray-200 bg-white p-3 text-gray-300"
         >
-          <img src={ImageInput} width={35} height={35} alt="logo select" />
+          <Icon name="upload" color="gray" />
           <input
             id="uploadAvatar"
             type="file"

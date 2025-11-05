@@ -1,24 +1,26 @@
 'use client';
+
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import Admin from '@/assets/admin.jpg';
-import { Comment } from '@/app/_api/types/fix';
 import 'dayjs/locale/ko';
 import {
-  Body1,
-  Body2,
-  Button,
-  DoubleButton,
-  Flex,
   usePortal,
-  Modal,
+  Flex,
   Avatar,
+  Body3,
   TextArea,
   Icon,
-  Body3,
+  Modal,
+  Body1,
+  DoubleButton,
+  Button,
+  Body2,
 } from 'ddingdong-design-system';
-import { RoleType } from '@/constants/role';
+
 import { useDeleteComment } from '@/app/_api/mutations/fix';
+import { Comment } from '@/app/_api/types/fix';
+import Admin from '@/assets/admin.jpg';
+import { RoleType } from '@/constants/role';
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);

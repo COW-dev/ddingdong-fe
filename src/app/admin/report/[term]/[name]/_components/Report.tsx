@@ -25,7 +25,7 @@ export default function Report({ report }: Props) {
     participants,
   } = report;
 
-  const image = responseImage?.originUrl ?? UnSubmitImage;
+  const image = responseImage?.originUrl ?? UnSubmitImage.src;
   const hasParticipants = participants?.some((p) => p.name?.trim());
 
   return (
