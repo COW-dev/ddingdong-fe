@@ -42,7 +42,7 @@ export const useDeleteComment = (postId: number) => {
 
 const createCommet = (postId: number, comment: string) =>
   fetcher.post(`admin/fix-zones/${postId}/comments?fixZoneId=${postId}`, {
-    json: { comment },
+    json: { content: comment },
   });
 
 export const useCreateComment = (postId: number) => {

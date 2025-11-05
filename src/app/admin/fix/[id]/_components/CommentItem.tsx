@@ -1,6 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
+import TextareaAutosize from 'react-textarea-autosize';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import {
@@ -9,12 +10,12 @@ import {
   Avatar,
   Body3,
   TextArea,
-  Icon,
   Modal,
   Body1,
   DoubleButton,
   Button,
   Body2,
+  IconButton,
 } from 'ddingdong-design-system';
 
 import { useDeleteComment } from '@/app/_api/mutations/fix';
@@ -47,23 +48,29 @@ export default function CommentItem({
   };
 
   return (
-    <Flex gap={4}>
-      <Avatar src={Admin.src} alt="admin image" />
+    <Flex className="gap-1 md:gap-4">
+      <Avatar src={Admin.src} alt="admin image" size="sm" />
       <Flex justifyContent="between" className="w-full">
         <div>
-          <Flex className="gap-2">
+          <Flex className="flex-col md:flex-row md:gap-2">
             <Body3>제41대 총동아리연합회 Mode</Body3>
-            <time className="text-gray-500">{dayjs(createdAt).fromNow()}</time>
+            <time className="truncate text-gray-500">
+              {dayjs(createdAt).fromNow()}
+            </time>
           </Flex>
-          <TextArea disabled={true} value={content} />
+          <TextareaAutosize
+            readOnly
+            value={content}
+            className="w-[65vw] resize-none focus:outline-0"
+          />
         </div>
         {role === 'ROLE_ADMIN' && (
           <Flex
             dir="col"
             justifyContent="center"
-            className="relative h-4 min-w-fit p-2"
+            className="relative h-4 min-w-fit"
           >
-            <Icon name="trash" onClick={openModal} />
+            <IconButton iconName="trash" onClick={openModal} />
           </Flex>
         )}
       </Flex>

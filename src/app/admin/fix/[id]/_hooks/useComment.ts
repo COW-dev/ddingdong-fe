@@ -1,13 +1,16 @@
 import { useState } from 'react';
+
 import toast from 'react-hot-toast';
-import { useCreateComment } from '@/app/_api/mutations/fix';
+
 import { ApiError } from '@/app/_api/fetcher';
+import { useCreateComment } from '@/app/_api/mutations/fix';
 
 export const useComment = (postId: number) => {
   const [comment, setComment] = useState<string>('');
   const mutation = useCreateComment(postId);
 
   const handleSubmit = () => {
+    if (!comment) return toast.error('댓글 작성 후, 전송해주세요.');
     mutation.mutate(
       { postId, comment },
       {
