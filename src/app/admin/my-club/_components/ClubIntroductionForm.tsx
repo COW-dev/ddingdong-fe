@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 
 import { ChangeEvent } from 'react';
 
@@ -62,10 +61,9 @@ export function ClubIntroductionForm({
           <>
             {introductionImage ? (
               <div className="my-4 flex justify-center">
-                <Image
+                <img
                   src={introductionImage?.cdnUrl}
                   width={300}
-                  priority
                   className="max-h-80"
                   height={300}
                   alt={introductionImage.fileName ?? '소개 이미지'}

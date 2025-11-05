@@ -12,14 +12,6 @@ import {
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
-import {
-  DeleteFixComment,
-  Fix,
-  FixComplete,
-  FixDetailInfo,
-  NewFix,
-  NewFixComment,
-} from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -74,37 +66,6 @@ export async function getAdminAllClubs(
     },
   });
 }
-export async function getAdminAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getClubAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/central/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getFixInfo(
-  token: string,
-  id: number,
-): Promise<FixDetailInfo> {
-  const response = await api.get(`/central/fix-zones/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  return await response.data;
-}
 
 export async function createFeed({ token, ...feedData }: NewFeed) {
   return await api.post('/central/my/feeds', feedData, {
@@ -138,50 +99,12 @@ export async function createBanner({ token, ...bannerData }: NewBanner) {
   });
 }
 
-export async function createFix({ token, post }: NewFix) {
-  return await api.post('/central/fix-zones', post, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function createFixComment({
-  fixZoneId,
-  token,
-  content,
-}: NewFixComment) {
-  return await api.post(
-    `/admin/fix-zones/${fixZoneId}/comments`,
-    { content },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
 export async function deleteClub({ clubId, token }: DeleteClub) {
   return await api.delete(`/admin/clubs/${clubId}`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
-}
-export async function deleteFixComment({
-  fixZoneId,
-  commentId,
-  token,
-}: DeleteFixComment) {
-  return await api.delete(
-    `/admin/fix-zones/${fixZoneId}/comments/${commentId}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
 }
 
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
@@ -192,8 +115,8 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   });
 }
 
-export async function updateFixComplete({ id, token }: FixComplete) {
-  return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
+export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
+  return await api.patch('/central/my', clubData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

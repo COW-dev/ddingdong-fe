@@ -47,7 +47,7 @@ export default function Index() {
             })
           }
         >
-          <div className=" items-end opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
+          <div className="items-end opacity-40 transition-opacity hover:opacity-70 sm:hidden">
             <Image
               src={Create}
               width={100}
@@ -61,7 +61,7 @@ export default function Index() {
           </div>
         </div>
       </div>
-      <div className="mt-12  w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
+      <div className="mt-12 w-full gap-4 sm:grid-cols-2 md:mt-14 md:gap-8">
         <ul className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
           {clubs
             .sort((a, b) => b.score - a.score)
@@ -85,7 +85,7 @@ export default function Index() {
                   });
                 }}
               >
-                <div className=" flex h-full w-full justify-around p-5 md:p-6">
+                <div className="flex h-full w-full justify-around p-5 md:p-6">
                   <div className="h-20 w-20 overflow-hidden rounded-full border-[1.5px] border-gray-100 bg-gray-50">
                     <Image
                       src={club?.profileImage?.originUrl ?? Admin}
