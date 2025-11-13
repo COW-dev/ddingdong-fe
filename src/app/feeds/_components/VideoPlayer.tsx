@@ -34,7 +34,7 @@ export default function VideoPlayer({ videoUrl }: VideoPlayerProps) {
       autoPlay
       muted
       playsInline
-      className="w-full md:h-[400px]"
+      className="h-full w-full rounded-xl object-contain"
     />
   );
 }
