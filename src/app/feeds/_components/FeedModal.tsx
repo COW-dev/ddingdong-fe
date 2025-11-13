@@ -30,7 +30,7 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <FeedModalContainer>
         <Flex dir="col">
-          <Flex className="h-full w-full rounded-xl bg-black md:h-[400px]">
+          <Flex className="h-48 w-full overflow-hidden rounded-xl bg-black sm:h-64 md:h-[400px]">
             {feed.feedType === 'VIDEO' ? (
               <VideoPlayer videoUrl={feed.fileUrls.cdnUrl} />
             ) : (
@@ -40,7 +40,7 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
                 height={400}
                 src={feed.fileUrls.cdnUrl}
                 alt="동아리 피드"
-                className="h-full max-h-full w-full max-w-full object-contain"
+                className="h-full w-full object-contain"
                 onLoad={() => setLoaded(true)}
               />
             )}
@@ -76,9 +76,5 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
 }
 
 function FeedModalContainer({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="max-w-[85vw] md:h-[550px] md:w-[800px] md:max-w-[90vw]">
-      {children}
-    </div>
-  );
+  return <div className="w-[80vw] max-w-[800px] md:h-[550px]">{children}</div>;
 }
