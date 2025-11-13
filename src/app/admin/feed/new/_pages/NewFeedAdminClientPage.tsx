@@ -1,0 +1,100 @@
+'use client';
+
+import {
+  Body2,
+  Button,
+  DoubleButton,
+  Flex,
+  Input,
+  MediaUpload,
+} from 'ddingdong-design-system';
+
+import { ClubHeading } from '@/app/club/[id]/_components/ClubHeading';
+import Admin from '@/assets/admin.jpg';
+import { useClubStore } from '@/store/club';
+
+import { useNewFeed } from '../_hooks/useNewFeed';
+import { useRouter } from 'next/navigation';
+
+export function NewFeedAdminClientPage({ token }: { token: string }) {
+  const router = useRouter();
+  const club = useClubStore((state) => state.club);
+  const {
+    feedData,
+    mediaPreviewUrls,
+    mediaPreviewFiles,
+    isLoading,
+    handleActivityContentChange,
+    handleActivityContentReset,
+    handleFileChange,
+    handleSubmit,
+  } = useNewFeed(token);
+
+  if (!club) {
+    return <div>동아리 정보가 존재하지 않아요.</div>;
+  }
+
+  return (
+    <>
+      <Flex alignItems="center" justifyContent="between">
+        <ClubHeading
+          name={club.name}
+          tag={club.tag}
+          category={club.category}
+          profileImage={club.profileImage ?? Admin.src}
+        />
+      </Flex>
+      <Flex
+        dir="col"
+        alignItems="center"
+        justifyContent="center"
+        className="w-full"
+      >
+        <Flex
+          dir="col"
+          className="mt-5 w-full rounded-xl border border-gray-100"
+        >
+          <Flex dir="col" alignItems="center" className="w-full gap-5 p-6">
+            <Input
+              name="activityContent"
+              value={feedData.activityContent}
+              onChange={(value) => handleActivityContentChange(value)}
+              onClickReset={handleActivityContentReset}
+              placeholder="활동 내용을 입력해 주세요. (최대 20자 이내)"
+            />
+            <MediaUpload
+              acceptedFormats={['image/*', 'video/*']}
+              onFileChange={handleFileChange}
+              previewUrls={mediaPreviewUrls}
+              previewFiles={mediaPreviewFiles}
+              className="flex h-96 max-h-96 w-full items-center justify-center"
+            />
+          </Flex>
+        </Flex>
+        <DoubleButton
+          className="m-auto w-fit p-6"
+          left={
+            <Button variant="tertiary" size="md" onClick={router.back}>
+              <Body2>취소</Body2>
+            </Button>
+          }
+          right={
+            <Button
+              variant="primary"
+              color="blue"
+              size="lg"
+              disabled={
+                isLoading ||
+                feedData.activityContent.length === 0 ||
+                !mediaPreviewFiles
+              }
+              onClick={handleSubmit}
+            >
+              <Body2>업로드 하기</Body2>
+            </Button>
+          }
+        />
+      </Flex>
+    </>
+  );
+}

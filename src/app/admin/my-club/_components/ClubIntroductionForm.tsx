@@ -6,6 +6,7 @@ import { Body3, Caption1, Flex, MediaUpload } from 'ddingdong-design-system';
 import TextareaAutosize from 'react-textarea-autosize';
 
 import { ClubDetail } from '@/app/_api/types/club';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { ClubIntroductionContainer } from '../_containers/ClubContainer';
 import { ClubContentContainer } from '../_containers/ClubContentContainer';
@@ -61,7 +62,7 @@ export function ClubIntroductionForm({
           <>
             {introductionImage ? (
               <div className="my-4 flex justify-center">
-                <img
+                <OptimizedImage
                   src={introductionImage?.cdnUrl}
                   width={300}
                   className="max-h-80"

@@ -26,6 +26,9 @@ export async function generateMetadata({
   return {
     title: `띵동 - ${clubData?.name ?? '동아리 소개'}`,
     description: `${clubData?.name ?? '동아리'}의 상세 소개 페이지입니다.`,
+    openGraph: {
+      images: [clubData?.profileImage?.cdnUrl ?? ''],
+    },
   };
 }
 
