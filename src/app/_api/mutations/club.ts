@@ -1,56 +1,23 @@
-import {
-  useMutation,
-  useQueryClient,
-  type QueryClient,
-} from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { fetcher } from '../fetcher';
 import { clubQueryKeys } from '../queries/club';
+import { UpdateClubDetailAPIRequest } from '../types/club';
 
-import type { AdminClub } from '../types/club';
-
-const invalidateClubLists = (qc: QueryClient) => {
-  qc.invalidateQueries({ queryKey: clubQueryKeys.all(), exact: false });
-  qc.invalidateQueries({ queryKey: clubQueryKeys.admin(), exact: false });
-};
-
-export type CreateClubRequest = {
-  clubName: string;
-  category: string;
-  tag: string;
-  leaderName: string;
-  authId: string;
-  password: string;
-};
-
-const addClub = (data: CreateClubRequest) =>
-  fetcher.post<AdminClub>('admin/clubs', { json: data });
-
-const removeClub = (id: number) => fetcher.delete<void>(`admin/clubs/${id}`);
-
-export type UpdateClubScoreRequest = {
-  id: number;
-  score: number;
-};
-
-export const useAddClub = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: addClub,
-    onSuccess: () => {
-      invalidateClubLists(queryClient);
-    },
+const updateClub = (club: UpdateClubDetailAPIRequest) =>
+  fetcher.patch('central/my', {
+    json: club,
   });
-};
 
-export const useDeleteClub = () => {
+export const useUpdateClub = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: removeClub,
+    mutationFn: (data: UpdateClubDetailAPIRequest) => updateClub(data),
     onSuccess: () => {
-      invalidateClubLists(queryClient);
+      queryClient.invalidateQueries({
+        queryKey: [...clubQueryKeys.my()],
+      });
     },
   });
 };

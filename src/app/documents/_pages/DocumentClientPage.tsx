@@ -17,7 +17,7 @@ export function DocumentClientPage() {
 
   return (
     <>
-      <Title1 weight="bold" className="py-7 md:py-10">
+      <Title1 as="h1" weight="bold" className="py-7 md:py-10">
         자료실
       </Title1>
       {documents.documents.length === 0 ? (
@@ -29,7 +29,6 @@ export function DocumentClientPage() {
           ))}
         </DocumentContainer>
       )}
-      {/* TODO : currentPage 버그, 1->2 페이지 전환 시 scrollTo 적용 */}
       <Pagination
         currentPage={currentPage}
         totalPages={documents.totalPageCount}

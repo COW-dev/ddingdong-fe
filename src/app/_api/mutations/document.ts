@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'react-hot-toast';
 
 import { fetcher } from '../fetcher';
 import { documentQueryKeys } from '../queries/document';
@@ -19,10 +18,6 @@ export const useAddDocument = () => {
       queryClient.invalidateQueries({
         queryKey: [...documentQueryKeys.all()],
       });
-      toast.success('자료가 업로드되었습니다.');
-    },
-    onError: () => {
-      toast.error('자료 업로드에 실패했습니다. 잠시 후 다시 시도해주세요.');
     },
   });
 };
@@ -36,10 +31,6 @@ export const useDeleteDocument = () => {
       queryClient.invalidateQueries({
         queryKey: [...documentQueryKeys.all()],
       });
-      toast.success('자료가 삭제되었습니다.');
-    },
-    onError: () => {
-      toast.error('자료 삭제에 실패했습니다. 잠시 후 다시 시도해주세요.');
     },
   });
 };

@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 export default {
   darkMode: ['class'],
   content: [
@@ -8,7 +7,9 @@ export default {
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './node_modules/ddingdong-design-system/dist/**/*.{js,ts,jsx,tsx}',
+    './node_modules/react-tailwindcss-datepicker/dist/**/*.{js,mjs}',
   ],
+  safelist: ['grid-cols-7', 'rotate-45', 'ml-[1.2rem]'],
   theme: {
     container: {
       center: true,

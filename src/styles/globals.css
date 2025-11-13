@@ -55,3 +55,11 @@ html {
   -webkit-tap-highlight-color: transparent;
   --muted-foreground: 215.4 16.3% 46.9%;
 }
+
+.customHideClock::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.customDatePickerWidth > div:nth-child(2) > div {
+  flex-direction: column;
+}

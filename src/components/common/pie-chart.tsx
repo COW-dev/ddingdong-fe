@@ -8,7 +8,7 @@ import {
 } from 'chart.js';
 import { tooltip } from '@/constants/tooltip';
 import { ChartItem } from '@/types/apply';
-import { debounce } from '../ui/utils';
+import { debounce } from '../../utils/cn';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
