@@ -11,7 +11,6 @@ import {
 } from '@/types/apply';
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
-import { NewFeed, DeleteFeed } from '@/types/feed';
 import { CreateFormData, ApplyData } from '@/types/form';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -67,22 +66,6 @@ export async function getAdminAllClubs(
   });
 }
 
-export async function createFeed({ token, ...feedData }: NewFeed) {
-  return await api.post('/central/my/feeds', feedData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function deleteFeed({ feedId, token }: DeleteFeed) {
-  return await api.delete(`/central/my/feeds/${feedId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function createClub({ token, ...clubData }: NewClub) {
   return await api.post('/admin/clubs', clubData, {
     headers: {
@@ -109,14 +92,6 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
 
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
-  return await api.patch('/central/my', clubData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

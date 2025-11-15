@@ -51,7 +51,7 @@ export function OptimizedImage({
   };
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <>
       {isSkeleton && !loaded && (
         <Skeleton className="absolute inset-0 h-full w-full" />
       )}
@@ -69,6 +69,8 @@ export function OptimizedImage({
         alt={alt}
         sizes={sizes}
         srcSet={srcSet}
+        width={width}
+        height={height}
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
         decoding={priority ? 'sync' : 'async'}
@@ -81,6 +83,6 @@ export function OptimizedImage({
         )}
         {...props}
       />
-    </div>
+    </>
   );
 }
