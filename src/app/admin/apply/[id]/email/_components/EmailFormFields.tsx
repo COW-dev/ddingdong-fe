@@ -9,7 +9,9 @@ type EmailFormFieldsProps = {
   target: string;
   title: string;
   message: string;
-  onTargetChange: (value: typeof EMAIL_STATUS.FIRST_PASS) => void;
+  onTargetChange: (
+    value: (typeof EMAIL_STATUS)[keyof typeof EMAIL_STATUS],
+  ) => void;
   onTitleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onTitleReset: () => void;
   onMessageChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
