@@ -18,7 +18,11 @@ const badgeVariantByStatus: Record<
 
 export function ClubCard({ id, name, tag, category, recruitStatus }: Club) {
   return (
-    <Link href={`/club/${id}`} aria-label={`${name} 동아리 상세 보기`}>
+    <Link
+      href={`/club/${id}`}
+      aria-label={`${name} 동아리 상세 보기`}
+      prefetch={true}
+    >
       <Card as="li" className="flex cursor-pointer justify-between">
         <Flex dir="col">
           <Body1 weight="bold">{name}</Body1>
