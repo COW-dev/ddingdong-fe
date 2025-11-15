@@ -29,7 +29,7 @@ export function DeleteModal({
       >
         <Flex dir="col" alignItems="center" className="w-full py-2">
           <Body1 as="span" className="text-gray-500" weight="bold">
-            {description} 피드를
+            {description}를
           </Body1>
           <Body1>삭제하시겠습니까?</Body1>
         </Flex>
