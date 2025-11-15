@@ -3,13 +3,18 @@ import { toast } from 'react-hot-toast';
 
 import { getPresignedUrl, uploadPresignedUrl } from '@/app/_api/services/file';
 import { UploadFile } from '@/app/_api/types/file';
+import { convertGifToMp4, isGifFile } from '@/utils/gifToMp4';
 import { optimizeImage } from '@/utils/imageOptimizer';
 
 export function usePresignedUrl() {
   const uploadFile = useMutation<UploadFile, Error, File>({
     mutationFn: async (originalFile: File) => {
       let fileToUpload = originalFile;
-      if (originalFile.type.startsWith('image/')) {
+
+      if (isGifFile(originalFile)) {
+        const result = await convertGifToMp4(originalFile);
+        fileToUpload = result.file;
+      } else if (originalFile.type.startsWith('image/')) {
         const result = await optimizeImage(originalFile, 0.75);
         fileToUpload = result.file;
       }

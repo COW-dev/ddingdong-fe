@@ -69,6 +69,8 @@ export function OptimizedImage({
         alt={alt}
         sizes={sizes}
         srcSet={srcSet}
+        width={width}
+        height={height}
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
         decoding={priority ? 'sync' : 'async'}
