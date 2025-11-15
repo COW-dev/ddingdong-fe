@@ -2,9 +2,17 @@ import { useRouter } from 'next/navigation';
 
 import { Badge, Body2, Body3, Card, Flex } from 'ddingdong-design-system';
 
-import { Form } from '@/app/_api/types/apply';
+import { Form, FormStatus } from '@/app/_api/types/apply';
 
 import { FORM_STATUS_FILTER } from '../_constants/formFilter';
+
+const getStatusVariant = (
+  formStatus: FormStatus,
+): 'positive' | 'neutral' | 'negative' => {
+  if (formStatus === FORM_STATUS_FILTER.IN_PROGRESS) return 'positive';
+  if (formStatus === FORM_STATUS_FILTER.BEFORE) return 'neutral';
+  return 'negative';
+};
 
 export function FormCard({
   formId,
@@ -31,16 +39,7 @@ export function FormCard({
             {startDate} ~ {endDate}
           </Body3>
         </Flex>
-        <Badge
-          variant={
-            formStatus === FORM_STATUS_FILTER.IN_PROGRESS
-              ? 'positive'
-              : formStatus === FORM_STATUS_FILTER.BEFORE
-                ? 'neutral'
-                : 'negative'
-          }
-          text={formStatus}
-        />
+        <Badge variant={getStatusVariant(formStatus)} text={formStatus} />
       </Flex>
     </Card>
   );
