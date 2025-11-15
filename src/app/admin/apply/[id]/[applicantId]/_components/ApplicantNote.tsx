@@ -29,7 +29,7 @@ export function ApplicantNote({
         <Flex justifyContent="end" className="w-full">
           <Body2
             weight="bold"
-            className="cursor-pointer text-gray-400"
+            className="cursor-pointer text-gray-400 underline"
             onClick={onUpdateNote}
           >
             저장하기
