@@ -7,7 +7,7 @@ export type ConvertResult = {
  * 브라우저에서 GIF를 비디오로 처리할 수 있도록 File 객체의 타입을 변경합니다.
  * 실제 변환은 서버에서 처리됩니다.
  */
-export const convertGifToMp4 = async (
+export const relabelGifToMp4 = async (
   gifFile: File,
 ): Promise<ConvertResult> => {
   const mp4File = new File([gifFile], gifFile.name.replace(/\.gif$/i, '.mp4'), {

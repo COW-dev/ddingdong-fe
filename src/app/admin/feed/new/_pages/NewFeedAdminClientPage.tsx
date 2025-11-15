@@ -66,7 +66,7 @@ export function NewFeedAdminClientPage({ token }: { token: string }) {
             <Input
               name="activityContent"
               value={feedData.activityContent}
-              onChange={(value) => handleActivityContentChange(value)}
+              onChange={handleActivityContentChange}
               onClickReset={handleActivityContentReset}
               placeholder="활동 내용을 입력해 주세요. (최대 20자 이내)"
             />
@@ -94,7 +94,7 @@ export function NewFeedAdminClientPage({ token }: { token: string }) {
               disabled={
                 isLoading ||
                 feedData.activityContent.length === 0 ||
-                !mediaPreviewUrls
+                mediaPreviewUrls.length === 0
               }
               onClick={handleSubmit}
             >

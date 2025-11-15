@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 
 import { getPresignedUrl, uploadPresignedUrl } from '@/app/_api/services/file';
 import { UploadFile } from '@/app/_api/types/file';
-import { convertGifToMp4, isGifFile } from '@/utils/gifToMp4';
+import { relabelGifToMp4, isGifFile } from '@/utils/gifToMp4';
 import { optimizeImage } from '@/utils/imageOptimizer';
 
 export function usePresignedUrl() {
@@ -12,7 +12,7 @@ export function usePresignedUrl() {
       let fileToUpload = originalFile;
 
       if (isGifFile(originalFile)) {
-        const result = await convertGifToMp4(originalFile);
+        const result = await relabelGifToMp4(originalFile);
         fileToUpload = result.file;
       } else if (originalFile.type.startsWith('image/')) {
         const result = await optimizeImage(originalFile, 0.75);
