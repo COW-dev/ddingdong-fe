@@ -6,9 +6,10 @@ import { Body2, Button, Flex, Title3 } from 'ddingdong-design-system';
 import { FORM_STATUS } from '@/app/admin/apply/[id]/_constants/apply';
 
 import { formatDate } from '../../_utils/formatDate';
+import { FormStatus } from '@/app/_api/types/apply';
 
 type FormStatusInfoProps = {
-  formStatus: string;
+  formStatus: FormStatus;
   startDate: string;
   endDate: string;
   hasInterview: boolean;
@@ -61,10 +62,10 @@ export function FormStatusInfo({
         </Button>
         <Link href={`/apply/${formId}/email`} className="hidden md:block">
           <Button
+            type="button"
             size="sm"
             variant="secondary"
             color="blue"
-            onClick={() => router.push(`/apply/${formId}/email`)}
             className="hidden md:block"
           >
             이메일 전송하기

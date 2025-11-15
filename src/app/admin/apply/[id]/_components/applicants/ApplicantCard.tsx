@@ -31,11 +31,13 @@ export function ApplicantCard({ data, type, checked, onCheck }: Props) {
       />
 
       <Flex className="w-full border-b border-gray-200 bg-white pb-3 transition-colors hover:border-gray-200 md:rounded-xl md:border-[1px] md:p-6 md:hover:bg-gray-50">
-        <Link
-          href={`/apply/${data.formId}/${data.id}`}
-          className="flex h-full flex-col justify-between"
-        >
-          <Flex justifyContent="between" alignItems="center" gap={1}>
+        <Link href={`/apply/${data.formId}/${data.id}`} className="flex w-full">
+          <Flex
+            justifyContent="between"
+            alignItems="center"
+            gap={1}
+            className="w-full"
+          >
             <Flex dir="col" alignItems="start" gap={1}>
               <Body1 weight="bold">{data.name}</Body1>
               <Body3 weight="semibold" className="text-gray-400">
@@ -44,11 +46,10 @@ export function ApplicantCard({ data, type, checked, onCheck }: Props) {
             </Flex>
             <Badge
               variant={
-                status === 'SUBMITTED'
-                  ? 'neutral'
-                  : status === 'FIRST_PASS' || status === 'FINAL_PASS'
-                    ? 'positive'
-                    : 'negative'
+                STATUS_TYPE[status].backgroundColor as
+                  | 'positive'
+                  | 'negative'
+                  | 'neutral'
               }
               text={STATUS_TYPE[status].text}
             />
