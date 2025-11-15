@@ -8,12 +8,18 @@ import {
 
 export const applyQueryKeys = {
   all: () => ['apply'],
-  application: (formId: number) => [...applyQueryKeys.all(), formId],
-  applicantDetail: (formId: number, applicantId: number) => [
-    ...applyQueryKeys.all(),
-    formId,
-    applicantId,
-  ],
+  applications: {
+    all: () => [...applyQueryKeys.all(), 'applications'],
+    detail: (formId: number) => [...applyQueryKeys.applications.all(), formId],
+  },
+  applicants: {
+    all: () => [...applyQueryKeys.all(), 'applicants'],
+    detail: (formId: number, applicantId: number) => [
+      ...applyQueryKeys.applicants.all(),
+      formId,
+      applicantId,
+    ],
+  },
 };
 
 export const applyQueryOptions = {
@@ -24,7 +30,7 @@ export const applyQueryOptions = {
     }),
   application: (formId: number) =>
     queryOptions({
-      queryKey: applyQueryKeys.application(formId),
+      queryKey: applyQueryKeys.applications.detail(formId),
       queryFn: () =>
         fetcher.get<ApplicationAPIResponse>(
           `central/my/forms/${formId}/applications`,
@@ -32,7 +38,7 @@ export const applyQueryOptions = {
     }),
   applicantDetail: (formId: number, applicantId: number) =>
     queryOptions({
-      queryKey: applyQueryKeys.applicantDetail(formId, applicantId),
+      queryKey: applyQueryKeys.applicants.detail(formId, applicantId),
       queryFn: () =>
         fetcher.get<ApplicantDetailAPIResponse>(
           `central/my/forms/${formId}/applications/${applicantId}`,

@@ -98,7 +98,7 @@ export const useUpdateApplicantNote = () => {
       updateApplicantNote(data),
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: applyQueryKeys.applicantDetail(
+        queryKey: applyQueryKeys.applicants.detail(
           variables.formId,
           variables.applicationId,
         ),
