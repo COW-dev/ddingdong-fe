@@ -1,6 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import {
+  Body1,
   Body2,
   Button,
   DoubleButton,
@@ -14,7 +17,6 @@ import Admin from '@/assets/admin.jpg';
 import { useClubStore } from '@/store/club';
 
 import { useNewFeed } from '../_hooks/useNewFeed';
-import { useRouter } from 'next/navigation';
 
 export function NewFeedAdminClientPage({ token }: { token: string }) {
   const router = useRouter();
@@ -31,7 +33,11 @@ export function NewFeedAdminClientPage({ token }: { token: string }) {
   } = useNewFeed(token);
 
   if (!club) {
-    return <div>동아리 정보가 존재하지 않아요.</div>;
+    return (
+      <Flex justifyContent="center" alignItems="center" className="h-screen">
+        <Body1 className="text-gray-500">동아리 정보가 존재하지 않아요.</Body1>
+      </Flex>
+    );
   }
 
   return (
@@ -41,7 +47,9 @@ export function NewFeedAdminClientPage({ token }: { token: string }) {
           name={club.name}
           tag={club.tag}
           category={club.category}
-          profileImage={club.profileImage ?? Admin.src}
+          profileImage={
+            club.profileImage ?? { originUrl: Admin.src, cdnUrl: Admin.src }
+          }
         />
       </Flex>
       <Flex
@@ -86,7 +94,7 @@ export function NewFeedAdminClientPage({ token }: { token: string }) {
               disabled={
                 isLoading ||
                 feedData.activityContent.length === 0 ||
-                !mediaPreviewFiles
+                !mediaPreviewUrls
               }
               onClick={handleSubmit}
             >

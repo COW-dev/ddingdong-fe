@@ -1,12 +1,6 @@
 import { useState } from 'react';
 
-import {
-  Flex,
-  Radio,
-  RadioItem,
-  Skeleton,
-  usePortal,
-} from 'ddingdong-design-system';
+import { Radio, RadioItem, usePortal } from 'ddingdong-design-system';
 
 import { Feed } from '@/app/_api/types/feed';
 import { FeedModal } from '@/app/feeds/_components/FeedModal';
@@ -40,9 +34,7 @@ export function ClubFeed({
         value={selectedFeedId?.toString() ?? ''}
         onValueChange={(value) => {
           const newValue = value === '' ? null : Number(value);
-          if (newValue === selectedFeedId) {
-            onFeedSelect(0);
-          } else {
+          if (editMode) {
             onFeedSelect(newValue ?? 0);
           }
         }}
@@ -95,12 +87,9 @@ function FeedImageWithRadio({
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <Flex
-      role="button"
-      tabIndex={0}
+    <div
       onClick={onClick}
-      onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick()}
-      className="aspect-square w-full cursor-pointer"
+      className="flex aspect-square w-full cursor-pointer border-0 bg-transparent p-0"
     >
       <OptimizedImage
         isSkeleton={!loaded}
@@ -114,6 +103,6 @@ function FeedImageWithRadio({
         }`}
         onLoad={() => setLoaded(true)}
       />
-    </Flex>
+    </div>
   );
 }
