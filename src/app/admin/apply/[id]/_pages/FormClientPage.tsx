@@ -9,13 +9,11 @@ import { FormStatusInfo } from '../_components/filter/FormStatusInfo';
 import { FormHeader } from '../_components/header/FormHeader';
 import { useFormActions } from '../_hooks/useFormActions';
 import { useFormData } from '../_hooks/useFormData';
-import { useTabState } from '../_hooks/useTabState';
 
 export function FormClientPage({ id }: { id: number }) {
   const { applicationData, documentApplicants, interviewApplicants } =
     useFormData(id);
   const { handleRegister, handleDelete } = useFormActions(id);
-  const { activeTab, tabsRef } = useTabState(id, applicationData.hasInterview);
 
   return (
     <>
@@ -34,24 +32,22 @@ export function FormClientPage({ id }: { id: number }) {
         formId={id}
       />
       {applicationData.hasInterview ? (
-        <div ref={tabsRef}>
-          <Tabs defaultIndex={activeTab}>
-            <TabItem label="서류">
-              <ApplicantList
-                formId={id}
-                type="DOCUMENT"
-                applicants={documentApplicants ?? []}
-              />
-            </TabItem>
-            <TabItem label="면접">
-              <ApplicantList
-                formId={id}
-                type="INTERVIEW"
-                applicants={interviewApplicants ?? []}
-              />
-            </TabItem>
-          </Tabs>
-        </div>
+        <Tabs key={`tabs-${id}`} defaultIndex={0}>
+          <TabItem label="서류">
+            <ApplicantList
+              formId={id}
+              type="DOCUMENT"
+              applicants={documentApplicants ?? []}
+            />
+          </TabItem>
+          <TabItem label="면접">
+            <ApplicantList
+              formId={id}
+              type="INTERVIEW"
+              applicants={interviewApplicants ?? []}
+            />
+          </TabItem>
+        </Tabs>
       ) : (
         <ApplicantList
           formId={id}
