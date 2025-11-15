@@ -18,16 +18,18 @@ export const useFormFilter = (forms: Form[]) => {
 
   const formCounts = useMemo<FormCounts>(
     () => ({
-      [FORM_STATUS_FILTER.ALL]: forms.length,
-      [FORM_STATUS_FILTER.BEFORE]: forms.filter(
-        (form) => form.formStatus === FORM_STATUS_FILTER.BEFORE,
-      ).length,
-      [FORM_STATUS_FILTER.IN_PROGRESS]: forms.filter(
-        (form) => form.formStatus === FORM_STATUS_FILTER.IN_PROGRESS,
-      ).length,
-      [FORM_STATUS_FILTER.CLOSED]: forms.filter(
-        (form) => form.formStatus === FORM_STATUS_FILTER.CLOSED,
-      ).length,
+      ...forms.reduce(
+        (acc, form) => {
+          acc[form.formStatus] = (acc[form.formStatus] || 0) + 1;
+          return acc;
+        },
+        {
+          [FORM_STATUS_FILTER.ALL]: forms.length,
+          [FORM_STATUS_FILTER.BEFORE]: 0,
+          [FORM_STATUS_FILTER.IN_PROGRESS]: 0,
+          [FORM_STATUS_FILTER.CLOSED]: 0,
+        } as FormCounts,
+      ),
     }),
     [forms],
   );
