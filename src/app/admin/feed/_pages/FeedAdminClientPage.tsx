@@ -4,7 +4,7 @@ import { PropsWithChildren } from 'react';
 
 import { Body1, Flex, usePortal } from 'ddingdong-design-system';
 
-import { ClubHeading } from '@/app/club/[id]/_components/ClubHeading';
+import { ClubHeading } from '@/app/club/[id]/_components/header/ClubHeading';
 import { useClubStore } from '@/store/club';
 
 import { ActionButton } from '../_components/ActionButton';

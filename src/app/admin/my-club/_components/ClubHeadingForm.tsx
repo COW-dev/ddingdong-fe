@@ -4,7 +4,7 @@ import React, { Dispatch, SetStateAction, ChangeEvent } from 'react';
 import { Body2, Flex, Input, Title1 } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
-import { ClubHeading } from '@/app/club/[id]/_components/ClubHeading';
+import { ClubHeading } from '@/app/club/[id]/_components/header/ClubHeading';
 import { deptCaptionColor } from '@/constants/color';
 
 import AvatarUpload from './AvatarUpload';
