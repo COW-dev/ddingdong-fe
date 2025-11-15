@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 
 import { Feed } from '@/app/_api/types/feed';
