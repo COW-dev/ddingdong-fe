@@ -63,13 +63,13 @@ export function ApplicantList({
       {
         onSuccess: () => {
           toast.success('지원자 상태 수정에 성공했어요.');
+          clearSelection();
         },
         onError: () => {
           toast.error('지원자 상태 수정에 실패했어요.');
         },
       },
     );
-    clearSelection();
   };
 
   return (
@@ -99,7 +99,6 @@ export function ApplicantList({
               onAllCheck={handleAllCheck}
             />
             <StatusDropdown
-              type={type}
               selectedCount={selectedCount}
               onStatusChange={handleStatusChange}
             />

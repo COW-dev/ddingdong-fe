@@ -38,18 +38,6 @@ export default function ApplicantDetailPage() {
     applicantData?.hasInterview || false,
   );
 
-  if (!applicantData) {
-    return (
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        className="h-full w-full p-6"
-      >
-        <Body3>지원자 정보가 존재하지 않아요.</Body3>
-      </Flex>
-    );
-  }
-
   return (
     <Flex dir="col" gap={3} className="w-full">
       <ApplicantHeader

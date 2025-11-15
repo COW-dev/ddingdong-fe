@@ -40,7 +40,7 @@ export function DeleteModal({
             </Body1>
             <Body1>삭제하시겠습니까?</Body1>
           </Flex>
-          <Caption1 className="text-gray-500">지원 폼이 삭제되요.</Caption1>
+          <Caption1 className="text-gray-500">지원 폼이 삭제돼요.</Caption1>
         </Flex>
 
         <DoubleButton

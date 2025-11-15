@@ -13,7 +13,6 @@ type StatusOption = {
 };
 
 type StatusDropdownProps = {
-  type: 'DOCUMENT' | 'INTERVIEW';
   selectedCount: number;
   onStatusChange: (status: 'PASS' | 'FAIL') => void;
   disabled?: boolean;

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { Flex } from 'ddingdong-design-system';
 
-import { useEmailForm } from '../_hooks/useEmailForm';
+import { useEmailForm } from './_hooks/useEmailForm';
 
 import { EmailActionButtons } from './_components/EmailActionButtons';
 import { EmailFormFields } from './_components/EmailFormFields';
