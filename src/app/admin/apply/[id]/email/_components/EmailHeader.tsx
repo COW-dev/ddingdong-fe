@@ -2,7 +2,13 @@ import { Body2, Flex, Icon, Title1, Tooltip } from 'ddingdong-design-system';
 
 export function EmailHeader() {
   return (
-    <Flex dir="col" alignItems="start" justifyContent="between" gap={2}>
+    <Flex
+      dir="col"
+      alignItems="start"
+      justifyContent="between"
+      gap={2}
+      className="pt-7 md:pt-10"
+    >
       <Title1 weight="bold">지원 결과 이메일 전송</Title1>
       <Flex dir="row" alignItems="center" gap={2}>
         <Body2 weight="semibold" className="text-gray-500">

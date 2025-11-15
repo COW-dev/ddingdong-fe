@@ -29,7 +29,7 @@ export default function ApplyEmailPage() {
       dir="col"
       justifyContent="between"
       alignItems="stretch"
-      className="mt-7 box-border w-full gap-2 md:gap-4"
+      className="box-border w-full gap-2 md:gap-4"
     >
       <EmailHeader />
       <EmailFormFields
