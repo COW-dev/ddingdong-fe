@@ -11,7 +11,7 @@ export function ClubTabSkeleton() {
       </section>
 
       <section className="mt-6 md:mt-8">
-        <Body1 weight="bold">
+        <Body1 as="span" weight="bold">
           <Skeleton className="inline-block h-6 w-40" />
         </Body1>
         <Flex dir="col" className="mt-1 space-y-1">
