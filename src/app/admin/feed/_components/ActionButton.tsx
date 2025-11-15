@@ -1,8 +1,9 @@
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
+import { PropsWithChildren } from 'react';
 
 import { Button, Flex, IconButton } from 'ddingdong-design-system';
-import { PropsWithChildren } from 'react';
-import { useRouter } from 'next/navigation';
 
 type ActionButtonProps = {
   editMode: boolean;
@@ -23,28 +24,12 @@ export function ActionButton({
     <>
       <DesktopActionButton>
         {editMode ? (
-          <>
-            <Button
-              variant="tertiary"
-              size="md"
-              onClick={() => onEditModeChange(false)}
-              className="text-md rounded-xl bg-gray-100 px-2 py-2 font-bold text-gray-500 transition-colors hover:bg-gray-300 md:w-auto md:px-4 md:py-2.5 md:text-lg"
-            >
-              취소
-            </Button>
-            <Button
-              variant="secondary"
-              size="md"
-              color="red"
-              onClick={onDeleteClick}
-              disabled={!selectedFeed}
-              className={`${
-                !selectedFeed && 'disabled:cursor-not-allowed'
-              } text-md rounded-xl bg-red-50 px-2 py-2 font-bold text-red-400 hover:bg-red-100 md:px-4 md:py-3 md:text-lg`}
-            >
-              삭제하기
-            </Button>
-          </>
+          <EditModeButtons
+            onEditModeChange={onEditModeChange}
+            onDeleteClick={onDeleteClick}
+            selectedFeed={selectedFeed}
+            deleteButtonText="삭제하기"
+          />
         ) : (
           <>
             <Button
@@ -68,28 +53,12 @@ export function ActionButton({
 
       <MobileActionButton>
         {editMode ? (
-          <>
-            <Button
-              variant="tertiary"
-              size="md"
-              onClick={() => onEditModeChange(false)}
-              className="text-md rounded-xl bg-gray-100 px-2 py-2 font-bold text-gray-500 transition-colors hover:bg-gray-300 md:w-auto md:px-4 md:py-2.5 md:text-lg"
-            >
-              취소
-            </Button>
-            <Button
-              variant="secondary"
-              size="md"
-              color="red"
-              onClick={onDeleteClick}
-              disabled={!selectedFeed}
-              className={`${
-                !selectedFeed && 'disabled:cursor-not-allowed'
-              } text-md rounded-xl bg-red-50 px-2 py-2 font-bold text-red-400 hover:bg-red-100 md:px-4 md:py-3 md:text-lg`}
-            >
-              삭제
-            </Button>
-          </>
+          <EditModeButtons
+            onEditModeChange={onEditModeChange}
+            onDeleteClick={onDeleteClick}
+            selectedFeed={selectedFeed}
+            deleteButtonText="삭제"
+          />
         ) : (
           <>
             <IconButton
@@ -108,6 +77,71 @@ export function ActionButton({
           </>
         )}
       </MobileActionButton>
+    </>
+  );
+}
+
+type EditModeButtonsProps = Pick<
+  ActionButtonProps,
+  'onEditModeChange' | 'onDeleteClick' | 'selectedFeed'
+> & {
+  deleteButtonText?: string;
+};
+
+function CancelButton({
+  onEditModeChange,
+}: {
+  onEditModeChange: (editMode: boolean) => void;
+}) {
+  return (
+    <Button
+      variant="tertiary"
+      size="md"
+      onClick={() => onEditModeChange(false)}
+      className="text-md rounded-xl bg-gray-100 px-2 py-2 font-bold text-gray-500 transition-colors hover:bg-gray-300 md:w-auto md:px-4 md:py-2.5 md:text-lg"
+    >
+      취소
+    </Button>
+  );
+}
+
+function DeleteButton({
+  onDeleteClick,
+  selectedFeed,
+  text = '삭제하기',
+}: {
+  onDeleteClick: () => void;
+  selectedFeed: number | null;
+  text?: string;
+}) {
+  return (
+    <Button
+      variant="secondary"
+      size="md"
+      color="red"
+      onClick={onDeleteClick}
+      disabled={!selectedFeed}
+      className="text-md rounded-xl bg-red-50 px-2 py-2 font-bold text-red-400 hover:bg-red-100 disabled:cursor-not-allowed md:px-4 md:py-3 md:text-lg"
+    >
+      {text}
+    </Button>
+  );
+}
+
+function EditModeButtons({
+  onEditModeChange,
+  onDeleteClick,
+  selectedFeed,
+  deleteButtonText = '삭제하기',
+}: EditModeButtonsProps) {
+  return (
+    <>
+      <CancelButton onEditModeChange={onEditModeChange} />
+      <DeleteButton
+        onDeleteClick={onDeleteClick}
+        selectedFeed={selectedFeed}
+        text={deleteButtonText}
+      />
     </>
   );
 }

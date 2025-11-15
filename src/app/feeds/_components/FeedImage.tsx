@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import { Flex, Skeleton } from 'ddingdong-design-system';
+import { Flex } from 'ddingdong-design-system';
 
+import { Feed } from '@/app/_api/types/feed';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import { Feed } from '../../_api/types/feed';
 type FeedImageProps = {
   feed: Feed;
   priority: boolean;
@@ -22,7 +22,6 @@ export function FeedImage({ feed, priority, onClick }: FeedImageProps) {
       onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && onClick()}
       className="relative aspect-square w-full cursor-pointer"
     >
-      {!loaded && <Skeleton className="absolute inset-0" />}
       <OptimizedImage
         isSkeleton={!loaded}
         width={500}

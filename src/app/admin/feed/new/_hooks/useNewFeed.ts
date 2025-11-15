@@ -79,11 +79,9 @@ export const useNewFeed = (token: string) => {
             ...feedData,
           },
           {
-            onSuccess: (_, variables) => {
-              if (!variables.mimeType?.includes('video')) {
-                toast.success('피드가 생성되었어요.');
-                router.push('/feed');
-              }
+            onSuccess: () => {
+              toast.success('피드가 생성되었어요.');
+              router.push('/feed');
             },
           },
         ),
