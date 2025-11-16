@@ -22,6 +22,10 @@ export function useQuestionHandlers(index: number, section: SectionFormField) {
     updateField('question', e.target.value);
   };
 
+  const resetInputValue = () => {
+    updateField('question', '');
+  };
+
   const handleTypeChange = (value: QuestionType) => {
     updateField('type', value);
     updateField(
@@ -35,6 +39,7 @@ export function useQuestionHandlers(index: number, section: SectionFormField) {
   };
 
   return {
+    resetInputValue,
     handleInputChange,
     handleTypeChange,
     handleSwitchChange,
