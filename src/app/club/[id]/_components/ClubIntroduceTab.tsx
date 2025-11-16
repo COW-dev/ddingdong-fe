@@ -1,3 +1,5 @@
+'use client';
+
 import { Body1, Body2, Flex } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
@@ -8,7 +10,7 @@ type ClubIntroduceProps = Pick<
   'introductionImage' | 'introduction' | 'activity' | 'ideal'
 >;
 
-export const ClubIntroduce = ({
+export const ClubIntroduceTab = ({
   introductionImage,
   introduction,
   activity,
@@ -21,9 +23,8 @@ export const ClubIntroduce = ({
           <Body1 weight="bold" className="my-2">
             동아리 소개 이미지
           </Body1>
-          <Flex justifyContent="center" className="rounded-2xl">
+          <Flex justifyContent="center" className="relative rounded-2xl">
             <OptimizedImage
-              priority
               isSkeleton
               src={introductionImage.cdnUrl}
               width={1000}

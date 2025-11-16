@@ -1,3 +1,5 @@
+'use client';
+
 import { Avatar, Body2, Flex, Title1 } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';

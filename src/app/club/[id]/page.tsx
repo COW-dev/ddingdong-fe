@@ -1,27 +1,25 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+import { Suspense } from 'react';
+
 import { Metadata } from 'next';
 
-import { clubQueryOptions } from '@/app/_api/queries/club';
-import { feedQueryOptions } from '@/app/_api/queries/feed';
+import { fetcher } from '@/app/_api/fetcher';
+import { ClubDetail } from '@/app/_api/types/club';
 
-import { ClubDetailClientPage } from './_pages/ClubDetailClientPage';
+import { ClubTabsClient } from './_components/ClubTabsClient';
+import { ClubFeedTab } from './_components/server/ClubFeedTab';
+import { ClubHeaderSection } from './_components/server/ClubHeaderSection';
+import { ClubIntroTab } from './_components/server/ClubIntroTab';
+import { ClubHeaderSkeleton } from './_components/skeleton/ClubHeaderSkeleton';
 
 export async function generateMetadata({
   params,
 }: {
   params: { id: string };
 }): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
   const clubId = Number(id);
 
-  const queryClient = new QueryClient();
-  const clubQuery = clubQueryOptions.detail(clubId);
-
-  const clubData = await queryClient.fetchQuery(clubQuery);
+  const clubData = await fetcher.get<ClubDetail>(`clubs/${clubId}`);
 
   return {
     title: `띵동 - ${clubData?.name ?? '동아리 소개'}`,
@@ -39,16 +37,16 @@ export default async function ClubDetailPage({
 }) {
   const { id } = await params;
   const clubId = Number(id);
-  const queryClient = new QueryClient();
-
-  await Promise.all([
-    queryClient.prefetchQuery(clubQueryOptions.detail(clubId)),
-    queryClient.prefetchQuery(feedQueryOptions.clubFeed(clubId)),
-  ]);
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ClubDetailClientPage id={clubId} />
-    </HydrationBoundary>
+    <>
+      <Suspense fallback={<ClubHeaderSkeleton />}>
+        <ClubHeaderSection id={clubId} />
+      </Suspense>
+      <ClubTabsClient
+        introTab={<ClubIntroTab id={clubId} />}
+        feedTab={<ClubFeedTab id={clubId} />}
+      />
+    </>
   );
 }

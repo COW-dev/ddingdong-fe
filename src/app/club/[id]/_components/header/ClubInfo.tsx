@@ -1,4 +1,6 @@
-import router from 'next/router';
+'use client';
+
+import { useRouter } from 'next/navigation';
 
 import dayjs from 'dayjs';
 import { Body2, Button, Flex } from 'ddingdong-design-system';
@@ -24,6 +26,7 @@ export const ClubInfo = ({
   endDate,
   formId,
 }: ClubInfoProps) => {
+  const router = useRouter();
   const now = dayjs();
   const isRecruitmentPeriod =
     now.isAfter(dayjs(startDate).startOf('day')) &&
