@@ -1,9 +1,10 @@
 import { usePathname } from 'next/navigation';
 
+import { Flex } from 'ddingdong-design-system';
+
 import AdminHeader from './AdminHeader';
 import Footer from './Footer';
 import UserHeader from './UserHeader';
-import { Flex } from 'ddingdong-design-system';
 
 type LayoutProps = {
   children: React.ReactNode;
