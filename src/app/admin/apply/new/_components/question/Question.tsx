@@ -54,8 +54,12 @@ function QuestionComponent({
   readOnly = false,
 }: QuestionProps) {
   const { updateQuestion } = useFormFieldContext();
-  const { handleInputChange, handleTypeChange, handleSwitchChange } =
-    useQuestionHandlers(index, section);
+  const {
+    handleInputChange,
+    resetInputValue,
+    handleTypeChange,
+    handleSwitchChange,
+  } = useQuestionHandlers(index, section);
 
   const QuestionContent = questionTypeMap[questionData.type as QuestionType];
   const currentOptions = getCurrentOptions(questionData);
@@ -129,7 +133,7 @@ function QuestionComponent({
             placeholder="질문을 입력해 주세요."
             value={questionData.question || ''}
             onChange={handleInputChange}
-            onClickReset={() => {}}
+            onClickReset={resetInputValue}
             className="w-full"
             disabled={readOnly}
           />
