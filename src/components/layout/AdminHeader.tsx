@@ -1,8 +1,9 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
 import { useClubStore } from '@/store/club';
+
+import { OptimizedImage } from '../common/OptimizedImage';
 
 export default function AdminHeader() {
   const router = useRouter();
@@ -20,7 +21,7 @@ export default function AdminHeader() {
     <header className="fixed z-40 flex h-16 w-full items-center justify-center border-b bg-white md:h-18">
       <div className="flex w-full max-w-6xl items-center justify-between px-6 md:px-16">
         <Link href={isLoginPage ? '/login' : '/'} className="-ml-3">
-          <Image
+          <OptimizedImage
             src="/logo.png"
             width={1544}
             height={380}
