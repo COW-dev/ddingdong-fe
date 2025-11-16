@@ -1,13 +1,14 @@
 import { Suspense } from 'react';
+
 import { Metadata } from 'next';
 
 import { fetcher } from '@/app/_api/fetcher';
 import { ClubDetail } from '@/app/_api/types/club';
 
+import { ClubTabsClient } from './_components/ClubTabsClient';
+import { ClubFeedTab } from './_components/server/ClubFeedTab';
 import { ClubHeaderSection } from './_components/server/ClubHeaderSection';
 import { ClubIntroTab } from './_components/server/ClubIntroTab';
-import { ClubFeedTab } from './_components/server/ClubFeedTab';
-import { ClubTabsClient } from './_components/ClubTabsClient';
 import { ClubHeaderSkeleton } from './_components/skeleton/ClubHeaderSkeleton';
 
 export async function generateMetadata({

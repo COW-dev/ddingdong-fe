@@ -1,10 +1,10 @@
 'use client';
 
-import { Body1, Body2, Flex, Skeleton } from 'ddingdong-design-system';
+import { Body1, Flex, Skeleton } from 'ddingdong-design-system';
 
 export function ClubTabSkeleton() {
   return (
-    <main className="w-full">
+    <div className="w-full">
       <section className="mt-6 md:mt-8">
         <Skeleton className="mb-2 h-6 w-48" />
         <Skeleton className="h-64 w-full rounded-2xl" />
@@ -22,7 +22,7 @@ export function ClubTabSkeleton() {
       </section>
 
       <section className="mt-6 md:mt-8">
-        <Body1 weight="bold">
+        <Body1 as="span" weight="bold">
           <Skeleton className="inline-block h-6 w-32" />
         </Body1>
         <ul className="mt-1 ml-5 list-disc space-y-2 md:mt-1.5">
@@ -39,7 +39,7 @@ export function ClubTabSkeleton() {
       </section>
 
       <section className="mt-6 md:mt-8">
-        <Body1 weight="bold">
+        <Body1 as="span" weight="bold">
           <Skeleton className="inline-block h-6 w-40" />
         </Body1>
         <ul className="mt-1 ml-5 list-disc space-y-2 md:mt-1.5">
@@ -54,6 +54,6 @@ export function ClubTabSkeleton() {
           </li>
         </ul>
       </section>
-    </main>
+    </div>
   );
 }

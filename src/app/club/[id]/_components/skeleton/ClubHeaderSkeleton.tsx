@@ -1,6 +1,6 @@
 'use client';
 
-import { Avatar, Body2, Flex, Skeleton, Title1 } from 'ddingdong-design-system';
+import { Body2, Flex, Skeleton } from 'ddingdong-design-system';
 
 export function ClubHeaderSkeleton() {
   return (
