@@ -89,5 +89,30 @@ export function validateQuestions(formField: SectionFormField[]): boolean {
     return false;
   }
 
+  const radioOrCheckboxQuestions = allQuestions.filter(
+    (question) => question.type === 'RADIO' || question.type === 'CHECK_BOX',
+  );
+
+  const questionWithEmptyOptions = radioOrCheckboxQuestions.find((question) => {
+    const options = question.options;
+
+    if (!options || !Array.isArray(options) || options.length === 0) {
+      return true;
+    }
+
+    const allOptionsEmpty = options.every(
+      (opt) => !opt || (typeof opt === 'string' && opt.trim() === ''),
+    );
+
+    return allOptionsEmpty;
+  });
+
+  if (questionWithEmptyOptions) {
+    toast.error(
+      '라디오 또는 체크박스 질문에는 최소 1개 이상의 옵션이 필요합니다.',
+    );
+    return false;
+  }
+
   return true;
 }
