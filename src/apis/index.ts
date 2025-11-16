@@ -9,7 +9,7 @@ import {
   UpdateApplicantNote,
   UpdateApplicantStatus,
 } from '@/types/apply';
-import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
+import { DeleteBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { CreateFormData, ApplyData } from '@/types/form';
 import { Score, ScoreDetail } from '@/types/score';
@@ -68,14 +68,6 @@ export async function getAdminAllClubs(
 
 export async function createClub({ token, ...clubData }: NewClub) {
   return await api.post('/admin/clubs', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function createBanner({ token, ...bannerData }: NewBanner) {
-  return await api.post('/admin/banners', bannerData, {
     headers: {
       Authorization: 'Bearer ' + token,
     },

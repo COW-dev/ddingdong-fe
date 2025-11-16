@@ -6,3 +6,9 @@ export type BannerType = {
   webImageUrl: UrlType;
   mobileImageUrl: UrlType;
 };
+
+export type NewBanner = {
+  webImageId: string;
+  mobileImageId: string;
+  link?: string;
+};
