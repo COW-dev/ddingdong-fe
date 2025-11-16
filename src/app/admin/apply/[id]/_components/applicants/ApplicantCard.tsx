@@ -1,14 +1,13 @@
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Badge, Body1, Body3, Checkbox, Flex } from 'ddingdong-design-system';
 
 import { Applicant } from '@/app/_api/types/apply';
+import { STATUS_TYPE } from '@/app/admin/apply/[id]/_constants/apply';
 import {
   getDocumentStatus,
   getInterviewStatus,
 } from '@/app/admin/apply/[id]/_utils/filter';
-import { STATUS_TYPE } from '@/app/admin/apply/[id]/_constants/apply';
-import { useRouter } from 'next/navigation';
 
 type Props = {
   data: Applicant;

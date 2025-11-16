@@ -1,12 +1,11 @@
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { Body2, Button, Flex, Title3 } from 'ddingdong-design-system';
 
+import { FormStatus } from '@/app/_api/types/apply';
 import { FORM_STATUS } from '@/app/admin/apply/[id]/_constants/apply';
 
 import { formatDate } from '../../_utils/formatDate';
-import { FormStatus } from '@/app/_api/types/apply';
 
 type FormStatusInfoProps = {
   formStatus: FormStatus;
@@ -25,8 +24,6 @@ export function FormStatusInfo({
   onRegister,
   formId,
 }: FormStatusInfoProps) {
-  const router = useRouter();
-
   return (
     <Flex
       dir="row"
