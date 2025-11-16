@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Badge, Body1, Caption1, Card, Flex } from 'ddingdong-design-system';
 
@@ -17,8 +18,14 @@ const badgeVariantByStatus: Record<
 };
 
 export function ClubCard({ id, name, tag, category, recruitStatus }: Club) {
+  const router = useRouter();
   return (
-    <Link href={`/club/${id}`} aria-label={`${name} 동아리 상세 보기`}>
+    <Link
+      href={`/club/${id}`}
+      aria-label={`${name} 동아리 상세 보기`}
+      prefetch={false}
+      onMouseEnter={() => router.prefetch(`/club/${id}`)}
+    >
       <Card as="li" className="flex cursor-pointer justify-between">
         <Flex dir="col">
           <Body1 weight="bold">{name}</Body1>
