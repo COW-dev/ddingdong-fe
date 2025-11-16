@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Body2,
@@ -29,6 +29,12 @@ export function EditSectionModal({
   existingSections,
 }: EditSectionModalProps) {
   const [sectionName, setSectionName] = useState(currentName);
+
+  useEffect(() => {
+    if (isOpen) {
+      setSectionName(currentName);
+    }
+  }, [isOpen, currentName]);
 
   const handleUpdate = () => {
     const trimmedName = sectionName.trim();
