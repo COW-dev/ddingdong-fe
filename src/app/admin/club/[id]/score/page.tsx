@@ -5,21 +5,18 @@ import {
 } from '@tanstack/react-query';
 import { Metadata } from 'next';
 
-import { ScoreQueryOptions } from '@/app/_api/queries/score';
-
-import ScorePageClient from './_components/ScorePageClient';
+import ScoreClientPage from './_pages/ScoreClientPage';
 
 export const metadata: Metadata = {
-  title: '띵동 - 동아리 점수 페이지',
+  title: '띵동 - 동아리 점수',
 };
 
-export default async function FaqPage() {
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery(ScoreQueryOptions.all());
+export default async function ClubDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
+  const { id } = await params;
 
-  return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <ScorePageClient />
-    </HydrationBoundary>
-  );
+  return <ScoreClientPage id={id} />;
 }

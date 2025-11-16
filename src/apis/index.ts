@@ -13,7 +13,6 @@ import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { NewFeed, DeleteFeed } from '@/types/feed';
 import { CreateFormData, ApplyData } from '@/types/form';
-import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -115,14 +114,6 @@ export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   });
 }
 
-export async function updateMyClub({ token, ...clubData }: UpdateMyClub) {
-  return await api.patch('/central/my', clubData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function updateBanner({ id, data, token }: UpdateBanner) {
   return await api.patch(`/admin/banners/${id}`, data, {
     headers: {
@@ -133,43 +124,6 @@ export async function updateBanner({ id, data, token }: UpdateBanner) {
 
 export async function updateClub({ id, score, token }: UpdateClub) {
   return await api.patch(`/admin/clubs/${id}/score?score=${score}`, score, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getNewScores(
-  token: string,
-  id: number,
-): Promise<AxiosResponse<ScoreDetail, unknown>> {
-  return await api.get(`/admin/${id}/score`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function createScore({ token, clubId, ...scoreData }: Score) {
-  return await api.post(`/admin/${clubId}/score`, scoreData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function getAllScores(
-  token: string,
-  clubId: number,
-): Promise<AxiosResponse<ScoreDetail, unknown>> {
-  return await api.get(`/admin/${clubId}/score`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-export async function getMyScore(
-  token: string,
-): Promise<AxiosResponse<ScoreDetail, unknown>> {
-  return await api.get('/central/my/score', {
     headers: {
       Authorization: 'Bearer ' + token,
     },

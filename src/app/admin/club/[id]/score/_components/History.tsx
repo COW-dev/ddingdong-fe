@@ -1,61 +1,71 @@
-import { ScoreDetail } from '@/types/score';
+import { ScoreDetail, ScoreHistory } from '@/app/_api/types/score';
+import { Body2, Body3, Caption1, Flex } from 'ddingdong-design-system';
 
 export default function History({ totalScore, scoreHistories }: ScoreDetail) {
   return (
-    <>
-      <div className="mt-10">
-        <div className="mb-2 flex flex-row justify-between">
-          <span className="ml-2 text-lg font-semibold lg:text-xl">내역</span>
-          <span className="text-lg font-bold text-blue-500 md:text-2xl">
-            총점 : {scoreHistories ? totalScore + '점' : '0점'}
-          </span>
-        </div>
-        <div
-          className={`${
-            scoreHistories ? 'h-56 overflow-scroll md:h-88' : ''
-          } shadow-md sm:rounded-lg`}
-        >
-          <table className="text-md w-full text-left text-gray-500 md:text-lg">
-            <thead className="text-md sticky top-0 bg-gray-50 text-gray-700 md:text-lg">
-              <tr>
-                <th scope="col" className="px-3 md:px-6 md:py-3">
-                  날짜
-                </th>
-                <th scope="col" className="px-2 py-3 md:px-6 md:py-3">
-                  카테고리
-                </th>
-                <th scope="col" className="md:px-5 md:py-3">
-                  점수
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {scoreHistories ? (
-                scoreHistories.reverse().map((data, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-neutral-200 bg-white"
-                  >
-                    <td className="px-3 py-2 md:px-6 md:py-4">
-                      {data?.createdAt.split('T')[0]}
-                    </td>
-                    <td className="px-2 md:px-6 md:py-4">
-                      {data?.scoreCategory}
-                    </td>
-                    <td className="px-1 py-2 md:px-6 md:py-4">
-                      {data?.amount.toFixed(3)}점
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <div className="px-3 py-2 md:px-6 md:py-4">
-                  내역이 존재하지 않습니다.
-                </div>
-              )}
-            </tbody>
-          </table>
-        </div>
+    <div>
+      <Flex justifyContent="between" className="p-2">
+        <Body2 weight="semibold">내역</Body2>
+        <Body2 weight="bold" className="text-blue-500">
+          총점 : {scoreHistories ? `${totalScore}점` : '0점'}
+        </Body2>
+      </Flex>
+      <div
+        className={`rounded-lg shadow-sm ${
+          scoreHistories && 'h-56 overflow-scroll md:h-88'
+        }`}
+      >
+        <table className="w-full text-left">
+          <thead className="sticky top-0 bg-gray-50">
+            <tr>
+              <th className="p-3 md:p-6 md:py-3">
+                <Body3>날짜</Body3>
+              </th>
+              <th className="p-3 md:p-6 md:py-3">
+                <Body3>카테고리</Body3>
+              </th>
+              <th className="p-3 md:p-6 md:py-3">
+                <Body3>점수</Body3>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <HistoryContent history={scoreHistories} />
+          </tbody>
+        </table>
       </div>
-    </>
+    </div>
   );
+}
+
+export function HistoryContent({ history }: { history: ScoreHistory[] }) {
+  if (!history)
+    return (
+      <tr className="h-40 md:h-72">
+        <td colSpan={3}>
+          <Flex justifyContent="center" className="w-full py-4">
+            <Caption1 weight="normal" className="text-gray-300">
+              동아리 점수 내역이 존재하지 않습니다.
+            </Caption1>
+          </Flex>
+        </td>
+      </tr>
+    );
+
+  return [...history].reverse().map((item, index) => {
+    const { createdAt, scoreCategory, amount } = item;
+    return (
+      <tr key={index} className="border-b border-neutral-200">
+        <td className="p-3 md:p-6 md:py-3">
+          <Body3 weight="normal">{createdAt.split('T')[0]}</Body3>
+        </td>
+        <td className="p-3 md:p-6 md:py-3">
+          <Body3 weight="normal">{scoreCategory}</Body3>
+        </td>
+        <td className="p-3 md:p-6 md:py-3">
+          <Body3 weight="normal">{parseFloat(amount.toFixed(3))}점</Body3>
+        </td>
+      </tr>
+    );
+  });
 }

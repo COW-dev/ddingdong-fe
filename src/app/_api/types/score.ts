@@ -17,3 +17,9 @@ export type ScoreHistory = {
   createdAt: string;
   amount: number;
 };
+
+export type ScoreAPIRequest = {
+  scoreCategory: string;
+  reason: string;
+  amount: number;
+};
