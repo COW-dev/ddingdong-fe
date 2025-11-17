@@ -1,27 +1,30 @@
+'use client';
+
 import { usePathname } from 'next/navigation';
 
-import AdminHeader from './AdminHeader';
-import Footer from './Footer';
-import UserHeader from './UserHeader';
 import { Flex } from 'ddingdong-design-system';
 
-type LayoutProps = {
-  children: React.ReactNode;
-};
+import { AdminHeader } from './AdminHeader';
+import Footer from './Footer';
+import { UserHeader } from './UserHeader';
+
+type LayoutProps = { children: React.ReactNode };
 
 export default function Layout({ children }: LayoutProps) {
   const pathname = usePathname();
-  const isAdminPage = pathname.startsWith('/admin');
-  const isLoginPage = pathname.endsWith('/login');
+  const host = typeof window !== 'undefined' ? window.location.hostname : '';
+  const sub = host.split('.')[0];
+  const isAdminHost = sub === 'admin';
+  const isLoginPage = pathname?.includes('/login');
 
   return (
-    <Flex dir="col" justifyContent="between" className="min-h-screen">
-      {isAdminPage ? <AdminHeader /> : <UserHeader />}
+    <>
+      {isAdminHost ? <AdminHeader /> : <UserHeader />}
       <Flex
         as="main"
         dir="col"
         alignItems="center"
-        className="w-full bg-white text-gray-800"
+        className="min-h-screen w-full bg-white text-gray-800"
       >
         <Flex
           dir="col"
@@ -31,6 +34,6 @@ export default function Layout({ children }: LayoutProps) {
         </Flex>
       </Flex>
       {!isLoginPage && <Footer />}
-    </Flex>
+    </>
   );
 }
