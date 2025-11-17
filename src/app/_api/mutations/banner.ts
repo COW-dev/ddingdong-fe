@@ -21,3 +21,18 @@ export const useCreateBanner = () => {
     },
   });
 };
+
+const deleteBanner = (id: number) => fetcher.delete(`admin/banners/${id}`);
+
+export const useDeleteBanner = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => deleteBanner(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [...bannerQueryKeys.all()],
+      });
+    },
+  });
+};

@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { Metadata } from 'next';
 
 import { RoleType } from '@/constants/role';
+
 import BannerClientPage from './_pages/BannerClientPage';
 
 export const metadata: Metadata = {

@@ -1,10 +1,14 @@
 import React, { useCallback, useRef } from 'react';
+
 import { Trash2 } from 'lucide-react';
+
 import { QuestionType, SectionFormField } from '@/types/form';
+
+import { Switch } from '../../components/ui/switch';
+
 import BaseInput from './BaseInput';
 import Content from './Content';
 import Dropdown from './Dropdown';
-import { Switch } from '../../components/ui/switch';
 
 interface Section {
   section: string;
