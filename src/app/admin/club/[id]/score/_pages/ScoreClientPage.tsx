@@ -1,9 +1,11 @@
 'use client';
-import { ScoreQueryOptions } from '@/app/_api/queries/score';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Flex, Title1 } from 'ddingdong-design-system';
-import History from '../_components/History';
+
+import { ScoreQueryOptions } from '@/app/_api/queries/score';
+
 import Category from '../_components/Category';
+import History from '../_components/History';
 import { CATEGORY } from '../_consts/category';
 import { CategoryListContainter } from '../_container/category';
 

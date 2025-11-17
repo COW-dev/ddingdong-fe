@@ -1,8 +1,3 @@
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
 import { Metadata } from 'next';
 
 import ScoreClientPage from './_pages/ScoreClientPage';
