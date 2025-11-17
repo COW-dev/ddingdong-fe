@@ -2,6 +2,8 @@ import { memo } from 'react';
 
 import { Flex, IconButton } from 'ddingdong-design-system';
 
+import { DEFAULT_SECTION } from '../../_utils/constants';
+
 type SectionTabsProps = {
   sections: string[];
   focusSection: string;
@@ -12,7 +14,6 @@ type SectionTabsProps = {
   readOnly?: boolean;
 };
 
-const REQUIRED_SECTIONS = '공통' as const;
 function SectionTabsComponent({
   sections,
   focusSection,
@@ -32,7 +33,7 @@ function SectionTabsComponent({
         <Flex
           key={name}
           alignItems="center"
-          gap={name !== REQUIRED_SECTIONS ? 1 : 0}
+          gap={name !== DEFAULT_SECTION ? 1 : 0}
           className={`rounded-md rounded-b-none border border-b-0 border-gray-200 ${
             focusSection === name
               ? 'bg-blue-50 text-blue-500'
@@ -46,7 +47,7 @@ function SectionTabsComponent({
           >
             {name}
           </button>
-          {name !== REQUIRED_SECTIONS && !readOnly && (
+          {name !== DEFAULT_SECTION && !readOnly && (
             <>
               <IconButton
                 iconName="write"

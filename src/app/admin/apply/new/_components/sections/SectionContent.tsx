@@ -90,7 +90,7 @@ export function SectionContent({ readOnly = false }: SectionContentProps) {
       <QuestionList
         focusSection={focusSection}
         sectionData={currentSectionData}
-        deleteQuestion={readOnly ? () => {} : deleteQuestion}
+        deleteQuestion={deleteQuestion}
         readOnly={readOnly}
       />
       {!readOnly && (
