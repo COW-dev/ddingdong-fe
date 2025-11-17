@@ -1,19 +1,25 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
 
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
+
+import { Header, NavigationItem } from 'ddingdong-design-system';
+
+import { useCookie } from '@/app/_api/useCookie';
 import { useClubStore } from '@/store/club';
 
 import { OptimizedImage } from '../common/OptimizedImage';
 
-export default function AdminHeader() {
+export function AdminHeader() {
   const router = useRouter();
 
   const { resetClub } = useClubStore();
-  const curPath = router.pathname;
-  const isLoginPage = curPath.endsWith('login');
+  const pathname = usePathname();
+  const isLoginPage = pathname.endsWith('/login');
+  const { resetCookie } = useCookie();
 
   const handleLogout = () => {
     resetClub();
+    resetCookie();
     router.push('/login');
   };
 
