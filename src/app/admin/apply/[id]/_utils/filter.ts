@@ -1,7 +1,7 @@
 import { Applicant, ApplicantStatus } from '@/app/_api/types/apply';
 
 export const filterApplicants = (data: Applicant[]) => {
-  const interviewApplicants = data.filter((applicant) =>
+  const interviewApplicants = data?.filter((applicant) =>
     ['FIRST_PASS', 'FINAL_FAIL', 'FINAL_PASS'].includes(applicant.status),
   );
 

@@ -141,28 +141,8 @@ export async function getMyScore(
   });
 }
 
-export async function createForm(token: string, formData: CreateFormData) {
-  return await api.post('/central/my/forms', formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
-
 export async function getForm(token: string, formId: number) {
   return await api.get(`/central/my/forms/${formId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
-
-export async function updateForm(
-  token: string,
-  formId: number,
-  formData: CreateFormData,
-) {
-  return await api.put(`/central/my/forms/${formId}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

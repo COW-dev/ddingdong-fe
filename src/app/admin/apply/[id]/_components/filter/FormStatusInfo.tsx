@@ -36,10 +36,10 @@ export function FormStatusInfo({
             as="span"
             weight="bold"
             className={
-              FORM_STATUS[formStatus as keyof typeof FORM_STATUS].color
+              FORM_STATUS[formStatus as keyof typeof FORM_STATUS]?.color
             }
           >
-            {FORM_STATUS[formStatus as keyof typeof FORM_STATUS].text}
+            {FORM_STATUS[formStatus as keyof typeof FORM_STATUS]?.text}
           </Title3>{' '}
           지원서입니다.
         </Title3>
