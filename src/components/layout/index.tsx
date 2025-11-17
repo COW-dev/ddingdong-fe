@@ -4,6 +4,10 @@ import { usePathname } from 'next/navigation';
 
 import { Flex } from 'ddingdong-design-system';
 
+import AdminHeader from './AdminHeader';
+import Footer from './Footer';
+import UserHeader from './UserHeader';
+
 import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
 import { UserHeader } from './UserHeader';

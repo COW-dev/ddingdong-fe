@@ -13,8 +13,8 @@ export default async function OverviewPage() {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 24 * 60 * 60 * 1000,
-        gcTime: 7 * 24 * 60 * 60 * 1000,
+        staleTime: 24 * 60 * 1000,
+        gcTime: 7 * 24 * 60 * 1000,
       },
     },
   });

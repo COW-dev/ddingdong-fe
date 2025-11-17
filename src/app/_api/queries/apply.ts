@@ -1,6 +1,8 @@
 import { queryOptions } from '@tanstack/react-query';
+
 import { fetcher } from '../fetcher';
 import {
+  AllFormAPIResponse,
   ApplicantDetailAPIResponse,
   ApplicationAPIResponse,
   FormAPIResponse,
@@ -8,6 +10,10 @@ import {
 
 export const applyQueryKeys = {
   all: () => ['apply'],
+  forms: {
+    all: () => [...applyQueryKeys.all(), 'forms'],
+    detail: (formId: number) => [...applyQueryKeys.forms.all(), formId],
+  },
   applications: {
     all: () => [...applyQueryKeys.all(), 'applications'],
     detail: (formId: number) => [...applyQueryKeys.applications.all(), formId],
@@ -26,7 +32,12 @@ export const applyQueryOptions = {
   all: () =>
     queryOptions({
       queryKey: applyQueryKeys.all(),
-      queryFn: () => fetcher.get<FormAPIResponse>('central/my/forms'),
+      queryFn: () => fetcher.get<AllFormAPIResponse>('central/my/forms'),
+    }),
+  form: (formId: number) =>
+    queryOptions({
+      queryKey: applyQueryKeys.forms.detail(formId),
+      queryFn: () => fetcher.get<FormAPIResponse>(`central/my/forms/${formId}`),
     }),
   application: (formId: number) =>
     queryOptions({
