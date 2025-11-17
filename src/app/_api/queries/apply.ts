@@ -6,13 +6,26 @@ import {
   ApplicantDetailAPIResponse,
   ApplicationAPIResponse,
   FormAPIResponse,
+  FormFieldAPIResponse,
+  SectionAPIResponse,
 } from '../types/apply';
 
 export const applyQueryKeys = {
   all: () => ['apply'],
   forms: {
     all: () => [...applyQueryKeys.all(), 'forms'],
+    sections: (formId: number) => [
+      ...applyQueryKeys.forms.all(),
+      'sections',
+      formId,
+    ],
     detail: (formId: number) => [...applyQueryKeys.forms.all(), formId],
+    questions: (formId: number, section: string) => [
+      ...applyQueryKeys.forms.all(),
+      'questions',
+      formId,
+      section,
+    ],
   },
   applications: {
     all: () => [...applyQueryKeys.all(), 'applications'],
@@ -32,12 +45,13 @@ export const applyQueryOptions = {
   all: () =>
     queryOptions({
       queryKey: applyQueryKeys.all(),
-      queryFn: () => fetcher.get<AllFormAPIResponse>('central/my/forms'),
+      queryFn: () => fetcher.get<FormAPIResponse>('central/my/forms'),
     }),
-  form: (formId: number) =>
+  sections: (formId: number) =>
     queryOptions({
-      queryKey: applyQueryKeys.forms.detail(formId),
-      queryFn: () => fetcher.get<FormAPIResponse>(`central/my/forms/${formId}`),
+      queryKey: applyQueryKeys.forms.sections(formId),
+      queryFn: () =>
+        fetcher.get<SectionAPIResponse>(`forms/${formId}/sections`),
     }),
   application: (formId: number) =>
     queryOptions({
@@ -54,5 +68,11 @@ export const applyQueryOptions = {
         fetcher.get<ApplicantDetailAPIResponse>(
           `central/my/forms/${formId}/applications/${applicantId}`,
         ),
+    }),
+  questions: (formId: number, section: string) =>
+    queryOptions({
+      queryKey: applyQueryKeys.forms.questions(formId, section),
+      queryFn: () =>
+        fetcher.get<FormFieldAPIResponse>(`forms/${formId}?section=${section}`),
     }),
 };

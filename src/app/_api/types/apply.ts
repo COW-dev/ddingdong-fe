@@ -112,7 +112,7 @@ export type UpdateFormAPIRequest = {
 };
 
 export type FormField = {
-  id?: string;
+  id?: number;
   question: string;
   type: QuestionType;
   options: string[];
@@ -121,7 +121,44 @@ export type FormField = {
   section: string;
 };
 
+export type FormFieldAPIResponse = {
+  clubName: string;
+  title: string;
+  description?: string | null;
+  applicationCount: number;
+  startDate: string;
+  endDate: string;
+  formFields: FormField[];
+};
+
 export type SectionFormField = {
   section: string;
   questions: FormField[];
+};
+
+export type SectionAPIResponse = {
+  title: string;
+  description?: string | null;
+  startDate: string;
+  endDate: string;
+  sections: string[];
+};
+
+export type SubmitApplicationAPIRequest = {
+  formId: number;
+  formData: ApplyData;
+};
+
+export type ApplyData = {
+  name: string;
+  studentNumber: string;
+  department: string;
+  email: string;
+  phoneNumber: string;
+  formAnswers: FormAnswer[];
+};
+
+export type FormAnswer = {
+  fieldId: number;
+  value: string | string[];
 };
