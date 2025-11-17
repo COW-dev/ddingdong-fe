@@ -37,7 +37,7 @@ export function useFormSubmission({
     const formattedPostData = formatFormData(basicInfo, sections, formField);
     createForm(formattedPostData, {
       onSuccess: () => {
-        router.push('apply');
+        router.push('/apply');
       },
       onError: (error) => {
         toast.error(
