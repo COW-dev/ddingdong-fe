@@ -22,9 +22,8 @@ export function useQuestionOptions(
   };
 
   const handleOptionChange = (optIndex: number, newValue: string) => {
-    const currentOptions = options || [];
     onOptionsChange(
-      currentOptions.map((opt, i) => (i === optIndex ? newValue : opt)),
+      localOptions.map((opt, i) => (i === optIndex ? newValue : opt)),
     );
   };
 
