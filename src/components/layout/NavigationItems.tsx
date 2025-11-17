@@ -5,17 +5,14 @@ import {
   Accordion,
   AccordionItem as Item,
   Flex,
-} from 'ddingdong-design-system';
-
-import { navItems } from '@/constants/navItems';
-
-import {
   NavigationItem,
   MenuContainer,
   Menu,
   MenuTrigger,
   MenuItem,
-} from './Header';
+} from 'ddingdong-design-system';
+
+import { navItems } from '@/constants/navItems';
 
 type Props = {
   onItemClick?: () => void;

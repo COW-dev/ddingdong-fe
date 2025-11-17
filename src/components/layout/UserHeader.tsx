@@ -2,9 +2,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { usePortal, Icon, Drawer, Flex } from 'ddingdong-design-system';
+import { usePortal, Icon, Drawer, Flex, Header } from 'ddingdong-design-system';
 
-import { Header } from './Header';
 import { NavigationItems } from './NavigationItems';
 
 export function UserHeader() {
