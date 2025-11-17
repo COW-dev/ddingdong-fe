@@ -2,20 +2,6 @@ export interface ManageFormProps {
   formData?: FormData;
 }
 
-export interface FormAnswer {
-  fieldId: string | number;
-  value: string | string[];
-}
-
-export interface ApplyData {
-  name: string;
-  studentNumber: string;
-  department: string;
-  email: string;
-  phoneNumber: string;
-  formAnswers: FormAnswer[];
-}
-
 export interface FormBlockData {
   formId: number;
   title: string;
