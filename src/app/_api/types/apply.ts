@@ -112,7 +112,7 @@ export type UpdateFormAPIRequest = {
 };
 
 export type FormField = {
-  id?: string;
+  id?: number;
   question: string;
   type: QuestionType;
   options: string[];
