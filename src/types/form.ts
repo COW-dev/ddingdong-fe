@@ -13,10 +13,7 @@ export interface ApplyData {
   department: string;
   email: string;
   phoneNumber: string;
-  formAnswers: {
-    fieldId: string | number;
-    value: string | string[];
-  }[];
+  formAnswers: FormAnswer[];
 }
 
 export interface FormBlockData {

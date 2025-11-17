@@ -1,7 +1,7 @@
 import axios, { type AxiosResponse } from 'axios';
 
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
-import { CreateFormData, ApplyData } from '@/types/form';
+import { Score, ScoreDetail } from '@/types/score';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
@@ -114,27 +114,4 @@ export async function getMyScore(
       Authorization: 'Bearer ' + token,
     },
   });
-}
-
-export async function getForm(token: string, formId: number) {
-  return await api.get(`/central/my/forms/${formId}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
-
-export async function getSections(formId: number) {
-  return await api.get(`/forms/${formId}/sections`);
-}
-
-export async function getFormDetail(formId: number, section: string) {
-  return await api.get(`forms/${formId}?section=${section}`);
-}
-
-export async function submitApplicationForm(
-  formId: number,
-  formData: ApplyData,
-) {
-  return await api.post(`forms/${formId}/applications`, formData);
 }
