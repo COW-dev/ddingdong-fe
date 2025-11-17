@@ -1,14 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
 
-import {
-  ApplicantDetail,
-  Application,
-  DeleteApplication,
-  NewEmail,
-  RegisterApplicant,
-  UpdateApplicantNote,
-  UpdateApplicantStatus,
-} from '@/types/apply';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
 import { CreateFormData, ApplyData } from '@/types/form';
 import { Score, ScoreDetail } from '@/types/score';
@@ -126,110 +117,8 @@ export async function getMyScore(
   });
 }
 
-export async function registerApplicants({ formId, token }: RegisterApplicant) {
-  return await api.post(
-    `/central/my/forms/${formId}/members/register-applicants`,
-    {},
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function createResultEmail({
-  formId,
-  token,
-  ...emailData
-}: NewEmail) {
-  return await api.post(
-    `/central/my/forms/${formId}/results/email`,
-    emailData,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function getAllApplication(
-  formId: number,
-  token: string,
-): Promise<AxiosResponse<Application, unknown>> {
-  return await api.get(`/central/my/forms/${formId}/applications`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getApplicantInfo(
-  formId: number,
-  applicantId: number,
-  token: string,
-): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.get(
-    `/central/my/forms/${formId}/applications/${applicantId}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function updateApplicantNote({
-  formId,
-  applicationId,
-  token,
-  note,
-}: UpdateApplicantNote): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.patch(
-    `/central/my/forms/${formId}/applications/${applicationId}`,
-    { note },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-export async function updateApplicantStatus({
-  formId,
-  token,
-  ...statusData
-}: UpdateApplicantStatus): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.patch(
-    `/central/my/forms/${formId}/applications`,
-    statusData,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function deleteApplication({ formId, token }: DeleteApplication) {
-  return await api.delete(`/central/my/forms/${formId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
-
-export async function getAllForms(token: string) {
-  return await api.get('/central/my/forms', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -12,7 +12,7 @@ import {
   MediaUpload,
 } from 'ddingdong-design-system';
 
-import { ClubHeading } from '@/app/club/[id]/_components/ClubHeading';
+import { ClubHeading } from '@/app/club/[id]/_components/header/ClubHeading';
 import Admin from '@/assets/admin.jpg';
 import { useClubStore } from '@/store/club';
 
