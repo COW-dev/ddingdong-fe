@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { usePortal, Icon, Drawer, Flex, Header } from 'ddingdong-design-system';
@@ -20,11 +19,10 @@ export function UserHeader() {
           className="w-full"
         >
           <Link href="/" className="inline-block">
-            <Image
+            <img
               src="/logo.png"
               width={1544}
               height={380}
-              priority
               alt="ddingdong"
               className="w-40 md:w-44"
             />
@@ -49,13 +47,12 @@ export function UserHeader() {
           className="w-full"
         >
           <Link href="/" className="inline-block">
-            <Image
+            <img
               src="/logo.png"
               width={1544}
               height={380}
-              priority
               alt="ddingdong"
-              className="w-32"
+              className="w-40 md:w-44"
             />
           </Link>
           <button
@@ -74,11 +71,10 @@ export function UserHeader() {
               className="bg-primary-300 w-[380px] px-6 py-4 pt-4 sm:w-[510px]"
             >
               <Link href="/" className="inline-block">
-                <Image
+                <img
                   src="/m_logo.png"
                   width={1544}
                   height={380}
-                  priority
                   alt="ddingdong"
                   className="w-30"
                 />
