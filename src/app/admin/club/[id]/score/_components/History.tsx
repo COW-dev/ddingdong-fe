@@ -1,5 +1,16 @@
+import {
+  Body2,
+  Caption1,
+  Flex,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from 'ddingdong-design-system';
+
 import { ScoreDetail, ScoreHistory } from '@/app/_api/types/score';
-import { Body2, Body3, Caption1, Flex } from 'ddingdong-design-system';
 
 export default function History({ totalScore, scoreHistories }: ScoreDetail) {
   return (
@@ -10,29 +21,19 @@ export default function History({ totalScore, scoreHistories }: ScoreDetail) {
           총점 : {scoreHistories ? `${totalScore}점` : '0점'}
         </Body2>
       </Flex>
-      <div
-        className={`rounded-lg shadow-sm ${
-          scoreHistories && 'h-56 overflow-scroll md:h-88'
-        }`}
-      >
-        <table className="w-full text-left">
-          <thead className="sticky top-0 bg-gray-50">
-            <tr>
-              <th className="p-3 md:p-6 md:py-3">
-                <Body3>날짜</Body3>
-              </th>
-              <th className="p-3 md:p-6 md:py-3">
-                <Body3>카테고리</Body3>
-              </th>
-              <th className="p-3 md:p-6 md:py-3">
-                <Body3>점수</Body3>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className="h-56 overflow-scroll md:h-88">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>날짜</TableHead>
+              <TableHead>카테고리</TableHead>
+              <TableHead>점수</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             <HistoryContent history={scoreHistories} />
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     </div>
   );
@@ -41,7 +42,7 @@ export default function History({ totalScore, scoreHistories }: ScoreDetail) {
 export function HistoryContent({ history }: { history: ScoreHistory[] }) {
   if (!history)
     return (
-      <tr className="h-40 md:h-72">
+      <TableRow>
         <td colSpan={3}>
           <Flex justifyContent="center" className="w-full py-4">
             <Caption1 weight="normal" className="text-gray-300">
@@ -49,23 +50,21 @@ export function HistoryContent({ history }: { history: ScoreHistory[] }) {
             </Caption1>
           </Flex>
         </td>
-      </tr>
+      </TableRow>
     );
 
   return [...history].reverse().map((item, index) => {
     const { createdAt, scoreCategory, amount } = item;
     return (
-      <tr key={index} className="border-b border-neutral-200">
-        <td className="p-3 md:p-6 md:py-3">
-          <Body3 weight="normal">{createdAt.split('T')[0]}</Body3>
-        </td>
-        <td className="p-3 md:p-6 md:py-3">
-          <Body3 weight="normal">{scoreCategory}</Body3>
-        </td>
-        <td className="p-3 md:p-6 md:py-3">
-          <Body3 weight="normal">{parseFloat(amount.toFixed(3))}점</Body3>
-        </td>
-      </tr>
+      <TableRow key={index}>
+        <TableCell>
+          <Caption1 weight="normal" className="max-xs:text-xs md:text-lg">
+            {createdAt.split('T')[0]}
+          </Caption1>
+        </TableCell>
+        <TableCell>{scoreCategory}</TableCell>
+        <TableCell>{parseFloat(amount.toFixed(3))}점</TableCell>
+      </TableRow>
     );
   });
 }

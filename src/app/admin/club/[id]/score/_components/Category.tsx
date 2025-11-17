@@ -8,11 +8,14 @@ import {
   Modal,
   usePortal,
 } from 'ddingdong-design-system';
-import { getCategoryHistory, getCategoryScore } from '../_utils/filter';
-import CreateScoreForm from './CreateScoreForm';
-import { CategoryContainer } from '../_container/category';
-import { CATEGORY } from '../_consts/category';
+
 import { ScoreDetail, ScoreHistory } from '@/app/_api/types/score';
+
+import { CATEGORY } from '../_consts/category';
+import { CategoryContainer } from '../_container/category';
+import { getCategoryHistory, getCategoryScore } from '../_utils/filter';
+
+import CreateScoreForm from './CreateScoreForm';
 
 type Props = {
   category: keyof typeof CATEGORY;
@@ -30,7 +33,7 @@ export default function Category({ category, score, clubId }: Props) {
   return (
     <>
       <CategoryContainer onClick={openModal}>
-        <Icon name="arrowDown" size={50} />
+        <Icon name={CATEGORY[category].icon} size={50} color="primary" />
         <Flex dir="col" justifyContent="end" className="text-right">
           <Body1 className="text-blue-500">{name}</Body1>
           <Body2>{parseFloat(totalScore.toFixed(3))}점</Body2>
