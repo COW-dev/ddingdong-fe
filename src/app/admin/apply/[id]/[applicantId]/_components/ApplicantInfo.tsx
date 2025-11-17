@@ -41,7 +41,7 @@ export default function ApplicantInfo({ ...props }: Props) {
             <Body1 weight="bold" className="text-blue-500">
               {label}
             </Body1>
-            <Body2 weight="medium" className="text-gray-300">
+            <Body2 weight="medium" className="text-gray-600">
               {value}
             </Body2>
           </Flex>
