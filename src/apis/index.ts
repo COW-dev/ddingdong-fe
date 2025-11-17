@@ -1,17 +1,7 @@
 import axios, { type AxiosResponse } from 'axios';
 
-import {
-  ApplicantDetail,
-  Application,
-  DeleteApplication,
-  NewEmail,
-  RegisterApplicant,
-  UpdateApplicantNote,
-  UpdateApplicantStatus,
-} from '@/types/apply';
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
-import { NewFeed, DeleteFeed } from '@/types/feed';
 import { CreateFormData, ApplyData } from '@/types/form';
 
 const api = axios.create({
@@ -66,22 +56,6 @@ export async function getAdminAllClubs(
   });
 }
 
-export async function createFeed({ token, ...feedData }: NewFeed) {
-  return await api.post('/central/my/feeds', feedData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function deleteFeed({ feedId, token }: DeleteFeed) {
-  return await api.delete(`/central/my/feeds/${feedId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function createClub({ token, ...clubData }: NewClub) {
   return await api.post('/admin/clubs', clubData, {
     headers: {
@@ -130,94 +104,37 @@ export async function updateClub({ id, score, token }: UpdateClub) {
   });
 }
 
-export async function registerApplicants({ formId, token }: RegisterApplicant) {
-  return await api.post(
-    `/central/my/forms/${formId}/members/register-applicants`,
-    {},
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function createResultEmail({
-  formId,
-  token,
-  ...emailData
-}: NewEmail) {
-  return await api.post(
-    `/central/my/forms/${formId}/results/email`,
-    emailData,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function getAllApplication(
-  formId: number,
+export async function getNewScores(
   token: string,
-): Promise<AxiosResponse<Application, unknown>> {
-  return await api.get(`/central/my/forms/${formId}/applications`, {
+  id: number,
+): Promise<AxiosResponse<ScoreDetail, unknown>> {
+  return await api.get(`/admin/${id}/score`, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
   });
 }
-
-export async function getApplicantInfo(
-  formId: number,
-  applicantId: number,
+export async function createScore({ token, clubId, ...scoreData }: Score) {
+  return await api.post(`/admin/${clubId}/score`, scoreData, {
+    headers: {
+      Authorization: 'Bearer ' + token,
+    },
+  });
+}
+export async function getAllScores(
   token: string,
-): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.get(
-    `/central/my/forms/${formId}/applications/${applicantId}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
+  clubId: number,
+): Promise<AxiosResponse<ScoreDetail, unknown>> {
+  return await api.get(`/admin/${clubId}/score`, {
+    headers: {
+      Authorization: 'Bearer ' + token,
     },
-  );
+  });
 }
-
-export async function updateApplicantNote({
-  formId,
-  applicationId,
-  token,
-  note,
-}: UpdateApplicantNote): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.patch(
-    `/central/my/forms/${formId}/applications/${applicationId}`,
-    { note },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-export async function updateApplicantStatus({
-  formId,
-  token,
-  ...statusData
-}: UpdateApplicantStatus): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.patch(
-    `/central/my/forms/${formId}/applications`,
-    statusData,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function deleteApplication({ formId, token }: DeleteApplication) {
-  return await api.delete(`/central/my/forms/${formId}`, {
+export async function getMyScore(
+  token: string,
+): Promise<AxiosResponse<ScoreDetail, unknown>> {
+  return await api.get('/central/my/score', {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -226,14 +143,6 @@ export async function deleteApplication({ formId, token }: DeleteApplication) {
 
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
-
-export async function getAllForms(token: string) {
-  return await api.get('/central/my/forms', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

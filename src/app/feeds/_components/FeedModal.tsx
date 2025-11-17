@@ -1,10 +1,19 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
+import { useState } from 'react';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Avatar, Body1, Flex, Modal } from 'ddingdong-design-system';
+import {
+  Avatar,
+  Body1,
+  Body3,
+  Flex,
+  Modal,
+  Title2,
+} from 'ddingdong-design-system';
 
 import { feedQueryOptions } from '@/app/_api/queries/feed';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -15,27 +24,32 @@ type FeedModalProps = {
 };
 export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
   const { data: feed } = useSuspenseQuery(feedQueryOptions.detail(feedId));
+  const [loaded, setLoaded] = useState(false);
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
-      <div className="md:h-[550px] md:w-[800px]">
+      <FeedModalContainer>
         <Flex dir="col">
-          <Flex className="relative w-full bg-black md:h-[400px]">
+          <Flex className="h-48 w-full overflow-hidden rounded-xl bg-black sm:h-64 md:h-[400px]">
             {feed.feedType === 'VIDEO' ? (
               <VideoPlayer videoUrl={feed.fileUrls.cdnUrl} />
             ) : (
-              <>
-                <Image
-                  fill
-                  src={feed.fileUrls.cdnUrl}
-                  alt="동아리 피드"
-                  sizes="(max-width: 768px) 100vw, 800px"
-                  className="h-full w-full object-contain"
-                />
-              </>
+              <OptimizedImage
+                isSkeleton={!loaded}
+                width={800}
+                height={400}
+                src={feed.fileUrls.cdnUrl}
+                alt="동아리 피드"
+                className="h-full w-full object-contain"
+                onLoad={() => setLoaded(true)}
+              />
             )}
           </Flex>
-          <Flex dir="col" alignItems="start" className="mt-2 w-full px-4 py-2">
+          <Flex
+            dir="col"
+            alignItems="start"
+            className="mt-2 w-full py-2 pr-2 pl-3 sm:pr-4 sm:pl-6"
+          >
             <Link
               href={`/club/${feed?.clubProfile.id}`}
               className="flex items-center gap-2"
@@ -46,15 +60,21 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
                 size="lg"
                 className="my-auto object-cover"
               />
-              <Body1>{feed.clubProfile.name}</Body1>
+              <Title2 weight="medium">{feed.clubProfile.name}</Title2>
             </Link>
-            <Flex dir="col" className="ml-2">
-              <Body1>{feed.activityContent}</Body1>
-              <Body1 className="text-gray-500">{feed.createdDate}</Body1>
+            <Flex dir="col" className="mt-2 ml-3">
+              <Body1 weight="medium">{feed.activityContent}</Body1>
+              <Body3 weight="medium" className="text-gray-500">
+                {feed.createdDate}
+              </Body3>
             </Flex>
           </Flex>
         </Flex>
-      </div>
+      </FeedModalContainer>
     </Modal>
   );
+}
+
+function FeedModalContainer({ children }: { children: React.ReactNode }) {
+  return <div className="w-[80vw] max-w-[800px] md:h-[550px]">{children}</div>;
 }
