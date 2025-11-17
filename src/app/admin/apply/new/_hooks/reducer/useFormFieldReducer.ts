@@ -9,11 +9,10 @@ export function useFormFieldReducer(initialData?: {
   formField?: SectionFormField[];
 }) {
   const sectionState = useSectionReducer(
-    initialData?.focusSection !== undefined ||
-      initialData?.sections !== undefined
+    initialData && (initialData.focusSection || initialData.sections)
       ? {
-          focusSection: initialData?.focusSection,
-          sections: initialData?.sections,
+          focusSection: initialData.focusSection,
+          sections: initialData.sections,
         }
       : undefined,
   );
