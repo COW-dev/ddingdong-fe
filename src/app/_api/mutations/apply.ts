@@ -65,9 +65,9 @@ export const useUpdateForm = () => {
 
   return useMutation({
     mutationFn: (data: UpdateFormAPIRequest) => updateForm(data),
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: applyQueryKeys.forms.detail(variables.formId),
+        queryKey: applyQueryKeys.all(),
       });
     },
   });
