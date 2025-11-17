@@ -19,11 +19,11 @@ type FormFieldContextType = {
     fromIndex: number,
     toIndex: number,
   ) => void;
-  updateQuestion: (
+  updateQuestion: <K extends keyof FormField>(
     section: string,
     questionIndex: number,
-    field: keyof FormField,
-    value: FormField[keyof FormField],
+    field: K,
+    value: FormField[K],
   ) => void;
 };
 

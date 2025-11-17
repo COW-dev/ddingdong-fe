@@ -9,9 +9,9 @@ import { useFormFieldContext } from '../_contexts/FormFieldContext';
 export function useQuestionHandlers(index: number, section: SectionFormField) {
   const { updateQuestion } = useFormFieldContext();
 
-  const updateField = (
-    field: keyof FormField,
-    value: FormField[keyof FormField],
+  const updateField = <K extends keyof FormField>(
+    field: K,
+    value: FormField[K],
   ) => {
     updateQuestion(section.section, index, field, value);
   };
