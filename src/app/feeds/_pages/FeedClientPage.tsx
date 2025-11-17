@@ -6,9 +6,8 @@ import { Body1, Flex } from 'ddingdong-design-system';
 import { feedQueryOptions } from '@/app/_api/queries/feed';
 import { useInfiniteScroll } from '@/hooks/common/useInfiniteScroll';
 
-import { FeedContainer } from '../_containers/FeedContainer';
-
 import { ClubFeed } from '../_components/ClubFeed';
+import { FeedContainer } from '../_containers/FeedContainer';
 
 export function FeedClientPage() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =

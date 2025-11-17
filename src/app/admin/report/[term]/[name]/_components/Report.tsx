@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 
 import { Body3, Flex, Icon } from 'ddingdong-design-system';
 
@@ -26,7 +25,7 @@ export default function Report({ report }: Props) {
     participants,
   } = report;
 
-  const image = responseImage?.originUrl ?? UnSubmitImage;
+  const image = responseImage?.originUrl ?? UnSubmitImage.src;
   const hasParticipants = participants?.some((p) => p.name?.trim());
 
   return (
@@ -48,11 +47,10 @@ export default function Report({ report }: Props) {
         </ReportContentContainer>
       </Flex>
       <Flex className="overflow-hidden">
-        <Image
+        <img
           src={image}
           className="object-contain"
           alt="activeReport"
-          priority
           width={400}
           height={400}
         />

@@ -1,25 +1,7 @@
 import axios, { type AxiosResponse } from 'axios';
 
-import {
-  ApplicantDetail,
-  Application,
-  DeleteApplication,
-  NewEmail,
-  RegisterApplicant,
-  UpdateApplicantNote,
-  UpdateApplicantStatus,
-} from '@/types/apply';
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
-import { NewFeed, DeleteFeed } from '@/types/feed';
-import {
-  DeleteFixComment,
-  Fix,
-  FixComplete,
-  FixDetailInfo,
-  NewFix,
-  NewFixComment,
-} from '@/types/fix';
 import { CreateFormData, ApplyData } from '@/types/form';
 import { Score, ScoreDetail } from '@/types/score';
 
@@ -74,53 +56,6 @@ export async function getAdminAllClubs(
     },
   });
 }
-export async function getAdminAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/admin/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getClubAllFix(
-  token: string,
-): Promise<AxiosResponse<Fix[], unknown>> {
-  return await api.get('/central/fix-zones', {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getFixInfo(
-  token: string,
-  id: number,
-): Promise<FixDetailInfo> {
-  const response = await api.get(`/central/fix-zones/${id}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-  return await response.data;
-}
-
-export async function createFeed({ token, ...feedData }: NewFeed) {
-  return await api.post('/central/my/feeds', feedData, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function deleteFeed({ feedId, token }: DeleteFeed) {
-  return await api.delete(`/central/my/feeds/${feedId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
 
 export async function createClub({ token, ...clubData }: NewClub) {
   return await api.post('/admin/clubs', clubData, {
@@ -138,30 +73,6 @@ export async function createBanner({ token, ...bannerData }: NewBanner) {
   });
 }
 
-export async function createFix({ token, post }: NewFix) {
-  return await api.post('/central/fix-zones', post, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function createFixComment({
-  fixZoneId,
-  token,
-  content,
-}: NewFixComment) {
-  return await api.post(
-    `/admin/fix-zones/${fixZoneId}/comments`,
-    { content },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
 export async function deleteClub({ clubId, token }: DeleteClub) {
   return await api.delete(`/admin/clubs/${clubId}`, {
     headers: {
@@ -169,31 +80,9 @@ export async function deleteClub({ clubId, token }: DeleteClub) {
     },
   });
 }
-export async function deleteFixComment({
-  fixZoneId,
-  commentId,
-  token,
-}: DeleteFixComment) {
-  return await api.delete(
-    `/admin/fix-zones/${fixZoneId}/comments/${commentId}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
 
 export async function deleteBanner({ bannerId, token }: DeleteBanner) {
   return await api.delete(`/admin/banners/${bannerId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function updateFixComplete({ id, token }: FixComplete) {
-  return await api.patch(`/admin/fix-zones/${id}?fixZoneId=${id}`, null, {
     headers: {
       Authorization: 'Bearer ' + token,
     },
@@ -253,110 +142,8 @@ export async function getMyScore(
   });
 }
 
-export async function registerApplicants({ formId, token }: RegisterApplicant) {
-  return await api.post(
-    `/central/my/forms/${formId}/members/register-applicants`,
-    {},
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function createResultEmail({
-  formId,
-  token,
-  ...emailData
-}: NewEmail) {
-  return await api.post(
-    `/central/my/forms/${formId}/results/email`,
-    emailData,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function getAllApplication(
-  formId: number,
-  token: string,
-): Promise<AxiosResponse<Application, unknown>> {
-  return await api.get(`/central/my/forms/${formId}/applications`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
-export async function getApplicantInfo(
-  formId: number,
-  applicantId: number,
-  token: string,
-): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.get(
-    `/central/my/forms/${formId}/applications/${applicantId}`,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function updateApplicantNote({
-  formId,
-  applicationId,
-  token,
-  note,
-}: UpdateApplicantNote): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.patch(
-    `/central/my/forms/${formId}/applications/${applicationId}`,
-    { note },
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-export async function updateApplicantStatus({
-  formId,
-  token,
-  ...statusData
-}: UpdateApplicantStatus): Promise<AxiosResponse<ApplicantDetail, unknown>> {
-  return await api.patch(
-    `/central/my/forms/${formId}/applications`,
-    statusData,
-    {
-      headers: {
-        Authorization: 'Bearer ' + token,
-      },
-    },
-  );
-}
-
-export async function deleteApplication({ formId, token }: DeleteApplication) {
-  return await api.delete(`/central/my/forms/${formId}`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function createForm(token: string, formData: CreateFormData) {
   return await api.post('/central/my/forms', formData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-}
-
-export async function getAllForms(token: string) {
-  return await api.get('/central/my/forms', {
     headers: {
       Authorization: `Bearer ${token}`,
     },

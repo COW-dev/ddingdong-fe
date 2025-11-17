@@ -6,6 +6,12 @@ export type FeedList = {
   [K in FeedKeys]: Feed[];
 } & { pagingInfo: PagingInfo };
 
+export type NewFeedAPIRequest = {
+  activityContent: string;
+  mediaId: string;
+  mimeType: string;
+};
+
 export type Feed = {
   id: number;
   feedType: 'IMAGE' | 'VIDEO';
@@ -26,4 +32,8 @@ export type FeedDetail = {
   fileUrls: UrlType;
   createdDate: string;
   clubProfile: ClubProfile;
+};
+
+export type DeleteFeedAPIRequest = {
+  feedId: number;
 };
