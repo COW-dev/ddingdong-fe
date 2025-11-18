@@ -9,15 +9,16 @@ export function useQuestionDrag({ onReorder }: UseQuestionDragProps) {
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const handleDragStart = (e: React.DragEvent, index: number) => {
-    setDraggedIndex(index);
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/html', index.toString());
+    e.dataTransfer.setData('text/plain', index.toString());
+    setDraggedIndex(index);
   };
 
   const handleDragOver = (e: React.DragEvent, index: number) => {
     e.preventDefault();
     e.stopPropagation();
     e.dataTransfer.dropEffect = 'move';
+
     if (draggedIndex !== null && draggedIndex !== index) {
       setDragOverIndex(index);
     } else if (draggedIndex === index) {
@@ -28,9 +29,15 @@ export function useQuestionDrag({ onReorder }: UseQuestionDragProps) {
   const handleDrop = (e: React.DragEvent, toIndex: number) => {
     e.preventDefault();
     e.stopPropagation();
-    if (draggedIndex !== null && draggedIndex !== toIndex) {
-      onReorder(draggedIndex, toIndex);
+    const fromIndex = parseInt(
+      e.dataTransfer.getData('text/plain') || '-1',
+      10,
+    );
+
+    if (fromIndex !== -1 && fromIndex !== toIndex) {
+      onReorder(fromIndex, toIndex);
     }
+
     setDraggedIndex(null);
     setDragOverIndex(null);
   };
