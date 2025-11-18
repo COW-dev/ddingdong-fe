@@ -19,16 +19,12 @@ type QuestionCardProps = FormField & {
 };
 
 export function QuestionCard({
-  id,
   type,
   question,
   options,
   required,
-  order,
-  section,
   onChange,
 }: QuestionCardProps) {
-  // 각 질문의 value를 내부 state로 관리 (uncontrolled component)
   const [value, setValue] = useState<string | string[]>('');
 
   const handleChange = (newValue: string | string[]) => {
@@ -95,7 +91,7 @@ export function QuestionCard({
     >
       <Flex dir="row" gap={1} alignItems="center">
         <Body2 weight="bold" className="text-lg text-blue-500 md:text-xl">
-          {section} {order}. {question}
+          {question}
         </Body2>
         {required && (
           <span className="text-lg font-bold text-red-500 md:text-xl">*</span>

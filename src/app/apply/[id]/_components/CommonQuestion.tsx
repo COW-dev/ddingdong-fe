@@ -91,7 +91,7 @@ export function CommonQuestion({ onChange }: CommonQuestionProps) {
             전화번호
           </Body2>
           <Input
-            placeholder="전화번호를 입력해 주세요."
+            placeholder="전화번호를 입력해 주세요. ex) 010-1234-5678"
             value={data.phoneNumber}
             onChange={(e) => handleChange('phoneNumber')(e.target.value)}
             onClickReset={() => handleChange('phoneNumber')('')}

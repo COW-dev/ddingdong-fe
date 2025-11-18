@@ -1,14 +1,16 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { Button, Flex } from 'ddingdong-design-system';
 
 import { FormField } from '@/app/_api/types/apply';
 
+import { useApplyForm } from '../_hooks/useApplyForm';
+import { sortedFields } from '../_utils/sorted';
+
 import { CommonQuestion } from './CommonQuestion';
 import { QuestionCard } from './QuestionCard';
-import { useApplyForm } from '../_hooks/useApplyForm';
-import { useRouter } from 'next/navigation';
-import { sortedFields } from '../_utils/sorted';
 
 type ApplyFormProps = {
   formId: number;
@@ -22,7 +24,7 @@ export function ApplyForm({ formId, formFields }: ApplyFormProps) {
     handleCommonQuestionChange,
     handleSubmit,
     updateFormAnswer,
-  } = useApplyForm(formId);
+  } = useApplyForm(formId, formFields);
 
   const fields = sortedFields(formFields);
 

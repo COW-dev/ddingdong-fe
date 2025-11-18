@@ -1,12 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { Button, Flex } from 'ddingdong-design-system';
+import { toast } from 'react-hot-toast';
+
+import { useApplyFunnel } from '../_contexts/ApplyFunnelContext';
 
 import { SelectSection } from './SelectSection';
-import { SectionAPIResponse } from '@/app/_api/types/apply';
-import { useApplyFunnel } from '../_contexts/ApplyFunnelContext';
-import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 
 type SectionStepProps = {
   selectableSections: string[];
