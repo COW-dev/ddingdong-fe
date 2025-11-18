@@ -3,8 +3,10 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { ApplySubmitClientPage } from './_pages/ApplySubmitClientPage';
+
 import { applyQueryOptions } from '@/app/_api/queries/apply';
+
+import { ApplySubmitClientPage } from './_pages/ApplySubmitClientPage';
 
 export default async function ApplySubmitPage({
   params,

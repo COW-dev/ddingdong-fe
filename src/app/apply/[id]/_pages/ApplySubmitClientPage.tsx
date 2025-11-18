@@ -1,15 +1,16 @@
 'use client';
 
+import { Body1, Body2, Flex, Title1 } from 'ddingdong-design-system';
+
+import { ApplyForm } from '../_components/ApplyForm';
 import { RecruitmentPeriodWarning } from '../_components/RecruitmentPeriodWarning';
 import { SectionStep } from '../_components/SectionStep';
 import { Submitted } from '../_components/Submitted';
-import { useApplyFormGetData } from '../_hooks/useApplyFormGetData';
 import {
   ApplyFunnelProvider,
   useApplyFunnel,
 } from '../_contexts/ApplyFunnelContext';
-import { Body1, Flex, Title1 } from 'ddingdong-design-system';
-import { ApplyForm } from '../_components/ApplyForm';
+import { useApplyFormGetData } from '../_hooks/useApplyFormGetData';
 
 function ApplySubmitContent({ id }: { id: number }) {
   const {
@@ -19,11 +20,10 @@ function ApplySubmitContent({ id }: { id: number }) {
     isRecruitmentActive,
     hasMultipleSections,
     selectableSections,
-
     handleSectionSelect,
   } = useApplyFormGetData(id);
 
-  const { Funnel, step, setStep } = useApplyFunnel();
+  const { Funnel, step } = useApplyFunnel();
 
   if (!isRecruitmentActive && sectionsData) {
     return (
@@ -39,11 +39,11 @@ function ApplySubmitContent({ id }: { id: number }) {
       {step !== 'SUBMITTED' && (
         <Flex dir="col" gap={4} className="w-full">
           <Title1 as="h1" weight="bold" className="pt-7 md:pt-10">
-            {questionData?.title} 지원서
+            {sectionsData?.title} 지원서
           </Title1>
-          <Body1 weight="medium" className="my-4 text-gray-500">
+          <Body2 weight="medium" className="my-4 text-gray-500">
             {sectionsData?.description}
-          </Body1>
+          </Body2>
         </Flex>
       )}
       <Funnel>

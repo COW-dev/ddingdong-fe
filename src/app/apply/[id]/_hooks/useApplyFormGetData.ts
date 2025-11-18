@@ -3,15 +3,14 @@ import { useMemo, useState, useEffect } from 'react';
 import { useSuspenseQuery, useQuery } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
-import { useRouter } from 'next/navigation';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';
+
 import { useApplyFunnel } from '../_contexts/ApplyFunnelContext';
 
 dayjs.extend(isBetween);
 
 export function useApplyFormGetData(formId: number) {
-  const router = useRouter();
   const [selectedSection, setSelectedSection] = useState<string>('');
   const { step, setStep } = useApplyFunnel();
 

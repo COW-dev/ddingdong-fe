@@ -3,7 +3,7 @@ import { useRef, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { useSubmitApplication } from '@/app/_api/mutations/apply';
-import { FormAnswer } from '@/app/_api/types/apply';
+import { FormAnswer, FormField } from '@/app/_api/types/apply';
 
 import { useApplyFunnel } from '../_contexts/ApplyFunnelContext';
 import { validateApplyData } from '../_utils/validateApplyData';
@@ -16,11 +16,10 @@ type CommonQuestionData = {
   email: string;
 };
 
-export function useApplyForm(formId: number) {
+export function useApplyForm(formId: number, formFields: FormField[]) {
   const { mutate: submitApplication, isPending } = useSubmitApplication();
   const { setStep } = useApplyFunnel();
 
-  // commonQuestionData를 ref로 관리하여 렌더링 최적화
   const commonQuestionDataRef = useRef<CommonQuestionData>({
     name: '',
     studentNumber: '',
@@ -29,7 +28,6 @@ export function useApplyForm(formId: number) {
     email: '',
   });
 
-  // formAnswers를 ref로 관리하여 렌더링 최적화
   const formAnswersRef = useRef<FormAnswer[]>([]);
 
   const handleCommonQuestionChange = useCallback(
@@ -46,13 +44,13 @@ export function useApplyForm(formId: number) {
     const isValid = validateApplyData({
       commonQuestionData,
       formAnswers,
+      formFields,
     });
 
     if (!isValid) {
       return;
     }
 
-    // 모든 value를 배열로 변환
     const formAnswersWithArrayValues = formAnswers.map((answer) => ({
       ...answer,
       value: Array.isArray(answer.value)
