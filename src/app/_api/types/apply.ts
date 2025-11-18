@@ -162,3 +162,17 @@ export type FormAnswer = {
   fieldId: number;
   value: string | string[];
 };
+
+export type ApplyStatistics = {
+  totalCount: number;
+  departmentStatistics: ChartItem[];
+  applicantStatistics: ApplyRate[];
+  fieldStatistics: fieldStatistics;
+};
+
+export type ChartItem = {
+  label: string;
+  count: number;
+  ratio: number;
+  rank?: number;
+};

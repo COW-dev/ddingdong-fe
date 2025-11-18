@@ -4,6 +4,7 @@ import { fetcher } from '../fetcher';
 import {
   ApplicantDetailAPIResponse,
   ApplicationAPIResponse,
+  ApplyStatistics,
   FormAPIResponse,
   FormFieldAPIResponse,
   SectionAPIResponse,
@@ -29,6 +30,10 @@ export const applyQueryKeys = {
   applications: {
     all: () => [...applyQueryKeys.all(), 'applications'],
     detail: (formId: number) => [...applyQueryKeys.applications.all(), formId],
+    statistics: (formId: number) => [
+      ...applyQueryKeys.applications.detail(formId),
+      'statistics',
+    ],
   },
   applicants: {
     all: () => [...applyQueryKeys.all(), 'applicants'],
@@ -60,6 +65,7 @@ export const applyQueryOptions = {
           `central/my/forms/${formId}/applications`,
         ),
     }),
+
   applicantDetail: (formId: number, applicantId: number) =>
     queryOptions({
       queryKey: applyQueryKeys.applicants.detail(formId, applicantId),
@@ -73,5 +79,11 @@ export const applyQueryOptions = {
       queryKey: applyQueryKeys.forms.questions(formId, section),
       queryFn: () =>
         fetcher.get<FormFieldAPIResponse>(`forms/${formId}?section=${section}`),
+    }),
+  statistics: (formId: number) =>
+    queryOptions({
+      queryKey: applyQueryKeys.applications.statistics(formId),
+      queryFn: () =>
+        fetcher.get<ApplyStatistics>(`central/my/forms/${formId}/statistics`),
     }),
 };
