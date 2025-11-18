@@ -1,9 +1,10 @@
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+
 import { fetcher } from '@/app/_api/fetcher';
 import { uploadPresignedUrl } from '@/app/_api/services/file';
 import { PresignedUrlResponse } from '@/app/_api/types/common';
 import { UploadFile } from '@/app/_api/types/file';
-import { useMutation } from '@tanstack/react-query';
-import toast from 'react-hot-toast';
 
 const getPresignedUrl = (fileName: string) => {
   return fetcher.get<PresignedUrlResponse>(
@@ -25,8 +26,7 @@ export const usePresignedUrlForm = () => {
         contentType,
       };
     },
-    onError: (error, variables, context) => {
-      console.error('업로드 실패:', error, variables, context);
+    onError: () => {
       toast.error('파일 업로드 중 문제가 발생했어요.');
     },
   });
@@ -34,9 +34,7 @@ export const usePresignedUrlForm = () => {
   const getPresignedId = async (file: File) => {
     try {
       return await uploadFile.mutateAsync(file);
-    } catch (e) {
-      console.error('❌ getPresignedId Error:', e);
-
+    } catch {
       handleError([file.name]);
     }
   };

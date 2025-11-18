@@ -51,7 +51,6 @@ export const useCreateResultEmail = () => {
 };
 
 const submitApplication = (data: SubmitApplicationAPIRequest) => {
-  console.log('formData', data.formData);
   return fetcher.post(`forms/${data.formId}/applications`, {
     json: data.formData,
   });
