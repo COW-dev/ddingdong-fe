@@ -1,12 +1,14 @@
 'use client';
-
-import { OptimizedImage } from '../common/OptimizedImage';
-
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 
+import { Header, NavigationItem } from 'ddingdong-design-system';
+
+import logo from '@/../../public/logo.png';
 import { useCookie } from '@/app/_api/useCookie';
 import { useClubStore } from '@/store/club';
+
+import { OptimizedImage } from '../common/OptimizedImage';
 
 export function AdminHeader() {
   const router = useRouter();
@@ -26,7 +28,7 @@ export function AdminHeader() {
     <Header className="px-3 md:px-13">
       <Link href={isLoginPage ? '/login' : '/'} className="inline-block">
         <OptimizedImage
-          src="/logo.png"
+          src={logo.src}
           width={1544}
           height={380}
           priority
