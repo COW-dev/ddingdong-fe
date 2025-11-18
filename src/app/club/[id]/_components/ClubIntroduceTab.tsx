@@ -102,7 +102,7 @@ function renderList(text?: string, as: 'li' | 'p' = 'p') {
           </Body2>
         </li>
       ) : (
-        <p key={i}>{renderLineWithLinks(line)}</p>
+        <span key={i}>{renderLineWithLinks(line)}</span>
       ),
     );
 }
