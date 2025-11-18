@@ -3,8 +3,9 @@ import Link from 'next/link';
 
 import { usePortal, Icon, Drawer, Flex, Header } from 'ddingdong-design-system';
 
-import { NavigationItems } from './NavigationItems';
 import { OptimizedImage } from '../common/OptimizedImage';
+
+import { NavigationItems } from './NavigationItems';
 
 export function UserHeader() {
   const { isOpen, openModal, closeModal } = usePortal();
