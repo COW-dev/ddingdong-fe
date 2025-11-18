@@ -2,18 +2,23 @@
 
 import { useState } from 'react';
 
+import { useQueryClient } from '@tanstack/react-query';
+import { usePortal } from 'ddingdong-design-system';
+
+import { feedQueryOptions } from '@/app/_api/queries/feed';
 import { Feed } from '@/app/_api/types/feed';
 
 import { FeedImage } from './FeedImage';
 import { FeedModal } from './FeedModal';
-import { usePortal } from 'ddingdong-design-system';
 
 export function ClubFeed({ feeds }: { feeds: Feed[] }) {
   const [selectedFeed, setSelectedFeed] = useState<number | null>(null);
   const { isOpen, openModal, closeModal } = usePortal();
+  const queryClient = useQueryClient();
 
-  const handleFeedDetailOpen = (feedId: number) => {
+  const handleFeedDetailOpen = async (feedId: number) => {
     setSelectedFeed(feedId);
+    await queryClient.prefetchQuery(feedQueryOptions.detail(feedId));
     openModal();
   };
 

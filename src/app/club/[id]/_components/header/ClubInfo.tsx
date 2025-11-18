@@ -6,7 +6,6 @@ import dayjs from 'dayjs';
 import { Body2, Button, Flex } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
-import Link from 'next/link';
 
 type ClubInfoProps = Pick<
   ClubDetail,

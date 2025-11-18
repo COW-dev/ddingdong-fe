@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import {
   Avatar,
   Body1,
@@ -23,8 +23,15 @@ type FeedModalProps = {
   closeModal: () => void;
 };
 export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
-  const { data: feed } = useSuspenseQuery(feedQueryOptions.detail(feedId));
+  const { data: feed, isLoading } = useQuery({
+    ...feedQueryOptions.detail(feedId),
+    enabled: isOpen,
+  });
   const [loaded, setLoaded] = useState(false);
+
+  if (!isOpen || isLoading || !feed) {
+    return null;
+  }
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
