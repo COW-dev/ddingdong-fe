@@ -55,14 +55,16 @@ export const ClubInfo = ({
             <Body2 className="w-20 text-gray-500">동아리방</Body2>
             <Body2>{location}</Body2>
           </Flex>
-          <Flex className="mb-1.5 flex md:flex-row">
+          <Flex alignItems="center" className="mb-1.5 flex md:flex-row">
             <Body2 className="w-20 text-gray-500">모집기간</Body2>
             {startDate && endDate && (
-              <>
+              <Body2>
                 {startDate.replace(/-/g, '.')}
-                <Body2 className="mx-1">~</Body2>
+                <Body2 as="span" className="mx-1">
+                  ~
+                </Body2>
                 {endDate.replace(/-/g, '.')}
-              </>
+              </Body2>
             )}
             {!startDate && !endDate && (
               <Body2 className="w-20 text-gray-500">모집예정</Body2>
