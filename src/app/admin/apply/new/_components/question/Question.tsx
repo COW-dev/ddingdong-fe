@@ -134,10 +134,10 @@ function QuestionComponent({
           draggable={false}
         >
           <IconButton
-            iconName="etc"
+            iconName="drag"
             color="gray"
             size={20}
-            className="pointer-events-none rotate-90 cursor-grab active:cursor-grabbing"
+            className="pointer-events-none cursor-grab active:cursor-grabbing"
           />
         </div>
       )}
