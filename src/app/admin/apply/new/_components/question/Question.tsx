@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { memo, useEffect } from 'react';
 
 import {
   Body3,
@@ -64,15 +64,11 @@ function QuestionComponent({
     handleSwitchChange,
   } = useQuestionHandlers(index, section);
 
-  const setQuestionInputRef = useCallback(
-    (ref: HTMLInputElement | null) => {
-      questionInputRef.current = ref;
-      if (ref && questionData.question !== undefined) {
-        ref.value = questionData.question || '';
-      }
-    },
-    [questionInputRef, questionData.question],
-  );
+  useEffect(() => {
+    if (questionInputRef.current && questionData.question !== undefined) {
+      questionInputRef.current.value = questionData.question || '';
+    }
+  }, [questionData.question, questionInputRef]);
 
   const QuestionContent = questionTypeMap[questionData.type as QuestionType];
 
@@ -153,9 +149,8 @@ function QuestionComponent({
       >
         <div className="flex-1" draggable={false}>
           <Input
-            ref={setQuestionInputRef}
             placeholder="질문을 입력해 주세요."
-            defaultValue={questionData.question || ''}
+            ref={questionInputRef}
             onChange={handleInputChange}
             onBlur={handleInputBlur}
             onClickReset={resetInputValue}
