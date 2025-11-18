@@ -1,8 +1,5 @@
-
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
-
-import { Header, NavigationItem } from 'ddingdong-design-system';
 
 import { useCookie } from '@/app/_api/useCookie';
 import { useClubStore } from '@/store/club';
