@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePortal, Icon, Drawer, Flex, Header } from 'ddingdong-design-system';
 
 import { NavigationItems } from './NavigationItems';
+import { OptimizedImage } from '../common/OptimizedImage';
 
 export function UserHeader() {
   const { isOpen, openModal, closeModal } = usePortal();
@@ -19,9 +20,9 @@ export function UserHeader() {
           className="w-full"
         >
           <Link href="/" className="inline-block">
-            <img
+            <OptimizedImage
               src="/logo.png"
-              width={1544}
+              width={1344}
               height={380}
               alt="ddingdong"
               className="w-40 md:w-44"
@@ -47,12 +48,12 @@ export function UserHeader() {
           className="w-full"
         >
           <Link href="/" className="inline-block">
-            <img
+            <OptimizedImage
               src="/logo.png"
-              width={1544}
+              width={1344}
               height={380}
               alt="ddingdong"
-              className="w-40 md:w-44"
+              className="w-32 md:w-44"
             />
           </Link>
           <button
@@ -71,9 +72,9 @@ export function UserHeader() {
               className="bg-primary-300 w-[380px] px-6 py-4 pt-4 sm:w-[510px]"
             >
               <Link href="/" className="inline-block">
-                <img
+                <OptimizedImage
                   src="/m_logo.png"
-                  width={1544}
+                  width={1344}
                   height={380}
                   alt="ddingdong"
                   className="w-30"

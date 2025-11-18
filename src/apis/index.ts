@@ -2,8 +2,7 @@ import axios, { type AxiosResponse } from 'axios';
 
 import { DeleteBanner, NewBanner, UpdateBanner } from '@/types/banner';
 import { AdminClub, NewClub, DeleteClub, UpdateClub } from '@/types/club';
-import { ApplyData } from '@/types/form';
-import { Score, ScoreDetail } from '@/types/score';
+import { CreateFormData, ApplyData } from '@/types/form';
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,

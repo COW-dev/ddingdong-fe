@@ -7,7 +7,7 @@ import { NoticeDetailAdminClientPage } from './_pages/NoticeDetailAdminClientPag
 export default async function NoticeAdminDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const cookie = await cookies();
