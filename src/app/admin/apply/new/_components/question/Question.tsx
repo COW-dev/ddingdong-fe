@@ -1,4 +1,4 @@
-import { memo, useMemo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 
 import {
   Body3,
@@ -62,7 +62,7 @@ function QuestionComponent({
     handleInputBlur,
     handleTypeChange,
     handleSwitchChange,
-  } = useQuestionHandlers(index, section, questionData.question || '');
+  } = useQuestionHandlers(index, section);
 
   const setQuestionInputRef = useCallback(
     (ref: HTMLInputElement | null) => {
@@ -93,9 +93,9 @@ function QuestionComponent({
   const isBeingDragged = dragHandlers?.isDragging ?? false;
 
   const handleDragStartInternal = (e: React.DragEvent) => {
-    if (canDrag && dragHandlers?.onDragStart) {
-      dragHandlers.onDragStart(e, index);
-    }
+    if (!canDrag || !dragHandlers?.onDragStart || readOnly) return;
+    handleInputBlur();
+    dragHandlers.onDragStart(e, index);
   };
 
   const handleOptionsChange = (options: string[]) => {

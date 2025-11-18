@@ -10,15 +10,10 @@ import { useFormFieldContext } from '../_contexts/FormFieldContext';
 
 const DEBOUNCE_DELAY_MS = 300;
 
-export function useQuestionHandlers(
-  index: number,
-  section: SectionFormField,
-  questionValue: string,
-) {
+export function useQuestionHandlers(index: number, section: SectionFormField) {
   const { updateQuestion } = useFormFieldContext();
   const questionInputRef = useRef<HTMLInputElement | null>(null);
-  const localValueRef = useRef<string>(questionValue);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateField = <K extends keyof FormField>(
     field: K,
@@ -30,7 +25,6 @@ export function useQuestionHandlers(
   const syncQuestionValue = () => {
     if (questionInputRef.current) {
       const newValue = questionInputRef.current.value;
-      localValueRef.current = newValue;
       updateField('question', newValue);
     }
   };
@@ -57,7 +51,6 @@ export function useQuestionHandlers(
   const resetInputValue = () => {
     if (questionInputRef.current) {
       questionInputRef.current.value = '';
-      localValueRef.current = '';
       updateField('question', '');
     }
   };
