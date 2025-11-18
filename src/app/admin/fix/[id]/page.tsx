@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function ReportNewPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const cookie = await cookies();
   const { id } = await params;

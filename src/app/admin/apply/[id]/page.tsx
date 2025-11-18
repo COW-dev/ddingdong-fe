@@ -3,7 +3,7 @@ import { FormClientPage } from './_pages/FormClientPage';
 export default async function ApplicationDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
 
