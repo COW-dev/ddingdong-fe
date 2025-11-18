@@ -9,17 +9,6 @@ const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
-export async function getApplyStatistics(
-  applyId: number,
-  token: string,
-): Promise<AxiosResponse<unknown>> {
-  return await api.get(`/central/my/forms/${applyId}/statistics`, {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  });
-}
-
 export async function getMultipleAnswer(
   questionId: number,
   token: string,

@@ -3,13 +3,9 @@ import { useCookies } from 'react-cookie';
 import Question from '@/components/apply/ApplyQuestion';
 import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
 import { ApplyQuestion } from '@/types/apply';
-import StatisticsSections from './StatisticsSections';
+import StatisticsSections from '../../../../../../components/apply/StatisticsSections';
 
-type Prop = {
-  applyId: number;
-};
-
-function QuestionList({ applyId }: Prop) {
+export default function QuestionList({ applyId }: { applyId: number }) {
   const [{ token }] = useCookies(['token']);
   const { data } = useApplyStatistics(applyId, token);
   const [fields, setFields] = useState<string>('공통');
@@ -37,5 +33,3 @@ function QuestionList({ applyId }: Prop) {
     </>
   );
 }
-
-export default QuestionList;

@@ -1,3 +1,5 @@
+import { ApplyRate, fieldStatistics } from '@/types/apply';
+
 export type FormAPIResponse = Form[];
 export type QuestionType =
   | 'CHECK_BOX'
@@ -84,4 +86,18 @@ export type CreateResultEmailAPIRequest = {
   title: string;
   target: ApplicantStatus;
   message: string;
+};
+
+export type ApplyStatistics = {
+  totalCount: number;
+  departmentStatistics: ChartItem[];
+  applicantStatistics: ApplyRate[];
+  fieldStatistics: fieldStatistics;
+};
+
+export type ChartItem = {
+  label: string;
+  count: number;
+  ratio: number;
+  rank?: number;
 };
