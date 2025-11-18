@@ -1,6 +1,6 @@
 import { toast } from 'react-hot-toast';
 
-import { FormAnswer } from '@/app/_api/types/apply';
+import { FormAnswer, FormField } from '@/app/_api/types/apply';
 import { applyDataSchema } from '@/types/schemas/applyDataSchema';
 
 type CommonQuestionData = {
@@ -14,11 +14,13 @@ type CommonQuestionData = {
 type ApplyDataInput = {
   commonQuestionData: CommonQuestionData;
   formAnswers: FormAnswer[];
+  formFields: FormField[];
 };
 
 export function validateApplyData({
   commonQuestionData,
   formAnswers,
+  formFields,
 }: ApplyDataInput): boolean {
   const result = applyDataSchema.safeParse({
     name: commonQuestionData.name,
@@ -39,6 +41,23 @@ export function validateApplyData({
       toast.error(firstErrorMessage);
     }
     return false;
+  }
+
+  const requiredFields = formFields.filter((field) => field.required);
+  for (const field of requiredFields) {
+    if (!field.id) continue;
+
+    const answer = formAnswers.find((ans) => ans.fieldId === field.id);
+    const hasValue =
+      answer &&
+      (Array.isArray(answer.value)
+        ? answer.value.length > 0 && answer.value.some((v) => v.trim() !== '')
+        : typeof answer.value === 'string' && answer.value.trim() !== '');
+
+    if (!hasValue) {
+      toast.error(`필수 항목인 "${field.question}"을(를) 입력해주세요.`);
+      return false;
+    }
   }
 
   return true;
