@@ -1,3 +1,5 @@
+import { memo, useEffect } from 'react';
+
 import {
   Body3,
   Flex,
@@ -24,18 +26,22 @@ import { questionTypeMap } from '../questionTypes';
 
 import { QuestionTypeSelect } from './QuestionTypeSelect';
 
-type QuestionProps = {
-  index: number;
-  questionData: FormField;
-  section: SectionFormField;
-  deleteQuestion: (sectionName: string | undefined, index: number) => void;
-  canDelete: boolean;
+type DragHandlers = {
   onDragStart?: (e: React.DragEvent, index: number) => void;
   onDragOver?: (e: React.DragEvent, index: number) => void;
   onDrop?: (e: React.DragEvent, index: number) => void;
   onDragEnd?: () => void;
   isDragging: boolean;
   dragOverIndex: number | null;
+};
+
+type QuestionProps = {
+  index: number;
+  questionData: FormField;
+  section: SectionFormField;
+  deleteQuestion: (sectionName: string | undefined, index: number) => void;
+  canDelete: boolean;
+  dragHandlers?: DragHandlers;
   readOnly?: boolean;
 };
 
@@ -45,38 +51,49 @@ function QuestionComponent({
   questionData,
   deleteQuestion,
   canDelete,
-  onDragStart,
-  onDragOver,
-  onDrop,
-  onDragEnd,
-  isDragging,
-  dragOverIndex,
+  dragHandlers,
   readOnly = false,
 }: QuestionProps) {
   const { updateQuestion } = useFormFieldContext();
   const {
-    handleInputChange,
+    questionInputRef,
     resetInputValue,
+    handleInputChange,
+    handleInputBlur,
     handleTypeChange,
     handleSwitchChange,
   } = useQuestionHandlers(index, section);
 
+  useEffect(() => {
+    if (questionInputRef.current && questionData.question !== undefined) {
+      questionInputRef.current.value = questionData.question || '';
+    }
+  }, [questionData.question, questionInputRef]);
+
   const QuestionContent = questionTypeMap[questionData.type as QuestionType];
+
   const currentOptions = getCurrentOptions(questionData);
+
   const questionContentKey = getQuestionContentKey(
     questionData,
     index,
     section,
   );
-  const isDragOverState = isDragOver(dragOverIndex, index);
-  const isBeingDragged = isDragging;
+
   const canDrag = canDragQuestion(section);
 
+  const isDragOverState = dragHandlers
+    ? isDragOver(dragHandlers.dragOverIndex, index)
+    : false;
+
+  const isBeingDragged = dragHandlers?.isDragging ?? false;
+
   const handleDragStartInternal = (e: React.DragEvent) => {
-    if (canDrag && onDragStart) {
-      onDragStart(e, index);
-    }
+    if (!canDrag || !dragHandlers?.onDragStart || readOnly) return;
+    handleInputBlur();
+    dragHandlers.onDragStart(e, index);
   };
+
   const handleOptionsChange = (options: string[]) => {
     updateQuestion(section.section, index, 'options', options);
   };
@@ -87,18 +104,20 @@ function QuestionComponent({
       draggable={readOnly ? false : canDrag}
       onDragStart={readOnly ? undefined : handleDragStartInternal}
       onDragOver={(e) => {
-        if (canDrag && !readOnly && onDragOver) {
+        if (canDrag && !readOnly && dragHandlers?.onDragOver) {
           e.preventDefault();
-          onDragOver(e, index);
+          dragHandlers.onDragOver(e, index);
         }
       }}
       onDrop={(e) => {
-        if (canDrag && !readOnly && onDrop) {
+        if (canDrag && !readOnly && dragHandlers?.onDrop) {
           e.preventDefault();
-          onDrop(e, index);
+          dragHandlers.onDrop(e, index);
         }
       }}
-      onDragEnd={readOnly ? undefined : canDrag ? onDragEnd : undefined}
+      onDragEnd={
+        readOnly ? undefined : canDrag ? dragHandlers?.onDragEnd : undefined
+      }
       className={`relative mb-3 box-border rounded-xl border border-gray-200 p-7 px-6 transition-all ${
         isDragOverState
           ? 'border-blue-500 bg-blue-50'
@@ -131,8 +150,9 @@ function QuestionComponent({
         <div className="flex-1" draggable={false}>
           <Input
             placeholder="질문을 입력해 주세요."
-            value={questionData.question || ''}
+            ref={questionInputRef}
             onChange={handleInputChange}
+            onBlur={handleInputBlur}
             onClickReset={resetInputValue}
             className="w-full"
             disabled={readOnly}
@@ -192,4 +212,4 @@ function QuestionComponent({
   );
 }
 
-export const Question = QuestionComponent;
+export const Question = memo(QuestionComponent);

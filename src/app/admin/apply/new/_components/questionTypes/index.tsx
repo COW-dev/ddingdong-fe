@@ -31,6 +31,8 @@ function RadioQuestionContent({
     handleAddOption,
     handleRemoveOption,
     handleOptionChange,
+    handleOptionBlur,
+    setOptionRef,
     canAddOption,
     canRemoveOption,
   } = useQuestionOptions(options || [], onOptionsChange);
@@ -55,8 +57,10 @@ function RadioQuestionContent({
               <RadioItem value={option} className="size-5" />
 
               <input
-                value={option}
-                onChange={(e) => handleOptionChange(i, e.target.value)}
+                ref={(ref) => setOptionRef(i, ref)}
+                defaultValue={option}
+                onChange={() => handleOptionChange(i)}
+                onBlur={() => handleOptionBlur(i)}
                 className="w-[80%] border-none outline-none"
                 disabled={readOnly}
                 readOnly={readOnly}
@@ -96,6 +100,8 @@ function CheckboxQuestionContent({
     handleAddOption,
     handleRemoveOption,
     handleOptionChange,
+    handleOptionBlur,
+    setOptionRef,
     canAddOption,
     canRemoveOption,
   } = useQuestionOptions(options || [], onOptionsChange);
@@ -116,8 +122,10 @@ function CheckboxQuestionContent({
             />
 
             <input
-              value={option}
-              onChange={(e) => handleOptionChange(i, e.target.value)}
+              ref={(ref) => setOptionRef(i, ref)}
+              defaultValue={option}
+              onChange={() => handleOptionChange(i)}
+              onBlur={() => handleOptionBlur(i)}
               className="w-[80%] border-none outline-none"
               disabled={readOnly}
               readOnly={readOnly}

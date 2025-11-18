@@ -1,3 +1,5 @@
+import { useRef } from 'react';
+
 import {
   FormField,
   QuestionType,
@@ -6,8 +8,12 @@ import {
 
 import { useFormFieldContext } from '../_contexts/FormFieldContext';
 
+const DEBOUNCE_DELAY_MS = 300;
+
 export function useQuestionHandlers(index: number, section: SectionFormField) {
   const { updateQuestion } = useFormFieldContext();
+  const questionInputRef = useRef<HTMLInputElement | null>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const updateField = <K extends keyof FormField>(
     field: K,
@@ -16,14 +22,37 @@ export function useQuestionHandlers(index: number, section: SectionFormField) {
     updateQuestion(section.section, index, field, value);
   };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    updateField('question', e.target.value);
+  const syncQuestionValue = () => {
+    if (questionInputRef.current) {
+      const newValue = questionInputRef.current.value;
+      updateField('question', newValue);
+    }
+  };
+
+  const handleInputChange = () => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      syncQuestionValue();
+      debounceTimerRef.current = null;
+    }, DEBOUNCE_DELAY_MS);
+  };
+
+  const handleInputBlur = () => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+      debounceTimerRef.current = null;
+    }
+    syncQuestionValue();
   };
 
   const resetInputValue = () => {
-    updateField('question', '');
+    if (questionInputRef.current) {
+      questionInputRef.current.value = '';
+      updateField('question', '');
+    }
   };
 
   const handleTypeChange = (value: QuestionType) => {
@@ -39,8 +68,10 @@ export function useQuestionHandlers(index: number, section: SectionFormField) {
   };
 
   return {
+    questionInputRef,
     resetInputValue,
     handleInputChange,
+    handleInputBlur,
     handleTypeChange,
     handleSwitchChange,
   };

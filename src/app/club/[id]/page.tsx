@@ -15,7 +15,7 @@ import { ClubTabSkeleton } from './_components/skeleton/ClubTabSkeleton';
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
   const clubId = Number(id);
@@ -34,7 +34,7 @@ export async function generateMetadata({
 export default async function ClubDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const clubId = Number(id);

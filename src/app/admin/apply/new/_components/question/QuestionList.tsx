@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { Flex } from 'ddingdong-design-system';
 
@@ -45,6 +45,20 @@ function QuestionListComponent({
     },
     [deleteQuestion, focusSection],
   );
+
+  const baseDragHandlers = useMemo(
+    () =>
+      readOnly
+        ? undefined
+        : {
+            onDragStart: handleDragStart,
+            onDragOver: handleDragOver,
+            onDrop: handleDrop,
+            onDragEnd: handleDragEnd,
+          },
+    [readOnly, handleDragStart, handleDragOver, handleDrop, handleDragEnd],
+  );
+
   return (
     <Flex
       dir="col"
@@ -52,23 +66,28 @@ function QuestionListComponent({
       onDragOver={readOnly ? undefined : handleContainerDragOver}
     >
       {focusSection === '공통' && <CommonQuestionPreview />}
-      {sectionData?.questions.map((question: FormField, index: number) => (
-        <Question
-          key={question.id || `${focusSection}-${index}`}
-          index={index}
-          questionData={question}
-          deleteQuestion={() => handleDeleteQuestion(index)}
-          section={sectionData}
-          canDelete={questionCount > 1 && !readOnly}
-          onDragStart={readOnly ? undefined : handleDragStart}
-          onDragOver={readOnly ? undefined : handleDragOver}
-          onDrop={readOnly ? undefined : handleDrop}
-          onDragEnd={readOnly ? undefined : handleDragEnd}
-          isDragging={draggedIndex === index}
-          dragOverIndex={dragOverIndex}
-          readOnly={readOnly}
-        />
-      ))}
+      {sectionData?.questions.map((question: FormField, index: number) => {
+        const dragHandlers = baseDragHandlers
+          ? {
+              ...baseDragHandlers,
+              isDragging: draggedIndex === index,
+              dragOverIndex: dragOverIndex,
+            }
+          : undefined;
+
+        return (
+          <Question
+            key={question.id || `${focusSection}-${index}`}
+            index={index}
+            questionData={question}
+            section={sectionData}
+            deleteQuestion={() => handleDeleteQuestion(index)}
+            canDelete={questionCount > 1 && !readOnly}
+            dragHandlers={dragHandlers}
+            readOnly={readOnly}
+          />
+        );
+      })}
     </Flex>
   );
 }
