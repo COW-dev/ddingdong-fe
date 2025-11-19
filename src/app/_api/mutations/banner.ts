@@ -2,9 +2,9 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { fetcher } from '../fetcher';
 import { bannerQueryKeys } from '../queries/banner';
-import { NewBanner } from '../types/banner';
+import { BannerAPIRequest } from '../types/banner';
 
-const createBanner = (banner: NewBanner) =>
+const createBanner = (banner: BannerAPIRequest) =>
   fetcher.post('admin/banners', {
     json: banner,
   });
@@ -13,7 +13,7 @@ export const useCreateBanner = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: NewBanner) => createBanner(data),
+    mutationFn: (data: BannerAPIRequest) => createBanner(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [...bannerQueryKeys.all()],

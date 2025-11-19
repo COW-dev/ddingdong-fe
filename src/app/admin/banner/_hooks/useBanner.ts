@@ -2,22 +2,50 @@ import { useState } from 'react';
 
 import toast from 'react-hot-toast';
 
-import { ApiError } from '@/app/_api/fetcher';
-import { useCreateBanner } from '@/app/_api/mutations/banner';
-import { NewBanner } from '@/app/_api/types/banner';
+import { BannerAPIRequest } from '@/app/_api/types/banner';
 import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { useCreateBanner } from '@/app/_api/mutations/banner';
+import { ApiError } from 'next/dist/server/api-utils';
 
 export const useBanner = () => {
   const [webPreviewUrl, setWebPreviewUrl] = useState<string[]>([]);
   const [mobilePreviewUrl, setMobilePreviewUrl] = useState<string[]>([]);
-  const [banner, setBanner] = useState<NewBanner>({
+  const [banner, setBanner] = useState<BannerAPIRequest>({
     mobileImageId: '',
     webImageId: '',
     link: '',
   });
 
+  const initialize = () => {
+    setWebPreviewUrl([]);
+    setMobilePreviewUrl([]);
+    setBanner({
+      mobileImageId: '',
+      webImageId: '',
+      link: '',
+    });
+  };
+
+  const { getPresignedId, isLoading } = usePresignedUrl();
   const { mutate } = useCreateBanner();
-  const { getPresignedId } = usePresignedUrl();
+
+  const handleSubmit = (onSuccess: () => void) => {
+    if ([banner.mobileImageId, banner.webImageId].includes('')) {
+      return toast.error('웹/모바일용 이미지를 모두 첨부해주세요.');
+    }
+    mutate(banner, {
+      onSuccess: () => {
+        toast.success('배너가 생성되었어요.');
+        onSuccess();
+        initialize();
+      },
+      onError: (error: Error) => {
+        if (error instanceof ApiError) {
+          toast.error(error.message);
+        }
+      },
+    });
+  };
 
   const handleChangeImage = async ({
     files,
@@ -55,24 +83,12 @@ export const useBanner = () => {
   const handleChangeMobile = (files: File[] | null, urls: string[]) =>
     handleChangeImage({ files, urls, type: 'mobile' });
 
-  const handleSubmit = () => {
-    mutate(banner, {
-      onSuccess: () => {
-        toast.success('배너가 생성되었어요.');
-      },
-      onError: (error: Error) => {
-        if (error instanceof ApiError) {
-          toast.error(error.message);
-        }
-      },
-    });
-  };
-
   return {
     webPreviewUrl,
     mobilePreviewUrl,
     handleChangeWeb,
     handleChangeMobile,
     handleSubmit,
+    isLoading,
   };
 };

@@ -13,11 +13,11 @@ import {
 } from 'ddingdong-design-system';
 import { useMediaQuery } from 'usehooks-ts';
 
-import { BannerType } from '@/app/_api/types/banner';
+import { Banner as BannerType } from '@/app/_api/types/banner';
 
 import { DeleteModal } from './DeleteModal';
 
-export default function Banner({ data }: { data: BannerType }) {
+export function Banner({ data }: { data: BannerType }) {
   const { id, webImageUrl, mobileImageUrl } = data;
   const { isOpen, openModal, closeModal } = usePortal();
 

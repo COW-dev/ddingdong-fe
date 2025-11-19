@@ -9,7 +9,7 @@ import {
 } from 'ddingdong-design-system';
 
 import { bannerQueryOptions } from '@/app/_api/queries/banner';
-import Banner from '@/app/admin/banner/_components/Banner';
+import { Banner } from '@/app/admin/banner/_components/Banner';
 import { ROLE_TYPE, RoleType } from '@/constants/role';
 
 import { UploadModal } from '../_components/UploadModal';

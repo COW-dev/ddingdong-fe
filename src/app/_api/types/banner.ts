@@ -1,6 +1,6 @@
 import { UrlType } from './file';
 
-export type BannerType = {
+export type Banner = {
   id: number;
   link: string;
   webImageUrl: UrlType;
