@@ -5,7 +5,7 @@ import { useSubmitApply } from '@/hooks/api/apply/useSubmitApply';
 import { ApplyData, FormAnswer, QuestionType } from '@/types/form';
 import { applyDataSchema } from '@/types/schemas/applyDataSchema';
 import ApplyContent from './ApplyContent';
-import CommonQuestion from './CommnQuestion';
+import CommonQuestion from '../../app/admin/apply/new/_components/CommonQuestionPreview';
 
 interface FormData {
   data: {

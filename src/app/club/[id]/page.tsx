@@ -10,11 +10,12 @@ import { ClubFeedTab } from './_components/server/ClubFeedTab';
 import { ClubHeaderSection } from './_components/server/ClubHeaderSection';
 import { ClubIntroTab } from './_components/server/ClubIntroTab';
 import { ClubHeaderSkeleton } from './_components/skeleton/ClubHeaderSkeleton';
+import { ClubTabSkeleton } from './_components/skeleton/ClubTabSkeleton';
 
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
   const clubId = Number(id);
@@ -33,7 +34,7 @@ export async function generateMetadata({
 export default async function ClubDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const clubId = Number(id);
@@ -43,10 +44,12 @@ export default async function ClubDetailPage({
       <Suspense fallback={<ClubHeaderSkeleton />}>
         <ClubHeaderSection id={clubId} />
       </Suspense>
-      <ClubTabsClient
-        introTab={<ClubIntroTab id={clubId} />}
-        feedTab={<ClubFeedTab id={clubId} />}
-      />
+      <Suspense fallback={<ClubTabSkeleton />}>
+        <ClubTabsClient
+          introTab={<ClubIntroTab id={clubId} />}
+          feedTab={<ClubFeedTab id={clubId} />}
+        />
+      </Suspense>
     </>
   );
 }

@@ -12,7 +12,7 @@ import { ReportDetailClientPage } from './_pages/ReportDetailClientPage';
 export async function generateMetadata({
   params,
 }: {
-  params: { term: string; name: string };
+  params: Promise<{ term: string; name: string }>;
 }): Promise<Metadata> {
   const { term, name } = await params;
   return {
@@ -24,7 +24,7 @@ export async function generateMetadata({
 export default async function ReportAdminTermNamePage({
   params,
 }: {
-  params: { term: string; name: string };
+  params: Promise<{ term: string; name: string }>;
 }) {
   const { term, name } = await params;
   const queryClient = new QueryClient();

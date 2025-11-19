@@ -1,3 +1,5 @@
+// components/layout/LayoutClient.tsx
+
 'use client';
 
 import { usePathname } from 'next/navigation';
@@ -8,13 +10,14 @@ import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
 import { UserHeader } from './UserHeader';
 
-type LayoutProps = { children: React.ReactNode };
+type LayoutClientProps = {
+  children: React.ReactNode;
+  isAdminHost: boolean;
+};
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, isAdminHost }: LayoutClientProps) {
   const pathname = usePathname();
-  const host = typeof window !== 'undefined' ? window.location.hostname : '';
-  const sub = host.split('.')[0];
-  const isAdminHost = sub === 'admin';
+
   const isLoginPage = pathname?.includes('/login');
 
   return (
