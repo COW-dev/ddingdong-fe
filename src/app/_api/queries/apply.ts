@@ -6,6 +6,8 @@ import {
   ApplicationAPIResponse,
   ApplyStatistics,
   FormAPIResponse,
+  MultipleField,
+  SingleField,
   FormFieldAPIResponse,
   SectionAPIResponse,
 } from '../types/apply';
@@ -34,6 +36,7 @@ export const applyQueryKeys = {
       ...applyQueryKeys.applications.detail(formId),
       'statistics',
     ],
+    field: (fieldId: number) => [...applyQueryKeys.all(), fieldId],
   },
   applicants: {
     all: () => [...applyQueryKeys.all(), 'applicants'],
@@ -65,7 +68,6 @@ export const applyQueryOptions = {
           `central/my/forms/${formId}/applications`,
         ),
     }),
-
   applicantDetail: (formId: number, applicantId: number) =>
     queryOptions({
       queryKey: applyQueryKeys.applicants.detail(formId, applicantId),
@@ -85,5 +87,21 @@ export const applyQueryOptions = {
       queryKey: applyQueryKeys.applications.statistics(formId),
       queryFn: () =>
         fetcher.get<ApplyStatistics>(`central/my/forms/${formId}/statistics`),
+    }),
+  multipleField: (fieldId: number) =>
+    queryOptions({
+      queryKey: applyQueryKeys.applications.field(fieldId),
+      queryFn: () =>
+        fetcher.get<MultipleField>(
+          `central/my/forms/statistics/multiple-choice?fieldId=${fieldId}`,
+        ),
+    }),
+  singleField: (fieldId: number) =>
+    queryOptions({
+      queryKey: applyQueryKeys.applications.field(fieldId),
+      queryFn: () =>
+        fetcher.get<SingleField>(
+          `central/my/forms/statistics/text?fieldId=${fieldId}`,
+        ),
     }),
 };

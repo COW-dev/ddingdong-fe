@@ -1,35 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
-import Question from '@/components/apply/ApplyQuestion';
-import { useApplyStatistics } from '@/hooks/api/apply/useApplyStatistics';
+'use client';
+import { useMemo, useState } from 'react';
+
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Flex } from 'ddingdong-design-system';
+
+import { applyQueryOptions } from '@/app/_api/queries/apply';
+import { Question } from '@/app/admin/apply/[id]/statistics/_components/ApplyQuestion';
 import { ApplyQuestion } from '@/types/apply';
-import StatisticsSections from '../../../../../../components/apply/StatisticsSections';
 
-export default function QuestionList({ applyId }: { applyId: number }) {
-  const [{ token }] = useCookies(['token']);
-  const { data } = useApplyStatistics(applyId, token);
-  const [fields, setFields] = useState<string>('공통');
+import Sections from './Sections';
 
-  const [fieldsData, setFieldsData] = useState<ApplyQuestion[]>();
+export function QuestionList({ applyId }: { applyId: number }) {
+  const { data: statisticsData } = useSuspenseQuery(
+    applyQueryOptions.statistics(applyId),
+  );
+  const sections = statisticsData.fieldStatistics.sections;
+  const [focusSection, setFocusSection] = useState(sections[0]);
 
-  useEffect(() => {
-    const filteredData = data?.data.fieldStatistics.fields.filter(
-      (item: ApplyQuestion) => item.section === fields,
+  const filteredQuestions = useMemo(() => {
+    return statisticsData.fieldStatistics.fields.filter(
+      (item: ApplyQuestion) => item.section === focusSection,
     );
-    setFieldsData(filteredData);
-  }, [fields, data]);
+  }, [statisticsData, focusSection]);
 
   return (
-    <>
-      <StatisticsSections
-        focusSection={fields}
-        setFocusSection={setFields}
-        sections={data?.data.fieldStatistics.sections ?? ['']}
-        isClosed={true}
+    <div>
+      <Sections
+        focusSection={focusSection}
+        setFocusSection={setFocusSection}
+        sections={sections}
       />
-      {fieldsData?.map((question: ApplyQuestion) => {
-        return <Question data={question} key={question.id} />;
-      })}
-    </>
+      <Flex dir="col" gap={2}>
+        {filteredQuestions?.map((question: ApplyQuestion) => {
+          return <Question data={question} key={question.id} />;
+        })}
+      </Flex>
+    </div>
   );
 }

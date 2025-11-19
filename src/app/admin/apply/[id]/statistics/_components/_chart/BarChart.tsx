@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import { Chart as ChartJS, BarController, BarElement, Tooltip } from 'chart.js';
-import { tooltip } from '@/constants/tooltip';
+
 import { ChartItem } from '@/app/_api/types/apply';
 import { debounce } from '@/app/admin/apply/[id]/statistics/_utils/debounce';
+import { tooltip } from '@/constants/tooltip';
 
 ChartJS.register(BarController, BarElement, Tooltip);
 

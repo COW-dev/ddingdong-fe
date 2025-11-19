@@ -1,7 +1,8 @@
+import { useSuspenseQueries } from '@tanstack/react-query';
+
 import { applyQueryOptions } from '@/app/_api/queries/apply';
 import { clubQueryOptions } from '@/app/_api/queries/club';
-import { ApplyRate } from '@/types/apply';
-import { useSuspenseQueries } from '@tanstack/react-query';
+
 import { createComparisonData } from '../_utils/createComparison';
 
 export const useSummary = (id: number) => {

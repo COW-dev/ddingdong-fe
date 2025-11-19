@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useMemo, useCallback } from 'react';
+
 import {
   Chart as ChartJS,
   PieController,
@@ -6,9 +7,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
+import { ChartItem } from '@/app/_api/types/apply';
+import { debounce } from '@/app/admin/apply/[id]/statistics/_utils/debounce';
 import { tooltip } from '@/constants/tooltip';
-import { ChartItem } from '@/types/apply';
-import { debounce } from '../../utils/cn';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 

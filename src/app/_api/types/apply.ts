@@ -176,3 +176,13 @@ export type ChartItem = {
   ratio: number;
   rank?: number;
 };
+
+export type SingleField = {
+  type: QuestionType;
+  answers: { applicationId: number; name: string; answer: string }[];
+};
+
+export type MultipleField = {
+  type: QuestionType;
+  options: { count: number; label: string; ratio: number }[];
+};
