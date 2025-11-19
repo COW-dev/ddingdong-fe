@@ -7,7 +7,7 @@ export type Banner = {
   mobileImageUrl: UrlType;
 };
 
-export type NewBanner = {
+export type BannerAPIRequest = {
   webImageId: string;
   mobileImageId: string;
   link?: string;
