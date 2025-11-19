@@ -1,16 +1,13 @@
-import React from 'react';
+'use client';
 import Image from 'next/image';
 import router from 'next/router';
-import {
-  TooltipProvider,
-  TooltipTrigger,
-  TooltipContent,
-  Tooltip,
-} from '@radix-ui/react-tooltip';
-import { useCookies } from 'react-cookie';
+
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Flex, Tooltip } from 'ddingdong-design-system';
 import TextareaAutosize from 'react-textarea-autosize';
+
+import { applyQueryOptions } from '@/app/_api/queries/apply';
 import File from '@/assets/file.svg';
-import { useSingleAnswer } from '@/hooks/api/apply/useSingleAnswer';
 import { AnswerItem, FileItem } from '@/types/apply';
 
 const componentMap = {
@@ -35,9 +32,9 @@ type Props = {
 };
 
 export default function QuestionSingleContent({ type, id }: Props) {
-  const [{ token }] = useCookies();
-
-  const { data } = useSingleAnswer(id, token);
+  const { data: answerData } = useSuspenseQuery(
+    applyQueryOptions.singleField(id),
+  );
 
   const groupFileItems = (data: AnswerItem[]) => {
     const grouped = data.reduce<Record<number, FileItem>>(
@@ -54,39 +51,27 @@ export default function QuestionSingleContent({ type, id }: Props) {
   };
 
   const answers =
-    data?.data.type === 'FILE'
-      ? groupFileItems(data?.data.answers)
-      : data?.data.answers ?? [];
+    answerData.type === 'FILE'
+      ? groupFileItems(answerData.answers)
+      : (answerData.answers ?? []);
   const isFileItemType = (answer: FileItem | AnswerItem): answer is FileItem =>
     Array.isArray(answer.answer);
 
   return (
-    <div className="flex w-full flex-col gap-4">
+    <Flex dir="col" gap={4} className="w-full">
       {answers.map((answer, index) => (
-        <TooltipProvider delayDuration={0} key={index}>
-          <Tooltip>
-            <TooltipTrigger>
-              {isFileItemType(answer) ? (
-                <FileList answer={answer} />
-              ) : (
-                <ChartComponent
-                  answer={answer}
-                  textType={type as 'TEXT' | 'LONG_TEXT'}
-                />
-              )}
-            </TooltipTrigger>
-            <TooltipContent
-              side="bottom"
-              align="end"
-              sideOffset={0}
-              className="m-2 rounded-lg bg-gray-100 p-1 px-1.5 text-sm md:p-2 md:px-2 md:text-base"
-            >
-              {answer.name}
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+        <Tooltip content={answer.name} color="gray" key={index}>
+          {isFileItemType(answer) ? (
+            <FileList answer={answer} />
+          ) : (
+            <ChartComponent
+              answer={answer}
+              textType={type as 'TEXT' | 'LONG_TEXT'}
+            />
+          )}
+        </Tooltip>
       ))}
-    </div>
+    </Flex>
   );
 }
 
@@ -103,7 +88,7 @@ function FileList({ answer }: { answer: FileItem }) {
       onClick={handleClick}
     >
       {answer.answer.map((fileName) => (
-        <div key={fileName} className="flex items-center">
+        <Flex alignItems="center" key={fileName}>
           <Image
             src={File}
             width={20}
@@ -112,7 +97,7 @@ function FileList({ answer }: { answer: FileItem }) {
             className="my-2 cursor-pointer"
           />
           <span className="ml-3">{fileName}</span>
-        </div>
+        </Flex>
       ))}
     </label>
   );
@@ -128,7 +113,7 @@ function TextList({ answer }: { answer: AnswerItem }) {
     <TextareaAutosize
       onClick={handleClick}
       readOnly
-      className="block w-full resize-none rounded-xl border border-[#E5E7EB]  p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
+      className="block w-full resize-none rounded-xl border border-[#E5E7EB] p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
       value={answer.answer}
     />
   );
