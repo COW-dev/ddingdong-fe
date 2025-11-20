@@ -51,14 +51,15 @@ export function useApplyForm(formId: number, formFields: FormField[]) {
       return;
     }
 
-    const formAnswersWithArrayValues = formAnswers.map((answer) => ({
-      ...answer,
-      value: Array.isArray(answer.value)
-        ? answer.value
-        : answer.value
-          ? [answer.value]
-          : [],
-    }));
+    const formAnswersWithArrayValues = formAnswers.map((answer) => {
+      if (Array.isArray(answer.value)) {
+        return answer;
+      }
+      return {
+        ...answer,
+        value: answer.value ? [answer.value] : [],
+      };
+    });
 
     submitApplication(
       {

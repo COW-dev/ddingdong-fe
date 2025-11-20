@@ -1,8 +1,9 @@
+import { cache } from 'react';
+
 import { fetcher } from '@/app/_api/fetcher';
 import { ClubDetail } from '@/app/_api/types/club';
 
 import { ClubIntroduceTab } from '../ClubIntroduceTab';
-import { cache } from 'react';
 
 const fetchClubDetail = cache(async (id: number): Promise<ClubDetail> => {
   return fetcher.get<ClubDetail>(`clubs/${id}`);
