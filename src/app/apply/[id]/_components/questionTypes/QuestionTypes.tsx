@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import {
   Body2,
   Checkbox,
@@ -10,7 +12,7 @@ import {
   RadioItem,
   TextArea,
 } from 'ddingdong-design-system';
-import { useState } from 'react';
+
 import { usePresignedUrlForm } from '../../_hooks/usePresignedUrlForm';
 
 type CheckboxQuestionProps = {
@@ -77,14 +79,14 @@ export function FileQuestion({ onFileChange }: FileQuestionProps) {
         setFileName(file.name);
         onFileChange([fileInfo.id]);
       }
-    } catch (error) {
+    } catch {
       onFileChange([]);
     }
   };
 
   return (
     <Flex dir="col" gap={2} className="w-full">
-      <FileUpload mode="single" disabled={false} onChange={handleChange} />
+      <FileUpload mode="single" disabled={isLoading} onChange={handleChange} />
       {fileName && (
         <Flex
           dir="row"
@@ -178,6 +180,7 @@ export function TextQuestion({
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
       disabled={false}
+      maxLength={300}
     />
   );
 }
