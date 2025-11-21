@@ -26,14 +26,9 @@ export const useFunnel = <T extends string>(stepNames: StepNames<T>) => {
     [step],
   );
 
-  const Step = useCallback(
-    ({ children }: StepProps<T>): ReactElement<StepProps<T>> => {
-      return React.createElement(React.Fragment, {}, children) as ReactElement<
-        StepProps<T>
-      >;
-    },
-    [],
-  );
+  const Step = useCallback(({ children }: StepProps<T>) => {
+    return <>{children}</>;
+  }, []);
 
   const Funnel = Object.assign(FunnelComponent, { Step });
 
