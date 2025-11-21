@@ -35,7 +35,7 @@ export function ApplyForm({ formId, formFields }: ApplyFormProps) {
         <QuestionCard
           key={field.id}
           {...field}
-          onChange={(value) => updateFormAnswer(field.id || 0, value)}
+          onChange={(value) => updateFormAnswer(Number(field.id), value)}
         />
       ))}
       <Flex dir="row" gap={3} className="w-full justify-center p-6">

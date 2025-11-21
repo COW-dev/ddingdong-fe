@@ -47,7 +47,7 @@ export function validateApplyData({
   for (const field of requiredFields) {
     if (!field.id) continue;
 
-    const answer = formAnswers.find((ans) => ans.fieldId === field.id);
+    const answer = formAnswers.find((ans) => ans.fieldId === Number(field.id));
     const hasValue =
       answer &&
       (Array.isArray(answer.value)
