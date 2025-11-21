@@ -34,7 +34,7 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} closeModal={closeModal}>
+    <Modal isOpen={isOpen} closeModal={closeModal} className="z-999">
       <FeedModalContainer>
         <Flex dir="col">
           <Flex className="h-48 w-full overflow-hidden rounded-xl bg-black sm:h-64 md:h-[400px]">
