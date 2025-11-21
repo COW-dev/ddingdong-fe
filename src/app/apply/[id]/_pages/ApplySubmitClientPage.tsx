@@ -1,6 +1,6 @@
 'use client';
 
-import { Body1, Body2, Flex, Title1 } from 'ddingdong-design-system';
+import { Body2, Flex, Title1 } from 'ddingdong-design-system';
 
 import { ApplyForm } from '../_components/ApplyForm';
 import { RecruitmentPeriodWarning } from '../_components/RecruitmentPeriodWarning';

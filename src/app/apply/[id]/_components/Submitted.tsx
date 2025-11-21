@@ -1,10 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useEffect } from 'react';
 
 import { Body1, Button, Flex, Title1 } from 'ddingdong-design-system';
 import JSConfetti from 'js-confetti';
-import { useRouter } from 'next/navigation';
 
 const CONFETTI_COLORS = [
   '#ff0a54',

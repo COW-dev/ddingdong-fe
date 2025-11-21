@@ -63,17 +63,7 @@ export function QuestionCard({
     ),
     FILE: () => (
       <FileQuestion
-        onFileChange={(files) => {
-          if (files.length === 0) {
-            handleChange([]);
-            return;
-          }
-          const fileIds: string[] =
-            typeof files[0] === 'string'
-              ? (files as string[])
-              : (files as File[]).map(() => ''); // TODO: 실제 파일 업로드 후 ID 받아오기
-          handleChange(fileIds);
-        }}
+        onFileChange={(fileIds) => handleChange(fileIds as string[])}
       />
     ),
   };

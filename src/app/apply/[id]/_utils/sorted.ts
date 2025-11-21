@@ -1,19 +1,15 @@
 import { FormField } from '@/app/_api/types/apply';
-
+const COMMON_SECTION = '공통' as const;
 export const sortedFields = (formFields: FormField[]) => {
-  const common: FormField[] = [];
-  const regular: FormField[] = [];
+  const sortByOrder = (fields: FormField[]) =>
+    [...fields].sort((a, b) => (a.order || 0) - (b.order || 0));
 
-  formFields.forEach((field) => {
-    if (field.section === '공통') {
-      common.push(field);
-    } else {
-      regular.push(field);
-    }
-  });
-
-  common.sort((a, b) => (a.order || 0) - (b.order || 0));
-  regular.sort((a, b) => (a.order || 0) - (b.order || 0));
+  const common = sortByOrder(
+    formFields.filter((field) => field.section === COMMON_SECTION),
+  );
+  const regular = sortByOrder(
+    formFields.filter((field) => field.section !== COMMON_SECTION),
+  );
 
   return [...common, ...regular];
 };
