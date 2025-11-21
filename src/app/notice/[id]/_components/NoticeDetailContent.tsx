@@ -20,10 +20,15 @@ export function NoticeDetailContent({
       {sortedImages.length > 0 && (
         <Flex justifyContent="center" className="my-6 w-full">
           <ImageGallery
-            images={sortedImages.map((image) => ({
-              url: image.originUrl,
-              alt: image.fileName,
-            }))}
+            images={sortedImages.map((image) => {
+              const separator = image.cdnUrl.includes('?') ? '&' : '?';
+              return {
+                url: decodeURIComponent(
+                  `${image.cdnUrl}${separator}w=768&f=webp`,
+                ),
+                alt: image.fileName,
+              };
+            })}
           />
         </Flex>
       )}
