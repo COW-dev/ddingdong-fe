@@ -41,7 +41,7 @@ export function UserHeader() {
       </Header>
 
       {/* 모바일 */}
-      <Header className="z-0 flex md:hidden">
+      <Header className="flex md:hidden">
         <Flex
           dir="row"
           alignItems="center"
@@ -70,7 +70,7 @@ export function UserHeader() {
               dir="row"
               alignItems="center"
               justifyContent="between"
-              className="bg-primary-300 w-[380px] px-6 py-4 pt-4 sm:w-[510px]"
+              className="bg-primary-300 w-[80vw] px-6 py-4 pt-4"
             >
               <Link href="/" className="inline-block">
                 <OptimizedImage
