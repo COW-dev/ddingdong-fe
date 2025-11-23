@@ -41,7 +41,7 @@ export function UserHeader() {
       </Header>
 
       {/* 모바일 */}
-      <Header className="z-0 flex md:hidden">
+      <Header className="flex md:hidden">
         <Flex
           dir="row"
           alignItems="center"
