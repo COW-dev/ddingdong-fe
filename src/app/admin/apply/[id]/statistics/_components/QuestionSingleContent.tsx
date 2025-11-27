@@ -18,7 +18,7 @@ type Props = {
 
 export function QuestionSingleContent({ type, id }: Props) {
   const { answers } = useQuestion(id);
-  console.log(answers);
+
   return (
     <Flex dir="col" gap={4} className="w-full">
       {answers.map((answer, index) => (
@@ -45,9 +45,9 @@ export function FileList({ answer, id }: { answer: FileItem; id: number }) {
   };
 
   return (
-    <label
-      className="flex flex-col rounded-xl border border-[#E5E7EB] px-5 py-2 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
-      htmlFor="file_input"
+    <Flex
+      dir="col"
+      className="w-full rounded-xl border border-[#E5E7EB] px-5 py-2 text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner"
       onClick={handleClick}
     >
       {answer.answer.map((fileName, index) => (
@@ -56,7 +56,7 @@ export function FileList({ answer, id }: { answer: FileItem; id: number }) {
           <Caption1>{fileName}</Caption1>
         </Flex>
       ))}
-    </label>
+    </Flex>
   );
 }
 
