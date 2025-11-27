@@ -1,7 +1,6 @@
 'use client';
 
 import dayjs from 'dayjs';
-import TextareaAutosize from 'react-textarea-autosize';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import 'dayjs/locale/ko';
 import {
@@ -57,11 +56,7 @@ export function CommentItem({
               {dayjs(createdAt).fromNow()}
             </time>
           </Flex>
-          <TextareaAutosize
-            readOnly
-            value={content}
-            className="w-[65vw] resize-none focus:outline-0"
-          />
+          <div className="w-[65vw]">{content}</div>
         </div>
         {role === 'ROLE_ADMIN' && (
           <Flex
