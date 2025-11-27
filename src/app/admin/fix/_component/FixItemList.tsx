@@ -6,14 +6,14 @@ import { Badge, Body1, Caption1 } from 'ddingdong-design-system';
 
 import { fixQueryOptions } from '@/app/_api/queries/fix';
 import { Fix } from '@/app/_api/types/fix';
-import EmptyText from '@/app/admin/fix/_component/EmptyText';
+import { EmptyText } from '@/app/admin/fix/_component/EmptyText';
 
 import {
   FixItemContainer,
   FixItemListContainer,
 } from '../_container/FixItemListContainer';
 
-export default function FixItemList({
+export function FixItemList({
   queryOptions,
 }: {
   queryOptions:

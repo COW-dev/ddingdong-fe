@@ -5,7 +5,7 @@ import { Title1 } from 'ddingdong-design-system';
 
 import { reportQueryOptions } from '@/app/_api/queries/report';
 
-import ReportFormBundle from '../../../new/_components/ReportFormBundle';
+import { ReportFormBundle } from '../../../new/_components/ReportFormBundle';
 import { parseReport } from '../_utils/parse';
 
 export function ReportFixClientPage({ term }: { term: number; name: string }) {

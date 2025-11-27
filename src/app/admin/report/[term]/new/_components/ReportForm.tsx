@@ -21,7 +21,7 @@ import {
 import { useReportImage } from '../_hooks/useReportImage';
 import { useReportInput } from '../_hooks/useReportInput';
 
-import ParticipantModal from './ParticipantModal';
+import { ParticipantModal } from './ParticipantModal';
 
 type Props = {
   report: Report;
@@ -29,7 +29,7 @@ type Props = {
   setIsEditing: Dispatch<SetStateAction<boolean>>;
 };
 
-export default function ReportForm({ setValue, report, setIsEditing }: Props) {
+export function ReportForm({ setValue, report, setIsEditing }: Props) {
   const { date, participants, place, startTime, endTime, content } = report;
   const { isOpen, openModal, closeModal } = usePortal();
   const { mediaPreviewUrls, mediaPreviewFiles, isLoading, handleFileChange } =

@@ -5,15 +5,15 @@ import { Report } from '@/app/_api/types/report';
 
 import { useReport } from '../_hooks/useReport';
 
-import EditButton from './EditButton';
-import ReportForm from './ReportForm';
+import { EditButton } from './EditButton';
+import { ReportForm } from './ReportForm';
 
 type Props = {
   report?: [Report, Report];
   term: number;
 };
 
-export default function ReportFormBundle({ report, term }: Props) {
+export function ReportFormBundle({ report, term }: Props) {
   const isEditMode = !!report;
 
   const {

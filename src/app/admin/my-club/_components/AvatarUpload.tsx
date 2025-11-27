@@ -14,7 +14,7 @@ type Props = {
   setClub: React.Dispatch<React.SetStateAction<ClubDetail>>;
 };
 
-export default function AvatarUpload({ profileImage, setClub }: Props) {
+export function AvatarUpload({ profileImage, setClub }: Props) {
   const { mediaPreviewUrls, handleFileChange } = useClubImage(
     profileImage,
     setClub,

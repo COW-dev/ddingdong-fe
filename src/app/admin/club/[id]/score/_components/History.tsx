@@ -12,7 +12,7 @@ import {
 
 import { ScoreDetail, ScoreHistory } from '@/app/_api/types/score';
 
-export default function History({ totalScore, scoreHistories }: ScoreDetail) {
+export function History({ totalScore, scoreHistories }: ScoreDetail) {
   return (
     <div>
       <Flex justifyContent="between" className="p-2">

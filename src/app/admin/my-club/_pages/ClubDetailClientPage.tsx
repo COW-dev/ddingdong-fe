@@ -3,8 +3,8 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { clubQueryOptions } from '@/app/_api/queries/club';
-import AdminClubHeading from '@/app/admin/my-club/_components/ClubHeadingForm';
-import ClubInfoForm from '@/app/admin/my-club/_components/ClubInfoForm';
+import { AdminClubHeading } from '@/app/admin/my-club/_components/ClubHeadingForm';
+import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
 
 import { ClubIntroductionForm } from '../_components/ClubIntroductionForm';
 import { EditActionButtons } from '../_components/EditActionButtons';

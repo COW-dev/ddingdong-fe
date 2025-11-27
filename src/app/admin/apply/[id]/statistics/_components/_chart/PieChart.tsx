@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useMemo, useCallback } from 'react';
+
 import {
   Chart as ChartJS,
   PieController,
@@ -6,17 +7,14 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
+import { ChartItem } from '@/app/_api/types/apply';
+import { debounce } from '@/app/admin/apply/[id]/statistics/_utils/debounce';
 import { tooltip } from '@/constants/tooltip';
-import { ChartItem } from '@/types/apply';
-import { debounce } from '../../utils/cn';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
-type Props = {
-  data: ChartItem[];
-};
-
-const PieChart = ({ data }: Props) => {
+export const PieChart = ({ data }: { data: ChartItem[] }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
 
@@ -129,5 +127,3 @@ const PieChart = ({ data }: Props) => {
     <canvas ref={canvasRef} className="flex h-auto w-full max-w-[550px]" />
   );
 };
-
-export default PieChart;

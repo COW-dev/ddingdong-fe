@@ -17,13 +17,6 @@ export type ApplyQuestion = {
   type: QuestionType;
 };
 
-export type ChartItem = {
-  label: string;
-  count: number;
-  ratio: number;
-  rank?: number;
-};
-
 export type AnswerItem = {
   applicationId: number;
   name: string;
@@ -37,14 +30,7 @@ export type FileItem = {
   answer: string[];
 };
 
-export type ApplyStatistics = {
-  totalCount: number;
-  departmentStatistics: ChartItem[];
-  applicantStatistics: ApplyRate[];
-  fieldStatistics: fieldStatistics;
-};
-
-export type fieldStatistics = {
+export type FieldStatistics = {
   fields: ApplyQuestion[];
   sections: string[];
 };

@@ -17,6 +17,7 @@ const ACTION_OPTIONS = [
   { label: '삭제', value: 'delete' },
   { label: '명단 연동', value: 'register' },
   { label: '이메일 전송', value: 'email' },
+  { label: '통계', value: 'statistics' },
 ] as const;
 
 export function FormActionDropdown({
@@ -35,6 +36,8 @@ export function FormActionDropdown({
       onRegister();
     } else if (value === 'email') {
       router.push(`/apply/${formId}/email`);
+    } else if (value === 'statistics') {
+      router.push(`/apply/${formId}/statistics`);
     }
   };
 

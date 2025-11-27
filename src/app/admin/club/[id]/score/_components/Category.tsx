@@ -15,7 +15,7 @@ import { CATEGORY } from '../_consts/category';
 import { CategoryContainer } from '../_container/category';
 import { getCategoryHistory, getCategoryScore } from '../_utils/filter';
 
-import CreateScoreForm from './CreateScoreForm';
+import { CreateScoreForm } from './CreateScoreForm';
 
 type Props = {
   category: keyof typeof CATEGORY;
@@ -23,7 +23,7 @@ type Props = {
   clubId?: number;
 };
 
-export default function Category({ category, score, clubId }: Props) {
+export function Category({ category, score, clubId }: Props) {
   const name = CATEGORY[category].name;
   const { isOpen, openModal, closeModal } = usePortal();
 

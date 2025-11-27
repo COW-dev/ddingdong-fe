@@ -1,7 +1,7 @@
 'use client';
 import { Title1 } from 'ddingdong-design-system';
 
-import ReportFormBundle from '@/app/admin/report/[term]/new/_components/ReportFormBundle';
+import { ReportFormBundle } from '@/app/admin/report/[term]/new/_components/ReportFormBundle';
 
 export function ReportNewClientPage({ term }: { term: number }) {
   return (

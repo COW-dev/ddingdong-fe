@@ -17,7 +17,7 @@ type Props = {
   filterOption: Record<FilterKey, Club[]>;
   setFilteredClub: (clubs: Club[]) => void;
 };
-export default function FilterOption({ filterOption, setFilteredClub }: Props) {
+export function FilterOption({ filterOption, setFilteredClub }: Props) {
   const [selected, setSelected] = useState<FilterKey>('all');
 
   const handleSelect = useCallback(
