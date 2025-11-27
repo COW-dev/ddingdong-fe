@@ -6,6 +6,7 @@ import {
   Flex,
   Icon,
   Modal,
+  Title3,
   usePortal,
 } from 'ddingdong-design-system';
 
@@ -40,12 +41,16 @@ export function Category({ category, score, clubId }: Props) {
         </Flex>
       </CategoryContainer>
       <Modal isOpen={isOpen} closeModal={closeModal}>
-        <Flex dir="col" gap={6}>
+        <Flex dir="col" gap={10}>
           {clubId ? (
-            <CreateScoreForm scoreCategory={category} clubId={clubId} />
+            <CreateScoreForm
+              closeModal={closeModal}
+              scoreCategory={category}
+              clubId={clubId}
+            />
           ) : null}
           <div>
-            <Body3>상세내역</Body3>
+            <Title3>상세내역</Title3>
             <ScoreList history={history} />
           </div>
         </Flex>

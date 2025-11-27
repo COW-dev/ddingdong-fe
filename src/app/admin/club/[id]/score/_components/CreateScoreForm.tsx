@@ -3,7 +3,13 @@ import { ApiError } from 'next/dist/server/api-utils';
 
 import { useState } from 'react';
 
-import { Body3, Button, Flex, Input } from 'ddingdong-design-system';
+import {
+  Button,
+  Flex,
+  IconButton,
+  Input,
+  Title3,
+} from 'ddingdong-design-system';
 import { toast } from 'react-hot-toast';
 
 import { useCreateScore } from '@/app/_api/mutations/score';
@@ -11,9 +17,11 @@ import { useCreateScore } from '@/app/_api/mutations/score';
 export function CreateScoreForm({
   scoreCategory,
   clubId,
+  closeModal,
 }: {
   scoreCategory: string;
   clubId: number;
+  closeModal: () => void;
 }) {
   const { mutate } = useCreateScore(clubId);
 
@@ -41,7 +49,16 @@ export function CreateScoreForm({
 
   return (
     <form className="flex flex-col gap-2">
-      <Body3>점수 등록</Body3>
+      <Flex justifyContent="between">
+        <Title3>점수 등록</Title3>
+        <IconButton
+          iconName="close"
+          color="gray"
+          onClick={closeModal}
+          size={21}
+          type="button"
+        />
+      </Flex>
       <Flex gap={2}>
         <Input
           name="reason"
