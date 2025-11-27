@@ -26,14 +26,19 @@ export function Summary({ applyId }: { applyId: number }) {
     <Card className="flex flex-col flex-wrap items-center gap-10 hover:bg-white md:flex-row md:items-end md:justify-around">
       <section className="max-w-[250px] md:w-[300px]">
         <LineChart data={applicantStatistics} />
-        <Flex justifyContent="center" className="m-3">
+        <Flex
+          justifyContent="center"
+          alignItems="center"
+          gap={2}
+          className="m-3"
+        >
           <Body3>최근 모집 대비 지원자 수</Body3>
           {isFirstApply && (
             <Tooltip
               content="신규 기능 개설로 이전(2024.09) 지원자 수는 동아리원 수를 가져왔어요"
               color="gray"
             >
-              <Icon name="search" size={20} />
+              <Icon name="information" size={16} />
             </Tooltip>
           )}
         </Flex>
