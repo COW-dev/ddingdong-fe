@@ -1,4 +1,4 @@
-import { ApplyRate } from '@/types/apply';
+import { ApplyRate } from '@/app/_api/types/apply';
 
 export const MOCK_APPLYCANT: { [key: string]: ApplyRate } = {
   명지서법: {

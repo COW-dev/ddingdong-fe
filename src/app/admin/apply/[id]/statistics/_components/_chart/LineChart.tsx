@@ -10,7 +10,7 @@ import {
   Tooltip,
 } from 'chart.js';
 
-import { ApplyRate } from '@/types/apply';
+import { ApplyRate } from '@/app/_api/types/apply';
 
 import { tooltip } from '../../../../../../../constants/tooltip';
 

@@ -1,4 +1,4 @@
-import { AnswerItem, FileItem } from '@/types/apply';
+import { AnswerItem } from '@/app/_api/types/apply';
 
 export function isSingleType(
   type: string,

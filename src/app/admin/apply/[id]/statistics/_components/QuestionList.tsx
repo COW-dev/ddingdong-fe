@@ -2,8 +2,8 @@
 
 import { Flex } from 'ddingdong-design-system';
 
+import { ApplyQuestion } from '@/app/_api/types/apply';
 import { Question } from '@/app/admin/apply/[id]/statistics/_components/ApplyQuestion';
-import { ApplyQuestion } from '@/types/apply';
 
 import { useSection } from '../_hooks/useSection';
 
