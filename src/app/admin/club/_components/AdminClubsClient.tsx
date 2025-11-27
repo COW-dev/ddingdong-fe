@@ -6,7 +6,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Modal } from 'ddingdong-design-system';
 
 import { clubQueryOptions } from '@/app/_api/queries/club';
-import type { AdminClub } from '@/app/_api/types/club';
 import CreateClub from '@/app/admin/club/_components/modal/CreateClub';
 import Admin from '@/assets/admin.jpg';
 
@@ -42,7 +41,7 @@ export default function AdminClubsClient() {
         {clubs
           .slice()
           .sort((a, b) => b.score - a.score)
-          .map((club: AdminClub) => (
+          .map((club) => (
             <AdminClubCard
               key={club.id}
               name={club.name}
