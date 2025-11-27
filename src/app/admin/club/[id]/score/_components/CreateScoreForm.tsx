@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 
 import { useCreateScore } from '@/app/_api/mutations/score';
 
-export default function CreateScoreForm({
+export function CreateScoreForm({
   scoreCategory,
   clubId,
 }: {
