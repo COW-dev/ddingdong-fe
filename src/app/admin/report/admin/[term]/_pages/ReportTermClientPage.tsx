@@ -8,7 +8,7 @@ import { reportQueryOptions } from '@/app/_api/queries/report';
 
 import { BackHeader } from '../../../_components/BackHeader';
 import { ReportCardContainer } from '../../../_containers/ReportCardContainer';
-import FilterOption from '../_components/FilterOption';
+import { FilterOption } from '../_components/FilterOption';
 import { ReportCard } from '../_components/ReportCard';
 import { useReportFilter } from '../_hooks/useReportFilter';
 
