@@ -1,9 +1,9 @@
+import { ChartItem } from '@/app/_api/types/apply';
 import { AnswerItem } from '@/types/apply';
 
-import { TextList } from './QuestionSingleContent';
 import { BarChart } from './_chart/BarChart';
 import { PieChart } from './_chart/PieChart';
-import { ChartItem } from '@/app/_api/types/apply';
+import { TextList } from './QuestionSingleContent';
 
 type TextProps = {
   type: 'TEXT' | 'LONG_TEXT';
@@ -17,13 +17,21 @@ type ChartProps = {
 };
 
 export const ChartComponent = (props: TextProps | ChartProps) => {
-  switch (props.type) {
+  const { type } = props;
+
+  switch (type) {
     case 'TEXT':
-    case 'LONG_TEXT':
-      return <TextList answer={props.answer} id={props.id} />;
-    case 'RADIO':
-      return <PieChart data={props.data} />;
-    case 'CHECK_BOX':
-      return <BarChart data={props.data} />;
+    case 'LONG_TEXT': {
+      const { answer, id } = props as TextProps;
+      return <TextList answer={answer} id={id} />;
+    }
+    case 'RADIO': {
+      const { data } = props as ChartProps;
+      return <PieChart data={data} />;
+    }
+    case 'CHECK_BOX': {
+      const { data } = props as ChartProps;
+      return <BarChart data={data} />;
+    }
   }
 };
