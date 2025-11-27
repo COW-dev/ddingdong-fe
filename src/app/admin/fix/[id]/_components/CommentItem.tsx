@@ -26,7 +26,7 @@ import { RoleType } from '@/constants/role';
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
 
-export default function CommentItem({
+export function CommentItem({
   comment,
   role,
   postId,

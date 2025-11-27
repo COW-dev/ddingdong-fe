@@ -8,9 +8,9 @@ import {
 } from 'ddingdong-design-system';
 
 import { ReportAPIResponse } from '@/app/_api/types/report';
-import Report from '@/app/admin/report/[term]/[name]/_components/Report';
+import { Report } from '@/app/admin/report/[term]/[name]/_components/Report';
 
-export default function ReportBundle({
+export function ReportBundle({
   reports,
 }: {
   reports: [ReportAPIResponse, ReportAPIResponse];

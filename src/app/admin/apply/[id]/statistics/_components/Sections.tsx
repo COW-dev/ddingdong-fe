@@ -8,11 +8,7 @@ type Props = {
   sections: string[];
 };
 
-export default function Sections({
-  focusSection,
-  setFocusSection,
-  sections,
-}: Props) {
+export function Sections({ focusSection, setFocusSection, sections }: Props) {
   return (
     <SectionContainer>
       {sections.map((section: string) => (

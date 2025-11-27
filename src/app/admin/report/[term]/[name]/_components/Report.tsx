@@ -15,7 +15,7 @@ type Props = {
   report: ReportAPIResponse;
 };
 
-export default function Report({ report }: Props) {
+export function Report({ report }: Props) {
   const {
     place,
     startDate,

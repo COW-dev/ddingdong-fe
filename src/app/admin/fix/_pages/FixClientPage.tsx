@@ -6,7 +6,7 @@ import { Body3, Button, Flex, Title1 } from 'ddingdong-design-system';
 import { fixQueryOptions } from '@/app/_api/queries/fix';
 import { RoleType } from '@/constants/role';
 
-import FixItemList from '../_component/FixItemList';
+import { FixItemList } from '../_component/FixItemList';
 
 export default function FixClientPage({ role }: { role: keyof RoleType }) {
   return (

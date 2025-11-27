@@ -1,11 +1,11 @@
 import { Body3, Card, Flex, ImageGallery } from 'ddingdong-design-system';
 
-import FixPostInfo from '@/app/admin/fix/[id]/_components/FixPostInfo';
+import { FixPostInfo } from '@/app/admin/fix/[id]/_components/FixPostInfo';
 
-import { UrlType } from '@/app/_api/types/common';
 import { DetailFix } from '@/app/_api/types/fix';
+import { UrlType } from '@/app/_api/types/file';
 
-export default function FixPost({ post }: { post: DetailFix }) {
+export function FixPost({ post }: { post: DetailFix }) {
   const { requestedAt, images, clubName, clubLocation, content } = post;
 
   const sortedImages = sortByOrder(images);

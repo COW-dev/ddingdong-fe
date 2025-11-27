@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-import React, { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react';
 
 import { DoubleButton, Button, Body2, Flex } from 'ddingdong-design-system';
 
@@ -10,7 +10,7 @@ type Props = {
   isEditMode: boolean;
 };
 
-export default function EditButton({ disabled = false, isEditMode }: Props) {
+export function EditButton({ disabled = false, isEditMode }: Props) {
   const router = useRouter();
   return (
     <EditButtonContainer>

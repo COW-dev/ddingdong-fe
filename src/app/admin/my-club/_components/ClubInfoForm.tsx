@@ -1,5 +1,5 @@
 'use client';
-import { ChangeEvent, ComponentProps, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, ComponentProps } from 'react';
 
 import { Body2, Flex, Input } from 'ddingdong-design-system';
 
@@ -14,12 +14,7 @@ type Props = {
   onReset: (name: string) => void;
 };
 
-export default function ClubInfoForm({
-  club,
-  isEditing,
-  onChange,
-  onReset,
-}: Props) {
+export function ClubInfoForm({ club, isEditing, onChange, onReset }: Props) {
   const { leader, phoneNumber, location, regularMeeting } = club;
 
   return (

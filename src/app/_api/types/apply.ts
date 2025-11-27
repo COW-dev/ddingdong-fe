@@ -1,4 +1,4 @@
-import { ApplyRate, fieldStatistics } from '@/types/apply';
+import { ApplyRate, FieldStatistics } from '@/types/apply';
 
 export type FormAPIResponse = Form[];
 export type QuestionType =
@@ -92,7 +92,7 @@ export type ApplyStatistics = {
   totalCount: number;
   departmentStatistics: ChartItem[];
   applicantStatistics: ApplyRate[];
-  fieldStatistics: fieldStatistics;
+  fieldStatistics: FieldStatistics;
 };
 
 export type ChartItem = {

@@ -1,11 +1,9 @@
 'use client';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { Caption1, Flex, Icon, Tooltip } from 'ddingdong-design-system';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import File from '@/assets/file.svg';
 import { AnswerItem, FileItem } from '@/types/apply';
 
 import { useQuestion } from '../_hooks/useQeustion';

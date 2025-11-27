@@ -13,7 +13,7 @@ type Props = {
   id: number;
 };
 
-export default function ParticipantSelect({ name, setData, id }: Props) {
+export function ParticipantSelect({ name, setData, id }: Props) {
   const {
     keyword,
     filteredList,

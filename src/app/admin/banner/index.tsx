@@ -47,7 +47,7 @@ export default function Index() {
             })
           }
         >
-          <div className="-mr-3 p-1 opacity-40 transition-opacity hover:opacity-70 sm:hidden ">
+          <div className="-mr-3 p-1 opacity-40 transition-opacity hover:opacity-70 sm:hidden">
             <Image
               src={Create}
               width={100}

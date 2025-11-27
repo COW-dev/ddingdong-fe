@@ -7,7 +7,7 @@ import { ApplyQuestion } from '@/types/apply';
 
 import { useSection } from '../_hooks/useSection';
 
-import Sections from './Sections';
+import { Sections } from './Sections';
 
 export function QuestionList({ applyId }: { applyId: number }) {
   const { sections, focusSection, setFocusSection, filteredQuestions } =
