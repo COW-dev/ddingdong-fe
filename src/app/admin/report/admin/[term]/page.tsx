@@ -13,7 +13,7 @@ import { ReportTermClientPage } from './_pages/ReportTermClientPage';
 export async function generateMetadata({
   params,
 }: {
-  params: { term: string };
+  params: Promise<{ term: string }>;
 }): Promise<Metadata> {
   const { term } = await params;
   return {
@@ -24,7 +24,7 @@ export async function generateMetadata({
 export default async function ReportAdminTermPage({
   params,
 }: {
-  params: { term: string };
+  params: Promise<{ term: string }>;
 }) {
   const { term } = await params;
 

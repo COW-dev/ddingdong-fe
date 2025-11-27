@@ -1,9 +1,12 @@
 import localFont from 'next/font/local';
+import { headers } from 'next/headers';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { Analytics } from '@vercel/analytics/react';
 import { type Metadata } from 'next';
+
 import '../styles/globals.css';
+import LayoutClient from '@/components/layout';
 
 import Providers from './providers';
 
@@ -33,15 +36,22 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headersList = await headers();
+  const host = headersList.get('host') || '';
+
+  const isAdminHost = host.startsWith('admin.');
+
   return (
     <html lang="ko" className={`${pretendard.variable}`}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <LayoutClient isAdminHost={isAdminHost}>{children}</LayoutClient>
+        </Providers>
         {process.env.NODE_ENV === 'production' &&
           process.env.NEXT_PUBLIC_GA_ID && (
             <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />

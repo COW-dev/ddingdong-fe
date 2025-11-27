@@ -1,6 +1,6 @@
 import { ApplyRate, FieldStatistics } from '@/types/apply';
 
-export type FormAPIResponse = Form[];
+export type AllFormAPIResponse = Form[];
 export type QuestionType =
   | 'CHECK_BOX'
   | 'RADIO'
@@ -110,4 +110,44 @@ export type SingleField = {
 export type MultipleField = {
   type: QuestionType;
   options: { count: number; label: string; ratio: number }[];
+};
+
+export type FormAPIResponse = {
+  title: string;
+  description?: string | null;
+  startDate: string;
+  endDate: string;
+  hasInterview: boolean;
+  sections: string[];
+  formFields: FormField[];
+};
+
+export type CreateFormDataAPIRequest = {
+  title: string;
+  description?: string | null;
+  startDate: string;
+  endDate: string;
+  hasInterview: boolean;
+  sections: string[];
+  formFields: FormField[];
+};
+
+export type UpdateFormAPIRequest = {
+  formId: number;
+  formData: CreateFormDataAPIRequest;
+};
+
+export type FormField = {
+  id?: string;
+  question: string;
+  type: QuestionType;
+  options: string[];
+  required: boolean;
+  order: number;
+  section: string;
+};
+
+export type SectionFormField = {
+  section: string;
+  questions: FormField[];
 };

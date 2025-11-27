@@ -6,10 +6,10 @@ import {
   CarouselItem,
 } from 'ddingdong-design-system';
 
-import { BannerType } from '@/app/_api/types/banner';
+import { Banner } from '@/app/_api/types/banner';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-export function ClubCarousel({ bannerData }: { bannerData: BannerType[] }) {
+export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
   return (
     <Carousel className="rounded-xl shadow-[0_2px_6px_-3px_rgba(0,0,0,0.2)]">
       <CarouselContent className="h-56">

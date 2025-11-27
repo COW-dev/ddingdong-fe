@@ -3,10 +3,28 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { fetcher } from '../fetcher';
 import { applyQueryKeys } from '../queries/apply';
 import {
+  CreateFormDataAPIRequest,
   CreateResultEmailAPIRequest,
   UpdateApplicantNoteAPIRequest,
   UpdateApplicantStatusAPIRequest,
+  UpdateFormAPIRequest,
 } from '../types/apply';
+
+const createForm = (formData: CreateFormDataAPIRequest) =>
+  fetcher.post(`central/my/forms`, { json: formData });
+
+export const useCreateForm = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: CreateFormDataAPIRequest) => createForm(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [...applyQueryKeys.all()],
+      });
+    },
+  });
+};
 
 const createResultEmail = ({
   formId,
@@ -36,6 +54,22 @@ const registerApplicants = (formId: number) =>
 export const useRegisterApplication = () => {
   return useMutation({
     mutationFn: (formId: number) => registerApplicants(formId),
+  });
+};
+
+const updateForm = ({ formId, formData }: UpdateFormAPIRequest) =>
+  fetcher.put(`central/my/forms/${formId}`, { json: formData });
+
+export const useUpdateForm = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: UpdateFormAPIRequest) => updateForm(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [...applyQueryKeys.all()],
+      });
+    },
   });
 };
 

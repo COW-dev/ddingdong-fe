@@ -1,14 +1,13 @@
 'use client';
 
-import { Body1, Body3, Flex, Icon } from 'ddingdong-design-system';
+import { Body1, Body3, Flex, Icon, usePortal } from 'ddingdong-design-system';
 
 import { Document } from '@/app/_api/types/document';
-import useModal from '@/hooks/common/useModal';
 
 import { DocumentModal } from './DocumentModal';
 
 export function DocumentItem({ document }: { document: Document }) {
-  const { visible, openModal, closeModal } = useModal();
+  const { isOpen, openModal, closeModal } = usePortal();
 
   return (
     <>
@@ -28,11 +27,7 @@ export function DocumentItem({ document }: { document: Document }) {
           <Icon name="download" color="black" size={24} />
         </Flex>
       </Flex>
-      <DocumentModal
-        id={document.id}
-        isOpen={visible}
-        closeModal={closeModal}
-      />
+      <DocumentModal id={document.id} isOpen={isOpen} closeModal={closeModal} />
     </>
   );
 }
