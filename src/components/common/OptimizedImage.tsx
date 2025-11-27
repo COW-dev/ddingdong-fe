@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { ComponentProps, useState } from 'react';
+import { ComponentProps, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Skeleton } from 'ddingdong-design-system';
 
@@ -26,7 +26,7 @@ export function OptimizedImage({
   src,
   alt,
   priority = false,
-  sizes = '100vw',
+  sizes,
   srcSet,
   width,
   height,
@@ -39,6 +39,15 @@ export function OptimizedImage({
   ...props
 }: OptimizedImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete) {
+      setLoaded(true);
+      onLoad?.();
+    }
+  }, [onLoad]);
 
   const handleLoad = () => {
     setLoaded(true);
@@ -50,25 +59,44 @@ export function OptimizedImage({
     onError?.();
   };
 
+  const optimizedSrc = useMemo(() => {
+    if (!src || src.includes('f=webp')) return src;
+    return `${src}${src.includes('?') ? '&' : '?'}f=webp`;
+  }, [src]);
+
+  const generatedSrcSet = useMemo(() => {
+    if (srcSet || !src) return srcSet;
+    return [256, 512, 768, 1024]
+      .map((w) => `${src}${src.includes('?') ? '&' : '?'}w=${w}&f=webp ${w}w`)
+      .join(', ');
+  }, [src, srcSet]);
+
   return (
     <>
-      {isSkeleton && !loaded && (
-        <Skeleton className="absolute inset-0 h-full w-full" />
-      )}
-      {placeholder === 'blur' && blurDataURL && !loaded && (
-        <img
-          src={blurDataURL}
-          alt=""
-          className="absolute inset-0 h-full w-full blur-lg"
-          aria-hidden="true"
-        />
+      {!loaded && (
+        <>
+          {isSkeleton && (
+            <Skeleton className="absolute inset-0 z-0 h-full w-full" />
+          )}
+          {placeholder === 'blur' && blurDataURL && (
+            <img
+              src={blurDataURL}
+              alt=""
+              className="absolute inset-0 h-full w-full blur-lg"
+              aria-hidden="true"
+            />
+          )}
+        </>
       )}
       <img
-        key={src}
-        src={src}
+        ref={imgRef}
+        src={optimizedSrc}
         alt={alt}
-        sizes={sizes}
-        srcSet={srcSet}
+        sizes={
+          sizes ??
+          '(max-width: 512px) 100vw, (max-width: 768px) 512px, (max-width: 1024px) 768px, 1024px'
+        }
+        srcSet={generatedSrcSet}
         width={width}
         height={height}
         loading={priority ? 'eager' : 'lazy'}
@@ -77,8 +105,8 @@ export function OptimizedImage({
         onLoad={handleLoad}
         onError={handleError}
         className={cn(
-          isSkeleton && 'z-10 transition-opacity duration-300',
-          isSkeleton ? (loaded ? 'opacity-100' : 'opacity-0') : '',
+          'relative z-10 transition-opacity',
+          loaded ? 'opacity-100' : 'opacity-0',
           className,
         )}
         {...props}

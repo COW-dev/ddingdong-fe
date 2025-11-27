@@ -1,4 +1,5 @@
 import { z } from 'zod';
+
 import { commonQuestionSchema } from './commonQuestionSchema';
 
 export const applyDataSchema = commonQuestionSchema.extend({

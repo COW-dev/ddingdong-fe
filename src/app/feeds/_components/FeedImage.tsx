@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { Flex } from 'ddingdong-design-system';
 
 import { Feed } from '@/app/_api/types/feed';
@@ -12,8 +10,6 @@ type FeedImageProps = {
 };
 
 export function FeedImage({ feed, priority, onClick }: FeedImageProps) {
-  const [loaded, setLoaded] = useState(false);
-
   return (
     <Flex
       role="button"
@@ -23,16 +19,13 @@ export function FeedImage({ feed, priority, onClick }: FeedImageProps) {
       className="relative aspect-square w-full cursor-pointer"
     >
       <OptimizedImage
-        isSkeleton={!loaded}
+        isSkeleton
         width={500}
         height={600}
         src={feed.thumbnailCdnUrl}
         priority={priority}
         alt={`피드 ${feed.id}`}
-        className={`object-cover transition-opacity duration-300 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        onLoad={() => setLoaded(true)}
+        className="object-cover"
       />
     </Flex>
   );

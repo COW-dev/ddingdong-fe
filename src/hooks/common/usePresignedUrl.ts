@@ -30,8 +30,7 @@ export function usePresignedUrl() {
         contentType,
       };
     },
-    onError: (error, variables, context) => {
-      console.error('업로드 실패:', error, variables, context);
+    onError: () => {
       toast.error('파일 업로드 중 문제가 발생했어요.');
     },
   });
@@ -69,9 +68,7 @@ export function usePresignedUrl() {
   const getPresignedId = async (file: File) => {
     try {
       return await uploadFile.mutateAsync(file);
-    } catch (e) {
-      console.error('❌ getPresignedId Error:', e);
-
+    } catch {
       handleError([file.name]);
     }
   };

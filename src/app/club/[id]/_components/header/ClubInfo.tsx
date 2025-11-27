@@ -32,16 +32,11 @@ export const ClubInfo = ({
     now.isAfter(dayjs(startDate).startOf('day')) &&
     now.isBefore(dayjs(endDate).endOf('day'));
 
-  const moveToApply = (id: number) => {
-    if (!isRecruitmentPeriod) return;
-    router.push(`/apply/${id}`);
-  };
-
   return (
-    <Flex alignItems="start" gap={4}>
+    <Flex alignItems="start" justifyContent="start" gap={4}>
       <Flex
         dir="col"
-        justifyContent="center"
+        justifyContent="start"
         className="w-full rounded-xl bg-gray-50 p-6 md:px-10 md:py-7 lg:w-[75%]"
       >
         <Flex className="flex w-full flex-col md:flex-row">
@@ -59,14 +54,16 @@ export const ClubInfo = ({
             <Body2 className="w-20 text-gray-500">동아리방</Body2>
             <Body2>{location}</Body2>
           </Flex>
-          <Flex className="mb-1.5 flex md:flex-row">
+          <Flex alignItems="center" className="mb-1.5 flex md:flex-row">
             <Body2 className="w-20 text-gray-500">모집기간</Body2>
             {startDate && endDate && (
-              <>
+              <Body2>
                 {startDate.replace(/-/g, '.')}
-                <Body2 className="mx-1">~</Body2>
+                <Body2 as="span" className="mx-1">
+                  ~
+                </Body2>
                 {endDate.replace(/-/g, '.')}
-              </>
+              </Body2>
             )}
             {!startDate && !endDate && (
               <Body2 className="w-20 text-gray-500">모집예정</Body2>
@@ -78,12 +75,14 @@ export const ClubInfo = ({
           <Body2>{regularMeeting}</Body2>
         </Flex>
       </Flex>
+
       <Button
         variant="primary"
+        color="blue"
         size="lg"
-        onClick={() => moveToApply(Number(formId))}
         disabled={!isRecruitmentPeriod}
-        className="text-md fixed right-6 bottom-6 left-6 z-100 h-14 font-semibold lg:static lg:right-auto lg:left-auto lg:w-[25%] lg:self-center"
+        onClick={() => router.push(`/apply/${formId}`)}
+        className="text-md fixed right-6 bottom-6 left-6 z-50 h-14 font-semibold lg:static lg:right-auto lg:left-auto lg:w-[25%] lg:self-start"
       >
         {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
       </Button>

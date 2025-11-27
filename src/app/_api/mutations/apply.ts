@@ -5,6 +5,8 @@ import { applyQueryKeys } from '../queries/apply';
 import {
   CreateFormDataAPIRequest,
   CreateResultEmailAPIRequest,
+  SubmitApplicationAPIRequest,
+  SubmitApplicationAPIRequest,
   UpdateApplicantNoteAPIRequest,
   UpdateApplicantStatusAPIRequest,
   UpdateFormAPIRequest,
@@ -48,6 +50,18 @@ export const useCreateResultEmail = () => {
     },
   });
 };
+
+const submitApplication = (data: SubmitApplicationAPIRequest) => {
+  return fetcher.post(`forms/${data.formId}/applications`, {
+    json: data.formData,
+  });
+};
+export const useSubmitApplication = () => {
+  return useMutation({
+    mutationFn: (data: SubmitApplicationAPIRequest) => submitApplication(data),
+  });
+};
+
 const registerApplicants = (formId: number) =>
   fetcher.post(`central/my/forms/${formId}/members/register-applicants`);
 

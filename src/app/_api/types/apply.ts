@@ -138,7 +138,7 @@ export type UpdateFormAPIRequest = {
 };
 
 export type FormField = {
-  id?: string;
+  id?: number;
   question: string;
   type: QuestionType;
   options: string[];
@@ -147,7 +147,103 @@ export type FormField = {
   section: string;
 };
 
+export type FormFieldAPIResponse = {
+  clubName: string;
+  title: string;
+  description?: string | null;
+  applicationCount: number;
+  startDate: string;
+  endDate: string;
+  formFields: FormField[];
+};
+
 export type SectionFormField = {
   section: string;
   questions: FormField[];
+};
+
+export type SectionAPIResponse = {
+  title: string;
+  description?: string | null;
+  startDate: string;
+  endDate: string;
+  sections: string[];
+};
+
+export type SubmitApplicationAPIRequest = {
+  formId: number;
+  formData: ApplyData;
+};
+
+export type ApplyData = {
+  name: string;
+  studentNumber: string;
+  department: string;
+  email: string;
+  phoneNumber: string;
+  formAnswers: FormAnswer[];
+};
+
+export type FormAnswer = {
+  fieldId: number;
+  value: string | string[];
+};
+
+export type ApplyStatistics = {
+  totalCount: number;
+  departmentStatistics: ChartItem[];
+  applicantStatistics: ApplyRate[];
+  fieldStatistics: FieldStatistics;
+};
+
+export type FieldStatistics = {
+  fields: ApplyQuestion[];
+  sections: string[];
+};
+
+export type ApplyQuestion = {
+  question: string;
+  id: number;
+  count: number;
+  section: string;
+  type: QuestionType;
+};
+
+export type AnswerItem = {
+  applicationId: number;
+  name: string;
+  answer: string;
+  fileName?: string;
+};
+
+export type ApplyRate = {
+  label: string;
+  count: number;
+  comparedToBefore: {
+    ratio: number;
+    value: number;
+  };
+};
+
+export type ChartItem = {
+  label: string;
+  count: number;
+  ratio: number;
+  rank?: number;
+};
+
+export type FileItem = {
+  applicationId: number;
+  name: string;
+  answer: string[];
+};
+
+export type SingleField = {
+  type: QuestionType;
+  answers: { applicationId: number; name: string; answer: string }[];
+};
+
+export type MultipleField = {
+  type: QuestionType;
+  options: { count: number; label: string; ratio: number }[];
 };

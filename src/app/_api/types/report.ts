@@ -1,6 +1,6 @@
 import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
 
-import { UrlType } from './common';
+import { UrlType } from './file';
 import { Member } from './member';
 
 export type ReportMember = Pick<Member, 'department' | 'name'> & {

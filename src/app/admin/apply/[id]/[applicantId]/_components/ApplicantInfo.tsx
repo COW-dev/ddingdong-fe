@@ -14,7 +14,7 @@ type Props = {
   formFieldAnswers: Answer[];
 };
 
-export default function ApplicantInfo({ ...props }: Props) {
+export function ApplicantInfo({ ...props }: Props) {
   const { formFieldAnswers } = props;
   const section = formFieldAnswers.find((answer) => answer.section !== '공통');
   const info = getApplicantInfo(props);

@@ -30,12 +30,19 @@ export const feedQueryOptions = {
       queryFn: () => fetcher.get<FeedDetail>(`feeds/${feedId}`),
     }),
   clubFeed: (clubId: number) =>
-    queryOptions({
+    infiniteQueryOptions({
       queryKey: feedQueryKeys.clubFeed(clubId),
-      queryFn: () =>
+      queryFn: ({ pageParam = -1 }) =>
         fetcher.get<FeedList>(
-          `clubs/${clubId}/feeds?currentCursorId=-1&size=9`,
+          `clubs/${clubId}/feeds?currentCursorId=${pageParam}&size=9`,
         ),
+      getNextPageParam: (lastPage) => {
+        if (lastPage.pagingInfo?.hasNext) {
+          return lastPage.pagingInfo.nextCursorId;
+        }
+        return undefined;
+      },
+      initialPageParam: -1,
     }),
   my: () =>
     infiniteQueryOptions({
