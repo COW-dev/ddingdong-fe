@@ -14,11 +14,7 @@ import { tooltip } from '@/constants/tooltip';
 
 ChartJS.register(PieController, ArcElement, Tooltip, Legend);
 
-type Props = {
-  data: ChartItem[];
-};
-
-const PieChart = ({ data }: Props) => {
+export const PieChart = ({ data }: { data: ChartItem[] }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
 
@@ -131,5 +127,3 @@ const PieChart = ({ data }: Props) => {
     <canvas ref={canvasRef} className="flex h-auto w-full max-w-[550px]" />
   );
 };
-
-export default PieChart;

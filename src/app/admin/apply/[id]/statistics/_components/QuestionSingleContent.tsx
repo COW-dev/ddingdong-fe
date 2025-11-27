@@ -1,72 +1,37 @@
 'use client';
 import Image from 'next/image';
-import router from 'next/router';
+import { useRouter } from 'next/navigation';
 
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { Flex, Tooltip } from 'ddingdong-design-system';
+import { Caption1, Flex, Icon, Tooltip } from 'ddingdong-design-system';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { applyQueryOptions } from '@/app/_api/queries/apply';
 import File from '@/assets/file.svg';
 import { AnswerItem, FileItem } from '@/types/apply';
 
-const componentMap = {
-  TEXT: TextList,
-  LONG_TEXT: TextList,
-} as const;
+import { useQuestion } from '../_hooks/useQeustion';
 
-const ChartComponent = ({
-  textType,
-  answer,
-}: {
-  textType: 'TEXT' | 'LONG_TEXT';
-  answer: AnswerItem;
-}) => {
-  const Component = componentMap[textType];
-  return <Component answer={answer} />;
-};
+import { ChartComponent } from './ChartComponent';
+import { isFileItemType } from '../_utils/validate';
 
 type Props = {
   id: number;
   type: 'TEXT' | 'LONG_TEXT' | 'FILE';
 };
 
-export default function QuestionSingleContent({ type, id }: Props) {
-  const { data: answerData } = useSuspenseQuery(
-    applyQueryOptions.singleField(id),
-  );
-
-  const groupFileItems = (data: AnswerItem[]) => {
-    const grouped = data.reduce<Record<number, FileItem>>(
-      (acc, { applicationId, name, answer }) => {
-        if (!acc[applicationId]) {
-          acc[applicationId] = { applicationId, name, answer: [] };
-        }
-        acc[applicationId].answer.push(answer);
-        return acc;
-      },
-      {},
-    );
-    return Object.values(grouped);
-  };
-
-  const answers =
-    answerData.type === 'FILE'
-      ? groupFileItems(answerData.answers)
-      : (answerData.answers ?? []);
-  const isFileItemType = (answer: FileItem | AnswerItem): answer is FileItem =>
-    Array.isArray(answer.answer);
-
+export function QuestionSingleContent({ type, id }: Props) {
+  const { answers } = useQuestion(id);
+  console.log(answers);
   return (
     <Flex dir="col" gap={4} className="w-full">
       {answers.map((answer, index) => (
         <Tooltip content={answer.name} color="gray" key={index}>
           {isFileItemType(answer) ? (
-            <FileList answer={answer} />
+            <FileList answer={answer} id={id} />
           ) : (
             <ChartComponent
               answer={answer}
-              textType={type as 'TEXT' | 'LONG_TEXT'}
+              type={type as 'TEXT' | 'LONG_TEXT'}
+              id={id}
             />
           )}
         </Tooltip>
@@ -75,9 +40,9 @@ export default function QuestionSingleContent({ type, id }: Props) {
   );
 }
 
-function FileList({ answer }: { answer: FileItem }) {
+export function FileList({ answer, id }: { answer: FileItem; id: number }) {
+  const router = useRouter();
   const handleClick = () => {
-    const { id } = router.query;
     router.push(`/apply/${id}/${answer.applicationId}`);
   };
 
@@ -87,25 +52,19 @@ function FileList({ answer }: { answer: FileItem }) {
       htmlFor="file_input"
       onClick={handleClick}
     >
-      {answer.answer.map((fileName) => (
-        <Flex alignItems="center" key={fileName}>
-          <Image
-            src={File}
-            width={20}
-            height={20}
-            alt="file"
-            className="my-2 cursor-pointer"
-          />
-          <span className="ml-3">{fileName}</span>
+      {answer.answer.map((fileName, index) => (
+        <Flex alignItems="center" key={index} gap={1}>
+          <Icon name={'file'} className="my-2 cursor-pointer" />
+          <Caption1>{fileName}</Caption1>
         </Flex>
       ))}
     </label>
   );
 }
 
-function TextList({ answer }: { answer: AnswerItem }) {
+export function TextList({ answer, id }: { answer: AnswerItem; id: number }) {
+  const router = useRouter();
   const handleClick = () => {
-    const { id } = router.query;
     router.push(`/apply/${id}/${answer.applicationId}`);
   };
 
@@ -113,7 +72,7 @@ function TextList({ answer }: { answer: AnswerItem }) {
     <TextareaAutosize
       onClick={handleClick}
       readOnly
-      className="block w-full resize-none rounded-xl border border-[#E5E7EB] p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
+      className="w-full resize-none rounded-xl border border-[#E5E7EB] p-5 text-sm font-semibold text-[#6B7280] outline-none hover:cursor-pointer hover:border-[#3B82F6] hover:shadow-inner md:text-base"
       value={answer.answer}
     />
   );

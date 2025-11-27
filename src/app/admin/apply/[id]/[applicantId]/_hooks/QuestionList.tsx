@@ -1,17 +1,28 @@
 'use client';
+import { useMemo, useState } from 'react';
 
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Flex } from 'ddingdong-design-system';
 
+import { applyQueryOptions } from '@/app/_api/queries/apply';
 import { Question } from '@/app/admin/apply/[id]/statistics/_components/ApplyQuestion';
 import { ApplyQuestion } from '@/types/apply';
-
-import { useSection } from '../_hooks/useSection';
 
 import Sections from './Sections';
 
 export function QuestionList({ applyId }: { applyId: number }) {
-  const { sections, focusSection, setFocusSection, filteredQuestions } =
-    useSection(applyId);
+  const { data: statisticsData } = useSuspenseQuery(
+    applyQueryOptions.statistics(applyId),
+  );
+  const sections = statisticsData.fieldStatistics.sections;
+  const [focusSection, setFocusSection] = useState(sections[0]);
+
+  const filteredQuestions = useMemo(() => {
+    return statisticsData.fieldStatistics.fields.filter(
+      (item: ApplyQuestion) => item.section === focusSection,
+    );
+  }, [statisticsData, focusSection]);
+
   return (
     <div>
       <Sections

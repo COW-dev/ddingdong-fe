@@ -7,8 +7,10 @@ import {
 } from 'ddingdong-design-system';
 
 import QuestionMultipleContent from '@/app/admin/apply/[id]/statistics/_components/QuestionMultipleContent';
-import QuestionSingleContent from '@/app/admin/apply/[id]/statistics/_components/QuestionSingleContent';
+import { QuestionSingleContent } from '@/app/admin/apply/[id]/statistics/_components/QuestionSingleContent';
 import { ApplyQuestion } from '@/types/apply';
+
+import { isSingleType } from '../_utils/validate';
 
 export function Question({ data }: { data: ApplyQuestion }) {
   const { question, count } = data;
@@ -32,23 +34,26 @@ export function Question({ data }: { data: ApplyQuestion }) {
   );
 }
 
-function isSingleType(type: string): type is 'TEXT' | 'FILE' | 'LONG_TEXT' {
-  return type === 'TEXT' || type === 'FILE' || type === 'LONG_TEXT';
-}
-
 function QuestionResponse({ data }: { data: ApplyQuestion }) {
   const { id, count, type } = data;
 
   if (!count) {
-    return <Body3>응답자가 없는 문항입니다.</Body3>;
+    return (
+      <Caption1 weight="normal" className="text-gray-300">
+        응답자가 없는 문항입니다.
+      </Caption1>
+    );
   }
 
   return (
-    <div className="w-full">
+    <div>
       {isSingleType(type) ? (
         <>
           {type === 'FILE' && (
-            <Caption1 className="w-full p-2 text-left">
+            <Caption1
+              weight="normal"
+              className="w-full p-2 text-left text-gray-400"
+            >
               * FILE 저장기능은 지원자 상세화면에서 지원해요
             </Caption1>
           )}

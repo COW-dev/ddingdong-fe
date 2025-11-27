@@ -12,18 +12,20 @@ export default function StatisticsClientPage({ id }: { id: number }) {
   );
 
   return (
-    <Flex dir="col" gap={2}>
-      <Title1 as="h1" weight="bold" className="py-7 md:py-10">
+    <Flex dir="col" className="gap-7 md:gap-10">
+      <Title1 as="h1" weight="bold" className="mt-7 md:mt-10">
         지원서 통계 확인하기
       </Title1>
-      <Title3>
-        총 지원자
-        <Title3 as="span" className="ml-2 text-blue-500">
-          {statisticsData.totalCount}
+      <div>
+        <Title3>
+          총 지원자
+          <Title3 as="span" className="ml-2 text-blue-500">
+            {statisticsData.totalCount}
+          </Title3>
+          명
         </Title3>
-        명
-      </Title3>
-      <Summary applyId={id} />
+        <Summary applyId={id} />
+      </div>
       <QuestionList applyId={id} />
     </Flex>
   );
