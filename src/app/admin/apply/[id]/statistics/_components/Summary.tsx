@@ -10,12 +10,12 @@ import {
   usePortal,
 } from 'ddingdong-design-system';
 
-import BarChart from '@/app/admin/apply/[id]/statistics/_components/_chart/BarChart';
-import LineChart from '@/app/admin/apply/[id]/statistics/_components/_chart/LineChart';
+import { BarChart } from '@/app/admin/apply/[id]/statistics/_components/_chart/BarChart';
+import { LineChart } from '@/app/admin/apply/[id]/statistics/_components/_chart/LineChart';
 
 import { useSummary } from '../_hooks/useSummary';
 
-import { RankingModal } from './RankingModal';
+import { RankingModal } from './Modal';
 
 export function Summary({ applyId }: { applyId: number }) {
   const { isFirstApply, applicantStatistics, departmentRanks } =
@@ -33,8 +33,7 @@ export function Summary({ applyId }: { applyId: number }) {
               content="신규 기능 개설로 이전(2024.09) 지원자 수는 동아리원 수를 가져왔어요"
               color="gray"
             >
-              {/* 아이콘 변경 필요 */}
-              <Icon name="new" size={25} />
+              <Icon name="search" size={20} />
             </Tooltip>
           )}
         </Flex>
@@ -45,9 +44,7 @@ export function Summary({ applyId }: { applyId: number }) {
         as="section"
         className="shrink md:w-[400px]"
       >
-        <div>
-          <BarChart data={departmentRanks} />
-        </div>
+        <BarChart data={departmentRanks} />
         <Flex gap={2} alignItems="center">
           <Body3>지원 학과 TOP 5</Body3>
           <div className="cursor-pointer">

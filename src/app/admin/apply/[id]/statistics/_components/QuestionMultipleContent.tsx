@@ -1,16 +1,10 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Flex } from 'ddingdong-design-system';
+import { Badge, Flex, usePortal } from 'ddingdong-design-system';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';
 
-import PieChart from '../../../../../../components/common/pie-chart';
-
-import BarChart from './_chart/BarChart';
-
-const componentMap = {
-  RADIO: PieChart,
-  CHECK_BOX: BarChart,
-} as const;
+import { ChartComponent } from './ChartComponent';
+import { OptionModal } from './Modal';
 
 type Props = {
   id: number;
@@ -18,20 +12,22 @@ type Props = {
 };
 
 export default function QuestionMultipleContent({ type, id }: Props) {
-  const ChartComponent = componentMap[type];
   const { data: answerData } = useSuspenseQuery(
     applyQueryOptions.multipleField(id),
   );
+  const { isOpen, closeModal, openModal } = usePortal();
 
   return (
-    <Flex justifyContent="center" className="relative w-full">
-      <div className="absolute right-0 bottom-0">
-        {/* <OptionModal
-          labels={data?.data.options?.map(({ label }) => label) ?? []}
-          className="md:px-3 md:py-2 md:text-sm"
-        /> */}
+    <Flex justifyContent="center" className="relative">
+      <div className="absolute right-0 bottom-0 cursor-pointer">
+        <Badge variant="neutral" text="옵션" onClick={openModal} />
+        <OptionModal
+          isOpen={isOpen}
+          onClose={closeModal}
+          options={answerData.options}
+        />
       </div>
-      <ChartComponent data={answerData.options ?? []} />
+      <ChartComponent type={type} data={answerData.options ?? []} />
     </Flex>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useMemo, useCallback } from 'react';
+
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -10,6 +11,7 @@ import {
 } from 'chart.js';
 
 import { ApplyRate } from '@/types/apply';
+
 import { tooltip } from '../../../../../../../constants/tooltip';
 
 ChartJS.register(
@@ -25,7 +27,7 @@ type Props = {
   data: ApplyRate[];
 };
 
-const LineChart = ({ data }: Props) => {
+export const LineChart = ({ data }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
 
@@ -89,7 +91,7 @@ const LineChart = ({ data }: Props) => {
             y: {
               display: false,
               beginAtZero: true,
-              max: Math.max(...chartData.datasets[0].data) + 20,
+              max: Math.max(...chartData.datasets[0].data) + 26,
             },
           },
         },
@@ -128,8 +130,6 @@ const LineChart = ({ data }: Props) => {
 
   return <canvas ref={canvasRef} className="w-full" />;
 };
-
-export default LineChart;
 
 const lineChartStyle = {
   borderColor: '#B0B0B0',

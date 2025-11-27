@@ -30,7 +30,7 @@ export type FileItem = {
   answer: string[];
 };
 
-export type fieldStatistics = {
+export type FieldStatistics = {
   fields: ApplyQuestion[];
   sections: string[];
 };

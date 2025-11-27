@@ -8,11 +8,7 @@ import { tooltip } from '@/constants/tooltip';
 
 ChartJS.register(BarController, BarElement, Tooltip);
 
-type Props = {
-  data: ChartItem[];
-};
-
-export default function BarChart({ data }: Props) {
+export function BarChart({ data }: { data: ChartItem[] }) {
   const isList = data.length > 5;
   return (
     <div className="w-full">
@@ -38,7 +34,7 @@ function getColorFromCount(data: ChartItem[]) {
   return backgroundColors;
 }
 
-export function BarGraph({ data }: Props) {
+export function BarGraph({ data }: { data: ChartItem[] }) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstanceRef = useRef<ChartJS | null>(null);
   const getBarThickness = () => {
@@ -174,7 +170,7 @@ export function BarGraph({ data }: Props) {
   return <canvas ref={canvasRef} className="w-full max-w-[400px]" />;
 }
 
-function BarList({ data }: Props) {
+function BarList({ data }: { data: ChartItem[] }) {
   const itemBorderColors = getColorFromCount(data);
 
   return (

@@ -18,7 +18,7 @@ export default function Sections({
       {sections.map((section: string) => (
         <Body3
           key={section}
-          className={`cursor-pointer rounded-md rounded-b-none border border-b-0 border-gray-200 px-3 py-1 ${
+          className={`cursor-pointer rounded-md border border-b-0 border-gray-200 px-3 py-1 ${
             focusSection === section
               ? 'bg-blue-50 text-blue-500'
               : 'bg-white text-gray-500 hover:bg-gray-50'
@@ -34,11 +34,7 @@ export default function Sections({
 
 function SectionContainer({ children }: PropsWithChildren) {
   return (
-    <Flex
-      alignItems="center"
-      gap={1}
-      className="relative mt-7 border-b-0 px-4 font-semibold"
-    >
+    <Flex alignItems="center" gap={1} className="mx-4">
       {children}
     </Flex>
   );
