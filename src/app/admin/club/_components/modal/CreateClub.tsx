@@ -10,7 +10,7 @@ import {
   INPUT_FIELDS,
   CATEGORY_OPTIONS,
 } from '@/app/admin/club/_constant/Inputs';
-import { useObjectForm } from '@/hooks/common/useObjectForm';
+import { useObjectForm } from '@/hooks/useObjectForm';
 
 import ModalHeader from './ModalHeader';
 

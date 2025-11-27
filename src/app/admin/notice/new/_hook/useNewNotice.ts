@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { NewNoticeAPIRequest } from '@/app/_api/types/notice';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 
 export type UploadRecord = {
   id: string;

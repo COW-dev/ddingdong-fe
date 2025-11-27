@@ -8,7 +8,7 @@ import { ApiError } from '@/app/_api/fetcher';
 import { useCreateFix } from '@/app/_api/mutations/fix';
 import { FixAPIRequest } from '@/app/_api/types/fix';
 import { UploadRecord } from '@/app/admin/notice/new/_hook/useNewNotice';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 
 const INIT_POST: FixAPIRequest = {
   title: '',

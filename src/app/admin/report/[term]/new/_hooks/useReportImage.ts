@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { Report } from '@/app/_api/types/report';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 
 type Props = {
   report: Report;

@@ -18,7 +18,8 @@ export function useApplyFormGetData(formId: number) {
     applyQueryOptions.sections(formId),
   );
 
-  const sections = sectionsData?.sections || [];
+  const sections = useMemo(() => sectionsData?.sections || [], [sectionsData]);
+
   const hasMultipleSections = sections.length >= 3;
   const selectableSections = sections.filter((section) => section !== '공통');
 

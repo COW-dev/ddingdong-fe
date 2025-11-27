@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { Caption1, Flex, IconButton } from 'ddingdong-design-system';
 
-import { useClickOutside } from '@/hooks/common/useClickOutside';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/lib/utils';
 
 type FormActionDropdownProps = {

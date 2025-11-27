@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 
 import { useCreateFeed } from '@/app/_api/mutations/feed';
 import { NewFeedAPIRequest } from '@/app/_api/types/feed';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 import { subscribeToSSE } from '@/utils/subscribeToSSE';
 
 const MAX_FILE_SIZE = 300 * 1024 * 1024;

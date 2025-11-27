@@ -4,7 +4,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { noticeQueryOptions } from '@/app/_api/queries/notice';
 import { UrlType } from '@/app/_api/types/file';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 import { sortByOrder } from '@/utils/change';
 
 import { UploadRecord } from '../../../new/_hook/useNewNotice';

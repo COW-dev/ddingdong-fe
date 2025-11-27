@@ -6,7 +6,7 @@ import { Body2 } from 'ddingdong-design-system';
 import { feedQueryOptions } from '@/app/_api/queries/feed';
 import { ClubFeed } from '@/app/feeds/_components/ClubFeed';
 import { FeedContainer } from '@/app/feeds/_containers/FeedContainer';
-import { useInfiniteScroll } from '@/hooks/common/useInfiniteScroll';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 type ClubFeedTabClientProps = {
   clubId: number;

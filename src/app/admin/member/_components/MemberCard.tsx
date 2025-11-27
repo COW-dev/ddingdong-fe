@@ -5,7 +5,7 @@ import { PropsWithChildren, useMemo, useState } from 'react';
 import { Body3, Card } from 'ddingdong-design-system';
 
 import { Member } from '@/app/_api/types/member';
-import { useDebounce } from '@/hooks/common/useDebounce';
+import { useDebounce } from '@/hooks/useDebounce';
 
 import MemberInfo from './MemberInfo';
 import { SearchBar } from './Searchbar';

@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 
 import { useCreateBanner } from '@/app/_api/mutations/banner';
 import { BannerAPIRequest } from '@/app/_api/types/banner';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 
 export const useBanner = () => {
   const [webPreviewUrl, setWebPreviewUrl] = useState<string[]>([]);

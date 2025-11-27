@@ -4,7 +4,7 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
 import { Body1, Flex } from 'ddingdong-design-system';
 
 import { feedQueryOptions } from '@/app/_api/queries/feed';
-import { useInfiniteScroll } from '@/hooks/common/useInfiniteScroll';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 import { ClubFeed } from '../_components/ClubFeed';
 import { FeedContainer } from '../_containers/FeedContainer';

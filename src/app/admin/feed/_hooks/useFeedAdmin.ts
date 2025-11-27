@@ -5,7 +5,7 @@ import { toast } from 'react-hot-toast';
 
 import { useDeleteFeed } from '@/app/_api/mutations/feed';
 import { feedQueryOptions } from '@/app/_api/queries/feed';
-import { useInfiniteScroll } from '@/hooks/common/useInfiniteScroll';
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll';
 
 export const useFeedAdmin = () => {
   const [editMode, setEditMode] = useState(false);

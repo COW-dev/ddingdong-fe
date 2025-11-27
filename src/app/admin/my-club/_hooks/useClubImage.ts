@@ -4,7 +4,7 @@ import { toast } from 'react-hot-toast';
 
 import { ClubDetail } from '@/app/_api/types/club';
 import { UrlType } from '@/app/_api/types/file';
-import { usePresignedUrl } from '@/hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '@/hooks/usePresignedUrl';
 
 export const useClubImage = (
   image: UrlType,

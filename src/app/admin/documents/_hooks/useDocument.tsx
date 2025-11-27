@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { usePresignedUrl } from '../../../../hooks/common/usePresignedUrl';
+import { usePresignedUrl } from '../../../../hooks/usePresignedUrl';
 
 type UploadFileRecord = {
   id: string;

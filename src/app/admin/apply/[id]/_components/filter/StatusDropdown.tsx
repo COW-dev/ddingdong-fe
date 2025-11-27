@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 
 import { Caption1, Flex, Icon } from 'ddingdong-design-system';
 
-import { useClickOutside } from '@/hooks/common/useClickOutside';
+import { useClickOutside } from '@/hooks/useClickOutside';
 import { cn } from '@/lib/utils';
 
 type StatusOption = {
