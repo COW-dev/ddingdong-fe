@@ -49,10 +49,10 @@ export function Category({ category, score, clubId }: Props) {
               clubId={clubId}
             />
           ) : null}
-          <div>
+          <Flex gap={2} dir="col">
             <Title3>상세내역</Title3>
             <ScoreList history={history} />
-          </div>
+          </Flex>
         </Flex>
       </Modal>
     </>
@@ -68,7 +68,7 @@ function ScoreList({ history }: { history: ScoreHistory[] }) {
     );
 
   return (
-    <div>
+    <div className="h-60 overflow-scroll">
       {[...history].reverse().map((data, index) => (
         <Flex
           key={index}
