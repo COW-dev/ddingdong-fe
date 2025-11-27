@@ -54,6 +54,11 @@ export const applyQueryOptions = {
       queryKey: applyQueryKeys.all(),
       queryFn: () => fetcher.get<FormAPIResponse>('central/my/forms'),
     }),
+  form: (formId: number) =>
+    queryOptions({
+      queryKey: applyQueryKeys.forms.detail(formId),
+      queryFn: () => fetcher.get<FormAPIResponse>(`central/my/forms/${formId}`),
+    }),
   sections: (formId: number) =>
     queryOptions({
       queryKey: applyQueryKeys.forms.sections(formId),

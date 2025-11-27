@@ -12,3 +12,8 @@ export type AdminClub = {
   category: string;
   score?: number;
 };
+
+export type ModalType = {
+  title: string;
+  content: React.ReactNode;
+};

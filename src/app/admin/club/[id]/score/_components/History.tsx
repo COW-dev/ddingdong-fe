@@ -45,7 +45,7 @@ export function HistoryContent({ history }: { history: ScoreHistory[] }) {
       <TableRow>
         <td colSpan={3}>
           <Flex justifyContent="center" className="w-full py-4">
-            <Caption1 weight="normal" className="text-gray-300">
+            <Caption1 as="span" weight="normal" className="text-gray-300">
               동아리 점수 내역이 존재하지 않습니다.
             </Caption1>
           </Flex>
@@ -58,7 +58,11 @@ export function HistoryContent({ history }: { history: ScoreHistory[] }) {
     return (
       <TableRow key={index}>
         <TableCell>
-          <Caption1 weight="normal" className="max-xs:text-xs md:text-lg">
+          <Caption1
+            as="span"
+            weight="normal"
+            className="max-xs:text-xs md:text-lg"
+          >
             {createdAt.split('T')[0]}
           </Caption1>
         </TableCell>
