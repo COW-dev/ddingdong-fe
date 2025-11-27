@@ -1,4 +1,4 @@
-import { Flex, Icon, IconButton } from 'ddingdong-design-system';
+import { Flex, Icon } from 'ddingdong-design-system';
 
 type SearchBarProps = {
   value: string;

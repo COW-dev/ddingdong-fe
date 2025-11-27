@@ -170,11 +170,46 @@ export type ApplyStatistics = {
   fieldStatistics: FieldStatistics;
 };
 
+export type FieldStatistics = {
+  fields: ApplyQuestion[];
+  sections: string[];
+};
+
+export type ApplyQuestion = {
+  question: string;
+  id: number;
+  count: number;
+  section: string;
+  type: QuestionType;
+};
+
+export type AnswerItem = {
+  applicationId: number;
+  name: string;
+  answer: string;
+  fileName?: string;
+};
+
+export type ApplyRate = {
+  label: string;
+  count: number;
+  comparedToBefore: {
+    ratio: number;
+    value: number;
+  };
+};
+
 export type ChartItem = {
   label: string;
   count: number;
   ratio: number;
   rank?: number;
+};
+
+export type FileItem = {
+  applicationId: number;
+  name: string;
+  answer: string[];
 };
 
 export type SingleField = {

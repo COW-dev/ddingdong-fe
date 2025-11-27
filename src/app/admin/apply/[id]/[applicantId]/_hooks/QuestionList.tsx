@@ -5,10 +5,9 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Flex } from 'ddingdong-design-system';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';
+import { ApplyQuestion } from '@/app/_api/types/apply';
 import { Question } from '@/app/admin/apply/[id]/statistics/_components/ApplyQuestion';
-import { ApplyQuestion } from '@/types/apply';
-
-import Sections from './Sections';
+import { Sections } from '@/app/admin/apply/[id]/statistics/_components/Sections';
 
 export function QuestionList({ applyId }: { applyId: number }) {
   const { data: statisticsData } = useSuspenseQuery(

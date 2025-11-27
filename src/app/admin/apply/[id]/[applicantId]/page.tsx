@@ -3,11 +3,11 @@
 import { useParams } from 'next/navigation';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Body3, Flex } from 'ddingdong-design-system';
+import { Flex } from 'ddingdong-design-system';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';
-import ApplicantInfo from '@/app/admin/apply/[id]/[applicantId]/_components/ApplicantInfo';
 import { ApplicantHeader } from '@/app/admin/apply/[id]/[applicantId]/_components/ApplicantHeader';
+import { ApplicantInfo } from '@/app/admin/apply/[id]/[applicantId]/_components/ApplicantInfo';
 import { ApplicantNote } from '@/app/admin/apply/[id]/[applicantId]/_components/ApplicantNote';
 import { ApplicantStatusButtons } from '@/app/admin/apply/[id]/[applicantId]/_components/ApplicantStatusButtons';
 import { ApplyResult } from '@/app/admin/apply/[id]/[applicantId]/_components/ApplyResult';
