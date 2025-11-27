@@ -1,9 +1,8 @@
 import { Body3, Card, Flex, ImageGallery } from 'ddingdong-design-system';
 
-import { FixPostInfo } from '@/app/admin/fix/[id]/_components/FixPostInfo';
-
-import { DetailFix } from '@/app/_api/types/fix';
 import { UrlType } from '@/app/_api/types/file';
+import { DetailFix } from '@/app/_api/types/fix';
+import { FixPostInfo } from '@/app/admin/fix/[id]/_components/FixPostInfo';
 
 export function FixPost({ post }: { post: DetailFix }) {
   const { requestedAt, images, clubName, clubLocation, content } = post;

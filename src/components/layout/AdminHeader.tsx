@@ -25,7 +25,7 @@ export function AdminHeader() {
   };
 
   return (
-    <Header className="px-3 md:px-13">
+    <Header className="px-6 md:px-2">
       <Link href={isLoginPage ? '/login' : '/'} className="inline-block">
         <OptimizedImage
           src={logo.src}

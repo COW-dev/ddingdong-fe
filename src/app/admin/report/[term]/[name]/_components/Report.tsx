@@ -4,6 +4,7 @@ import { Body3, Flex, Icon } from 'ddingdong-design-system';
 
 import { ReportAPIResponse, ReportMember } from '@/app/_api/types/report';
 import UnSubmitImage from '@/assets/unsubmit_announce.png';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import {
   ReportContiner,
@@ -47,7 +48,7 @@ export function Report({ report }: Props) {
         </ReportContentContainer>
       </Flex>
       <Flex className="overflow-hidden">
-        <img
+        <OptimizedImage
           src={image}
           className="object-contain"
           alt="activeReport"
