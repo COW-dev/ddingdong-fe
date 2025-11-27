@@ -1,5 +1,6 @@
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
+
 import { useUploadStore } from '@/store/upload';
 
 export function subscribeToSSE(

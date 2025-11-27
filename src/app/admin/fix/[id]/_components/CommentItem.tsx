@@ -9,7 +9,6 @@ import {
   Flex,
   Avatar,
   Body3,
-  TextArea,
   Modal,
   Body1,
   DoubleButton,

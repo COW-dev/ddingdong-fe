@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation';
 import { Caption1, Flex, Icon, Tooltip } from 'ddingdong-design-system';
 import TextareaAutosize from 'react-textarea-autosize';
 
-import { AnswerItem, FileItem } from '@/types/apply';
+import { AnswerItem, FileItem } from '@/app/_api/types/apply';
 
 import { useQuestion } from '../_hooks/useQeustion';
+import { isFileItemType } from '../_utils/validate';
 
 import { ChartComponent } from './ChartComponent';
-import { isFileItemType } from '../_utils/validate';
 
 type Props = {
   id: number;
@@ -52,7 +52,7 @@ export function FileList({ answer, id }: { answer: FileItem; id: number }) {
     >
       {answer.answer.map((fileName, index) => (
         <Flex alignItems="center" key={index} gap={1}>
-          <Icon name={'file'} className="my-2 cursor-pointer" />
+          <Icon name="file" className="my-2 cursor-pointer" />
           <Caption1>{fileName}</Caption1>
         </Flex>
       ))}

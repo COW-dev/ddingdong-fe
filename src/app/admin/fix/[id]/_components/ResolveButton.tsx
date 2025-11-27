@@ -1,6 +1,5 @@
 'use client';
 
-import toast from 'react-hot-toast';
 import {
   Body1,
   Body2,
@@ -11,6 +10,8 @@ import {
   Modal,
   usePortal,
 } from 'ddingdong-design-system';
+import { toast } from 'react-hot-toast';
+
 import { useResolveFix } from '@/app/_api/mutations/fix';
 import { DetailFix } from '@/app/_api/types/fix';
 

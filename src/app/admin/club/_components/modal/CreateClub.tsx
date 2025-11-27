@@ -1,7 +1,7 @@
 'use client';
 
 import { Body1, Button, Flex } from 'ddingdong-design-system';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { useAddClub } from '@/app/_api/mutations/club';
 import { LabeledInput } from '@/app/admin/club/_components/form/LabeledInput';

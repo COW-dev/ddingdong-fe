@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+
 import FixNewClientPage from './_pages/FixNewClientPage';
 
 export const metadata: Metadata = {

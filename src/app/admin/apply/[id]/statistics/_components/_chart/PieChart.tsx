@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo, useCallback } from 'react';
+import { useRef, useEffect, useMemo, useCallback } from 'react';
 
 import {
   Chart as ChartJS,
@@ -26,7 +26,7 @@ export const PieChart = ({ data }: { data: ChartItem[] }) => {
     };
   };
 
-  const getChartData = (data: ChartItem[]) => {
+  const getChartData = useCallback((data: ChartItem[]) => {
     const labels = data.map((item) =>
       item.label.length > 7
         ? `${item.label.slice(0, 6)}... (${item.count}명)`
@@ -43,8 +43,9 @@ export const PieChart = ({ data }: { data: ChartItem[] }) => {
         },
       ],
     };
-  };
-  const chartData = useMemo(() => getChartData(data), [data]);
+  }, []);
+
+  const chartData = useMemo(() => getChartData(data), [getChartData, data]);
 
   const handleResize = useMemo(() => {
     const maxSize = 200;

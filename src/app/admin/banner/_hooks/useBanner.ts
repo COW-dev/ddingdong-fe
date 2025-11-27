@@ -2,7 +2,7 @@ import { ApiError } from 'next/dist/server/api-utils';
 
 import { useState } from 'react';
 
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { useCreateBanner } from '@/app/_api/mutations/banner';
 import { BannerAPIRequest } from '@/app/_api/types/banner';

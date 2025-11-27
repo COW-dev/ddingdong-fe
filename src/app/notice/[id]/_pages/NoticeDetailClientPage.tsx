@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Body2, Button, Flex, Title1, Title2 } from 'ddingdong-design-system';
+import { Body2, Button, Flex, Title1 } from 'ddingdong-design-system';
 
 import { noticeQueryOptions } from '@/app/_api/queries/notice';
 

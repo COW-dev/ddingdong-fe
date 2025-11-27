@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { ClubDetail } from '@/app/_api/types/club';
 import { UrlType } from '@/app/_api/types/file';

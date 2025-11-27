@@ -6,11 +6,8 @@ import { Flex, IconButton, Title3 } from 'ddingdong-design-system';
 
 type Props = {
   title?: string;
-
   titleNode?: ReactNode;
-
   onClose?: () => void;
-
   className?: string;
 };
 

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { ApiError } from '@/app/_api/fetcher';
 import { useCreateComment } from '@/app/_api/mutations/fix';

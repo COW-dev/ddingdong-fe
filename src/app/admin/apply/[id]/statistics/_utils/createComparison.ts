@@ -1,5 +1,5 @@
+import { ApplyRate } from '@/app/_api/types/apply';
 import { MOCK_APPLYCANT } from '@/components/apply/applicant.data';
-import { ApplyRate } from '@/types/apply';
 
 export const createComparisonData = (
   clubName: string,

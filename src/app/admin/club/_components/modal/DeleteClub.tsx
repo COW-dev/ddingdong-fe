@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { Button, Body3, Input, Flex } from 'ddingdong-design-system';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { useDeleteClub } from '@/app/_api/mutations/club';
 

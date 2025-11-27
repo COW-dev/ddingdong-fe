@@ -5,7 +5,6 @@ import {
   EMAIL_STATUS,
   TEMPLATE,
 } from '@/app/admin/apply/[id]/_constants/apply';
-import { toast } from 'react-hot-toast';
 
 export const useEmailForm = () => {
   const [title, setTitle] = useState<string>('');

@@ -3,7 +3,7 @@ import { useState, useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';
-import { ApplyQuestion } from '@/types/apply';
+import { ApplyQuestion } from '@/app/_api/types/apply';
 
 export const useSection = (applyId: number) => {
   const { data: statisticsData } = useSuspenseQuery(

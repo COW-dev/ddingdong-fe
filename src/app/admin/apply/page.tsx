@@ -3,7 +3,6 @@ import {
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-
 import { Metadata } from 'next';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';

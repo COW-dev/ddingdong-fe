@@ -12,7 +12,7 @@ import {
   Body2,
   Flex,
 } from 'ddingdong-design-system';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { useDeleteReport } from '@/app/_api/mutations/report';
 import { clubQueryOptions } from '@/app/_api/queries/club';

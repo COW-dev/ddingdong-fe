@@ -1,5 +1,4 @@
-import { ChartItem } from '@/app/_api/types/apply';
-import { AnswerItem } from '@/types/apply';
+import { ChartItem, AnswerItem } from '@/app/_api/types/apply';
 
 import { BarChart } from './_chart/BarChart';
 import { PieChart } from './_chart/PieChart';

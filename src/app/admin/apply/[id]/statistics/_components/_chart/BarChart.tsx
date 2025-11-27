@@ -53,7 +53,7 @@ export function BarGraph({ data }: { data: ChartItem[] }) {
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [handleResize]);
 
   const getChartData = (data: ChartItem[], barThickness: number) => {
     const labels = data.map((item) => item.label);

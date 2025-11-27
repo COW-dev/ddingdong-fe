@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { applyQueryOptions } from '@/app/_api/queries/apply';
-import { AnswerItem, FileItem } from '@/types/apply';
+import { AnswerItem, FileItem } from '@/app/_api/types/apply';
 
 export const useQuestion = (id: number) => {
   const { data: answerData } = useSuspenseQuery(

@@ -8,7 +8,7 @@ import {
   Flex,
   Modal,
 } from 'ddingdong-design-system';
-import toast from 'react-hot-toast';
+import { toast } from 'react-hot-toast';
 
 import { ApiError } from '@/app/_api/fetcher';
 import { useDeleteBanner } from '@/app/_api/mutations/banner';

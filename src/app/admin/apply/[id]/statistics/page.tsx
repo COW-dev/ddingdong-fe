@@ -1,11 +1,13 @@
-import { Metadata } from 'next';
-import StatisticsClientPage from './_pages/StatisticsClientPage';
-import { applyQueryOptions } from '@/app/_api/queries/apply';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
+import { Metadata } from 'next';
+
+import { applyQueryOptions } from '@/app/_api/queries/apply';
+
+import StatisticsClientPage from './_pages/StatisticsClientPage';
 
 export const metadata: Metadata = {
   title: '띵동 - 지원서 통계',
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
 export default async function ApplicationDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const queryClient = new QueryClient();

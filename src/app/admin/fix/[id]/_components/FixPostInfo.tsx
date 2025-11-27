@@ -1,6 +1,8 @@
-import { parseDate } from '@/utils/parse';
-import { Body1, Body2, Flex } from 'ddingdong-design-system';
 import { PropsWithChildren } from 'react';
+
+import { Body1, Body2, Flex } from 'ddingdong-design-system';
+
+import { parseDate } from '@/utils/parse';
 
 type Props = {
   club: string;
