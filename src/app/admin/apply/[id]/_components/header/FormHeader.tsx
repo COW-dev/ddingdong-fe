@@ -39,8 +39,8 @@ export function FormHeader({
           <Flex alignItems="center" className="mb-1 hidden md:flex">
             <IconButton
               iconName="chart"
+              size={28}
               color="primary"
-              size={25}
               onClick={() => router.push(`/apply/${formId}/statistics`)}
             />
             <IconButton
