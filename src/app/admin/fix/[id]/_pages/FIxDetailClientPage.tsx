@@ -7,9 +7,10 @@ import { fixQueryOptions } from '@/app/_api/queries/fix';
 import { RoleType } from '@/constants/role';
 
 import { BackHeader } from '../../_component/BackHeader';
-import FixComment from '../_components/FixComment';
-import FixPost from '../_components/FixPost';
-import ResolveButton from '../_components/ResolveButton';
+import { ResolveButton } from '../_components/ResolveButton';
+import { FixPost } from '../_components/FixPost';
+import { RoleType } from '@/constants/role';
+import { FixComment } from '../_components/FixComment';
 
 export default function FIxDetailClientPage({
   id,

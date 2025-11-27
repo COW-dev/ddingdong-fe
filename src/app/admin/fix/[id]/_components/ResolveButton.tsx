@@ -14,7 +14,7 @@ import {
 import { useResolveFix } from '@/app/_api/mutations/fix';
 import { DetailFix } from '@/app/_api/types/fix';
 
-export default function ResolveButton({ post }: { post: DetailFix }) {
+export function ResolveButton({ post }: { post: DetailFix }) {
   const { isOpen, openModal, closeModal } = usePortal();
   const { isCompleted, id } = post;
 

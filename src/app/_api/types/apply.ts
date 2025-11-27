@@ -167,7 +167,7 @@ export type ApplyStatistics = {
   totalCount: number;
   departmentStatistics: ChartItem[];
   applicantStatistics: ApplyRate[];
-  fieldStatistics: fieldStatistics;
+  fieldStatistics: FieldStatistics;
 };
 
 export type ChartItem = {

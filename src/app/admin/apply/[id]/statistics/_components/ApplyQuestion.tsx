@@ -6,7 +6,7 @@ import {
   Card,
 } from 'ddingdong-design-system';
 
-import QuestionMultipleContent from '@/app/admin/apply/[id]/statistics/_components/QuestionMultipleContent';
+import { QuestionMultipleContent } from '@/app/admin/apply/[id]/statistics/_components/QuestionMultipleContent';
 import { QuestionSingleContent } from '@/app/admin/apply/[id]/statistics/_components/QuestionSingleContent';
 import { ApplyQuestion } from '@/types/apply';
 

@@ -9,9 +9,9 @@ import { RoleType } from '@/constants/role';
 
 import { useComment } from '../_hooks/useComment';
 
-import CommentItem from './CommentItem';
+import { CommentItem } from './CommentItem';
 
-export default function FixComment({
+export function FixComment({
   comments,
   id,
   role,

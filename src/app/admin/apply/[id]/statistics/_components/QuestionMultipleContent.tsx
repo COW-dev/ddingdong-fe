@@ -11,7 +11,7 @@ type Props = {
   type: 'RADIO' | 'CHECK_BOX';
 };
 
-export default function QuestionMultipleContent({ type, id }: Props) {
+export function QuestionMultipleContent({ type, id }: Props) {
   const { data: answerData } = useSuspenseQuery(
     applyQueryOptions.multipleField(id),
   );

@@ -7,7 +7,7 @@ import { ClubDetail } from '@/app/_api/types/club';
 import { ClubHeading } from '@/app/club/[id]/_components/header/ClubHeading';
 import { deptCaptionColor } from '@/constants/color';
 
-import AvatarUpload from './AvatarUpload';
+import { AvatarUpload } from './AvatarUpload';
 
 type Props = {
   isEditing: boolean;
@@ -19,7 +19,7 @@ type Props = {
   ) => void;
 };
 
-export default function AdminClubHeading({
+export function AdminClubHeading({
   club,
   isEditing,
   setClub,

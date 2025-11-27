@@ -8,7 +8,7 @@ type Props = {
   location: string;
 };
 
-export default function FixPostInfo({ club, createdAt, location }: Props) {
+export function FixPostInfo({ club, createdAt, location }: Props) {
   return (
     <FixItemInfoContainer>
       <Flex dir="col" alignItems="center" justifyContent="center">

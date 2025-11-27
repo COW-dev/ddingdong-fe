@@ -15,7 +15,7 @@ import {
 } from 'ddingdong-design-system';
 
 import { Report, ReportMember } from '@/app/_api/types/report';
-import ParticipantSelect from '@/app/admin/report/[term]/new/_components/ParticipantSelect';
+import { ParticipantSelect } from '@/app/admin/report/[term]/new/_components/ParticipantSelect';
 
 export const EMPTY_PARTICIPANT: ReportMember = {
   name: '',
@@ -30,12 +30,7 @@ type Props = {
   isOpen: boolean;
 };
 
-export default function ParticipantModal({
-  isOpen,
-  data,
-  setData,
-  closeModal,
-}: Props) {
+export function ParticipantModal({ isOpen, data, setData, closeModal }: Props) {
   const [participants, setParticipants] = useState<ReportMember[]>(
     data.length > 0 ? data : Array(5).fill({ ...EMPTY_PARTICIPANT }),
   );

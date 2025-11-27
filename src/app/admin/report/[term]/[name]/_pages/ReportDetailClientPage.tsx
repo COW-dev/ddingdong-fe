@@ -7,7 +7,7 @@ import { reportQueryOptions } from '@/app/_api/queries/report';
 
 import { BackHeader } from '../../../_components/BackHeader';
 import { EditButton } from '../_components/EditButton';
-import ReportBundle from '../_components/ReportBundle';
+import { ReportBundle } from '../_components/ReportBundle';
 
 export function ReportDetailClientPage({
   term,
