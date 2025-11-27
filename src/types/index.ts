@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 export type Club = {
   id: number;
   name: string;
@@ -15,6 +17,11 @@ export type AdminClub = {
 
 export type DeptCaptionColor = {
   [name: string]: string;
+};
+
+export type ModalType = {
+  title: string;
+  content: ReactNode;
 };
 
 export type LoginResponse = {
