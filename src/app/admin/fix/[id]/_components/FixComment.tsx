@@ -36,26 +36,28 @@ function CreateComment({ id }: { id: number }) {
   const { comment, handleSubmit, handleChangeMessage } = useComment(id);
 
   return (
-    <Flex alignItems="center" justifyContent="center" gap={2}>
+    <Flex alignItems="center" className="w-full gap-1 md:gap-4">
       <Avatar src={Admin.src} alt="admin image" size="sm" />
-      <TextArea
-        placeholder="댓글을 작성해 주세요."
-        value={comment}
-        rows={1}
-        maxLength={255}
-        onChange={handleChangeMessage}
-        className="min-w-[70vw] max-sm:min-w-[60vw]"
-      />
-      <Button
-        type="button"
-        color="blue"
-        variant="primary"
-        onClick={handleSubmit}
-        size="sm"
-        className="h-13"
-      >
-        전송
-      </Button>
+      <Flex justifyContent="between" gap={2} className="w-full">
+        <TextArea
+          placeholder="댓글을 작성해 주세요."
+          value={comment}
+          rows={1}
+          maxLength={255}
+          onChange={handleChangeMessage}
+          wrapperClassName="flex-1"
+        />
+        <Button
+          type="button"
+          color="blue"
+          variant="primary"
+          onClick={handleSubmit}
+          size="sm"
+          className="h-13 shrink-0"
+        >
+          전송
+        </Button>
+      </Flex>
     </Flex>
   );
 }

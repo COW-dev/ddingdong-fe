@@ -56,14 +56,10 @@ export function CommentItem({
               {dayjs(createdAt).fromNow()}
             </time>
           </Flex>
-          <div className="w-[65vw]">{content}</div>
+          <div className="flex-1">{content}</div>
         </div>
         {role === 'ROLE_ADMIN' && (
-          <Flex
-            dir="col"
-            justifyContent="center"
-            className="relative h-4 min-w-fit"
-          >
+          <Flex dir="col" className="h-4">
             <IconButton iconName="trash" onClick={openModal} />
           </Flex>
         )}
