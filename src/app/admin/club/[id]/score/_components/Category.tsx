@@ -68,7 +68,7 @@ function ScoreList({ history }: { history: ScoreHistory[] }) {
     );
 
   return (
-    <div className="h-60 overflow-scroll">
+    <div className="max-h-60 overflow-scroll">
       {[...history].reverse().map((data, index) => (
         <Flex
           key={index}
