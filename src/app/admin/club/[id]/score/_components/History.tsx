@@ -2,9 +2,9 @@ import {
   Body2,
   Caption1,
   Flex,
-  Table,
   TableBody,
   TableCell,
+  Table,
   TableHead,
   TableHeader,
   TableRow,
@@ -21,20 +21,18 @@ export function History({ totalScore, scoreHistories }: ScoreDetail) {
           총점 : {scoreHistories ? `${totalScore}점` : '0점'}
         </Body2>
       </Flex>
-      <div className="h-56 overflow-scroll md:h-88">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>날짜</TableHead>
-              <TableHead>카테고리</TableHead>
-              <TableHead>점수</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <HistoryContent history={scoreHistories} />
-          </TableBody>
-        </Table>
-      </div>
+      <Table className="h-56 overflow-scroll md:h-88">
+        <TableHeader className="sticky top-0">
+          <TableRow>
+            <TableHead>날짜</TableHead>
+            <TableHead>카테고리</TableHead>
+            <TableHead>점수</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <HistoryContent history={scoreHistories} />
+        </TableBody>
+      </Table>
     </div>
   );
 }
