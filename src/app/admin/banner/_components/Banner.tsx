@@ -14,6 +14,7 @@ import {
 import { useMediaQuery } from 'usehooks-ts';
 
 import { Banner as BannerType } from '@/app/_api/types/banner';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { DeleteModal } from './DeleteModal';
 
@@ -33,9 +34,13 @@ export function Banner({ data }: { data: BannerType }) {
   return (
     <>
       <Card className={`relative my-4 h-52 ${isDesktopViewport && 'w-full'}`}>
-        <img
-          src={isDesktop ? webImageUrl.originUrl : mobileImageUrl.originUrl}
-          alt={isDesktop ? webImageUrl.fileName : mobileImageUrl.fileName}
+        <OptimizedImage
+          src={isDesktop ? webImageUrl.cdnUrl : mobileImageUrl.cdnUrl}
+          alt={
+            isDesktop
+              ? (webImageUrl?.fileName ?? '')
+              : (mobileImageUrl?.fileName ?? '')
+          }
           width={1024}
           height={200}
           className="h-[90%] object-scale-down"

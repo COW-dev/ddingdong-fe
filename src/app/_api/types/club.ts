@@ -23,9 +23,7 @@ export type AdminClub = {
   name: string;
   category: string;
   score: number;
-  profileImage?: {
-    originUrl?: string;
-  };
+  profileImage: UrlType;
 };
 
 export type ClubProfile = {

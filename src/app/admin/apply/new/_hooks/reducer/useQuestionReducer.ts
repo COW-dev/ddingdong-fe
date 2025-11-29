@@ -4,7 +4,7 @@ import { FormField, SectionFormField } from '@/app/_api/types/apply';
 
 import { DEFAULT_SECTION } from '../../_utils/constants';
 
-function generateQuestionId(): string {
+function generateQuestionId() {
   return `question-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
 }
 
