@@ -11,7 +11,6 @@ import {
   CATEGORY_OPTIONS,
 } from '@/app/admin/club/_constant/Inputs';
 import { useObjectForm } from '@/hooks/useObjectForm';
-
 import ModalHeader from './ModalHeader';
 
 type CreateClubProp = { closeModal: () => void };

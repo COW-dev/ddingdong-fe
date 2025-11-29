@@ -2,12 +2,13 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Button, Flex, DoubleButton } from 'ddingdong-design-system';
+import { Flex, Body3 } from 'ddingdong-design-system';
 
 import { ModalType } from '@/types';
 
 import DeleteClub from './DeleteClub';
 import ModalHeader from './ModalHeader';
+import { Icon } from 'ddingdong-design-system';
 
 type Prop = {
   id: number;
@@ -33,33 +34,37 @@ export default function ManageClub({
   }
 
   return (
-    <Flex dir="col" alignItems="center" className="max-w-[350px]">
+    <Flex dir="col" alignItems="center" className="min-w-[350px]">
       <ModalHeader title="동아리 관리하기" onClose={closeModal} />
 
-      <div className="flex w-full flex-row items-center justify-between">
-        <DoubleButton
-          left={
-            <Button
-              color="blue"
-              size="md"
-              variant="primary"
-              onClick={() => router.push(`/club/${id}/score`)}
-            >
-              동아리 점수
-            </Button>
-          }
-          right={
-            <Button
-              color="red"
-              size="md"
-              variant="secondary"
-              onClick={handleClickDelete}
-            >
-              동아리 삭제
-            </Button>
-          }
-        />
-      </div>
+      <Flex
+        dir="row"
+        alignItems="center"
+        justifyContent="between"
+        className="w-full py-4"
+      >
+        <Flex
+          dir="col"
+          alignItems="center"
+          gap={2}
+          className="w-full cursor-pointer"
+          onClick={() => router.push(`/club/${id}/score`)}
+        >
+          <Icon name="score" size={50} />
+          <Body3>동아리 점수 수정</Body3>
+        </Flex>
+
+        <Flex
+          dir="col"
+          alignItems="center"
+          gap={2}
+          className="w-full cursor-pointer"
+          onClick={handleClickDelete}
+        >
+          <Icon name="trash" size={50} />
+          <Body3>동아리 삭제</Body3>
+        </Flex>
+      </Flex>
     </Flex>
   );
 }
