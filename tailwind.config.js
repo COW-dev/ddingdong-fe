@@ -1,28 +1,24 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+  darkMode: ['class'],
   content: [
-    './src/**/*.{js,jsx,ts,tsx}',
-    './node_modules/react-tailwindcss-datepicker/dist/index.esm.js',
+    './src/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './node_modules/ddingdong-design-system/dist/**/*.{js,ts,jsx,tsx}',
+    './node_modules/react-tailwindcss-datepicker/dist/**/*.{js,mjs}',
   ],
+  safelist: ['grid-cols-7', 'rotate-45', 'ml-[1.2rem]'],
   theme: {
-    extend: {
-      spacing: {
-        4.5: '1.125rem',
-        5.5: '1.375rem',
-        18: '4.5rem',
-        22: '5.5rem',
-        26: '6.5rem',
-        30: '7.5rem',
-        34: '8.5rem',
-        42: '10.5rem',
-        50: '12.5rem',
-        54: '13.5rem',
-        88: '22rem',
-        104: '26rem',
-        112: '28rem',
-        128: '32rem',
+    container: {
+      center: true,
+      padding: '2rem',
+      screens: {
+        '2xl': '1400px',
       },
-
+    },
+    extend: {
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
@@ -39,4 +35,5 @@ module.exports = {
       },
     },
   },
+  plugins: [],
 };

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import { useUploadStore } from '@/store/upload';
 
 export default function VideoUploadProgress() {

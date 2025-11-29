@@ -1,0 +1,43 @@
+'use client';
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from 'ddingdong-design-system';
+
+import { Banner } from '@/app/_api/types/banner';
+import { OptimizedImage } from '@/components/common/OptimizedImage';
+
+export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
+  return (
+    <Carousel className="rounded-xl shadow-[0_2px_6px_-3px_rgba(0,0,0,0.2)]">
+      <CarouselContent className="h-56">
+        {bannerData.map((banner, index) => (
+          <CarouselItem key={banner.id}>
+            <div className="relative hidden items-center justify-center overflow-hidden rounded-lg md:flex md:h-[224px]">
+              <OptimizedImage
+                priority={index === 0}
+                width={1024}
+                height={224}
+                src={banner.webImageUrl.cdnUrl}
+                alt={`배너 ${index + 1}`}
+                className="absolute h-full w-full object-scale-down"
+              />
+            </div>
+            <div className="relative flex h-[224px] w-full items-center justify-center overflow-hidden rounded-lg md:hidden">
+              <OptimizedImage
+                priority={index === 0}
+                width={342}
+                height={224}
+                src={banner.mobileImageUrl.cdnUrl}
+                alt={`배너 ${index + 1}`}
+                className="absolute h-full w-full object-scale-down"
+              />
+            </div>
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+    </Carousel>
+  );
+}

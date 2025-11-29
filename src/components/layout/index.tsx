@@ -1,27 +1,42 @@
-import { useRouter } from 'next/router';
-import AdminHeader from './AdminHeader';
-import Footer from './Footer';
-import UserHeader from './UserHeader';
+// components/layout/LayoutClient.tsx
 
-type LayoutProps = {
+'use client';
+
+import { usePathname } from 'next/navigation';
+
+import { Flex } from 'ddingdong-design-system';
+
+import { AdminHeader } from './AdminHeader';
+import Footer from './Footer';
+import { UserHeader } from './UserHeader';
+
+type LayoutClientProps = {
   children: React.ReactNode;
+  isAdminHost: boolean;
 };
 
-export default function Layout({ children }: LayoutProps) {
-  const router = useRouter();
-  const curPath = router.pathname;
-  const isAdminPage = curPath.startsWith('/admin');
-  const isLoginPage = curPath.endsWith('/login');
+export default function Layout({ children, isAdminHost }: LayoutClientProps) {
+  const pathname = usePathname();
+
+  const isLoginPage = pathname?.includes('/login');
 
   return (
     <>
-      <div className="flex min-h-screen w-full flex-col items-center justify-between bg-white text-gray-800">
-        {isAdminPage ? <AdminHeader /> : <UserHeader />}
-        <div className="flex w-full max-w-6xl flex-col px-6 pt-22 md:px-16 md:pt-26">
+      {isAdminHost ? <AdminHeader /> : <UserHeader />}
+      <Flex
+        as="main"
+        dir="col"
+        alignItems="center"
+        className="min-h-screen w-full bg-white text-gray-800"
+      >
+        <Flex
+          dir="col"
+          className="w-full max-w-6xl px-6 pt-22 md:px-16 md:pt-26"
+        >
           {children}
-        </div>
-        {!isLoginPage && <Footer />}
-      </div>
+        </Flex>
+      </Flex>
+      {!isLoginPage && <Footer />}
     </>
   );
 }
