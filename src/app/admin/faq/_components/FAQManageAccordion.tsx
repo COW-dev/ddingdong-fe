@@ -53,7 +53,7 @@ export function FAQManageAccordion({
     <>
       <FAQContainer>
         <Accordion type="single" className="w-full">
-          {FAQs.map((faq) => (
+          {[...FAQs].reverse().map((faq) => (
             <Flex
               key={faq.id}
               justifyContent="between"
