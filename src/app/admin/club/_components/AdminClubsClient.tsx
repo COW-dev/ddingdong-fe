@@ -47,7 +47,7 @@ export default function AdminClubsClient() {
               key={club.id}
               name={club.name}
               score={club.score}
-              imageSrc={club?.profileImage.cdnUrl ?? Admin}
+              imageSrc={club?.profileImage?.cdnUrl ?? Admin}
               onClick={() =>
                 openModalWith(
                   <ManageClub
