@@ -6,14 +6,13 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Modal } from 'ddingdong-design-system';
 
 import { clubQueryOptions } from '@/app/_api/queries/club';
+import type { AdminClub } from '@/app/_api/types/club';
 import CreateClub from '@/app/admin/club/_components/modal/CreateClub';
 import Admin from '@/assets/admin.jpg';
 
 import AdminClubCard from './AdminClubCard';
 import AdminClubsHeader from './AdminClubHeader';
 import ManageClub from './modal/ManageClub';
-
-import type { AdminClub } from '@/app/_api/types/club';
 
 export default function AdminClubsClient() {
   const { data: clubs = [] } = useSuspenseQuery(clubQueryOptions.admin());
