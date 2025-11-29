@@ -16,7 +16,7 @@ export function FAQAccordion({ FAQs }: { FAQs: FAQ[] }) {
   return (
     <FAQContainer>
       <Accordion type="single">
-        {FAQs?.map((faq) => (
+        {[...FAQs].reverse().map((faq) => (
           <AccordionItem
             key={faq.id}
             value={`item-${faq.id}`}
