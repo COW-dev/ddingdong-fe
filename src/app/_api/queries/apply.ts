@@ -10,6 +10,7 @@ import {
   SingleField,
   FormFieldAPIResponse,
   SectionAPIResponse,
+  Form,
 } from '../types/apply';
 
 export const applyQueryKeys = {
@@ -52,7 +53,7 @@ export const applyQueryOptions = {
   all: () =>
     queryOptions({
       queryKey: applyQueryKeys.all(),
-      queryFn: () => fetcher.get<FormAPIResponse>('central/my/forms'),
+      queryFn: () => fetcher.get<Form[]>('central/my/forms'),
     }),
   form: (formId: number) =>
     queryOptions({
