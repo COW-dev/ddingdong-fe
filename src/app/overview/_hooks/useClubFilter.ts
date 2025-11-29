@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import { RecruitStatus } from '@/app/_api/types/club';
+
+import { SortOption } from '../_components/ClubFilter';
 import { ClubFilterOptions } from '../_types/club';
 
 export const useClubFilter = () => {
@@ -16,14 +19,14 @@ export const useClubFilter = () => {
     }));
   };
 
-  const handleRecruitChange = (selectedRecruit: string) => {
+  const handleRecruitChange = (selectedRecruit: '전체' | RecruitStatus) => {
     setFilterOption((prev) => ({
       ...prev,
       recruit: selectedRecruit,
     }));
   };
 
-  const handleSortChange = (selectedSort: string) => {
+  const handleSortChange = (selectedSort: SortOption) => {
     setFilterOption((prev) => ({
       ...prev,
       sort: selectedSort,
