@@ -18,6 +18,13 @@ export type Club = {
   recruitStatus: RecruitStatus;
 };
 
+export type AdminClub = {
+  id: number;
+  name?: string;
+  category: string;
+  score?: number;
+};
+
 export type ClubProfile = {
   id: number;
   name: string;

@@ -11,7 +11,7 @@ import { ApplySubmitClientPage } from './_pages/ApplySubmitClientPage';
 export default async function ApplySubmitPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
   const queryClient = new QueryClient();

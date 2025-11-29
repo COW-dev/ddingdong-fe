@@ -6,7 +6,6 @@ import {
   CreateFormDataAPIRequest,
   CreateResultEmailAPIRequest,
   SubmitApplicationAPIRequest,
-  SubmitApplicationAPIRequest,
   UpdateApplicantNoteAPIRequest,
   UpdateApplicantStatusAPIRequest,
   UpdateFormAPIRequest,
