@@ -15,8 +15,8 @@ type RoleDashboard = {
     fix: NavBox;
     notice: NavBox;
     documents: NavBox;
-    FAQ?: NavBox;
-    feed?: NavBox;
+    faq?: NavBox;
+    feed: NavBox;
     banner?: NavBox;
     apply?: NavBox;
   };
@@ -48,10 +48,15 @@ export const ROLE_DASHBOARD: RoleDashboard = {
       subtitle: '동아리에게 필요한 자료를 등록/삭제해요.',
       route: '/documents',
     },
-    FAQ: {
+    faq: {
       title: 'FAQ 관리',
       subtitle: '총동아리연합회 및 동아리에게 자주 물어보는 질문을 관리해요.',
       route: '/faq',
+    },
+    feed: {
+      title: '동아리 피드 업로드',
+      subtitle: '동아리의 활동 사진 및 영상을 업로드하고 홍보해요.',
+      route: '/feed',
     },
 
     banner: {
