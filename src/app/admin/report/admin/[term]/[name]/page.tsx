@@ -14,10 +14,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ term: string; name: string }>;
 }): Promise<Metadata> {
-  const { term, name } = await params;
+  const { term } = await params;
   return {
-    title: `띵동 - ${name} ${term}주차 활동보고서`,
-    description: `${name ?? '동아리'}의 ${term}주차 활동보고서 페이지입니다.`,
+    title: `띵동 - ${term}주차 활동보고서`,
   };
 }
 
@@ -27,12 +26,14 @@ export default async function ReportAdminTermNamePage({
   params: Promise<{ term: string; name: string }>;
 }) {
   const { term, name } = await params;
+  const decodedName = decodeURIComponent(name);
+
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery(reportQueryOptions.termReports(Number(term)));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ReportDetailClientPage term={Number(term)} name={name} />
+      <ReportDetailClientPage term={Number(term)} name={decodedName} />
     </HydrationBoundary>
   );
 }
