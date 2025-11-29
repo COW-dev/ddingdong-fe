@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { Modal } from 'ddingdong-design-system';
 
 import { clubQueryOptions } from '@/app/_api/queries/club';
@@ -14,7 +14,7 @@ import AdminClubsHeader from './AdminClubHeader';
 import ManageClub from './modal/ManageClub';
 
 export default function AdminClubsClient() {
-  const { data: clubs = [] } = useQuery(clubQueryOptions.admin());
+  const { data: clubs = [] } = useSuspenseQuery(clubQueryOptions.admin());
 
   const [isOpen, setIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState<React.ReactNode>(null);
@@ -46,7 +46,7 @@ export default function AdminClubsClient() {
               key={club.id}
               name={club.name}
               score={club.score}
-              imageSrc={club?.profileImage?.originUrl ?? Admin}
+              imageSrc={club?.profileImage.cdnUrl ?? Admin}
               onClick={() =>
                 openModalWith(
                   <ManageClub
