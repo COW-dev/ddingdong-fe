@@ -2,13 +2,12 @@
 
 import { useRouter } from 'next/navigation';
 
-import { Flex, Body3 } from 'ddingdong-design-system';
+import { Flex, Body3, Icon } from 'ddingdong-design-system';
 
 import { ModalType } from '@/types';
 
 import DeleteClub from './DeleteClub';
 import ModalHeader from './ModalHeader';
-import { Icon } from 'ddingdong-design-system';
 
 type Prop = {
   id: number;
