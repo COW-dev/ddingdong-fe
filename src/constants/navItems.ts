@@ -35,13 +35,13 @@ export const navItems: {
   SNS: [
     {
       id: 5,
-      href: 'https://pf.kakao.com/_ExmtkG',
+      href: 'https://pf.kakao.com/_Fvdwn',
       image: KaKaoImage,
       content: '카카오톡',
     },
     {
       id: 6,
-      href: 'https://www.instagram.com/mju_club_',
+      href: 'https://www.instagram.com/mju_mode?igsh=cGNxM29sMHd6dzVy',
       image: InstaImage,
       content: '인스타그램',
     },
