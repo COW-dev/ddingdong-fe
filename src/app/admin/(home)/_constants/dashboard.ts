@@ -16,7 +16,7 @@ type RoleDashboard = {
     notice: NavBox;
     documents: NavBox;
     faq?: NavBox;
-    feed: NavBox;
+    feed?: NavBox;
     banner?: NavBox;
     apply?: NavBox;
   };
