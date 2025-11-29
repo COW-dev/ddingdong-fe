@@ -1,28 +1,15 @@
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { ROLE_TYPE } from './constants/text';
+import { NextResponse, type NextRequest } from 'next/server';
 
 export function middleware(req: NextRequest) {
   const subdomain = req.headers.get('host')?.split('.')[0];
   const cookie = req.headers.get('cookie');
   const hasToken = cookie?.includes('token=');
-  const isClub = cookie?.includes(ROLE_TYPE.ROLE_CLUB);
 
-  const allowedPaths = {
-    [ROLE_TYPE.ROLE_ADMIN]: ['/club', '/notice/new', '/banner'],
-    [ROLE_TYPE.ROLE_CLUB]: ['/my-club'],
-  };
-
-  const unablePath =
-    allowedPaths[isClub ? ROLE_TYPE.ROLE_ADMIN : ROLE_TYPE.ROLE_CLUB];
   if (subdomain === 'admin') {
     if (hasToken && req.nextUrl.pathname === '/login')
       return NextResponse.redirect(new URL('/', req.nextUrl.origin));
     if (!hasToken && req.nextUrl.pathname !== '/login') {
       return NextResponse.redirect(new URL('/login', req.nextUrl.origin));
-    }
-    if (unablePath.includes(req.nextUrl.pathname)) {
-      return NextResponse.redirect(new URL('/', req.nextUrl.origin));
     }
     return NextResponse.rewrite(
       new URL(`/admin${req.nextUrl.pathname}`, req.nextUrl.origin),
@@ -35,30 +22,18 @@ export function middleware(req: NextRequest) {
   if (req.nextUrl.pathname.startsWith('/admin')) {
     return NextResponse.redirect(new URL(req.nextUrl.origin));
   }
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    '/',
-    '/login',
-    '/notice/:path*',
-    '/my-club',
-    '/documents',
-    '/faq',
-    '/club',
-    '/member',
-    '/fix',
-    '/fix/:path*',
-    '/club/:path*',
-    '/report',
-    '/banner',
-    '/apply',
-    '/apply/:path*',
-    '/admin/:path*',
-    '/report/:path*',
-    '/feeds/:path*',
-    '/feed/:path*',
-    '/apply/:path*',
-    '/apply',
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    '/((?!_next/static|_next/image|favicon.ico|image-worker.js).*)',
   ],
 };
