@@ -20,9 +20,12 @@ export type Club = {
 
 export type AdminClub = {
   id: number;
-  name?: string;
+  name: string;
   category: string;
-  score?: number;
+  score: number;
+  profileImage?: {
+    originUrl?: string;
+  };
 };
 
 export type ClubProfile = {
@@ -47,6 +50,7 @@ export type ClubDetail = {
   introductionImage: UrlType;
   startDate?: string;
   endDate?: string;
+  formUrl?: string;
   formId?: number;
 };
 

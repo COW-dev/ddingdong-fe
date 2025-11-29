@@ -44,6 +44,7 @@ export const useClubEdit = (initialData: ClubDetail) => {
       clubLeader: club.leader,
       profileImageId: club.profileImage?.id ?? null,
       introductionImageId: club.introductionImage?.id ?? null,
+      formUrl: club.formUrl ?? '',
     };
 
     updateClub(requestData, {

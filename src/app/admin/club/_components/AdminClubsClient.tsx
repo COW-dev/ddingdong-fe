@@ -13,6 +13,8 @@ import AdminClubCard from './AdminClubCard';
 import AdminClubsHeader from './AdminClubHeader';
 import ManageClub from './modal/ManageClub';
 
+import type { AdminClub } from '@/app/_api/types/club';
+
 export default function AdminClubsClient() {
   const { data: clubs = [] } = useQuery(clubQueryOptions.admin());
 
@@ -40,8 +42,8 @@ export default function AdminClubsClient() {
       <div className="mt-12 grid w-full grid-cols-1 place-items-center gap-4 md:mt-14 md:grid-cols-2 lg:grid-cols-3">
         {clubs
           .slice()
-          .sort((a, b) => b.score - a.score)
-          .map((club) => (
+          .sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
+          .map((club: AdminClub) => (
             <AdminClubCard
               key={club.id}
               name={club.name}
