@@ -61,7 +61,7 @@ export function OptimizedImage({
 
   const optimizedSrc = useMemo(() => {
     if (!src || src.includes('f=webp')) return src;
-    return `${src}${src.includes('?') ? '&' : '?'}f=webp`;
+    return `${src}${src.includes('?') ? '&' : '?'}f=webp&w=768`;
   }, [src]);
 
   const generatedSrcSet = useMemo(() => {
@@ -94,7 +94,7 @@ export function OptimizedImage({
         alt={alt}
         sizes={
           sizes ??
-          '(max-width: 512px) 100vw, (max-width: 768px) 512px, (max-width: 1024px) 768px, 1024px'
+          '(max-width: 512px) 100vw, (max-width: 768px) 512px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, 1280px'
         }
         srcSet={generatedSrcSet}
         width={width}

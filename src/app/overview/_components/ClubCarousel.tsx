@@ -17,10 +17,11 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
           <CarouselItem key={banner.id}>
             <div className="relative hidden items-center justify-center overflow-hidden rounded-lg md:flex md:h-[224px]">
               <OptimizedImage
+                isSkeleton
                 priority={index === 0}
                 width={1024}
                 height={224}
-                src={banner.webImageUrl.cdnUrl}
+                src={`${banner.webImageUrl.cdnUrl}?f=webp&w=2048`}
                 alt={`배너 ${index + 1}`}
                 className="absolute h-full w-full object-scale-down"
               />

@@ -17,7 +17,8 @@ export default function AdminClubCard({
   imageSrc,
   onClick,
 }: Props) {
-  const avatarSrc = typeof imageSrc === 'string' ? imageSrc : imageSrc.src;
+  const avatarSrc =
+    typeof imageSrc === 'string' ? `${imageSrc}?f=webp&w=256` : imageSrc.src;
 
   return (
     <Card onClick={onClick} className="w-full p-5 md:p-6">

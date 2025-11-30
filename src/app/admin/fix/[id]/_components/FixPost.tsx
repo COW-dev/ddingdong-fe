@@ -8,6 +8,10 @@ export function FixPost({ post }: { post: DetailFix }) {
   const { requestedAt, images, clubName, clubLocation, content } = post;
 
   const sortedImages = sortByOrder(images);
+  const optimizedImages = sortedImages.map((image) => ({
+    url: `${image.url}?f=webp&w=768`,
+    name: image.name,
+  }));
   const isImage = sortedImages.length > 0;
   return (
     <Card className="flex flex-col gap-4 text-gray-500 hover:bg-white md:flex-row">
@@ -27,7 +31,7 @@ export function FixPost({ post }: { post: DetailFix }) {
         className={`min-h-40 flex-1 p-3 ${isImage && 'border border-gray-200'}`}
       >
         {isImage ? (
-          <ImageGallery images={sortedImages} />
+          <ImageGallery images={optimizedImages} />
         ) : (
           <Body3 weight="normal" className="text-gray-300">
             등록된 사진이 없습니다.
