@@ -66,7 +66,7 @@ export function OptimizedImage({
 
   const generatedSrcSet = useMemo(() => {
     if (srcSet || !src) return srcSet;
-    return [256, 512, 768, 1024]
+    return [256, 512, 768, 1024, 2048]
       .map((w) => `${src}${src.includes('?') ? '&' : '?'}w=${w}&f=webp ${w}w`)
       .join(', ');
   }, [src, srcSet]);
@@ -94,7 +94,7 @@ export function OptimizedImage({
         alt={alt}
         sizes={
           sizes ??
-          '(max-width: 512px) 100vw, (max-width: 768px) 512px, (max-width: 1024px) 768px, 1024px'
+          '(max-width: 512px) 100vw, (max-width: 768px) 512px, (max-width: 1024px) 768px, (max-width: 1280px) 1024px, 1280px'
         }
         srcSet={generatedSrcSet}
         width={width}
