@@ -8,7 +8,7 @@ import { Modal } from 'ddingdong-design-system';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import type { AdminClub } from '@/app/_api/types/club';
 import CreateClub from '@/app/admin/club/_components/modal/CreateClub';
-import Admin from '@/assets/admin.jpg';
+import Admin from '@/assets/admin.webp';
 
 import AdminClubCard from './AdminClubCard';
 import AdminClubsHeader from './AdminClubHeader';

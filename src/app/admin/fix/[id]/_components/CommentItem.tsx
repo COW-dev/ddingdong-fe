@@ -18,7 +18,7 @@ import {
 
 import { useDeleteComment } from '@/app/_api/mutations/fix';
 import { Comment } from '@/app/_api/types/fix';
-import Admin from '@/assets/admin.jpg';
+import Admin from '@/assets/admin.webp';
 import { RoleType } from '@/constants/role';
 
 dayjs.locale('ko');

@@ -13,7 +13,7 @@ import {
 } from 'ddingdong-design-system';
 
 import { ClubHeading } from '@/app/club/[id]/_components/header/ClubHeading';
-import Admin from '@/assets/admin.jpg';
+import Admin from '@/assets/admin.webp';
 import { useClubStore } from '@/store/club';
 
 import { useNewFeed } from '../_hooks/useNewFeed';

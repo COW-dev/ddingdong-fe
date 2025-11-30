@@ -4,7 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 
 import { Header, NavigationItem } from 'ddingdong-design-system';
 
-import logo from '@/../../public/logo.png';
+import logo from '@/../../public/logo.webp';
 import { useCookie } from '@/app/_api/useCookie';
 import { useClubStore } from '@/store/club';
 

@@ -20,7 +20,7 @@ export function UserHeader() {
         >
           <Link href="/" className="inline-block">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               width={1344}
               height={380}
               alt="ddingdong"
@@ -48,7 +48,7 @@ export function UserHeader() {
         >
           <Link href="/" className="inline-block">
             <img
-              src="/logo.png"
+              src="/logo.webp"
               width={1344}
               height={380}
               alt="ddingdong"
@@ -72,7 +72,7 @@ export function UserHeader() {
             >
               <Link href="/" className="inline-block">
                 <img
-                  src="/m_logo.png"
+                  src="/m_logo.webp"
                   width={1344}
                   height={380}
                   alt="ddingdong"

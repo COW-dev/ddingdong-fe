@@ -3,7 +3,7 @@
 import { Avatar, Body2, Flex, Title1 } from 'ddingdong-design-system';
 
 import { ClubDetail } from '@/app/_api/types/club';
-import Mode from '@/assets/admin.jpg';
+import Mode from '@/assets/admin.webp';
 import { deptCaptionColor } from '@/constants/color';
 
 type ClubHeadingProps = Pick<
