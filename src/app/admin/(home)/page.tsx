@@ -1,15 +1,37 @@
-'use client';
+import { cookies } from 'next/headers';
 
-import dynamic from 'next/dynamic';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
 
-import { useCookie } from '@/app/_api/useCookie';
+import { bannerQueryOptions } from '@/app/_api/queries/banner';
+import { clubQueryOptions } from '@/app/_api/queries/club';
+import { documentQueryOptions } from '@/app/_api/queries/document';
+import { noticeQueryOptions } from '@/app/_api/queries/notice';
+import { ROLE_TYPE, RoleType } from '@/constants/role';
 
-const AdminPage = dynamic(() => import('./_pages/AdminPage'), {
-  ssr: false,
-});
+import AdminPage from './_pages/AdminPage';
 
-export default function AdminHomePage() {
-  const { cookie } = useCookie();
+export default async function AdminHomePage() {
+  const cookie = await cookies();
+  const role = (cookie.get('role')?.value as keyof RoleType) || '';
 
-  return <AdminPage role={cookie.role} />;
+  const queryClient = new QueryClient();
+
+  await Promise.all([
+    queryClient.prefetchQuery(documentQueryOptions.all(1)),
+    queryClient.prefetchQuery(noticeQueryOptions.all(1)),
+    queryClient.prefetchQuery(bannerQueryOptions.all()),
+    ...(role === ROLE_TYPE.ROLE_CLUB
+      ? [queryClient.prefetchQuery(clubQueryOptions.my())]
+      : []),
+  ]);
+
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <AdminPage role={role} />
+    </HydrationBoundary>
+  );
 }
