@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import { toast } from 'react-hot-toast';
 
+import { ApiError } from '@/app/_api/fetcher';
 import { useLoginMutation } from '@/app/_api/mutations/login';
 
 import { useCookie } from '../../../_api/useCookie';
@@ -37,10 +38,23 @@ export const useLogin = () => {
     if (!id || !password) {
       return toast.error('아이디와 비밀번호를 모두 입력해주세요.');
     }
-    const { role, token } = await loginMutation({ id, password });
+    const { role, token } = await loginMutation(
+      { id, password },
+      {
+        onSuccess: () => {
+          router.push('/');
+        },
+        onError: (error: Error) => {
+          if (error instanceof ApiError) {
+            toast.error(error.message);
+          } else {
+            toast.error('로그인에 실패했습니다.');
+          }
+        },
+      },
+    );
     const authToken = token.split('Bearer ')[1];
     setCookies(authToken, role);
-    router.push('/');
   };
 
   return {
