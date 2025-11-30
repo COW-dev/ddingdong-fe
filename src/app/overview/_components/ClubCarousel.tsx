@@ -20,7 +20,7 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
                 priority={index === 0}
                 width={1024}
                 height={224}
-                src={banner.webImageUrl.cdnUrl}
+                src={`${banner.webImageUrl.cdnUrl}?f=webp&w=2048`}
                 alt={`배너 ${index + 1}`}
                 className="absolute h-full w-full object-scale-down"
               />

@@ -61,12 +61,12 @@ export function OptimizedImage({
 
   const optimizedSrc = useMemo(() => {
     if (!src || src.includes('f=webp')) return src;
-    return `${src}${src.includes('?') ? '&' : '?'}f=webp`;
+    return `${src}${src.includes('?') ? '&' : '?'}f=webp&w=768`;
   }, [src]);
 
   const generatedSrcSet = useMemo(() => {
     if (srcSet || !src) return srcSet;
-    return [256, 512, 768, 1024, 2048]
+    return [256, 512, 768, 1024]
       .map((w) => `${src}${src.includes('?') ? '&' : '?'}w=${w}&f=webp ${w}w`)
       .join(', ');
   }, [src, srcSet]);
