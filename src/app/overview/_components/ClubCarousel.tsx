@@ -22,6 +22,7 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
                 width={1024}
                 height={224}
                 src={`${banner.webImageUrl.cdnUrl}?f=webp&w=2048`}
+                srcSet={`${banner.webImageUrl.cdnUrl}?f=webp&w=2048 2048w, ${banner.webImageUrl.cdnUrl}?f=webp&w=1024 1024w, ${banner.webImageUrl.cdnUrl}?f=webp&w=512 512w, ${banner.webImageUrl.cdnUrl}?f=webp&w=256 256w`}
                 alt={`배너 ${index + 1}`}
                 className="absolute h-full w-full object-scale-down"
               />
