@@ -43,7 +43,6 @@ export default async function RootLayout({
 }) {
   const headersList = await headers();
   const host = headersList.get('host') || '';
-
   const isAdminHost = host.startsWith('admin.');
 
   return (

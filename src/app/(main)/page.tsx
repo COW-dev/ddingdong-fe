@@ -7,7 +7,6 @@ import { OverviewClientPage } from './_pages/OverviewClientPage';
 
 export const revalidate = 3600;
 export const dynamic = 'force-static';
-export const dynamicParams = true;
 
 const CACHE_TAGS = {
   CLUBS: 'clubs',
@@ -22,7 +21,6 @@ async function getClubsData() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}clubs`, {
     headers,
     next: {
-      revalidate: 3600,
       tags: [CACHE_TAGS.CLUBS],
     },
   });
@@ -42,7 +40,6 @@ async function getBannersData() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}banners`, {
     headers,
     next: {
-      revalidate: 3600,
       tags: [CACHE_TAGS.BANNERS],
     },
   });
