@@ -18,8 +18,12 @@ export function EmailHeader() {
           color="gray"
           content={`"지원자명"은 각 지원자의 이름으로 자동 변경되며, 수정이 불가합니다.\n필요할 경우 직접 "지원자명"을 입력해 추가로 사용할 수 있습니다.`}
         >
-          {/* TODO: 아이콘 변경 */}
-          <Icon name="etc" color="gray" size={20} className="hidden md:block" />
+          <Icon
+            name="information"
+            color="gray"
+            size={20}
+            className="hidden md:block"
+          />
         </Tooltip>
       </Flex>
     </Flex>
