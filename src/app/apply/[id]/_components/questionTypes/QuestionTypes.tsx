@@ -176,6 +176,7 @@ export function TextQuestion({
 }: TextQuestionProps) {
   return (
     <TextArea
+      showCounter
       value={value}
       onChange={(e) => onChange(e.target.value)}
       placeholder={placeholder}
