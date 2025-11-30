@@ -21,6 +21,7 @@ export function AdminHeader() {
   const handleLogout = () => {
     resetClub();
     resetCookie();
+    useClubStore.persist.clearStorage();
     router.push('/login');
   };
 
