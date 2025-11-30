@@ -1,13 +1,10 @@
 'use client';
 
-import { useSuspenseQueries } from '@tanstack/react-query';
 import { Body3 } from 'ddingdong-design-system';
 
-import { bannerQueryOptions } from '@/app/_api/queries/banner';
-import { clubQueryOptions } from '@/app/_api/queries/club';
+import { Club } from '@/app/_api/types/club';
 
 import { ClubCard } from '../_components/ClubCard';
-import { ClubCarousel } from '../_components/ClubCarousel';
 import { ClubFilter } from '../_components/ClubFilter';
 import { FilterCategory } from '../_components/FilterCategory';
 import { SearchBar } from '../_components/SearchBar';
@@ -16,11 +13,7 @@ import { useClubFilter } from '../_hooks/useClubFilter';
 import { useClubSearch } from '../_hooks/useClubSearch';
 import { useFilteredClubs } from '../_hooks/useFilteredClubs';
 
-export function OverviewClientPage() {
-  const [{ data: clubData }, { data: bannerData }] = useSuspenseQueries({
-    queries: [clubQueryOptions.all(), bannerQueryOptions.all()],
-  });
-
+export function OverviewClientPage({ clubs }: { clubs: Club[] }) {
   const { searchClub, handleSearchClub } = useClubSearch();
   const {
     filterOption,
@@ -28,11 +21,10 @@ export function OverviewClientPage() {
     handleRecruitChange,
     handleSortChange,
   } = useClubFilter();
-  const filteredClubs = useFilteredClubs(clubData, searchClub, filterOption);
+  const filteredClubs = useFilteredClubs(clubs, searchClub, filterOption);
 
   return (
     <>
-      <ClubCarousel bannerData={bannerData} />
       <SearchBar value={searchClub} onSearch={handleSearchClub} />
       <ClubFilter
         club={filteredClubs}

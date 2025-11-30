@@ -23,6 +23,7 @@ export function UserHeader() {
               src="/logo.webp"
               width={1344}
               height={380}
+              fetchPriority="high"
               alt="ddingdong"
               className="w-40 md:w-44"
             />
@@ -51,6 +52,7 @@ export function UserHeader() {
               src="/logo.webp"
               width={1344}
               height={380}
+              fetchPriority="high"
               alt="ddingdong"
               className="w-32 md:w-44"
             />
@@ -75,6 +77,7 @@ export function UserHeader() {
                   src="/m_logo.webp"
                   width={1344}
                   height={380}
+                  fetchPriority="high"
                   alt="ddingdong"
                   className="w-30"
                 />

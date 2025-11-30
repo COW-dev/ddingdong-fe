@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
 import { Flex } from 'ddingdong-design-system';
 
+import { ClubCarousel } from '@/app/(main)/_components/ClubCarousel';
 import { bannerQueryOptions } from '@/app/_api/queries/banner';
 import { clubQueryOptions } from '@/app/_api/queries/club';
 import { documentQueryOptions } from '@/app/_api/queries/document';
 import { noticeQueryOptions } from '@/app/_api/queries/notice';
-import { ClubCarousel } from '@/app/overview/_components/ClubCarousel';
 import { ROLE_TYPE } from '@/constants/role';
 import { useClubStore } from '@/store/club';
 
