@@ -17,6 +17,7 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
           <CarouselItem key={banner.id}>
             <div className="relative hidden items-center justify-center overflow-hidden rounded-lg md:flex md:h-[224px]">
               <OptimizedImage
+                isSkeleton
                 priority={index === 0}
                 width={1024}
                 height={224}
