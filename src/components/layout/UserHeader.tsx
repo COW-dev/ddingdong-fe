@@ -11,7 +11,7 @@ export function UserHeader() {
   return (
     <>
       {/* 데스크탑 */}
-      <Header className="hidden md:flex">
+      <Header className="z-25 hidden md:flex">
         <Flex
           dir="row"
           alignItems="center"

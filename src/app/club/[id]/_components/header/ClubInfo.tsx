@@ -82,7 +82,7 @@ export const ClubInfo = ({
         size="lg"
         disabled={!isRecruitmentPeriod}
         onClick={() => router.push(`/apply/${formId}`)}
-        className="text-md fixed right-6 bottom-6 left-6 z-50 h-14 font-semibold lg:static lg:right-auto lg:left-auto lg:w-[25%] lg:self-start"
+        className="text-md fixed right-6 bottom-6 left-6 z-20 h-14 font-semibold lg:static lg:right-auto lg:left-auto lg:w-[25%] lg:self-start"
       >
         {isRecruitmentPeriod ? '지원하기' : '모집 마감'}
       </Button>
