@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect } from 'react';
+
 import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
 import { Flex } from 'ddingdong-design-system';
 
@@ -32,7 +34,13 @@ export default function AdminPage({ role }: { role: string }) {
       ],
     });
 
-  useClubStore((state) => state.setClub);
+  const setClub = useClubStore((state) => state.setClub);
+
+  useEffect(() => {
+    if (myClubData) {
+      setClub(myClubData);
+    }
+  }, [myClubData, setClub]);
 
   if (!ROLE_DASHBOARD[role]) return null;
 

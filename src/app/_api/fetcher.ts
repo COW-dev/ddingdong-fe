@@ -66,8 +66,7 @@ export const instance = ky.create({
       async (error) => {
         if (error instanceof HTTPError) {
           const errorData: ErrorType = await error.response.json();
-          console.log('error', error);
-          console.log('errorData', errorData);
+
           const apiError = new ApiError(
             errorData.status || error.response.status,
             errorData.message || '서버 오류가 발생했습니다.',

@@ -84,25 +84,39 @@ function FeedImageWithRadio({
   priority,
   onClick,
 }: FeedImageWithRadioProps) {
-  const [loaded, setLoaded] = useState(false);
-
   return (
     <div
       onClick={onClick}
-      className="flex aspect-square w-full cursor-pointer border-0 bg-transparent p-0"
+      className="relative flex aspect-square w-full cursor-pointer border-0 bg-transparent p-0"
     >
       <OptimizedImage
-        isSkeleton={!loaded}
+        isSkeleton
         width={500}
         height={600}
         src={feed.thumbnailCdnUrl}
         priority={priority}
         alt={`피드 ${feed.id}`}
-        className={`h-full w-full object-cover object-center transition-opacity duration-300 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-        onLoad={() => setLoaded(true)}
+        className="h-full w-full object-cover object-center"
       />
+      {feed.feedType === 'VIDEO' && (
+        <div className="absolute right-2 bottom-2 z-20 flex items-center justify-center rounded-full bg-black p-2">
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="text-white"
+          >
+            <path
+              d="M8 5V19L19 12L8 5Z"
+              fill="white"
+              stroke="white"
+              strokeWidth="0.5"
+            />
+          </svg>
+        </div>
+      )}
     </div>
   );
 }
