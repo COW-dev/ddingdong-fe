@@ -33,6 +33,7 @@ export default function LoginPage() {
       resetCookie();
     }
   }, [cookie.refresh_token, resetCookie]);
+
   return (
     <Flex
       as="section"
