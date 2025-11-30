@@ -3,6 +3,7 @@
 import * as Sentry from '@sentry/react';
 import { CookiesProvider } from 'react-cookie';
 
+import { ChannelTalk } from '@/components/common/ChannelTalk';
 import { ToasterWithMax } from '@/components/common/ToasterWithMax';
 import VideoUploadProgress from '@/components/common/VideoUploadProgress';
 
@@ -17,6 +18,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           <VideoUploadProgress />
 
           <ToasterWithMax />
+          <ChannelTalk />
         </ClientQueryProvider>
       </CookiesProvider>
     </Sentry.ErrorBoundary>
