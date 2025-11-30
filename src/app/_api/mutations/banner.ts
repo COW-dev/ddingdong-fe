@@ -2,6 +2,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query';
 
 import { fetcher } from '../fetcher';
 import { bannerQueryKeys } from '../queries/banner';
+import { revalidateCache } from '../revalidate';
 import { BannerAPIRequest } from '../types/banner';
 
 const createBanner = (banner: BannerAPIRequest) =>
@@ -14,10 +15,11 @@ export const useCreateBanner = () => {
 
   return useMutation({
     mutationFn: (data: BannerAPIRequest) => createBanner(data),
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: [...bannerQueryKeys.all()],
       });
+      await revalidateCache('banners');
     },
   });
 };
@@ -29,10 +31,11 @@ export const useDeleteBanner = () => {
 
   return useMutation({
     mutationFn: (id: number) => deleteBanner(id),
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries({
         queryKey: [...bannerQueryKeys.all()],
       });
+      await revalidateCache('banners');
     },
   });
 };
