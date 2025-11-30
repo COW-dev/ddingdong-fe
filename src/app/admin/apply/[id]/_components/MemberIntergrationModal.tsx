@@ -8,7 +8,7 @@ import {
   Modal,
 } from 'ddingdong-design-system';
 
-type DeleteModalProps = {
+type MemberIntegrationModalProps = {
   isOpen: boolean;
   onClose: VoidFunction;
   onIntegration: VoidFunction;
@@ -18,7 +18,7 @@ export function MemberIntegrationModal({
   isOpen,
   onClose,
   onIntegration,
-}: DeleteModalProps) {
+}: MemberIntegrationModalProps) {
   return (
     <Modal isOpen={isOpen} closeModal={onClose}>
       <Flex
@@ -53,7 +53,10 @@ export function MemberIntegrationModal({
               variant="primary"
               color="red"
               size="full"
-              onClick={onIntegration}
+              onClick={() => {
+                onIntegration();
+                onClose();
+              }}
             >
               <Body2 weight="bold">연동하기</Body2>
             </Button>
