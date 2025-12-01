@@ -76,7 +76,7 @@ function CustomInput({
       {isEditing ? (
         <Input value={value} {...props} />
       ) : (
-        <div className="h-13 w-full rounded-xl px-4 py-3.5 outline-1 outline-gray-200">
+        <div className="h-13 w-full overflow-auto rounded-xl px-4 py-3.5 whitespace-pre outline-1 outline-gray-200">
           {value}
         </div>
       )}
