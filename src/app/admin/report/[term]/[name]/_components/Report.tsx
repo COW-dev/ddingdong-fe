@@ -26,7 +26,7 @@ export function Report({ report }: Props) {
     participants,
   } = report;
 
-  const image = `${responseImage?.cdnUrl}` || UnSubmitImage.src;
+  const image = responseImage?.cdnUrl || UnSubmitImage.src;
   const hasParticipants = participants?.some((p) => p.name?.trim());
 
   return (
