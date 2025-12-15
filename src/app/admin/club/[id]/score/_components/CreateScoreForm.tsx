@@ -29,7 +29,7 @@ export function CreateScoreForm({
   const [reason, setReason] = useState('');
 
   const handleSubmit = () => {
-    if (!/^\d*\.?\d*$/.test(amount))
+    if (!/^-?\d*\.?\d*$/.test(amount))
       return toast.error('점수는 숫자형식으로 입력해주세요.');
 
     mutate(
@@ -37,6 +37,8 @@ export function CreateScoreForm({
       {
         onSuccess: () => {
           toast.success('점수를 추가했어요.');
+          setAmount('');
+          setReason('');
         },
         onError: (error: Error) => {
           if (error instanceof ApiError) {
