@@ -50,7 +50,7 @@ export function ClubFeed({
               <RadioItem
                 value={feed.id.toString()}
                 id={feed.id.toString()}
-                className="absolute top-2 left-2 z-10"
+                className="absolute top-2 left-2 z-20"
               />
             )}
             <FeedImageWithRadio
