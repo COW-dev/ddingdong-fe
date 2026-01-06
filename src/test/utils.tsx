@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, RenderOptions } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 const createTestQueryClient = () =>
   new QueryClient({
@@ -33,8 +34,10 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'>,
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
+export const user = userEvent.setup();
+
 export { act, cleanup, renderHook } from '@testing-library/react';
 
-export { screen, fireEvent, waitFor, within } from '@testing-library/dom';
+export { screen, waitFor, within } from '@testing-library/dom';
 
 export { customRender as render };
