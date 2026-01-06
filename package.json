@@ -52,7 +52,6 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
-    "@radix-ui/react-switch": "^1.2.6",
     "@tailwindcss/postcss": "^4.1.12",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
