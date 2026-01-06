@@ -1,59 +1,42 @@
 import '@testing-library/jest-dom/vitest';
-import { cleanup } from '@testing-library/react';
-import { afterEach, vi } from 'vitest';
+import { vi, afterEach } from 'vitest';
 
-afterEach(() => {
-  cleanup();
-});
+export const mockPush = vi.fn();
+export const mockReplace = vi.fn();
+export const mockBack = vi.fn();
+export const mockPathname = vi.fn(() => '/');
+export const mockSearchParams = vi.fn(() => new URLSearchParams());
+export const mockParams = vi.fn(() => ({ id: '1' }));
 
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
-    push: vi.fn(),
-    replace: vi.fn(),
-    back: vi.fn(),
+    push: mockPush,
+    replace: mockReplace,
+    back: mockBack,
     forward: vi.fn(),
     refresh: vi.fn(),
     prefetch: vi.fn(),
   }),
-  usePathname: () => '/',
-  useSearchParams: () => new URLSearchParams(),
-  useParams: () => ({ id: '1' }),
+  usePathname: () => mockPathname(),
+  useSearchParams: () => mockSearchParams(),
+  useParams: () => mockParams(),
 }));
 
-vi.mock('react-cookie', () => {
-  const mockCookiesInstance = {
-    get: vi.fn(() => 'mock-token'),
-    set: vi.fn(),
-    remove: vi.fn(),
-  };
+export const mockCookiesInstance = {
+  get: vi.fn(() => 'mock-token'),
+  set: vi.fn(),
+  remove: vi.fn(),
+};
 
-  return {
-    useCookies: () => [
-      {
-        token: 'mock-token',
-        role: 'ADMIN',
-      },
-      vi.fn(),
-    ],
-    Cookies: class Cookies {
-      constructor() {
-        return mockCookiesInstance;
-      }
-    },
-  };
-});
+export const mockToast = {
+  success: vi.fn(),
+  error: vi.fn(),
+  loading: vi.fn(),
+};
 
 vi.mock('react-hot-toast', () => ({
-  default: {
-    success: vi.fn(),
-    error: vi.fn(),
-    loading: vi.fn(),
-  },
-  toast: {
-    success: vi.fn(),
-    error: vi.fn(),
-    loading: vi.fn(),
-  },
+  default: mockToast,
+  toast: mockToast,
 }));
 
 vi.mock('@sentry/nextjs', () => ({
@@ -61,21 +44,29 @@ vi.mock('@sentry/nextjs', () => ({
   captureException: vi.fn(),
 }));
 
+export const mockFetcher = {
+  get: vi.fn(),
+  getBlob: vi.fn(),
+  post: vi.fn(),
+  put: vi.fn(),
+  delete: vi.fn(),
+  patch: vi.fn(),
+};
+
 vi.mock('@/app/_api/fetcher', () => ({
-  fetcher: {
-    get: vi.fn(),
-    getBlob: vi.fn(),
-    post: vi.fn(),
-    put: vi.fn(),
-    delete: vi.fn(),
-    patch: vi.fn(),
-  },
+  fetcher: mockFetcher,
 }));
+
+export const mockUseSuspenseQuery = vi.fn();
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual('@tanstack/react-query');
   return {
     ...actual,
-    useSuspenseQuery: vi.fn(),
+    useSuspenseQuery: mockUseSuspenseQuery,
   };
+});
+
+afterEach(() => {
+  vi.resetAllMocks();
 });
