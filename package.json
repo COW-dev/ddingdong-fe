@@ -28,7 +28,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.13",
-    "ddingdong-design-system": "^2.0.1",
+    "ddingdong-design-system": "^1.0.28",
     "embla-carousel-autoplay": "^8.0.0-rc22",
     "event-source-polyfill": "^1.0.31",
     "framer-motion": "^11.16.4",
