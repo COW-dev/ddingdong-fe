@@ -13,6 +13,7 @@ const createTestQueryClient = () =>
       },
       mutations: {
         retry: false,
+        gcTime: 0,
       },
     },
   });
