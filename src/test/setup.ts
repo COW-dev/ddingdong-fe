@@ -54,7 +54,6 @@ vi.mock('@/app/_api/fetcher', () => ({
 export const mockUseSuspenseQuery = vi.fn(() => ({
   data: undefined,
   error: null,
-  isLoading: false,
   isError: false,
   status: 'success',
 }));
