@@ -68,5 +68,5 @@ vi.mock('@tanstack/react-query', async () => {
 });
 
 afterEach(() => {
-  vi.resetAllMocks();
+  vi.clearAllMocks();
 });
