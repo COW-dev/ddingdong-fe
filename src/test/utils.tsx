@@ -18,16 +18,18 @@ const createTestQueryClient = () =>
     },
   });
 
+const testQueryClient = createTestQueryClient();
+
 interface AllTheProvidersProps {
   children: ReactNode;
 }
 
 function AllTheProviders({ children }: AllTheProvidersProps) {
-  const queryClient = createTestQueryClient();
-
   return (
     <CookiesProvider>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+      <QueryClientProvider client={testQueryClient}>
+        {children}
+      </QueryClientProvider>
     </CookiesProvider>
   );
 }
