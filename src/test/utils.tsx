@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, RenderOptions } from '@testing-library/react';
+import { CookiesProvider } from 'react-cookie';
 
 const createTestQueryClient = () =>
   new QueryClient({
@@ -24,7 +25,9 @@ function AllTheProviders({ children }: AllTheProvidersProps) {
   const queryClient = createTestQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <CookiesProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    </CookiesProvider>
   );
 }
 
