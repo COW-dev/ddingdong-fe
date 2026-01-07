@@ -51,7 +51,13 @@ vi.mock('@/app/_api/fetcher', () => ({
   fetcher: mockFetcher,
 }));
 
-export const mockUseSuspenseQuery = vi.fn();
+export const mockUseSuspenseQuery = vi.fn(() => ({
+  data: undefined,
+  error: null,
+  isLoading: false,
+  isError: false,
+  status: 'success',
+}));
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual('@tanstack/react-query');
