@@ -22,12 +22,6 @@ vi.mock('next/navigation', () => ({
   useParams: () => mockParams(),
 }));
 
-export const mockCookiesInstance = {
-  get: vi.fn(() => 'mock-token'),
-  set: vi.fn(),
-  remove: vi.fn(),
-};
-
 export const mockToast = {
   success: vi.fn(),
   error: vi.fn(),
