@@ -9,7 +9,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^2.0.0",
@@ -17,7 +19,6 @@
     "@sentry/nextjs": "^8.45.0",
     "@tanstack/react-query": "^5.71.1",
     "@tanstack/react-query-devtools": "^5.71.1",
-    "@types/node": "18.15.5",
     "@types/react": "^19.1.11",
     "@types/react-dom": "^19.1.7",
     "@vercel/analytics": "^1.0.2",
@@ -25,7 +26,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.13",
-    "ddingdong-design-system": "^2.0.1",
+    "ddingdong-design-system": "^1.0.28",
     "embla-carousel-autoplay": "^8.0.0-rc22",
     "event-source-polyfill": "^1.0.31",
     "framer-motion": "^11.16.4",
@@ -50,21 +51,30 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.12",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.1",
+    "@testing-library/user-event": "^14.6.1",
     "@types/event-source-polyfill": "^1.0.5",
     "@types/gtag.js": "^0.0.20",
+    "@types/node": "^20.19.27",
     "@typescript-eslint/eslint-plugin": "^8.17.0",
     "@typescript-eslint/parser": "^8.17.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.39.0",
     "eslint-config-next": "^15.5.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "happy-dom": "^15.11.7",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "tailwindcss": "^4.1.12",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vite-tsconfig-paths": "^6.0.3",
+    "vitest": "^4.0.16"
   },
   "engines": {
     "node": ">=18.18 <23"
