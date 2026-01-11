@@ -29,11 +29,22 @@ export function CreateScoreForm({
   const [reason, setReason] = useState('');
 
   const handleSubmit = () => {
-    if (!/^-?\d*\.?\d*$/.test(amount))
+    if (!reason.trim()) {
+      return toast.error('사유를 입력해주세요.');
+    }
+
+    if (!amount.trim()) {
+      return toast.error('점수를 입력해주세요.');
+    }
+
+    if (!/^-?\d*\.?\d*$/.test(amount)) {
       return toast.error('점수는 숫자형식으로 입력해주세요.');
+    }
+
+    const amountNumber = Number(amount);
 
     mutate(
-      { scoreCategory, reason, amount: Number(amount) },
+      { scoreCategory, reason, amount: amountNumber },
       {
         onSuccess: () => {
           toast.success('점수를 추가했어요.');
