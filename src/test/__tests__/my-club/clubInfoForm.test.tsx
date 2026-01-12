@@ -5,14 +5,6 @@ import { ClubDetail } from '@/app/_api/types/club';
 import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
 
 const mockClub = {
-  //  type Props = {
-  //   club: ClubDetail;
-  //   isEditing: boolean;
-  //   onChange: (
-  //     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  //   ) => void;
-  //   onReset: (name: string) => void;
-  // };
   leader: '김띵동',
   phoneNumber: '010-1234-5678',
   location: 's1234',
