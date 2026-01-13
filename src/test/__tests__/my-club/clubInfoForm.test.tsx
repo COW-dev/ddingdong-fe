@@ -8,7 +8,7 @@ import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
 const mockClub = {
   leader: '김주장',
   phoneNumber: '010-1234-5678',
-  location: 's1234',
+  location: 'S1234',
   regularMeeting: '매주 수요일 18:00',
 } as ClubDetail;
 
