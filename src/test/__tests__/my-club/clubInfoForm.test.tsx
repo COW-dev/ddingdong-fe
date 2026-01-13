@@ -6,13 +6,13 @@ import { ClubDetail } from '@/app/_api/types/club';
 import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
 
 const mockClub = {
-  leader: '김띵동',
+  leader: '김주장',
   phoneNumber: '010-1234-5678',
   location: 's1234',
   regularMeeting: '매주 수요일 18:00',
 } as ClubDetail;
 
-describe('ClubInfoForm', () => {
+describe('ClubInfoForm 테스트', () => {
   const mockOnChange = vi.fn();
   const mockOnReset = vi.fn();
 
@@ -30,7 +30,7 @@ describe('ClubInfoForm', () => {
       />,
     );
 
-    expect(screen.getByText('김띵동')).toBeInTheDocument();
+    expect(screen.getByText('김주장')).toBeInTheDocument();
     expect(screen.getByText('010-1234-5678')).toBeInTheDocument();
   });
 
@@ -45,7 +45,7 @@ describe('ClubInfoForm', () => {
         onReset={mockOnReset}
       />,
     );
-    const input = screen.getByDisplayValue('김띵동');
+    const input = screen.getByDisplayValue('김주장');
     await user.clear(input);
     await user.type(input, '박띵동');
 
