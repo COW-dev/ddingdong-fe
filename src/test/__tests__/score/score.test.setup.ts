@@ -20,25 +20,14 @@ type Options = {
 
 function mockCreateScoreMutation(
   options: Options = {},
-): UseMutationResult<void, Error, ScoreAPIRequest, unknown> {
+): Partial<UseMutationResult<void, Error, ScoreAPIRequest, unknown>> {
   return {
-    // @ts-expect-error - mutate
-    mutate: options.mutate ?? vi.fn(),
-    mutateAsync: vi.fn(),
-    reset: vi.fn(),
-    status: 'idle',
-    isIdle: true,
-    isPending: false,
-    isError: false,
-    isSuccess: false,
-    data: undefined,
-    error: null,
-    failureCount: 0,
-    failureReason: null,
-    submittedAt: 0,
-    variables: undefined,
-    context: undefined,
-    isPaused: false,
+    mutate: (options.mutate ?? vi.fn()) as UseMutationResult<
+      void,
+      Error,
+      ScoreAPIRequest,
+      unknown
+    >['mutate'],
   };
 }
 
@@ -75,7 +64,7 @@ export function setupScorePage({
         }
         onSuccess?.();
       },
-    }),
+    }) as UseMutationResult<void, Error, ScoreAPIRequest, unknown>,
   );
 }
 
