@@ -66,4 +66,26 @@ describe('useClubEdit 테스트', () => {
     });
     expect(result.current.club.leader).toBe('김주장');
   });
+
+  it('handleReset으로 필드를 빈 값으로 초기화한다.', () => {
+    const { result } = renderHook(() => useClubEdit(mockClub));
+
+    act(() => {
+      result.current.handleReset('leader');
+    });
+
+    expect(result.current.club.leader).toBe('');
+  });
+
+  it('빈 문자열로 값을 변경할 수 있다.', () => {
+    const { result } = renderHook(() => useClubEdit(mockClub));
+
+    act(() =>
+      result.current.handleChange({
+        target: { name: 'phoneNumber', value: '' },
+      } as React.ChangeEvent<HTMLInputElement>),
+    );
+
+    expect(result.current.club.phoneNumber).toBe('');
+  });
 });
