@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { ClubDetail } from '@/app/_api/types/club';
 import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
@@ -15,6 +15,10 @@ const mockClub = {
 describe('ClubInfoForm', () => {
   const mockOnChange = vi.fn();
   const mockOnReset = vi.fn();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
   it('렌더링을 하면 동아리에 대한 정보를 표시한다.', () => {
     render(
