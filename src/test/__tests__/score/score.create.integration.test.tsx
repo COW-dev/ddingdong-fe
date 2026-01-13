@@ -29,13 +29,16 @@ describe('점수 추가 - 정상 플로우', () => {
         createdAt: new Date().toISOString(),
       };
 
+      const initialTotalScore = 100;
+      const updatedTotalScore = initialTotalScore + newHistory.amount;
+
       setupScorePage({
         initialData: {
-          totalScore: 100,
+          totalScore: initialTotalScore,
           scoreHistories: [],
         },
         updatedData: {
-          totalScore: 110,
+          totalScore: updatedTotalScore,
           scoreHistories: [newHistory],
         },
       });
@@ -62,21 +65,24 @@ describe('점수 추가 - 정상 플로우', () => {
   it('점수 추가 시 totalScore에 반영된다', async () => {
     const user = userEvent.setup();
 
+    const initialTotalScore = 100;
+    const newScore = 10;
+    const newHistory: ScoreHistory = {
+      scoreCategory: CATEGORY.CLEANING.name,
+      reason: '테스트',
+      amount: newScore,
+      createdAt: new Date().toISOString(),
+    };
+    const updatedTotalScore = initialTotalScore + newScore;
+
     setupScorePage({
       initialData: {
-        totalScore: 100,
+        totalScore: initialTotalScore,
         scoreHistories: [],
       },
       updatedData: {
-        totalScore: 110,
-        scoreHistories: [
-          {
-            scoreCategory: CATEGORY.CLEANING.name,
-            reason: '테스트',
-            amount: 10,
-            createdAt: new Date().toISOString(),
-          },
-        ],
+        totalScore: updatedTotalScore,
+        scoreHistories: [newHistory],
       },
     });
 
@@ -88,11 +94,14 @@ describe('점수 추가 - 정상 플로우', () => {
       screen.getByPlaceholderText('사유를 입력해주세요.'),
       '테스트',
     );
-    await user.type(screen.getByPlaceholderText('점수를 입력해주세요.'), '10');
+    await user.type(
+      screen.getByPlaceholderText('점수를 입력해주세요.'),
+      String(newScore),
+    );
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
     rerender(<ScoreClientPage id="1" />);
 
-    await screen.findByText(/110/);
+    await screen.findByText(new RegExp(String(updatedTotalScore)));
   });
 });
