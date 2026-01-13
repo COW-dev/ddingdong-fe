@@ -102,6 +102,6 @@ describe('점수 추가 - 정상 플로우', () => {
 
     rerender(<ScoreClientPage id="1" />);
 
-    await screen.findByText(new RegExp(String(updatedTotalScore)));
+    await screen.findByText(new RegExp(`총점\\s*:\\s*${updatedTotalScore}`));
   });
 });
