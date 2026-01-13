@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
 
 import { ClubDetail } from '@/app/_api/types/club';
@@ -12,21 +13,38 @@ const mockClub = {
 } as ClubDetail;
 
 describe('ClubInfoForm', () => {
-  it('렌더링을 하면 동아리에 대한 정보를 표시한다.', () => {
-    const onChange = vi.fn();
-    const onReset = vi.fn();
+  const mockOnChange = vi.fn();
+  const mockOnReset = vi.fn();
 
+  it('렌더링을 하면 동아리에 대한 정보를 표시한다.', () => {
     render(
       <ClubInfoForm
         club={mockClub}
         isEditing={false}
-        onChange={onChange}
-        onReset={onReset}
+        onChange={mockOnChange}
+        onReset={mockOnReset}
       />,
     );
 
     expect(screen.getByText('김띵동')).toBeInTheDocument();
     expect(screen.getByText('010-1234-5678')).toBeInTheDocument();
-    expect(screen.getByText('')).toBeInTheDocument();
+  });
+
+  it('입력값을 변경할 때 onChang가 호출된다', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ClubInfoForm
+        club={mockClub}
+        isEditing={true}
+        onChange={mockOnChange}
+        onReset={mockOnReset}
+      />,
+    );
+    const input = screen.getByDisplayValue('김띵동');
+    await user.clear(input);
+    await user.type(input, '박띵동');
+
+    expect(mockOnChange).toHaveBeenCalled();
   });
 });
