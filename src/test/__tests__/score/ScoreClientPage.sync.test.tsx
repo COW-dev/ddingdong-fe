@@ -74,7 +74,7 @@ function setupScorePage({ initialData }: { initialData: ScoreDetail }) {
   );
 }
 
-describe('상세 내역 동기화', () => {
+describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

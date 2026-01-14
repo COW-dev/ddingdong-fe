@@ -61,7 +61,7 @@ function setupScorePageForValidation() {
   );
 }
 
-describe('점수 추가 - validation', () => {
+describe('점수 추가 시 validation 테스트', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });

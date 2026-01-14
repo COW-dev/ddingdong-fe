@@ -60,7 +60,7 @@ function setupScorePage({
   } as UseMutationResult<void, Error, ScoreAPIRequest, unknown>);
 }
 
-describe('점수 추가 - 정상 플로우', () => {
+describe('동아리 카테고리 별 점수 추가 테스트', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
