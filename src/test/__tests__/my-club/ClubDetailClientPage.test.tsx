@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render } from '@testing-library/react';
 import { beforeEach, describe, it, vi, expect } from 'vitest';
 
 import ClubDetailClientPage from '@/app/admin/my-club/_pages/ClubDetailClientPage';
+import { render } from '@/test/utils';
 
 const mockClub = {
   name: '테스트동아리',

@@ -1,9 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import { ClubDetail } from '@/app/_api/types/club';
 import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
+import { render } from '@/test/utils';
 
 const mockClub = {
   leader: '김주장',
@@ -34,7 +35,7 @@ describe('ClubInfoForm 테스트', () => {
     expect(screen.getByText('010-1234-5678')).toBeInTheDocument();
   });
 
-  it('입력값을 변경할 때 onChang가 호출된다', async () => {
+  it('입력값을 변경할 때 onChange가 호출된다', async () => {
     const user = userEvent.setup();
 
     render(
