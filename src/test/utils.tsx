@@ -20,9 +20,9 @@ const createTestQueryClient = () =>
 
 const testQueryClient = createTestQueryClient();
 
-interface AllTheProvidersProps {
+type AllTheProvidersProps = {
   children: ReactNode;
-}
+};
 
 function AllTheProviders({ children }: AllTheProvidersProps) {
   return (
