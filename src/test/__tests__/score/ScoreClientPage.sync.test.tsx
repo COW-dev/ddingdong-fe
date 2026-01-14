@@ -1,16 +1,78 @@
+import {
+  UseMutationResult,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 
-import { ScoreHistory } from '@/app/_api/types/score';
+import { useCreateScore } from '@/app/_api/mutations/score';
+import {
+  ScoreAPIRequest,
+  ScoreDetail,
+  ScoreHistory,
+} from '@/app/_api/types/score';
 import { CATEGORY } from '@/app/admin/club/[id]/score/_consts/category';
 import ScoreClientPage from '@/app/admin/club/[id]/score/_pages/ScoreClientPage';
-import { setupScorePage } from '@/test/__tests__/score/score.test.setup';
+import { createSuspenseQueryResult } from '@/test/setup';
 import { render } from '@/test/utils';
 
 vi.mock('@/app/_api/mutations/score', () => ({
   useCreateScore: vi.fn(),
 }));
+
+const { mockUseSuspenseQuery } = vi.hoisted(() => {
+  return {
+    mockUseSuspenseQuery:
+      vi.fn<() => UseSuspenseQueryResult<ScoreDetail, Error>>(),
+  };
+});
+
+vi.mock('@tanstack/react-query', async () => {
+  const actual = await vi.importActual('@tanstack/react-query');
+  return {
+    ...actual,
+    useSuspenseQuery: mockUseSuspenseQuery,
+  };
+});
+
+type Options = {
+  mutate?: (
+    variables: ScoreAPIRequest,
+    options?: {
+      onSuccess?: () => void;
+      onError?: (error: Error) => void;
+    },
+  ) => void;
+};
+
+function mockCreateScoreMutation(
+  options: Options = {},
+): Partial<UseMutationResult<void, Error, ScoreAPIRequest, unknown>> {
+  return {
+    mutate: (options.mutate ?? vi.fn()) as UseMutationResult<
+      void,
+      Error,
+      ScoreAPIRequest,
+      unknown
+    >['mutate'],
+  };
+}
+
+function setupScorePage({ initialData }: { initialData: ScoreDetail }) {
+  mockUseSuspenseQuery.mockReturnValueOnce(
+    createSuspenseQueryResult(initialData),
+  );
+
+  vi.mocked(useCreateScore).mockReturnValue(
+    mockCreateScoreMutation() as UseMutationResult<
+      void,
+      Error,
+      ScoreAPIRequest,
+      unknown
+    >,
+  );
+}
 
 describe('상세 내역 동기화', () => {
   beforeEach(() => {

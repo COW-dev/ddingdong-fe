@@ -1,16 +1,64 @@
+import {
+  UseMutationResult,
+  UseSuspenseQueryResult,
+} from '@tanstack/react-query';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi, beforeEach } from 'vitest';
 
-import { ScoreHistory } from '@/app/_api/types/score';
+import { useCreateScore } from '@/app/_api/mutations/score';
+import {
+  ScoreAPIRequest,
+  ScoreDetail,
+  ScoreHistory,
+} from '@/app/_api/types/score';
 import { CATEGORY } from '@/app/admin/club/[id]/score/_consts/category';
 import ScoreClientPage from '@/app/admin/club/[id]/score/_pages/ScoreClientPage';
-import { setupScorePage } from '@/test/__tests__/score/score.test.setup';
+import { createSuspenseQueryResult } from '@/test/setup';
 import { render } from '@/test/utils';
 
 vi.mock('@/app/_api/mutations/score', () => ({
   useCreateScore: vi.fn(),
 }));
+
+const { mockUseSuspenseQuery } = vi.hoisted(() => {
+  return {
+    mockUseSuspenseQuery:
+      vi.fn<() => UseSuspenseQueryResult<ScoreDetail, Error>>(),
+  };
+});
+
+vi.mock('@tanstack/react-query', async () => {
+  const actual = await vi.importActual('@tanstack/react-query');
+  return {
+    ...actual,
+    useSuspenseQuery: mockUseSuspenseQuery,
+  };
+});
+
+function setupScorePage({
+  initialData,
+  updatedData,
+}: {
+  initialData: ScoreDetail;
+  updatedData?: ScoreDetail;
+}) {
+  mockUseSuspenseQuery.mockReturnValueOnce(
+    createSuspenseQueryResult(initialData),
+  );
+
+  vi.mocked(useCreateScore).mockReturnValue({
+    mutate: (_data: ScoreAPIRequest, options?: { onSuccess?: () => void }) => {
+      const { onSuccess } = options || {};
+      if (updatedData) {
+        mockUseSuspenseQuery.mockReturnValue(
+          createSuspenseQueryResult(updatedData),
+        );
+      }
+      onSuccess?.();
+    },
+  } as UseMutationResult<void, Error, ScoreAPIRequest, unknown>);
+}
 
 describe('점수 추가 - 정상 플로우', () => {
   beforeEach(() => {
