@@ -1,8 +1,6 @@
 import '@testing-library/jest-dom/vitest';
 import { vi, afterEach } from 'vitest';
 
-import type { UseSuspenseQueryResult } from '@tanstack/react-query';
-
 export const mockPush = vi.fn();
 export const mockReplace = vi.fn();
 export const mockBack = vi.fn();
@@ -52,16 +50,6 @@ export const mockFetcher = {
 vi.mock('@/app/_api/fetcher', () => ({
   fetcher: mockFetcher,
 }));
-
-export const createSuspenseQueryResult = <T>(
-  data: T,
-): UseSuspenseQueryResult<T, Error> =>
-  ({
-    data,
-    status: 'success',
-    error: null,
-    isError: false,
-  }) as UseSuspenseQueryResult<T, Error>;
 
 afterEach(() => {
   vi.clearAllMocks();
