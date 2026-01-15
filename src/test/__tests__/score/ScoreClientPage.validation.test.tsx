@@ -6,7 +6,7 @@ import { useCreateScore } from '@/app/_api/mutations/score';
 import { ScoreDetail } from '@/app/_api/types/score';
 import { CATEGORY } from '@/app/admin/club/[id]/score/_consts/category';
 import ScoreClientPage from '@/app/admin/club/[id]/score/_pages/ScoreClientPage';
-import { mockFetcher } from '@/test/setup';
+import { mockFetcher, mockToast } from '@/test/setup';
 import { render, testQueryClient } from '@/test/utils';
 
 vi.mock('@/app/_api/mutations/score', () => ({
@@ -43,6 +43,7 @@ describe('점수 추가 시 validation 테스트', () => {
     await user.type(screen.getByPlaceholderText('점수를 입력해주세요.'), '10');
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
+    expect(mockToast.error).toHaveBeenCalledWith('사유를 입력해주세요.');
     expect(mutateSpy).not.toHaveBeenCalled();
   });
 
@@ -72,6 +73,7 @@ describe('점수 추가 시 validation 테스트', () => {
     );
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
+    expect(mockToast.error).toHaveBeenCalledWith('점수를 입력해주세요.');
     expect(mutateSpy).not.toHaveBeenCalled();
   });
 });
