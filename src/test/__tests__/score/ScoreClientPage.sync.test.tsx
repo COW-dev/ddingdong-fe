@@ -26,13 +26,13 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
         scoreCategory: CATEGORY.CLEANING.name,
         reason: '10월 청소평가',
         amount: 10.24,
-        createdAt: new Date().toISOString(),
+        createdAt: '2024-10-15T10:30:00.000Z',
       },
       {
         scoreCategory: CATEGORY.ACTIVITY_REPORT.name,
         reason: '10월 전동대회 참여',
         amount: 20,
-        createdAt: new Date().toISOString(),
+        createdAt: '2024-10-16T14:20:00.000Z',
       },
     ];
 
@@ -71,19 +71,19 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
           scoreCategory: name,
           reason: `${name} 테스트 1`,
           amount: 10.2,
-          createdAt: new Date().toISOString(),
+          createdAt: '2024-10-15T10:30:00.000Z',
         },
         {
           scoreCategory: name,
           reason: `${name} 테스트 2`,
           amount: 5.5,
-          createdAt: new Date().toISOString(),
+          createdAt: '2024-10-16T14:20:00.000Z',
         },
         {
           scoreCategory: otherCategoryName,
           reason: `${otherCategoryName} 다른 데이터`,
           amount: 20,
-          createdAt: new Date().toISOString(),
+          createdAt: '2024-10-17T09:15:00.000Z',
         },
       ];
 

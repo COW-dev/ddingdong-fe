@@ -31,7 +31,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
         scoreCategory: name,
         reason: '테스트 사유',
         amount: 10,
-        createdAt: new Date().toISOString(),
+        createdAt: '2024-10-17T09:15:00.000Z',
       };
 
       const initialData: ScoreDetail = {
@@ -89,7 +89,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       scoreCategory: CATEGORY.CLEANING.name,
       reason: '테스트',
       amount: newScore,
-      createdAt: new Date().toISOString(),
+      createdAt: '2024-10-17T09:15:00.000Z',
     };
 
     const initialData: ScoreDetail = {
