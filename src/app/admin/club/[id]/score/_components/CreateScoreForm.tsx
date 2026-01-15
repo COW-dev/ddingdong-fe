@@ -1,6 +1,4 @@
 'use client';
-import { ApiError } from 'next/dist/server/api-utils';
-
 import { useState } from 'react';
 
 import {
@@ -12,6 +10,7 @@ import {
 } from 'ddingdong-design-system';
 import { toast } from 'react-hot-toast';
 
+import { ApiError } from '@/app/_api/fetcher';
 import { useCreateScore } from '@/app/_api/mutations/score';
 
 export function CreateScoreForm({
