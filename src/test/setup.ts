@@ -47,9 +47,13 @@ export const mockFetcher = {
   patch: vi.fn(),
 };
 
-vi.mock('@/app/_api/fetcher', () => ({
-  fetcher: mockFetcher,
-}));
+vi.mock('@/app/_api/fetcher', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/app/_api/fetcher')>();
+  return {
+    ...actual,
+    fetcher: mockFetcher,
+  };
+});
 
 afterEach(() => {
   vi.clearAllMocks();
