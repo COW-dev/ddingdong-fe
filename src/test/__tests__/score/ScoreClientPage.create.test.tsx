@@ -132,9 +132,6 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     );
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
-    await screen.findByText(
-      new RegExp(`총점\\s*:\\s*${updatedData.totalScore}\\s*점`),
-      {},
-    );
+    await screen.findByText(new RegExp(`총점\\s*:\\s*110\\s*점`));
   });
 });
