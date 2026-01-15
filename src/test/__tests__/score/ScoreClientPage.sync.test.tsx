@@ -2,16 +2,11 @@ import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 
-import { useCreateScore } from '@/app/_api/mutations/score';
 import { ScoreDetail, ScoreHistory } from '@/app/_api/types/score';
 import { CATEGORY } from '@/app/admin/club/[id]/score/_consts/category';
 import ScoreClientPage from '@/app/admin/club/[id]/score/_pages/ScoreClientPage';
 import { mockFetcher } from '@/test/setup';
 import { render, testQueryClient } from '@/test/utils';
-
-vi.mock('@/app/_api/mutations/score', () => ({
-  useCreateScore: vi.fn(),
-}));
 
 describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => {
   beforeEach(() => {
@@ -40,10 +35,6 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
     const initialData: ScoreDetail = { totalScore, scoreHistories };
 
     mockFetcher.get.mockResolvedValue(initialData);
-
-    vi.mocked(useCreateScore).mockReturnValue({
-      mutate: vi.fn(),
-    } as unknown as ReturnType<typeof useCreateScore>);
 
     render(<ScoreClientPage id="1" />);
 
@@ -104,10 +95,6 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
       const initialData: ScoreDetail = { totalScore, scoreHistories };
 
       mockFetcher.get.mockResolvedValue(initialData);
-
-      vi.mocked(useCreateScore).mockReturnValue({
-        mutate: vi.fn(),
-      } as unknown as ReturnType<typeof useCreateScore>);
 
       render(<ScoreClientPage id="1" />);
 
