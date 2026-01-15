@@ -39,4 +39,4 @@ const customRender = (
   options?: Omit<RenderOptions, 'wrapper'>,
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
-export { customRender as render };
+export { customRender as render, testQueryClient };
