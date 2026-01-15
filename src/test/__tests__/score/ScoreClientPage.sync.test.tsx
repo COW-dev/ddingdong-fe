@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 
@@ -51,9 +51,19 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
       await screen.findByText(new RegExp(`총점\\s*:\\s*${totalScore}\\s*점`)),
     ).toBeInTheDocument();
 
-    expect(screen.getAllByText(CATEGORY.CLEANING.name).length).toBeGreaterThan(
-      0,
-    );
+    const historyTable = screen.getByRole('table');
+
+    expect(
+      within(historyTable).getByText(CATEGORY.CLEANING.name),
+    ).toBeInTheDocument();
+    expect(within(historyTable).getByText('10.24점')).toBeInTheDocument();
+    expect(within(historyTable).getByText('2024-10-15')).toBeInTheDocument();
+
+    expect(
+      within(historyTable).getByText(CATEGORY.ACTIVITY_REPORT.name),
+    ).toBeInTheDocument();
+    expect(within(historyTable).getByText('20점')).toBeInTheDocument();
+    expect(within(historyTable).getByText('2024-10-16')).toBeInTheDocument();
   });
 
   it.each(Object.entries(CATEGORY))(
