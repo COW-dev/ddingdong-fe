@@ -1,6 +1,6 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, it, vi, beforeEach } from 'vitest';
+import { describe, it, vi, beforeEach, expect } from 'vitest';
 
 import { useCreateScore } from '@/app/_api/mutations/score';
 import { ScoreQueryKeys } from '@/app/_api/queries/score';
@@ -73,7 +73,10 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       );
       await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
-      await screen.findByText('테스트 사유', {}, { timeout: 5000 });
+      const historyTable = await screen.findByRole('table');
+
+      await within(historyTable).findByText(name);
+      expect(within(historyTable).getByText(/10\s*점/)).toBeInTheDocument();
     },
   );
 
