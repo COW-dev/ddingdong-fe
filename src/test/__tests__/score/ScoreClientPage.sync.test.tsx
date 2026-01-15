@@ -1,85 +1,26 @@
-import {
-  UseMutationResult,
-  UseSuspenseQueryResult,
-} from '@tanstack/react-query';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, vi, beforeEach, expect } from 'vitest';
 
 import { useCreateScore } from '@/app/_api/mutations/score';
-import {
-  ScoreAPIRequest,
-  ScoreDetail,
-  ScoreHistory,
-} from '@/app/_api/types/score';
+import { ScoreDetail, ScoreHistory } from '@/app/_api/types/score';
 import { CATEGORY } from '@/app/admin/club/[id]/score/_consts/category';
 import ScoreClientPage from '@/app/admin/club/[id]/score/_pages/ScoreClientPage';
-import { createSuspenseQueryResult } from '@/test/setup';
-import { render } from '@/test/utils';
+import { mockFetcher } from '@/test/setup';
+import { render, testQueryClient } from '@/test/utils';
 
 vi.mock('@/app/_api/mutations/score', () => ({
   useCreateScore: vi.fn(),
 }));
 
-const { mockUseSuspenseQuery } = vi.hoisted(() => {
-  return {
-    mockUseSuspenseQuery:
-      vi.fn<() => UseSuspenseQueryResult<ScoreDetail, Error>>(),
-  };
-});
-
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query');
-  return {
-    ...actual,
-    useSuspenseQuery: mockUseSuspenseQuery,
-  };
-});
-
-type Options = {
-  mutate?: (
-    variables: ScoreAPIRequest,
-    options?: {
-      onSuccess?: () => void;
-      onError?: (error: Error) => void;
-    },
-  ) => void;
-};
-
-function mockCreateScoreMutation(
-  options: Options = {},
-): Partial<UseMutationResult<void, Error, ScoreAPIRequest, unknown>> {
-  return {
-    mutate: (options.mutate ?? vi.fn()) as UseMutationResult<
-      void,
-      Error,
-      ScoreAPIRequest,
-      unknown
-    >['mutate'],
-  };
-}
-
-function setupScorePage({ initialData }: { initialData: ScoreDetail }) {
-  mockUseSuspenseQuery.mockReturnValueOnce(
-    createSuspenseQueryResult(initialData),
-  );
-
-  vi.mocked(useCreateScore).mockReturnValue(
-    mockCreateScoreMutation() as UseMutationResult<
-      void,
-      Error,
-      ScoreAPIRequest,
-      unknown
-    >,
-  );
-}
-
 describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockFetcher.get.mockReset();
+    testQueryClient.clear();
   });
 
-  it('점수 데이터가 요약 영역과 히스토리 영역에 정상적으로 표시된다', () => {
+  it('점수 데이터가 요약 영역과 히스토리 영역에 정상적으로 표시된다', async () => {
     const scoreHistories: ScoreHistory[] = [
       {
         scoreCategory: CATEGORY.CLEANING.name,
@@ -96,15 +37,18 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
     ];
 
     const totalScore = scoreHistories.reduce((acc, cur) => acc + cur.amount, 0);
+    const initialData: ScoreDetail = { totalScore, scoreHistories };
 
-    setupScorePage({
-      initialData: { totalScore, scoreHistories },
-    });
+    mockFetcher.get.mockResolvedValue(initialData);
+
+    vi.mocked(useCreateScore).mockReturnValue({
+      mutate: vi.fn(),
+    } as unknown as ReturnType<typeof useCreateScore>);
 
     render(<ScoreClientPage id="1" />);
 
     expect(
-      screen.getByText(new RegExp(`총점\\s*:\\s*${totalScore}\\s*점`)),
+      await screen.findByText(new RegExp(`총점\\s*:\\s*${totalScore}\\s*점`)),
     ).toBeInTheDocument();
 
     expect(screen.getAllByText(CATEGORY.CLEANING.name).length).toBeGreaterThan(
@@ -147,12 +91,17 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
         (acc, cur) => acc + cur.amount,
         0,
       );
+      const initialData: ScoreDetail = { totalScore, scoreHistories };
 
-      setupScorePage({
-        initialData: { totalScore, scoreHistories },
-      });
+      mockFetcher.get.mockResolvedValue(initialData);
+
+      vi.mocked(useCreateScore).mockReturnValue({
+        mutate: vi.fn(),
+      } as unknown as ReturnType<typeof useCreateScore>);
 
       render(<ScoreClientPage id="1" />);
+
+      await screen.findByText(new RegExp(`총점\\s*:\\s*${totalScore}\\s*점`));
 
       const categoryElements = screen.getAllByText(name);
       await user.click(categoryElements[categoryElements.length - 1]);
