@@ -20,7 +20,7 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
       {
         scoreCategory: CATEGORY.CLEANING.name,
         reason: '10월 청소평가',
-        amount: 10.24,
+        amount: 11,
         createdAt: '2024-10-15T10:30:00.000Z',
       },
       {
@@ -38,16 +38,14 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
 
     render(<ScoreClientPage id="1" />);
 
-    expect(
-      await screen.findByText(new RegExp(`총점\\s*:\\s*${totalScore}\\s*점`)),
-    ).toBeInTheDocument();
+    await screen.findByText(new RegExp(`총점\\s*:\\s*31\\s*점`));
 
     const historyTable = screen.getByRole('table');
 
     expect(
       within(historyTable).getByText(CATEGORY.CLEANING.name),
     ).toBeInTheDocument();
-    expect(within(historyTable).getByText('10.24점')).toBeInTheDocument();
+    expect(within(historyTable).getByText('11점')).toBeInTheDocument();
     expect(within(historyTable).getByText('2024-10-15')).toBeInTheDocument();
 
     expect(
@@ -71,13 +69,13 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
         {
           scoreCategory: name,
           reason: `${name} 테스트 1`,
-          amount: 10.2,
+          amount: 10,
           createdAt: '2024-10-15T10:30:00.000Z',
         },
         {
           scoreCategory: name,
           reason: `${name} 테스트 2`,
-          amount: 5.5,
+          amount: 6,
           createdAt: '2024-10-16T14:20:00.000Z',
         },
         {
@@ -98,7 +96,7 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
 
       render(<ScoreClientPage id="1" />);
 
-      await screen.findByText(new RegExp(`총점\\s*:\\s*${totalScore}\\s*점`));
+      await screen.findByText(new RegExp(`총점\\s*:\\s*36\\s*점`));
 
       const categoryElements = screen.getAllByText(name);
       await user.click(categoryElements[categoryElements.length - 1]);

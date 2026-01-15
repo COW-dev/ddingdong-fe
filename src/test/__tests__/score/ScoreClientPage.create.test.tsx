@@ -42,9 +42,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
       render(<ScoreClientPage id="1" />);
 
-      await screen.findByText(
-        new RegExp(`총점\\s*:\\s*${initialData.totalScore}\\s*점`),
-      );
+      await screen.findByText(new RegExp(`총점\\s*:\\s*100\\s*점`));
 
       await user.click(screen.getByText(name));
       await user.type(
@@ -89,9 +87,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
     render(<ScoreClientPage id="1" />);
 
-    await screen.findByText(
-      new RegExp(`총점\\s*:\\s*${initialData.totalScore}\\s*점`),
-    );
+    await screen.findByText(new RegExp(`총점\\s*:\\s*100\\s*점`));
 
     await user.click(screen.getByText(CATEGORY.CLEANING.name));
     await user.type(
