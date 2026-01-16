@@ -47,22 +47,11 @@ export const mockFetcher = {
   patch: vi.fn(),
 };
 
-vi.mock('@/app/_api/fetcher', () => ({
-  fetcher: mockFetcher,
-}));
-
-export const mockUseSuspenseQuery = vi.fn(() => ({
-  data: undefined,
-  error: null,
-  isError: false,
-  status: 'success',
-}));
-
-vi.mock('@tanstack/react-query', async () => {
-  const actual = await vi.importActual('@tanstack/react-query');
+vi.mock('@/app/_api/fetcher', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/app/_api/fetcher')>();
   return {
     ...actual,
-    useSuspenseQuery: mockUseSuspenseQuery,
+    fetcher: mockFetcher,
   };
 });
 
