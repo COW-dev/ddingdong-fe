@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
-import { render } from '@/test/utils';
 import { myClubMock as mockClub } from './my-clubMock';
+
+import { render } from '@/test/utils';
+import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
 
 describe('ClubInfoForm 테스트', () => {
   const mockOnChange = vi.fn();
@@ -23,15 +23,9 @@ describe('ClubInfoForm 테스트', () => {
         onReset={mockOnReset}
       />,
     );
-    const texts = [
-      '김주장',
-      '010-1234-5678',
-      'S1234',
-      '2025.08.21~2025.09.04',
-    ];
-    texts.forEach((text: string) => {
+    const texts = ['김주장', '010-1234-5678', 'S1234', '2025.08.21~2025.09.04'];
+    texts.forEach((text) => {
       expect(screen.getByText(text)).toBeInTheDocument();
     });
   });
-
 });
