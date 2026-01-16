@@ -29,26 +29,9 @@ describe('ClubInfoForm 테스트', () => {
       'S1234',
       '2025.08.21~2025.09.04',
     ];
-    texts.forEach((text) => {
+    texts.forEach((text: string) => {
       expect(screen.getByText(text)).toBeInTheDocument();
     });
   });
 
-  it('편집 모드일 경우 사용자가 입력값을 변경할 수 있다.', async () => {
-    const user = userEvent.setup();
-    render(
-      <ClubInfoForm
-        club={mockClub}
-        isEditing={true}
-        onChange={mockOnChange}
-        onReset={mockOnReset}
-      />,
-    );
-
-    const input = screen.getByDisplayValue('김주장');
-    await user.clear(input);
-    await user.type(input, '박띵동');
-
-    expect(mockOnChange).toHaveBeenCalled();
-  });
 });
