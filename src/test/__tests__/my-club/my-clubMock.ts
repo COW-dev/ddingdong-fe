@@ -6,7 +6,7 @@ export const myClubMock: ClubDetail = {
   category: '체육',
   leader: '김주장',
   phoneNumber: '010-1234-5678',
-  location: 's1234',
+  location: 'S1234',
   regularMeeting: '2025.08.21~2025.09.04',
   introduction: '동아리 소개',
   activity: '동아리 활동',
