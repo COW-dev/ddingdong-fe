@@ -38,7 +38,7 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
 
     render(<ScoreClientPage id="1" />);
 
-    await screen.findByText(new RegExp(`총점\\s*:\\s*31\\s*점`));
+    await screen.findByText('총점 : 31점');
 
     const historyTable = screen.getByRole('table');
 
@@ -96,7 +96,7 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
 
       render(<ScoreClientPage id="1" />);
 
-      await screen.findByText(new RegExp(`총점\\s*:\\s*36\\s*점`));
+      await screen.findByText('총점 : 36점');
 
       const categoryElements = screen.getAllByText(name);
       await user.click(categoryElements[categoryElements.length - 1]);

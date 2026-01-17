@@ -43,7 +43,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
       render(<ScoreClientPage id="1" />);
 
-      await screen.findByText(new RegExp(`총점\\s*:\\s*100\\s*점`));
+      await screen.findByText('총점 : 100점');
 
       await user.click(screen.getByText(name));
       await user.type(
@@ -58,7 +58,6 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       mockFetcher.get.mockResolvedValueOnce(updatedData);
 
       await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
-
 
       const historyTable = await screen.findByRole('table');
       await within(historyTable).findByText(name);
@@ -91,7 +90,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
     render(<ScoreClientPage id="1" />);
 
-    await screen.findByText(new RegExp(`총점\\s*:\\s*100\\s*점`));
+    await screen.findByText('총점 : 100점');
 
     await user.click(screen.getByText(CATEGORY.CLEANING.name));
     await user.type(
@@ -103,14 +102,12 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       String(newScore),
     );
 
-
     mockFetcher.post.mockResolvedValueOnce({});
     mockFetcher.get.mockResolvedValueOnce(updatedData);
 
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
-  
-    await screen.findByText(new RegExp(`총점\\s*:\\s*110\\s*점`));
+    await screen.findByText('총점 : 110점');
   });
 
   it('점수 등록 API가 "존재하지 않는 카테고리" 에러를 반환하면 에러 토스트를 노출한다', async () => {
@@ -130,7 +127,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
     render(<ScoreClientPage id="1" />);
 
-    await screen.findByText(new RegExp(`총점\\s*:\\s*100\\s*점`));
+    await screen.findByText('총점 : 100점');
 
     await user.click(screen.getByText(CATEGORY.CLEANING.name));
     await user.type(
