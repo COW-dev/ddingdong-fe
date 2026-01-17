@@ -10,18 +10,19 @@ import { mockFetcher, mockToast } from '@/test/setup';
 import { render, testQueryClient } from '@/test/utils';
 
 describe('동아리 카테고리 별 점수 추가 테스트', () => {
+  let user: ReturnType<typeof userEvent.setup>;
+
   beforeEach(() => {
     vi.clearAllMocks();
     mockFetcher.get.mockReset();
     mockFetcher.post.mockReset();
     testQueryClient.clear();
+    user = userEvent.setup();
   });
 
   it.each(Object.entries(CATEGORY).map(([key, value]) => [key, value.name]))(
     '%s 카테고리 점수 추가 시 즉시 리스트에 반영된다',
     async (_key, name) => {
-      const user = userEvent.setup();
-
       const newHistory: ScoreHistory = {
         scoreCategory: name,
         reason: '테스트 사유',
@@ -66,8 +67,6 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
   );
 
   it('점수 추가 시 totalScore에 반영된다', async () => {
-    const user = userEvent.setup();
-
     const newScore = 10;
     const newHistory: ScoreHistory = {
       scoreCategory: CATEGORY.CLEANING.name,
@@ -111,8 +110,6 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
   });
 
   it('존재하지 않는 카테고리(ex.가나다)로 데이터를 보내면 존재하지 않는 카테고리입니다. 텍스트와 400에러를 반환한다.', async () => {
-    const user = userEvent.setup();
-
     const initialData: ScoreDetail = {
       totalScore: 100,
       scoreHistories: [],

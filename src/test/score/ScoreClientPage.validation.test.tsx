@@ -9,15 +9,16 @@ import { mockFetcher, mockToast } from '@/test/setup';
 import { render, testQueryClient } from '@/test/utils';
 
 describe('점수 추가 시 validation 테스트', () => {
+  let user: ReturnType<typeof userEvent.setup>;
+
   beforeEach(() => {
     vi.clearAllMocks();
     mockFetcher.get.mockReset();
     testQueryClient.clear();
+    user = userEvent.setup();
   });
 
   it('사유가 없으면 점수 추가가 되지 않는다', async () => {
-    const user = userEvent.setup();
-
     const initialData: ScoreDetail = {
       totalScore: 100,
       scoreHistories: [],
@@ -37,8 +38,6 @@ describe('점수 추가 시 validation 테스트', () => {
   });
 
   it('점수가 없으면 점수 추가가 되지 않는다', async () => {
-    const user = userEvent.setup();
-
     const initialData: ScoreDetail = {
       totalScore: 100,
       scoreHistories: [],
