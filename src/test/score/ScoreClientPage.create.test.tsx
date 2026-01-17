@@ -110,7 +110,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     await screen.findByText('총점 : 110점');
   });
 
-  it('점수 등록 API가 "존재하지 않는 카테고리" 에러를 반환하면 에러 토스트를 노출한다', async () => {
+  it('존재하지 않는 카테고리(ex.가나다)로 데이터를 보내면 존재하지 않는 카테고리입니다. 텍스트와 400에러를 반환한다.', async () => {
     const user = userEvent.setup();
 
     const initialData: ScoreDetail = {
