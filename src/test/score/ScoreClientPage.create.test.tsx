@@ -40,7 +40,6 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       };
 
       mockFetcher.get.mockResolvedValueOnce(initialData);
-      mockFetcher.get.mockResolvedValueOnce(updatedData);
 
       render(<ScoreClientPage id="1" />);
 
@@ -55,7 +54,11 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
         screen.getByPlaceholderText('점수를 입력해주세요.'),
         '10',
       );
+      mockFetcher.post.mockResolvedValueOnce({});
+      mockFetcher.get.mockResolvedValueOnce(updatedData);
+
       await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
+
 
       const historyTable = await screen.findByRole('table');
       await within(historyTable).findByText(name);
@@ -85,7 +88,6 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     };
 
     mockFetcher.get.mockResolvedValueOnce(initialData);
-    mockFetcher.get.mockResolvedValueOnce(updatedData);
 
     render(<ScoreClientPage id="1" />);
 
@@ -100,8 +102,14 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       screen.getByPlaceholderText('점수를 입력해주세요.'),
       String(newScore),
     );
+
+
+    mockFetcher.post.mockResolvedValueOnce({});
+    mockFetcher.get.mockResolvedValueOnce(updatedData);
+
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
+  
     await screen.findByText(new RegExp(`총점\\s*:\\s*110\\s*점`));
   });
 
