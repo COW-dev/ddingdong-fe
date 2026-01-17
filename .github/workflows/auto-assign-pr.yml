@@ -23,9 +23,14 @@ jobs:
               assignees: [author],
             });
 
-            await github.rest.pulls.requestReviewers({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: context.issue.number,
-              reviewers: ['keemsebin', 'JangYEhoon00'],
-            });
+            const reviewers = ['keemsebin', 'JangYEhoon00', 'ujinsim'];
+            const filteredReviewers = reviewers.filter(r => r !== author);
+
+            if (filteredReviewers.length > 0) {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: context.issue.number,
+                reviewers: filteredReviewers,
+              });
+            }
