@@ -2,8 +2,8 @@ import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { describe, it, expect } from 'vitest';
 
-import { render } from '@/test/utils';
 import { ClubDetailView } from '@/app/admin/my-club/_pages/ClubDetailClientPage';
+import { render } from '@/test/utils';
 
 import { myClubMock } from './my-clubMock';
 

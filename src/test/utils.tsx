@@ -22,7 +22,7 @@ const testQueryClient = createTestQueryClient();
 
 type AllTheProvidersProps = {
   children: ReactNode;
-}
+};
 
 function AllTheProviders({ children }: AllTheProvidersProps) {
   return (
