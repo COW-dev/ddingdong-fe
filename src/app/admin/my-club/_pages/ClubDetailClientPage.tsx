@@ -14,7 +14,9 @@ import {
 } from '../_containers/ClubContainer';
 import { useClubEdit } from '../_hooks/useClubEdit';
 
-export function ClubDetailView({ clubData }: { clubData: any }) {
+export function ClubDetailClientPage() {
+  const { data: clubData } = useSuspenseQuery(clubQueryOptions.my());
+
   const {
     club,
     setClub,
@@ -57,10 +59,4 @@ export function ClubDetailView({ clubData }: { clubData: any }) {
       />
     </ClubContainer>
   );
-}
-
-export default function ClubDetailClientPage() {
-  const { data: clubData } = useSuspenseQuery(clubQueryOptions.my());
-
-  return <ClubDetailView clubData={clubData} />;
 }
