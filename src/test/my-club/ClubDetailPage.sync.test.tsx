@@ -40,4 +40,24 @@ describe('ClubDetailClientPage 동기 테스트', () => {
       screen.getByRole('button', { name: '정보 수정하기' }),
     ).toBeInTheDocument();
   });
+
+  it('정보 수정에 실패하면 에러 토스트가 표시된다.', async () => {
+    const errorMessage = '동아리 정보 수정에 실패했습니다.';
+    mockFetcher.patch.mockRejectedValueOnce(new Error(errorMessage));
+
+    const user = userEvent.setup();
+    render(<ClubDetailView clubData={myClubMock} />);
+
+    await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
+
+    const tagInput = screen.getByDisplayValue('배드민턴');
+    await user.clear(tagInput);
+    await user.type(tagInput, '수정된 태그');
+
+    await user.click(screen.getByRole('button', { name: '확인' }));
+
+    await waitFor(() => {
+      expect(mockToast.error).toHaveBeenCalledWith(errorMessage);
+    });
+  });
 });
