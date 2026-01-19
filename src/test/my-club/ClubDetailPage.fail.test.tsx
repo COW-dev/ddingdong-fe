@@ -27,10 +27,8 @@ describe('실패 케이스', () => {
       />,
     );
 
-    expect(screen.queryByText(emptyClubData.leader)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(emptyClubData.regularMeeting),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText('김주장')).not.toBeInTheDocument();
+    expect(screen.queryByText('2025.08.21~2025.09.04')).not.toBeInTheDocument();
   });
 
   it('편집 모드가 아닐 때 input 필드는 렌더링되지 않는다.', () => {
