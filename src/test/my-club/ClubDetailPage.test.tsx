@@ -124,7 +124,7 @@ describe('ClubDetailClientPage 통합 테스트', () => {
     expect(inputs.length).toBeGreaterThan(0);
   });
 
-  it('정보 수정이 성공하면 토스트 메시지가 나타나고 편집 모드가 종료된다.', async () => {
+  it('동아리 회장 변경에 성공하면 토스트 메시지가 나타나고 편집 모드가 종료된다.', async () => {
     mockFetcher.get.mockResolvedValueOnce(myClubMock).mockResolvedValueOnce({
       ...myClubMock,
       leader: '새로운주장',
@@ -147,6 +147,7 @@ describe('ClubDetailClientPage 통합 테스트', () => {
       );
     });
 
+    expect(screen.getByText('새로운주장')).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: '정보 수정하기' }),
     ).toBeInTheDocument();
