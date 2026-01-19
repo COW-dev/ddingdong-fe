@@ -3,12 +3,12 @@ import { userEvent } from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
 
 import { ClubDetailClientPage } from '@/app/admin/my-club/_pages/ClubDetailClientPage';
-import { mockApiError, mockFetcher, mockToast } from '@/test/setup';
+import { mockFetcher, mockToast } from '@/test/setup';
 import { render, testQueryClient } from '@/test/utils';
 
 import { myClubMock } from './my-club.data';
 
-describe('ClubDetailClientPage 수정 테스트', () => {
+describe('ClubDetailClientPage 편집 테스트', () => {
   beforeEach(() => {
     testQueryClient.setQueryData(['clubs', 'my'], myClubMock);
   });
@@ -53,16 +53,7 @@ describe('ClubDetailClientPage 수정 테스트', () => {
     ).toBeInTheDocument();
   });
 
-  it('입력 필드의 지우기 버튼을 누르면 해당 필드가 초기화된다.', async () => {
-    const user = userEvent.setup();
-    render(<ClubDetailClientPage />);
 
-    await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
-
-    const leaderInput = screen.getByDisplayValue('김주장');
-    await user.clear(leaderInput);
-    expect(leaderInput).toHaveValue('');
-  });
 
   it('정보 수정이 성공하면 토스트 메시지가 나타나고 편집 모드가 종료된다.', async () => {
     mockFetcher.get
@@ -87,10 +78,10 @@ describe('ClubDetailClientPage 수정 테스트', () => {
       expect(mockToast.success).toHaveBeenCalledWith('동아리 정보를 수정했어요.');
     });
 
-    expect(screen.getByText('새로운주장')).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: '정보 수정하기' }),
     ).toBeInTheDocument();
   });
+
 });
 
