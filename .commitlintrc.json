@@ -1,0 +1,33 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "parserPreset": {
+    "parserOpts": {
+      "headerPattern": "^(?<type>.+):\\s(?<subject>.+)$",
+      "headerCorrespondence": ["type", "subject"]
+    }
+  },
+  "rules": {
+    "subject-empty": [2, "never"],
+    "subject-full-stop": [2, "never", "."],
+    "type-case": [0],
+    "type-empty": [2, "never"],
+    "type-enum": [
+      2,
+      "always",
+      [
+        "build",
+        "chore",
+        "ci",
+        "docs",
+        "feat",
+        "fix",
+        "hotfix",
+        "refactor",
+        "revert",
+        "style",
+        "test"
+      ]
+    ]
+  },
+  "helpUrl": "https://github.com/conventional-changelog/commitlint/#what-is-commitlint"
+}

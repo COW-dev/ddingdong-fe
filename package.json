@@ -9,10 +9,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "lint:fix": "next lint --fix"
+    "lint:fix": "next lint --fix",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^2.0.0",
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
     "@next/third-parties": "^15.5.0",
     "@sentry/nextjs": "^8.45.0",
     "@tanstack/react-query": "^5.71.1",
@@ -60,6 +63,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.7",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.9",
