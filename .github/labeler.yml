@@ -3,7 +3,6 @@ dependencies:
       - any-glob-to-any-file:
           - '**/package.json'
           - '**/package-lock.json'
-          - '**/yarn.lock'
 
 '⚛️ 프론트엔드':
   - changed-files:
