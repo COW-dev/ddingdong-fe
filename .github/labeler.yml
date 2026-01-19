@@ -26,7 +26,7 @@ dependencies:
           - 'infra/**/*'
 
 '✨ 기능':
-  - head-branch: ['^feat', 'feat', '^feature', 'feature']
+  - head-branch: ['^feat', 'feat']
 
 '🛠️ 버그':
   - head-branch: ['^fix', 'fix', '^bug', 'bug', '^hotfix', 'hotfix']
@@ -49,4 +49,4 @@ dependencies:
           - 'README.md'
 
 '🚨 긴급':
-  - head-branch: ['^emergency', '^urgent', '^hotfix']
+  - head-branch: ['^hotfix']
