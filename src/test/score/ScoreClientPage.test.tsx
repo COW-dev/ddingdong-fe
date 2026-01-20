@@ -206,10 +206,7 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
     async (categoryKey, { name }) => {
       const user = userEvent.setup();
 
-      const otherCategoryKey = Object.keys(CATEGORY).find(
-        (key) => key !== categoryKey,
-      )!;
-      const otherCategoryName = CATEGORY[otherCategoryKey].name;
+      const OTHER_CATEGORY_NAME = '다른 카테고리';
 
       const scoreHistories: ScoreHistory[] = [
         {
@@ -225,8 +222,8 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
           createdAt: '2024-10-16T14:20:00.000Z',
         },
         {
-          scoreCategory: otherCategoryName,
-          reason: `${otherCategoryName} 다른 데이터`,
+          scoreCategory: OTHER_CATEGORY_NAME,
+          reason: `${OTHER_CATEGORY_NAME} 데이터`,
           amount: 20,
           createdAt: '2024-10-17T09:15:00.000Z',
         },
@@ -251,7 +248,7 @@ describe('동아리 점수 추가 시 상세 내역 동기화 테스트', () => 
       expect(screen.getByText(`${name} 테스트 1`)).toBeInTheDocument();
       expect(screen.getByText(`${name} 테스트 2`)).toBeInTheDocument();
       expect(
-        screen.queryByText(`${otherCategoryName} 다른 데이터`),
+        screen.queryByText(`다른 카테고리 데이터`),
       ).not.toBeInTheDocument();
     },
   );
