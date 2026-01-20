@@ -29,7 +29,7 @@ dependencies:
   - head-branch: ['^feat', 'feat']
 
 '🛠️ 버그':
-  - head-branch: ['^fix', 'fix', '^bug', 'bug', '^hotfix', 'hotfix']
+  - head-branch: ['^fix', 'fix', '^hotfix', 'hotfix']
 
 '🛠️ 리팩토링':
   - head-branch: ['^refactor', 'refactor']
