@@ -1,0 +1,12 @@
+addAssignees: author
+
+skipKeywords:
+  - wip
+  - draft
+
+reviewers:
+  - keemsebin
+  - JangYEhoon00
+  - ujinsim
+
+numberOfReviewers: 2
