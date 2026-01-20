@@ -142,6 +142,7 @@ describe('ClubDetailClientPage 통합 테스트', () => {
     await user.click(screen.getByRole('button', { name: '확인' }));
 
     await waitFor(() => {
+      expect(mockFetcher.patch).toHaveBeenCalled();
       expect(mockToast.success).toHaveBeenCalledWith(
         '동아리 정보를 수정했어요.',
       );
