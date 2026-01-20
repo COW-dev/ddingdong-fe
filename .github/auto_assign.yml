@@ -1,4 +1,5 @@
 addAssignees: author
+addReviewers: true
 
 skipKeywords:
   - wip
