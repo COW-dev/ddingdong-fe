@@ -1,4 +1,11 @@
-npx --no -- commitlint --edit ${1} || {
+#!/bin/sh
+
+if ! command -v npx >/dev/null 2>&1; then
+  echo "❌ npx 를 찾을 수 없습니다. Node/npm PATH를 확인해주세요."
+  exit 1
+fi
+
+npx --no -- commitlint --edit "$1" || {
   echo ""
   echo "❌ 커밋 메시지 형식이 올바르지 않습니다."
   echo ""
