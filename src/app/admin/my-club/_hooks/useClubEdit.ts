@@ -9,7 +9,7 @@ export const useClubEdit = (initialData: ClubDetail) => {
   const [club, setClub] = useState<ClubDetail>(initialData);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const { mutateAsync: updateClub } = useUpdateClub();
+  const { mutate: updateClub } = useUpdateClub();
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
