@@ -2,15 +2,14 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
+import { ApiError } from '@/app/_api/fetcher';
 import { ClubDetail } from '@/app/_api/types/club';
 import { ClubInfoForm } from '@/app/admin/my-club/_components/ClubInfoForm';
 import { ClubDetailClientPage } from '@/app/admin/my-club/_pages/ClubDetailClientPage';
-import { render, testQueryClient } from '@/test/utils';
 import { mockFetcher, mockToast } from '@/test/setup';
-import { ApiError } from '@/app/_api/fetcher';
+import { render, testQueryClient } from '@/test/utils';
 
 import { myClubMock } from './my-club.data';
-
 
 describe('실패 케이스', () => {
   const mockOnChange = vi.fn();
@@ -130,14 +129,14 @@ describe('실패 케이스', () => {
     const submitButton = screen.getByRole('button', { name: '확인' });
     await user.click(submitButton);
 
-    await waitFor(
-      () => {
-        expect(mockFetcher.patch).toHaveBeenCalled();
-        expect(mockToast.error).toHaveBeenCalledWith(errorMessage);
-      }
-    );
+    await waitFor(() => {
+      expect(mockFetcher.patch).toHaveBeenCalled();
+      expect(mockToast.error).toHaveBeenCalledWith(errorMessage);
+    });
 
     expect(screen.getByRole('button', { name: '취소' })).toBeInTheDocument();
-    expect(screen.queryByRole('button', { name: '정보 수정하기' })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: '정보 수정하기' }),
+    ).not.toBeInTheDocument();
   });
 });
