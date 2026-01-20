@@ -41,10 +41,14 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       };
 
       mockFetcher.get.mockResolvedValueOnce(initialData);
+      mockFetcher.post.mockResolvedValueOnce({
+        success: true,
+      });
+      mockFetcher.get.mockResolvedValueOnce(updatedData);
 
       render(<ScoreClientPage id="1" />);
 
-      await screen.findByText('총점 : 100점');
+      await screen.findByRole('table');
 
       await user.click(screen.getByText(name));
       await user.type(
@@ -55,17 +59,18 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
         screen.getByPlaceholderText('점수를 입력해주세요.'),
         '10',
       );
-      mockFetcher.post.mockResolvedValueOnce({});
-      mockFetcher.get.mockResolvedValueOnce(updatedData);
 
       await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
+      await waitFor(() => {
+        expect(mockToast.success).toHaveBeenCalledWith('점수를 추가했어요.');
+      });
+
       const historyTable = await screen.findByRole('table');
-      await within(historyTable).findByText(name);
-      expect(within(historyTable).getByText(/10\s*점/)).toBeInTheDocument();
+      expect(await within(historyTable).findByText(name)).toBeInTheDocument();
+      expect(within(historyTable).getByText('10점')).toBeInTheDocument();
     },
   );
-
   it('점수 추가 시 totalScore에 반영된다', async () => {
     const newScore = 10;
     const newHistory: ScoreHistory = {
@@ -86,10 +91,14 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     };
 
     mockFetcher.get.mockResolvedValueOnce(initialData);
+    mockFetcher.post.mockResolvedValueOnce({
+      success: true,
+    });
+    mockFetcher.get.mockResolvedValueOnce(updatedData);
 
     render(<ScoreClientPage id="1" />);
 
-    await screen.findByText('총점 : 100점');
+    await screen.findByRole('table');
 
     await user.click(screen.getByText(CATEGORY.CLEANING.name));
     await user.type(
@@ -101,10 +110,11 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       String(newScore),
     );
 
-    mockFetcher.post.mockResolvedValueOnce({});
-    mockFetcher.get.mockResolvedValueOnce(updatedData);
-
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
+
+    await waitFor(() => {
+      expect(mockToast.success).toHaveBeenCalledWith('점수를 추가했어요.');
+    });
 
     await screen.findByText('총점 : 110점');
   });
@@ -115,16 +125,18 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       scoreHistories: [],
     };
 
-    const errorMessage = '존재하지 않는 카테고리입니다.';
-    const apiError = new ApiError(400, errorMessage, new Date().toISOString());
+    const apiError = new ApiError(
+      400,
+      '존재하지 않는 카테고리입니다.',
+      new Date().toISOString(),
+    );
 
     mockFetcher.get.mockResolvedValueOnce(initialData);
-
     mockFetcher.post.mockRejectedValueOnce(apiError);
 
     render(<ScoreClientPage id="1" />);
 
-    await screen.findByText('총점 : 100점');
+    await screen.findByRole('table');
 
     await user.click(screen.getByText(CATEGORY.CLEANING.name));
     await user.type(
@@ -135,7 +147,9 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     await user.click(screen.getByRole('button', { name: /점수 추가하기/ }));
 
     await waitFor(() => {
-      expect(mockToast.error).toHaveBeenCalledWith(errorMessage);
+      expect(mockToast.error).toHaveBeenCalledWith(
+        '존재하지 않는 카테고리입니다.',
+      );
     });
   });
 });
