@@ -1,0 +1,52 @@
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/package.json'
+          - '**/package-lock.json'
+
+'⚛️ 프론트엔드':
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'src/**/*'
+          - 'components.json'
+          - 'next.config.js'
+          - 'tailwind.config.ts'
+          - 'tsconfig.json'
+          - 'postcss.config.js'
+          - '*.d.ts'
+
+'🌍 인프라':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '.github/workflows/**/*'
+          - '.github/ISSUE_TEMPLATE/**/*'
+          - '.github/pull_request_template.md'
+          - '.github/labeler.yml'
+          - 'docker/**/*'
+          - 'infra/**/*'
+
+'✨ 기능':
+  - head-branch: ['^feat', 'feat']
+
+'🛠️ 버그':
+  - head-branch: ['^fix', 'fix', '^hotfix', 'hotfix']
+
+'🛠️ 리팩토링':
+  - head-branch: ['^refactor', 'refactor']
+
+'💯 테스트':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/test/**/*'
+          - '**/*.test.js'
+          - '**/*.test.ts'
+
+'📖 문서':
+  - changed-files:
+      - any-glob-to-any-file:
+          - '**/*.md'
+          - 'docs/**/*'
+          - 'README.md'
+
+'🚨 긴급':
+  - head-branch: ['^hotfix']

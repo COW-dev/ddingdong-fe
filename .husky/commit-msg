@@ -1,0 +1,30 @@
+#!/bin/sh
+
+if ! command -v npx >/dev/null 2>&1; then
+  echo "❌ npx 를 찾을 수 없습니다. Node/npm PATH를 확인해주세요."
+  exit 1
+fi
+
+npx --no -- commitlint --edit "$1" || {
+  echo ""
+  echo "❌ 커밋 메시지 형식이 올바르지 않습니다."
+  echo ""
+  echo "📝 올바른 형식: <type>: <subject>"
+  echo ""
+  echo "✅ 사용 가능한 타입:"
+  echo "   - feat: 새로운 기능 추가"
+  echo "   - fix: 버그 수정"
+  echo "   - docs: 문서 변경"
+  echo "   - style: 스타일링 수정"
+  echo "   - refactor: 리팩토링"
+  echo "   - test: 테스트 코드, 리팩토링 테스트 코드 추가"
+  echo "   - chore: 패키지 매니저 수정, 그 외 기타 수정 (예: .gitignore)"
+  echo "   - hotfix: 급하게 치명적인 버그를 고쳐야 하는 경우"
+  echo ""
+  echo "💡 예시:"
+  echo "   ✓ feat: 사용자 로그인 기능 추가"
+  echo "   ✓ fix: 로그인 버그 수정"
+  echo "   ✓ docs: README 업데이트"
+  echo ""
+  exit 1
+}
