@@ -21,6 +21,7 @@ describe('ClubDetailClientPage 통합 테스트', () => {
 
   afterEach(() => {
     testQueryClient.clear();
+    vi.clearAllMocks();
   });
   it('렌더링을 하면 동아리에 대한 정보를 표시한다.', () => {
     render(
