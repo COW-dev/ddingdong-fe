@@ -31,7 +31,12 @@ describe('ClubDetailClientPage 통합 테스트', () => {
         onReset={mockOnReset}
       />,
     );
-    const texts = ['김주장', '010-1234-5678', 'S1234', '2025.08.21~2025.09.04'];
+    const texts = [
+      myClubMock.leader,
+      myClubMock.phoneNumber,
+      myClubMock.location,
+      myClubMock.regularMeeting,
+    ];
     texts.forEach((text) => {
       expect(screen.getByText(text)).toBeInTheDocument();
     });
@@ -44,10 +49,10 @@ describe('ClubDetailClientPage 통합 테스트', () => {
     const editButton = screen.getByRole('button', { name: '정보 수정하기' });
     await user.click(editButton);
 
-    const tagInput = screen.getByDisplayValue('배드민턴');
+    const tagInput = screen.getByDisplayValue(myClubMock.tag);
     expect(tagInput).toBeInTheDocument();
 
-    const leaderInput = screen.getByDisplayValue('김주장');
+    const leaderInput = screen.getByDisplayValue(myClubMock.leader);
     expect(leaderInput).toBeInTheDocument();
 
     expect(screen.getByRole('button', { name: '취소' })).toBeInTheDocument();
@@ -66,11 +71,11 @@ describe('ClubDetailClientPage 통합 테스트', () => {
     );
 
     const inputs = [
-      { placeholder: '김주장', newValue: '테스트' },
-      { placeholder: '010-1234-5678', newValue: '010-9999-9999' },
-      { placeholder: 'S1234', newValue: 'S5678' },
+      { placeholder: myClubMock.leader, newValue: '테스트' },
+      { placeholder: myClubMock.phoneNumber, newValue: '010-9999-9999' },
+      { placeholder: myClubMock.location, newValue: 'S5678' },
       {
-        placeholder: '2025.08.21~2025.09.04',
+        placeholder: myClubMock.regularMeeting,
         newValue: '2025.09.01~2025.09.30',
       },
     ];
@@ -90,14 +95,14 @@ describe('ClubDetailClientPage 통합 테스트', () => {
 
     await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
 
-    const leaderInput = screen.getByDisplayValue('김주장');
+    const leaderInput = screen.getByDisplayValue(myClubMock.leader);
     await user.clear(leaderInput);
     await user.type(leaderInput, '새로운주장');
     expect(leaderInput).toHaveValue('새로운주장');
 
     await user.click(screen.getByRole('button', { name: '취소' }));
 
-    expect(screen.getByText('김주장')).toBeInTheDocument();
+    expect(screen.getByText(myClubMock.leader)).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: '정보 수정하기' }),
     ).toBeInTheDocument();
@@ -132,7 +137,7 @@ describe('ClubDetailClientPage 통합 테스트', () => {
 
     await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
 
-    const leaderInput = screen.getByDisplayValue('김주장');
+    const leaderInput = screen.getByDisplayValue(myClubMock.leader);
     await user.clear(leaderInput);
     await user.type(leaderInput, '새로운주장');
 
@@ -162,6 +167,7 @@ describe('실패 케이스', () => {
 
   afterEach(() => {
     testQueryClient.clear();
+    vi.clearAllMocks();
   });
 
   it('빈 문자열로 데이터를 전달하면 텍스트는 표시되지 않는다.', () => {
@@ -180,8 +186,10 @@ describe('실패 케이스', () => {
       />,
     );
 
-    expect(screen.queryByText('김주장')).not.toBeInTheDocument();
-    expect(screen.queryByText('2025.08.21~2025.09.04')).not.toBeInTheDocument();
+    expect(screen.queryByText(myClubMock.leader)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(myClubMock.regularMeeting),
+    ).not.toBeInTheDocument();
   });
 
   it('편집 모드가 아닐 때 input 필드는 보이지 않고 텍스트로만 정보가 표시된다.', () => {
@@ -194,14 +202,25 @@ describe('실패 케이스', () => {
       />,
     );
 
-    expect(screen.queryByDisplayValue('김주장')).not.toBeInTheDocument();
-    expect(screen.queryByDisplayValue('010-1234-5678')).not.toBeInTheDocument();
-    expect(screen.queryByDisplayValue('S1234')).not.toBeInTheDocument();
     expect(
-      screen.queryByDisplayValue('2025.08.21~2025.09.04'),
+      screen.queryByDisplayValue(myClubMock.leader),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByDisplayValue(myClubMock.phoneNumber),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByDisplayValue(myClubMock.location),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByDisplayValue(myClubMock.regularMeeting),
     ).not.toBeInTheDocument();
 
-    const texts = ['김주장', '010-1234-5678', 'S1234', '2025.08.21~2025.09.04'];
+    const texts = [
+      myClubMock.leader,
+      myClubMock.phoneNumber,
+      myClubMock.location,
+      myClubMock.regularMeeting,
+    ];
 
     texts.forEach((text) => {
       const element = screen.getByText(text);
@@ -239,10 +258,10 @@ describe('실패 케이스', () => {
       />,
     );
 
-    expect(screen.queryByText('김주장')).not.toBeInTheDocument();
-    expect(screen.queryByText('S1234')).not.toBeInTheDocument();
-    expect(screen.getByText('010-1234-5678')).toBeInTheDocument();
-    expect(screen.getByText('2025.08.21~2025.09.04')).toBeInTheDocument();
+    expect(screen.queryByText(myClubMock.leader)).not.toBeInTheDocument();
+    expect(screen.queryByText(myClubMock.location)).not.toBeInTheDocument();
+    expect(screen.getByText(myClubMock.phoneNumber)).toBeInTheDocument();
+    expect(screen.getByText(myClubMock.regularMeeting)).toBeInTheDocument();
   });
 
   it('편집 모드에서 값을 변경하고 확인을 누르면 변경된 값이 유지된다.', async () => {
@@ -251,14 +270,14 @@ describe('실패 케이스', () => {
 
     await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
 
-    const leaderInput = screen.getByDisplayValue('김주장');
+    const leaderInput = screen.getByDisplayValue(myClubMock.leader);
     await user.clear(leaderInput);
     await user.type(leaderInput, '새로운주장');
     expect(leaderInput).toHaveValue('새로운주장');
 
     await user.click(screen.getByRole('button', { name: '취소' }));
 
-    expect(screen.getByText('김주장')).toBeInTheDocument();
+    expect(screen.getByText(myClubMock.leader)).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: '정보 수정하기' }),
     ).toBeInTheDocument();
@@ -276,7 +295,7 @@ describe('실패 케이스', () => {
 
     await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
 
-    const leaderInput = screen.getByDisplayValue('김주장');
+    const leaderInput = screen.getByDisplayValue(myClubMock.leader);
     await user.clear(leaderInput);
     await user.type(leaderInput, '새로운주장');
 
