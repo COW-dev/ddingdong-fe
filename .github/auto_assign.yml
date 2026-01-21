@@ -1,0 +1,13 @@
+addAssignees: author
+addReviewers: true
+
+skipKeywords:
+  - wip
+  - draft
+
+reviewers:
+  - keemsebin
+  - JangYEhoon00
+  - ujinsim
+
+numberOfReviewers: 3
