@@ -103,7 +103,7 @@ describe('ClubDetailClientPage 통합 테스트', () => {
     ).toBeInTheDocument();
   });
 
-  it('편집 모드일 경우 TEXTAREA 태그 대신 INPUT 태그가 존재한다.', () => {
+  it('편집 모드일 경우 값을 입력할 수 있는 INPUT 태그가 존재한다.', () => {
     render(
       <ClubInfoForm
         club={myClubMock}
@@ -117,11 +117,6 @@ describe('ClubDetailClientPage 통합 테스트', () => {
     inputs.forEach((input) => {
       expect(input.tagName).toBe('INPUT');
     });
-
-    const textareas = screen
-      .queryAllByRole('textbox')
-      .filter((element) => element.tagName === 'TEXTAREA');
-    expect(textareas).toHaveLength(0);
 
     expect(inputs.length).toBeGreaterThan(0);
   });
@@ -189,7 +184,7 @@ describe('실패 케이스', () => {
     expect(screen.queryByText('2025.08.21~2025.09.04')).not.toBeInTheDocument();
   });
 
-  it('편집 모드가 아닐 때 input 필드는 렌더링되지 않는다.', () => {
+  it('편집 모드가 아닐 때 input 필드는 보이지 않고 텍스트로만 정보가 표시된다.', () => {
     render(
       <ClubInfoForm
         club={myClubMock}
@@ -199,7 +194,20 @@ describe('실패 케이스', () => {
       />,
     );
 
-    expect(screen.queryAllByRole('textbox')).toHaveLength(0);
+    expect(screen.queryByDisplayValue('김주장')).not.toBeInTheDocument();
+    expect(screen.queryByDisplayValue('010-1234-5678')).not.toBeInTheDocument();
+    expect(screen.queryByDisplayValue('S1234')).not.toBeInTheDocument();
+    expect(
+      screen.queryByDisplayValue('2025.08.21~2025.09.04'),
+    ).not.toBeInTheDocument();
+
+    const texts = ['김주장', '010-1234-5678', 'S1234', '2025.08.21~2025.09.04'];
+
+    texts.forEach((text) => {
+      const element = screen.getByText(text);
+      expect(element).toBeInTheDocument();
+      expect(element.tagName).toBe('DIV');
+    });
   });
 
   it('편집 모드가 아닐 때 사용자는 입력이 불가능하다.', () => {
