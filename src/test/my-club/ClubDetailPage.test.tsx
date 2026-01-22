@@ -190,12 +190,16 @@ describe('ClubDetailClientPage 통합테스트', () => {
 
     const tagInput = screen.getByDisplayValue(myClubMock.tag);
     expect(tagInput).toBeInTheDocument();
+    expect(tagInput.tagName).toBe('INPUT');
+    expect(tagInput).toBeEnabled();
 
     const leaderInput = screen.getByDisplayValue(myClubMock.leader);
     expect(leaderInput).toBeInTheDocument();
+    expect(leaderInput.tagName).toBe('INPUT');
+    expect(leaderInput).toBeEnabled();
 
-    expect(screen.getByRole('button', { name: '취소' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: '확인' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '취소' })).toBeEnabled();
+    expect(screen.getByRole('button', { name: '확인' })).toBeEnabled();
   });
 
   it('편집 모드에서 취소를 누르면 변경 사항이 초기화되고 읽기 모드로 돌아간다.', async () => {
