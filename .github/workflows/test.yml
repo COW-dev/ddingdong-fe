@@ -1,28 +1,37 @@
-name: Test
+name: Test Workflow
 
 on:
   push:
-    branches: [test, tests/**]
+    branches: [main, test, tests/**]
   pull_request:
-    branches: [test]
+    branches: [main, test]
 
 jobs:
   test:
-    name: Run Tests
+    name: Run Vitest
     runs-on: ubuntu-latest
-    timeout-minutes: 10
 
     permissions:
       contents: read
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: npm
 
       - run: npm ci
+      - run: npx vitest run --reporter=verbose --reporter=junit --outputFile=vitest-report.xml
 
-      - run: npm test
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-report
+          path: vitest-report.xml
+
+      - if: always() && github.event_name == 'pull_request'
+        uses: test-summary/action@v2
+        with:
+          paths: vitest-report.xml
