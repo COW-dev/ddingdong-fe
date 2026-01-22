@@ -40,12 +40,14 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
         scoreHistories: [newHistory],
       };
 
-      mockFetcher.get.mockResolvedValueOnce(initialData);
-      mockFetcher.post.mockResolvedValueOnce({
-        success: true,
-      });
-      mockFetcher.get.mockResolvedValueOnce(updatedData);
+      let currentData = initialData;
 
+      mockFetcher.get.mockImplementation(async () => currentData);
+
+      mockFetcher.post.mockImplementation(async () => {
+        currentData = updatedData;
+        return { success: true };
+      });
       render(<ScoreClientPage id="1" />);
 
       await screen.findByRole('table');
@@ -90,12 +92,14 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       scoreHistories: [newHistory],
     };
 
-    mockFetcher.get.mockResolvedValueOnce(initialData);
-    mockFetcher.post.mockResolvedValueOnce({
-      success: true,
-    });
-    mockFetcher.get.mockResolvedValueOnce(updatedData);
+    let currentData = initialData;
 
+    mockFetcher.get.mockImplementation(async () => currentData);
+
+    mockFetcher.post.mockImplementation(async () => {
+      currentData = updatedData;
+      return { success: true };
+    });
     render(<ScoreClientPage id="1" />);
 
     await screen.findByRole('table');
@@ -131,8 +135,12 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
       new Date().toISOString(),
     );
 
-    mockFetcher.get.mockResolvedValueOnce(initialData);
-    mockFetcher.post.mockRejectedValueOnce(apiError);
+    const currentData = initialData;
+
+    mockFetcher.get.mockImplementation(async () => currentData);
+    mockFetcher.post.mockImplementation(async () => {
+      throw apiError;
+    });
 
     render(<ScoreClientPage id="1" />);
 
