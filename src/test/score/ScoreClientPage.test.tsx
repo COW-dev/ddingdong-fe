@@ -138,9 +138,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     const currentData = initialData;
 
     mockFetcher.get.mockImplementation(async () => currentData);
-    mockFetcher.post.mockImplementation(async () => {
-      throw apiError;
-    });
+    mockFetcher.post.mockRejectedValueOnce(apiError);
 
     render(<ScoreClientPage id="1" />);
 
