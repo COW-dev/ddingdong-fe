@@ -250,7 +250,7 @@ describe('ClubDetailClientPage 통합테스트', () => {
   });
 
   describe('예외 케이스', () => {
-    it('필수 정보(회장, 정기모임)가 비어있을 경우 수정되지 않고 토스트 메시지가 표시된다.', async () => {
+    it('필수 정보 회장이 비어있을 경우 수정되지 않고 토스트 메시지가 표시된다.', async () => {
       const user = userEvent.setup();
       render(<ClubDetailClientPage />);
 
@@ -258,9 +258,6 @@ describe('ClubDetailClientPage 통합테스트', () => {
 
       const leaderInput = screen.getByDisplayValue(myClubMock.leader);
       await user.clear(leaderInput);
-
-      const meetingInput = screen.getByDisplayValue(myClubMock.regularMeeting);
-      await user.clear(meetingInput);
 
       await user.click(screen.getByRole('button', { name: '확인' }));
 
