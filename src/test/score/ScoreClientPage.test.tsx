@@ -313,3 +313,67 @@ describe('점수 추가 시 validation 테스트', () => {
     expect(mockToast.error).toHaveBeenCalledWith('점수를 입력해주세요.');
   });
 });
+
+describe('ScoreClientPage id에 따른 UI 렌더링 테스트', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockFetcher.get.mockReset();
+    testQueryClient.clear();
+  });
+
+  it('id가 있을 때 어드민 UI가 렌더링된다', async () => {
+    const initialData: ScoreDetail = {
+      totalScore: 100,
+      scoreHistories: [],
+    };
+
+    mockFetcher.get.mockImplementation(async (url: string) => {
+      expect(url).toBe('admin/1/score');
+      return initialData;
+    });
+
+    render(<ScoreClientPage id="1" />);
+
+    await screen.findByRole('table');
+
+    expect(screen.getByText('동아리 점수 관리하기')).toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await user.click(screen.getByText(CATEGORY.CLEANING.name));
+
+    expect(
+      screen.getByPlaceholderText('사유를 입력해주세요.'),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('점수를 입력해주세요.'),
+    ).toBeInTheDocument();
+  });
+
+  it('id가 없을 때 총동아리연합회 UI가 렌더링된다', async () => {
+    const initialData: ScoreDetail = {
+      totalScore: 100,
+      scoreHistories: [],
+    };
+
+    mockFetcher.get.mockImplementation(async (url: string) => {
+      expect(url).toBe('central/my/score');
+      return initialData;
+    });
+
+    render(<ScoreClientPage />);
+
+    await screen.findByRole('table');
+
+    expect(screen.getByText('동아리 점수 확인하기')).toBeInTheDocument();
+
+    const user = userEvent.setup();
+    await user.click(screen.getByText(CATEGORY.CLEANING.name));
+
+    expect(
+      screen.queryByPlaceholderText('사유를 입력해주세요.'),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByPlaceholderText('점수를 입력해주세요.'),
+    ).not.toBeInTheDocument();
+  });
+});
