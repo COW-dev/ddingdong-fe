@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
 import { ApiError } from '@/app/_api/fetcher';
@@ -147,19 +147,6 @@ describe('ClubInfoForm Tests', () => {
       });
     });
 
-    it('편집 모드가 아닐 때 사용자는 입력이 불가능하다.', () => {
-      render(
-        <ClubInfoForm
-          club={myClubMock}
-          isEditing={false}
-          onChange={mockOnChange}
-          onReset={mockOnReset}
-        />,
-      );
-
-      expect(mockOnChange).not.toHaveBeenCalled();
-    });
-
     it('일부 필드만 빈 값일 경우 나머지 필드는 정상적으로 표시된다.', () => {
       const partialEmptyClubData: ClubDetail = {
         ...myClubMock,
@@ -231,7 +218,9 @@ describe('ClubDetailClientPage 통합테스트', () => {
   });
 
   it('동아리 회장 변경에 성공하면 토스트 메시지가 나타나고 편집 모드가 종료된다.', async () => {
-    mockFetcher.get.mockResolvedValueOnce(myClubMock).mockResolvedValueOnce({
+    mockFetcher.get.mockResolvedValueOnce(myClubMock);
+
+    mockFetcher.patch.mockResolvedValueOnce({
       ...myClubMock,
       leader: '새로운주장',
     });
@@ -248,7 +237,7 @@ describe('ClubDetailClientPage 통합테스트', () => {
     await user.click(screen.getByRole('button', { name: '확인' }));
 
     await waitFor(() => {
-      expect(mockFetcher.patch).toHaveBeenCalled();
+      expect(mockFetcher.patch).toHaveBeenCalledTimes(1);
       expect(mockToast.success).toHaveBeenCalledWith(
         '동아리 정보를 수정했어요.',
       );
@@ -261,6 +250,26 @@ describe('ClubDetailClientPage 통합테스트', () => {
   });
 
   describe('예외 케이스', () => {
+    it('필수 정보(회장, 정기모임)가 비어있을 경우 수정되지 않고 토스트 메시지가 표시된다.', async () => {
+      const user = userEvent.setup();
+      render(<ClubDetailClientPage />);
+
+      await user.click(screen.getByRole('button', { name: '정보 수정하기' }));
+
+      const leaderInput = screen.getByDisplayValue(myClubMock.leader);
+      await user.clear(leaderInput);
+
+      const meetingInput = screen.getByDisplayValue(myClubMock.regularMeeting);
+      await user.clear(meetingInput);
+
+      await user.click(screen.getByRole('button', { name: '확인' }));
+
+      expect(mockFetcher.patch).not.toHaveBeenCalled();
+      expect(mockToast.error).toHaveBeenCalledWith(
+        '동아리 회장을 입력해주세요.',
+      );
+    });
+
     it('동아리 정보 수정에 실패하면 에러 메시지가 토스트로 표시된다.', async () => {
       const user = userEvent.setup();
       const errorMessage = '동아리 정보 수정에 실패했습니다.';
