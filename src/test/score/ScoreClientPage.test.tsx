@@ -132,7 +132,7 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
     const apiError = new ApiError(
       400,
       '존재하지 않는 카테고리입니다.',
-      new Date().toISOString(),
+      '2024-10-17T09:15:00.000Z',
     );
 
     const currentData = initialData;
