@@ -62,6 +62,8 @@ describe('ClubInfoForm Tests', () => {
 
     for (const { currentValue, newValue } of inputs) {
       const input = screen.getByDisplayValue(currentValue);
+      expect(input.tagName).toBe('INPUT');
+      expect(input.tagName).not.toBe('TEXTAREA');
       await user.clear(input);
       await user.type(input, newValue);
       expect(mockOnChange).toHaveBeenCalled();
