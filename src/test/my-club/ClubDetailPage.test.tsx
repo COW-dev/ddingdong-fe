@@ -278,7 +278,6 @@ describe('ClubDetailClientPage 통합테스트', () => {
     it('동아리 정보 수정에 실패하면 에러 메시지가 토스트로 표시된다.', async () => {
       const user = userEvent.setup();
       const errorMessage = '동아리 정보 수정에 실패했습니다.';
-
       const apiError = new ApiError(
         400,
         errorMessage,
