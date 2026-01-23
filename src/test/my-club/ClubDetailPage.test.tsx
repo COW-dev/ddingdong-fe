@@ -188,15 +188,19 @@ describe('ClubDetailClientPage 통합테스트', () => {
     const editButton = screen.getByRole('button', { name: '정보 수정하기' });
     await user.click(editButton);
 
-    const tagInput = screen.getByDisplayValue(myClubMock.tag);
-    expect(tagInput).toBeInTheDocument();
-    expect(tagInput.tagName).toBe('INPUT');
-    expect(tagInput).toBeEnabled();
+    const inputs = [
+      myClubMock.leader,
+      myClubMock.phoneNumber,
+      myClubMock.location,
+      myClubMock.regularMeeting,
+    ];
 
-    const leaderInput = screen.getByDisplayValue(myClubMock.leader);
-    expect(leaderInput).toBeInTheDocument();
-    expect(leaderInput.tagName).toBe('INPUT');
-    expect(leaderInput).toBeEnabled();
+    inputs.forEach((value) => {
+      const input = screen.getByDisplayValue(value);
+      expect(input).toBeInTheDocument();
+      expect(input.tagName).toBe('INPUT');
+      expect(input).toBeEnabled();
+    });
 
     expect(screen.getByRole('button', { name: '취소' })).toBeEnabled();
     expect(screen.getByRole('button', { name: '확인' })).toBeEnabled();
