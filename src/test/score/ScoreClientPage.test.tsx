@@ -46,8 +46,9 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
       mockFetcher.post.mockImplementation(async () => {
         currentData = updatedData;
-        return { success: true };
+        return updatedData;
       });
+
       render(<ScoreClientPage id="1" />);
 
       await screen.findByRole('table');
@@ -98,8 +99,9 @@ describe('동아리 카테고리 별 점수 추가 테스트', () => {
 
     mockFetcher.post.mockImplementation(async () => {
       currentData = updatedData;
-      return { success: true };
+      return updatedData;
     });
+
     render(<ScoreClientPage id="1" />);
 
     await screen.findByRole('table');
