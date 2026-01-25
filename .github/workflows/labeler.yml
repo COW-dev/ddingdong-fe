@@ -26,7 +26,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           disable-bot: true
-          config-file-name: labeler-config.yml
+          config-file-name: .github/labeler-config.yml
 
   add_assignees:
     runs-on: ubuntu-latest
