@@ -7,48 +7,48 @@ filters:
 
   - label: fix
     regexs:
-      - /^fix\b/
+      - /^fix:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: hotfix
     regexs:
-      - /^hotfix\b/
+      - /^hotfix:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: docs
     regexs:
-      - /^docs\b/
+      - /^docs:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: style
     regexs:
-      - /^style\b/
+      - /^style:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: refactor
     regexs:
-      - /^refactor\b/
+      - /^refactor:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: test
     regexs:
-      - /^test\b/
+      - /^test:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: chore
     regexs:
-      - /^chore\b/
+      - /^chore:\b/
     events: [issues, pull_request]
     targets: [title]
 
   - label: infra
     regexs:
-      - /^infra\b/
+      - /^infra:\b/
     events: [issues]
     targets: [title]
