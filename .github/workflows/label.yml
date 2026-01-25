@@ -1,0 +1,54 @@
+filters:
+  - label: feat
+    regexs:
+      - /feat/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: fix
+    regexs:
+      - /fix/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: hotfix
+    regexs:
+      - /hotfix/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: docs
+    regexs:
+      - /docs/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: style
+    regexs:
+      - /style/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: refactor
+    regexs:
+      - /refactor/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: test
+    regexs:
+      - /test/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: chore
+    regexs:
+      - /chore/i
+    events: [issues, pull_request]
+    targets: [title]
+
+  - label: infra
+    regexs:
+      - /infra/i
+    events: [issues]
+    targets: [title]
