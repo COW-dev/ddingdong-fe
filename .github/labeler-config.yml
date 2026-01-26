@@ -46,9 +46,3 @@ filters:
       - /^chore:\s/
     events: [issues, pull_request]
     targets: [title]
-
-  - label: infra
-    regexs:
-      - /^infra:\s/
-    events: [issues]
-    targets: [title]

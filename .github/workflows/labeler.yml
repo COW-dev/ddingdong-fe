@@ -30,6 +30,9 @@ jobs:
 
   add_assignees:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
     steps:
       - uses: actions-ecosystem/action-add-assignees@v1
         with:
