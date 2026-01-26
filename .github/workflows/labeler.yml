@@ -25,7 +25,7 @@ jobs:
         uses: hoho4190/issue-pr-labeler@v2.0.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          disable-bot: true
+          disable-bot: false
           config-file-name: labeler-config.yml
 
   add_assignees:
