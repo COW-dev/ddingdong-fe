@@ -1,54 +1,54 @@
 filters:
   - label: feat
     regexs:
-      - /^feat\s*:\s*/
+      - /^feat:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: fix
     regexs:
-      - /^fix\s*:\s*/
+      - /^fix:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: hotfix
     regexs:
-      - /^hotfix\s*:\s*/
+      - /^hotfix:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: docs
     regexs:
-      - /^docs\s*:\s*/
+      - /^docs:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: style
     regexs:
-      - /^style\s*:\s*/
+      - /^style:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: refactor
     regexs:
-      - /^refactor\s*:\s*/
+      - /^refactor:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: test
     regexs:
-      - /^test\s*:\s*/
+      - /^test:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: chore
     regexs:
-      - /^chore\s*:\s*/
+      - /^chore:\s/
     events: [issues, pull_request]
     targets: [title]
 
   - label: infra
     regexs:
-      - /^infra\s*:\s*/
+      - /^infra:\s/
     events: [issues]
     targets: [title]
