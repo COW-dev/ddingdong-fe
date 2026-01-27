@@ -9,7 +9,7 @@ export const useClubEdit = (initialData: ClubDetail) => {
   const [club, setClub] = useState<ClubDetail>(initialData);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const { mutateAsync: updateClub } = useUpdateClub();
+  const { mutate: updateClub } = useUpdateClub();
 
   function handleChange(
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -37,6 +37,11 @@ export const useClubEdit = (initialData: ClubDetail) => {
   };
 
   const handleClickSubmit = () => {
+    if (!club.leader.trim()) {
+      toast.error('동아리 회장을 입력해주세요.');
+      return;
+    }
+
     const requestData = {
       ...club,
       location: club.location || null,

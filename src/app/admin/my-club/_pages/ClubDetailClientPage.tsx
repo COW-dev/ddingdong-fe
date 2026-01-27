@@ -14,7 +14,7 @@ import {
 } from '../_containers/ClubContainer';
 import { useClubEdit } from '../_hooks/useClubEdit';
 
-export default function ClubDetailClientPage() {
+export function ClubDetailClientPage() {
   const { data: clubData } = useSuspenseQuery(clubQueryOptions.my());
 
   const {
