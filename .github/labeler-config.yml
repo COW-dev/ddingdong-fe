@@ -13,7 +13,7 @@ filters:
 
   - label: hotfix
     regexs:
-      - /^\[HOTFIX\]\s/
+      - /^\[HOTFIX\]\s*/
     events: [issues, pull_request]
     targets: [title]
 
