@@ -5,7 +5,7 @@ import { Form } from '@/app/_api/types/apply';
 import { FORM_STATUS_FILTER } from '@/app/admin/apply/_constants/formFilter';
 import { useFormFilter } from '@/app/admin/apply/_hooks/useFormFilter';
 
-import { mockForms, mockEmptyForms } from '../apply-admin.data';
+import { mockForms, mockEmptyForms } from './apply-admin.data';
 
 describe('useFormFilter 훅 테스트', () => {
   describe('초기 상태', () => {
