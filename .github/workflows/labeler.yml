@@ -19,4 +19,4 @@ jobs:
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
           disable-bot: true
-          config-file-name: label-config.yml
+          config-file-name: labeler-config.yml
