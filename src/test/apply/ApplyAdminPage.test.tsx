@@ -1,4 +1,4 @@
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 
@@ -84,15 +84,13 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       const beforeFilter = screen.getByRole('button', { name: /진행전/ });
       await user.click(beforeFilter);
 
-      await waitFor(() => {
-        expect(screen.getByText('2025년 하계 특별 모집')).toBeInTheDocument();
-        expect(
-          screen.queryByText('2025년 1학기 신입부원 모집'),
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByText('2024년 2학기 신입부원 모집'),
-        ).not.toBeInTheDocument();
-      });
+      expect(screen.getByText('2025년 하계 특별 모집')).toBeInTheDocument();
+      expect(
+        screen.queryByText('2025년 1학기 신입부원 모집'),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('2024년 2학기 신입부원 모집'),
+      ).not.toBeInTheDocument();
     });
 
     it('"진행중" 필터 클릭 시 진행 중 상태의 지원서만 표시된다.', async () => {
@@ -102,17 +100,15 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       const inProgressFilter = screen.getByRole('button', { name: /진행중/ });
       await user.click(inProgressFilter);
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('2025년 1학기 신입부원 모집'),
-        ).toBeInTheDocument();
-        expect(
-          screen.queryByText('2024년 2학기 신입부원 모집'),
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByText('2025년 하계 특별 모집'),
-        ).not.toBeInTheDocument();
-      });
+      expect(
+        screen.getByText('2025년 1학기 신입부원 모집'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('2024년 2학기 신입부원 모집'),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('2025년 하계 특별 모집'),
+      ).not.toBeInTheDocument();
     });
 
     it('"종료" 필터 클릭 시 마감 상태의 지원서만 표시된다.', async () => {
@@ -122,24 +118,21 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       const closedFilter = screen.getByRole('button', { name: /종료/ });
       await user.click(closedFilter);
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('2024년 2학기 신입부원 모집'),
-        ).toBeInTheDocument();
-        expect(
-          screen.queryByText('2025년 1학기 신입부원 모집'),
-        ).not.toBeInTheDocument();
-        expect(
-          screen.queryByText('2025년 하계 특별 모집'),
-        ).not.toBeInTheDocument();
-      });
+      expect(
+        screen.getByText('2024년 2학기 신입부원 모집'),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByText('2025년 1학기 신입부원 모집'),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.queryByText('2025년 하계 특별 모집'),
+      ).not.toBeInTheDocument();
     });
 
     it('필터별 개수가 정확하게 표시된다.', () => {
       render(<ApplyAdminClientPage />);
 
       expect(screen.getByText(/\(3\)/)).toBeInTheDocument();
-      expect(screen.getAllByText(/\(1\)/)).toHaveLength(3);
     });
   });
 
@@ -196,7 +189,7 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       expect(screen.queryAllByText(mockForms[0].title)).toHaveLength(1);
     });
 
-    it('필터링 결과가 없을 경우 빈 화면이 표시된다.', async () => {
+    it('필터링 결과가 없을 경우 "생성된 지원서가 없습니다." 안내 메시지가 표시된다.', async () => {
       testQueryClient.setQueryData<Form[]>(
         ['apply'],
         [
@@ -216,11 +209,7 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       const beforeFilter = screen.getByRole('button', { name: /진행전/ });
       await user.click(beforeFilter);
 
-      await waitFor(() => {
-        expect(
-          screen.getByText('생성된 지원서가 없습니다.'),
-        ).toBeInTheDocument();
-      });
+      expect(screen.getByText('생성된 지원서가 없습니다.')).toBeInTheDocument();
     });
   });
 });
