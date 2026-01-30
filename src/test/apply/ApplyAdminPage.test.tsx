@@ -132,7 +132,13 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     it('필터별 개수가 정확하게 표시된다.', () => {
       render(<ApplyAdminClientPage />);
 
-      expect(screen.getByText(/\(3\)/)).toBeInTheDocument();
+      const getFilter = (label: RegExp) =>
+        screen.getByRole('button', { name: label });
+
+      expect(getFilter(/전체/)).toHaveTextContent('(3)');
+      expect(getFilter(/진행전/)).toHaveTextContent('(1)');
+      expect(getFilter(/진행 중/)).toHaveTextContent('(1)');
+      expect(getFilter(/종료/)).toHaveTextContent('(1)');
     });
   });
 
