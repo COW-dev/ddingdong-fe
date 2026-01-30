@@ -137,7 +137,7 @@ describe('ApplyAdminClientPage 통합테스트', () => {
 
       expect(getFilter(/전체/)).toHaveTextContent('(3)');
       expect(getFilter(/진행전/)).toHaveTextContent('(1)');
-      expect(getFilter(/진행 중/)).toHaveTextContent('(1)');
+      expect(getFilter(/진행중/)).toHaveTextContent('(1)');
       expect(getFilter(/종료/)).toHaveTextContent('(1)');
     });
   });
