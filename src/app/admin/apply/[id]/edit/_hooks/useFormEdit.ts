@@ -18,15 +18,16 @@ export function useFormEdit(formId: number) {
   const { data: formData } = useSuspenseQuery(applyQueryOptions.form(formId));
   const { mutate: updateForm, isPending } = useUpdateForm();
 
-  // 모집 기간 종료 여부 확인 (endDate의 하루 끝까지 허용)
-  const isRecruitPeriodEnded = useMemo(() => {
-    if (!formData.endDate) return false;
+  // 모집이 시작되기 전인지 확인
+  const isRecruitStartedBefore = useMemo(() => {
+    if (!formData.startDate) return false;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const endDate = new Date(formData.endDate);
-    endDate.setHours(23, 59, 59, 999);
-    return today > endDate;
-  }, [formData.endDate]);
+    const startDate = new Date(formData.startDate);
+    startDate.setHours(0, 0, 0, 0);
+
+    return startDate.getTime() > today.getTime();
+  }, [formData.startDate]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [basicInfo, setBasicInfo] = useState<FormBasicInfo>(() =>
@@ -54,11 +55,7 @@ export function useFormEdit(formId: number) {
 
   const handleBasicInfoChange = (updates: Partial<FormBasicInfo>) => {
     if (isEditing) {
-      const allowedUpdates: Partial<FormBasicInfo> = {};
-      if (updates.recruitPeriod) {
-        allowedUpdates.recruitPeriod = updates.recruitPeriod;
-      }
-      setBasicInfo((prev) => ({ ...prev, ...allowedUpdates }));
+      setBasicInfo((prev) => ({ ...prev, ...updates }));
     }
   };
 
@@ -75,13 +72,13 @@ export function useFormEdit(formId: number) {
       {
         formId,
         formData: {
-          title: formData.title,
-          description: formData.description,
+          title: basicInfo.title,
+          description: basicInfo.description,
           startDate: basicInfo.recruitPeriod.startDate
             .toISOString()
             .split('T')[0],
           endDate: basicInfo.recruitPeriod.endDate.toISOString().split('T')[0],
-          hasInterview: formData.hasInterview,
+          hasInterview: basicInfo.hasInterview,
           sections: formData.sections || [],
           formFields: formData.formFields || [],
         },
@@ -117,6 +114,6 @@ export function useFormEdit(formId: number) {
     handleCancel,
     isPending,
     contextValue,
-    isRecruitPeriodEnded,
+    isRecruitStartedBefore,
   };
 }

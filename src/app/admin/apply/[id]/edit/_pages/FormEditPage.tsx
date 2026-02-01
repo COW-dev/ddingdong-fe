@@ -22,7 +22,7 @@ export function FormEditPage({ formId }: FormEditPageProps) {
     handleCancel,
     isPending,
     contextValue,
-    isRecruitPeriodEnded,
+    isRecruitStartedBefore,
   } = useFormEdit(formId);
 
   return (
@@ -34,7 +34,7 @@ export function FormEditPage({ formId }: FormEditPageProps) {
         className="pt-7 md:pt-10"
       >
         <Title1 weight="bold">지원서 수정</Title1>
-        {!isRecruitPeriodEnded &&
+        {isRecruitStartedBefore &&
           (isEditing ? (
             <Flex gap={2}>
               <Button
@@ -66,10 +66,10 @@ export function FormEditPage({ formId }: FormEditPageProps) {
       <FormHeaderSection
         basicInfo={basicInfo}
         onBasicInfoChange={handleBasicInfoChange}
-        readOnly={true}
+        readOnly={!isEditing}
         allowDateEdit={isEditing}
       />
-      <SectionContent readOnly={true} />
+      <SectionContent readOnly={!isEditing} />
     </FormFieldContext.Provider>
   );
 }
