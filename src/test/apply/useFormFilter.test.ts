@@ -59,21 +59,6 @@ describe('useFormFilter 훅 테스트', () => {
       expect(result.current.formFilter).toBe(FORM_STATUS_FILTER.ALL);
     });
 
-    it('진행 중 필터는 진행 중 폼만 반환한다', () => {
-      const { result } = renderHook(() => useFormFilter(mockForms));
-
-      act(() => {
-        result.current.handleFilterChange(FORM_STATUS_FILTER.IN_PROGRESS);
-      });
-
-      expect(result.current.formFilter).toBe(FORM_STATUS_FILTER.IN_PROGRESS);
-      expect(
-        result.current.filteredForms.every(
-          (form) => form.formStatus === '진행 중',
-        ),
-      ).toBe(true);
-    });
-
     it('필터를 진행중으로 변경하면 해당 상태의 폼만 반환한다.', () => {
       const { result } = renderHook(() => useFormFilter(mockForms));
 
@@ -82,8 +67,7 @@ describe('useFormFilter 훅 테스트', () => {
       });
 
       expect(result.current.formFilter).toBe(FORM_STATUS_FILTER.IN_PROGRESS);
-      expect(result.current.filteredForms).toHaveLength(1);
-      expect(result.current.filteredForms[0].formStatus).toBe('진행 중');
+      expect(result.current.filteredForms).toEqual([mockForms[0]]);
     });
 
     it('필터를 마감으로 변경하면 해당 상태의 폼만 반환한다.', () => {
@@ -93,8 +77,7 @@ describe('useFormFilter 훅 테스트', () => {
         result.current.handleFilterChange(FORM_STATUS_FILTER.CLOSED);
       });
 
-      expect(result.current.filteredForms).toHaveLength(1);
-      expect(result.current.filteredForms[0].formStatus).toBe('마감');
+      expect(result.current.filteredForms).toEqual([mockForms[1]]);
     });
 
     it('필터를 진행전으로 변경하면 해당 상태의 폼을 반환한다.', () => {
@@ -104,8 +87,7 @@ describe('useFormFilter 훅 테스트', () => {
         result.current.handleFilterChange(FORM_STATUS_FILTER.BEFORE);
       });
 
-      expect(result.current.filteredForms).toHaveLength(1);
-      expect(result.current.filteredForms[0].formStatus).toBe('진행 전');
+      expect(result.current.filteredForms).toEqual([mockForms[2]]);
     });
 
     it('전체 필터로 다시 변경하면 모든 폼을 반환한다.', () => {
@@ -180,7 +162,10 @@ describe('useFormFilter 훅 테스트', () => {
         result.current.handleFilterChange(FORM_STATUS_FILTER.IN_PROGRESS);
       });
 
-      expect(result.current.filteredForms).toHaveLength(2);
+      expect(result.current.filteredForms).toEqual([
+        multipleInProgressForms[0],
+        multipleInProgressForms[1],
+      ]);
       expect(result.current.formCounts[FORM_STATUS_FILTER.IN_PROGRESS]).toBe(2);
     });
 
