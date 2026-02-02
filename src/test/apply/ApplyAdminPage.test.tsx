@@ -58,8 +58,8 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     it('전체 필터 클릭 시 모든 지원서가 표시된다.', async () => {
       render(<ApplyAdminClientPage />);
 
-      const allFilter = screen.getByRole('button', { name: /전체/ });
-      await user.click(allFilter);
+      const allFilterButton = screen.getByRole('button', { name: /전체/ });
+      await user.click(allFilterButton);
 
       mockForms.forEach((form) => {
         expect(screen.getByText(form.title)).toBeInTheDocument();
@@ -69,8 +69,8 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     it('"진행전" 필터 클릭 시 진행 전 상태의 지원서만 표시된다.', async () => {
       render(<ApplyAdminClientPage />);
 
-      const beforeFilter = screen.getByRole('button', { name: /진행전/ });
-      await user.click(beforeFilter);
+      const beforeFilterButton = screen.getByRole('button', { name: /진행전/ });
+      await user.click(beforeFilterButton);
 
       expect(screen.getByText('2025년 하계 특별 모집')).toBeInTheDocument();
       expect(
@@ -84,8 +84,10 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     it('"진행중" 필터 클릭 시 진행 중 상태의 지원서만 표시된다.', async () => {
       render(<ApplyAdminClientPage />);
 
-      const inProgressFilter = screen.getByRole('button', { name: /진행중/ });
-      await user.click(inProgressFilter);
+      const inProgressFilterButton = screen.getByRole('button', {
+        name: /진행중/,
+      });
+      await user.click(inProgressFilterButton);
 
       expect(
         screen.getByText('2025년 1학기 신입부원 모집'),
@@ -101,8 +103,8 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     it('"종료" 필터 클릭 시 마감 상태의 지원서만 표시된다.', async () => {
       render(<ApplyAdminClientPage />);
 
-      const closedFilter = screen.getByRole('button', { name: /종료/ });
-      await user.click(closedFilter);
+      const closedFilterButton = screen.getByRole('button', { name: /종료/ });
+      await user.click(closedFilterButton);
 
       expect(
         screen.getByText('2024년 2학기 신입부원 모집'),
@@ -194,8 +196,8 @@ describe('ApplyAdminClientPage 통합테스트', () => {
 
       render(<ApplyAdminClientPage />);
 
-      const beforeFilter = screen.getByRole('button', { name: /진행전/ });
-      await user.click(beforeFilter);
+      const beforeFilterButton = screen.getByRole('button', { name: /진행전/ });
+      await user.click(beforeFilterButton);
 
       expect(screen.getByText('생성된 지원서가 없습니다.')).toBeInTheDocument();
     });
