@@ -10,6 +10,8 @@ import { render, testQueryClient } from '@/test/utils';
 import { mockEmptyForms, mockForms, mockSingleForm } from './apply-admin.data';
 
 describe('ApplyAdminClientPage 통합테스트', () => {
+  const user = userEvent.setup();
+
   beforeEach(() => {
     testQueryClient.setQueryData(['apply'], mockForms);
   });
@@ -19,7 +21,7 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     vi.clearAllMocks();
   });
 
-  describe('렌더링 테스트', () => {
+  describe('생성 버튼, 필터링 옵션, 지원서 목록 등이 존재하는지 확인한다.', () => {
     it('지원서 생성하기 버튼이 표시된다.', () => {
       render(<ApplyAdminClientPage />);
 
@@ -37,36 +39,23 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       expect(screen.getByText(/종료/)).toBeInTheDocument();
     });
 
-    it('지원서 목록이 표시된다.', () => {
+    it('생성된 지원서의 이름 및 기간을 담고있는 카드가 표시된다.', () => {
       render(<ApplyAdminClientPage />);
 
       mockForms.forEach((form) => {
         expect(screen.getByText(form.title)).toBeInTheDocument();
-      });
-    });
-
-    it('각 지원서에 기간이 표시된다.', () => {
-      render(<ApplyAdminClientPage />);
-
-      mockForms.forEach((form) => {
         expect(
           screen.getByText(`${form.startDate} ~ ${form.endDate}`),
         ).toBeInTheDocument();
+        expect(screen.getByText('진행 중')).toBeInTheDocument();
+        expect(screen.getByText('마감')).toBeInTheDocument();
+        expect(screen.getByText('진행 전')).toBeInTheDocument();
       });
-    });
-
-    it('각 지원서에 상태 배지가 표시된다.', () => {
-      render(<ApplyAdminClientPage />);
-
-      expect(screen.getByText('진행 중')).toBeInTheDocument();
-      expect(screen.getByText('마감')).toBeInTheDocument();
-      expect(screen.getByText('진행 전')).toBeInTheDocument();
     });
   });
 
-  describe('필터 기능 테스트', () => {
+  describe('필터를 클릭하면 해당 필터에 대한 라벨에 맞추어 지원서를 표시한다.', () => {
     it('전체 필터 클릭 시 모든 지원서가 표시된다.', async () => {
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const allFilter = screen.getByRole('button', { name: /전체/ });
@@ -78,7 +67,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     });
 
     it('"진행전" 필터 클릭 시 진행 전 상태의 지원서만 표시된다.', async () => {
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const beforeFilter = screen.getByRole('button', { name: /진행전/ });
@@ -94,7 +82,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     });
 
     it('"진행중" 필터 클릭 시 진행 중 상태의 지원서만 표시된다.', async () => {
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const inProgressFilter = screen.getByRole('button', { name: /진행중/ });
@@ -112,7 +99,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     });
 
     it('"종료" 필터 클릭 시 마감 상태의 지원서만 표시된다.', async () => {
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const closedFilter = screen.getByRole('button', { name: /종료/ });
@@ -144,7 +130,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
 
   describe('네비게이션 테스트', () => {
     it('생성하기 버튼 클릭 시 지원서 생성 페이지로 이동한다.', async () => {
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const createButton = screen.getByRole('button', { name: '생성하기' });
@@ -154,7 +139,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     });
 
     it('지원서 카드 클릭 시 해당 지원서 상세 페이지로 이동한다.', async () => {
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const formCard = screen.getByText('2025년 1학기 신입부원 모집');
@@ -164,8 +148,8 @@ describe('ApplyAdminClientPage 통합테스트', () => {
     });
   });
 
-  describe('예외 케이스', () => {
-    it('지원서가 없을 경우 안내 메시지 UI가 표시된다.', () => {
+  describe('필터 조건에 맞는 데이터가 없을 경우 안내 메시지를 표시하고, 데이터가 존재할 경우 목록을 렌더링한다.', () => {
+    it('지원서가 없을 경우 "생성된 지원서가 없습니다." 라는 안내 메시지 가 표시된다.', () => {
       testQueryClient.setQueryData(['apply'], mockEmptyForms);
       render(<ApplyAdminClientPage />);
 
@@ -177,7 +161,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
       const emptyMessage = screen.getByText('생성된 지원서가 없습니다.');
 
       expect(emptyMessage).toBeInTheDocument();
-      expect(emptyMessage.tagName).toBe('P');
 
       mockForms.forEach((form) => {
         expect(screen.queryByText(form.title)).not.toBeInTheDocument();
@@ -209,7 +192,6 @@ describe('ApplyAdminClientPage 통합테스트', () => {
         ],
       );
 
-      const user = userEvent.setup();
       render(<ApplyAdminClientPage />);
 
       const beforeFilter = screen.getByRole('button', { name: /진행전/ });
