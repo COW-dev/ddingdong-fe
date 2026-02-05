@@ -1,6 +1,5 @@
 export {
   Card,
-  GameEndModal,
   GameStartModal,
   RoundResultModal,
   type RoundResultModalAction,

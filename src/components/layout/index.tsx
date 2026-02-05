@@ -29,8 +29,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
 
   const isLoginPage = pathname?.includes('/login');
   const isGamePage = pathname?.startsWith('/game');
-  const isGameSubmitStep =
-    isGamePage && searchParams.get('step') === 'submit';
+  const isGameSubmitStep = isGamePage && searchParams.get('step') === 'submit';
 
   useLayoutEffect(() => {
     if (!shouldShowGameStartModal) return;
