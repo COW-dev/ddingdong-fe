@@ -177,7 +177,7 @@ describe('ApplyAdminClientPage 통합테스트', () => {
         screen.getByText('2025년 1학기 신입부원 모집'),
       ).toBeInTheDocument();
 
-      expect(screen.queryAllByText(mockForms[0].title)).toHaveLength(1);
+      expect(screen.queryAllByText(mockSingleForm[0].title)).toHaveLength(1);
     });
 
     it('필터링 결과가 없을 경우 "생성된 지원서가 없습니다." 안내 메시지가 표시된다.', async () => {
