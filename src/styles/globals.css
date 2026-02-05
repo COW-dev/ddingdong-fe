@@ -36,6 +36,9 @@
   --color-purple: #a855f7;
   --color-white: #ffffff;
   --color-black: #000000;
+
+  /* Game */
+  --color-game-primary: #ff507d;
 }
 
 html {
@@ -54,6 +57,23 @@ html {
 * {
   -webkit-tap-highlight-color: transparent;
   --muted-foreground: 215.4 16.3% 46.9%;
+}
+
+/* 학교안심 둥근미소체 폰트 */
+@font-face {
+  font-family: 'SchoolSafetyRoundedSmile';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SchoolSafetyRoundedSmile';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-display: swap;
 }
 
 .customHideClock::-webkit-calendar-picker-indicator {
