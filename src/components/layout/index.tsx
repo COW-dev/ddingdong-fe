@@ -24,7 +24,8 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
   const searchParams = useSearchParams();
   const { isOpen, openModal, closeModal } = usePortal();
 
-  const shouldShowGameStartModal = pathname === '/';
+  const shouldShowGameStartModal =
+    pathname === '/' && !isAdminHost;
   const hasOpenedRef = useRef(false);
 
   const isLoginPage = pathname?.includes('/login');
@@ -75,14 +76,16 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
 
       {!isLoginPage && !isGamePage && <Footer />}
 
-      <GameStartModal
-        isOpen={isOpen}
-        onClose={closeModal}
-        onGameStart={() => {
-          closeModal();
-          router.push('/game');
-        }}
-      />
+      {!isAdminHost && (
+        <GameStartModal
+          isOpen={isOpen}
+          onClose={closeModal}
+          onGameStart={() => {
+            closeModal();
+            router.push('/game');
+          }}
+        />
+      )}
     </>
   );
 }
