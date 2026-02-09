@@ -88,7 +88,7 @@ export function SubmitStep({ onSubmit }: Props) {
         <Flex
           dir="col"
           gap={2}
-          className="w-full rounded-lg border border-[#FFE7ED] bg-white px-4 py-4 text-gray-700"
+          className="w-full rounded-lg border border-[#FFE7ED] bg-[#FFF9FB] px-4 py-4 text-gray-700"
         >
           <Caption1>• 학생회비 납부자에 한해 응모가 가능해요</Caption1>
           <Caption1>• 모든 항목을 입력해야 응모가 완료돼요</Caption1>
