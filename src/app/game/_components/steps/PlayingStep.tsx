@@ -27,12 +27,12 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
   return (
     <div
       className="relative flex flex-col overflow-hidden px-4"
-      style={{ height: 'calc(115dvh - 15rem)' }}
+      style={{ height: 'calc(115dvh - 13rem)' }}
     >
-      <div className="col flex min-h-0 flex-1 items-center justify-center py-2">
+      <div className="col flex min-h-0 flex-1 items-center justify-center pb-3">
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
-            <span className="text-game-prtmary my-1 inline-flex items-center gap-1.5 rounded-full px-3 py-1 shadow-md">
+            <span className="text-game-primary my-1 inline-flex items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
               <BellAnimation className="h-6 w-6" />
               <Caption3
                 as="span"
