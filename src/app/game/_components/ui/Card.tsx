@@ -2,11 +2,14 @@
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import { CARD_FRONT_PALETTES } from '../../_utils/gameConstants';
+import { getClubImageSrc } from '../../_utils/clubImages';
+import { getCategoryCardStyle } from '../../_utils/gameConstants';
 import cardBackImage from '../../Img/card.png';
 
 type Props = {
-  pairIndex: number;
+  clubId: number;
+  category: string;
+  clubName: string;
   isFlipped: boolean;
   isMatched: boolean;
   isDisabled: boolean;
@@ -21,7 +24,9 @@ const cardBackSrc =
 const DEFAULT_SIZE = { width: 80, height: 105 };
 
 export function Card({
-  pairIndex,
+  clubId,
+  category,
+  clubName,
   isFlipped,
   isMatched,
   isDisabled,
@@ -29,7 +34,8 @@ export function Card({
   width = DEFAULT_SIZE.width,
   height = DEFAULT_SIZE.height,
 }: Props) {
-  const palette = CARD_FRONT_PALETTES[pairIndex] ?? CARD_FRONT_PALETTES[0];
+  const style = getCategoryCardStyle(category);
+  const imageSrc = getClubImageSrc(clubId);
   const isFlippedOrMatched = isFlipped || isMatched;
 
   const widthStyle =
@@ -73,15 +79,23 @@ export function Card({
         </div>
 
         <div
-          className="absolute inset-0 z-10 box-border flex items-center justify-center rounded-xl"
+          className="absolute inset-0 z-10 box-border flex items-center justify-center overflow-hidden rounded-xl p-3"
           style={{
-            backgroundColor: palette.backgroundColor,
-            border: `2px solid ${palette.borderColor}`,
+            background: style.backgroundGradient,
+            border: `2px solid ${style.borderColor}`,
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-        />
+        >
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              alt={clubName}
+              className="max-h-full max-w-full object-contain"
+            />
+          ) : null}
+        </div>
       </button>
     </div>
   );

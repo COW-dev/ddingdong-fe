@@ -49,7 +49,56 @@ export type CardFrontPalette = {
   backgroundColor: string;
   borderColor: string;
 };
-// todo : api연동시 동아리 카테고리별로 색상 재 지정
+
+export type CategoryCardStyle = {
+  borderColor: string;
+  backgroundGradient: string;
+};
+
+const CATEGORY_CARD_STYLES: Record<string, CategoryCardStyle> = {
+  봉사: {
+    borderColor: '#FFDADA',
+    backgroundGradient: 'linear-gradient(180deg, #FEF2F2 0%, #FFFBFB 100%)',
+  },
+  사회연구: {
+    borderColor: '#FFE6C7',
+    backgroundGradient: 'linear-gradient(180deg, #FFF7ED 0%, #FFFCF9 100%)',
+  },
+  연행예술: {
+    borderColor: '#FFFACC',
+    backgroundGradient: 'linear-gradient(180deg, #FEFCE8 0%, #FFFEF4 100%)',
+  },
+  전시창작: {
+    borderColor: '#E7FFB1',
+    backgroundGradient: 'linear-gradient(180deg, #F7FEE7 0%, #FCFFF6 100%)',
+  },
+  종교: {
+    borderColor: '#C5E8FF',
+    backgroundGradient: 'linear-gradient(180deg, #F0F9FF 0%, #F7FCFF 100%)',
+  },
+  체육: {
+    borderColor: '#D4CBFF',
+    backgroundGradient: 'linear-gradient(180deg, #F5F3FF 0%, #F9F8FF 100%)',
+  },
+  학술: {
+    borderColor: '#F6D0FF',
+    backgroundGradient: 'linear-gradient(180deg, #FDF4FF 0%, #FFFEFF 100%)',
+  },
+  준동아리: {
+    borderColor: '#D1D1D1',
+    backgroundGradient: 'linear-gradient(180deg, #E2E5EB 0%, #FAFAFA 100%)',
+  },
+};
+
+const DEFAULT_CATEGORY_STYLE: CategoryCardStyle = {
+  borderColor: '#D1D1D1',
+  backgroundGradient: 'linear-gradient(180deg, #E2E5EB 0%, #FAFAFA 100%)',
+};
+
+export function getCategoryCardStyle(category: string): CategoryCardStyle {
+  return CATEGORY_CARD_STYLES[category] ?? DEFAULT_CATEGORY_STYLE;
+}
+
 export const CARD_FRONT_PALETTES: CardFrontPalette[] = [
   { backgroundColor: '#CCEFFF', borderColor: '#A0D0F0' },
   { backgroundColor: '#FFF0CC', borderColor: '#F0D8A0' },

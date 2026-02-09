@@ -52,10 +52,10 @@ export function useCardGame({
   });
 
   useEffect(() => {
-    setCards(createCards(config.totalCards));
+    setCards(createCards(config.totalCards, currentRound));
     setSelectedCards([]);
     resetTimer();
-  }, [currentRound]);
+  }, [currentRound, config.totalCards]);
 
   const resolveTwoCards = useCallback(
     (firstId: number, secondId: number) => {

@@ -60,7 +60,9 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
           {cards.map((card) => (
             <Card
               key={card.id}
-              pairIndex={card.pairIndex}
+              clubId={card.clubId}
+              category={card.category}
+              clubName={card.clubName}
               isFlipped={card.isFlipped}
               isMatched={card.isMatched}
               isDisabled={!isGameActive || card.isMatched}

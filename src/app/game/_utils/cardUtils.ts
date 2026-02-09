@@ -1,29 +1,58 @@
+import { getClubById, pickRandomClubIds } from './clubs';
+
 export type Card = {
   id: number;
-  pairIndex: number;
+  clubId: number;
+  category: string;
+  clubName: string;
   isFlipped: boolean;
   isMatched: boolean;
 };
 
-const DEFAULT_MAX_PALETTES = 18;
-
-export function createCards(
-  totalCards: number,
-  maxPalettes = DEFAULT_MAX_PALETTES,
-): Card[] {
+export function createCards(totalCards: number, seed?: number): Card[] {
   const pairs = totalCards / 2;
-  const paletteCount = Math.min(pairs, maxPalettes);
+  const clubIds = pickRandomClubIds(pairs, seed);
 
   const cards: Card[] = [];
-  for (let i = 0; i < paletteCount; i++) {
+  let cardId = 0;
+  for (const clubId of clubIds) {
+    const club = getClubById(clubId);
+    if (!club) continue;
     cards.push(
-      { id: i * 2, pairIndex: i, isFlipped: true, isMatched: false },
-      { id: i * 2 + 1, pairIndex: i, isFlipped: true, isMatched: false },
+      {
+        id: cardId++,
+        clubId: club.id,
+        category: club.category,
+        clubName: club.name,
+        isFlipped: true,
+        isMatched: false,
+      },
+      {
+        id: cardId++,
+        clubId: club.id,
+        category: club.category,
+        clubName: club.name,
+        isFlipped: true,
+        isMatched: false,
+      },
     );
   }
 
+  const shuffleRandom =
+    seed !== undefined
+      ? (() => {
+          let s = seed + 1;
+          return () => {
+            let t = (s += 0x6d2b79f5);
+            t = Math.imul(t ^ (t >>> 15), t | 1);
+            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+          };
+        })()
+      : Math.random;
+
   for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(shuffleRandom() * (i + 1));
     [cards[i], cards[j]] = [cards[j], cards[i]];
   }
 
@@ -31,7 +60,7 @@ export function createCards(
 }
 
 export function isCardMatch(firstCard: Card, secondCard: Card): boolean {
-  return firstCard.pairIndex === secondCard.pairIndex;
+  return firstCard.clubId === secondCard.clubId;
 }
 
 export function areAllCardsMatched(cards: Card[]): boolean {
