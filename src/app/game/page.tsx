@@ -19,6 +19,8 @@ import {
   useGameFunnel,
 } from './_contexts/GameFunnelContext';
 
+const ALL_ROUNDS_CLEARED_KEY = 'pairGameAllRoundsCleared';
+
 function GamePageContent() {
   const searchParams = useSearchParams();
   const { Funnel, step, setStep } = useGameFunnel();
@@ -26,7 +28,14 @@ function GamePageContent() {
   useEffect(() => {
     const stepFromUrl = searchParams.get('step');
     if (stepFromUrl === 'submit' && step !== 'submit') {
-      setStep('submit');
+      if (typeof window === 'undefined') return;
+      const cleared = window.localStorage.getItem(ALL_ROUNDS_CLEARED_KEY);
+      if (cleared === 'true') {
+        setStep('submit');
+      } else {
+        window.history.replaceState(null, '', '/game');
+        setStep('intro');
+      }
     }
   }, [searchParams, step, setStep]);
 
@@ -65,6 +74,9 @@ function GamePageContent() {
         setGameKey((k) => k + 1);
         break;
       case 'submit':
+        if (typeof window !== 'undefined') {
+          window.localStorage.setItem(ALL_ROUNDS_CLEARED_KEY, 'true');
+        }
         setStep('submit');
         window.history.replaceState(null, '', '/game?step=submit');
         break;
