@@ -8,7 +8,7 @@ import {
   Caption1,
 } from 'ddingdong-design-system';
 
-import { HEART_MODAL_CONTENT } from '../../_utils/heartModalContent';
+import { ROUND_RESULT_MODAL_CONTENT } from '../../_utils/RoundResultModalContent';
 import brokenHeartImage from '../../Img/broken_heart.png';
 import emptyHeartImage from '../../Img/empty_heart.png';
 import filledHeartImage from '../../Img/filled_heart.png';
@@ -39,7 +39,7 @@ export type RoundResultModalProps = Props;
 
 export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
   const { stage, success } = result;
-  const content = HEART_MODAL_CONTENT[stage];
+  const content = ROUND_RESULT_MODAL_CONTENT[stage];
   if (!content) return null;
 
   const { title, lines } = success ? content.success : content.fail;

@@ -1,4 +1,4 @@
-export const HEART_MODAL_CONTENT: Record<
+export const ROUND_RESULT_MODAL_CONTENT: Record<
   number,
   {
     success: { title: string; lines: string[] };

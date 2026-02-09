@@ -23,7 +23,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
       className="mx-auto min-h-screen w-full max-w-md px-4 py-0"
     >
       <Flex dir="row" justifyContent="end" className="w-full">
-        <Link href="/game/guide">
+        <Link href="/pair_game/guide">
           <Caption1 className="text-gray-600">안내</Caption1>
         </Link>
       </Flex>
@@ -113,7 +113,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         <Button
           variant="secondary"
           size="full"
-          onClick={() => router.push('/game/prize')}
+          onClick={() => router.push('/pair_game/prize')}
           className="bg-[#FFE7ED] py-3"
         >
           <Caption2 className="text-game-primary">상품 안내</Caption2>

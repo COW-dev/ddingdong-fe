@@ -7,7 +7,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { Flex, usePortal } from 'ddingdong-design-system';
 import { Snowfall } from 'react-snowfall';
 
-import { GameStartModal } from '@/app/game/_components/ui';
+import { GameStartModal } from '@/app/pair_game/_components/ui';
 
 import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
@@ -24,12 +24,11 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
   const searchParams = useSearchParams();
   const { isOpen, openModal, closeModal } = usePortal();
 
-  const shouldShowGameStartModal =
-    pathname === '/' && !isAdminHost;
+  const shouldShowGameStartModal = pathname === '/' && !isAdminHost;
   const hasOpenedRef = useRef(false);
 
   const isLoginPage = pathname?.includes('/login');
-  const isGamePage = pathname?.startsWith('/game');
+  const isGamePage = pathname?.startsWith('/pair_game');
   const isGameSubmitStep = isGamePage && searchParams.get('step') === 'submit';
 
   useLayoutEffect(() => {
@@ -82,7 +81,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
           onClose={closeModal}
           onGameStart={() => {
             closeModal();
-            router.push('/game');
+            router.push('/pair_game');
           }}
         />
       )}
