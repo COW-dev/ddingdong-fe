@@ -1,12 +1,4 @@
 import img1 from '../Img/clubs/1.png';
-import img2 from '../Img/clubs/2.png';
-import img3 from '../Img/clubs/3.png';
-import img4 from '../Img/clubs/4.png';
-import img5 from '../Img/clubs/5.png';
-import img6 from '../Img/clubs/6.png';
-import img7 from '../Img/clubs/7.png';
-import img8 from '../Img/clubs/8.png';
-import img9 from '../Img/clubs/9.png';
 import img10 from '../Img/clubs/10.png';
 import img11 from '../Img/clubs/11.png';
 import img12 from '../Img/clubs/12.png';
@@ -17,6 +9,7 @@ import img16 from '../Img/clubs/16.png';
 import img17 from '../Img/clubs/17.png';
 import img18 from '../Img/clubs/18.png';
 import img19 from '../Img/clubs/19.png';
+import img2 from '../Img/clubs/2.png';
 import img20 from '../Img/clubs/20.png';
 import img21 from '../Img/clubs/21.png';
 import img22 from '../Img/clubs/22.png';
@@ -27,6 +20,7 @@ import img26 from '../Img/clubs/26.png';
 import img27 from '../Img/clubs/27.png';
 import img28 from '../Img/clubs/28.png';
 import img29 from '../Img/clubs/29.png';
+import img3 from '../Img/clubs/3.png';
 import img30 from '../Img/clubs/30.png';
 import img31 from '../Img/clubs/31.png';
 import img32 from '../Img/clubs/32.png';
@@ -37,6 +31,12 @@ import img36 from '../Img/clubs/36.png';
 import img37 from '../Img/clubs/37.png';
 import img38 from '../Img/clubs/38.png';
 import img39 from '../Img/clubs/39.png';
+import img4 from '../Img/clubs/4.png';
+import img5 from '../Img/clubs/5.png';
+import img6 from '../Img/clubs/6.png';
+import img7 from '../Img/clubs/7.png';
+import img8 from '../Img/clubs/8.png';
+import img9 from '../Img/clubs/9.png';
 
 const images: Record<number, { src: string }> = {
   1: img1,

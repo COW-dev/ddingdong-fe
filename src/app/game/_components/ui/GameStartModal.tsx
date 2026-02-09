@@ -16,13 +16,19 @@ type Props = {
 
 export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
   return (
-    <Modal isOpen={isOpen} closeModal={onClose} closeOnOutsideClick={false}>
+    <Modal
+      isOpen={isOpen}
+      closeModal={onClose}
+      closeOnOutsideClick={false}
+      contentClassName="
+  bg-[radial-gradient(circle_at_center,rgba(255,80,125,0)_0%,rgba(255,80,125,0.15)_60%,rgba(255,80,125,0.3)_100%)]"
+    >
       <Flex
         alignItems="center"
         dir="col"
         justifyContent="center"
         gap={4}
-        className="relative w-full max-w-[350px] min-w-[300px] bg-white md:min-w-[500px]"
+        className="d:min-w-[500px] relative w-full max-w-[350px] min-w-[300px]"
       >
         <Flex
           alignItems="center"

@@ -1,10 +1,10 @@
 'use client';
 
-import { Flex } from 'ddingdong-design-system';
+import { Flex, ProgressBar } from 'ddingdong-design-system';
 
 import { getCardSizeStyleForConfig } from '../../_utils/gameConstants';
 import { useCardGame } from '../../hooks/useCardGame';
-import { BellAnimation, BridgeMaruMari, Card, Body2, Caption3 } from '../ui';
+import { BellAnimation, BridgeMaruMari, Card, Caption3, Caption1 } from '../ui';
 
 type Props = {
   currentRound: number;
@@ -42,7 +42,17 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
               </Caption3>
             </span>
           ) : (
-            <Body2 className="py-2">남은 시간: {gameTimer}초</Body2>
+            <Flex
+              alignItems="center"
+              gap={2}
+              className="rounded-full bg-white p-2 px-3 shadow-md"
+            >
+              <ProgressBar
+                color="pink"
+                percent={(gameTimer / config.gameTime) * 100}
+              />
+              <Caption1 className="text-game-primary">00:{gameTimer}</Caption1>
+            </Flex>
           )}
         </Flex>
       </div>
