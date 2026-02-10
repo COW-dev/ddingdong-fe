@@ -4,9 +4,8 @@ import { createContext, useContext, ReactNode, ReactElement } from 'react';
 
 import { useFunnel } from '@/app/apply/[id]/_hooks/useFunnel';
 
-type Step = 'intro' | 'playing' | 'submit' | 'completed';
-
 const STEP_NAMES = ['intro', 'playing', 'submit', 'completed'] as const;
+type Step = (typeof STEP_NAMES)[number];
 
 type StepProps = {
   name: Step;
