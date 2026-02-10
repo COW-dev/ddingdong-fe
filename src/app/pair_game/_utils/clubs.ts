@@ -30,7 +30,7 @@ export const CLUBS: Club[] = [
   { id: 23, name: 'PTPI', category: '봉사' },
   { id: 24, name: '무릉도원', category: '체육' },
   { id: 25, name: 'cow', category: '사회연구' },
-  { id: 26, name: '코아 ', category: '전시창작' },
+  { id: 26, name: 'Cfm ', category: '종교' },
   { id: 27, name: 'RCY', category: '봉사' },
   { id: 28, name: 'MGH', category: '연행예술' },
   { id: 29, name: '그림패시만화', category: '전시창작' },
@@ -43,7 +43,6 @@ export const CLUBS: Club[] = [
   { id: 36, name: 'MJTA', category: '체육' },
   { id: 37, name: '비주얼', category: '사회연구' },
   { id: 38, name: '명지챌린저스', category: '사회연구' },
-  { id: 39, name: 'Cfm', category: '종교' },
 ];
 
 const CLUB_MAP = new Map(CLUBS.map((c) => [c.id, c]));
