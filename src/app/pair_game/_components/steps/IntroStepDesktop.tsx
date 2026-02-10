@@ -9,7 +9,7 @@ import cheerMaruMari from '../../Img/cheer_maru_mari.png';
 import heartMariImage from '../../Img/heart_mari.png';
 import qrCodeImage from '../../Img/qr_code.png';
 import rideMaruImage from '../../Img/ride_maru.png';
-import { Body1, Body3, Caption1, Title3 } from '../ui';
+import { Body1, Body3, Caption1, Title3 } from '../ui/Typography';
 
 type Props = {
   onShareLink: () => void;

@@ -4,16 +4,14 @@ import { useSearchParams } from 'next/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import {
-  CompletedStep,
-  IntroStep,
-  PlayingStep,
-  SubmitStep,
-} from './_components/steps';
+import { CompletedStep } from './_components/steps/CompletedStep';
+import { IntroStep } from './_components/steps/IntroStep';
+import { PlayingStep } from './_components/steps/PlayingStep';
+import { SubmitStep } from './_components/steps/SubmitStep';
 import {
   RoundResultModal,
   type RoundResultModalAction,
-} from './_components/ui';
+} from './_components/ui/RoundResultModal';
 import {
   GameFunnelProvider,
   useGameFunnel,

@@ -7,7 +7,7 @@ import { useRef, useLayoutEffect } from 'react';
 import { Flex, usePortal } from 'ddingdong-design-system';
 import { Snowfall } from 'react-snowfall';
 
-import { GameStartModal } from '@/app/pair_game/_components/ui';
+import { GameStartModal } from '@/app/pair_game/_components/ui/GameStartModal';
 
 import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';

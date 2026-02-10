@@ -30,7 +30,6 @@ import img35 from '../Img/clubs/35.png';
 import img36 from '../Img/clubs/36.png';
 import img37 from '../Img/clubs/37.png';
 import img38 from '../Img/clubs/38.png';
-import img39 from '../Img/clubs/39.png';
 import img4 from '../Img/clubs/4.png';
 import img5 from '../Img/clubs/5.png';
 import img6 from '../Img/clubs/6.png';
@@ -77,7 +76,6 @@ const images: Record<number, { src: string }> = {
   36: img36,
   37: img37,
   38: img38,
-  39: img39,
 };
 
 export function getClubImageSrc(clubId: number): string {

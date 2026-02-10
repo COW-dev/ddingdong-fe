@@ -4,7 +4,10 @@ import { Flex, ProgressBar } from 'ddingdong-design-system';
 
 import { getCardSizeStyleForConfig } from '../../_utils/gameConstants';
 import { useCardGame } from '../../hooks/useCardGame';
-import { BellAnimation, BridgeMaruMari, Card, Caption3, Caption1 } from '../ui';
+import { Caption3, Caption1 } from '../ui/Typography';
+import {BridgeMaruMari} from '../ui/BridgeMaruMari';
+import {Card} from '../ui/Card';
+import {BellAnimation} from '../ui/BellAnimation';
 
 type Props = {
   currentRound: number;

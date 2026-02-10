@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation';
 
 import { Button, Flex, Caption1 } from 'ddingdong-design-system';
 
-import { Body3, BridgeMaruMari, Caption2, Title3 } from '../ui';
+import { Body3,  Caption2, Title3 } from '../ui/Typography';
+import {BridgeMaruMari} from '../ui/BridgeMaruMari';
 
 type Props = {
   onGameStart: () => void;

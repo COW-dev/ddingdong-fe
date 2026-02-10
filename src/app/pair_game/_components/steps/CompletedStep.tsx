@@ -2,7 +2,7 @@
 
 import { Flex } from 'ddingdong-design-system';
 
-import { Body1, Body2 } from '../ui';
+import { Body1, Body2 } from '../ui/Typography';
 
 type Props = {
   totalParticipants: number;

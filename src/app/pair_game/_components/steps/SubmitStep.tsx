@@ -14,7 +14,7 @@ import {
 
 import { departmentInfo } from '@/constants/department';
 
-import { Caption2, Title1 } from '../ui';
+import { Caption2, Title1 } from '../ui/Typography';
 
 const departments = Object.values(departmentInfo).flat();
 

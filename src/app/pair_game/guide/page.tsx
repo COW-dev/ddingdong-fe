@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 
 import { Caption1, Flex, NavBack } from 'ddingdong-design-system';
 
-import { BridgeMaruMari } from '../_components/ui';
+import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
 
 export default function GameGuidePage() {
   const router = useRouter();
