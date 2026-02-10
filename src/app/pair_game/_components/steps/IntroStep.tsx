@@ -9,12 +9,13 @@ import { GameSkeleton } from '../ui/GameSkeleton';
 import { IntroStepDesktop } from './IntroStepDesktop';
 import { IntroStepMobile } from './IntroStepMobile';
 
-function getIsMobileFromUserAgent(): boolean {
+function getShouldUseMobileLayout(): boolean {
   if (typeof navigator === 'undefined') return false;
   const ua = navigator.userAgent;
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    ua,
-  );
+  const uaSuggestsMobile =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  const isTouchDevice = navigator.maxTouchPoints > 0;
+  return uaSuggestsMobile || isTouchDevice;
 }
 
 type Props = {
@@ -25,7 +26,7 @@ export function IntroStep({ onGameStart }: Props) {
   const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
   useEffect(() => {
-    setIsMobile(getIsMobileFromUserAgent());
+    setIsMobile(getShouldUseMobileLayout());
   }, []);
 
   const handleShareLink = async () => {
