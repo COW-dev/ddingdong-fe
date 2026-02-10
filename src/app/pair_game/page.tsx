@@ -90,7 +90,7 @@ function GamePageContent() {
     console.log('응모 제출:', data);
     setTotalParticipants((prev) => prev + 1);
     setStep('completed');
-    window.history.replaceState(null, '', '/game');
+    window.history.replaceState(null, '', '/pair_game');
   };
 
   return (

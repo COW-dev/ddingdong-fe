@@ -58,7 +58,7 @@ export function useCardGame({
   });
 
   useEffect(() => {
-    setCards(createCards(config.totalCards, roundIndex));
+    setCards(createCards(config.totalCards));
     setSelectedCards([]);
     resetTimer();
   }, [currentRound, roundIndex, config.totalCards, resetTimer]);
