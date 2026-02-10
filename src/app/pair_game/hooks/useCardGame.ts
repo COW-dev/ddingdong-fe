@@ -27,9 +27,15 @@ export function useCardGame({
   const [cards, setCards] = useState<CardType[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const cardsRef = useRef(cards);
+  const selectedCardsRef = useRef(selectedCards);
   cardsRef.current = cards;
+  selectedCardsRef.current = selectedCards;
 
-  const config = ROUND_CONFIGS[currentRound];
+  const roundIndex = Math.max(
+    0,
+    Math.min(currentRound, ROUND_CONFIGS.length - 1),
+  );
+  const config = ROUND_CONFIGS[roundIndex];
 
   const {
     previewTimer,
@@ -52,41 +58,42 @@ export function useCardGame({
   });
 
   useEffect(() => {
-    setCards(createCards(config.totalCards, currentRound));
+    setCards(createCards(config.totalCards, roundIndex));
     setSelectedCards([]);
     resetTimer();
-  }, [currentRound, config.totalCards]);
+  }, [currentRound, roundIndex, config.totalCards, resetTimer]);
 
   const resolveTwoCards = useCallback(
     (firstId: number, secondId: number) => {
-      setCards((prev) => {
-        const { updatedCards, isMatch } = processCardMatch(
-          prev,
-          firstId,
-          secondId,
-        );
-        if (isMatch && areAllCardsMatched(updatedCards)) {
-          setIsGameActive(false);
-          setTimeout(
-            () => onRoundComplete(currentRound, true),
-            ROUND_COMPLETE_DELAY_MS,
-          );
-        } else if (!isMatch) {
-          setTimeout(() => {
-            onRoundComplete(currentRound, false);
-            setIsGameActive(false);
-          }, 0);
-        }
-        return updatedCards;
-      });
+      const prev = cardsRef.current;
+      const { updatedCards, isMatch } = processCardMatch(
+        prev,
+        firstId,
+        secondId,
+      );
+      setCards(updatedCards);
       setSelectedCards([]);
+
+      if (isMatch && areAllCardsMatched(updatedCards)) {
+        setIsGameActive(false);
+        setTimeout(
+          () => onRoundComplete(currentRound, true),
+          ROUND_COMPLETE_DELAY_MS,
+        );
+      } else if (!isMatch) {
+        setTimeout(() => {
+          onRoundComplete(currentRound, false);
+          setIsGameActive(false);
+        }, 0);
+      }
     },
     [currentRound, onRoundComplete, setIsGameActive],
   );
 
   const handleCardClick = useCallback(
     (cardId: number) => {
-      if (!isGameActive || selectedCards.length >= 2) return;
+      const currentSelected = selectedCardsRef.current;
+      if (!isGameActive || currentSelected.length >= 2) return;
 
       const currentCards = cardsRef.current;
       const card = currentCards.find((c) => c.id === cardId);
@@ -94,12 +101,12 @@ export function useCardGame({
         !card ||
         card.isFlipped ||
         card.isMatched ||
-        selectedCards.includes(cardId)
+        currentSelected.includes(cardId)
       ) {
         return;
       }
 
-      const newSelected = [...selectedCards, cardId];
+      const newSelected = [...currentSelected, cardId];
       setSelectedCards(newSelected);
       setCards((prev) =>
         prev.map((c) =>
@@ -114,7 +121,7 @@ export function useCardGame({
         );
       }
     },
-    [isGameActive, selectedCards, resolveTwoCards],
+    [isGameActive, resolveTwoCards],
   );
 
   return {
