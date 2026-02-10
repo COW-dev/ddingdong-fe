@@ -26,7 +26,6 @@ function GamePageContent() {
   useEffect(() => {
     const stepFromUrl = searchParams.get('step');
     if (stepFromUrl === 'submit' && step !== 'submit') {
-      if (typeof window === 'undefined') return;
       const cleared = window.localStorage.getItem(ALL_ROUNDS_CLEARED_KEY);
       if (cleared === 'true') {
         setStep('submit');
@@ -72,9 +71,7 @@ function GamePageContent() {
         setGameKey((k) => k + 1);
         break;
       case 'submit':
-        if (typeof window !== 'undefined') {
-          window.localStorage.setItem(ALL_ROUNDS_CLEARED_KEY, 'true');
-        }
+        window.localStorage.setItem(ALL_ROUNDS_CLEARED_KEY, 'true');
         setStep('submit');
         window.history.replaceState(null, '', '/game?step=submit');
         break;
