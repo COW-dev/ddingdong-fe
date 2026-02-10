@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-import { useRef, useLayoutEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 import { Flex, usePortal } from 'ddingdong-design-system';
 import { Snowfall } from 'react-snowfall';
@@ -31,7 +31,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
   const isGamePage = pathname?.startsWith('/pair_game');
   const isGameSubmitStep = isGamePage && searchParams.get('step') === 'submit';
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!shouldShowGameStartModal) return;
 
     if (!hasOpenedRef.current) {
