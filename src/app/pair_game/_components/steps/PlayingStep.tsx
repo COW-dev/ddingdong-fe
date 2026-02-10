@@ -54,7 +54,9 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
                 color="pink"
                 percent={(gameTimer / config.gameTime) * 100}
               />
-              <Caption1 className="text-game-primary">00:{gameTimer}</Caption1>
+              <Caption1 className="text-game-primary">
+                {`00:${String(gameTimer).padStart(2, '0')}`}
+              </Caption1>
             </Flex>
           )}
         </Flex>
