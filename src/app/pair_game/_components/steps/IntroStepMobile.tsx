@@ -37,7 +37,6 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         className="w-full rounded-lg bg-[#FFE7ED99] py-5"
       >
         <Title3
-          text-center
           weight="bold"
           className="text-game-primary text-center text-2xl"
         >

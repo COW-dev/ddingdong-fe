@@ -82,21 +82,17 @@ export function IntroStepDesktop({ onShareLink }: Props) {
               className="rounded-lg"
             />
           </div>
-          <div
-            className="w-full max-w-[280px] cursor-pointer [&>button]:pointer-events-none"
+          <Button
+            type="button"
+            variant="secondary"
+            size="full"
+            className="w-full max-w-[280px] bg-[#FFE7ED]"
             onClick={onShareLink}
           >
-            <Button
-              type="button"
-              variant="secondary"
-              size="full"
-              className="bg-[#FFE7ED]"
-            >
-              <Body3 weight="bold" className="text-game-primary">
-                게임 링크 공유하기
-              </Body3>
-            </Button>
-          </div>
+            <Body3 weight="bold" className="text-game-primary">
+              게임 링크 공유하기
+            </Body3>
+          </Button>
         </Flex>
 
         <div className="pointer-events-none relative mt-auto w-screen">
