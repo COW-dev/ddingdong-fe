@@ -74,5 +74,6 @@ function shuffleWithRandom<T>(arr: T[], random: () => number): T[] {
 export function pickRandomClubIds(count: number, seed?: number): number[] {
   const random = seed !== undefined ? createSeededRandom(seed) : Math.random;
   const shuffled = shuffleWithRandom(CLUB_IDS, random);
-  return shuffled.slice(0, count);
+  const safeCount = Math.min(count, CLUB_IDS.length);
+  return shuffled.slice(0, safeCount);
 }
