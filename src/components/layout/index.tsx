@@ -72,7 +72,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
 
       {!isLoginPage && !isGamePage && <Footer />}
 
-      {!isAdminHost && (
+      {!isAdminHost && shouldShowGameStartModal && (
         <GameStartModal
           isOpen={isOpen}
           onClose={closeModal}
