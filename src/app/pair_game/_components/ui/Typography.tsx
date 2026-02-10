@@ -37,8 +37,8 @@ const variantClasses = cva('whitespace-pre-wrap font-school-safety', {
       Body1: 'md:text-xl text-lg',
       Body2: 'md:text-lg text-base',
       Body3: 'md:text-base text-base',
-      Caption1: 'md:text-sm text-sm',
-      Caption2: 'md:text-xs text-xs',
+      Caption1: 'text-sm',
+      Caption2: 'text-xs',
       Caption3: 'md:text-[10px] text-[8px]',
     },
     weight: {
@@ -73,7 +73,9 @@ export function Typography<T extends AllowedTag = 'p'>({
   weight,
   className,
   children,
-  ...props
+  variant,
+  style,
+  ...restProps
 }: Props<T>) {
   const Component = as || 'p';
 
@@ -89,7 +91,7 @@ export function Typography<T extends AllowedTag = 'p'>({
     {
       className: cn(
         variantClasses({
-          type: props.variant,
+          type: variant,
           weight: typeof weight === 'number' ? weight : (weight ?? 'semibold'),
         }),
         className,
@@ -97,9 +99,9 @@ export function Typography<T extends AllowedTag = 'p'>({
       style: {
         fontFamily: "'SchoolSafetyRoundedSmile', sans-serif",
         fontWeight: resolvedWeight,
-        ...((props.style as CSSProperties) || {}),
+        ...((style as CSSProperties) || {}),
       },
-      ...props,
+      ...restProps,
     },
     children,
   );

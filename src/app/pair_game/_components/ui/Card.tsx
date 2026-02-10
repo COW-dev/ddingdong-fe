@@ -39,9 +39,9 @@ export function Card({
   const isFlippedOrMatched = isFlipped || isMatched;
 
   const widthStyle =
-    typeof width === 'string' ? width : `${width ?? DEFAULT_SIZE.width}px`;
+    typeof width === 'string' ? width : `${width}px`;
   const heightStyle =
-    typeof height === 'string' ? height : `${height ?? DEFAULT_SIZE.height}px`;
+    typeof height === 'string' ? height : `${height}px`;
 
   return (
     <div
