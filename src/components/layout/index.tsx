@@ -58,11 +58,8 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
         alignItems="center"
         className="min-h-screen w-full text-gray-800"
         style={{
-          backgroundColor: isGameSubmitStep
-            ? 'white'
-            : isGamePage
-              ? '#FEFCFD'
-              : 'white',
+          backgroundColor:
+            isGamePage && !isGameSubmitStep ? '#FEFCFD' : 'white',
         }}
       >
         <Flex

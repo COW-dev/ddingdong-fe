@@ -23,8 +23,8 @@ export default function GameGuidePage() {
             게임 이용 안내
           </Caption1>
           <Caption1 className="text-gray-600" as="p">
-            게임은 횟수 제한 없이 계속 도전할 수 있습니다. 총 5단 계 구성되어,
-            구성되어, 모든 단계 성공 시 상품 응모가 가능합니다.
+            게임은 횟수 제한 없이 계속 도전할 수 있습니다. 총 5단계로 구성되어,
+            모든 단계 성공 시 상품 응모가 가능합니다.
           </Caption1>
         </section>
 
