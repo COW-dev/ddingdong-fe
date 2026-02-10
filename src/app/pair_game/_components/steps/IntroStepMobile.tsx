@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import { Button, Flex, Caption1 } from 'ddingdong-design-system';
 
@@ -14,8 +13,6 @@ type Props = {
 };
 
 export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
-  const router = useRouter();
-
   return (
     <Flex
       dir="col"
@@ -110,14 +107,12 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         >
           <Caption2 weight="bold">마루 도와주기</Caption2>
         </Button>
-        <Button
-          variant="secondary"
-          size="full"
-          onClick={() => router.push('/pair_game/prize')}
-          className="bg-[#FFE7ED] py-3"
+        <Link
+          href="/pair_game/prize"
+          className="flex w-full items-center justify-center rounded-lg bg-[#FFE7ED] py-3"
         >
           <Caption2 className="text-game-primary">상품 안내</Caption2>
-        </Button>
+        </Link>
         <button
           type="button"
           onClick={onShareLink}
