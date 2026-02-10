@@ -38,10 +38,8 @@ export function Card({
   const imageSrc = getClubImageSrc(clubId);
   const isFlippedOrMatched = isFlipped || isMatched;
 
-  const widthStyle =
-    typeof width === 'string' ? width : `${width}px`;
-  const heightStyle =
-    typeof height === 'string' ? height : `${height}px`;
+  const widthStyle = typeof width === 'string' ? width : `${width}px`;
+  const heightStyle = typeof height === 'string' ? height : `${height}px`;
 
   return (
     <div
