@@ -18,23 +18,27 @@ export function useGameTimer({
   const [isPreviewMode, setIsPreviewMode] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
 
+  const onPreviewComplete = useCallback(() => {
+    setIsPreviewMode(false);
+    setIsGameActive(true);
+    onPreviewEnd();
+  }, [onPreviewEnd]);
+
+  const onGameComplete = useCallback(() => {
+    setIsGameActive(false);
+    onGameEnd();
+  }, [onGameEnd]);
+
   const { time: previewTimer, reset: resetPreview } = useTimer({
     initialTime: previewTime,
     isActive: isPreviewMode,
-    onComplete: () => {
-      setIsPreviewMode(false);
-      setIsGameActive(true);
-      onPreviewEnd();
-    },
+    onComplete: onPreviewComplete,
   });
 
   const { time: gameTimer, reset: resetGame } = useTimer({
     initialTime: gameTime,
     isActive: isGameActive,
-    onComplete: () => {
-      setIsGameActive(false);
-      onGameEnd();
-    },
+    onComplete: onGameComplete,
   });
 
   const reset = useCallback(() => {

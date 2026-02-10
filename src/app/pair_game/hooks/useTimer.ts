@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 
 type UseTimerOptions = {
   initialTime: number;
@@ -14,6 +14,8 @@ export function useTimer({
   interval = 1000,
 }: UseTimerOptions) {
   const [time, setTime] = useState(initialTime);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     if (!isActive || time <= 0) return;
@@ -26,10 +28,10 @@ export function useTimer({
   }, [time, isActive, interval]);
 
   useEffect(() => {
-    if (time === 0 && isActive && onComplete) {
-      onComplete();
+    if (time === 0 && isActive && onCompleteRef.current) {
+      onCompleteRef.current();
     }
-  }, [time, isActive, onComplete]);
+  }, [time, isActive]);
 
   const reset = useCallback(
     (newTime?: number) => setTime(newTime ?? initialTime),
