@@ -53,7 +53,7 @@ export function getClubById(id: number): Club | undefined {
 
 export const CLUB_IDS = CLUBS.map((c) => c.id);
 
-function createSeededRandom(seed: number) {
+export function createSeededRandom(seed: number) {
   return function next() {
     let t = (seed += 0x6d2b79f5);
     t = Math.imul(t ^ (t >>> 15), t | 1);

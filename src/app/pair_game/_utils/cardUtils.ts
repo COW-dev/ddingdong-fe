@@ -1,4 +1,9 @@
-import { getClubById, pickRandomClubIds } from './clubs';
+import {
+  createSeededRandom,
+  getClubById,
+  pickRandomClubIds,
+  CLUB_IDS,
+} from './clubs';
 
 export type Card = {
   id: number;
@@ -10,8 +15,10 @@ export type Card = {
 };
 
 export function createCards(totalCards: number, seed?: number): Card[] {
-  const pairs = totalCards / 2;
-  const clubIds = pickRandomClubIds(pairs, seed);
+  const pairCount = Math.floor(totalCards / 2);
+  const shuffledIds = pickRandomClubIds(CLUB_IDS.length, seed);
+  const validClubIds = shuffledIds.filter((id) => getClubById(id) != null);
+  const clubIds = validClubIds.slice(0, pairCount);
 
   const cards: Card[] = [];
   let cardId = 0;
@@ -39,17 +46,7 @@ export function createCards(totalCards: number, seed?: number): Card[] {
   }
 
   const shuffleRandom =
-    seed !== undefined
-      ? (() => {
-          let s = seed + 1;
-          return () => {
-            let t = (s += 0x6d2b79f5);
-            t = Math.imul(t ^ (t >>> 15), t | 1);
-            t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-            return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-          };
-        })()
-      : Math.random;
+    seed !== undefined ? createSeededRandom(seed + 1) : Math.random;
 
   for (let i = cards.length - 1; i > 0; i--) {
     const j = Math.floor(shuffleRandom() * (i + 1));
