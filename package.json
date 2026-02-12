@@ -12,8 +12,8 @@
     "lint:fix": "next lint --fix",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:e2e": "npx playwright test",
-    "test:e2e:ui": "npx playwright test --ui"
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@channel.io/channel-web-sdk-loader": "^2.0.0",
@@ -37,7 +37,6 @@
     "ky": "^1.9.0",
     "lottie-react": "^2.4.0",
     "next": "^15.5.7",
-    "playwright": "^1.58.2",
     "react": "^19.2.1",
     "react-cookie": "^7.2.2",
     "react-dom": "^19.2.1",

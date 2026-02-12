@@ -17,7 +17,7 @@
   ],
   "overrides": [
     {
-      "files": ["tests/**/*.{ts,tsx}"],
+      "files": ["e2e/**/*.{ts,tsx}"],
       "extends": ["plugin:playwright/recommended"]
     }
   ],
