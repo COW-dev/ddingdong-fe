@@ -43,7 +43,7 @@ export function Card({
 
   return (
     <div
-      className="shrink-0"
+      className="sh0 z-20"
       style={{
         perspective: '1000px',
         width: widthStyle,

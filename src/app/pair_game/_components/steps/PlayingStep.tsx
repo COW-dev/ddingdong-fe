@@ -32,7 +32,7 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
       className="relative flex flex-col overflow-hidden px-4"
       style={{ height: 'calc(115dvh - 13rem)' }}
     >
-      <div className="col flex min-h-0 flex-1 items-center justify-center pb-3">
+      <div className="col flex min-h-0 flex-1 items-center justify-center pb-6">
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
             <span className="text-game-primary my-1 inline-flex items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
@@ -48,7 +48,7 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
             <Flex
               alignItems="center"
               gap={2}
-              className="rounded-full bg-white p-2 px-3 shadow-md"
+              className="rounded-full bg-white p-2 px-4 shadow-md"
             >
               <ProgressBar
                 color="pink"
