@@ -39,11 +39,26 @@ export function BellAnimation({ className, alt = '종' }: Props) {
   }, []);
 
   return (
-    <img
-      src={BELL_FRAMES[frame].src}
-      alt={alt}
-      className={className}
-      aria-hidden={alt === '종'}
-    />
+    <div className="relative inline-block">
+      {BELL_FRAMES.map((bellFrame, index) => (
+        <img
+          key={index}
+          src={bellFrame.src}
+          alt={index === frame ? alt : ''}
+          className={className}
+          aria-hidden={index !== frame || alt === '종'}
+          loading="eager"
+          fetchPriority="high"
+          style={{
+            position: index === 0 ? 'relative' : 'absolute',
+            top: 0,
+            left: 0,
+            opacity: index === frame ? 1 : 0,
+            pointerEvents: 'none',
+            display: 'block',
+          }}
+        />
+      ))}
+    </div>
   );
 }
