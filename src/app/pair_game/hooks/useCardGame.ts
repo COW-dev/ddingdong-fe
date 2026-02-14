@@ -20,10 +20,10 @@ type UseCardGameParams = {
 const MATCH_RESOLVE_DELAY_MS = 500;
 const ROUND_COMPLETE_DELAY_MS = 500;
 
-export function useCardGame({
+export const useCardGame = ({
   currentRound,
   onRoundComplete,
-}: UseCardGameParams) {
+}: UseCardGameParams) => {
   const [cards, setCards] = useState<CardType[]>([]);
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const cardsRef = useRef(cards);
@@ -133,4 +133,4 @@ export function useCardGame({
     gameTimer,
     handleCardClick,
   };
-}
+};

@@ -7,12 +7,12 @@ type UseTimerOptions = {
   interval?: number;
 };
 
-export function useTimer({
+export const useTimer = ({
   initialTime,
   isActive,
   onComplete,
   interval = 1000,
-}: UseTimerOptions) {
+}: UseTimerOptions) => {
   const [time, setTime] = useState(initialTime);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
@@ -39,4 +39,4 @@ export function useTimer({
   );
 
   return { time, reset };
-}
+};

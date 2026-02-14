@@ -9,12 +9,12 @@ type UseGameTimerOptions = {
   onGameEnd: () => void;
 };
 
-export function useGameTimer({
+export const useGameTimer = ({
   previewTime,
   gameTime,
   onPreviewEnd,
   onGameEnd,
-}: UseGameTimerOptions) {
+}: UseGameTimerOptions) => {
   const [isPreviewMode, setIsPreviewMode] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
 
@@ -56,4 +56,4 @@ export function useGameTimer({
     setIsGameActive,
     reset,
   };
-}
+};

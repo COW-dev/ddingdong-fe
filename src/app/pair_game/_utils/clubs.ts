@@ -47,33 +47,32 @@ export const CLUBS: Club[] = [
 
 const CLUB_MAP = new Map(CLUBS.map((c) => [c.id, c]));
 
-export function getClubById(id: number): Club | undefined {
-  return CLUB_MAP.get(id);
-}
+export const getClubById = (id: number): Club | undefined =>
+  CLUB_MAP.get(id);
 
 export const CLUB_IDS = CLUBS.map((c) => c.id);
 
-export function createSeededRandom(seed: number) {
-  return function next() {
+export const createSeededRandom = (seed: number) => {
+  return () => {
     let t = (seed += 0x6d2b79f5);
     t = Math.imul(t ^ (t >>> 15), t | 1);
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
-}
+};
 
-function shuffleWithRandom<T>(arr: T[], random: () => number): T[] {
+const shuffleWithRandom = <T>(arr: T[], random: () => number): T[] => {
   const out = [...arr];
   for (let i = out.length - 1; i > 0; i--) {
     const j = Math.floor(random() * (i + 1));
     [out[i], out[j]] = [out[j], out[i]];
   }
   return out;
-}
+};
 
-export function pickRandomClubIds(count: number, seed?: number): number[] {
+export const pickRandomClubIds = (count: number, seed?: number): number[] => {
   const random = seed !== undefined ? createSeededRandom(seed) : Math.random;
   const shuffled = shuffleWithRandom(CLUB_IDS, random);
   const safeCount = Math.min(count, CLUB_IDS.length);
   return shuffled.slice(0, safeCount);
-}
+};

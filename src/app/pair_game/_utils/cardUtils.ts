@@ -14,7 +14,7 @@ export type Card = {
   isMatched: boolean;
 };
 
-export function createCards(totalCards: number, seed?: number): Card[] {
+export const createCards = (totalCards: number, seed?: number): Card[] => {
   const pairCount = Math.floor(totalCards / 2);
   const shuffledIds = pickRandomClubIds(CLUB_IDS.length, seed);
   const validClubIds = shuffledIds.filter((id) => getClubById(id) != null);
@@ -54,21 +54,19 @@ export function createCards(totalCards: number, seed?: number): Card[] {
   }
 
   return cards;
-}
+};
 
-export function isCardMatch(firstCard: Card, secondCard: Card): boolean {
-  return firstCard.clubId === secondCard.clubId;
-}
+export const isCardMatch = (firstCard: Card, secondCard: Card): boolean =>
+  firstCard.clubId === secondCard.clubId;
 
-export function areAllCardsMatched(cards: Card[]): boolean {
-  return cards.every((card) => card.isMatched);
-}
+export const areAllCardsMatched = (cards: Card[]): boolean =>
+  cards.every((card) => card.isMatched);
 
-export function processCardMatch(
+export const processCardMatch = (
   cards: Card[],
   firstId: number,
   secondId: number,
-): { updatedCards: Card[]; isMatch: boolean } {
+): { updatedCards: Card[]; isMatch: boolean } => {
   const firstCard = cards.find((c) => c.id === firstId);
   const secondCard = cards.find((c) => c.id === secondId);
 
@@ -90,4 +88,4 @@ export function processCardMatch(
     isSelectedCard(c) && !c.isMatched ? { ...c, isFlipped: false } : c,
   );
   return { updatedCards, isMatch: false };
-}
+};

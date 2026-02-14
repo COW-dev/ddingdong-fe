@@ -78,7 +78,7 @@ const images: Record<number, { src: string }> = {
   38: img38,
 };
 
-export function getClubImageSrc(clubId: number): string {
+export const getClubImageSrc = (clubId: number): string => {
   const img = images[clubId];
   return img?.src ?? '';
-}
+};

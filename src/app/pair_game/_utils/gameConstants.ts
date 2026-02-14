@@ -10,10 +10,10 @@ export type CardSize = { width: number; height: number };
 
 export type CardSizeStyle = { width: string; height: string };
 
-export function getCardSizeStyleForConfig(config: {
+export const getCardSizeStyleForConfig = (config: {
   cols: number;
   rows: number;
-}): CardSizeStyle {
+}): CardSizeStyle => {
   const { cols } = config;
   const base = getCardSizeForConfig(config);
   const vwW = Math.min(24, 85 / cols);
@@ -22,12 +22,12 @@ export function getCardSizeStyleForConfig(config: {
     width: `min(${base.width}px, ${vwW}vw)`,
     height: `min(${base.height}px, ${vwH}vw)`,
   };
-}
+};
 
-export function getCardSizeForConfig(config: {
+export const getCardSizeForConfig = (config: {
   cols: number;
   rows: number;
-}): CardSize {
+}): CardSize => {
   const { cols, rows } = config;
   if (cols === 2 && rows === 3) return { width: 92, height: 121 };
   if (cols === 2 && rows === 4) return { width: 92, height: 121 };
@@ -36,7 +36,7 @@ export function getCardSizeForConfig(config: {
   if (cols === 4 && rows === 4) return { width: 66, height: 87 };
   if (cols === 4 && rows === 5) return { width: 66, height: 87 };
   return { width: 80, height: 105 };
-}
+};
 
 export const ROUND_CONFIGS: RoundConfig[] = [
   { rows: 3, cols: 2, totalCards: 6, previewTime: 4, gameTime: 20 },
@@ -96,27 +96,5 @@ const DEFAULT_CATEGORY_STYLE: CategoryCardStyle = {
   backgroundGradient: 'linear-gradient(180deg, #E2E5EB 0%, #FAFAFA 100%)',
 };
 
-export function getCategoryCardStyle(category: string): CategoryCardStyle {
-  return CATEGORY_CARD_STYLES[category] ?? DEFAULT_CATEGORY_STYLE;
-}
-
-export const CARD_FRONT_PALETTES: CardFrontPalette[] = [
-  { backgroundColor: '#CCEFFF', borderColor: '#A0D0F0' },
-  { backgroundColor: '#FFF0CC', borderColor: '#F0D8A0' },
-  { backgroundColor: '#EBE0FF', borderColor: '#D0C0F0' },
-  { backgroundColor: '#E0EBFF', borderColor: '#C0D0F0' },
-  { backgroundColor: '#CCFFEB', borderColor: '#A0F0D0' },
-  { backgroundColor: '#E0EBE0', borderColor: '#C0D0C0' },
-  { backgroundColor: '#CCFFFF', borderColor: '#A0F0F0' },
-  { backgroundColor: '#FFE0E0', borderColor: '#F0C0C0' },
-  { backgroundColor: '#E0E0FF', borderColor: '#C0C0F0' },
-  { backgroundColor: '#FFF5CC', borderColor: '#F0E0A0' },
-  { backgroundColor: '#FFFFCC', borderColor: '#F0F0A0' },
-  { backgroundColor: '#CCFFCC', borderColor: '#A0F0A0' },
-  { backgroundColor: '#E0EBEB', borderColor: '#C0D0D0' },
-  { backgroundColor: '#FFE7ED', borderColor: '#F0C8D0' },
-  { backgroundColor: '#FFE0D8', borderColor: '#F0C0B8' },
-  { backgroundColor: '#F0E6FF', borderColor: '#E0D0F0' },
-  { backgroundColor: '#E8F0E8', borderColor: '#D0E0D0' },
-  { backgroundColor: '#FFEDE0', borderColor: '#F0DDC8' },
-];
+export const getCategoryCardStyle = (category: string): CategoryCardStyle =>
+  CATEGORY_CARD_STYLES[category] ?? DEFAULT_CATEGORY_STYLE;
