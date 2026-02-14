@@ -63,8 +63,7 @@ export function SubmitStep({ onSubmit }: Props) {
       dir="col"
       alignItems="center"
       gap={6}
-      className="min-h-screen w-full px-4 py-8"
-      style={{ backgroundColor: 'white' }}
+      className="min-h-screen w-full px-4 py-8 bg-white"
     >
       <form
         onSubmit={handleSubmit}
