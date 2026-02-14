@@ -6,7 +6,7 @@ import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import maruMariImage from '../../Img/maru_mari.png';
 
-import { Body1, Title2, Body2 } from './Typography';
+import { Body1, Title2, Body2 } from './EventTypography';
 
 type Props = {
   isOpen: boolean;

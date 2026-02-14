@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { Button, Flex, Caption1 } from 'ddingdong-design-system';
 
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
-import { Body3, Caption2, Title3 } from '../ui/Typography';
+import { Body3, Caption2, Title3 } from '../ui/EventTypography';
 
 type Props = {
   onGameStart: () => void;
@@ -31,7 +31,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         alignItems="center"
         justifyContent="center"
         gap={2}
-        className="w-full rounded-lg bg-[#FFE7ED99] py-5"
+        className="w-full rounded-lg bg-game-secondary/60 py-5"
       >
         <Title3
           weight="bold"
@@ -47,7 +47,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
       <Flex
         dir="col"
         gap={6}
-        className="w-full rounded-lg bg-[#FFE7ED99] px-6 py-4"
+        className="w-full rounded-lg bg-game-secondary/60 px-6 py-4"
       >
         <Flex dir="col" gap={2}>
           <Flex dir="row" alignItems="center" gap={2}>
@@ -109,7 +109,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         </Button>
         <Link
           href="/pair_game/prize"
-          className="flex w-full items-center justify-center rounded-lg bg-[#FFE7ED] py-3"
+          className="flex w-full items-center justify-center rounded-lg bg-game-secondary py-3"
         >
           <Caption2 className="text-game-primary">상품 안내</Caption2>
         </Link>

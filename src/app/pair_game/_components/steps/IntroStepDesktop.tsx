@@ -9,7 +9,7 @@ import cheerMaruMari from '../../Img/cheer_maru_mari.png';
 import heartMariImage from '../../Img/heart_mari.png';
 import qrCodeImage from '../../Img/qr_code.png';
 import rideMaruImage from '../../Img/ride_maru.png';
-import { Body1, Body3, Caption1, Title3 } from '../ui/Typography';
+import { Body1, Body3, Caption1, Title3 } from '../ui/EventTypography';
 
 type Props = {
   onShareLink: () => void;
@@ -40,7 +40,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
           alignItems="center"
           justifyContent="center"
           gap={4}
-          className="w-full rounded-lg bg-[#FFE7ED99] p-4"
+          className="w-full rounded-lg bg-game-secondary/60 p-4"
         >
           <Body1 weight="bold" className="text-game-primary">
             마루의 러브 스토리 💌
@@ -86,7 +86,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             type="button"
             variant="secondary"
             size="full"
-            className="w-full max-w-[280px] bg-[#FFE7ED]"
+            className="w-full max-w-[280px] bg-game-secondary"
             onClick={onShareLink}
           >
             <Body3 weight="bold" className="text-game-primary">

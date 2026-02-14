@@ -14,7 +14,7 @@ import {
 
 import { departmentInfo } from '@/constants/department';
 
-import { Caption2, Title1 } from '../ui/Typography';
+import { Caption2, Title1 } from '../ui/EventTypography';
 
 const departments = Object.values(departmentInfo).flat();
 
@@ -87,7 +87,7 @@ export function SubmitStep({ onSubmit }: Props) {
         <Flex
           dir="col"
           gap={2}
-          className="w-full rounded-lg border border-[#FFE7ED] bg-[#FFF9FB] px-4 py-4 text-gray-700"
+          className="w-full rounded-lg border border-game-secondary bg-game-tertiary px-4 py-4 text-gray-700"
         >
           <Caption1>• 학생회비 납부자에 한해 응모가 가능해요</Caption1>
           <Caption1>• 모든 항목을 입력해야 응모가 완료돼요</Caption1>

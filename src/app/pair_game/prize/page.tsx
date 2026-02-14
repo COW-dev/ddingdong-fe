@@ -7,7 +7,7 @@ import { Flex, NavBack, Caption1 } from 'ddingdong-design-system';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
-import { Body1, Body3 } from '../_components/ui/Typography';
+import { Body1, Body3 } from '../_components/ui/EventTypography';
 import naverPay from '../Img/naver_pay.png';
 
 export default function GamePrizePage() {

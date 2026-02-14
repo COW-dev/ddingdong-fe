@@ -8,25 +8,16 @@ import {
   Caption1,
 } from 'ddingdong-design-system';
 
-import { ROUND_RESULT_MODAL_CONTENT } from '../../_utils/RoundResultModalContent';
+import { useRoundResultModal } from '../../hooks/useRoundResultModal';
 import brokenHeartImage from '../../Img/broken_heart.png';
 import emptyHeartImage from '../../Img/empty_heart.png';
 import filledHeartImage from '../../Img/filled_heart.png';
 
-import { Body1, Caption2, Caption3 } from './Typography';
+import { Body1, Caption2, Caption3 } from './EventTypography';
 
-const brokenHeartSrc =
-  typeof brokenHeartImage === 'string'
-    ? brokenHeartImage
-    : brokenHeartImage.src;
-const emptyHeartSrc =
-  typeof emptyHeartImage === 'string' ? emptyHeartImage : emptyHeartImage.src;
-const filledHeartSrc =
-  typeof filledHeartImage === 'string'
-    ? filledHeartImage
-    : filledHeartImage.src;
+import type { RoundResultModalAction } from '../../hooks/useRoundResultModal';
 
-export type RoundResultModalAction = 'nextStage' | 'quit' | 'retry' | 'submit';
+export type { RoundResultModalAction };
 
 type Props = {
   isOpen: boolean;
@@ -38,30 +29,19 @@ type Props = {
 export type RoundResultModalProps = Props;
 
 export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
-  const { stage, success } = result;
-  const content = ROUND_RESULT_MODAL_CONTENT[stage];
+  const {
+    content,
+    filledCount,
+    brokenCount,
+    emptyCount,
+    quitLabel,
+    rightLabel,
+    rightAction,
+    stage,
+    success,
+  } = useRoundResultModal(result);
+
   if (!content) return null;
-
-  const { title, lines } = success ? content.success : content.fail;
-  const filledCount = success ? stage : stage - 1;
-  const brokenCount = success ? 0 : 1;
-  const emptyCount = 5 - filledCount - brokenCount;
-
-  const isStage5Success = stage === 5 && success;
-  const quitLabel = isStage5Success ? '나가기' : '그만하기';
-
-  let rightLabel: string;
-  let rightAction: RoundResultModalAction;
-  if (isStage5Success) {
-    rightLabel = '상품 응모하기';
-    rightAction = 'submit';
-  } else if (success) {
-    rightLabel = '다음단계';
-    rightAction = 'nextStage';
-  } else {
-    rightLabel = '다시 도전하기';
-    rightAction = 'retry';
-  }
 
   const heartImageProps = {
     className:
@@ -84,9 +64,9 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
             </Caption3>
           </span>
           <Body1 weight="bold" className="py-1 text-gray-600">
-            {title}
+            {content.title}
           </Body1>
-          {lines.map((line, i) => (
+          {content.lines.map((line, i) => (
             <Caption2 weight="normal" key={i} className="text-gray-600">
               {line}
             </Caption2>
@@ -97,7 +77,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
           {Array.from({ length: filledCount }, (_, i) => (
             <img
               key={`filled-${i}`}
-              src={filledHeartSrc}
+              src={filledHeartImage.src}
               alt="채워진 하트"
               {...heartImageProps}
             />
@@ -105,7 +85,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
           {Array.from({ length: brokenCount }, (_, i) => (
             <img
               key={`broken-${i}`}
-              src={brokenHeartSrc}
+              src={brokenHeartImage.src}
               alt="깨진 하트"
               {...heartImageProps}
             />
@@ -113,7 +93,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
           {Array.from({ length: emptyCount }, (_, i) => (
             <img
               key={`empty-${i}`}
-              src={emptyHeartSrc}
+              src={emptyHeartImage.src}
               alt="빈 하트"
               {...heartImageProps}
             />

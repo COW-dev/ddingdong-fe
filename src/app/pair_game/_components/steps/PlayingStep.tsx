@@ -6,8 +6,8 @@ import { getCardSizeStyleForConfig } from '../../_utils/gameConstants';
 import { useCardGame } from '../../hooks/useCardGame';
 import { BellAnimation } from '../ui/BellAnimation';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
-import { Card } from '../ui/Card';
-import { Caption3, Caption1 } from '../ui/Typography';
+import { EventCard } from '../ui/EventCard';
+import { Caption3, Caption1 } from '../ui/EventTypography';
 
 type Props = {
   currentRound: number;
@@ -73,7 +73,7 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
           }}
         >
           {cards.map((card) => (
-            <Card
+            <EventCard
               key={card.id}
               clubId={card.clubId}
               category={card.category}
