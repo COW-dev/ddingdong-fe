@@ -23,7 +23,7 @@ const cardBackSrc =
 
 const DEFAULT_SIZE = { width: 80, height: 105 };
 
-export function Card({
+export function EventCard({
   clubId,
   category,
   clubName,
