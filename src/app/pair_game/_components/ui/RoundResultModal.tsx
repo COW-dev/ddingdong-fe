@@ -8,14 +8,15 @@ import {
   Caption1,
 } from 'ddingdong-design-system';
 
-import { useRoundResultModal } from '../../hooks/useRoundResultModal';
+import {
+  useRoundResultModal,
+  type RoundResultModalAction,
+} from '../../hooks/useRoundResultModal';
 import brokenHeartImage from '../../Img/broken_heart.png';
 import emptyHeartImage from '../../Img/empty_heart.png';
 import filledHeartImage from '../../Img/filled_heart.png';
 
 import { Body1, Caption2, Caption3 } from './EventTypography';
-
-import type { RoundResultModalAction } from '../../hooks/useRoundResultModal';
 
 export type { RoundResultModalAction };
 
