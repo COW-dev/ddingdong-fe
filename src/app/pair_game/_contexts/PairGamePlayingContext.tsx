@@ -5,12 +5,11 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type ReactNode,
 } from 'react';
-
-import { flushSync } from 'react-dom';
 
 import {
   createCards,
@@ -49,7 +48,8 @@ export function PairGamePlayingProvider({
   children,
 }: PairGamePlayingProviderProps) {
   const [cards, setCards] = useState<CardType[]>([]);
-  const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const [, setSelectedCards] = useState<number[]>([]);
+  const selectedCardsRef = useRef<number[]>([]);
 
   const roundIndex = Math.max(
     0,
@@ -85,80 +85,85 @@ export function PairGamePlayingProvider({
 
   useEffect(() => {
     setCards(createCards(config.totalCards));
+    selectedCardsRef.current = [];
     setSelectedCards([]);
     resetTimer();
   }, [currentRound, roundIndex, config.totalCards, resetTimer]);
 
-  const resolveResultRef = useRef<{
-    isMatch: boolean;
-    updatedCards: CardType[];
-  } | null>(null);
-
   const resolveTwoCards = useCallback(
     (firstId: number, secondId: number) => {
-      flushSync(() => {
-        setCards((prev) => {
-          const result = processCardMatch(prev, firstId, secondId);
-          resolveResultRef.current = result;
-          return result.updatedCards;
-        });
-      });
-      setSelectedCards([]);
+      setCards((prev) => {
+        const result = processCardMatch(prev, firstId, secondId);
 
-      const r = resolveResultRef.current;
-      if (r?.isMatch && areAllCardsMatched(r.updatedCards)) {
-        setIsGameActive(false);
-        setTimeout(
-          () => onRoundComplete(currentRound, true),
-          ROUND_COMPLETE_DELAY_MS,
-        );
-      }
-      resolveResultRef.current = null;
+        if (result.isMatch && areAllCardsMatched(result.updatedCards)) {
+          setIsGameActive(false);
+          setTimeout(
+            () => onRoundComplete(currentRound, true),
+            ROUND_COMPLETE_DELAY_MS,
+          );
+        }
+
+        return result.updatedCards;
+      });
+      selectedCardsRef.current = [];
+      setSelectedCards([]);
     },
     [currentRound, onRoundComplete, setIsGameActive],
   );
 
   const handleCardClick = useCallback(
     (cardId: number) => {
-      if (!isGameActive || selectedCards.length >= 2) return;
+      if (!isGameActive) return;
 
-      const card = cards.find((c) => c.id === cardId);
-      if (
-        !card ||
-        card.isFlipped ||
-        card.isMatched ||
-        selectedCards.includes(cardId)
-      ) {
-        return;
-      }
+      const prevSelected = selectedCardsRef.current;
+      if (prevSelected.length >= 2 || prevSelected.includes(cardId)) return;
 
-      const newSelected = [...selectedCards, cardId];
-      setSelectedCards(newSelected);
-      setCards((prev) =>
-        prev.map((c) =>
-          c.id === cardId && !c.isMatched ? { ...c, isFlipped: true } : c,
-        ),
-      );
+      const next = [...prevSelected, cardId];
+      selectedCardsRef.current = next;
 
-      if (newSelected.length === 2) {
+      setSelectedCards(next);
+      setCards((prev) => {
+        const card = prev.find((c) => c.id === cardId);
+
+        if (!card || card.isFlipped || card.isMatched) {
+          return prev;
+        }
+
+        return prev.map((c) =>
+          c.id === cardId ? { ...c, isFlipped: true } : c,
+        );
+      });
+
+      if (next.length === 2) {
         setTimeout(
-          () => resolveTwoCards(newSelected[0], newSelected[1]),
+          () => resolveTwoCards(next[0], next[1]),
           MATCH_RESOLVE_DELAY_MS,
         );
       }
     },
-    [isGameActive, selectedCards, cards, resolveTwoCards],
+    [isGameActive, resolveTwoCards],
   );
 
-  const value: PairGamePlayingContextValue = {
-    cards,
-    config,
-    isPreviewMode,
-    isGameActive,
-    previewTimer,
-    gameTimer,
-    handleCardClick,
-  };
+  const value = useMemo<PairGamePlayingContextValue>(
+    () => ({
+      cards,
+      config,
+      isPreviewMode,
+      isGameActive,
+      previewTimer,
+      gameTimer,
+      handleCardClick,
+    }),
+    [
+      cards,
+      config,
+      isPreviewMode,
+      isGameActive,
+      previewTimer,
+      gameTimer,
+      handleCardClick,
+    ],
+  );
 
   return (
     <PairGamePlayingContext.Provider value={value}>
