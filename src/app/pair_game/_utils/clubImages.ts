@@ -82,3 +82,5 @@ export const getClubImageSrc = (clubId: number): string => {
   const img = images[clubId];
   return img?.src ?? '';
 };
+
+export const CLUB_IMAGE_SRCS = Object.values(images).map((img) => img.src);
