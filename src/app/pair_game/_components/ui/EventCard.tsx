@@ -41,6 +41,11 @@ export function EventCard({
   const widthStyle = typeof width === 'string' ? width : `${width}px`;
   const heightStyle = typeof height === 'string' ? height : `${height}px`;
 
+  const handlePointerUp = () => {
+    if (isDisabled) return;
+    onClick();
+  };
+
   return (
     <div
       className="sh0 z-20"
@@ -51,7 +56,8 @@ export function EventCard({
       }}
     >
       <button
-        onClick={onClick}
+        type="button"
+        onPointerUp={handlePointerUp}
         disabled={isDisabled}
         className={`relative h-full w-full transition-transform duration-500 ${
           isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
@@ -59,14 +65,17 @@ export function EventCard({
         style={{
           transformStyle: 'preserve-3d',
           transform: isFlippedOrMatched ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          touchAction: 'manipulation',
+          WebkitTapHighlightColor: 'transparent',
         }}
       >
         <div
-          className="absolute inset-0 z-20"
+          className="absolute inset-0"
           style={{
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(0deg)',
+            pointerEvents: 'none',
           }}
         >
           <OptimizedImage
@@ -77,13 +86,14 @@ export function EventCard({
         </div>
 
         <div
-          className="absolute inset-0 z-10 box-border flex items-center justify-center overflow-hidden rounded-xl p-3"
+          className="absolute inset-0 box-border flex items-center justify-center overflow-hidden rounded-xl p-3"
           style={{
             background: style.backgroundGradient,
             border: `2px solid ${style.borderColor}`,
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
+            pointerEvents: 'none',
           }}
         >
           {imageSrc ? (
