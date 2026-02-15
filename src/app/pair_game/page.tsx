@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
 
+import { PairGamePlayingProvider } from './_contexts/PairGamePlayingContext';
 import { CompletedStep } from './_components/steps/CompletedStep';
 import { IntroStep } from './_components/steps/IntroStep';
 import { PlayingStep } from './_components/steps/PlayingStep';
@@ -86,7 +87,6 @@ function GamePageContent() {
     phoneNumber: string;
     membershipFeeReceiptFileIds: string[];
   }) => {
-    // TODO: API 호출하여 응모 제출
     console.log('응모 제출:', data);
     setTotalParticipants((prev) => prev + 1);
     setStep('completed');
@@ -100,11 +100,13 @@ function GamePageContent() {
           <IntroStep onGameStart={handleGameStart} />
         </Funnel.Step>
         <Funnel.Step name="playing">
-          <PlayingStep
+          <PairGamePlayingProvider
             key={gameKey}
             currentRound={currentRound}
             onRoundComplete={handleRoundComplete}
-          />
+          >
+            <PlayingStep />
+          </PairGamePlayingProvider>
         </Funnel.Step>
         <Funnel.Step name="submit">
           <SubmitStep onSubmit={handleSubmit} />

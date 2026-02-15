@@ -5,40 +5,40 @@ import { useTimer } from './useTimer';
 type UseGameTimerOptions = {
   previewTime: number;
   gameTime: number;
-  onPreviewEnd: () => void;
-  onGameEnd: () => void;
+  handlePreviewEnd: () => void;
+  handleGameEnd: () => void;
 };
 
 export const useGameTimer = ({
   previewTime,
   gameTime,
-  onPreviewEnd,
-  onGameEnd,
+  handlePreviewEnd,
+  handleGameEnd,
 }: UseGameTimerOptions) => {
   const [isPreviewMode, setIsPreviewMode] = useState(true);
   const [isGameActive, setIsGameActive] = useState(false);
 
-  const onPreviewComplete = useCallback(() => {
+  const handlePreviewComplete = useCallback(() => {
     setIsPreviewMode(false);
     setIsGameActive(true);
-    onPreviewEnd();
-  }, [onPreviewEnd]);
+    handlePreviewEnd();
+  }, [handlePreviewEnd]);
 
-  const onGameComplete = useCallback(() => {
+  const handleGameComplete = useCallback(() => {
     setIsGameActive(false);
-    onGameEnd();
-  }, [onGameEnd]);
+    handleGameEnd();
+  }, [handleGameEnd]);
 
   const { time: previewTimer, reset: resetPreview } = useTimer({
     initialTime: previewTime,
     isActive: isPreviewMode,
-    onComplete: onPreviewComplete,
+    onComplete: handlePreviewComplete,
   });
 
   const { time: gameTimer, reset: resetGame } = useTimer({
     initialTime: gameTime,
     isActive: isGameActive,
-    onComplete: onGameComplete,
+    onComplete: handleGameComplete,
   });
 
   const reset = useCallback(() => {
