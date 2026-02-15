@@ -47,8 +47,7 @@ export const CLUBS: Club[] = [
 
 const CLUB_MAP = new Map(CLUBS.map((c) => [c.id, c]));
 
-export const getClubById = (id: number): Club | undefined =>
-  CLUB_MAP.get(id);
+export const getClubById = (id: number): Club | undefined => CLUB_MAP.get(id);
 
 export const CLUB_IDS = CLUBS.map((c) => c.id);
 

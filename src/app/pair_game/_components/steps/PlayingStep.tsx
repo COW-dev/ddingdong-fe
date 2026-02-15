@@ -30,13 +30,13 @@ export function PlayingStep() {
       <div className="col flex min-h-0 flex-1 items-center justify-center pb-6">
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
-            <span className="text-game-primary my-1 inline-flex items-center gap-1.5 rounded-full w-[75px] px-3 py-2 shadow-md">
+            <span className="text-game-primary my-1 inline-flex w-[75px] items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center">
                 <BellAnimation className="h-6 w-6" />
               </span>
               <Caption3
                 as="span"
-                className="text-game-primary flex items-center leading-none text-[14px] md:text-[16px]"
+                className="text-game-primary flex items-center text-[14px] leading-none md:text-[16px]"
               >
                 {previewTimer}초
               </Caption3>
