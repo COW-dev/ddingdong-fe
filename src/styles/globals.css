@@ -39,6 +39,8 @@
 
   /* Game */
   --color-game-primary: #ff507d;
+  --color-game-secondary: #ffe7ed;
+  --color-game-tertiary: #fff9fb;
 }
 
 html {
