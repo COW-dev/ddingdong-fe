@@ -112,9 +112,6 @@ export function PairGamePlayingProvider({
           () => onRoundComplete(currentRound, true),
           ROUND_COMPLETE_DELAY_MS,
         );
-      } else if (r && !r.isMatch) {
-        onRoundComplete(currentRound, false);
-        setIsGameActive(false);
       }
       resolveResultRef.current = null;
     },
