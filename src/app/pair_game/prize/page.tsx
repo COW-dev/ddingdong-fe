@@ -8,7 +8,7 @@ import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
 import { Body1, Body3 } from '../_components/ui/EventTypography';
-import naverPay from '../Img/naver_pay.png';
+import naverPay from '../Img/naver_pay.webp';
 
 export default function GamePrizePage() {
   const router = useRouter();

@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-import bell1 from '../../Img/bell/bell_1.png';
-import bell2 from '../../Img/bell/bell_2.png';
-import bell3 from '../../Img/bell/bell_3.png';
-import bell4 from '../../Img/bell/bell_4.png';
-import bell5 from '../../Img/bell/bell_5.png';
-import bell6 from '../../Img/bell/bell_6.png';
-import bell7 from '../../Img/bell/bell_7.png';
-import bell8 from '../../Img/bell/bell_8.png';
+import bell1 from '../../Img/bell/bell_1.webp';
+import bell2 from '../../Img/bell/bell_2.webp';
+import bell3 from '../../Img/bell/bell_3.webp';
+import bell4 from '../../Img/bell/bell_4.webp';
+import bell5 from '../../Img/bell/bell_5.webp';
+import bell6 from '../../Img/bell/bell_6.webp';
+import bell7 from '../../Img/bell/bell_7.webp';
+import bell8 from '../../Img/bell/bell_8.webp';
 
 const BELL_FRAMES = [bell1, bell2, bell3, bell4, bell5, bell6, bell7, bell8];
 const DELAY_MS = 600;

@@ -4,7 +4,7 @@ import { Button, Flex, Modal, IconButton } from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import maruMariImage from '../../Img/maru_mari.png';
+import maruMariImage from '../../Img/maru_mari.webp';
 
 import { Body1, Title2, Body2 } from './EventTypography';
 

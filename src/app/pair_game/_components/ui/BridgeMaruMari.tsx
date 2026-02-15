@@ -2,9 +2,9 @@
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import bridgeImage from '../../Img/bridge.png';
-import heartMariImage from '../../Img/heart_mari.png';
-import rideMaruImage from '../../Img/ride_maru.png';
+import bridgeImage from '../../Img/bridge.webp';
+import heartMariImage from '../../Img/heart_mari.webp';
+import rideMaruImage from '../../Img/ride_maru.webp';
 
 type Props = {
   className?: string;

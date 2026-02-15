@@ -4,7 +4,7 @@ import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { getClubImageSrc } from '../../_utils/clubImages';
 import { getCategoryCardStyle } from '../../_utils/gameConstants';
-import cardBackImage from '../../Img/card.png';
+import cardBackImage from '../../Img/card.webp';
 
 type Props = {
   clubId: number;

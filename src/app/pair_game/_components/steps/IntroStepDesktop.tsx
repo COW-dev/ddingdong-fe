@@ -4,11 +4,11 @@ import { Button, Flex } from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import bridgeImage from '../../Img/bridge.png';
-import cheerMaruMari from '../../Img/cheer_maru_mari.png';
-import heartMariImage from '../../Img/heart_mari.png';
-import qrCodeImage from '../../Img/qr_code.png';
-import rideMaruImage from '../../Img/ride_maru.png';
+import bridgeImage from '../../Img/bridge.webp';
+import cheerMaruMari from '../../Img/cheer_maru_mari.webp';
+import heartMariImage from '../../Img/heart_mari.webp';
+import qrCodeImage from '../../Img/qr_code.webp';
+import rideMaruImage from '../../Img/ride_maru.webp';
 import { Body1, Body3, Caption1, Title3 } from '../ui/EventTypography';
 
 type Props = {
@@ -40,7 +40,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
           alignItems="center"
           justifyContent="center"
           gap={4}
-          className="w-full rounded-lg bg-game-secondary/60 p-4"
+          className="bg-game-secondary/60 w-full rounded-lg p-4"
         >
           <Body1 weight="bold" className="text-game-primary">
             마루의 러브 스토리 💌
@@ -86,7 +86,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             type="button"
             variant="secondary"
             size="full"
-            className="w-full max-w-[280px] bg-game-secondary"
+            className="bg-game-secondary w-full max-w-[280px]"
             onClick={onShareLink}
           >
             <Body3 weight="bold" className="text-game-primary">
