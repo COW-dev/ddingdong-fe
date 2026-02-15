@@ -2,19 +2,14 @@
 
 import { Flex, ProgressBar } from 'ddingdong-design-system';
 
+import { usePairGamePlaying } from '../../_contexts/PairGamePlayingContext';
 import { getCardSizeStyleForConfig } from '../../_utils/gameConstants';
-import { useCardGame } from '../../hooks/useCardGame';
 import { BellAnimation } from '../ui/BellAnimation';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 import { EventCard } from '../ui/EventCard';
 import { Caption3, Caption1 } from '../ui/EventTypography';
 
-type Props = {
-  currentRound: number;
-  onRoundComplete: (roundIndex: number, success: boolean) => void;
-};
-
-export function PlayingStep({ currentRound, onRoundComplete }: Props) {
+export function PlayingStep() {
   const {
     cards,
     config,
@@ -23,7 +18,7 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
     previewTimer,
     gameTimer,
     handleCardClick,
-  } = useCardGame({ currentRound, onRoundComplete });
+  } = usePairGamePlaying();
 
   const cardSize = getCardSizeStyleForConfig(config);
 
@@ -35,11 +30,13 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
       <div className="col flex min-h-0 flex-1 items-center justify-center pb-6">
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
-            <span className="text-game-primary my-1 inline-flex items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
-              <BellAnimation className="h-6 w-6" />
+            <span className="text-game-primary my-1 inline-flex items-center gap-1.5 rounded-full w-[75px] px-3 py-2 shadow-md">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center">
+                <BellAnimation className="h-6 w-6" />
+              </span>
               <Caption3
                 as="span"
-                className="text-game-primary text-[14px] md:text-[16px]"
+                className="text-game-primary flex items-center leading-none text-[14px] md:text-[16px]"
               >
                 {previewTimer}초
               </Caption3>
@@ -48,14 +45,18 @@ export function PlayingStep({ currentRound, onRoundComplete }: Props) {
             <Flex
               alignItems="center"
               gap={2}
-              className="rounded-full bg-white p-2 px-4 shadow-md"
+              className="rounded-full bg-white p-2 shadow-md"
             >
               <ProgressBar
                 color="pink"
                 percent={(gameTimer / config.gameTime) * 100}
+                className="flex-1 transition-[width] duration-100 ease-linear"
               />
-              <Caption1 className="text-game-primary">
-                {`00:${String(gameTimer).padStart(2, '0')}`}
+              <Caption1
+                className="text-game-primary tabular-nums"
+                style={{ minWidth: '4ch' }}
+              >
+                {`00:${String(Math.floor(gameTimer)).padStart(2, '0')}`}
               </Caption1>
             </Flex>
           )}

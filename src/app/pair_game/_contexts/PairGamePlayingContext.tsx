@@ -9,6 +9,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
+
 import { flushSync } from 'react-dom';
 
 import {
@@ -18,7 +19,6 @@ import {
   type Card as CardType,
 } from '../_utils/cardUtils';
 import { ROUND_CONFIGS, type RoundConfig } from '../_utils/gameConstants';
-
 import { useGameTimer } from '../hooks/useGameTimer';
 
 const MATCH_RESOLVE_DELAY_MS = 500;

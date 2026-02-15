@@ -63,7 +63,7 @@ export function SubmitStep({ onSubmit }: Props) {
       dir="col"
       alignItems="center"
       gap={6}
-      className="min-h-screen w-full px-4 py-8 bg-white"
+      className="min-h-screen w-full bg-white px-4 py-8"
     >
       <form
         onSubmit={handleSubmit}
@@ -87,7 +87,7 @@ export function SubmitStep({ onSubmit }: Props) {
         <Flex
           dir="col"
           gap={2}
-          className="w-full rounded-lg border border-game-secondary bg-game-tertiary px-4 py-4 text-gray-700"
+          className="border-game-secondary bg-game-tertiary w-full rounded-lg border px-4 py-4 text-gray-700"
         >
           <Caption1>• 학생회비 납부자에 한해 응모가 가능해요</Caption1>
           <Caption1>• 모든 항목을 입력해야 응모가 완료돼요</Caption1>

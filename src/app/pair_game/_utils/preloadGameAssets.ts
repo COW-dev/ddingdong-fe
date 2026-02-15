@@ -35,16 +35,3 @@ export const preloadGameAssets = () => {
     img.src = src;
   });
 };
-
-export const preloadGameAssetsAndWait = (): Promise<void> =>
-  Promise.all(
-    CRITICAL_IMAGES.map(
-      (src) =>
-        new Promise<void>((resolve) => {
-          const img = new Image();
-          img.onload = () => resolve();
-          img.onerror = () => resolve();
-          img.src = src;
-        }),
-    ),
-  ).then(() => {});

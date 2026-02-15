@@ -4,8 +4,9 @@ import { useSearchParams } from 'next/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import type { RoundResultModalAction } from '../_components/ui/RoundResultModal';
 import { useGameFunnel } from '../_contexts/GameFunnelContext';
+
+import type { RoundResultModalAction } from '../_components/ui/RoundResultModal';
 
 export const usePairGamePage = () => {
   const searchParams = useSearchParams();
@@ -64,20 +65,11 @@ export const usePairGamePage = () => {
     [heartModalStage, setStep],
   );
 
-  const handleSubmit = useCallback(
-    async (data: {
-      name: string;
-      studentNumber: string;
-      department: string;
-      phoneNumber: string;
-      membershipFeeReceiptFileIds: string[];
-    }) => {
-      setTotalParticipants((prev) => prev + 1);
-      setStep('completed');
-      window.history.replaceState(null, '', '/pair_game');
-    },
-    [setStep],
-  );
+  const handleSubmit = useCallback(async () => {
+    setTotalParticipants((prev) => prev + 1);
+    setStep('completed');
+    window.history.replaceState(null, '', '/pair_game');
+  }, [setStep]);
 
   return {
     Funnel,
