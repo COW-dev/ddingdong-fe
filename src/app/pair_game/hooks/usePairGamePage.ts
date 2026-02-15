@@ -57,7 +57,7 @@ export const usePairGamePage = () => {
           break;
         case 'submit':
           setStep('submit');
-          window.history.replaceState(null, '', '/game?step=submit');
+          window.history.replaceState(null, '', '/pair_game?step=submit');
           break;
       }
       setIsHeartModalOpen(false);
