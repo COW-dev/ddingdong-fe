@@ -7,7 +7,7 @@ import { getCardSizeStyleForConfig } from '../../_utils/gameConstants';
 import { BellAnimation } from '../ui/BellAnimation';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 import { EventCard } from '../ui/EventCard';
-import { Caption3, Caption1 } from '../ui/EventTypography';
+import { EventCaption3, EventCaption1 } from '../ui/EventTypography';
 
 export function PlayingStep() {
   const {
@@ -34,12 +34,12 @@ export function PlayingStep() {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center">
                 <BellAnimation className="h-6 w-6" />
               </span>
-              <Caption3
+              <EventCaption3
                 as="span"
                 className="text-game-primary flex items-center text-[14px] leading-none md:text-[16px]"
               >
                 {previewTimer}초
-              </Caption3>
+              </EventCaption3>
             </span>
           ) : (
             <Flex
@@ -51,12 +51,12 @@ export function PlayingStep() {
                 color="pink"
                 percent={(gameTimer / config.gameTime) * 100}
               />
-              <Caption1
+              <EventCaption1
                 className="text-game-primary tabular-nums"
                 style={{ minWidth: '4ch' }}
               >
                 {`00:${String(Math.floor(gameTimer)).padStart(2, '0')}`}
-              </Caption1>
+              </EventCaption1>
             </Flex>
           )}
         </Flex>

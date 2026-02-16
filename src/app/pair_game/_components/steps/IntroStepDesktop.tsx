@@ -9,7 +9,12 @@ import cheerMaruMari from '../../Img/cheer_maru_mari.webp';
 import heartMariImage from '../../Img/heart_mari.webp';
 import qrCodeImage from '../../Img/qr_code.webp';
 import rideMaruImage from '../../Img/ride_maru.webp';
-import { Body1, Body3, Caption1, Title3 } from '../ui/EventTypography';
+import {
+  EventBody1,
+  EventBody3,
+  EventCaption1,
+  EventTitle3,
+} from '../ui/EventTypography';
 
 type Props = {
   onShareLink: () => void;
@@ -24,15 +29,15 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         className="relative z-10 mx-auto min-h-screen w-full max-w-md gap-12"
       >
         <Flex dir="col" alignItems="center" gap={1} className="w-full">
-          <Title3
+          <EventTitle3
             weight="bold"
             className="text-game-primary text-center text-2xl"
           >
             마리의 마음을 쟁취하라!
-          </Title3>
-          <Body3 className="text-center text-gray-600">
+          </EventTitle3>
+          <EventBody3 className="text-center text-gray-600">
             동아리 카드 짝 맞추기 게임
-          </Body3>
+          </EventBody3>
         </Flex>
 
         <Flex
@@ -42,19 +47,28 @@ export function IntroStepDesktop({ onShareLink }: Props) {
           gap={4}
           className="bg-game-secondary/60 w-full rounded-lg p-4"
         >
-          <Body1 weight="bold" className="text-game-primary">
+          <EventBody1 weight="bold" className="text-game-primary">
             마루의 러브 스토리 💌
-          </Body1>
+          </EventBody1>
           <Flex dir="col" alignItems="center" gap={2} className="text-center">
-            <Caption1 className="whitespace-nowrap text-gray-600" weight={400}>
+            <EventCaption1
+              className="whitespace-nowrap text-gray-600"
+              weight={400}
+            >
               마루의 짝사랑녀 마리. 둘의 인연은 같은 동아리에서 시작되었어요.
-            </Caption1>
-            <Caption1 className="whitespace-nowrap text-gray-600" weight={400}>
+            </EventCaption1>
+            <EventCaption1
+              className="whitespace-nowrap text-gray-600"
+              weight={400}
+            >
               마리의 마음을 얻으려면 마루가 더욱 표현해야 해요!
-            </Caption1>
-            <Caption1 className="whitespace-nowrap text-gray-600" weight={400}>
+            </EventCaption1>
+            <EventCaption1
+              className="whitespace-nowrap text-gray-600"
+              weight={400}
+            >
               마루의 연애가 성공할 수 있도록 명지대 여러분이 도와주세요!
-            </Caption1>
+            </EventCaption1>
             <OptimizedImage
               width={200}
               src={cheerMaruMari.src}
@@ -64,12 +78,12 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         </Flex>
 
         <Flex dir="col" alignItems="center" gap={1} className="w-full">
-          <Title3 weight="bold" className="text-game-primary text-center">
+          <EventTitle3 weight="bold" className="text-game-primary text-center">
             마루의 사랑을 위해
-          </Title3>
-          <Title3 weight="bold" className="text-game-primary text-center">
+          </EventTitle3>
+          <EventTitle3 weight="bold" className="text-game-primary text-center">
             지금 바로, 게임하고 선물 받아가세요!
-          </Title3>
+          </EventTitle3>
         </Flex>
 
         <Flex dir="col" alignItems="center" gap={5} className="w-full">
@@ -89,9 +103,9 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             className="bg-game-secondary w-full max-w-[280px]"
             onClick={onShareLink}
           >
-            <Body3 weight="bold" className="text-game-primary">
+            <EventBody3 weight="bold" className="text-game-primary">
               게임 링크 공유하기
-            </Body3>
+            </EventBody3>
           </Button>
         </Flex>
 

@@ -4,9 +4,10 @@ import { useSearchParams } from 'next/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import type { RoundResultModalAction } from '../_components/ui/RoundResultModal';
 import { useGameFunnel } from '../_contexts/GameFunnelContext';
 import { preloadGameAssets } from '../_utils/preloadGameAssets';
+
+import type { RoundResultModalAction } from '../_components/ui/RoundResultModal';
 
 export const usePairGamePage = () => {
   const searchParams = useSearchParams();

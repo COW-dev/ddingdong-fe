@@ -16,7 +16,7 @@ import brokenHeartImage from '../../Img/broken_heart.webp';
 import emptyHeartImage from '../../Img/empty_heart.webp';
 import filledHeartImage from '../../Img/filled_heart.webp';
 
-import { Body1, Caption2, Caption3 } from './EventTypography';
+import { EventBody1, EventCaption2, EventCaption3 } from './EventTypography';
 
 export type { RoundResultModalAction };
 
@@ -60,17 +60,17 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
       >
         <Flex dir="col" alignItems="center" className="text-center">
           <span className="border-game-primary text-game-primary mb-2 inline-flex rounded-full border bg-white px-3 py-1">
-            <Caption3 as="span" className="text-game-primary">
+            <EventCaption3 as="span" className="text-game-primary">
               {success ? `${stage}단계 클리어` : `${stage}단계 실패`}
-            </Caption3>
+            </EventCaption3>
           </span>
-          <Body1 weight="bold" className="py-1 text-gray-600">
+          <EventBody1 weight="bold" className="py-1 text-gray-600">
             {content.title}
-          </Body1>
+          </EventBody1>
           {content.lines.map((line, i) => (
-            <Caption2 weight="normal" key={i} className="text-gray-600">
+            <EventCaption2 weight="normal" key={i} className="text-gray-600">
               {line}
-            </Caption2>
+            </EventCaption2>
           ))}
         </Flex>
 

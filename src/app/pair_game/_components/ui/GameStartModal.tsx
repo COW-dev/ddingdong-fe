@@ -6,7 +6,7 @@ import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import maruMariImage from '../../Img/maru_mari.webp';
 
-import { Body1, Title2, Body2 } from './EventTypography';
+import { EventBody1, EventTitle2, EventBody2 } from './EventTypography';
 
 type Props = {
   isOpen: boolean;
@@ -38,12 +38,12 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
           <div className="w-[24px]" />
 
           <div className="flex-1 text-center">
-            <Title2 className="text-game-primary whitespace-nowrap">
+            <EventTitle2 className="text-game-primary whitespace-nowrap">
               마리의 마음을 쟁취하라!
-            </Title2>
-            <Body2 className="text-[#1F2937]">
+            </EventTitle2>
+            <EventBody2 className="text-[#1F2937]">
               동아리 카드 짝 맞추기 게임 도전!
-            </Body2>
+            </EventBody2>
           </div>
 
           <IconButton
@@ -66,9 +66,9 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
           className="bg-game-primary relative z-10"
           onClick={onGameStart}
         >
-          <Body1 weight="bold" className="text-white">
+          <EventBody1 weight="bold" className="text-white">
             게임하고 상품 받기
-          </Body1>
+          </EventBody1>
         </Button>
       </Flex>
     </Modal>

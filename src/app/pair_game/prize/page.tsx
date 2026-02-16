@@ -7,7 +7,7 @@ import { Flex, NavBack, Caption1 } from 'ddingdong-design-system';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
-import { Body1, Body3 } from '../_components/ui/EventTypography';
+import { EventBody1, EventBody3 } from '../_components/ui/EventTypography';
 import naverPay from '../Img/naver_pay.webp';
 
 export default function GamePrizePage() {
@@ -26,18 +26,18 @@ export default function GamePrizePage() {
               alignItems="center"
               className="mb-2 text-center"
             >
-              <Body1 className="text-gray-600">로고 짝 맞추고</Body1>
-              <Body1 weight="bold" className="text-center text-[#00D456]">
+              <EventBody1 className="text-gray-600">로고 짝 맞추고</EventBody1>
+              <EventBody1 weight="bold" className="text-center text-[#00D456]">
                 네이버페이 포인트 <span className="text-gray-600">받자!</span>
-              </Body1>
+              </EventBody1>
             </Flex>
             <OptimizedImage src={naverPay.src} alt="네이버페이" />
           </section>
 
           <section>
-            <Body3 weight="semibold" className="mb-2 text-gray-600">
+            <EventBody3 weight="semibold" className="mb-2 text-gray-600">
               상품 안내
-            </Body3>
+            </EventBody3>
             <Caption1 className="text-gray-600">
               네이버페이 1만원 권 (10명)
             </Caption1>
@@ -47,9 +47,9 @@ export default function GamePrizePage() {
           </section>
 
           <section>
-            <Body3 weight="semibold" className="mb-2 text-gray-600">
+            <EventBody3 weight="semibold" className="mb-2 text-gray-600">
               응모 자격
-            </Body3>
+            </EventBody3>
             <Caption1 className="text-gray-600">
               2026년 1학기 학생회비 납부자
             </Caption1>
@@ -59,9 +59,9 @@ export default function GamePrizePage() {
           </section>
 
           <section>
-            <Body3 weight="semibold" className="mb-2 text-gray-600">
+            <EventBody3 weight="semibold" className="mb-2 text-gray-600">
               응모 규칙
-            </Body3>
+            </EventBody3>
             <Caption1 className="text-gray-600">
               게임은 여러 번 도전할 수 있으나, 기존 응모 내역이 있는 경우 응모는
               1회로 제한됩니다.

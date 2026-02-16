@@ -14,7 +14,7 @@ import {
 
 import { departmentInfo } from '@/constants/department';
 
-import { Caption2, Title1 } from '../ui/EventTypography';
+import { EventCaption2, EventTitle1 } from '../ui/EventTypography';
 
 const departments = Object.values(departmentInfo).flat();
 
@@ -76,12 +76,12 @@ export function SubmitStep({ onSubmit }: Props) {
           gap={2}
           className="w-full text-center"
         >
-          <Title1 weight="bold" className="text-game-primary">
+          <EventTitle1 weight="bold" className="text-game-primary">
             상품 응모하기
-          </Title1>
-          <Caption2 className="text-gray-700">
+          </EventTitle1>
+          <EventCaption2 className="text-gray-700">
             마루가 준비한 선물을 전달하기 위해 정보를 입력해주세요
-          </Caption2>
+          </EventCaption2>
         </Flex>
 
         <Flex

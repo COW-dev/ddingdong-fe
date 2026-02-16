@@ -68,7 +68,7 @@ type Props<T extends AllowedTag> = {
   children?: ReactNode;
 } & Omit<ComponentPropsWithoutRef<T>, 'as' | 'className' | 'children'>;
 
-export function Typography<T extends AllowedTag = 'p'>({
+export function EventTypography<T extends AllowedTag = 'p'>({
   as,
   weight,
   className,
@@ -109,21 +109,21 @@ export function Typography<T extends AllowedTag = 'p'>({
 
 const createTypography = (variant: TypographyVariant) => {
   function Component<T extends AllowedTag = 'p'>(
-    props: Omit<TypographyProps<T>, 'variant'>,
+    props: Omit<EventTypographyProps<T>, 'variant'>,
   ) {
-    return <Typography variant={variant} {...props} />;
+    return <EventTypography variant={variant} {...props} />;
   }
   return Component;
 };
 
-export const Title1 = createTypography('Title1');
-export const Title2 = createTypography('Title2');
-export const Title3 = createTypography('Title3');
-export const Body1 = createTypography('Body1');
-export const Body2 = createTypography('Body2');
-export const Body3 = createTypography('Body3');
-export const Caption1 = createTypography('Caption1');
-export const Caption2 = createTypography('Caption2');
-export const Caption3 = createTypography('Caption3');
+export const EventTitle1 = createTypography('Title1');
+export const EventTitle2 = createTypography('Title2');
+export const EventTitle3 = createTypography('Title3');
+export const EventBody1 = createTypography('Body1');
+export const EventBody2 = createTypography('Body2');
+export const EventBody3 = createTypography('Body3');
+export const EventCaption1 = createTypography('Caption1');
+export const EventCaption2 = createTypography('Caption2');
+export const EventCaption3 = createTypography('Caption3');
 
-export type TypographyProps<T extends AllowedTag> = Props<T>;
+export type EventTypographyProps<T extends AllowedTag> = Props<T>;
