@@ -4,9 +4,9 @@ import { useSearchParams } from 'next/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { useGameFunnel } from '../_contexts/GameFunnelContext';
-
 import type { RoundResultModalAction } from '../_components/ui/RoundResultModal';
+import { useGameFunnel } from '../_contexts/GameFunnelContext';
+import { preloadGameAssets } from '../_utils/preloadGameAssets';
 
 export const usePairGamePage = () => {
   const searchParams = useSearchParams();
@@ -27,6 +27,12 @@ export const usePairGamePage = () => {
     }
   }, [searchParams, step, setStep]);
 
+  useEffect(() => {
+    if (step === 'intro') {
+      preloadGameAssets();
+    }
+  }, [step]);
+
   const handleGameStart = useCallback(() => {
     setCurrentRound(0);
     setGameKey((k) => k + 1);
@@ -35,6 +41,9 @@ export const usePairGamePage = () => {
 
   const handleRoundComplete = useCallback(
     (roundIndex: number, success: boolean) => {
+      if (success) {
+        preloadGameAssets();
+      }
       setHeartModalStage(roundIndex + 1);
       setHeartModalSuccess(success);
       setIsHeartModalOpen(true);
