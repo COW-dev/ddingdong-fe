@@ -78,7 +78,7 @@ export function EventCard({
             pointerEvents: 'none',
           }}
         >
-          <OptimizedImage
+          <img
             src={cardBackSrc}
             alt="카드 뒷면"
             className="h-full w-full rounded-xl object-cover"
