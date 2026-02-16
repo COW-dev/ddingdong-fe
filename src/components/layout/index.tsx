@@ -1,6 +1,6 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { useRef, useEffect } from 'react';
 
@@ -11,6 +11,7 @@ import { GameStartModal } from '@/app/pair_game/_components/ui/GameStartModal';
 
 import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
+import GameLayout from './GameLayout';
 import { UserHeader } from './UserHeader';
 
 type LayoutClientProps = {
@@ -21,7 +22,6 @@ type LayoutClientProps = {
 export default function Layout({ children, isAdminHost }: LayoutClientProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { isOpen, openModal, closeModal } = usePortal();
 
   const shouldShowGameStartModal = pathname === '/' && !isAdminHost;
@@ -29,7 +29,6 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
 
   const isLoginPage = pathname?.includes('/login');
   const isGamePage = pathname?.startsWith('/pair_game');
-  const isGameSubmitStep = isGamePage && searchParams.get('step') === 'submit';
 
   useEffect(() => {
     if (!shouldShowGameStartModal) return;
@@ -39,6 +38,10 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
       hasOpenedRef.current = true;
     }
   }, [shouldShowGameStartModal, openModal]);
+
+  if (isGamePage) {
+    return <GameLayout>{children}</GameLayout>;
+  }
 
   return (
     <>
@@ -56,11 +59,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
         as="main"
         dir="col"
         alignItems="center"
-        className="min-h-screen w-full text-gray-800"
-        style={{
-          backgroundColor:
-            isGamePage && !isGameSubmitStep ? '#FEFCFD' : 'white',
-        }}
+        className="min-h-screen w-full bg-white text-gray-800"
       >
         <Flex
           dir="col"
@@ -70,7 +69,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
         </Flex>
       </Flex>
 
-      {!isLoginPage && !isGamePage && <Footer />}
+      {!isLoginPage && <Footer />}
 
       {!isAdminHost && shouldShowGameStartModal && (
         <GameStartModal
