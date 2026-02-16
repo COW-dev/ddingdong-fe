@@ -2,8 +2,8 @@
 
 import bellSprite from '../../Img/bell-sprite.webp';
 
-const FRAME_COUNT = 8;
-const DURATION_S = 1.2;
+const FRAME_COUNT = 10;
+const DURATION_S = 1.0;
 const DELAY_S = 0.5;
 
 const keyframesCss = `

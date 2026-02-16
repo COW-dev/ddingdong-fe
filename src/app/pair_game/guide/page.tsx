@@ -10,7 +10,7 @@ export default function GameGuidePage() {
   const router = useRouter();
 
   return (
-    <Flex dir="col" className="mx-auto min-h-screen w-full max-w-md px-4 py-24">
+    <Flex dir="col" className="mx-auto min-h-screen w-full max-w-md px-4 pt-24">
       <NavBack
         title="동아리 카드 짝 맞추기 게임 안내"
         size="sm"

@@ -121,7 +121,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         </button>
       </Flex>
 
-      <BridgeMaruMari className="relative bottom-0 mt-auto w-screen" />
+      <BridgeMaruMari className="relative bottom-0 mt-auto w-screen pt-5" />
     </Flex>
   );
 }
