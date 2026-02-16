@@ -30,7 +30,7 @@ export const getCardSizeForConfig = (config: {
 }): CardSize => {
   const { cols, rows } = config;
   if (cols === 2 && rows === 3) return { width: 92, height: 121 };
-  if (cols === 2 && rows === 4) return { width: 92, height: 121 };
+  if (cols === 2 && rows === 4) return { width: 80, height: 105 };
   if (cols === 4 && rows === 2) return { width: 80, height: 105 };
   if (cols === 4 && rows === 3) return { width: 80, height: 105 };
   if (cols === 4 && rows === 4) return { width: 66, height: 87 };

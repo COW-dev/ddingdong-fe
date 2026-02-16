@@ -85,11 +85,10 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
               단계가 올라갈수록 마리의 마음을 사로잡을 수 있어요.
             </Caption2>
             <Caption2 className="text-gray-600" weight={400}>
-              5개 단계를 모두 클리어하면
+              5개 단계를 모두 클리어하면{' '}
               <span className="text-game-primary">
                 특별한 결말과 상품 응모 기회
               </span>
-              까지! 🎁
             </Caption2>
             <Caption2 className="text-gray-600" weight={400}>
               과연 마루는 그녀의 마음을 사로잡을 수 있을까요?

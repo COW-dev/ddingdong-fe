@@ -28,7 +28,7 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
         dir="col"
         justifyContent="center"
         gap={4}
-        className="d:min-w-[500px] relative w-full max-w-[350px] min-w-[300px]"
+        className="relative w-full max-w-[520px] min-w-[300px]"
       >
         <Flex
           alignItems="center"
@@ -38,7 +38,7 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
           <div className="w-[24px]" />
 
           <div className="flex-1 text-center">
-            <Title2 className="text-game-primary">
+            <Title2 className="text-game-primary whitespace-nowrap">
               마리의 마음을 쟁취하라!
             </Title2>
             <Body2 className="text-[#1F2937]">
@@ -49,7 +49,7 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
           <IconButton
             color="gray"
             iconName="close"
-            className="-translate-y-2"
+            className="translate-x-5 -translate-y-7"
             onClick={onClose}
           />
         </Flex>

@@ -45,12 +45,11 @@ export function PlayingStep() {
             <Flex
               alignItems="center"
               gap={2}
-              className="rounded-full bg-white p-2 shadow-md"
+              className="w-[340px] rounded-full bg-white p-2 px-3 shadow-md"
             >
               <ProgressBar
                 color="pink"
                 percent={(gameTimer / config.gameTime) * 100}
-                className="flex-1 transition-[width] duration-100 ease-linear"
               />
               <Caption1
                 className="text-game-primary tabular-nums"
