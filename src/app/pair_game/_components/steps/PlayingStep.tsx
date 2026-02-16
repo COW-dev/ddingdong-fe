@@ -25,7 +25,7 @@ export function PlayingStep() {
   return (
     <div
       className="relative flex flex-col overflow-hidden px-4"
-      style={{ height: 'calc(115dvh - 13rem)' }}
+      style={{ height: 'calc(145dvh - 27rem)' }}
     >
       <div className="col flex min-h-0 flex-1 items-center justify-center pb-6">
         <Flex dir="col" alignItems="center" gap={2}>
@@ -51,10 +51,7 @@ export function PlayingStep() {
                 color="pink"
                 percent={(gameTimer / config.gameTime) * 100}
               />
-              <EventCaption1
-                className="text-game-primary tabular-nums"
-                style={{ minWidth: '4ch' }}
-              >
+              <EventCaption1 className="text-game-primary tabular-nums">
                 {`00:${String(Math.ceil(gameTimer) || 0).padStart(2, '0')}`}
               </EventCaption1>
             </Flex>

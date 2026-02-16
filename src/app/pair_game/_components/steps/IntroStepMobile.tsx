@@ -18,7 +18,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
       dir="col"
       alignItems="center"
       gap={6}
-      className="mx-auto min-h-screen w-full max-w-md px-4 py-0"
+      className="mx-auto min-h-screen w-full max-w-md px-4 pt-24"
     >
       <Flex dir="row" justifyContent="end" className="w-full">
         <Link href="/pair_game/guide">

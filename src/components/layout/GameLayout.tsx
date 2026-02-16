@@ -38,7 +38,7 @@ export default function GameLayout({ children }: GameLayoutProps) {
           </Link>
         </Flex>
       </Header>
-      <Flex dir="col" className="w-full max-w-6xl px-6 pt-22 md:px-16 md:pt-26">
+      <Flex dir="col" className="w-full max-w-6xl px-6 md:px-16 md:pt-26">
         {children}
       </Flex>
     </Flex>
