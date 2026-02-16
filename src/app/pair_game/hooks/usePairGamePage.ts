@@ -2,7 +2,9 @@
 
 import { useSearchParams } from 'next/navigation';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import { usePortal } from 'ddingdong-design-system';
 
 import { useGameFunnel } from '../_contexts/GameFunnelContext';
 import { preloadGameAssets } from '../_utils/preloadGameAssets';
@@ -12,13 +14,29 @@ import type { RoundResultModalAction } from '../_components/ui/RoundResultModal'
 export const usePairGamePage = () => {
   const searchParams = useSearchParams();
   const { Funnel, step, setStep } = useGameFunnel();
+  const {
+    isOpen: isHeartModalOpen,
+    openModal: openHeartModal,
+    closeModal: closeHeartModal,
+  } = usePortal();
 
   const [currentRound, setCurrentRound] = useState(0);
   const [gameKey, setGameKey] = useState(0);
   const [heartModalStage, setHeartModalStage] = useState(1);
   const [heartModalSuccess, setHeartModalSuccess] = useState(false);
-  const [isHeartModalOpen, setIsHeartModalOpen] = useState(false);
   const [totalParticipants, setTotalParticipants] = useState(0);
+
+  const roundResultModalRef = useRef<{
+    setResult: (stage: number, success: boolean) => void;
+    open: () => void;
+  } | null>(null);
+  roundResultModalRef.current = {
+    setResult: (stage, success) => {
+      setHeartModalStage(stage);
+      setHeartModalSuccess(success);
+    },
+    open: openHeartModal,
+  };
 
   useEffect(() => {
     const stepFromUrl = searchParams.get('step');
@@ -47,9 +65,9 @@ export const usePairGamePage = () => {
       }
       setHeartModalStage(roundIndex + 1);
       setHeartModalSuccess(success);
-      setIsHeartModalOpen(true);
+      openHeartModal();
     },
-    [],
+    [openHeartModal],
   );
 
   const handleRoundResultAction = useCallback(
@@ -70,9 +88,9 @@ export const usePairGamePage = () => {
           window.history.replaceState(null, '', '/pair_game?step=submit');
           break;
       }
-      setIsHeartModalOpen(false);
+      closeHeartModal();
     },
-    [heartModalStage, setStep],
+    [heartModalStage, setStep, closeHeartModal],
   );
 
   const handleSubmit = useCallback(async () => {
@@ -89,7 +107,8 @@ export const usePairGamePage = () => {
     heartModalStage,
     heartModalSuccess,
     isHeartModalOpen,
-    setIsHeartModalOpen,
+    closeHeartModal,
+    roundResultModalRef,
     totalParticipants,
     handleGameStart,
     handleRoundComplete,

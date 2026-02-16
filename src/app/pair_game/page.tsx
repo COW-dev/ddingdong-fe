@@ -18,7 +18,8 @@ function GamePageContent() {
     heartModalStage,
     heartModalSuccess,
     isHeartModalOpen,
-    setIsHeartModalOpen,
+    closeHeartModal,
+    roundResultModalRef,
     totalParticipants,
     handleGameStart,
     handleRoundComplete,
@@ -37,6 +38,7 @@ function GamePageContent() {
             key={gameKey}
             currentRound={currentRound}
             onRoundComplete={handleRoundComplete}
+            roundResultModalRef={roundResultModalRef}
           >
             <PlayingStep />
           </PairGamePlayingProvider>
@@ -49,14 +51,12 @@ function GamePageContent() {
         </Funnel.Step>
       </Funnel>
 
-      {step === 'playing' && (
-        <RoundResultModal
-          isOpen={isHeartModalOpen}
-          onClose={() => setIsHeartModalOpen(false)}
-          result={{ stage: heartModalStage, success: heartModalSuccess }}
-          onAction={handleRoundResultAction}
-        />
-      )}
+      <RoundResultModal
+        isOpen={isHeartModalOpen}
+        onClose={closeHeartModal}
+        result={{ stage: heartModalStage, success: heartModalSuccess }}
+        onAction={handleRoundResultAction}
+      />
     </>
   );
 }
