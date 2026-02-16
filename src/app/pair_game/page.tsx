@@ -12,7 +12,6 @@ import { usePairGamePage } from './hooks/usePairGamePage';
 function GamePageContent() {
   const {
     Funnel,
-    step,
     currentRound,
     gameKey,
     heartModalStage,

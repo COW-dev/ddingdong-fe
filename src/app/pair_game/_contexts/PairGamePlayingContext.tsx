@@ -1,6 +1,6 @@
 'use client';
 
-import {
+import React, {
   createContext,
   useCallback,
   useContext,
@@ -36,19 +36,25 @@ type PairGamePlayingContextValue = {
 const PairGamePlayingContext =
   createContext<PairGamePlayingContextValue | null>(null);
 
+export type RoundResultModalRef = {
+  setResult: (stage: number, success: boolean) => void;
+  open: () => void;
+};
+
 type PairGamePlayingProviderProps = {
   currentRound: number;
   onRoundComplete: (roundIndex: number, success: boolean) => void;
+  roundResultModalRef?: React.MutableRefObject<RoundResultModalRef | null>;
   children: ReactNode;
 };
 
 export function PairGamePlayingProvider({
   currentRound,
   onRoundComplete,
+  roundResultModalRef,
   children,
 }: PairGamePlayingProviderProps) {
   const [cards, setCards] = useState<CardType[]>([]);
-  const [, setSelectedCards] = useState<number[]>([]);
   const selectedCardsRef = useRef<number[]>([]);
 
   const roundIndex = Math.max(
@@ -86,9 +92,8 @@ export function PairGamePlayingProvider({
   useEffect(() => {
     setCards(createCards(config.totalCards));
     selectedCardsRef.current = [];
-    setSelectedCards([]);
     resetTimer();
-  }, [currentRound, roundIndex, config.totalCards, resetTimer]);
+  }, [currentRound, config.totalCards, resetTimer]);
 
   const resolveTwoCards = useCallback(
     (firstId: number, secondId: number) => {
@@ -97,18 +102,19 @@ export function PairGamePlayingProvider({
 
         if (result.isMatch && areAllCardsMatched(result.updatedCards)) {
           setIsGameActive(false);
-          setTimeout(
-            () => onRoundComplete(currentRound, true),
-            ROUND_COMPLETE_DELAY_MS,
-          );
+          const round = currentRound;
+          setTimeout(() => {
+            onRoundComplete(round, true);
+            roundResultModalRef?.current?.setResult(round + 1, true);
+            roundResultModalRef?.current?.open();
+          }, ROUND_COMPLETE_DELAY_MS);
         }
 
         return result.updatedCards;
       });
       selectedCardsRef.current = [];
-      setSelectedCards([]);
     },
-    [currentRound, onRoundComplete, setIsGameActive],
+    [currentRound, onRoundComplete, setIsGameActive, roundResultModalRef],
   );
 
   const handleCardClick = useCallback(
@@ -121,7 +127,6 @@ export function PairGamePlayingProvider({
       const next = [...prevSelected, cardId];
       selectedCardsRef.current = next;
 
-      setSelectedCards(next);
       setCards((prev) => {
         const card = prev.find((c) => c.id === cardId);
 
