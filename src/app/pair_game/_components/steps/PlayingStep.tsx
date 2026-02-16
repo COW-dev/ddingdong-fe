@@ -38,7 +38,7 @@ export function PlayingStep() {
                 as="span"
                 className="text-game-primary flex items-center text-[14px] leading-none md:text-[16px]"
               >
-                {previewTimer}초
+                {Math.ceil(previewTimer) || 0}초
               </EventCaption3>
             </span>
           ) : (
@@ -55,7 +55,7 @@ export function PlayingStep() {
                 className="text-game-primary tabular-nums"
                 style={{ minWidth: '4ch' }}
               >
-                {`00:${String(Math.floor(gameTimer)).padStart(2, '0')}`}
+                {`00:${String(Math.ceil(gameTimer) || 0).padStart(2, '0')}`}
               </EventCaption1>
             </Flex>
           )}
