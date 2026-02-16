@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 import { Flex, ProgressBar } from 'ddingdong-design-system';
 
 import { usePairGamePlaying } from '../../_contexts/PairGamePlayingContext';
@@ -21,11 +23,61 @@ export function PlayingStep() {
   } = usePairGamePlaying();
 
   const cardSize = getCardSizeStyleForConfig(config);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+
+    if (containerRef.current) {
+      containerRef.current.scrollTop = 0;
+    }
+  }, []);
+
+  useEffect(() => {
+    const container = document.querySelector(
+      '[data-playing-step]',
+    ) as HTMLElement;
+    if (!container) return;
+
+    const preventScroll = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+
+      const target = e.target as HTMLElement;
+      if (container.contains(target)) {
+        e.preventDefault();
+      }
+    };
+
+    const preventWheel = (e: WheelEvent) => {
+      const target = e.target as HTMLElement;
+      if (
+        container.contains(target) &&
+        Math.abs(e.deltaY) > Math.abs(e.deltaX)
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener('touchmove', preventScroll, { passive: false });
+    document.addEventListener('wheel', preventWheel, { passive: false });
+
+    return () => {
+      document.removeEventListener('touchmove', preventScroll);
+      document.removeEventListener('wheel', preventWheel);
+    };
+  }, []);
 
   return (
     <div
+      ref={containerRef}
       className="relative flex flex-col overflow-hidden px-4"
-      style={{ height: 'calc(145dvh - 27rem)' }}
+      style={{
+        height: 'calc(145dvh - 27rem)',
+        touchAction: 'pan-x',
+        overflowY: 'hidden',
+      }}
+      data-playing-step
     >
       <div className="col flex min-h-0 flex-1 items-center justify-center pb-6">
         <Flex dir="col" alignItems="center" gap={2}>
@@ -71,6 +123,7 @@ export function PlayingStep() {
             gridTemplateRows: `repeat(${config.rows}, 1fr)`,
             justifyItems: 'center',
             alignItems: 'center',
+            touchAction: 'manipulation',
           }}
         >
           {cards.map((card) => (
