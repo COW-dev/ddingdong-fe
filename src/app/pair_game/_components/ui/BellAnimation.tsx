@@ -1,64 +1,43 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import bellSprite from '../../Img/bell-sprite.webp';
 
-import bell1 from '../../Img/bell/bell_1.webp';
-import bell2 from '../../Img/bell/bell_2.webp';
-import bell3 from '../../Img/bell/bell_3.webp';
-import bell4 from '../../Img/bell/bell_4.webp';
-import bell5 from '../../Img/bell/bell_5.webp';
-import bell6 from '../../Img/bell/bell_6.webp';
-import bell7 from '../../Img/bell/bell_7.webp';
-import bell8 from '../../Img/bell/bell_8.webp';
+const FRAME_COUNT = 8;
+const DURATION_S = 1.2;
+const DELAY_S = 0.5;
 
-const BELL_FRAMES = [bell1, bell2, bell3, bell4, bell5, bell6, bell7, bell8];
-const DELAY_MS = 600;
-const DURATION_MS = 1100;
-const FRAME_INTERVAL_MS = DURATION_MS / BELL_FRAMES.length;
+const keyframesCss = `
+  @keyframes bell-sprite-play {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+`;
 
 type Props = {
   className?: string;
   alt?: string;
 };
 
-export function BellAnimation({ className, alt = '종' }: Props) {
-  const [frame, setFrame] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  useEffect(() => {
-    const startTimeoutId = setTimeout(() => {
-      intervalRef.current = setInterval(() => {
-        setFrame((prev) => (prev + 1) % BELL_FRAMES.length);
-      }, FRAME_INTERVAL_MS);
-    }, DELAY_MS);
-
-    return () => {
-      clearTimeout(startTimeoutId);
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
+export function BellAnimation({ className = 'w-6 h-6', alt = '종' }: Props) {
   return (
-    <div className="relative inline-block">
-      {BELL_FRAMES.map((bellFrame, index) => (
-        <img
-          key={index}
-          src={bellFrame.src}
-          alt={index === frame ? alt : ''}
-          className={className}
-          aria-hidden={index !== frame || alt === '종'}
-          loading="eager"
-          fetchPriority="high"
+    <>
+      <style dangerouslySetInnerHTML={{ __html: keyframesCss }} />
+      <div
+        role="img"
+        aria-label={alt}
+        className={`relative overflow-hidden ${className}`}
+      >
+        <div
           style={{
-            position: index === 0 ? 'relative' : 'absolute',
-            top: 0,
-            left: 0,
-            opacity: index === frame ? 1 : 0,
-            pointerEvents: 'none',
-            display: 'block',
+            width: `${FRAME_COUNT * 100}%`,
+            height: '100%',
+            backgroundImage: `url(${bellSprite.src})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%',
+            animation: `bell-sprite-play ${DURATION_S}s steps(${FRAME_COUNT}) ${DELAY_S}s infinite`,
           }}
         />
-      ))}
-    </div>
+      </div>
+    </>
   );
 }
