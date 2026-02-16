@@ -49,10 +49,14 @@ export function PlayingStep() {
             >
               <ProgressBar
                 color="pink"
-                percent={(gameTimer / config.gameTime) * 100}
+                percent={
+                  isGameActive && gameTimer > 0
+                    ? Math.max(0, (gameTimer / config.gameTime) * 100)
+                    : 0
+                }
               />
               <EventCaption1 className="text-game-primary tabular-nums">
-                {`00:${String(Math.ceil(gameTimer) || 0).padStart(2, '0')}`}
+                {`00:${String(Math.floor(Math.max(0, isGameActive ? gameTimer : 0))).padStart(2, '0')}`}
               </EventCaption1>
             </Flex>
           )}
