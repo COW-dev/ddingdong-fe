@@ -24,12 +24,30 @@ export function PlayingStep() {
   const cardSize = getCardSizeStyleForConfig(config);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    if (containerRef.current) containerRef.current.scrollTop = 0;
+  };
 
-    if (containerRef.current) {
-      containerRef.current.scrollTop = 0;
-    }
+  useEffect(() => {
+    scrollToTop();
+    const raf = requestAnimationFrame(() => scrollToTop());
+    const t = setTimeout(scrollToTop, 0);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY !== 0 || document.documentElement.scrollTop !== 0)
+        scrollToTop();
+    };
+    window.addEventListener('scroll', handleScroll, { passive: false });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
@@ -72,7 +90,7 @@ export function PlayingStep() {
       ref={containerRef}
       className="relative flex flex-col overflow-hidden px-4"
       style={{
-        height: 'calc(145dvh - 27rem)',
+        height: 'calc(145dvh - 29rem)',
         touchAction: 'pan-x',
         overflowY: 'hidden',
       }}
@@ -96,7 +114,7 @@ export function PlayingStep() {
             <Flex
               alignItems="center"
               gap={2}
-              className="w-[340px] rounded-full bg-white p-2 px-3 shadow-md"
+              className="w-[328px] rounded-full bg-white p-2 px-3 shadow-md"
             >
               <ProgressBar
                 color="pink"
