@@ -17,7 +17,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
       dir="col"
       alignItems="center"
       gap={6}
-      className="mx-auto min-h-screen w-full max-w-md px-4 pt-24"
+      className="mx-auto min-h-screen w-full max-w-md pt-20"
     >
       <Flex dir="row" justifyContent="end" className="w-full">
         <Link href="/pair_game/guide">
@@ -50,19 +50,31 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
       >
         <Flex dir="col" gap={2}>
           <Flex dir="row" alignItems="center" gap={2}>
-            <Caption1 weight="bold" className="font-school-safety text-gray-600">
+            <Caption1
+              weight="bold"
+              className="font-school-safety text-gray-600"
+            >
               마루의 러브 스토리
             </Caption1>
             <span className="text-game-primary">💌</span>
           </Flex>
           <Flex dir="col" gap={2}>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               마루의 짝사랑녀 마리. 둘의 인연은 같은 동아리에서 시작되었어요.
             </Caption1>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               마리의 마음을 얻으려면 마루가 더욱 표현해야 해요!
             </Caption1>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               마루의 연애가 성공할 수 있도록 명지대 여러분이 도와주세요!
             </Caption1>
           </Flex>
@@ -70,26 +82,41 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
 
         <Flex dir="col" gap={2}>
           <Flex dir="row" alignItems="center" gap={2}>
-            <Caption1 weight="bold" className="font-school-safety text-gray-600">
+            <Caption1
+              weight="bold"
+              className="font-school-safety text-gray-600"
+            >
               플레이 방법
             </Caption1>
             <span>🃏</span>
           </Flex>
           <Flex dir="col" gap={2}>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               <span className="text-game-primary">같은 동아리 카드의 짝</span>을
               맞춰주세요.
             </Caption1>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               단계가 올라갈수록 마리의 마음을 사로잡을 수 있어요.
             </Caption1>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               5개 단계를 모두 클리어하면{' '}
               <span className="text-game-primary">
                 특별한 결말과 상품 응모 기회
               </span>
             </Caption1>
-            <Caption1 className="font-school-safety text-gray-600" weight="normal">
+            <Caption1
+              className="font-school-safety text-gray-600"
+              weight="normal"
+            >
               과연 마루는 그녀의 마음을 사로잡을 수 있을까요?
             </Caption1>
           </Flex>
@@ -103,13 +130,17 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
           onClick={onGameStart}
           className="bg-game-primary py-3"
         >
-          <Caption1 weight="bold" className="font-school-safety">마루 도와주기</Caption1>
+          <Caption1 weight="bold" className="font-school-safety">
+            마루 도와주기
+          </Caption1>
         </Button>
         <Link
           href="/pair_game/prize"
           className="bg-game-secondary flex w-full items-center justify-center rounded-lg py-3"
         >
-          <Caption1 className="font-school-safety text-game-primary">상품 안내</Caption1>
+          <Caption1 className="font-school-safety text-game-primary">
+            상품 안내
+          </Caption1>
         </Link>
         <button
           type="button"

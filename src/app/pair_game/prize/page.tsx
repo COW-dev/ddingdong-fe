@@ -26,20 +26,29 @@ export default function GamePrizePage() {
               alignItems="center"
               className="mb-2 text-center"
             >
-              <Body1 className="font-school-safety text-gray-600">로고 짝 맞추고</Body1>
-              <Body1 weight="bold" className="font-school-safety text-center text-[#00D456]">
+              <Body1 className="font-school-safety text-gray-600">
+                로고 짝 맞추고
+              </Body1>
+              <Body1
+                weight="bold"
+                className="font-school-safety text-center text-[#00D456]"
+              >
                 네이버페이 포인트 <span className="text-gray-600">받자!</span>
               </Body1>
             </Flex>
+
             <OptimizedImage src={naverPaySrc} alt="네이버페이" />
           </section>
 
           <section>
-            <Body3 weight="semibold" className="font-school-safety mb-2 text-gray-600">
+            <Body3
+              weight="semibold"
+              className="font-school-safety mb-2 text-gray-600"
+            >
               상품 안내
             </Body3>
             <Caption1 className="text-gray-600">
-              네이버페이 1만원 권 (10명)
+              네이버페 이 1만원 권 (10명)
             </Caption1>
             <Caption1 className="mt-1 text-gray-300">
               * 5명 씩 양일 간 10명에게 추첨을 통해 지급됩니다.
@@ -47,7 +56,10 @@ export default function GamePrizePage() {
           </section>
 
           <section>
-            <Body3 weight="semibold" className="font-school-safety mb-2 text-gray-600">
+            <Body3
+              weight="semibold"
+              className="font-school-safety mb-2 text-gray-600"
+            >
               응모 자격
             </Body3>
             <Caption1 className="text-gray-600">
@@ -59,7 +71,10 @@ export default function GamePrizePage() {
           </section>
 
           <section>
-            <Body3 weight="semibold" className="font-school-safety mb-2 text-gray-600">
+            <Body3
+              weight="semibold"
+              className="font-school-safety mb-2 text-gray-600"
+            >
               응모 규칙
             </Body3>
             <Caption1 className="text-gray-600">

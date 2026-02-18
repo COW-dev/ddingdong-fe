@@ -19,7 +19,7 @@ export default function GameLayout({ children }: GameLayoutProps) {
       justifyContent="center"
       className="bg-game-tertiary min-h-screen w-full text-gray-800"
     >
-      <Header className="bg-game-tertiary z-25 flex">
+      <Header className="bg-game-tertiary z-25 flex border-b-0">
         <Flex
           dir="row"
           alignItems="center"
