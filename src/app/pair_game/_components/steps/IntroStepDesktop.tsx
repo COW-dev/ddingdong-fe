@@ -1,6 +1,13 @@
 'use client';
 
-import { Body1, Body3, Button, Caption1, Flex, Title3 } from 'ddingdong-design-system';
+import {
+  Body1,
+  Body3,
+  Button,
+  Caption1,
+  Flex,
+  Title3,
+} from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
@@ -72,10 +79,16 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         </Flex>
 
         <Flex dir="col" alignItems="center" gap={1} className="w-full">
-          <Title3 weight="bold" className="font-school-safety text-game-primary text-center">
+          <Title3
+            weight="bold"
+            className="font-school-safety text-game-primary text-center"
+          >
             마루의 사랑을 위해
           </Title3>
-          <Title3 weight="bold" className="font-school-safety text-game-primary text-center">
+          <Title3
+            weight="bold"
+            className="font-school-safety text-game-primary text-center"
+          >
             지금 바로, 게임하고 선물 받아가세요!
           </Title3>
         </Flex>
@@ -97,7 +110,10 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             className="bg-game-secondary w-full max-w-[280px]"
             onClick={onShareLink}
           >
-            <Body3 weight="bold" className="font-school-safety text-game-primary">
+            <Body3
+              weight="bold"
+              className="font-school-safety text-game-primary"
+            >
               게임 링크 공유하기
             </Body3>
           </Button>

@@ -23,7 +23,10 @@ export function CompletedStep({ totalParticipants }: Props) {
         gap={4}
         className="w-full max-w-md rounded-lg bg-pink-50 px-6 py-8"
       >
-        <Body1 weight="bold" className="font-school-safety text-center text-2xl">
+        <Body1
+          weight="bold"
+          className="font-school-safety text-center text-2xl"
+        >
           응모가 완료되었습니다! 🎉
         </Body1>
         <Body2 className="font-school-safety text-center text-[#1F2937]">

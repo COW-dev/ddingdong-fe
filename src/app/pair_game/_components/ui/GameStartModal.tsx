@@ -1,6 +1,14 @@
 'use client';
 
-import { Body1, Body2, Button, Flex, Modal, IconButton, Title2 } from 'ddingdong-design-system';
+import {
+  Body1,
+  Body2,
+  Button,
+  Flex,
+  Modal,
+  IconButton,
+  Title2,
+} from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 

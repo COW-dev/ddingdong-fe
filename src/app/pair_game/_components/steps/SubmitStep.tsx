@@ -75,7 +75,10 @@ export function SubmitStep({ onSubmit }: Props) {
           gap={2}
           className="w-full text-center"
         >
-          <Title1 weight="bold" className="font-school-safety text-game-primary">
+          <Title1
+            weight="bold"
+            className="font-school-safety text-game-primary"
+          >
             상품 응모하기
           </Title1>
           <Caption1 className="font-school-safety text-gray-700">

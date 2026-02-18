@@ -11,6 +11,7 @@ import React, {
   type ReactNode,
 } from 'react';
 
+import { useGameTimer } from '../_hooks/useGameTimer';
 import {
   createCards,
   processCardMatch,
@@ -18,7 +19,6 @@ import {
   type Card as CardType,
 } from '../_utils/cardUtils';
 import { ROUND_CONFIGS, type RoundConfig } from '../_utils/gameConstants';
-import { useGameTimer } from '../_hooks/useGameTimer';
 
 const MATCH_RESOLVE_DELAY_MS = 500;
 const ROUND_COMPLETE_DELAY_MS = 500;
