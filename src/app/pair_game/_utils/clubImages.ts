@@ -5,4 +5,6 @@ export const getClubImageSrc = (clubId: number): string => {
   return '';
 };
 
-export const CLUB_IMAGE_SRCS = CLUB_IDS.map((id) => `/pair_game/clubs/${id}.webp`);
+export const CLUB_IMAGE_SRCS = CLUB_IDS.map(
+  (id) => `/pair_game/clubs/${id}.webp`,
+);

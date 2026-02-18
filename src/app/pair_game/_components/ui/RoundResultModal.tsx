@@ -56,19 +56,29 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
         alignItems="center"
         justifyContent="center"
         gap={4}
-        className="w-full max-w-xs px-4 md:max-w-md"
+        className="w-full max-w-96 px-4 md:max-w-md"
       >
         <Flex dir="col" alignItems="center" className="text-center">
           <span className="border-game-primary text-game-primary mb-2 inline-flex rounded-full border bg-white px-3 py-1">
-            <Caption1 as="span" className="font-school-safety text-game-primary">
+            <Caption1
+              as="span"
+              className="font-school-safety text-game-primary"
+            >
               {success ? `${stage}단계 클리어` : `${stage}단계 실패`}
             </Caption1>
           </span>
-          <Body1 weight="bold" className="font-school-safety py-1 text-gray-600">
+          <Body1
+            weight="bold"
+            className="font-school-safety py-1 text-gray-600"
+          >
             {content.title}
           </Body1>
           {content.lines.map((line: string, i: number) => (
-            <Caption1 weight="normal" key={i} className="font-school-safety text-gray-600">
+            <Caption1
+              weight="normal"
+              key={i}
+              className="font-school-safety text-gray-600"
+            >
               {line}
             </Caption1>
           ))}
