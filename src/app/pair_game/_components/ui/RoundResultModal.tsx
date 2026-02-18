@@ -1,22 +1,22 @@
 'use client';
 
 import {
+  Body1,
   Button,
+  Caption1,
   DoubleButton,
   Flex,
   Modal,
-  Caption1,
 } from 'ddingdong-design-system';
 
 import {
   useRoundResultModal,
   type RoundResultModalAction,
 } from '../../_hooks/useRoundResultModal';
+
 const brokenHeartImageSrc = '/pair_game/broken_heart.webp';
 const emptyHeartImageSrc = '/pair_game/empty_heart.webp';
 const filledHeartImageSrc = '/pair_game/filled_heart.webp';
-
-import { EventBody1, EventCaption2, EventCaption3 } from './EventTypography';
 
 export type { RoundResultModalAction };
 
@@ -60,17 +60,17 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
       >
         <Flex dir="col" alignItems="center" className="text-center">
           <span className="border-game-primary text-game-primary mb-2 inline-flex rounded-full border bg-white px-3 py-1">
-            <EventCaption3 as="span" className="text-game-primary">
+            <Caption1 as="span" className="font-school-safety text-game-primary">
               {success ? `${stage}단계 클리어` : `${stage}단계 실패`}
-            </EventCaption3>
+            </Caption1>
           </span>
-          <EventBody1 weight="bold" className="py-1 text-gray-600">
+          <Body1 weight="bold" className="font-school-safety py-1 text-gray-600">
             {content.title}
-          </EventBody1>
-          {content.lines.map((line, i) => (
-            <EventCaption2 weight="normal" key={i} className="text-gray-600">
+          </Body1>
+          {content.lines.map((line: string, i: number) => (
+            <Caption1 weight="normal" key={i} className="font-school-safety text-gray-600">
               {line}
-            </EventCaption2>
+            </Caption1>
           ))}
         </Flex>
 

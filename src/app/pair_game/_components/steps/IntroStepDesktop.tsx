@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Flex } from 'ddingdong-design-system';
+import { Body1, Body3, Button, Caption1, Flex, Title3 } from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
@@ -9,12 +9,6 @@ const cheerMaruMariSrc = '/pair_game/cheer_maru_mari.webp';
 const heartMariImageSrc = '/pair_game/heart_mari.webp';
 const qrCodeImageSrc = '/pair_game/qr_code.webp';
 const rideMaruImageSrc = '/pair_game/ride_maru.webp';
-import {
-  EventBody1,
-  EventBody3,
-  EventCaption1,
-  EventTitle3,
-} from '../ui/EventTypography';
 
 type Props = {
   onShareLink: () => void;
@@ -29,15 +23,15 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         className="relative z-10 mx-auto min-h-screen w-full max-w-md gap-12"
       >
         <Flex dir="col" alignItems="center" gap={1} className="w-full">
-          <EventTitle3
+          <Title3
             weight="bold"
-            className="text-game-primary text-center text-2xl"
+            className="font-school-safety text-game-primary text-center text-2xl"
           >
             마리의 마음을 쟁취하라!
-          </EventTitle3>
-          <EventBody3 className="text-center text-gray-600">
+          </Title3>
+          <Body3 className="font-school-safety text-center text-gray-600">
             동아리 카드 짝 맞추기 게임
-          </EventBody3>
+          </Body3>
         </Flex>
 
         <Flex
@@ -47,28 +41,28 @@ export function IntroStepDesktop({ onShareLink }: Props) {
           gap={4}
           className="bg-game-secondary/60 w-full rounded-lg p-4"
         >
-          <EventBody1 weight="bold" className="text-game-primary">
+          <Body1 weight="bold" className="font-school-safety text-game-primary">
             마루의 러브 스토리 💌
-          </EventBody1>
+          </Body1>
           <Flex dir="col" alignItems="center" gap={2} className="text-center">
-            <EventCaption1
-              className="whitespace-nowrap text-gray-600"
-              weight={400}
+            <Caption1
+              className="font-school-safety whitespace-nowrap text-gray-600"
+              weight="normal"
             >
               마루의 짝사랑녀 마리. 둘의 인연은 같은 동아리에서 시작되었어요.
-            </EventCaption1>
-            <EventCaption1
-              className="whitespace-nowrap text-gray-600"
-              weight={400}
+            </Caption1>
+            <Caption1
+              className="font-school-safety whitespace-nowrap text-gray-600"
+              weight="normal"
             >
               마리의 마음을 얻으려면 마루가 더욱 표현해야 해요!
-            </EventCaption1>
-            <EventCaption1
-              className="whitespace-nowrap text-gray-600"
-              weight={400}
+            </Caption1>
+            <Caption1
+              className="font-school-safety whitespace-nowrap text-gray-600"
+              weight="normal"
             >
               마루의 연애가 성공할 수 있도록 명지대 여러분이 도와주세요!
-            </EventCaption1>
+            </Caption1>
             <OptimizedImage
               width={200}
               src={cheerMaruMariSrc}
@@ -78,12 +72,12 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         </Flex>
 
         <Flex dir="col" alignItems="center" gap={1} className="w-full">
-          <EventTitle3 weight="bold" className="text-game-primary text-center">
+          <Title3 weight="bold" className="font-school-safety text-game-primary text-center">
             마루의 사랑을 위해
-          </EventTitle3>
-          <EventTitle3 weight="bold" className="text-game-primary text-center">
+          </Title3>
+          <Title3 weight="bold" className="font-school-safety text-game-primary text-center">
             지금 바로, 게임하고 선물 받아가세요!
-          </EventTitle3>
+          </Title3>
         </Flex>
 
         <Flex dir="col" alignItems="center" gap={5} className="w-full">
@@ -103,9 +97,9 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             className="bg-game-secondary w-full max-w-[280px]"
             onClick={onShareLink}
           >
-            <EventBody3 weight="bold" className="text-game-primary">
+            <Body3 weight="bold" className="font-school-safety text-game-primary">
               게임 링크 공유하기
-            </EventBody3>
+            </Body3>
           </Button>
         </Flex>
 

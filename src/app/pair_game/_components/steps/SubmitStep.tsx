@@ -10,11 +10,10 @@ import {
   Flex,
   Input,
   Select,
+  Title1,
 } from 'ddingdong-design-system';
 
 import { departmentInfo } from '@/constants/department';
-
-import { EventCaption2, EventTitle1 } from '../ui/EventTypography';
 
 const departments = Object.values(departmentInfo).flat();
 
@@ -76,12 +75,12 @@ export function SubmitStep({ onSubmit }: Props) {
           gap={2}
           className="w-full text-center"
         >
-          <EventTitle1 weight="bold" className="text-game-primary">
+          <Title1 weight="bold" className="font-school-safety text-game-primary">
             상품 응모하기
-          </EventTitle1>
-          <EventCaption2 className="text-gray-700">
+          </Title1>
+          <Caption1 className="font-school-safety text-gray-700">
             마루가 준비한 선물을 전달하기 위해 정보를 입력해주세요
-          </EventCaption2>
+          </Caption1>
         </Flex>
 
         <Flex

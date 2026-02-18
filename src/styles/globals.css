@@ -41,6 +41,8 @@
   --color-game-primary: #ff507d;
   --color-game-secondary: #ffe7ed;
   --color-game-tertiary: #fff9fb;
+
+  --font-school-safety: 'SchoolSafetyRoundedSmile', sans-serif;
 }
 
 html {

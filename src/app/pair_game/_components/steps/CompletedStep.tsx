@@ -1,8 +1,6 @@
 'use client';
 
-import { Flex } from 'ddingdong-design-system';
-
-import { EventBody1, EventBody2 } from '../ui/EventTypography';
+import { Body1, Body2, Flex } from 'ddingdong-design-system';
 
 type Props = {
   totalParticipants: number;
@@ -25,12 +23,12 @@ export function CompletedStep({ totalParticipants }: Props) {
         gap={4}
         className="w-full max-w-md rounded-lg bg-pink-50 px-6 py-8"
       >
-        <EventBody1 weight="bold" className="text-center text-2xl">
+        <Body1 weight="bold" className="font-school-safety text-center text-2xl">
           응모가 완료되었습니다! 🎉
-        </EventBody1>
-        <EventBody2 className="text-center text-[#1F2937]">
+        </Body1>
+        <Body2 className="font-school-safety text-center text-[#1F2937]">
           현재까지 {totalParticipants}명이 응모했어요.
-        </EventBody2>
+        </Body2>
       </Flex>
     </Flex>
   );

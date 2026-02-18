@@ -1,12 +1,10 @@
 'use client';
 
-import { Button, Flex, Modal, IconButton } from 'ddingdong-design-system';
+import { Body1, Body2, Button, Flex, Modal, IconButton, Title2 } from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 const maruMariImageSrc = '/pair_game/maru_mari.webp';
-
-import { EventBody1, EventTitle2, EventBody2 } from './EventTypography';
 
 type Props = {
   isOpen: boolean;
@@ -38,12 +36,12 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
           <div className="w-[24px]" />
 
           <div className="flex-1 text-center">
-            <EventTitle2 className="text-game-primary whitespace-nowrap">
+            <Title2 className="font-school-safety text-game-primary whitespace-nowrap">
               마리의 마음을 쟁취하라!
-            </EventTitle2>
-            <EventBody2 className="text-[#1F2937]">
+            </Title2>
+            <Body2 className="font-school-safety text-[#1F2937]">
               동아리 카드 짝 맞추기 게임 도전!
-            </EventBody2>
+            </Body2>
           </div>
 
           <IconButton
@@ -66,9 +64,9 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
           className="bg-game-primary relative z-10"
           onClick={onGameStart}
         >
-          <EventBody1 weight="bold" className="text-white">
+          <Body1 weight="bold" className="font-school-safety text-white">
             게임하고 상품 받기
-          </EventBody1>
+          </Body1>
         </Button>
       </Flex>
     </Modal>

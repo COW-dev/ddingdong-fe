@@ -2,14 +2,13 @@
 
 import { useEffect, useRef } from 'react';
 
-import { Flex, ProgressBar } from 'ddingdong-design-system';
+import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 
 import { usePairGamePlaying } from '../../_contexts/PairGamePlayingContext';
 import { getCardSizeStyleForConfig } from '../../_utils/gameConstants';
 import { BellAnimation } from '../ui/BellAnimation';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 import { EventCard } from '../ui/EventCard';
-import { EventCaption3, EventCaption1 } from '../ui/EventTypography';
 
 export function PlayingStep() {
   const {
@@ -86,12 +85,12 @@ export function PlayingStep() {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center">
                 <BellAnimation className="h-6 w-6" />
               </span>
-              <EventCaption3
+              <Caption1
                 as="span"
-                className="text-game-primary flex items-center text-[14px] leading-none md:text-[16px]"
+                className="font-school-safety text-game-primary flex items-center text-[14px] leading-none md:text-[16px]"
               >
                 {Math.ceil(previewTimer) || 0}초
-              </EventCaption3>
+              </Caption1>
             </span>
           ) : (
             <Flex
@@ -107,9 +106,9 @@ export function PlayingStep() {
                     : 0
                 }
               />
-              <EventCaption1 className="text-game-primary tabular-nums">
+              <Caption1 className="font-school-safety text-game-primary tabular-nums">
                 {`00:${String(Math.floor(Math.max(0, isGameActive ? gameTimer : 0))).padStart(2, '0')}`}
-              </EventCaption1>
+              </Caption1>
             </Flex>
           )}
         </Flex>
