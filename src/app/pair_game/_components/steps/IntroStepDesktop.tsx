@@ -4,11 +4,11 @@ import { Button, Flex } from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import bridgeImage from '../../Img/bridge.webp';
-import cheerMaruMari from '../../Img/cheer_maru_mari.webp';
-import heartMariImage from '../../Img/heart_mari.webp';
-import qrCodeImage from '../../Img/qr_code.webp';
-import rideMaruImage from '../../Img/ride_maru.webp';
+const bridgeImageSrc = '/pair_game/bridge.webp';
+const cheerMaruMariSrc = '/pair_game/cheer_maru_mari.webp';
+const heartMariImageSrc = '/pair_game/heart_mari.webp';
+const qrCodeImageSrc = '/pair_game/qr_code.webp';
+const rideMaruImageSrc = '/pair_game/ride_maru.webp';
 import {
   EventBody1,
   EventBody3,
@@ -71,7 +71,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             </EventCaption1>
             <OptimizedImage
               width={200}
-              src={cheerMaruMari.src}
+              src={cheerMaruMariSrc}
               alt="응원하는 마루와 마리"
             />
           </Flex>
@@ -89,7 +89,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         <Flex dir="col" alignItems="center" gap={5} className="w-full">
           <div className="flex h-[250px] w-[250px] items-center justify-center rounded-lg bg-gray-200">
             <OptimizedImage
-              src={qrCodeImage.src}
+              src={qrCodeImageSrc}
               alt="게임 링크 QR 코드"
               width={250}
               height={250}
@@ -112,26 +112,26 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         <div className="pointer-events-none relative mt-auto w-screen">
           <div className="relative flex w-full flex-row pt-30">
             <OptimizedImage
-              src={bridgeImage.src}
+              src={bridgeImageSrc}
               alt="bridge1"
               className="w-1/2 min-w-0 flex-1 object-contain object-bottom"
               priority
             />
             <OptimizedImage
-              src={bridgeImage.src}
+              src={bridgeImageSrc}
               alt="bridge2"
               className="w-1/2 min-w-0 flex-1 object-contain object-bottom"
               priority
             />
             <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between px-[8%] pb-[5%]">
               <OptimizedImage
-                src={rideMaruImage.src}
+                src={rideMaruImageSrc}
                 alt="마루"
                 className="h-auto w-[28%] max-w-[140px] -scale-x-100 object-contain object-bottom"
                 priority
               />
               <OptimizedImage
-                src={heartMariImage.src}
+                src={heartMariImageSrc}
                 alt="마리"
                 className="h-auto w-[14%] max-w-[70px] -scale-x-100 object-contain object-bottom"
                 priority

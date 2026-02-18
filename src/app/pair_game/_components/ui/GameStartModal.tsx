@@ -4,7 +4,7 @@ import { Button, Flex, Modal, IconButton } from 'ddingdong-design-system';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import maruMariImage from '../../Img/maru_mari.webp';
+const maruMariImageSrc = '/pair_game/maru_mari.webp';
 
 import { EventBody1, EventTitle2, EventBody2 } from './EventTypography';
 
@@ -56,7 +56,7 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
 
         <div className="min-h-[200px] w-full" aria-hidden />
         <OptimizedImage
-          src={maruMariImage.src}
+          src={maruMariImageSrc}
           alt="마루와 마리"
           className="absolute top-3/5 left-1/2 z-0 w-full max-w-[280px] -translate-x-1/2 -translate-y-1/2 object-contain"
         />

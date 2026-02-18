@@ -2,7 +2,7 @@
 
 import { getClubImageSrc } from '../../_utils/clubImages';
 import { getCategoryCardStyle } from '../../_utils/gameConstants';
-import cardBackImage from '../../Img/card.webp';
+const cardBackSrc = '/pair_game/card.webp';
 
 type Props = {
   clubId: number;
@@ -15,9 +15,6 @@ type Props = {
   width?: number | string;
   height?: number | string;
 };
-
-const cardBackSrc =
-  typeof cardBackImage === 'string' ? cardBackImage : cardBackImage.src;
 
 const DEFAULT_SIZE = { width: 80, height: 105 };
 

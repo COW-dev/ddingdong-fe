@@ -7,7 +7,7 @@ import { SubmitStep } from './_components/steps/SubmitStep';
 import { RoundResultModal } from './_components/ui/RoundResultModal';
 import { GameFunnelProvider } from './_contexts/GameFunnelContext';
 import { PairGamePlayingProvider } from './_contexts/PairGamePlayingContext';
-import { usePairGamePage } from './hooks/usePairGamePage';
+import { usePairGamePage } from './_hooks/usePairGamePage';
 
 function GamePageContent() {
   const {

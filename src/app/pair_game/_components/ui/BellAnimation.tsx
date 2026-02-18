@@ -1,6 +1,6 @@
 'use client';
 
-import bellSprite from '../../Img/bell-sprite.webp';
+const BELL_SPRITE_SRC = '/pair_game/bell-sprite.webp';
 
 const FRAME_COUNT = 10;
 const DURATION_S = 1.0;
@@ -31,7 +31,7 @@ export function BellAnimation({ className = 'w-6 h-6', alt = '종' }: Props) {
           style={{
             width: `${FRAME_COUNT * 100}%`,
             height: '100%',
-            backgroundImage: `url(${bellSprite.src})`,
+            backgroundImage: `url(${BELL_SPRITE_SRC})`,
             backgroundRepeat: 'no-repeat',
             backgroundSize: '100% 100%',
             animation: `bell-sprite-play ${DURATION_S}s steps(${FRAME_COUNT}) ${DELAY_S}s infinite`,

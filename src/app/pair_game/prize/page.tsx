@@ -8,7 +8,7 @@ import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
 import { EventBody1, EventBody3 } from '../_components/ui/EventTypography';
-import naverPay from '../Img/naver_pay.webp';
+const naverPaySrc = '/pair_game/naver_pay.webp';
 
 export default function GamePrizePage() {
   const router = useRouter();
@@ -31,7 +31,7 @@ export default function GamePrizePage() {
                 네이버페이 포인트 <span className="text-gray-600">받자!</span>
               </EventBody1>
             </Flex>
-            <OptimizedImage src={naverPay.src} alt="네이버페이" />
+            <OptimizedImage src={naverPaySrc} alt="네이버페이" />
           </section>
 
           <section>
