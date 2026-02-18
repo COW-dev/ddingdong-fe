@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 
@@ -22,23 +22,26 @@ export function PlayingStep() {
   } = usePairGamePlaying();
 
   const cardSize = getCardSizeStyleForConfig(config);
-  const containerRef = useRef<HTMLDivElement>(null);
+
+  const { displaySeconds, progressPercent } = useMemo(() => {
+    const totalSeconds = config.gameTime;
+    const remainingSeconds = Math.max(0, isGameActive ? gameTimer : 0);
+    const percent =
+      totalSeconds > 0 ? (remainingSeconds / totalSeconds) * 100 : 0;
+    return {
+      displaySeconds: Math.floor(remainingSeconds),
+      progressPercent: percent,
+    };
+  }, [isGameActive, gameTimer, config.gameTime]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
-    if (containerRef.current) containerRef.current.scrollTop = 0;
   };
 
   useEffect(() => {
     scrollToTop();
-    const raf = requestAnimationFrame(() => scrollToTop());
-    const t = setTimeout(scrollToTop, 0);
-    return () => {
-      cancelAnimationFrame(raf);
-      clearTimeout(t);
-    };
   }, []);
 
   useEffect(() => {
@@ -57,13 +60,8 @@ export function PlayingStep() {
     if (!container) return;
 
     const preventScroll = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-
       const target = e.target as HTMLElement;
-      if (container.contains(target)) {
-        e.preventDefault();
-      }
+      if (container.contains(target)) e.preventDefault();
     };
 
     const preventWheel = (e: WheelEvent) => {
@@ -87,7 +85,6 @@ export function PlayingStep() {
 
   return (
     <div
-      ref={containerRef}
       className="relative flex flex-col overflow-hidden px-4"
       style={{
         height: 'calc(145dvh - 29rem)',
@@ -114,18 +111,17 @@ export function PlayingStep() {
             <Flex
               alignItems="center"
               gap={2}
-              className="w-[328px] rounded-full bg-white p-2 px-3 shadow-md"
+              className="w-[330px] rounded-full bg-white p-2 px-3 shadow-md"
             >
-              <ProgressBar
-                color="pink"
-                percent={
-                  isGameActive && gameTimer > 0
-                    ? Math.max(0, (gameTimer / config.gameTime) * 100)
-                    : 0
+              <div
+                className={
+                  progressPercent > 0 ? '[&>div>div]:!duration-75' : ''
                 }
-              />
+              >
+                <ProgressBar color="pink" percent={progressPercent} />
+              </div>
               <Caption1 className="font-school-safety text-game-primary tabular-nums">
-                {`00:${String(Math.floor(Math.max(0, isGameActive ? gameTimer : 0))).padStart(2, '0')}`}
+                {`00:${String(displaySeconds).padStart(2, '0')}`}
               </Caption1>
             </Flex>
           )}
