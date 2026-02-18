@@ -46,4 +46,12 @@ export const navItems: {
       content: '인스타그램',
     },
   ],
+
+  '동아리 박람회 이벤트': [
+    {
+      id: 7,
+      href: '/pair_game',
+      content: '동아리 카드 짝 맞추기 게임',
+    },
+  ],
 };
