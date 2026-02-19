@@ -1,5 +1,4 @@
 import InstaImage from '@/assets/InstaImage.svg';
-import KaKaoImage from '@/assets/kakaoImage.svg';
 
 export const navItems: {
   [key: string]: {
@@ -32,16 +31,10 @@ export const navItems: {
       href: '/feeds',
     },
   ],
-  SNS: [
+  인스타그램: [
     {
       id: 5,
-      href: 'https://pf.kakao.com/_Fvdwn',
-      image: KaKaoImage,
-      content: '카카오톡',
-    },
-    {
-      id: 6,
-      href: 'https://www.instagram.com/mju_mode?igsh=cGNxM29sMHd6dzVy',
+      href: 'https://www.instagram.com/mju_so.one?igsh=MWYyeTJmNXRodGdpcA%3D%3D&utm_source=qr',
       image: InstaImage,
       content: '인스타그램',
     },
