@@ -62,37 +62,54 @@ export function PlayingStep() {
   }, []);
 
   useEffect(() => {
-    const container = document.querySelector(
-      '[data-playing-step]',
-    ) as HTMLElement;
-    if (!container) return;
+    const body = document.body;
+    const html = document.documentElement;
+    const scrollY = window.scrollY;
 
-    const preventScroll = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-
-      const target = e.target as HTMLElement;
-      if (container.contains(target)) {
-        e.preventDefault();
-      }
-    };
-
-    const preventWheel = (e: WheelEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        container.contains(target) &&
-        Math.abs(e.deltaY) > Math.abs(e.deltaX)
-      ) {
-        e.preventDefault();
-      }
-    };
-
-    document.addEventListener('touchmove', preventScroll, { passive: false });
-    document.addEventListener('wheel', preventWheel, { passive: false });
+    body.style.overflow = 'hidden';
+    body.style.position = 'fixed';
+    body.style.top = `-${scrollY}px`;
+    body.style.left = '0';
+    body.style.right = '0';
+    html.style.overflow = 'hidden';
 
     return () => {
-      document.removeEventListener('touchmove', preventScroll);
-      document.removeEventListener('wheel', preventWheel);
+      body.style.overflow = '';
+      body.style.position = '';
+      body.style.top = '';
+      body.style.left = '';
+      body.style.right = '';
+      html.style.overflow = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, []);
+
+  useEffect(() => {
+    let touchStartY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0]?.clientY ?? 0;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+      const deltaY = Math.abs(touch.clientY - touchStartY);
+      if (deltaY > 10) e.preventDefault();
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) e.preventDefault();
+    };
+
+    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      document.removeEventListener('touchstart', handleTouchStart);
+      document.removeEventListener('touchmove', handleTouchMove);
+      document.removeEventListener('wheel', handleWheel);
     };
   }, []);
 
@@ -102,8 +119,8 @@ export function PlayingStep() {
       className="relative flex flex-col overflow-hidden px-4"
       style={{
         height: 'calc(150dvh - 29rem)',
-        touchAction: 'pan-x',
-        overflowY: 'hidden',
+        touchAction: 'manipulation',
+        overflow: 'hidden',
       }}
       data-playing-step
     >

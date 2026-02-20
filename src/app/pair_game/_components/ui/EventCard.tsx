@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+
 import { getClubImageSrc } from '../../_utils/clubImages';
 import { getCategoryCardStyle } from '../../_utils/gameConstants';
 const cardBackSrc = '/pair_game/card.webp';
@@ -32,11 +34,15 @@ export function EventCard({
   const style = getCategoryCardStyle(category);
   const imageSrc = getClubImageSrc(clubId);
   const isFlippedOrMatched = isFlipped || isMatched;
+  const lastTapRef = useRef(0);
 
   const widthStyle = typeof width === 'string' ? width : `${width}px`;
   const heightStyle = typeof height === 'string' ? height : `${height}px`;
 
-  const handlePointerUp = () => {
+  const handleTap = () => {
+    const now = Date.now();
+    if (now - lastTapRef.current < 300) return;
+    lastTapRef.current = now;
     if (isDisabled) return;
     onClick();
   };
@@ -52,16 +58,20 @@ export function EventCard({
     >
       <button
         type="button"
-        onPointerUp={handlePointerUp}
+        onClick={handleTap}
+        onPointerUp={handleTap}
         disabled={isDisabled}
-        className={`relative h-full w-full transition-transform duration-500 ${
-          isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+        className={`relative h-full w-full select-none transition-transform duration-300 ${
+          isDisabled ? 'cursor-not-allowed' : 'cursor-pointer active:scale-[0.98]'
         }`}
         style={{
           transformStyle: 'preserve-3d',
           transform: isFlippedOrMatched ? 'rotateY(180deg)' : 'rotateY(0deg)',
           touchAction: 'manipulation',
           WebkitTapHighlightColor: 'transparent',
+          WebkitTouchCallout: 'none',
+          minHeight: 44,
+          minWidth: 44,
         }}
       >
         <div
