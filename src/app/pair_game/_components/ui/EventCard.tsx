@@ -61,8 +61,10 @@ export function EventCard({
         onClick={handleTap}
         onPointerUp={handleTap}
         disabled={isDisabled}
-        className={`relative h-full w-full select-none transition-transform duration-300 ${
-          isDisabled ? 'cursor-not-allowed' : 'cursor-pointer active:scale-[0.98]'
+        className={`relative h-full w-full transition-transform duration-300 select-none ${
+          isDisabled
+            ? 'cursor-not-allowed'
+            : 'cursor-pointer active:scale-[0.98]'
         }`}
         style={{
           transformStyle: 'preserve-3d',

@@ -102,7 +102,9 @@ export function PlayingStep() {
       if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) e.preventDefault();
     };
 
-    document.addEventListener('touchstart', handleTouchStart, { passive: true });
+    document.addEventListener('touchstart', handleTouchStart, {
+      passive: true,
+    });
     document.addEventListener('touchmove', handleTouchMove, { passive: false });
     document.addEventListener('wheel', handleWheel, { passive: false });
 
