@@ -14,7 +14,7 @@ export default function GamePrizePage() {
   const router = useRouter();
 
   return (
-    <Flex dir="col" className="min-h-screen px-4 pt-24">
+    <Flex dir="col" className="min-h-screen pt-24">
       <Flex dir="col" className="mx-auto w-full max-w-md flex-1">
         <NavBack title="상품 안내" size="sm" onClick={() => router.back()} />
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 
@@ -22,6 +22,7 @@ export function PlayingStep() {
   } = usePairGamePlaying();
 
   const cardSize = getCardSizeStyleForConfig(config);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const { displaySeconds, progressPercent } = useMemo(() => {
     const totalSeconds = config.gameTime;
@@ -38,10 +39,17 @@ export function PlayingStep() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
+    if (containerRef.current) containerRef.current.scrollTop = 0;
   };
 
   useEffect(() => {
     scrollToTop();
+    const raf = requestAnimationFrame(() => scrollToTop());
+    const t = setTimeout(scrollToTop, 0);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {
@@ -60,8 +68,13 @@ export function PlayingStep() {
     if (!container) return;
 
     const preventScroll = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (!touch) return;
+
       const target = e.target as HTMLElement;
-      if (container.contains(target)) e.preventDefault();
+      if (container.contains(target)) {
+        e.preventDefault();
+      }
     };
 
     const preventWheel = (e: WheelEvent) => {
@@ -85,9 +98,10 @@ export function PlayingStep() {
 
   return (
     <div
+      ref={containerRef}
       className="relative flex flex-col overflow-hidden px-4"
       style={{
-        height: 'calc(145dvh - 29rem)',
+        height: 'calc(150dvh - 29rem)',
         touchAction: 'pan-x',
         overflowY: 'hidden',
       }}
