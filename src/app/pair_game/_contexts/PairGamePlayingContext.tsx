@@ -20,7 +20,7 @@ import {
 } from '../_utils/cardUtils';
 import { ROUND_CONFIGS, type RoundConfig } from '../_utils/gameConstants';
 
-const MATCH_RESOLVE_DELAY_MS = 500;
+const MATCH_RESOLVE_DELAY_MS = 0;
 const ROUND_COMPLETE_DELAY_MS = 500;
 
 type PairGamePlayingContextValue = {
