@@ -66,6 +66,7 @@ export function EventCard({
         style={{
           transformStyle: 'preserve-3d',
           transform: isFlippedOrMatched ? 'rotateY(180deg)' : 'rotateY(0deg)',
+          transitionDuration: '500ms',
           touchAction: 'manipulation',
           WebkitTapHighlightColor: 'transparent',
           WebkitTouchCallout: 'none',
