@@ -1,7 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
-
 import { getClubImageSrc } from '../../_utils/clubImages';
 import { getCategoryCardStyle } from '../../_utils/gameConstants';
 const cardBackSrc = '/pair_game/card.webp';
@@ -34,16 +32,16 @@ export function EventCard({
   const style = getCategoryCardStyle(category);
   const imageSrc = getClubImageSrc(clubId);
   const isFlippedOrMatched = isFlipped || isMatched;
-  const lastTapRef = useRef(0);
 
   const widthStyle = typeof width === 'string' ? width : `${width}px`;
   const heightStyle = typeof height === 'string' ? height : `${height}px`;
 
-  const handleTap = () => {
-    const now = Date.now();
-    if (now - lastTapRef.current < 300) return;
-    lastTapRef.current = now;
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
     if (isDisabled) return;
+    if (e.pointerType === 'touch' && !e.isPrimary) return;
+    if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+      navigator.vibrate(15);
+    }
     onClick();
   };
 
@@ -58,8 +56,7 @@ export function EventCard({
     >
       <button
         type="button"
-        onClick={handleTap}
-        onPointerUp={handleTap}
+        onPointerDown={handlePointerDown}
         disabled={isDisabled}
         className={`relative h-full w-full transition-transform duration-500 select-none ${
           isDisabled
