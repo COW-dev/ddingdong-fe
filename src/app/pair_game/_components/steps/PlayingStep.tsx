@@ -144,7 +144,7 @@ export function PlayingStep() {
             <Flex
               alignItems="center"
               gap={2}
-              className="w-[330px] rounded-full bg-white p-2 px-3 shadow-md"
+              className="w-[335px] rounded-full bg-white p-2 px-3 shadow-md"
             >
               <div
                 className={
