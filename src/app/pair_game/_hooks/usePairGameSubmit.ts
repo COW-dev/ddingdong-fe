@@ -19,7 +19,9 @@ const INIT: SubmitFormValues = {
   phoneNumber: '',
 };
 
-export const usePairGameSubmit = (onSubmit: (data: SubmitFormValues) => void) => {
+export const usePairGameSubmit = (
+  onSubmit: (data: SubmitFormValues) => void,
+) => {
   const [formData, setFormData] = useState<SubmitFormValues>(INIT);
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const { mutate: createApplier, isPending } = useCreatePairGameApplier();

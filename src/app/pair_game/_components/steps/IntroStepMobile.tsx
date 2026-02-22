@@ -10,9 +10,14 @@ import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 type Props = {
   onGameStart: () => void;
   onShareLink: () => void;
+  animateMaru?: boolean;
 };
 
-export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
+export function IntroStepMobile({
+  onGameStart,
+  onShareLink,
+  animateMaru,
+}: Props) {
   return (
     <Flex
       dir="col"
@@ -152,7 +157,11 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         </button>
       </Flex>
 
-      <BridgeMaruMari className="relative bottom-0 mt-auto w-screen pt-5" />
+      <BridgeMaruMari
+        className="relative bottom-0 mt-auto w-screen pt-15"
+        animateMaru={animateMaru}
+        driveDistance="53vw"
+      />
     </Flex>
   );
 }

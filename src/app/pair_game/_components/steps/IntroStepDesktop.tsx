@@ -18,8 +18,41 @@ type Props = {
 };
 
 export function IntroStepDesktop({ onShareLink }: Props) {
+  const floatingHearts = [
+    { left: '6%', top: '10%', size: '40px', delay: '0s', duration: '7s' },
+    { left: '18%', top: '55%', size: '40px', delay: '1.2s', duration: '6.2s' },
+    { left: '32%', top: '30%', size: '40px', delay: '0.6s', duration: '7.8s' },
+    { left: '48%', top: '70%', size: '40px', delay: '2s', duration: '6.4s' },
+    { left: '62%', top: '18%', size: '40px', delay: '1.6s', duration: '7.2s' },
+    { left: '74%', top: '48%', size: '40px', delay: '0.8s', duration: '6.6s' },
+    { left: '86%', top: '65%', size: '40px', delay: '2.4s', duration: '7.4s' },
+    { left: '40%', top: '85%', size: '40px', delay: '1.8s', duration: '6.8s' },
+  ];
+
   return (
     <div className="relative min-h-screen w-full pt-5">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {floatingHearts.map((heart, index) => (
+          <OptimizedImage
+            key={`floating-heart-${index}`}
+            src={GAME_IMAGES.background_heart}
+            alt=""
+            aria-hidden
+            width={40}
+            height={40}
+            className="floating-heart z-0"
+            style={
+              {
+                left: heart.left,
+                top: heart.top,
+                '--float-size': heart.size,
+                '--float-delay': heart.delay,
+                '--float-duration': heart.duration,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </div>
       <Flex
         dir="col"
         alignItems="center"
@@ -133,13 +166,18 @@ export function IntroStepDesktop({ onShareLink }: Props) {
               <OptimizedImage
                 src={GAME_IMAGES.ride_maru}
                 alt="마루"
-                className="h-auto w-[28%] max-w-[140px] -scale-x-100 object-contain object-bottom"
+                className="maru-slow-drive h-auto w-[28%] max-w-[140px] object-contain object-bottom"
+                style={
+                  {
+                    '--maru-drive-distance': '70vw',
+                  } as React.CSSProperties
+                }
                 priority
               />
               <OptimizedImage
                 src={GAME_IMAGES.heart_mari}
                 alt="마리"
-                className="h-auto w-[14%] max-w-[70px] -scale-x-100 object-contain object-bottom"
+                className="h-auto w-[14%] max-w-[70px] -scale-x-100 object-contain object-bottom pb-3"
                 priority
               />
             </div>

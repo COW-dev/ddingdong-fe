@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from 'react';
 
+import { shareCurrentLink } from '../../_utils/shareLink';
 import { GameSkeleton } from '../ui/GameSkeleton';
 
 import { IntroStepDesktop } from './IntroStepDesktop';
 import { IntroStepMobile } from './IntroStepMobile';
-import { shareCurrentLink } from '../../_utils/shareLink';
 
 function getShouldUseMobileLayout(): boolean {
   if (typeof navigator === 'undefined') return false;
@@ -39,6 +39,10 @@ export function IntroStep({ onGameStart }: Props) {
   }
 
   return (
-    <IntroStepMobile onGameStart={onGameStart} onShareLink={handleShareLink} />
+    <IntroStepMobile
+      onGameStart={onGameStart}
+      onShareLink={handleShareLink}
+      animateMaru
+    />
   );
 }
