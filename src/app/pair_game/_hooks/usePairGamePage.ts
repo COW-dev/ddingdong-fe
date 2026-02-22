@@ -4,7 +4,10 @@ import { useSearchParams } from 'next/navigation';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import { useQuery } from '@tanstack/react-query';
 import { usePortal } from 'ddingdong-design-system';
+
+import { pairGameQueryOptions } from '@/app/_api/queries/pair_game';
 
 import { useGameFunnel } from '../_contexts/GameFunnelContext';
 import { PAIR_GAME_PATH } from '../_utils/gameImages';
@@ -25,7 +28,10 @@ export const usePairGamePage = () => {
   const [gameKey, setGameKey] = useState(0);
   const [heartModalStage, setHeartModalStage] = useState(1);
   const [heartModalSuccess, setHeartModalSuccess] = useState(false);
-  const [totalParticipants, setTotalParticipants] = useState(0);
+  const { data: appliersAmount } = useQuery({
+    ...pairGameQueryOptions.appliersAmount(),
+  });
+  const totalParticipants = appliersAmount?.amount ?? 0;
 
   const roundResultModalRef = useRef<{
     setResult: (stage: number, success: boolean) => void;
@@ -41,9 +47,20 @@ export const usePairGamePage = () => {
 
   useEffect(() => {
     const stepFromUrl = searchParams.get('step');
-    if (stepFromUrl === 'submit' && step !== 'submit') {
-      window.history.replaceState(null, '', PAIR_GAME_PATH);
-      setStep('intro');
+    if (stepFromUrl === 'submit') {
+      const canSubmit =
+        typeof window !== 'undefined' &&
+        window.sessionStorage.getItem('pairGameCanSubmit') === '1';
+      if (canSubmit) {
+        if (step !== 'submit') {
+          setStep('submit');
+        }
+      } else {
+        window.history.replaceState(null, '', PAIR_GAME_PATH);
+        if (step !== 'intro') {
+          setStep('intro');
+        }
+      }
     }
   }, [searchParams, step, setStep]);
 
@@ -85,12 +102,11 @@ export const usePairGamePage = () => {
           setGameKey((k) => k + 1);
           break;
         case 'submit':
+          if (typeof window !== 'undefined') {
+            window.sessionStorage.setItem('pairGameCanSubmit', '1');
+          }
           setStep('submit');
-          window.history.replaceState(
-            null,
-            '',
-            `${PAIR_GAME_PATH}?step=submit`,
-          );
+          window.history.replaceState(null, '', PAIR_GAME_PATH);
           break;
       }
       closeHeartModal();
@@ -99,7 +115,9 @@ export const usePairGamePage = () => {
   );
 
   const handleSubmit = useCallback(async () => {
-    setTotalParticipants((prev) => prev + 1);
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem('pairGameCanSubmit');
+    }
     setStep('completed');
     window.history.replaceState(null, '', PAIR_GAME_PATH);
   }, [setStep]);
