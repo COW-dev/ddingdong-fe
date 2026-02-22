@@ -16,11 +16,12 @@ import {
 
 import { departmentInfo } from '@/constants/department';
 
-import { usePairGameSubmit } from '../../_hooks/usePairGameSubmit';
+import {
+  usePairGameSubmit,
+  type SubmitFormValues,
+} from '../../_hooks/usePairGameSubmit';
 
 const departments = Object.values(departmentInfo).flat();
-
-import type { SubmitFormValues } from '../../_hooks/usePairGameSubmit';
 
 type Props = {
   onSubmit: (data: SubmitFormValues) => void;
