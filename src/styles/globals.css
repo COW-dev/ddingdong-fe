@@ -54,6 +54,10 @@ html {
   scrollbar-width: none;
 }
 
+:root {
+  --game-layout-bg: var(--color-game-tertiary);
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
@@ -87,3 +91,4 @@ html {
 .customDatePickerWidth > div:nth-child(2) > div {
   flex-direction: column;
 }
+
