@@ -34,7 +34,7 @@ export function BridgeMaruMari({
           className="w-full object-contain object-bottom"
           priority
         />
-        <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between pr-[4%] pb-[7%]">
+        <div className="absolute right-0 bottom-0 -left-2 flex items-end justify-between pr-[2%] pb-[7%]">
           <OptimizedImage
             src={GAME_IMAGES.ride_maru}
             alt="마루"
