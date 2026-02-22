@@ -1,4 +1,6 @@
-const PREFIX = '/pair_game';
+export const PAIR_GAME_PATH = '/pair_game';
+
+const PREFIX = PAIR_GAME_PATH;
 
 export const GAME_IMAGES = {
   'bell-sprite': `${PREFIX}/bell-sprite.webp`,

@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 import { Body3, Button, Caption1, Flex, Title3 } from 'ddingdong-design-system';
 
+import { PAIR_GAME_PATH } from '../../_utils/gameImages';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 
 type Props = {
@@ -20,7 +21,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
       className="mx-auto min-h-screen w-full max-w-md pt-20"
     >
       <Flex dir="row" justifyContent="end" className="w-full">
-        <Link href="/pair_game/guide">
+        <Link href={`${PAIR_GAME_PATH}/guide`}>
           <Caption1 className="text-gray-600">안내</Caption1>
         </Link>
       </Flex>
@@ -135,7 +136,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
           </Caption1>
         </Button>
         <Link
-          href="/pair_game/prize"
+          href={`${PAIR_GAME_PATH}/prize`}
           className="bg-game-secondary flex w-full items-center justify-center rounded-lg py-3"
         >
           <Caption1 className="font-school-safety text-game-primary">

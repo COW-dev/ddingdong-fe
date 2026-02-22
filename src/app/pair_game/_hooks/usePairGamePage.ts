@@ -7,6 +7,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { usePortal } from 'ddingdong-design-system';
 
 import { useGameFunnel } from '../_contexts/GameFunnelContext';
+import { PAIR_GAME_PATH } from '../_utils/gameImages';
 import { preloadGameAssets } from '../_utils/preloadGameAssets';
 
 import type { RoundResultModalAction } from '../_components/ui/RoundResultModal';
@@ -41,7 +42,7 @@ export const usePairGamePage = () => {
   useEffect(() => {
     const stepFromUrl = searchParams.get('step');
     if (stepFromUrl === 'submit' && step !== 'submit') {
-      window.history.replaceState(null, '', '/pair_game');
+      window.history.replaceState(null, '', PAIR_GAME_PATH);
       setStep('intro');
     }
   }, [searchParams, step, setStep]);
@@ -85,7 +86,11 @@ export const usePairGamePage = () => {
           break;
         case 'submit':
           setStep('submit');
-          window.history.replaceState(null, '', '/pair_game?step=submit');
+          window.history.replaceState(
+            null,
+            '',
+            `${PAIR_GAME_PATH}?step=submit`,
+          );
           break;
       }
       closeHeartModal();
@@ -96,7 +101,7 @@ export const usePairGamePage = () => {
   const handleSubmit = useCallback(async () => {
     setTotalParticipants((prev) => prev + 1);
     setStep('completed');
-    window.history.replaceState(null, '', '/pair_game');
+    window.history.replaceState(null, '', PAIR_GAME_PATH);
   }, [setStep]);
 
   return {
