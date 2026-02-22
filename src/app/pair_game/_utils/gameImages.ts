@@ -15,4 +15,5 @@ export const GAME_IMAGES = {
   broken_heart: `${PREFIX}/broken_heart.webp`,
   empty_heart: `${PREFIX}/empty_heart.webp`,
   filled_heart: `${PREFIX}/filled_heart.webp`,
+  check_maru_mari: `${PREFIX}/check_maru_mari.webp`,
 } as const;
