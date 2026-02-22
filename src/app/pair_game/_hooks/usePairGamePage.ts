@@ -41,7 +41,7 @@ export const usePairGamePage = () => {
   useEffect(() => {
     const stepFromUrl = searchParams.get('step');
     if (stepFromUrl === 'submit' && step !== 'submit') {
-      window.history.replaceState(null, '', '/game');
+      window.history.replaceState(null, '', '/pair_game');
       setStep('intro');
     }
   }, [searchParams, step, setStep]);
