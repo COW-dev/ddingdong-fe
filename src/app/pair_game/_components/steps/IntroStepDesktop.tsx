@@ -11,11 +11,7 @@ import {
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-const bridgeImageSrc = '/pair_game/bridge.webp';
-const cheerMaruMariSrc = '/pair_game/cheer_maru_mari.webp';
-const heartMariImageSrc = '/pair_game/heart_mari.webp';
-const qrCodeImageSrc = '/pair_game/qr_code.webp';
-const rideMaruImageSrc = '/pair_game/ride_maru.webp';
+import { GAME_IMAGES } from '../../_utils/gameImages';
 
 type Props = {
   onShareLink: () => void;
@@ -72,7 +68,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
             </Caption1>
             <OptimizedImage
               width={200}
-              src={cheerMaruMariSrc}
+              src={GAME_IMAGES.cheer_maru_mari}
               alt="응원하는 마루와 마리"
             />
           </Flex>
@@ -96,7 +92,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         <Flex dir="col" alignItems="center" gap={5} className="w-full">
           <div className="flex h-[250px] w-[250px] items-center justify-center rounded-lg bg-gray-200">
             <OptimizedImage
-              src={qrCodeImageSrc}
+              src={GAME_IMAGES.qr_code}
               alt="게임 링크 QR 코드"
               width={250}
               height={250}
@@ -122,26 +118,26 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         <div className="pointer-events-none relative mt-auto w-screen">
           <div className="relative flex w-full flex-row pt-30">
             <OptimizedImage
-              src={bridgeImageSrc}
+              src={GAME_IMAGES.bridge}
               alt="bridge1"
               className="w-1/2 min-w-0 flex-1 object-contain object-bottom"
               priority
             />
             <OptimizedImage
-              src={bridgeImageSrc}
+              src={GAME_IMAGES.bridge}
               alt="bridge2"
               className="w-1/2 min-w-0 flex-1 object-contain object-bottom"
               priority
             />
             <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between px-[8%] pb-[5%]">
               <OptimizedImage
-                src={rideMaruImageSrc}
+                src={GAME_IMAGES.ride_maru}
                 alt="마루"
                 className="h-auto w-[28%] max-w-[140px] -scale-x-100 object-contain object-bottom"
                 priority
               />
               <OptimizedImage
-                src={heartMariImageSrc}
+                src={GAME_IMAGES.heart_mari}
                 alt="마리"
                 className="h-auto w-[14%] max-w-[70px] -scale-x-100 object-contain object-bottom"
                 priority

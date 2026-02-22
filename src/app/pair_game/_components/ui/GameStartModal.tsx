@@ -12,7 +12,7 @@ import {
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-const maruMariImageSrc = '/pair_game/maru_mari.webp';
+import { GAME_IMAGES } from '../../_utils/gameImages';
 
 type Props = {
   isOpen: boolean;
@@ -62,7 +62,7 @@ export function GameStartModal({ isOpen, onClose, onGameStart }: Props) {
 
         <div className="min-h-[200px] w-full" aria-hidden />
         <OptimizedImage
-          src={maruMariImageSrc}
+          src={GAME_IMAGES.maru_mari}
           alt="마루와 마리"
           className="absolute top-3/5 left-1/2 z-0 w-full max-w-[280px] -translate-x-1/2 -translate-y-1/2 object-contain"
         />

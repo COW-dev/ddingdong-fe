@@ -13,10 +13,7 @@ import {
   useRoundResultModal,
   type RoundResultModalAction,
 } from '../../_hooks/useRoundResultModal';
-
-const brokenHeartImageSrc = '/pair_game/broken_heart.webp';
-const emptyHeartImageSrc = '/pair_game/empty_heart.webp';
-const filledHeartImageSrc = '/pair_game/filled_heart.webp';
+import { GAME_IMAGES } from '../../_utils/gameImages';
 
 export type { RoundResultModalAction };
 
@@ -88,7 +85,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
           {Array.from({ length: filledCount }, (_, i) => (
             <img
               key={`filled-${i}`}
-              src={filledHeartImageSrc}
+              src={GAME_IMAGES.filled_heart}
               alt="채워진 하트"
               {...heartImageProps}
             />
@@ -96,7 +93,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
           {Array.from({ length: brokenCount }, (_, i) => (
             <img
               key={`broken-${i}`}
-              src={brokenHeartImageSrc}
+              src={GAME_IMAGES.broken_heart}
               alt="깨진 하트"
               {...heartImageProps}
             />
@@ -104,7 +101,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
           {Array.from({ length: emptyCount }, (_, i) => (
             <img
               key={`empty-${i}`}
-              src={emptyHeartImageSrc}
+              src={GAME_IMAGES.empty_heart}
               alt="빈 하트"
               {...heartImageProps}
             />

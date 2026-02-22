@@ -2,7 +2,7 @@
 
 import { getClubImageSrc } from '../../_utils/clubImages';
 import { getCategoryCardStyle } from '../../_utils/gameConstants';
-const cardBackSrc = '/pair_game/card.webp';
+import { GAME_IMAGES } from '../../_utils/gameImages';
 
 type Props = {
   clubId: number;
@@ -84,7 +84,7 @@ export function EventCard({
           }}
         >
           <img
-            src={cardBackSrc}
+            src={GAME_IMAGES.card}
             alt="카드 뒷면"
             className="h-full w-full rounded-xl object-cover"
           />

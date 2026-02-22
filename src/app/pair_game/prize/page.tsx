@@ -7,8 +7,7 @@ import { Body1, Body3, Flex, NavBack, Caption1 } from 'ddingdong-design-system';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
-
-const naverPaySrc = '/pair_game/naver_pay.webp';
+import { GAME_IMAGES } from '../_utils/gameImages';
 
 export default function GamePrizePage() {
   const router = useRouter();
@@ -37,7 +36,7 @@ export default function GamePrizePage() {
               </Body1>
             </Flex>
 
-            <OptimizedImage src={naverPaySrc} alt="네이버페이" />
+            <OptimizedImage src={GAME_IMAGES.naver_pay} alt="네이버페이" />
           </section>
 
           <section>

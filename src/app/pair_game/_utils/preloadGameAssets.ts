@@ -1,11 +1,12 @@
 import { CLUB_IMAGE_SRCS } from './clubImages';
+import { GAME_IMAGES } from './gameImages';
 
 const CRITICAL_IMAGES = [
-  '/pair_game/bell-sprite.webp',
-  '/pair_game/bridge.webp',
-  '/pair_game/card.webp',
-  '/pair_game/heart_mari.webp',
-  '/pair_game/ride_maru.webp',
+  GAME_IMAGES['bell-sprite'],
+  GAME_IMAGES.bridge,
+  GAME_IMAGES.card,
+  GAME_IMAGES.heart_mari,
+  GAME_IMAGES.ride_maru,
   ...CLUB_IMAGE_SRCS,
 ];
 
