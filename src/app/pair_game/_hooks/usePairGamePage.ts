@@ -30,6 +30,7 @@ export const usePairGamePage = () => {
   const [heartModalSuccess, setHeartModalSuccess] = useState(false);
   const { data: appliersAmount } = useQuery({
     ...pairGameQueryOptions.appliersAmount(),
+    enabled: step === 'completed',
   });
   const totalParticipants = appliersAmount?.amount ?? 0;
 
