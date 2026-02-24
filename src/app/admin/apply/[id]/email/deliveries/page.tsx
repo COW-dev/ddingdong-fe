@@ -5,13 +5,13 @@ export default async function EmailPage({
   params,
   searchParams,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
   searchParams: Promise<{
     status?: string;
     historyId?: string;
   }>;
 }) {
-  const applyId = Number(params.id);
+  const applyId = Number((await params).id);
   const { status, historyId } = await searchParams;
 
   if (status === 'in-progress' && historyId) {
