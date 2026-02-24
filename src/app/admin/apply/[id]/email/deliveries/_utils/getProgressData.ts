@@ -1,8 +1,4 @@
-type EmailCounts = {
-  totalCount: number;
-  successCount: number;
-  failCount: number;
-};
+import { EmailProgressAPIResponse } from '@/app/_api/types/email';
 
 type ProgressData = {
   icon: 'error' | 'check' | 'loading';
@@ -13,7 +9,7 @@ type ProgressData = {
 export const getProgressData = (
   isCompleted: boolean,
   isDelayedThreshold: boolean,
-  emailCounts: EmailCounts,
+  emailCounts: EmailProgressAPIResponse,
 ): ProgressData => {
   if (isCompleted) {
     if (emailCounts.failCount > 0) {
@@ -33,13 +29,13 @@ export const getProgressData = (
     return {
       icon: 'loading',
       message: '이메일 전송이 지연되고 있습니다.',
-      subMessage: `해당 페이지를 벗어나도 이메일 전송이 진행됩니다.\n이메일 전송 현황'에서 진행 상황을 확인해주세요.`,
+      subMessage: `해당 페이지를 벗어나도 이메일 전송이 진행됩니다.\n이메일 전송 현황에서 진행 상황을 확인해주세요.`,
     };
   }
 
   return {
     icon: 'loading',
     message: '이메일 전송이 진행 중입니다.',
-    subMessage: `해당 페이지를 벗어나도 이메일 전송이 진행됩니다.\n이메일 전송 현황'에서 진행 상황을 확인해주세요.`,
+    subMessage: `해당 페이지를 벗어나도 이메일 전송이 진행됩니다.\n이메일 전송 현황에서 진행 상황을 확인해주세요.`,
   };
 };

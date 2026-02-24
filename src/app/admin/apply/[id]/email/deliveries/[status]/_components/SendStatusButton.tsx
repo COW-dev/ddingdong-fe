@@ -16,6 +16,7 @@ export function SendStatusButton({ sendingList }: SendStatusProps) {
   return (
     <div className="relative">
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex cursor-pointer items-center gap-2 border-none bg-none p-0"
       >
