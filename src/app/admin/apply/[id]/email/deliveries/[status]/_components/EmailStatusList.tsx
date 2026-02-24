@@ -29,11 +29,11 @@ export function EmailStatusList({ type, data }: EmailStatusListProps) {
     <>
       <Body3 className="my-4 text-gray-400">총 {data.length} 건</Body3>
       <Flex dir="col" alignItems="center" justifyContent="center">
-        <Flex className="w-full flex-col gap-4 md:grid md:grid-cols-3">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {data.map((statusItem, index) => (
             <ApplicantCard key={index} {...statusItem} />
           ))}
-        </Flex>
+        </div>
         {type === 'FAIL' && (
           <Button
             variant="primary"
