@@ -18,6 +18,10 @@ import { emailQueryOptions } from '@/app/_api/queries/email';
 import { cn } from '@/lib/utils';
 import { getProgressData } from '../_utils/getProgressData';
 
+const POLLING_INTERVAL_MS = 2000;
+const ELAPSED_TIME_UPDATE_INTERVAL_MS = 1000;
+const POLLING_TIMEOUT_SECONDS = 30;
+
 type EmailProgressProps = {
   applyId: number;
   historyId: number;
@@ -32,7 +36,16 @@ export function EmailProgressClientPage({
   const [elapsedSeconds, setElapsedSeconds] = useState(0);
   const { data: emailCounts } = useSuspenseQuery({
     ...emailQueryOptions.counts(historyId),
-    refetchInterval: () => (elapsedSeconds < 30 ? 2000 : false),
+    refetchInterval: (query) => {
+      const data = query.state.data;
+      const isCompleted =
+        data && data.successCount + data.failCount === data.totalCount;
+
+      if (isCompleted) return false;
+      return elapsedSeconds < POLLING_TIMEOUT_SECONDS
+        ? POLLING_INTERVAL_MS
+        : false;
+    },
   });
 
   const isCompleted =
@@ -42,12 +55,13 @@ export function EmailProgressClientPage({
   useEffect(() => {
     const interval = setInterval(() => {
       setElapsedSeconds(Math.floor((Date.now() - startTime) / 1000));
-    }, 1000);
+    }, ELAPSED_TIME_UPDATE_INTERVAL_MS);
 
     return () => clearInterval(interval);
   }, [startTime]);
 
-  const isDelayedThreshold = !isCompleted && elapsedSeconds >= 30;
+  const isDelayedThreshold =
+    !isCompleted && elapsedSeconds >= POLLING_TIMEOUT_SECONDS;
 
   const progressData = getProgressData(
     isCompleted,
