@@ -20,7 +20,7 @@ export const getProgressData = (
       return {
         icon: 'error',
         message: '이메일 전송이 일부 실패하였습니다.',
-        subMessage: `일부 지원자에게 이메일이 정상적으로 전송되지 않았습니다.\n이메일 전송 현황'에서 지원자 정보를 다시 확인해주세요.`,
+        subMessage: `일부 지원자에게 이메일이 정상적으로 전송되지 않았습니다.\n이메일 전송 현황에서 지원자 정보를 다시 확인해주세요.`,
       };
     }
     return {

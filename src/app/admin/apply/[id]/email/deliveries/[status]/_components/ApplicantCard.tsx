@@ -15,9 +15,11 @@ export function ApplicantCard({
   return (
     <Card>
       <Flex dir="col">
-        <Flex dir="row" justifyContent="start" alignItems="center" gap={1}>
-          <Body2>{name}</Body2>
-          <Caption1 className="text-gray-400">{studentNumber}</Caption1>
+        <Flex dir="row" justifyContent="between" alignItems="center" gap={1}>
+          <Flex gap={1} alignItems="center">
+            <Body2>{name}</Body2>
+            <Caption1 className="text-gray-400">{studentNumber}</Caption1>
+          </Flex>
           {isPermanentFailure && <Badge variant="negative" text="영구 실패" />}
         </Flex>
         <Caption1 className="text-gray-300">

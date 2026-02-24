@@ -76,7 +76,7 @@ export function EmailProgressClientPage({
         gap={2}
         className="mt-4"
       >
-        <Title3 weight="bold">
+        <Title3 weight="bold" className="text-center">
           {progressData.message} (
           <Title3
             as="span"
@@ -89,7 +89,7 @@ export function EmailProgressClientPage({
           /{emailCounts.totalCount}명)
         </Title3>
       </Flex>
-      <Body3 className="text-center whitespace-pre-wrap text-gray-400">
+      <Body3 className="text-center text-gray-400">
         {progressData.subMessage}
       </Body3>
       <DoubleButton
@@ -113,7 +113,7 @@ export function EmailProgressClientPage({
             이메일 전송 현황
           </Button>
         }
-        className="w-full md:mt-10 md:w-[400px]"
+        className="mt-10 w-full md:w-[400px]"
       />
     </Flex>
   );
