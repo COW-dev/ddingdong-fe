@@ -41,9 +41,9 @@ export const getCardSizeForConfig = (config: {
 export const ROUND_CONFIGS: RoundConfig[] = [
   { rows: 3, cols: 2, totalCards: 6, previewTime: 4, gameTime: 20 },
   { rows: 4, cols: 2, totalCards: 8, previewTime: 4, gameTime: 20 },
-  { rows: 2, cols: 2, totalCards: 4, previewTime: 4, gameTime: 20 },
-  { rows: 2, cols: 2, totalCards: 4, previewTime: 4, gameTime: 20 },
-  { rows: 2, cols: 2, totalCards: 4, previewTime: 4, gameTime: 20 },
+  { rows: 4, cols: 3, totalCards: 12, previewTime: 4, gameTime: 20 },
+  { rows: 4, cols: 4, totalCards: 16, previewTime: 4, gameTime: 20 },
+  { rows: 5, cols: 4, totalCards: 20, previewTime: 4, gameTime: 20 },
 ];
 
 export type CardFrontPalette = {
