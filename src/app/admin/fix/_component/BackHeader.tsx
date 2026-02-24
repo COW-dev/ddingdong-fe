@@ -10,7 +10,7 @@ export function BackHeader({ title }: { title: string }) {
   return (
     <Flex alignItems="center">
       <IconButton
-        iconName="navbarArrow"
+        iconName="arrowLeft"
         color="gray"
         size={24}
         onClick={(e) => {
