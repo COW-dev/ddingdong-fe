@@ -1,20 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Body3, Caption1, Flex, Icon } from 'ddingdong-design-system';
 
 import { EmailDeliveryStatus } from '@/app/_api/types/email';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 type SendStatusProps = {
   sendingList: EmailDeliveryStatus[];
 };
 
 export function SendStatusButton({ sendingList }: SendStatusProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen, ref } = useClickOutside();
 
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
