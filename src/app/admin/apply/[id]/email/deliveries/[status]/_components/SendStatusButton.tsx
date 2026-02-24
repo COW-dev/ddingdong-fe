@@ -1,7 +1,5 @@
 'use client';
 
-import { useRef, useState } from 'react';
-
 import { Body3, Caption1, Flex, Icon } from 'ddingdong-design-system';
 
 import { EmailDeliveryStatus } from '@/app/_api/types/email';

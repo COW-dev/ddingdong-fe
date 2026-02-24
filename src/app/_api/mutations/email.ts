@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { fetcher } from '../fetcher';
-import { EmailSendAPIResponse, ReSendEmailAPIRequest } from '../types/email';
 
+import { fetcher } from '../fetcher';
 import { emailQueryKeys } from '../queries/email';
+import { EmailSendAPIResponse, ReSendEmailAPIRequest } from '../types/email';
 
 const reSendEmail = ({ formId, target }: ReSendEmailAPIRequest) =>
   fetcher.post<EmailSendAPIResponse>(

@@ -16,6 +16,7 @@ import {
 
 import { emailQueryOptions } from '@/app/_api/queries/email';
 import { cn } from '@/lib/utils';
+
 import { getProgressData } from '../_utils/getProgressData';
 
 const POLLING_INTERVAL_MS = 2000;
