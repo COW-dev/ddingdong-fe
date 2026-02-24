@@ -1,4 +1,11 @@
-import { Badge, Body2, Caption1, Card, Flex } from 'ddingdong-design-system';
+import {
+  Badge,
+  Body2,
+  Caption1,
+  Card,
+  Flex,
+  Tooltip,
+} from 'ddingdong-design-system';
 
 import { EmailDeliveryStatus } from '@/app/_api/types/email';
 
@@ -14,17 +21,26 @@ export function ApplicantCard({
 
   return (
     <Card>
-      <Flex dir="col">
-        <Flex dir="row" justifyContent="between" alignItems="center" gap={1}>
-          <Flex gap={1} alignItems="center">
-            <Body2>{name}</Body2>
-            <Caption1 className="text-gray-400">{studentNumber}</Caption1>
+      <Flex dir="row" justifyContent="between" alignItems="center" gap={2}>
+        <Flex dir="col">
+          <Flex dir="row" justifyContent="between" alignItems="center" gap={1}>
+            <Flex gap={1} alignItems="center">
+              <Body2>{name}</Body2>
+              <Caption1 className="text-gray-400">{studentNumber}</Caption1>
+            </Flex>
           </Flex>
-          {isPermanentFailure && <Badge variant="negative" text="영구 실패" />}
+          <Caption1 className="text-gray-300">
+            {sendAt && formatDate(sendAt)}
+          </Caption1>
         </Flex>
-        <Caption1 className="text-gray-300">
-          {sendAt && formatDate(sendAt)}
-        </Caption1>
+        {isPermanentFailure && (
+          <Tooltip
+            content={`영구 실패 건은 이메일 오류 등으로 인해\n재전송이 불가합니다`}
+            color="white"
+          >
+            <Badge variant="negative" text="영구 실패" />
+          </Tooltip>
+        )}
       </Flex>
     </Card>
   );
