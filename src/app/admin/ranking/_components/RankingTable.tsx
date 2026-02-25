@@ -7,10 +7,10 @@ import {
   TableCell,
 } from 'ddingdong-design-system';
 
-import type { FeedRanking } from '@/app/_api/types/ranking';
+import type { AdminFeedRanking } from '@/app/_api/types/ranking';
 
 type RankingTableProps = {
-  data: FeedRanking[];
+  data: AdminFeedRanking[];
 };
 
 export function RankingTable({ data }: RankingTableProps) {
@@ -51,7 +51,7 @@ export function RankingTable({ data }: RankingTableProps) {
       </TableHeader>
       <TableBody className="divide-y divide-gray-100 font-medium">
         {data.map((item) => (
-          <RankingTableRow key={item.rank} item={item} />
+          <RankingTableRow key={item.clubName} item={item} />
         ))}
       </TableBody>
     </Table>
@@ -69,7 +69,7 @@ function ScoreCell({ value }: { value: number }) {
   );
 }
 
-function RankingTableRow({ item }: { item: FeedRanking }) {
+function RankingTableRow({ item }: { item: AdminFeedRanking }) {
   return (
     <TableRow>
       <TableCell className="py-[1.6rem] text-center text-[1.4rem]">

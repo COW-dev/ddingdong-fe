@@ -2,8 +2,6 @@ import { Suspense } from 'react';
 
 import { Metadata } from 'next';
 
-import { Loading } from '@/components/loading/Loading';
-
 import RankingClientPage from './_pages/RankingClientPage';
 
 export const metadata: Metadata = {
@@ -12,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function RankingPage() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense>
       <RankingClientPage />
     </Suspense>
   );

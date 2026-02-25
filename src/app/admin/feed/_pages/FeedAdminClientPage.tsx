@@ -7,9 +7,11 @@ import { Body1, Flex, usePortal } from 'ddingdong-design-system';
 import { ClubHeading } from '@/app/club/[id]/_components/header/ClubHeading';
 import { useClubStore } from '@/store/club';
 
+import { useClubFeedRanking } from '../../ranking/_hooks/useGetRanking';
 import { ActionButton } from '../_components/ActionButton';
 import { ClubFeed } from '../_components/ClubFeed';
 import { DeleteModal } from '../_components/DeleteModal';
+import { RankContainer } from '../_components/RankContainer';
 import { useFeedAdmin } from '../_hooks/useFeedAdmin';
 
 export function FeedAdminClientPage() {
@@ -26,6 +28,8 @@ export function FeedAdminClientPage() {
     handleDelete,
   } = useFeedAdmin();
 
+  const { clubRanking } = useClubFeedRanking();
+
   return (
     <>
       <Flex justifyContent="between" alignItems="center" className="mt-2">
@@ -41,6 +45,10 @@ export function FeedAdminClientPage() {
           onEditModeChange={handleEditModeChange}
           onDeleteClick={openModal}
         />
+      </Flex>
+
+      <Flex dir="col" gap={2}>
+        <RankContainer clubRanking={clubRanking} />
       </Flex>
       <Flex className="mt-3 w-full">
         {feeds.length === 0 ? (
