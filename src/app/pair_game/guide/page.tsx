@@ -17,7 +17,7 @@ export default function GameGuidePage() {
         onClick={() => router.back()}
       />
 
-      <Flex dir="col" gap={6} className="mt-6">
+      <Flex dir="col" gap={6} className="mt-6 px-3 pt-3">
         <section>
           <Caption1 weight="bold" className="mb-2 text-gray-600" as="h2">
             게임 이용 안내

@@ -17,7 +17,7 @@ export default function GamePrizePage() {
       <Flex dir="col" className="mx-auto w-full max-w-md flex-1">
         <NavBack title="상품 안내" size="sm" onClick={() => router.back()} />
 
-        <Flex dir="col" gap={6} className="mt-6">
+        <Flex dir="col" gap={6} className="mt-6 px-3">
           <section>
             <Flex
               dir="col"
