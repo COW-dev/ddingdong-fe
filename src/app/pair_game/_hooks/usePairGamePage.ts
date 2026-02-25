@@ -112,12 +112,6 @@ export const usePairGamePage = () => {
     [heartModalStage, setStep, closeHeartModal],
   );
 
-  const handleSubmit = useCallback(() => {
-    window.sessionStorage.removeItem('pairGameCanSubmit');
-    setStep('completed');
-    window.history.replaceState(null, '', PAIR_GAME_PATH);
-  }, [setStep]);
-
   return {
     Funnel,
     step,
@@ -132,6 +126,5 @@ export const usePairGamePage = () => {
     handleGameStart,
     handleRoundComplete,
     handleRoundResultAction,
-    handleSubmit,
   };
 };

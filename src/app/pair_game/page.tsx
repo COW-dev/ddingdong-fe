@@ -36,7 +36,6 @@ function GamePageContent() {
     handleGameStart,
     handleRoundComplete,
     handleRoundResultAction,
-    handleSubmit,
   } = usePairGamePage();
 
   return (
@@ -56,7 +55,7 @@ function GamePageContent() {
           </PairGamePlayingProvider>
         </Funnel.Step>
         <Funnel.Step name="submit">
-          <SubmitStep onSubmit={handleSubmit} />
+          <SubmitStep />
         </Funnel.Step>
         <Funnel.Step name="completed">
           <CompletedStep totalParticipants={totalParticipants} />

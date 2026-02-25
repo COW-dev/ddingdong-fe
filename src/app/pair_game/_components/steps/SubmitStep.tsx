@@ -13,20 +13,14 @@ import {
 } from 'ddingdong-design-system';
 
 import { departmentInfo } from '@/constants/department';
+import { cn } from '@/lib/utils';
 
 import { useGameLayoutBg } from '../../_hooks/useGameLayoutBg';
-import {
-  usePairGameSubmit,
-  type SubmitFormValues,
-} from '../../_hooks/usePairGameSubmit';
+import { usePairGameSubmit } from '../../_hooks/usePairGameSubmit';
 
 const departments = Object.values(departmentInfo).flat();
 
-type Props = {
-  onSubmit: (data: SubmitFormValues) => void;
-};
-
-export function SubmitStep({ onSubmit }: Props) {
+export function SubmitStep() {
   const {
     formData,
     receiptFile,
@@ -36,7 +30,7 @@ export function SubmitStep({ onSubmit }: Props) {
     handleFileChange,
     clearReceiptFile,
     handleSubmit,
-  } = usePairGameSubmit(onSubmit);
+  } = usePairGameSubmit();
 
   useGameLayoutBg();
 
@@ -179,9 +173,10 @@ export function SubmitStep({ onSubmit }: Props) {
               size="full"
               isLoading={isPending}
               disabled={!isFormComplete || isPending}
-              className={`py-3 ${
-                !isFormComplete || isPending ? '' : 'bg-game-primary'
-              }`}
+              className={cn(
+                'py-3',
+                isFormComplete && !isPending && 'bg-game-primary',
+              )}
             >
               <Body2 weight="bold">응모하기</Body2>
             </Button>
