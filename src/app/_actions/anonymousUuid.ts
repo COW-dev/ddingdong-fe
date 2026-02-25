@@ -21,3 +21,8 @@ export async function getOrCreateAnonymousUuid(): Promise<string> {
 
   return uuid;
 }
+
+export async function getAnonymousUuid(): Promise<string | null> {
+  const cookieStore = await cookies();
+  return cookieStore.get(ANONYMOUS_UUID_KEY)?.value ?? null;
+}
