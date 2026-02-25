@@ -126,7 +126,10 @@ export function PlayingStep() {
       }}
       data-playing-step
     >
-      <div className="col flex min-h-0 flex-1 items-center justify-center pt-8 md:pt-12">
+      <Flex
+        alignItems="center"
+        className="col min-h-0 flex-1 justify-center pt-8 md:pt-12"
+      >
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
             <span className="text-game-primary my-1 inline-flex w-[75px] items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
@@ -159,9 +162,12 @@ export function PlayingStep() {
             </Flex>
           )}
         </Flex>
-      </div>
+      </Flex>
 
-      <div className="relative flex w-full shrink-0 items-center justify-center pt-6 md:pt-10">
+      <Flex
+        alignItems="center"
+        className="relative w-full shrink-0 justify-center pt-6 md:pt-10"
+      >
         <div
           className="grid w-fit gap-2"
           style={{
@@ -187,7 +193,7 @@ export function PlayingStep() {
             />
           ))}
         </div>
-      </div>
+      </Flex>
       <div className="min-h-px min-w-0 flex-1" />
       <BridgeMaruMari className="pointer-events-none fixed bottom-0 left-1/2 z-0 w-screen max-w-[100vw] -translate-x-1/2" />
     </div>
