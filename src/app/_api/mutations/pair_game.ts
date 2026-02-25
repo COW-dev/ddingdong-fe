@@ -1,7 +1,6 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { instance } from '../fetcher';
-import { pairGameQueryKeys } from '../queries/pair_game';
 import { CreatePairGameApplierRequest } from '../types/pair_game';
 
 const createPairGameApplier = (data: CreatePairGameApplierRequest) => {
@@ -20,16 +19,8 @@ const createPairGameApplier = (data: CreatePairGameApplierRequest) => {
   });
 };
 
-export const useCreatePairGameApplier = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
+export const useCreatePairGameApplier = () =>
+  useMutation({
     mutationFn: (data: CreatePairGameApplierRequest) =>
       createPairGameApplier(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: [pairGameQueryKeys.all()],
-      });
-    },
   });
-};
