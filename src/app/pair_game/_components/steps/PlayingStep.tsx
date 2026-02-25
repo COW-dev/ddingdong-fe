@@ -120,13 +120,13 @@ export function PlayingStep() {
       ref={containerRef}
       className="relative flex flex-col overflow-hidden px-4"
       style={{
-        height: 'calc(150dvh - 29rem)',
+        height: 'calc(132dvh - 20rem)',
         touchAction: 'manipulation',
         overflow: 'hidden',
       }}
       data-playing-step
     >
-      <div className="col flex min-h-0 flex-1 items-center justify-center pb-6">
+      <div className="col flex min-h-0 flex-1 items-center justify-center pt-3">
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
             <span className="text-game-primary my-1 inline-flex w-[75px] items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
@@ -144,7 +144,7 @@ export function PlayingStep() {
             <Flex
               alignItems="center"
               gap={2}
-              className="w-[335px] rounded-full bg-white p-2 px-3 shadow-md"
+              className="max-w-[335px] min-w-full rounded-full bg-white p-2 px-3 shadow-md"
             >
               <div
                 className={
@@ -161,7 +161,7 @@ export function PlayingStep() {
         </Flex>
       </div>
 
-      <div className="relative flex w-full shrink-0 items-center justify-center">
+      <div className="relative flex w-full shrink-0 items-center justify-center pt-5">
         <div
           className="grid w-fit gap-2"
           style={{
