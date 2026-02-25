@@ -1,87 +1,84 @@
 import Link from 'next/link';
 
-import { useState } from 'react';
-
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   Avatar,
   Body1,
-  Body3,
+  Body2,
+  Caption1,
   Flex,
   Modal,
-  Title2,
 } from 'ddingdong-design-system';
 
 import { feedQueryOptions } from '@/app/_api/queries/feed';
-import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import VideoPlayer from './VideoPlayer';
+import { CommentInput } from './CommentInput';
+import { CommentList } from './CommentList';
+import { FeedMedia } from './FeedMedia';
+import { FeedStats } from './FeedStats';
+import { useDebouncedLike } from '../_hooks/useDebouncedLike';
 
 type FeedModalProps = {
   feedId: number;
   isOpen: boolean;
   closeModal: () => void;
 };
-export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
-  const { data: feed, isLoading } = useQuery({
-    ...feedQueryOptions.detail(feedId),
-    enabled: isOpen,
-  });
-  const [loaded, setLoaded] = useState(false);
 
-  if (!isOpen || isLoading || !feed) {
-    return null;
-  }
+export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
+  const { data: feed } = useSuspenseQuery(feedQueryOptions.detail(feedId));
+  const { likeCount, handleLike } = useDebouncedLike({
+    feedId,
+    initialLikeCount: feed.likeCount,
+  });
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal} className="z-100">
-      <FeedModalContainer>
-        <Flex dir="col">
-          <Flex className="h-48 w-full overflow-hidden rounded-xl bg-black sm:h-64 md:h-[400px]">
-            {feed.feedType === 'VIDEO' ? (
-              <VideoPlayer videoUrl={feed.fileUrls.cdnUrl} />
-            ) : (
-              <OptimizedImage
-                isSkeleton={!loaded}
-                width={800}
-                height={400}
-                src={feed.fileUrls.cdnUrl}
-                alt="동아리 피드"
-                className="h-full w-full object-contain"
-                onLoad={() => setLoaded(true)}
-              />
-            )}
-          </Flex>
-          <Flex
-            dir="col"
-            alignItems="start"
-            className="mt-2 w-full py-2 pr-2 pl-3 sm:pr-4 sm:pl-6"
-          >
+      <Flex
+        dir="col"
+        className="h-[85vh] w-[90vw] max-w-[1000px] overflow-hidden bg-white md:h-[600px] md:flex-row"
+      >
+        <FeedMedia
+          feedType={feed.feedType}
+          mediaUrl={feed.fileUrls.cdnUrl}
+          className="h-[40vh] w-full flex-shrink-0 md:h-full md:w-[50%]"
+        />
+        <Flex dir="col" className="flex-1 md:w-[50%]">
+          <Flex gap={4} dir="col" alignItems="start" className="p-4">
             <Link
-              href={`/club/${feed?.clubProfile.id}`}
+              href={`/club/${feed.clubProfile.id}`}
               className="flex items-center gap-2"
             >
               <Avatar
                 src={feed.clubProfile.profileImageCdnUrl}
                 alt={feed.clubProfile.name}
-                size="lg"
+                size="sm"
                 className="my-auto object-cover"
               />
-              <Title2 weight="medium">{feed.clubProfile.name}</Title2>
+              <Body1 weight="semibold">{feed.clubProfile.name}</Body1>
             </Link>
-            <Flex dir="col" className="mt-2 ml-3">
-              <Body1 weight="medium">{feed.activityContent}</Body1>
-              <Body3 weight="medium" className="text-gray-500">
+            <Flex dir="row" justifyContent="between" className="w-full">
+              <Body2 weight="medium">{feed.activityContent}</Body2>
+              <Caption1 weight="medium" className="text-gray-500">
                 {feed.createdDate}
-              </Body3>
+              </Caption1>
             </Flex>
+            <FeedStats
+              likeCount={likeCount}
+              commentCount={feed.commentCount}
+              viewCount={feed.viewCount}
+              size="sm"
+              onLike={handleLike}
+            />
           </Flex>
+          <Flex dir="col" className="flex-1 overflow-y-auto p-4">
+            <CommentList comments={feed.comments} />
+          </Flex>
+          <CommentInput
+            feedId={feedId}
+            className="border-t border-gray-200 p-3"
+          />
         </Flex>
-      </FeedModalContainer>
+      </Flex>
     </Modal>
   );
-}
-
-function FeedModalContainer({ children }: { children: React.ReactNode }) {
-  return <div className="w-[80vw] max-w-[800px] md:h-[550px]">{children}</div>;
 }
