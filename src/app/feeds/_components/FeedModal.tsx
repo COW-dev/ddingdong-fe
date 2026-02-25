@@ -12,11 +12,12 @@ import {
 
 import { feedQueryOptions } from '@/app/_api/queries/feed';
 
+import { useDebouncedLike } from '../_hooks/useDebouncedLike';
+
 import { CommentInput } from './CommentInput';
 import { CommentList } from './CommentList';
 import { FeedMedia } from './FeedMedia';
 import { FeedStats } from './FeedStats';
-import { useDebouncedLike } from '../_hooks/useDebouncedLike';
 
 type FeedModalProps = {
   feedId: number;

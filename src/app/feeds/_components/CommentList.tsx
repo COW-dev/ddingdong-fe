@@ -13,9 +13,9 @@ import {
 import toast from 'react-hot-toast';
 
 import { getAnonymousUuid } from '@/app/_actions/anonymousUuid';
-import { DeleteModal } from '@/app/admin/feed/_components/DeleteModal';
 import { useDeleteFeedComment } from '@/app/_api/mutations/feed';
 import { Comment } from '@/app/_api/types/feed';
+import { DeleteModal } from '@/app/admin/feed/_components/DeleteModal';
 import Admin from '@/assets/admin.webp';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 import { formatRelativeTime } from '@/utils/formatRelativeTime';
@@ -125,7 +125,11 @@ function CommentItem({ feedId, comment, isOwner, myUuid }: CommentItemProps) {
           />
         )}
       </Flex>
-      <DeleteModal isOpen={isOpen} onClose={closeModal} onDelete={handleDelete} />
+      <DeleteModal
+        isOpen={isOpen}
+        onClose={closeModal}
+        onDelete={handleDelete}
+      />
     </>
   );
 }

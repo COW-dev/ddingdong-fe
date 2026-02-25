@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   Avatar,
   Body1,

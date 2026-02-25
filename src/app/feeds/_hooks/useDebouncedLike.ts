@@ -2,9 +2,10 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { useLikeFeed } from '@/app/_api/mutations/feed';
 import toast from 'react-hot-toast';
+
 import { ApiError } from '@/app/_api/fetcher';
+import { useLikeFeed } from '@/app/_api/mutations/feed';
 
 const DEBOUNCE_DELAY = 3000;
 const MAX_LIKE_COUNT = 100;

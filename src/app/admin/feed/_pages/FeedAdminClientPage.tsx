@@ -63,7 +63,6 @@ export function FeedAdminClientPage() {
         isOpen={isOpen}
         onClose={closeModal}
         onDelete={() => handleDelete(closeModal)}
-        description={`선택한 ${selectedFeed}`}
       />
     </>
   );

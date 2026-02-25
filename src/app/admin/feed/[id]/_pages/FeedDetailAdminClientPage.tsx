@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Avatar, Body1, Body2, Caption1, Flex } from 'ddingdong-design-system';
 
-import { AdminCommentList } from '@/app/admin/feed/_components/AdminCommentList';
 import { feedQueryOptions } from '@/app/_api/queries/feed';
+import { AdminCommentList } from '@/app/admin/feed/_components/AdminCommentList';
 import { FeedMedia } from '@/app/feeds/_components/FeedMedia';
 import { FeedStats } from '@/app/feeds/_components/FeedStats';
 

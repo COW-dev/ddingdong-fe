@@ -5,7 +5,6 @@ export const formatRelativeTime = (dateString: string) => {
   const diffMs = now.getTime() - date.getTime();
   const diffSeconds = Math.floor(diffMs / 1000);
   const diffMinutes = Math.floor(diffSeconds / 60);
-  const diffHours = Math.floor(diffMinutes / 60);
 
   if (diffMinutes < 1) {
     return '지금';

@@ -1,7 +1,6 @@
 import {
   Body1,
   Body2,
-  Body3,
   Button,
   Caption1,
   DoubleButton,
