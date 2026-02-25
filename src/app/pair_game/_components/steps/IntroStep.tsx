@@ -28,20 +28,18 @@ export function IntroStep({ onGameStart }: Props) {
     setIsMobile(getShouldUseMobileLayout());
   }, []);
 
-  const handleShareLink = shareCurrentLink;
-
   if (isMobile === null) {
     return <GameSkeleton />;
   }
 
   if (!isMobile) {
-    return <IntroStepDesktop onShareLink={handleShareLink} />;
+    return <IntroStepDesktop onShareLink={shareCurrentLink} />;
   }
 
   return (
     <IntroStepMobile
       onGameStart={onGameStart}
-      onShareLink={handleShareLink}
+      onShareLink={shareCurrentLink}
       animateMaru
     />
   );

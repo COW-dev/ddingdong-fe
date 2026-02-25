@@ -98,3 +98,14 @@ const DEFAULT_CATEGORY_STYLE: CategoryCardStyle = {
 
 export const getCategoryCardStyle = (category: string): CategoryCardStyle =>
   CATEGORY_CARD_STYLES[category] ?? DEFAULT_CATEGORY_STYLE;
+
+export const FLOATING_HEARTS = [
+  { left: '6%', top: '10%', size: '40px', delay: '0s', duration: '7s' },
+  { left: '18%', top: '55%', size: '40px', delay: '1.2s', duration: '6.2s' },
+  { left: '32%', top: '30%', size: '40px', delay: '0.6s', duration: '7.8s' },
+  { left: '48%', top: '70%', size: '40px', delay: '2s', duration: '6.4s' },
+  { left: '62%', top: '18%', size: '40px', delay: '1.6s', duration: '7.2s' },
+  { left: '74%', top: '48%', size: '40px', delay: '0.8s', duration: '6.6s' },
+  { left: '86%', top: '65%', size: '40px', delay: '2.4s', duration: '7.4s' },
+  { left: '40%', top: '85%', size: '40px', delay: '1.8s', duration: '6.8s' },
+] as const;

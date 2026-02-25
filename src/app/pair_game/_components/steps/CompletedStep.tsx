@@ -9,6 +9,7 @@ import JSConfetti from 'js-confetti';
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
+import { useGameLayoutBg } from '../../_hooks/useGameLayoutBg';
 import { GAME_IMAGES } from '../../_utils/gameImages';
 import { shareCurrentLink } from '../../_utils/shareLink';
 const CONFETTI_COLORS = [
@@ -31,26 +32,22 @@ type Props = {
 export function CompletedStep({ totalParticipants }: Props) {
   const router = useRouter();
 
+  useGameLayoutBg();
+
   useEffect(() => {
     const jsConfetti = new JSConfetti();
     jsConfetti.addConfetti({
       confettiColors: CONFETTI_COLORS,
       confettiRadius: 3,
     });
-  }, []);
-
-  useEffect(() => {
-    document.documentElement.style.setProperty('--game-layout-bg', '#ffffff');
     return () => {
-      document.documentElement.style.removeProperty('--game-layout-bg');
+      jsConfetti.clearCanvas();
     };
   }, []);
 
   const handleGoHome = () => {
     router.push('/');
   };
-
-  const handleShareLink = shareCurrentLink;
 
   return (
     <Flex
@@ -110,7 +107,7 @@ export function CompletedStep({ totalParticipants }: Props) {
           variant="secondary"
           size="full"
           className="bg-game-secondary py-3"
-          onClick={handleShareLink}
+          onClick={shareCurrentLink}
         >
           <Body2 weight="bold" className="text-game-primary">
             게임 링크 공유하기

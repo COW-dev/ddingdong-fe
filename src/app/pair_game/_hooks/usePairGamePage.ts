@@ -50,7 +50,6 @@ export const usePairGamePage = () => {
     const stepFromUrl = searchParams.get('step');
     if (stepFromUrl === 'submit') {
       const canSubmit =
-        typeof window !== 'undefined' &&
         window.sessionStorage.getItem('pairGameCanSubmit') === '1';
       if (canSubmit) {
         if (step !== 'submit') {
@@ -103,9 +102,7 @@ export const usePairGamePage = () => {
           setGameKey((k) => k + 1);
           break;
         case 'submit':
-          if (typeof window !== 'undefined') {
-            window.sessionStorage.setItem('pairGameCanSubmit', '1');
-          }
+          window.sessionStorage.setItem('pairGameCanSubmit', '1');
           setStep('submit');
           window.history.replaceState(null, '', PAIR_GAME_PATH);
           break;
@@ -115,10 +112,8 @@ export const usePairGamePage = () => {
     [heartModalStage, setStep, closeHeartModal],
   );
 
-  const handleSubmit = useCallback(async () => {
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.removeItem('pairGameCanSubmit');
-    }
+  const handleSubmit = useCallback(() => {
+    window.sessionStorage.removeItem('pairGameCanSubmit');
     setStep('completed');
     window.history.replaceState(null, '', PAIR_GAME_PATH);
   }, [setStep]);

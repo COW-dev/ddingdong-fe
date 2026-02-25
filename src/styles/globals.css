@@ -54,10 +54,6 @@ html {
   scrollbar-width: none;
 }
 
-:root {
-  --game-layout-bg: var(--color-game-tertiary);
-}
-
 ::-webkit-scrollbar {
   display: none;
 }
@@ -93,6 +89,7 @@ html {
 }
 
 :root {
+  --game-layout-bg: var(--color-game-tertiary);
   --maru-drive-distance: 20vw;
   --float-size: 32px;
   --float-delay: 0s;
@@ -111,6 +108,13 @@ html {
 .maru-slow-drive {
   animation: maru-slow-drive 20s ease-in-out forwards;
   will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maru-slow-drive {
+    animation: none;
+    will-change: auto;
+  }
 }
 
 @keyframes float-up {
@@ -136,4 +140,11 @@ html {
   animation: float-up var(--float-duration) linear infinite;
   animation-delay: calc(var(--float-delay) * -1);
   will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-heart {
+    animation: none;
+    will-change: auto;
+  }
 }

@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import {
   Body2,
   Button,
@@ -16,6 +14,7 @@ import {
 
 import { departmentInfo } from '@/constants/department';
 
+import { useGameLayoutBg } from '../../_hooks/useGameLayoutBg';
 import {
   usePairGameSubmit,
   type SubmitFormValues,
@@ -39,12 +38,8 @@ export function SubmitStep({ onSubmit }: Props) {
     handleSubmit,
   } = usePairGameSubmit(onSubmit);
 
-  useEffect(() => {
-    document.documentElement.style.setProperty('--game-layout-bg', '#ffffff');
-    return () => {
-      document.documentElement.style.removeProperty('--game-layout-bg');
-    };
-  }, []);
+  useGameLayoutBg();
+
   return (
     <Flex
       dir="col"

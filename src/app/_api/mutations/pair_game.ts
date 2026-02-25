@@ -28,7 +28,7 @@ export const useCreatePairGameApplier = () => {
       createPairGameApplier(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [...pairGameQueryKeys.all()],
+        queryKey: [pairGameQueryKeys.all()],
       });
     },
   });
