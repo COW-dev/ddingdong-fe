@@ -83,7 +83,7 @@ export const usePairGamePage = () => {
       }
       setHeartModalStage(roundIndex + 1);
       setHeartModalSuccess(success);
-      openHeartModal();
+      queueMicrotask(() => openHeartModal());
     },
     [openHeartModal],
   );

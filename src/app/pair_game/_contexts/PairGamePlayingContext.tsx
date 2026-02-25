@@ -103,18 +103,14 @@ export function PairGamePlayingProvider({
         if (result.isMatch && areAllCardsMatched(result.updatedCards)) {
           setIsGameActive(false);
           const round = currentRound;
-          setTimeout(() => {
-            onRoundComplete(round, true);
-            roundResultModalRef?.current?.setResult(round + 1, true);
-            roundResultModalRef?.current?.open();
-          }, ROUND_COMPLETE_DELAY_MS);
+          setTimeout(() => onRoundComplete(round, true), ROUND_COMPLETE_DELAY_MS);
         }
 
         return result.updatedCards;
       });
       selectedCardsRef.current = [];
     },
-    [currentRound, onRoundComplete, setIsGameActive, roundResultModalRef],
+    [currentRound, onRoundComplete, setIsGameActive],
   );
 
   const handleCardClick = useCallback(
