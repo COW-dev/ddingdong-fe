@@ -81,9 +81,9 @@ export function CompletedStep({ totalParticipants }: Props) {
       <div className="bg-game-tertiary border-game-secondary w-full max-w-sm rounded-lg border py-4 text-center">
         <Body2 className="text-gray-700">
           현재까지{' '}
-          <span className="text-game-primary font-bold">
+          <Body2 as="span" className="text-game-primary font-bold">
             {totalParticipants}
-          </span>
+          </Body2>
           명이 응모했어요!
         </Body2>
       </div>

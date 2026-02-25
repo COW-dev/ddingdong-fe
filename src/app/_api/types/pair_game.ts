@@ -8,12 +8,14 @@ export type PairGameAppliersAmount = {
   amount: number;
 };
 
+export type PairGameSubmitFormValues = {
+  name: string;
+  studentNumber: string;
+  department: string;
+  phoneNumber: string;
+};
+
 export type CreatePairGameApplierRequest = {
-  request: {
-    name: string;
-    studentNumber: string;
-    department: string;
-    phoneNumber: string;
-  };
+  request: PairGameSubmitFormValues;
   file: File;
 };
