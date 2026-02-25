@@ -13,7 +13,7 @@ type RankingTableProps = {
   data: FeedRanking[];
 };
 
-export default function RankingTable({ data }: RankingTableProps) {
+export function RankingTable({ data }: RankingTableProps) {
   if (data.length === 0) {
     return (
       <div className="py-[3.2rem] text-center text-[1.6rem] text-gray-400">
@@ -51,7 +51,7 @@ export default function RankingTable({ data }: RankingTableProps) {
       </TableHeader>
       <TableBody className="divide-y divide-gray-100 font-medium">
         {data.map((item) => (
-          <RankingTableRow key={item.clubName} item={item} />
+          <RankingTableRow key={item.rank} item={item} />
         ))}
       </TableBody>
     </Table>
@@ -60,7 +60,7 @@ export default function RankingTable({ data }: RankingTableProps) {
 
 function ScoreCell({ value }: { value: number }) {
   return (
-    <TableCell className="hidden py-[1.6rem] text-center text-[1.4rem] font-semibold text-black md:table-cell">
+    <TableCell className="hidden py-[1.6rem] text-center text-[1.4rem] md:table-cell">
       <span className="font-semibold text-black">
         {value.toString().padStart(2, '0')}{' '}
       </span>

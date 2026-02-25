@@ -5,13 +5,13 @@ import { Tabs, TabItem } from 'ddingdong-design-system';
 
 import { rankingQueryOptions } from '@/app/_api/queries/ranking';
 
-import RankingHeader from '../_components/RankingHeader';
-import RankingTable from '../_components/RankingTable';
-import { useRankingDate } from '../_hooks/useRankingDate';
+import { RankingHeader } from '../_components/RankingHeader';
+import { RankingTable } from '../_components/RankingTable';
+import { getRankingDate } from '../_hooks/getRankingDate';
 
 export default function AdminRankingPage() {
   const { currentYear, currentMonth, lastMonthYear, lastMonthMonth } =
-    useRankingDate();
+    getRankingDate();
 
   const [{ data: thisMonthRankingData }, { data: lastMonthRankingData }] =
     useSuspenseQueries({

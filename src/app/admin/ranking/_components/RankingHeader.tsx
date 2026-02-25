@@ -1,6 +1,6 @@
 import { Title1, Body2, Flex } from 'ddingdong-design-system';
 
-export default function RankingHeader() {
+export function RankingHeader() {
   return (
     <div className="mb-[3.2rem]">
       <Title1 as="h1" weight="bold">
