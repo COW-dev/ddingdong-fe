@@ -126,7 +126,7 @@ export function PlayingStep() {
       }}
       data-playing-step
     >
-      <div className="col flex min-h-0 flex-1 items-center justify-center pt-3">
+      <div className="col flex min-h-0 flex-1 items-center justify-center pt-8 md:pt-12">
         <Flex dir="col" alignItems="center" gap={2}>
           {isPreviewMode ? (
             <span className="text-game-primary my-1 inline-flex w-[75px] items-center gap-1.5 rounded-full px-3 py-2 shadow-md">
@@ -144,7 +144,7 @@ export function PlayingStep() {
             <Flex
               alignItems="center"
               gap={2}
-              className="max-w-[335px] min-w-full rounded-full bg-white p-2 px-3 shadow-md"
+              className="w-full max-w-[335px] rounded-full bg-white p-2 px-3 shadow-md"
             >
               <div
                 className={
@@ -161,7 +161,7 @@ export function PlayingStep() {
         </Flex>
       </div>
 
-      <div className="relative flex w-full shrink-0 items-center justify-center pt-5">
+      <div className="relative flex w-full shrink-0 items-center justify-center pt-6 md:pt-10">
         <div
           className="grid w-fit gap-2"
           style={{
