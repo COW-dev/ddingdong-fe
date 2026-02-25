@@ -5,6 +5,8 @@ import { toast } from 'react-hot-toast';
 import { ApiError } from '@/app/_api/fetcher';
 import { useCreatePairGameApplier } from '@/app/_api/mutations/pair_game';
 
+import { validatePairGameSubmitData } from '../_utils/validatePairGameSubmitData';
+
 export type SubmitFormValues = {
   name: string;
   studentNumber: string;
@@ -42,6 +44,11 @@ export const usePairGameSubmit = (
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validatePairGameSubmitData({ formData, receiptFile })) {
+      return;
+    }
+
     createApplier(
       {
         request: {

@@ -114,7 +114,7 @@ export function SubmitStep({ onSubmit }: Props) {
             </Flex>
             <Flex dir="col" gap={3} className="flex-1">
               <Caption1 weight="bold" className="text-gray-600">
-                학번 (예시:60*****)
+                학번 (예시:60123456)
               </Caption1>
               <Input
                 placeholder="학번을 입력해 주세요"
