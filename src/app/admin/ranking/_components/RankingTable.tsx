@@ -13,35 +13,40 @@ type RankingTableProps = {
   data: FeedRanking[];
 };
 
-function ScoreCell({ value }: { value: number }) {
-  return (
-    <TableCell className="hidden py-[1.6rem] text-center text-[1.4rem] text-gray-600 md:table-cell">
-      {value.toString().padStart(2, '0')}{' '}
-      <span className="text-[1.2rem] text-gray-400">점</span>
-    </TableCell>
-  );
-}
-
 export default function RankingTable({ data }: RankingTableProps) {
+  if (data.length === 0) {
+    return (
+      <div className="py-[3.2rem] text-center text-[1.6rem] text-gray-400">
+        랭킹 데이터가 없습니다
+      </div>
+    );
+  }
+
   return (
     <Table className="w-full text-center">
       <TableHeader className="bg-[#F8F9FA] text-[1.2rem] md:text-[1.4rem]">
         <TableRow>
-          <TableHead className="py-[1.6rem] text-center">순위</TableHead>
-          <TableHead className="py-[1.6rem] text-center">동아리명</TableHead>
-          <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
-            피드
+          <TableHead className="py-[1.6rem] text-center">
+            <span className="text-gray-400">순위</span>
+          </TableHead>
+          <TableHead className="py-[1.6rem] text-center">
+            <span className="text-gray-400">동아리명</span>
           </TableHead>
           <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
-            조회수
+            <span className="text-gray-400">피드</span>
           </TableHead>
           <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
-            좋아요
+            <span className="text-gray-400">조회수</span>
           </TableHead>
           <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
-            댓글
+            <span className="text-gray-400">좋아요</span>
           </TableHead>
-          <TableHead className="py-[1.6rem] text-center">총점</TableHead>
+          <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
+            <span className="text-gray-400">댓글</span>
+          </TableHead>
+          <TableHead className="py-[1.6rem] text-center">
+            <span className="text-gray-400">총점</span>
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody className="divide-y divide-gray-100 font-medium">
@@ -50,6 +55,17 @@ export default function RankingTable({ data }: RankingTableProps) {
         ))}
       </TableBody>
     </Table>
+  );
+}
+
+function ScoreCell({ value }: { value: number }) {
+  return (
+    <TableCell className="hidden py-[1.6rem] text-center text-[1.4rem] font-semibold text-black md:table-cell">
+      <span className="font-semibold text-black">
+        {value.toString().padStart(2, '0')}{' '}
+      </span>
+      <span className="text-[1.2rem] text-gray-400">점</span>
+    </TableCell>
   );
 }
 
@@ -64,16 +80,18 @@ function RankingTableRow({ item }: { item: FeedRanking }) {
           <span className="text-[1.2rem] text-gray-400">위</span>
         </span>
       </TableCell>
-      <TableCell className="py-[1.6rem] text-center text-[1.4rem] font-bold text-gray-800">
-        {item.clubName}
+      <TableCell className="py-[1.6rem] text-center text-[1.4rem] font-bold">
+        <span className="font-semibold text-black">{item.clubName}</span>
       </TableCell>
       <ScoreCell value={item.feedScore} />
       <ScoreCell value={item.viewScore} />
       <ScoreCell value={item.likeScore} />
       <ScoreCell value={item.commentScore} />
       <TableCell className="py-[1.6rem] text-center text-[1.4rem] font-bold text-blue-500">
-        {item.totalScore.toString().padStart(2, '0')}{' '}
-        <span className="text-[1.2rem] font-medium text-gray-400">점</span>
+        <span className="font-semibold text-blue-500">
+          {item.totalScore.toString().padStart(2, '0')}{' '}
+        </span>
+        <span className="text-[1.2rem] text-gray-400">점</span>
       </TableCell>
     </TableRow>
   );
