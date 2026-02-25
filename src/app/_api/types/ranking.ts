@@ -12,7 +12,7 @@ export type ClubFeedRanking = {
   year: number;
   month: number;
   rank: number;
-  lastMonthRank: number;
+  lastMonthRank: number | null;
   feedScore: number;
   viewScore: number;
   likeScore: number;
