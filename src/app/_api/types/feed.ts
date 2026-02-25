@@ -43,6 +43,7 @@ export type FeedDetail = {
 
 export type Comment = {
   id: number;
+  uuid: string;
   anonymousName: string;
   content: string;
   createdAt: string;
