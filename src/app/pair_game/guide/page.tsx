@@ -99,7 +99,7 @@ export default function GameGuidePage() {
         </section>
       </Flex>
 
-      <BridgeMaruMari className="relative bottom-0 left-1/2 mt-auto w-screen max-w-[100vw] -translate-x-1/2 pt-20" />
+      <BridgeMaruMari className="relative bottom-0 left-1/2 mt-auto w-screen max-w-[100vw] -translate-x-1/2 pt-30" />
     </Flex>
   );
 }
