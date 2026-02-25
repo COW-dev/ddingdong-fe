@@ -1,13 +1,26 @@
 'use client';
 
+import dynamic from 'next/dynamic';
+
 import { CompletedStep } from './_components/steps/CompletedStep';
-import { IntroStep } from './_components/steps/IntroStep';
 import { PlayingStep } from './_components/steps/PlayingStep';
 import { SubmitStep } from './_components/steps/SubmitStep';
+import { GameSkeleton } from './_components/ui/GameSkeleton';
 import { RoundResultModal } from './_components/ui/RoundResultModal';
 import { GameFunnelProvider } from './_contexts/GameFunnelContext';
 import { PairGamePlayingProvider } from './_contexts/PairGamePlayingContext';
 import { usePairGamePage } from './_hooks/usePairGamePage';
+
+const IntroStep = dynamic(
+  () =>
+    import('./_components/steps/IntroStep').then((mod) => ({
+      default: mod.IntroStep,
+    })),
+  {
+    ssr: false,
+    loading: () => <GameSkeleton />,
+  },
+);
 
 function GamePageContent() {
   const {
