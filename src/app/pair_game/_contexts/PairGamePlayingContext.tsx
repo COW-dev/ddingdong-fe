@@ -51,7 +51,6 @@ type PairGamePlayingProviderProps = {
 export function PairGamePlayingProvider({
   currentRound,
   onRoundComplete,
-  roundResultModalRef,
   children,
 }: PairGamePlayingProviderProps) {
   const [cards, setCards] = useState<CardType[]>([]);
@@ -103,7 +102,10 @@ export function PairGamePlayingProvider({
         if (result.isMatch && areAllCardsMatched(result.updatedCards)) {
           setIsGameActive(false);
           const round = currentRound;
-          setTimeout(() => onRoundComplete(round, true), ROUND_COMPLETE_DELAY_MS);
+          setTimeout(
+            () => onRoundComplete(round, true),
+            ROUND_COMPLETE_DELAY_MS,
+          );
         }
 
         return result.updatedCards;
