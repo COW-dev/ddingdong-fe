@@ -65,15 +65,12 @@ export function FeedDetailClientPage({ feedId }: FeedDetailClientPageProps) {
       </Flex>
 
       <Flex dir="col" className="border-t border-gray-200 p-4">
-        <CommentList
-          comments={feed.comments}
-          commentCount={feed.commentCount}
-        />
+        <CommentList feedId={feedId} comments={feed.comments} />
       </Flex>
 
       <CommentInput
         feedId={feedId}
-        className="fixed right-0 bottom-0 left-0 border-t border-gray-200 bg-white p-3"
+        className="fixed right-0 bottom-0 left-0 z-100 border-t border-gray-200 bg-white p-3"
       />
     </Flex>
   );

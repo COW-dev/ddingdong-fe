@@ -71,7 +71,7 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
             />
           </Flex>
           <Flex dir="col" className="flex-1 overflow-y-auto p-4">
-            <CommentList comments={feed.comments} />
+            <CommentList feedId={feedId} comments={feed.comments} />
           </Flex>
           <CommentInput
             feedId={feedId}

@@ -26,10 +26,11 @@ export function CommentInput({ feedId, className }: CommentInputProps) {
       { content: commentText, anonymousUuid },
       {
         onSuccess: () => {
-          setCommentText('');
           toast.success('댓글이 작성되었습니다.');
+          setCommentText('');
         },
         onError: () => {
+          setCommentText(commentText);
           toast.error('댓글 작성에 실패했습니다.');
         },
       },
@@ -41,13 +42,19 @@ export function CommentInput({ feedId, className }: CommentInputProps) {
       <Input
         value={commentText}
         onChange={(e) => setCommentText(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.nativeEvent.isComposing) {
+            e.preventDefault();
+            handleSubmit();
+          }
+        }}
         onClickReset={() => setCommentText('')}
         placeholder="댓글을 작성해주세요."
         className="h-[36px] md:h-[48px]"
         disabled={isPending}
       />
       <Button
+        type="button"
         variant="primary"
         color="blue"
         onClick={handleSubmit}
