@@ -104,7 +104,7 @@ export function SubmitStep({ onSubmit }: Props) {
               <Select
                 value={formData.department}
                 onChange={(value) => handleChange('department', value)}
-                defaultValue="학과를 선택해주세요"
+                defaultValue="학과를 선택해 주세요"
                 className="flex-1"
               >
                 {departments.map((dept) => (
@@ -146,7 +146,7 @@ export function SubmitStep({ onSubmit }: Props) {
               <FileUpload
                 mode="single"
                 onChange={handleFileChange}
-                placeholder="파일을 선택해주세요"
+                placeholder="파일을 선택해 주세요"
               />
               {receiptFile && (
                 <Flex
