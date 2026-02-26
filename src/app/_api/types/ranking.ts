@@ -1,4 +1,4 @@
-export type AdminFeedRanking = {
+export type AdminFeedRankingApiRequest = {
   rank: number;
   clubName: string;
   feedScore: number;
@@ -8,7 +8,7 @@ export type AdminFeedRanking = {
   totalScore: number;
 };
 
-export type ClubFeedRanking = {
+export type ClubFeedRankingApiRequest = {
   year: number;
   month: number;
   rank: number;
