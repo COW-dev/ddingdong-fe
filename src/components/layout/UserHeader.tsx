@@ -3,6 +3,8 @@ import Link from 'next/link';
 
 import { usePortal, Icon, Drawer, Flex, Header } from 'ddingdong-design-system';
 
+import { OptimizedImage } from '../common/OptimizedImage';
+
 import { NavigationItems } from './NavigationItems';
 
 export function UserHeader() {
@@ -48,7 +50,7 @@ export function UserHeader() {
           className="w-full"
         >
           <Link href="/" className="inline-block">
-            <img
+            <OptimizedImage
               src="/logo.webp"
               width={1344}
               height={380}
@@ -73,7 +75,7 @@ export function UserHeader() {
               className="bg-primary-300 w-[80vw] px-6 py-4 pt-4"
             >
               <Link href="/" className="inline-block">
-                <img
+                <OptimizedImage
                   src="/m_logo.webp"
                   width={1344}
                   height={380}

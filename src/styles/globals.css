@@ -36,6 +36,13 @@
   --color-purple: #a855f7;
   --color-white: #ffffff;
   --color-black: #000000;
+
+  /* Game */
+  --color-game-primary: #ff507d;
+  --color-game-secondary: #ffe7ed;
+  --color-game-tertiary: #fff9fb;
+
+  --font-school-safety: 'SchoolSafetyRoundedSmile', sans-serif;
 }
 
 html {
@@ -56,10 +63,88 @@ html {
   --muted-foreground: 215.4 16.3% 46.9%;
 }
 
+/* 학교안심 둥근미소체 폰트 */
+@font-face {
+  font-family: 'SchoolSafetyRoundedSmile';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-R.woff2')
+    format('woff2');
+  font-weight: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SchoolSafetyRoundedSmile';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimDunggeunmisoTTF-B.woff2')
+    format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
 .customHideClock::-webkit-calendar-picker-indicator {
   display: none;
 }
 
 .customDatePickerWidth > div:nth-child(2) > div {
   flex-direction: column;
+}
+
+:root {
+  --game-layout-bg: var(--color-game-tertiary);
+  --maru-drive-distance: 20vw;
+  --float-size: 32px;
+  --float-delay: 0s;
+  --float-duration: 10s;
+}
+
+@keyframes maru-slow-drive {
+  0% {
+    transform: translateX(0) scaleX(-1);
+  }
+  100% {
+    transform: translateX(var(--maru-drive-distance)) scaleX(-1);
+  }
+}
+
+.maru-slow-drive {
+  animation: maru-slow-drive 20s ease-in-out forwards;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maru-slow-drive {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(35vh) scale(0.85);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-45vh) scale(1);
+    opacity: 0;
+  }
+}
+
+.floating-heart {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--float-size);
+  height: var(--float-size);
+  animation: float-up var(--float-duration) linear infinite;
+  animation-delay: calc(var(--float-delay) * -1);
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-heart {
+    animation: none;
+    will-change: auto;
+  }
 }
