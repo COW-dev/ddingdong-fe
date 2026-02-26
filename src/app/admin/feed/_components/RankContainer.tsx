@@ -1,12 +1,16 @@
-import { Flex, Title3 } from 'ddingdong-design-system';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { Flex, Title3, Body1, Body3 } from 'ddingdong-design-system';
 
-import type { ClubFeedRanking } from '@/app/_api/types/ranking';
+import { rankingQueryOptions } from '@/app/_api/queries/ranking';
 
-type RankContainerProps = {
-  clubRanking: ClubFeedRanking | null;
-};
+import { getRankingDate } from '../../ranking/_hooks/getRankingDate';
 
-export function RankContainer({ clubRanking }: RankContainerProps) {
+export function RankContainer() {
+  const { currentYear, currentMonth } = getRankingDate();
+  const { data: clubRanking } = useSuspenseQuery(
+    rankingQueryOptions.clubFeedRanking(currentYear, currentMonth),
+  );
+
   if (!clubRanking) {
     return null;
   }
@@ -24,7 +28,7 @@ export function RankContainer({ clubRanking }: RankContainerProps) {
   const safeLastMonthRank =
     typeof lastMonthRank === 'number'
       ? `${lastMonthRank}위`
-      : '지난달의 정보가 없습니다.';
+      : '지난달의 정보가 없습니다';
 
   return (
     <Flex dir="col" gap={1} className="w-full">
@@ -44,19 +48,27 @@ export function RankContainer({ clubRanking }: RankContainerProps) {
           gap={5}
           className="items-center text-[1rem] md:text-[1.2rem]"
         >
-          <div className="flex items-center gap-[1rem] font-semibold">
-            <span className="text-gray-400">총점</span>
-            <span className="text-blue-500">
+          <Flex className="flex items-center gap-[1rem] font-semibold">
+            <Body1 as="span" className="text-gray-400">
+              총점
+            </Body1>
+            <Body1 as="span" className="text-blue-500">
               {totalScore.toString().padStart(2, '0')}점
-            </span>
-          </div>
+            </Body1>
+          </Flex>
 
-          <div className="flex items-center gap-[1rem] font-semibold">
-            <span className="text-gray-400">순위</span>
-            <span className="text-blue-500">{rank}위</span>
-          </div>
+          <Flex className="flex items-center gap-[1rem] font-semibold">
+            <Body1 as="span" className="text-gray-400">
+              순위
+            </Body1>
+            <Body1 as="span" className="text-blue-500">
+              {rank}위
+            </Body1>
+          </Flex>
 
-          <span className="hidden text-gray-300 md:inline">|</span>
+          <Body1 as="span" className="hidden text-gray-300 md:inline">
+            |
+          </Body1>
 
           <ScoreItem label="좋아요" value={likeScore} />
           <ScoreItem label="댓글" value={commentScore} />
@@ -64,10 +76,10 @@ export function RankContainer({ clubRanking }: RankContainerProps) {
           <ScoreItem label="게시물" value={feedScore} />
         </Flex>
       </Flex>
-      <span className="text-[0.8rem] text-gray-300">
+      <Body3 as="span" className="text-gray-300">
         * 점수 산정 방식 : (좋아요 × 1) + (댓글 × 5) + (조회수 × 3) + (게시물 ×
         10)
-      </span>
+      </Body3>
     </Flex>
   );
 }
@@ -79,11 +91,13 @@ type ScoreItemProps = {
 
 function ScoreItem({ label, value }: ScoreItemProps) {
   return (
-    <div className="flex items-center gap-[0.8rem]">
-      <span className="text-[1.1rem] font-semibold text-gray-400">{label}</span>
-      <span className="text-[1.1rem] font-semibold text-gray-900">
+    <Flex className="flex items-center gap-[0.8rem]">
+      <Body1 as="span" className="text-[1.1rem] font-semibold text-gray-400">
+        {label}
+      </Body1>
+      <Body1 as="span" className="text-[1.1rem] font-semibold text-gray-900">
         {value.toString().padStart(2, '0')}점
-      </span>
-    </div>
+      </Body1>
+    </Flex>
   );
 }
