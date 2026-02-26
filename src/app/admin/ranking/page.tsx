@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { Tabs, TabItem, Flex } from 'ddingdong-design-system';
 
 import { rankingQueryOptions } from '@/app/_api/queries/ranking';
@@ -17,16 +17,21 @@ export default function RankingClientPage() {
     rankingQueryOptions.adminFeedRanking(currentYear, currentMonth),
   );
 
-  const { data: lastMonthRanking } = useQuery({
-    ...rankingQueryOptions.adminFeedRanking(lastMonthYear, lastMonthMonth),
-    enabled: true,
+  const [{ data: lastMonthRanking }] = useQueries({
+    queries: [
+      rankingQueryOptions.adminFeedRanking(lastMonthYear, lastMonthMonth),
+    ],
   });
+
+  const lastMonthData = lastMonthRanking?.every((item) => item.totalScore === 0)
+    ? []
+    : (lastMonthRanking ?? []);
 
   return (
     <Flex className="flex w-full flex-col py-[3.2rem] md:py-[4.8rem]">
       <RankingHeader />
       <Flex className="mt-8 w-full">
-        <Tabs defaultIndex={0}>
+        <Tabs defaultIndex={0} className="w-full">
           <TabItem label="이달의 랭킹">
             <Flex className="mt-[1.6rem]">
               <RankingTable data={thisMonthRanking} />
@@ -34,7 +39,7 @@ export default function RankingClientPage() {
           </TabItem>
           <TabItem label="지난달 랭킹">
             <Flex className="mt-[1.6rem]">
-              <RankingTable data={lastMonthRanking ?? []} />
+              <RankingTable data={lastMonthData} />
             </Flex>
           </TabItem>
         </Tabs>

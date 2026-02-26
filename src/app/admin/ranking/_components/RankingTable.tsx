@@ -6,6 +6,8 @@ import {
   TableBody,
   TableCell,
   Body1,
+  Body2,
+  Flex,
 } from 'ddingdong-design-system';
 
 import type { AdminFeedRankingApiRequest } from '@/app/_api/types/ranking';
@@ -17,15 +19,17 @@ type RankingTableProps = {
 export function RankingTable({ data }: RankingTableProps) {
   if (data.length === 0) {
     return (
-      <div className="py-[3.2rem] text-center text-[1.6rem] text-gray-400">
-        랭킹 데이터가 없습니다
-      </div>
+      <Flex justifyContent="center" className="w-full py-30">
+        <Body2 as="span" className="text-gray-300">
+          랭킹 데이터가 존재하지 않습니다
+        </Body2>
+      </Flex>
     );
   }
 
   return (
-    <Table className="w-full text-center">
-      <TableHeader className="bg-[#F8F9FA] text-[1.2rem] md:text-[1.4rem]">
+    <Table className="w-full">
+      <TableHeader className="bg-[#F8F9FA]">
         <TableRow>
           <TableHead className="py-[1.6rem] text-center">
             <Body1 as="span" className="text-gray-400">
@@ -39,7 +43,12 @@ export function RankingTable({ data }: RankingTableProps) {
           </TableHead>
           <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
             <Body1 as="span" className="text-gray-400">
-              피드
+              좋아요
+            </Body1>
+          </TableHead>
+          <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
+            <Body1 as="span" className="text-gray-400">
+              댓글
             </Body1>
           </TableHead>
           <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
@@ -49,12 +58,7 @@ export function RankingTable({ data }: RankingTableProps) {
           </TableHead>
           <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
             <Body1 as="span" className="text-gray-400">
-              좋아요
-            </Body1>
-          </TableHead>
-          <TableHead className="hidden py-[1.6rem] text-center md:table-cell">
-            <Body1 as="span" className="text-gray-400">
-              댓글
+              게시물
             </Body1>
           </TableHead>
           <TableHead className="py-[1.6rem] text-center">
@@ -75,11 +79,11 @@ export function RankingTable({ data }: RankingTableProps) {
 
 function ScoreCell({ value }: { value: number }) {
   return (
-    <TableCell className="hidden py-[1.6rem] text-center text-[1.4rem] md:table-cell">
-      <Body1 as="span" className="font-semibold text-black">
-        {value.toString().padStart(2, '0')}{' '}
+    <TableCell className="hidden py-[1.6rem] text-center md:table-cell">
+      <Body1 as="span" className="text-black">
+        {value.toString().padStart(1, '0')}{' '}
       </Body1>
-      <Body1 as="span" className="text-[1.2rem] text-gray-400">
+      <Body1 as="span" className="text-gray-400">
         점
       </Body1>
     </TableCell>
@@ -89,7 +93,7 @@ function ScoreCell({ value }: { value: number }) {
 function RankingTableRow({ item }: { item: AdminFeedRankingApiRequest }) {
   return (
     <TableRow>
-      <TableCell className="py-[1.6rem] text-center text-[1.4rem]">
+      <TableCell className="py-[1.6rem] text-center">
         <Body1
           as="span"
           className="flex items-center justify-center gap-[0.4rem]"
@@ -100,25 +104,25 @@ function RankingTableRow({ item }: { item: AdminFeedRankingApiRequest }) {
           >
             {item.rank}
           </Body1>
-          <Body1 as="span" className="text-[1.2rem] text-gray-400">
+          <Body1 as="span" className="text-gray-400">
             위
           </Body1>
         </Body1>
       </TableCell>
-      <TableCell className="py-[1.6rem] text-center text-[1.4rem] font-bold">
+      <TableCell className="py-[1.6rem] text-center">
         <Body1 as="span" className="font-semibold text-black">
           {item.clubName}
         </Body1>
       </TableCell>
-      <ScoreCell value={item.feedScore} />
-      <ScoreCell value={item.viewScore} />
       <ScoreCell value={item.likeScore} />
       <ScoreCell value={item.commentScore} />
-      <TableCell className="py-[1.6rem] text-center text-[1.4rem] font-bold text-blue-500">
+      <ScoreCell value={item.viewScore} />
+      <ScoreCell value={item.feedScore} />
+      <TableCell className="py-[1.6rem] text-center">
         <Body1 as="span" className="font-semibold text-blue-500">
-          {item.totalScore.toString().padStart(2, '0')}{' '}
+          {item.totalScore.toString().padStart(1, '0')}{' '}
         </Body1>
-        <Body1 as="span" className="text-[1.2rem] text-gray-400">
+        <Body1 as="span" className="text-gray-400">
           점
         </Body1>
       </TableCell>
