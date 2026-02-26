@@ -18,16 +18,21 @@ export function useFormEdit(formId: number) {
   const { data: formData } = useSuspenseQuery(applyQueryOptions.form(formId));
   const { mutate: updateForm, isPending } = useUpdateForm();
 
-  // 모집이 시작되기 전인지 확인
-  const isRecruitStartedBefore = useMemo(() => {
-    if (!formData.startDate) return false;
+  // 현재 모집 중인지 확인
+  const isRecruiting = useMemo(() => {
+    if (!formData.startDate || !formData.endDate) return false;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const startDate = new Date(formData.startDate);
     startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(formData.endDate);
+    endDate.setHours(0, 0, 0, 0);
 
-    return startDate.getTime() > today.getTime();
-  }, [formData.startDate]);
+    return (
+      startDate.getTime() <= today.getTime() &&
+      today.getTime() <= endDate.getTime()
+    );
+  }, [formData.startDate, formData.endDate]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [basicInfo, setBasicInfo] = useState<FormBasicInfo>(() =>
@@ -114,6 +119,6 @@ export function useFormEdit(formId: number) {
     handleCancel,
     isPending,
     contextValue,
-    isRecruitStartedBefore,
+    isRecruiting,
   };
 }
