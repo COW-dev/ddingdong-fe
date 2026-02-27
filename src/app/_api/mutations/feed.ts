@@ -9,6 +9,8 @@ import {
   NewFeedAPIRequest,
   DeleteFeedAPIRequest,
   LikeFeedAPIRequest,
+  FeedDetail,
+  Comment,
 } from '../types/feed';
 
 const createFeed = async ({
@@ -82,10 +84,27 @@ export const usePostFeedComment = (feedId: number) => {
         content: data.content,
         anonymousUuid: data.anonymousUuid,
       }),
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: feedQueryKeys.detail(feedId),
-      });
+    onSuccess(response, variables) {
+      queryClient.setQueryData<FeedDetail>(
+        feedQueryKeys.detail(feedId),
+        (oldData) => {
+          if (!oldData) return oldData;
+
+          const newComment: Comment = {
+            id: response.commentId,
+            uuid: variables.anonymousUuid,
+            anonymousName: `익명${response.anonymousNumber}`,
+            content: variables.content,
+            createdAt: new Date().toISOString(),
+          };
+
+          return {
+            ...oldData,
+            commentCount: oldData.commentCount + 1,
+            comments: [...oldData.comments, newComment],
+          };
+        },
+      );
     },
   });
 };
@@ -118,7 +137,7 @@ export const useDeleteFeedComment = (feedId: number) => {
       }),
     onSuccess() {
       queryClient.invalidateQueries({
-        queryKey: feedQueryKeys.detail(feedId),
+        queryKey: feedQueryKeys.all(),
       });
     },
   });
@@ -159,10 +178,18 @@ export const useLikeFeed = (feedId: number) => {
 
   return useMutation({
     mutationFn: (data: LikeFeedAPIRequest) => likeFeed(feedId, data),
-    onSuccess() {
-      queryClient.invalidateQueries({
-        queryKey: feedQueryKeys.detail(feedId),
-      });
+    onSuccess(_, variables) {
+      queryClient.setQueryData<FeedDetail>(
+        feedQueryKeys.detail(feedId),
+        (oldData) => {
+          if (!oldData) return oldData;
+
+          return {
+            ...oldData,
+            likeCount: oldData.likeCount + variables.count,
+          };
+        },
+      );
     },
   });
 };
