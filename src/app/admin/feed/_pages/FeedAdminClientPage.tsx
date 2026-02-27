@@ -43,7 +43,7 @@ export function FeedAdminClientPage() {
         />
       </Flex>
 
-      <Flex dir="col" gap={2}>
+      <Flex dir="col" className="my-5">
         <RankContainer />
       </Flex>
       <Flex className="mt-3 w-full">
