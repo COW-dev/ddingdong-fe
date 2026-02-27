@@ -14,10 +14,10 @@ type FormActionDropdownProps = {
 };
 
 const ACTION_OPTIONS = [
-  { label: '삭제', value: 'delete' },
+  { label: '지원서 삭제', value: 'delete' },
   { label: '명단 연동', value: 'register' },
-  { label: '이메일 전송', value: 'email' },
-  { label: '통계', value: 'statistics' },
+  { label: '지원 결과 전송', value: 'email' },
+  { label: '이메일 전송 현황', value: 'deliveries' },
 ] as const;
 
 export function FormActionDropdown({
@@ -31,26 +31,38 @@ export function FormActionDropdown({
   const handleAction = (value: string) => {
     setIsOpen(false);
     if (value === 'delete') {
-      onDelete();
-    } else if (value === 'register') {
-      onRegister();
-    } else if (value === 'email') {
-      router.push(`/apply/${formId}/email`);
-    } else if (value === 'statistics') {
-      router.push(`/apply/${formId}/statistics`);
+      return onDelete();
+    }
+    if (value === 'register') {
+      return onRegister();
+    }
+    if (value === 'email') {
+      return router.push(`/apply/${formId}/email/new`);
+    }
+    if (value === 'deliveries') {
+      return router.push(`/apply/${formId}/email/deliveries`);
     }
   };
 
   return (
     <div ref={dropdownRef} className="relative inline-block">
       <div className="block md:hidden">
-        <IconButton
-          iconName="etc"
-          color="gray"
-          size={20}
-          onClick={() => setIsOpen((prev) => !prev)}
-          aria-label="메뉴 열기"
-        />
+        <Flex alignItems="center" gap={1}>
+          <IconButton
+            iconName="chart"
+            color="primary"
+            size={25}
+            onClick={() => router.push(`/apply/${formId}/statistics`)}
+            aria-label="지원서 통계 열기"
+          />
+          <IconButton
+            iconName="etc"
+            color="gray"
+            size={20}
+            onClick={() => setIsOpen((prev) => !prev)}
+            aria-label="메뉴 열기"
+          />
+        </Flex>
       </div>
 
       <div
@@ -68,7 +80,7 @@ export function FormActionDropdown({
               as="button"
               justifyContent="center"
               onClick={() => handleAction(option.value)}
-              className="w-full gap-2 rounded-lg p-2 text-center hover:bg-gray-100 focus:bg-gray-100"
+              className="w-full gap-2 rounded-lg py-1.5 text-center hover:bg-gray-100 focus:bg-gray-100"
             >
               <Caption1>{option.label}</Caption1>
             </Flex>
