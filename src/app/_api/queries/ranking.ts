@@ -20,7 +20,7 @@ export const rankingQueryKeys = {
 };
 
 export const rankingQueryOptions = {
-  adminFeedRanking: (year: number, month: number) =>
+  adminFeed: (year: number, month: number) =>
     queryOptions({
       queryKey: rankingQueryKeys.adminFeedRanking(year, month),
       queryFn: () =>
@@ -28,7 +28,7 @@ export const rankingQueryOptions = {
           `admin/feeds/ranking?year=${year}&month=${month}`,
         ),
     }),
-  clubFeedRanking: (year: number, month: number) =>
+  clubFeed: (year: number, month: number) =>
     queryOptions({
       queryKey: rankingQueryKeys.clubFeedRanking(year, month),
       queryFn: () =>

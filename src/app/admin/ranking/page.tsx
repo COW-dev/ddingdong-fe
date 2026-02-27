@@ -1,6 +1,6 @@
 'use client';
 
-import { useQueries, useQuery, useSuspenseQuery } from '@tanstack/react-query';
+import { useQueries, useSuspenseQuery } from '@tanstack/react-query';
 import { Tabs, TabItem, Flex } from 'ddingdong-design-system';
 
 import { rankingQueryOptions } from '@/app/_api/queries/ranking';
@@ -14,13 +14,11 @@ export default function RankingClientPage() {
     getRankingDate();
 
   const { data: thisMonthRanking } = useSuspenseQuery(
-    rankingQueryOptions.adminFeedRanking(currentYear, currentMonth),
+    rankingQueryOptions.adminFeed(currentYear, currentMonth),
   );
 
   const [{ data: lastMonthRanking }] = useQueries({
-    queries: [
-      rankingQueryOptions.adminFeedRanking(lastMonthYear, lastMonthMonth),
-    ],
+    queries: [rankingQueryOptions.adminFeed(lastMonthYear, lastMonthMonth)],
   });
 
   const lastMonthData = lastMonthRanking?.every((item) => item.totalScore === 0)

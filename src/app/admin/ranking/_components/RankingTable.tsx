@@ -81,7 +81,7 @@ function ScoreCell({ value }: { value: number }) {
   return (
     <TableCell className="hidden py-[1.6rem] text-center md:table-cell">
       <Body1 as="span" className="text-black">
-        {value.toString().padStart(1, '0')}{' '}
+        {value}{' '}
       </Body1>
       <Body1 as="span" className="text-gray-400">
         점
@@ -120,7 +120,7 @@ function RankingTableRow({ item }: { item: AdminFeedRankingApiRequest }) {
       <ScoreCell value={item.feedScore} />
       <TableCell className="py-[1.6rem] text-center">
         <Body1 as="span" className="font-semibold text-blue-500">
-          {item.totalScore.toString().padStart(1, '0')}{' '}
+          {item.totalScore}{' '}
         </Body1>
         <Body1 as="span" className="text-gray-400">
           점
