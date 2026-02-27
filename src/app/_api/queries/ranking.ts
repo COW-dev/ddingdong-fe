@@ -8,20 +8,15 @@ import type {
 } from '../types/ranking';
 
 export const rankingQueryKeys = {
-  all: () => ['ranking'],
-  adminFeedRanking: (year: number, month: number) => [
-    ...rankingQueryKeys.all(),
-    'feed',
-    year,
-    month,
-  ],
-  clubFeedRanking: (year: number, month: number) => [
-    ...rankingQueryKeys.all(),
-    'feed',
-    'club',
-    year,
-    month,
-  ],
+  all: () => ['ranking'] as const,
+  feed: () => [...rankingQueryKeys.all(), 'feed'] as const,
+  adminFeed: () => [...rankingQueryKeys.feed(), 'admin'] as const,
+  clubFeed: () => [...rankingQueryKeys.feed(), 'club'] as const,
+
+  adminFeedRanking: (year: number, month: number) =>
+    [...rankingQueryKeys.adminFeed(), year, month] as const,
+  clubFeedRanking: (year: number, month: number) =>
+    [...rankingQueryKeys.clubFeed(), year, month] as const,
 };
 
 export const rankingQueryOptions = {
