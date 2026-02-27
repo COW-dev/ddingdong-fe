@@ -28,6 +28,7 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
   return (
     <Modal isOpen={isOpen} closeModal={closeModal} className="z-100">
       <Flex
+        gap={4}
         dir="col"
         className="h-[85vh] w-[90vw] max-w-[1000px] overflow-hidden bg-white md:h-[600px] md:flex-row"
       >
@@ -50,7 +51,7 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
               />
               <Body1 weight="semibold">{feed.clubProfile.name}</Body1>
             </Link>
-            <Flex dir="row" justifyContent="between" className="w-full">
+            <Flex gap={2} dir="row" justifyContent="between" className="w-full">
               <Body2 weight="medium">{feed.activityContent}</Body2>
               <Caption1 weight="medium" className="text-gray-500">
                 {feed.createdDate}

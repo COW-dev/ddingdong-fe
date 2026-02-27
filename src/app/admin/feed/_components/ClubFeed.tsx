@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import {
   Body2,
+  Caption1,
   Flex,
   Icon,
   Radio,
@@ -135,10 +136,20 @@ function FeedImageWithRadio({
         </Flex>
       </Flex>
       {feed.feedType === 'VIDEO' && (
-        <div className="absolute right-2 bottom-2 z-20 flex items-center justify-center p-2">
-          <Icon name="video" size={20} color="white" />
+        <div className="absolute right-2 bottom-2 z-20 flex items-center justify-center p-1 md:p-2">
+          <Icon name="video" size={18} color="white" />
         </div>
       )}
+      <Flex
+        gap={1}
+        alignItems="center"
+        className="absolute bottom-2 left-2 z-20 md:hidden"
+      >
+        <Icon name="eye" size={16} color="white" />
+        <Caption1 weight="semibold" className="text-white">
+          {feed.viewCount}
+        </Caption1>
+      </Flex>
     </div>
   );
 }
