@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +17,10 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
       <CarouselContent className="h-56">
         {bannerData.map((banner, index) => (
           <CarouselItem key={banner.id}>
-            <div className="relative hidden items-center justify-center overflow-hidden rounded-lg md:flex md:h-[224px]">
+            <Link
+              href={banner.link ?? '/'}
+              className="relative hidden items-center justify-center overflow-hidden rounded-lg md:flex md:h-[224px]"
+            >
               <OptimizedImage
                 isSkeleton
                 priority={index === 0}
@@ -26,8 +31,11 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
                 alt={`배너 ${index + 1}`}
                 className="absolute h-full w-full object-scale-down"
               />
-            </div>
-            <div className="relative flex h-[224px] w-full items-center justify-center overflow-hidden rounded-lg md:hidden">
+            </Link>
+            <Link
+              href={banner.link ?? '/'}
+              className="relative flex h-[224px] w-full items-center justify-center overflow-hidden rounded-lg md:hidden"
+            >
               <OptimizedImage
                 priority={index === 0}
                 width={342}
@@ -36,7 +44,7 @@ export function ClubCarousel({ bannerData }: { bannerData: Banner[] }) {
                 alt={`배너 ${index + 1}`}
                 className="absolute h-full w-full object-scale-down"
               />
-            </div>
+            </Link>
           </CarouselItem>
         ))}
       </CarouselContent>
