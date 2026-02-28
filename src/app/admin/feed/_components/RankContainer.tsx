@@ -12,12 +12,12 @@ import {
 
 import { rankingQueryOptions } from '@/app/_api/queries/ranking';
 
-import { getRankingDate } from '../../ranking/_hooks/getRankingDate';
+import { getRankingDate } from '../../ranking/utils/getRankingDate';
 
 export function RankContainer() {
   const { currentYear, currentMonth } = getRankingDate();
   const { data: clubRanking } = useSuspenseQuery(
-    rankingQueryOptions.clubRank(currentYear, currentMonth),
+    rankingQueryOptions.clubList(currentYear, currentMonth),
   );
 
   if (!clubRanking) {
@@ -90,10 +90,10 @@ export function RankContainer() {
           </AccordionItem>
         </Accordion>
         <Flex className="mt-2 ml-2">
-          <span className="text-[0.7rem] font-semibold text-gray-300 max-[412px]:text-[0.625rem]">
-            * 점수 산정 방식 : (좋아요 × 1) + (댓글 × 5) + (조회수 × 3) +
+          <Caption1 weight="semibold" className="text-gray-300">
+            * 점수 산정 방식 : (좋아요 × 1) + (조회수 × 3) + (댓글 × 5) +
             (게시물 × 10)
-          </span>
+          </Caption1>
         </Flex>
       </Flex>
       {/* pc 버전 */}
@@ -101,36 +101,36 @@ export function RankContainer() {
         <Flex dir="col" gap={3}>
           <Flex dir="col" gap={2} className="w-full rounded-xl bg-gray-50 p-6">
             <Flex gap={2} className="w-full">
-              <Title3 as="h2" weight="semibold" className="text-blue-500">
+              <Body1 as="h2" weight="bold" className="text-blue-500">
                 이달의 피드 점수 현황
-              </Title3>
+              </Body1>
               <Body3 as="span" className="pt-1 text-gray-300">
                 지난달 순위 : {safeLastMonthRank}
               </Body3>
             </Flex>
 
             <Flex wrap="wrap" gap={5} alignItems="center">
-              <Flex gap={4}>
-                <Body1 as="span" className="text-gray-400">
+              <Flex gap={3}>
+                <Body2 as="span" className="text-gray-400">
                   총점
-                </Body1>
-                <Body1 as="span" className="text-blue-500">
+                </Body2>
+                <Body2 as="span" className="text-blue-500">
                   {totalScore}점
-                </Body1>
+                </Body2>
               </Flex>
 
-              <Flex gap={4}>
-                <Body1 as="span" className="text-gray-400">
+              <Flex gap={3}>
+                <Body2 as="span" className="text-gray-400">
                   순위
-                </Body1>
-                <Body1 as="span" className="text-blue-500">
+                </Body2>
+                <Body2 as="span" className="text-blue-500">
                   {rank}위
-                </Body1>
+                </Body2>
               </Flex>
 
-              <Body1 as="span" className="text-gray-300 md:inline">
+              <Body2 as="span" className="text-gray-300 md:inline">
                 |
-              </Body1>
+              </Body2>
               <ScoreItem label="좋아요" value={likeScore} />
               <ScoreItem label="댓글" value={commentScore} />
               <ScoreItem label="조회수" value={viewScore} />
@@ -138,7 +138,7 @@ export function RankContainer() {
             </Flex>
           </Flex>
           <Body3 as="span" className="text-gray-300">
-            * 점수 산정 방식 : (좋아요 × 1) + (댓글 × 5) + (조회수 × 3) +
+            * 점수 산정 방식 : (좋아요 × 1) + (조회수 × 3) + (댓글 × 5) +
             (게시물 × 10)
           </Body3>
         </Flex>
@@ -154,24 +154,13 @@ type ScoreItemProps = {
 
 function ScoreItem({ label, value }: ScoreItemProps) {
   return (
-    <>
-      <Flex alignItems="center" gap={3} className="hidden md:flex">
-        <Body1 as="span" className="text-gray-400">
-          {label}
-        </Body1>
-        <Body1 as="span" className="text-gray-900">
-          {value}점
-        </Body1>
-      </Flex>
-
-      <Flex className="md:hidden">
-        <Caption1 as="span" className="text-gray-400">
-          {label}
-        </Caption1>
-        <Caption1 as="span" className="text-gray-900">
-          {value}점
-        </Caption1>
-      </Flex>
-    </>
+    <Flex alignItems="center" gap={3}>
+      <Body2 as="span" className="text-gray-400">
+        {label}
+      </Body2>
+      <Body2 as="span" className="text-gray-900">
+        {value}점
+      </Body2>
+    </Flex>
   );
 }

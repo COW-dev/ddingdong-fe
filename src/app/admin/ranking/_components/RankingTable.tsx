@@ -10,10 +10,10 @@ import {
   Flex,
 } from 'ddingdong-design-system';
 
-import type { AdminFeedRankingApiRequest } from '@/app/_api/types/ranking';
+import type { AdminFeedRankingApiResponse } from '@/app/_api/types/ranking';
 
 type RankingTableProps = {
-  data: AdminFeedRankingApiRequest[];
+  data: AdminFeedRankingApiResponse[];
 };
 
 export function RankingTable({ data }: RankingTableProps) {
@@ -90,7 +90,7 @@ function ScoreCell({ value }: { value: number }) {
   );
 }
 
-function RankingTableRow({ item }: { item: AdminFeedRankingApiRequest }) {
+function RankingTableRow({ item }: { item: AdminFeedRankingApiResponse }) {
   return (
     <TableRow>
       <TableCell className="py-[1.6rem] text-center">
