@@ -1,10 +1,22 @@
+import { useRouter } from 'next/navigation';
+
 import { useState } from 'react';
 
-import { Radio, RadioItem, usePortal } from 'ddingdong-design-system';
+import {
+  Body2,
+  Caption1,
+  Flex,
+  Icon,
+  Radio,
+  RadioItem,
+  usePortal,
+} from 'ddingdong-design-system';
+import { useMediaQuery } from 'usehooks-ts';
 
 import { Feed } from '@/app/_api/types/feed';
-import { FeedModal } from '@/app/feeds/_components/FeedModal';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
+
+import { FeedModal } from './FeedModal';
 
 export function ClubFeed({
   feeds,
@@ -20,11 +32,17 @@ export function ClubFeed({
   const { isOpen, openModal, closeModal } = usePortal();
   const [selectedFeedIdForModal, setSelectedFeedIdForModal] =
     useState<number>(0);
+  const router = useRouter();
+  const isDesktop = useMediaQuery('(min-width: 768px)');
 
   const handleFeedDetailOpen = (feedId: number) => {
-    if (!editMode) {
+    if (editMode) return;
+
+    if (isDesktop) {
       setSelectedFeedIdForModal(feedId);
       openModal();
+    } else {
+      router.push(`/feed/${feedId}`);
     }
   };
 
@@ -87,7 +105,7 @@ function FeedImageWithRadio({
   return (
     <div
       onClick={onClick}
-      className="relative flex aspect-square w-full cursor-pointer border-0 bg-transparent p-0"
+      className="group relative aspect-square w-full cursor-pointer overflow-hidden"
     >
       <OptimizedImage
         isSkeleton
@@ -98,25 +116,40 @@ function FeedImageWithRadio({
         alt={`피드 ${feed.id}`}
         className="h-full w-full object-cover object-center"
       />
+      <Flex
+        gap={6}
+        alignItems="center"
+        justifyContent="center"
+        className="absolute inset-0 z-10 bg-black/50 opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+      >
+        <Flex gap={1.5} alignItems="center">
+          <Icon name="like" size={22} color="white" />
+          <Body2 weight="semibold" className="text-white">
+            {feed.likeCount}
+          </Body2>
+        </Flex>
+        <Flex gap={1.5} alignItems="center">
+          <Icon name="comment" size={22} color="white" />
+          <Body2 weight="semibold" className="text-white">
+            {feed.commentCount}
+          </Body2>
+        </Flex>
+      </Flex>
       {feed.feedType === 'VIDEO' && (
-        <div className="absolute right-2 bottom-2 z-20 flex items-center justify-center rounded-full bg-black p-2">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="text-white"
-          >
-            <path
-              d="M8 5V19L19 12L8 5Z"
-              fill="white"
-              stroke="white"
-              strokeWidth="0.5"
-            />
-          </svg>
+        <div className="absolute right-2 bottom-2 z-20 flex items-center justify-center p-1 md:p-2">
+          <Icon name="video" size={18} color="white" />
         </div>
       )}
+      <Flex
+        gap={1}
+        alignItems="center"
+        className="absolute bottom-2 left-2 z-20 md:hidden"
+      >
+        <Icon name="eye" size={16} color="white" />
+        <Caption1 weight="semibold" className="text-white">
+          {feed.viewCount}
+        </Caption1>
+      </Flex>
     </div>
   );
 }

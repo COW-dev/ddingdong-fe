@@ -11,13 +11,10 @@ import {
 } from 'ddingdong-design-system';
 
 import { feedQueryOptions } from '@/app/_api/queries/feed';
+import { FeedMedia } from '@/app/feeds/_components/FeedMedia';
+import { FeedStats } from '@/app/feeds/_components/FeedStats';
 
-import { useDebouncedLike } from '../_hooks/useDebouncedLike';
-
-import { CommentInput } from './CommentInput';
-import { CommentList } from './CommentList';
-import { FeedMedia } from './FeedMedia';
-import { FeedStats } from './FeedStats';
+import { AdminCommentList } from './AdminCommentList';
 
 type FeedModalProps = {
   feedId: number;
@@ -27,10 +24,6 @@ type FeedModalProps = {
 
 export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
   const { data: feed } = useSuspenseQuery(feedQueryOptions.detail(feedId));
-  const { likeCount, handleLike } = useDebouncedLike({
-    feedId,
-    initialLikeCount: feed.likeCount,
-  });
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal} className="z-100">
@@ -65,20 +58,15 @@ export function FeedModal({ feedId, isOpen, closeModal }: FeedModalProps) {
               </Caption1>
             </Flex>
             <FeedStats
-              likeCount={likeCount}
+              likeCount={feed.likeCount}
               commentCount={feed.commentCount}
               viewCount={feed.viewCount}
               size="sm"
-              onLike={handleLike}
             />
           </Flex>
           <Flex dir="col" className="flex-1 overflow-y-auto p-4">
-            <CommentList feedId={feedId} comments={feed.comments} />
+            <AdminCommentList feedId={feedId} comments={feed.comments} />
           </Flex>
-          <CommentInput
-            feedId={feedId}
-            className="border-t border-gray-200 p-3"
-          />
         </Flex>
       </Flex>
     </Modal>
