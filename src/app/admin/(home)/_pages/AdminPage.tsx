@@ -48,7 +48,7 @@ export default function AdminPage({ role }: { role: string }) {
     <Flex dir="col">
       <Flex alignItems="end" justifyContent="between">
         <AdminGreeting
-          name={role === ROLE_TYPE.ROLE_ADMIN ? 'MODE' : myClubData?.name}
+          name={role === ROLE_TYPE.ROLE_ADMIN ? 'SO:ONE' : myClubData?.name}
         />
       </Flex>
       <div className="mt-7">

@@ -1,5 +1,4 @@
 'use client';
-
 import { PropsWithChildren } from 'react';
 
 import { Body1, Flex, usePortal } from 'ddingdong-design-system';
@@ -10,6 +9,7 @@ import { useClubStore } from '@/store/club';
 import { ActionButton } from '../_components/ActionButton';
 import { ClubFeed } from '../_components/ClubFeed';
 import { DeleteModal } from '../_components/DeleteModal';
+import { RankContainer } from '../_components/RankContainer';
 import { useFeedAdmin } from '../_hooks/useFeedAdmin';
 
 export function FeedAdminClientPage() {
@@ -41,6 +41,10 @@ export function FeedAdminClientPage() {
           onEditModeChange={handleEditModeChange}
           onDeleteClick={openModal}
         />
+      </Flex>
+
+      <Flex dir="col" className="my-5">
+        <RankContainer />
       </Flex>
       <Flex className="mt-3 w-full">
         {feeds.length === 0 ? (

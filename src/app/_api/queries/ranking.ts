@@ -1,0 +1,39 @@
+import { queryOptions } from '@tanstack/react-query';
+
+import { fetcher } from '../fetcher';
+
+import type {
+  AdminFeedRankingApiRequest,
+  ClubFeedRankingApiRequest,
+} from '../types/ranking';
+
+export const rankingQueryKeys = {
+  all: () => ['ranking'] as const,
+  feed: () => [...rankingQueryKeys.all(), 'feed'] as const,
+  rankList: () => [...rankingQueryKeys.feed(), 'admin'] as const,
+  rank: () => [...rankingQueryKeys.feed(), 'club'] as const,
+
+  adminFeedRanking: (year: number, month: number) =>
+    [...rankingQueryKeys.rankList(), year, month] as const,
+  clubFeedRanking: (year: number, month: number) =>
+    [...rankingQueryKeys.rank(), year, month] as const,
+};
+
+export const rankingQueryOptions = {
+  adminFeed: (year: number, month: number) =>
+    queryOptions({
+      queryKey: rankingQueryKeys.adminFeedRanking(year, month),
+      queryFn: () =>
+        fetcher.get<AdminFeedRankingApiRequest[]>(
+          `admin/feeds/ranking?year=${year}&month=${month}`,
+        ),
+    }),
+  clubRank: (year: number, month: number) =>
+    queryOptions({
+      queryKey: rankingQueryKeys.clubFeedRanking(year, month),
+      queryFn: () =>
+        fetcher.get<ClubFeedRankingApiRequest>(
+          `central/feeds/status?year=${year}&month=${month}`,
+        ),
+    }),
+};

@@ -51,7 +51,7 @@ export function CommentItem({
       <Flex justifyContent="between" className="w-full">
         <div>
           <Flex className="flex-col md:flex-row md:gap-2">
-            <Body3>제41대 총동아리연합회 Mode</Body3>
+            <Body3>제42대 총동아리연합회 SO:ONE</Body3>
             <time className="truncate text-gray-500">
               {dayjs(createdAt).fromNow()}
             </time>
