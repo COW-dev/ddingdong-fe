@@ -82,6 +82,7 @@ export function ClubFeed({
 
       {isOpen && selectedFeedIdForModal > 0 && (
         <FeedModal
+          key={selectedFeedIdForModal}
           feedId={selectedFeedIdForModal}
           isOpen={isOpen}
           closeModal={closeModal}

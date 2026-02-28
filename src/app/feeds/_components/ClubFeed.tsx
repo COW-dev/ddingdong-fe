@@ -43,6 +43,7 @@ export function ClubFeed({ feeds }: { feeds: Feed[] }) {
       ))}
       {selectedFeed !== null && (
         <FeedModal
+          key={selectedFeed}
           feedId={selectedFeed}
           isOpen={isOpen}
           closeModal={closeModal}
