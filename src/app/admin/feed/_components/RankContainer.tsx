@@ -3,7 +3,6 @@ import {
   Accordion,
   AccordionItem,
   Flex,
-  Title3,
   Body1,
   Body2,
   Body3,
