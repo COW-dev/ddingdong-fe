@@ -18,16 +18,21 @@ export function useFormEdit(formId: number) {
   const { data: formData } = useSuspenseQuery(applyQueryOptions.form(formId));
   const { mutate: updateForm, isPending } = useUpdateForm();
 
-  // 모집이 시작되기 전인지 확인
-  const isRecruitStartedBefore = useMemo(() => {
-    if (!formData.startDate) return false;
+  // 현재 모집 중인지 확인
+  const isRecruiting = useMemo(() => {
+    if (!formData.startDate || !formData.endDate) return false;
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const startDate = new Date(formData.startDate);
     startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(formData.endDate);
+    endDate.setHours(0, 0, 0, 0);
 
-    return startDate.getTime() > today.getTime();
-  }, [formData.startDate]);
+    return (
+      startDate.getTime() <= today.getTime() &&
+      today.getTime() <= endDate.getTime()
+    );
+  }, [formData.startDate, formData.endDate]);
 
   const [isEditing, setIsEditing] = useState(false);
   const [basicInfo, setBasicInfo] = useState<FormBasicInfo>(() =>
@@ -67,6 +72,15 @@ export function useFormEdit(formId: number) {
       toast.error('모집 기간을 입력해주세요.');
       return;
     }
+    const formatLocalDate = (date: Date | string): string => {
+      if (typeof date === 'string') {
+        return date;
+      }
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    };
 
     updateForm(
       {
@@ -74,10 +88,8 @@ export function useFormEdit(formId: number) {
         formData: {
           title: basicInfo.title,
           description: basicInfo.description,
-          startDate: basicInfo.recruitPeriod.startDate
-            .toISOString()
-            .split('T')[0],
-          endDate: basicInfo.recruitPeriod.endDate.toISOString().split('T')[0],
+          startDate: formatLocalDate(basicInfo.recruitPeriod.startDate),
+          endDate: formatLocalDate(basicInfo.recruitPeriod.endDate),
           hasInterview: basicInfo.hasInterview,
           sections: formData.sections || [],
           formFields: formData.formFields || [],
@@ -114,6 +126,6 @@ export function useFormEdit(formId: number) {
     handleCancel,
     isPending,
     contextValue,
-    isRecruitStartedBefore,
+    isRecruiting,
   };
 }

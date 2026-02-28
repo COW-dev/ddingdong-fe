@@ -10,6 +10,7 @@ import {
   UpdateApplicantStatusAPIRequest,
   UpdateFormAPIRequest,
 } from '../types/apply';
+import { EmailSendAPIResponse } from '../types/email';
 
 const createForm = (formData: CreateFormDataAPIRequest) =>
   fetcher.post(`central/my/forms`, { json: formData });
@@ -33,9 +34,12 @@ const createResultEmail = ({
   target,
   message,
 }: CreateResultEmailAPIRequest) =>
-  fetcher.post(`central/my/forms/${formId}/results/email`, {
-    json: { title, target, message },
-  });
+  fetcher.post<EmailSendAPIResponse>(
+    `central/my/forms/${formId}/results/email`,
+    {
+      json: { title, target, message },
+    },
+  );
 
 export const useCreateResultEmail = () => {
   const queryClient = useQueryClient();

@@ -1,16 +1,11 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
-import { useRef, useEffect } from 'react';
-
-import { Flex, usePortal } from 'ddingdong-design-system';
-
-import { GameStartModal } from '@/app/pair_game/_components/ui/GameStartModal';
+import { Flex } from 'ddingdong-design-system';
 
 import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
-import GameLayout from './GameLayout';
 import { UserHeader } from './UserHeader';
 
 type LayoutClientProps = {
@@ -20,32 +15,12 @@ type LayoutClientProps = {
 
 export default function Layout({ children, isAdminHost }: LayoutClientProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { isOpen, openModal, closeModal } = usePortal();
-
-  const shouldShowGameStartModal = pathname === '/' && !isAdminHost;
-  const hasOpenedRef = useRef(false);
 
   const isLoginPage = pathname?.includes('/login');
-  const isGamePage = pathname?.startsWith('/pair_game');
-
-  useEffect(() => {
-    if (!shouldShowGameStartModal) return;
-
-    if (!hasOpenedRef.current) {
-      openModal();
-      hasOpenedRef.current = true;
-    }
-  }, [shouldShowGameStartModal, openModal]);
-
-  if (isGamePage) {
-    return <GameLayout>{children}</GameLayout>;
-  }
 
   return (
     <>
       {isAdminHost ? <AdminHeader /> : <UserHeader />}
-
       <Flex
         as="main"
         dir="col"
@@ -59,19 +34,7 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
           {children}
         </Flex>
       </Flex>
-
       {!isLoginPage && <Footer />}
-
-      {!isAdminHost && shouldShowGameStartModal && (
-        <GameStartModal
-          isOpen={isOpen}
-          onClose={closeModal}
-          onGameStart={() => {
-            closeModal();
-            router.push('/pair_game');
-          }}
-        />
-      )}
     </>
   );
 }
