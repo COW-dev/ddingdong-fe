@@ -1,11 +1,8 @@
-// components/layout/LayoutClient.tsx
-
 'use client';
 
 import { usePathname } from 'next/navigation';
 
 import { Flex } from 'ddingdong-design-system';
-import { Snowfall } from 'react-snowfall';
 
 import { AdminHeader } from './AdminHeader';
 import Footer from './Footer';
@@ -23,13 +20,6 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
 
   return (
     <>
-      <Snowfall
-        style={{
-          position: 'fixed',
-          width: '100vw',
-          height: '100vh',
-        }}
-      />
       {isAdminHost ? <AdminHeader /> : <UserHeader />}
       <Flex
         as="main"

@@ -17,6 +17,9 @@ export type Feed = {
   feedType: 'IMAGE' | 'VIDEO';
   thumbnailCdnUrl: string;
   thumbnailOriginUrl: string;
+  viewCount: number;
+  likeCount: number;
+  commentCount: number;
 };
 
 export type PagingInfo = {
@@ -32,8 +35,38 @@ export type FeedDetail = {
   fileUrls: UrlType;
   createdDate: string;
   clubProfile: ClubProfile;
+  viewCount: number;
+  likeCount: number;
+  commentCount: number;
+  comments: Comment[];
+};
+
+export type Comment = {
+  id: number;
+  uuid: string;
+  anonymousName: string;
+  content: string;
+  createdAt: string;
+};
+
+export type LikeFeedAPIRequest = {
+  count: number;
 };
 
 export type DeleteFeedAPIRequest = {
   feedId: number;
+};
+
+export type CreateFeedCommentAPIRequest = {
+  content: string;
+};
+
+export type CreateFeedCommentAPIResponse = {
+  commentId: number;
+  anonymousNumber: string;
+};
+
+export type DeleteCommentAPIRequest = {
+  feedId: number;
+  commentId: number;
 };
