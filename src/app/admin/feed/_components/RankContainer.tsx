@@ -17,7 +17,7 @@ import { getRankingDate } from '../../ranking/_hooks/getRankingDate';
 export function RankContainer() {
   const { currentYear, currentMonth } = getRankingDate();
   const { data: clubRanking } = useSuspenseQuery(
-    rankingQueryOptions.clubFeed(currentYear, currentMonth),
+    rankingQueryOptions.clubRank(currentYear, currentMonth),
   );
 
   if (!clubRanking) {

@@ -10,13 +10,13 @@ import type {
 export const rankingQueryKeys = {
   all: () => ['ranking'] as const,
   feed: () => [...rankingQueryKeys.all(), 'feed'] as const,
-  adminFeed: () => [...rankingQueryKeys.feed(), 'admin'] as const,
-  clubFeed: () => [...rankingQueryKeys.feed(), 'club'] as const,
+  rankList: () => [...rankingQueryKeys.feed(), 'admin'] as const,
+  rank: () => [...rankingQueryKeys.feed(), 'club'] as const,
 
   adminFeedRanking: (year: number, month: number) =>
-    [...rankingQueryKeys.adminFeed(), year, month] as const,
+    [...rankingQueryKeys.rankList(), year, month] as const,
   clubFeedRanking: (year: number, month: number) =>
-    [...rankingQueryKeys.clubFeed(), year, month] as const,
+    [...rankingQueryKeys.rank(), year, month] as const,
 };
 
 export const rankingQueryOptions = {
@@ -28,7 +28,7 @@ export const rankingQueryOptions = {
           `admin/feeds/ranking?year=${year}&month=${month}`,
         ),
     }),
-  clubFeed: (year: number, month: number) =>
+  clubRank: (year: number, month: number) =>
     queryOptions({
       queryKey: rankingQueryKeys.clubFeedRanking(year, month),
       queryFn: () =>

@@ -26,7 +26,7 @@ export default function RankingClientPage() {
     : (lastMonthRanking ?? []);
 
   return (
-    <Flex className="flex w-full flex-col py-[3.2rem] md:py-[4.8rem]">
+    <Flex className="w-full py-[3.2rem] md:py-[4.8rem]" dir="col">
       <RankingHeader />
       <Flex className="mt-8 w-full">
         <Tabs defaultIndex={0} className="w-full">
