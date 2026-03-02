@@ -116,7 +116,7 @@ export function IntroStepMobile({
             >
               5개 단계를 모두 클리어하면{' '}
               <span className="text-game-primary">
-                특별한 결말과 상품 응모 기회
+                특별한 결말과 상품 응모 기회까지!🎁
               </span>
             </Caption1>
             <Caption1
