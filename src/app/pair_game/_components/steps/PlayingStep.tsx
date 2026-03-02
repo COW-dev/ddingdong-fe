@@ -7,7 +7,7 @@ import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 import { PAIR_GAME_PATH } from '../../_constants/gameImages';
 import { useGameFunnel } from '../../_contexts/GameFunnelContext';
 import { usePairGamePlaying } from '../../_contexts/PairGamePlayingContext';
-import type { RoundResult } from '../../_hooks/usePairGame';
+import { RoundResult } from '../../_hooks/useGameProgress';
 import { getCardSizeStyleForConfig } from '../../_utils/cardStyles';
 import { BellAnimation } from '../ui/BellAnimation';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';

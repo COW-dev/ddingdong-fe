@@ -18,7 +18,7 @@ import {
   useGameFunnel,
 } from './_contexts/GameFunnelContext';
 import { PairGamePlayingProvider } from './_contexts/PairGamePlayingContext';
-import { usePairGame } from './_hooks/usePairGame';
+import { useGameProgress } from './_hooks/useGameProgress';
 import { preloadGameAssets } from './_utils/preloadGameAssets';
 
 const IntroStep = dynamic(
@@ -41,7 +41,7 @@ function GamePageContent() {
     completeRound,
     advanceToNextStage,
     resetGame,
-  } = usePairGame();
+  } = useGameProgress();
 
   const { data: appliersAmount } = useQuery({
     ...pairGameQueryOptions.appliersAmount(),

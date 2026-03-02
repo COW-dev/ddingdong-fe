@@ -9,7 +9,7 @@ export type RoundResult = {
   success: boolean;
 };
 
-export const usePairGame = () => {
+export const useGameProgress = () => {
   const [currentRound, setCurrentRound] = useState(0);
   const [gameInstanceId, setGameInstanceId] = useState(0);
   const [roundResult, setRoundResult] = useState<RoundResult>({

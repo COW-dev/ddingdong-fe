@@ -7,7 +7,7 @@ type Phase = 'preview' | 'playing' | 'ended';
 const PREVIEW_TIME = 4;
 const GAME_TIME = 20;
 
-export const useGamePhase = () => {
+export const useRoundPhase = () => {
   const [phase, setPhase] = useState<Phase>('preview');
   const [previewTimer, setPreviewTimer] = useState(PREVIEW_TIME);
   const [gameTimer, setGameTimer] = useState(GAME_TIME);

@@ -23,8 +23,22 @@ export function createCards(totalCards: number): Card[] {
   const selectedClubs = shuffle(CLUBS).slice(0, pairCount);
 
   const cards = selectedClubs.flatMap((club, idx) => [
-    { id: idx * 2, clubId: club.id, category: club.category, clubName: club.name, isFlipped: true, isMatched: false },
-    { id: idx * 2 + 1, clubId: club.id, category: club.category, clubName: club.name, isFlipped: true, isMatched: false },
+    {
+      id: idx * 2,
+      clubId: club.id,
+      category: club.category,
+      clubName: club.name,
+      isFlipped: true,
+      isMatched: false,
+    },
+    {
+      id: idx * 2 + 1,
+      clubId: club.id,
+      category: club.category,
+      clubName: club.name,
+      isFlipped: true,
+      isMatched: false,
+    },
   ]);
 
   return shuffle(cards);

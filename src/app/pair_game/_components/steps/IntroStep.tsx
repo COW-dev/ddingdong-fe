@@ -1,6 +1,7 @@
 'use client';
 
 import { isMobileDevice } from '@/utils/userAgent';
+
 import { shareCurrentLink } from '../../_utils/shareLink';
 
 import { IntroStepDesktop } from './IntroStepDesktop';

@@ -4,7 +4,10 @@ import {
   DEFAULT_CATEGORY_STYLE,
 } from '../_constants/categoryStyles';
 
-export function getCardSizeStyleForConfig(config: { cols: number; rows: number }) {
+export function getCardSizeStyleForConfig(config: {
+  cols: number;
+  rows: number;
+}) {
   const key = `${config.cols}x${config.rows}`;
   const base = CARD_SIZES[key] ?? { width: 80, height: 105 };
   const vwW = Math.min(24, 85 / config.cols);

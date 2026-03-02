@@ -13,7 +13,8 @@ import {
 import { ROUND_CONFIGS, type RoundConfig } from '../_constants/roundConfigs';
 import { useCardState } from '../_hooks/useCardState';
 import { useDelayedAction } from '../_hooks/useDelayedAction';
-import { useGamePhase } from '../_hooks/useGamePhase';
+import { useRoundPhase } from '../_hooks/useRoundPhase';
+
 import type { Card } from '../_utils/cardUtils';
 
 const MATCH_CHECK_DELAY_MS = 350;
@@ -48,7 +49,7 @@ export function PairGamePlayingProvider({
 
   const { schedule } = useDelayedAction();
   const { previewTimer, gameTimer, phase, isPreviewMode, isGameActive, stop } =
-    useGamePhase();
+    useRoundPhase();
   const { cards, flipCard, flipAllDown, checkMatch } = useCardState(
     config.totalCards,
   );

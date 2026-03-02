@@ -20,12 +20,24 @@ function getActionConfig(stage: number, success: boolean) {
   const isLastStageSuccess = stage === TOTAL_HEARTS && success;
 
   if (isLastStageSuccess) {
-    return { quitLabel: '나가기', rightLabel: '상품 응모하기', rightAction: 'submit' as const };
+    return {
+      quitLabel: '나가기',
+      rightLabel: '상품 응모하기',
+      rightAction: 'submit' as const,
+    };
   }
   if (success) {
-    return { quitLabel: '그만하기', rightLabel: '다음단계', rightAction: 'nextStage' as const };
+    return {
+      quitLabel: '그만하기',
+      rightLabel: '다음단계',
+      rightAction: 'nextStage' as const,
+    };
   }
-  return { quitLabel: '그만하기', rightLabel: '다시 도전하기', rightAction: 'retry' as const };
+  return {
+    quitLabel: '그만하기',
+    rightLabel: '다시 도전하기',
+    rightAction: 'retry' as const,
+  };
 }
 
 function getModalContent(stage: number, success: boolean) {
