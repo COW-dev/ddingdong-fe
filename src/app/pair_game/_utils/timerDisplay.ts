@@ -8,10 +8,12 @@ export function getTimerDisplay(
   gameTime: number,
 ): TimerDisplayResult {
   const remaining = Math.max(0, gameTimer);
-  const percent = gameTime > 0 ? (remaining / gameTime) * 100 : 0;
+  const displaySeconds = remaining > 0 ? Math.ceil(remaining) : 0;
+  const percent =
+    gameTime > 0 && displaySeconds > 0 ? (remaining / gameTime) * 100 : 0;
 
   return {
-    displaySeconds: Math.floor(remaining),
+    displaySeconds,
     progressPercent: percent,
   };
 }

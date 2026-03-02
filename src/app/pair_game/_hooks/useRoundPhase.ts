@@ -15,16 +15,24 @@ export const useRoundPhase = () => {
   useEffect(() => {
     if (phase !== 'preview') return;
 
-    const id = setInterval(() => {
-      setPreviewTimer((prev) => {
-        if (prev <= 1) {
-          clearInterval(id);
-          setPhase('playing');
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    const start = performance.now();
+    const durationMs = PREVIEW_TIME * 1000;
+
+    const updateRemaining = () => {
+      const elapsedMs = performance.now() - start;
+      const remaining = Math.max(0, (durationMs - elapsedMs) / 1000);
+      setPreviewTimer(remaining);
+      return remaining;
+    };
+
+    updateRemaining();
+    const id = window.setInterval(() => {
+      const remaining = updateRemaining();
+      if (remaining <= 0) {
+        window.clearInterval(id);
+        setPhase('playing');
+      }
+    }, 100);
 
     return () => clearInterval(id);
   }, [phase]);
@@ -32,16 +40,24 @@ export const useRoundPhase = () => {
   useEffect(() => {
     if (phase !== 'playing') return;
 
-    const id = setInterval(() => {
-      setGameTimer((prev) => {
-        if (prev <= 1) {
-          clearInterval(id);
-          setPhase('ended');
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
+    const start = performance.now();
+    const durationMs = GAME_TIME * 1000;
+
+    const updateRemaining = () => {
+      const elapsedMs = performance.now() - start;
+      const remaining = Math.max(0, (durationMs - elapsedMs) / 1000);
+      setGameTimer(remaining);
+      return remaining;
+    };
+
+    updateRemaining();
+    const id = window.setInterval(() => {
+      const remaining = updateRemaining();
+      if (remaining <= 0) {
+        window.clearInterval(id);
+        setPhase('ended');
+      }
+    }, 100);
 
     return () => clearInterval(id);
   }, [phase]);

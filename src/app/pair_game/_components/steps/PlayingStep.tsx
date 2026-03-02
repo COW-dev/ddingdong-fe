@@ -92,10 +92,9 @@ export function PlayingStep({
   return (
     <>
       <Flex
-        ref={containerRef}
         dir="col"
         justifyContent="between"
-        className="h-dvh overflow-hidden px-4 pt-6"
+        className="h-svh overflow-hidden px-4 pt-6"
         style={{ touchAction: 'none' }}
       >
         <Flex dir="col" alignItems="center" className="shrink-0 py-4">
@@ -117,8 +116,12 @@ export function PlayingStep({
               gap={2}
               className="w-full max-w-[335px] rounded-full bg-white p-2 px-3 shadow-md"
             >
-              <div className="min-w-0 flex-1 [&_*]:!duration-100">
-                <ProgressBar color="pink" percent={progressPercent} />
+              <div className="min-w-0 flex-1">
+                <ProgressBar
+                  color="pink"
+                  percent={progressPercent}
+                  className="[&>div]:!duration-100 [&>div]:!ease-linear"
+                />
               </div>
               <Caption1 className="font-school-safety text-game-primary shrink-0 tabular-nums">
                 {`00:${String(displaySeconds).padStart(2, '0')}`}
