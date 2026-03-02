@@ -40,7 +40,7 @@ export const navItems: {
     },
   ],
 
-  '동아리 박람회 이벤트': [
+  '동아리박람회 이벤트': [
     {
       id: 7,
       href: '/pair_game',
