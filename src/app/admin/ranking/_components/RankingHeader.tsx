@@ -6,7 +6,7 @@ export function RankingHeader() {
       <Title1 as="h1" weight="bold">
         이달의 피드 점수 현황
       </Title1>
-      <Flex dir="col">
+      <Flex dir="col" className="hidden md:block">
         <Body3 className="text-gray-400">
           매월 1일 이달의 피드가 선정됩니다.
         </Body3>
