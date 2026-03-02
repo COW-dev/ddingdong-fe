@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 
@@ -45,16 +45,11 @@ export function PlayingStep({
   } = usePairGamePlaying();
 
   const cardSize = getCardSizeStyleForConfig(config);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const scrollToTop = () => {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    };
-
-    scrollToTop();
-    requestAnimationFrame(scrollToTop);
+    containerRef.current?.scrollIntoView({ block: 'start' });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
   const { displaySeconds, progressPercent } = getTimerDisplay(
@@ -97,6 +92,7 @@ export function PlayingStep({
   return (
     <>
       <Flex
+        ref={containerRef}
         dir="col"
         justifyContent="between"
         className="h-dvh overflow-hidden px-4 pt-6"
