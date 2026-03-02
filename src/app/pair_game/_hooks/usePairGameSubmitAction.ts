@@ -7,7 +7,7 @@ import { useCreatePairGameApplier } from '@/app/_api/mutations/pair_game';
 import type { PairGameSubmitFormValues } from '@/app/_api/types/pair_game';
 
 import { useGameFunnel } from '../_contexts/GameFunnelContext';
-import { PAIR_GAME_PATH } from '../_utils/gameImages';
+import { PAIR_GAME_PATH } from '../_constants/gameImages';
 import { validatePairGameSubmitData } from '../_utils/validatePairGameSubmitData';
 
 export function usePairGameSubmitAction() {

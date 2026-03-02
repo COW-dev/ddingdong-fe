@@ -1,4 +1,4 @@
-import { ROUND_RESULT_MODAL_CONTENT } from '../_utils/RoundResultModalContent';
+import { ROUND_RESULT_MODAL_CONTENT } from '../_constants/RoundResultModalContent';
 
 export type RoundResultModalAction = 'nextStage' | 'quit' | 'retry' | 'submit';
 

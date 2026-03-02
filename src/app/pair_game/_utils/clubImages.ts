@@ -1,13 +1,7 @@
-import { PAIR_GAME_PATH } from './gameImages';
+import { CLUBS } from '../_constants/clubs';
+import { PAIR_GAME_PATH } from '../_constants/gameImages';
 
-const CLUB_IDS = Array.from({ length: 38 }, (_, i) => i + 1);
+export const getClubImageSrc = (clubId: number): string =>
+  `${PAIR_GAME_PATH}/clubs/${clubId}.webp`;
 
-export const getClubImageSrc = (clubId: number): string => {
-  if (clubId >= 1 && clubId <= 38)
-    return `${PAIR_GAME_PATH}/clubs/${clubId}.webp`;
-  return '';
-};
-
-export const CLUB_IMAGE_SRCS = CLUB_IDS.map(
-  (id) => `${PAIR_GAME_PATH}/clubs/${id}.webp`,
-);
+export const CLUB_IMAGE_SRCS = CLUBS.map((c) => getClubImageSrc(c.id));
