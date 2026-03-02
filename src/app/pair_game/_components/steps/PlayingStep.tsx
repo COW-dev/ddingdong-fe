@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 
 import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 
@@ -9,6 +9,7 @@ import { useGameFunnel } from '../../_contexts/GameFunnelContext';
 import { usePairGamePlaying } from '../../_contexts/PairGamePlayingContext';
 import { RoundResult } from '../../_hooks/useGameProgress';
 import { getCardSizeStyleForConfig } from '../../_utils/cardStyles';
+import { getTimerDisplay } from '../../_utils/timerDisplay';
 import { BellAnimation } from '../ui/BellAnimation';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 import { EventCard } from '../ui/EventCard';
@@ -46,20 +47,20 @@ export function PlayingStep({
   const cardSize = getCardSizeStyleForConfig(config);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0;
+    const scrollToTop = () => {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    scrollToTop();
+    requestAnimationFrame(scrollToTop);
   }, []);
 
-  const { displaySeconds, progressPercent } = useMemo(() => {
-    const remaining = Math.max(0, gameTimer);
-    const percent =
-      config.gameTime > 0 ? (remaining / config.gameTime) * 100 : 0;
-    return {
-      displaySeconds: Math.floor(remaining),
-      progressPercent: percent,
-    };
-  }, [gameTimer, config.gameTime]);
+  const { displaySeconds, progressPercent } = getTimerDisplay(
+    gameTimer,
+    config.gameTime,
+  );
 
   const handleNextStage = () => {
     onCloseModal();
