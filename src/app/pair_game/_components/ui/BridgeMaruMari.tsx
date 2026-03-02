@@ -2,7 +2,7 @@
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import { GAME_IMAGES } from '../../_utils/gameImages';
+import { GAME_IMAGES } from '../../_constants/gameImages';
 
 export type Props = {
   className?: string;

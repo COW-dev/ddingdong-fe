@@ -1,5 +1,5 @@
+import { GAME_IMAGES } from '../_constants/gameImages';
 import { CLUB_IMAGE_SRCS } from './clubImages';
-import { GAME_IMAGES } from './gameImages';
 
 const CRITICAL_IMAGES = [
   GAME_IMAGES['bell-sprite'],

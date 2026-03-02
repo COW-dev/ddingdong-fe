@@ -1,6 +1,6 @@
 'use client';
 
-import { GAME_IMAGES } from '../../_utils/gameImages';
+import { GAME_IMAGES } from '../../_constants/gameImages';
 
 const FRAME_COUNT = 10;
 const DURATION_S = 1.0;

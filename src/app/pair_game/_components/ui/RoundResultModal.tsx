@@ -13,7 +13,7 @@ import {
   useRoundResultModal,
   type RoundResultModalAction,
 } from '../../_hooks/useRoundResultModal';
-import { GAME_IMAGES } from '../../_utils/gameImages';
+import { GAME_IMAGES } from '../../_constants/gameImages';
 
 export type { RoundResultModalAction };
 

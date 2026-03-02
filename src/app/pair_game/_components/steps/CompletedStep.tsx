@@ -10,8 +10,8 @@ import JSConfetti from 'js-confetti';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { useGameLayoutBg } from '../../_hooks/useGameLayoutBg';
-import { GAME_IMAGES } from '../../_utils/gameImages';
 import { shareCurrentLink } from '../../_utils/shareLink';
+import { GAME_IMAGES } from '../../_constants/gameImages';
 const CONFETTI_COLORS = [
   '#ff0a54',
   '#ff477e',
