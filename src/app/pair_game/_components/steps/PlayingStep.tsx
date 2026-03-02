@@ -116,14 +116,14 @@ export function PlayingStep({
               gap={2}
               className="w-full max-w-[335px] rounded-full bg-white p-2 px-3 shadow-md"
             >
-              <div className="min-w-0 flex-1">
+              <div className="min-w-0 flex-1 overflow-hidden">
                 <ProgressBar
                   color="pink"
                   percent={progressPercent}
-                  className="[&>div]:!duration-100 [&>div]:!ease-linear"
+                  className="w-full max-w-full [&>div]:!duration-100 [&>div]:!ease-linear"
                 />
               </div>
-              <Caption1 className="font-school-safety text-game-primary shrink-0 tabular-nums">
+              <Caption1 className="font-school-safety text-game-primary w-[48px] flex-none text-right tabular-nums">
                 {`00:${String(displaySeconds).padStart(2, '0')}`}
               </Caption1>
             </Flex>
