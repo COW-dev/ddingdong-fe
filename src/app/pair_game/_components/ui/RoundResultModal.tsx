@@ -9,11 +9,11 @@ import {
   Modal,
 } from 'ddingdong-design-system';
 
+import { GAME_IMAGES } from '../../_constants/gameImages';
 import {
   getRoundResultModalContent,
   type RoundResultModalAction,
 } from '../../_utils/roundResultModal';
-import { GAME_IMAGES } from '../../_constants/gameImages';
 
 export type { RoundResultModalAction };
 
