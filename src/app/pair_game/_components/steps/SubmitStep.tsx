@@ -16,7 +16,7 @@ import { departmentInfo } from '@/constants/department';
 import { cn } from '@/lib/utils';
 
 import { useGameLayoutBg } from '../../_hooks/useGameLayoutBg';
-import { usePairGameSubmit } from '../../_hooks/usePairGameSubmit';
+import { usePairGameForm } from '../../_hooks/usePairGameForm';
 
 const departments = Object.values(departmentInfo).flat();
 
@@ -30,7 +30,7 @@ export function SubmitStep() {
     handleFileChange,
     clearReceiptFile,
     handleSubmit,
-  } = usePairGameSubmit();
+  } = usePairGameForm();
 
   useGameLayoutBg();
 
