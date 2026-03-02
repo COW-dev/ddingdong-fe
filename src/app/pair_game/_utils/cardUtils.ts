@@ -9,16 +9,16 @@ export type Card = {
   isMatched: boolean;
 };
 
-function shuffle<T>(arr: T[]): T[] {
+const shuffle = <T>(arr: T[]): T[] => {
   const result = [...arr];
   for (let i = result.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [result[i], result[j]] = [result[j], result[i]];
   }
   return result;
-}
+};
 
-export function createCards(totalCards: number): Card[] {
+export const createCards = (totalCards: number): Card[] => {
   const pairCount = totalCards / 2;
   const selectedClubs = shuffle(CLUBS).slice(0, pairCount);
 
@@ -42,17 +42,17 @@ export function createCards(totalCards: number): Card[] {
   ]);
 
   return shuffle(cards);
-}
+};
 
-export function areAllCardsMatched(cards: Card[]): boolean {
+export const areAllCardsMatched = (cards: Card[]): boolean => {
   return cards.every((card) => card.isMatched);
-}
+};
 
-export function processCardMatch(
+export const processCardMatch = (
   cards: Card[],
   firstId: number,
   secondId: number,
-): { updatedCards: Card[]; isMatch: boolean } {
+): { updatedCards: Card[]; isMatch: boolean } => {
   const first = cards.find((c) => c.id === firstId);
   const second = cards.find((c) => c.id === secondId);
 
@@ -71,4 +71,4 @@ export function processCardMatch(
   });
 
   return { updatedCards, isMatch };
-}
+};

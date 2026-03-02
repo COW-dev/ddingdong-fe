@@ -6,7 +6,7 @@ type Result = { stage: number; success: boolean };
 
 const TOTAL_HEARTS = 5;
 
-function getHeartCounts(stage: number, success: boolean) {
+const getHeartCounts = (stage: number, success: boolean) => {
   const filled = success ? stage : stage - 1;
   const broken = success ? 0 : 1;
   return {
@@ -14,9 +14,9 @@ function getHeartCounts(stage: number, success: boolean) {
     brokenCount: broken,
     emptyCount: TOTAL_HEARTS - filled - broken,
   };
-}
+};
 
-function getActionConfig(stage: number, success: boolean) {
+const getActionConfig = (stage: number, success: boolean) => {
   const isLastStageSuccess = stage === TOTAL_HEARTS && success;
 
   if (isLastStageSuccess) {
@@ -38,17 +38,17 @@ function getActionConfig(stage: number, success: boolean) {
     rightLabel: '다시 도전하기',
     rightAction: 'retry' as const,
   };
-}
+};
 
-function getModalContent(stage: number, success: boolean) {
+const getModalContent = (stage: number, success: boolean) => {
   const stageContent = ROUND_RESULT_MODAL_CONTENT[stage];
   if (!stageContent) return null;
 
   const { title, lines } = success ? stageContent.success : stageContent.fail;
   return { title, lines };
-}
+};
 
-export function getRoundResultModalContent(result: Result) {
+export const getRoundResultModalContent = (result: Result) => {
   const { stage, success } = result;
 
   return {
@@ -58,4 +58,4 @@ export function getRoundResultModalContent(result: Result) {
     stage,
     success,
   };
-}
+};

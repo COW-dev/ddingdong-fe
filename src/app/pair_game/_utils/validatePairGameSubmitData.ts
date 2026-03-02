@@ -10,10 +10,10 @@ type ValidatePairGameSubmitInput = {
   receiptFile: File | null;
 };
 
-export function validatePairGameSubmitData({
+export const validatePairGameSubmitData = ({
   formData,
   receiptFile,
-}: ValidatePairGameSubmitInput): boolean {
+}: ValidatePairGameSubmitInput): boolean => {
   const result = pairGameSubmitSchema.safeParse(formData);
 
   if (!result.success) {
@@ -34,4 +34,4 @@ export function validatePairGameSubmitData({
   }
 
   return true;
-}
+};
