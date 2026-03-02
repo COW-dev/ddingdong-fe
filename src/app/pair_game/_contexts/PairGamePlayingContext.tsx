@@ -48,10 +48,7 @@ export function PairGamePlayingProvider({
 
   const { schedule } = useDelayedAction();
   const { previewTimer, gameTimer, phase, isPreviewMode, isGameActive, stop } =
-    useGamePhase({
-      previewTime: config.previewTime,
-      gameTime: config.gameTime,
-    });
+    useGamePhase();
   const { cards, flipCard, flipAllDown, checkMatch } = useCardState(
     config.totalCards,
   );
