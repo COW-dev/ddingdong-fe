@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   Accordion,
@@ -7,6 +11,7 @@ import {
   Body2,
   Body3,
   Caption1,
+  Icon,
 } from 'ddingdong-design-system';
 
 import { rankingQueryOptions } from '@/app/_api/queries/ranking';
@@ -14,6 +19,7 @@ import { rankingQueryOptions } from '@/app/_api/queries/ranking';
 import { getRankingDate } from '../../ranking/utils/getRankingDate';
 
 export function RankContainer() {
+  const [isOpen, setIsOpen] = useState(false);
   const { currentYear, currentMonth } = getRankingDate();
   const { data: clubRanking } = useSuspenseQuery(
     rankingQueryOptions.clubList(currentYear, currentMonth),
@@ -40,9 +46,15 @@ export function RankContainer() {
 
   return (
     <Flex dir="col" gap={1} className="w-full">
-      <Flex dir="col" gap={1} className="md:hidden">
+      <Flex
+        dir="col"
+        gap={1}
+        className="md:hidden"
+        onClick={() => setIsOpen(!isOpen)}
+      >
         <Accordion type="single">
           <AccordionItem
+            isArrow={false}
             value="rank-summary"
             trigger={
               <Flex dir="col" gap={1} className="w-full text-left">
@@ -54,23 +66,30 @@ export function RankContainer() {
                     지난달 순위 : {safeLastMonthRank}
                   </Caption1>
                 </Flex>
-                <Flex gap={5} alignItems="center" className="mt-2">
-                  <Flex gap={2}>
-                    <Body3 as="span" className="text-gray-400">
-                      총점
-                    </Body3>
-                    <Body3 as="span" className="text-blue-500">
-                      {totalScore}점
-                    </Body3>
+                <Flex justifyContent="between" alignItems="center">
+                  <Flex gap={5} alignItems="center" className="mt-2">
+                    <Flex gap={2}>
+                      <Body3 as="span" className="text-gray-400">
+                        총점
+                      </Body3>
+                      <Body3 as="span" className="text-blue-500">
+                        {totalScore}점
+                      </Body3>
+                    </Flex>
+                    <Flex className="items-center gap-[1rem]">
+                      <Body3 as="span" className="text-gray-400">
+                        순위
+                      </Body3>
+                      <Body3 as="span" className="text-blue-500">
+                        {rank}위
+                      </Body3>
+                    </Flex>
                   </Flex>
-                  <Flex className="items-center gap-[1rem]">
-                    <Body3 as="span" className="text-gray-400">
-                      순위
-                    </Body3>
-                    <Body3 as="span" className="text-blue-500">
-                      {rank}위
-                    </Body3>
-                  </Flex>
+                  <Icon
+                    name={isOpen ? 'arrowUp' : 'arrowDown'}
+                    className="mt-2"
+                    size={12}
+                  />
                 </Flex>
               </Flex>
             }
