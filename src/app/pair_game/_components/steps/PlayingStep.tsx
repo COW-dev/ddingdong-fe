@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 import { Caption1, Flex, ProgressBar } from 'ddingdong-design-system';
 
