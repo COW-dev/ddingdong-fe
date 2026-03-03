@@ -5,7 +5,6 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useRef, useEffect } from 'react';
 
 import { Flex, usePortal } from 'ddingdong-design-system';
-import { Snowfall } from 'react-snowfall';
 
 import { GameStartModal } from '@/app/pair_game/_components/ui/GameStartModal';
 
@@ -45,14 +44,6 @@ export default function Layout({ children, isAdminHost }: LayoutClientProps) {
 
   return (
     <>
-      <Snowfall
-        style={{
-          position: 'fixed',
-          width: '100vw',
-          height: '100vh',
-        }}
-      />
-
       {isAdminHost ? <AdminHeader /> : <UserHeader />}
 
       <Flex
