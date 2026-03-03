@@ -47,10 +47,10 @@ export default function GamePrizePage() {
               상품 안내
             </Body3>
             <Caption1 className="text-gray-600">
-              네이버페 이 1만원 권 (10명)
+              네이버페이 1만원 권 (10명)
             </Caption1>
             <Caption1 className="mt-1 text-gray-300">
-              * 5명 씩 양일 간 10명에게 추첨을 통해 지급됩니다.
+              * 5명씩 양일 간 10명에게 추첨을 통해 지급됩니다.
             </Caption1>
           </section>
 
