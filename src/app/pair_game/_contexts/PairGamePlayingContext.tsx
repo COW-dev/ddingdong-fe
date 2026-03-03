@@ -1,50 +1,40 @@
 'use client';
 
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
   useEffect,
   useMemo,
   useRef,
-  useState,
   type ReactNode,
 } from 'react';
 
-import { useGameTimer } from '../_hooks/useGameTimer';
-import {
-  createCards,
-  processCardMatch,
-  areAllCardsMatched,
-  type Card as CardType,
-} from '../_utils/cardUtils';
-import { ROUND_CONFIGS, type RoundConfig } from '../_utils/gameConstants';
+import { ROUND_CONFIGS, type RoundConfig } from '../_constants/roundConfigs';
+import { useCardState } from '../_hooks/useCardState';
+import { useDelayedAction } from '../_hooks/useDelayedAction';
+import { useRoundPhase } from '../_hooks/useRoundPhase';
 
-const MATCH_RESOLVE_DELAY_MS = 350;
+import type { Card } from '../_utils/cardUtils';
+
+const MATCH_CHECK_DELAY_MS = 350;
 const ROUND_COMPLETE_DELAY_MS = 500;
 
-type PairGamePlayingContextValue = {
-  cards: CardType[];
+type GameContextValue = {
+  cards: Card[];
   config: RoundConfig;
   isPreviewMode: boolean;
   isGameActive: boolean;
   previewTimer: number;
   gameTimer: number;
-  handleCardClick: (cardId: number) => void;
+  selectCard: (cardId: number) => void;
 };
 
-const PairGamePlayingContext =
-  createContext<PairGamePlayingContextValue | null>(null);
+const GameContext = createContext<GameContextValue | null>(null);
 
-export type RoundResultModalRef = {
-  setResult: (stage: number, success: boolean) => void;
-  open: () => void;
-};
-
-type PairGamePlayingProviderProps = {
+type Props = {
   currentRound: number;
   onRoundComplete: (roundIndex: number, success: boolean) => void;
-  roundResultModalRef?: React.MutableRefObject<RoundResultModalRef | null>;
   children: ReactNode;
 };
 
@@ -52,102 +42,109 @@ export function PairGamePlayingProvider({
   currentRound,
   onRoundComplete,
   children,
-}: PairGamePlayingProviderProps) {
-  const [cards, setCards] = useState<CardType[]>([]);
-  const selectedCardsRef = useRef<number[]>([]);
+}: Props) {
+  const config = ROUND_CONFIGS[currentRound] ?? ROUND_CONFIGS[0];
+  const onRoundCompleteRef = useRef(onRoundComplete);
+  onRoundCompleteRef.current = onRoundComplete;
 
-  const roundIndex = Math.max(
-    0,
-    Math.min(currentRound, ROUND_CONFIGS.length - 1),
+  const { schedule } = useDelayedAction();
+  const { previewTimer, gameTimer, phase, isPreviewMode, isGameActive, stop } =
+    useRoundPhase();
+  const { cards, flipCard, flipAllDown, checkMatch } = useCardState(
+    config.totalCards,
   );
-  const config = ROUND_CONFIGS[roundIndex];
 
-  const handlePreviewEnd = useCallback(() => {
-    setCards((prev) =>
-      prev.map((card) =>
-        card.isMatched ? card : { ...card, isFlipped: false },
-      ),
-    );
-  }, []);
+  const selectedCardIds = useRef<number[]>([]);
+  const pendingCardIds = useRef<number[]>([]);
+  const isProcessingMatch = useRef(false);
+  const isRoundCompleted = useRef(false);
 
-  const handleGameEnd = useCallback(() => {
-    onRoundComplete(currentRound, false);
-  }, [currentRound, onRoundComplete]);
-
-  const {
-    previewTimer,
-    gameTimer,
-    isPreviewMode,
-    isGameActive,
-    setIsGameActive,
-    reset: resetTimer,
-  } = useGameTimer({
-    previewTime: config.previewTime,
-    gameTime: config.gameTime,
-    handlePreviewEnd,
-    handleGameEnd,
-  });
-
+  // 프리뷰 종료 시 카드 뒤집기
   useEffect(() => {
-    setCards(createCards(config.totalCards));
-    selectedCardsRef.current = [];
-    resetTimer();
-  }, [currentRound, config.totalCards, resetTimer]);
+    if (phase === 'playing') {
+      flipAllDown();
+    }
+  }, [phase, flipAllDown]);
 
-  const resolveTwoCards = useCallback(
+  // 게임 타임아웃 처리
+  useEffect(() => {
+    if (phase === 'ended' && !isRoundCompleted.current) {
+      onRoundCompleteRef.current(currentRound, false);
+    }
+  }, [phase, currentRound]);
+
+  const tryFlipNextCards = useCallback(() => {
+    while (
+      pendingCardIds.current.length > 0 &&
+      selectedCardIds.current.length < 2
+    ) {
+      const nextId = pendingCardIds.current.shift()!;
+      const flipped = flipCard(nextId);
+      if (flipped) {
+        selectedCardIds.current.push(nextId);
+      }
+    }
+  }, [flipCard]);
+
+  const processMatchResult = useCallback(
     (firstId: number, secondId: number) => {
-      setCards((prev) => {
-        const result = processCardMatch(prev, firstId, secondId);
+      const isAllMatched = checkMatch(firstId, secondId);
 
-        if (result.isMatch && areAllCardsMatched(result.updatedCards)) {
-          setIsGameActive(false);
-          const round = currentRound;
-          setTimeout(
-            () => onRoundComplete(round, true),
-            ROUND_COMPLETE_DELAY_MS,
-          );
-        }
+      if (isAllMatched) {
+        isRoundCompleted.current = true;
+        stop();
+        schedule(
+          () => onRoundCompleteRef.current(currentRound, true),
+          ROUND_COMPLETE_DELAY_MS,
+        );
+        return;
+      }
 
-        return result.updatedCards;
-      });
-      selectedCardsRef.current = [];
+      selectedCardIds.current = [];
+      isProcessingMatch.current = false;
+      tryFlipNextCards();
+
+      if (selectedCardIds.current.length === 2) {
+        isProcessingMatch.current = true;
+        const [first, second] = selectedCardIds.current;
+        schedule(() => processMatchResult(first, second), MATCH_CHECK_DELAY_MS);
+      }
     },
-    [currentRound, onRoundComplete, setIsGameActive],
+    [currentRound, checkMatch, stop, schedule, tryFlipNextCards],
   );
 
-  const handleCardClick = useCallback(
+  const selectCard = useCallback(
     (cardId: number) => {
       if (!isGameActive) return;
 
-      const prevSelected = selectedCardsRef.current;
-      if (prevSelected.length >= 2 || prevSelected.includes(cardId)) return;
+      const isDuplicate =
+        selectedCardIds.current.includes(cardId) ||
+        pendingCardIds.current.includes(cardId);
+      if (isDuplicate) return;
 
-      const next = [...prevSelected, cardId];
-      selectedCardsRef.current = next;
+      const canFlipNow =
+        !isProcessingMatch.current && selectedCardIds.current.length < 2;
 
-      setCards((prev) => {
-        const card = prev.find((c) => c.id === cardId);
+      if (!canFlipNow) {
+        pendingCardIds.current.push(cardId);
+        return;
+      }
 
-        if (!card || card.isFlipped || card.isMatched) {
-          return prev;
-        }
+      const flipped = flipCard(cardId);
+      if (!flipped) return;
 
-        return prev.map((c) =>
-          c.id === cardId ? { ...c, isFlipped: true } : c,
-        );
-      });
+      selectedCardIds.current.push(cardId);
 
-      if (next.length === 2) {
-        setTimeout(
-          () => resolveTwoCards(next[0], next[1]),
-          MATCH_RESOLVE_DELAY_MS,
-        );
+      if (selectedCardIds.current.length === 2) {
+        isProcessingMatch.current = true;
+        const [first, second] = selectedCardIds.current;
+        schedule(() => processMatchResult(first, second), MATCH_CHECK_DELAY_MS);
       }
     },
-    [isGameActive, resolveTwoCards],
+    [isGameActive, flipCard, schedule, processMatchResult],
   );
 
-  const value = useMemo<PairGamePlayingContextValue>(
+  const value = useMemo<GameContextValue>(
     () => ({
       cards,
       config,
@@ -155,7 +152,7 @@ export function PairGamePlayingProvider({
       isGameActive,
       previewTimer,
       gameTimer,
-      handleCardClick,
+      selectCard,
     }),
     [
       cards,
@@ -164,19 +161,15 @@ export function PairGamePlayingProvider({
       isGameActive,
       previewTimer,
       gameTimer,
-      handleCardClick,
+      selectCard,
     ],
   );
 
-  return (
-    <PairGamePlayingContext.Provider value={value}>
-      {children}
-    </PairGamePlayingContext.Provider>
-  );
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }
 
 export function usePairGamePlaying() {
-  const context = useContext(PairGamePlayingContext);
+  const context = useContext(GameContext);
   if (!context) {
     throw new Error(
       'usePairGamePlaying must be used within PairGamePlayingProvider',

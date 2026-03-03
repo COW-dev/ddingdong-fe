@@ -1,8 +1,8 @@
 'use client';
 
+import { GAME_IMAGES } from '../../_constants/gameImages';
+import { getCategoryCardStyle } from '../../_utils/cardStyles';
 import { getClubImageSrc } from '../../_utils/clubImages';
-import { getCategoryCardStyle } from '../../_utils/gameConstants';
-import { GAME_IMAGES } from '../../_utils/gameImages';
 
 type Props = {
   clubId: number;
@@ -36,9 +36,8 @@ export function EventCard({
   const widthStyle = typeof width === 'string' ? width : `${width}px`;
   const heightStyle = typeof height === 'string' ? height : `${height}px`;
 
-  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+  const handleClick = () => {
     if (isDisabled) return;
-    if (e.pointerType === 'touch' && !e.isPrimary) return;
     if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
       navigator.vibrate(15);
     }
@@ -56,7 +55,7 @@ export function EventCard({
     >
       <button
         type="button"
-        onPointerDown={handlePointerDown}
+        onClick={handleClick}
         disabled={isDisabled}
         className={`relative h-full w-full transition-transform duration-500 select-none ${
           isDisabled

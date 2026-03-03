@@ -7,7 +7,7 @@ import { Body1, Body3, Flex, NavBack, Caption1 } from 'ddingdong-design-system';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
-import { GAME_IMAGES } from '../_utils/gameImages';
+import { GAME_IMAGES } from '../_constants/gameImages';
 
 export default function GamePrizePage() {
   const router = useRouter();

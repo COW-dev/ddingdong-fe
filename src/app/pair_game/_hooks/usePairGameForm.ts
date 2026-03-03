@@ -13,7 +13,7 @@ const INIT: PairGameSubmitFormValues = {
   phoneNumber: '',
 };
 
-export const usePairGameSubmit = () => {
+export const usePairGameForm = () => {
   const [formData, setFormData] = useState<PairGameSubmitFormValues>(INIT);
   const [receiptFile, setReceiptFile] = useState<File | null>(null);
   const { submit, isPending } = usePairGameSubmitAction();

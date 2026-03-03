@@ -1,38 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { isMobileDevice } from '@/utils/userAgent';
 
 import { shareCurrentLink } from '../../_utils/shareLink';
-import { GameSkeleton } from '../ui/GameSkeleton';
 
 import { IntroStepDesktop } from './IntroStepDesktop';
 import { IntroStepMobile } from './IntroStepMobile';
-
-function getShouldUseMobileLayout(): boolean {
-  if (typeof navigator === 'undefined') return false;
-  const ua = navigator.userAgent;
-  const uaSuggestsMobile =
-    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
-  const isTouchDevice = navigator.maxTouchPoints > 0;
-  return uaSuggestsMobile || isTouchDevice;
-}
 
 type Props = {
   onGameStart: () => void;
 };
 
 export function IntroStep({ onGameStart }: Props) {
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    setIsMobile(getShouldUseMobileLayout());
-  }, []);
-
-  if (isMobile === null) {
-    return <GameSkeleton />;
-  }
-
-  if (!isMobile) {
+  if (!isMobileDevice()) {
     return <IntroStepDesktop onShareLink={shareCurrentLink} />;
   }
 

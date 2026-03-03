@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { Body3, Button, Caption1, Flex, Title3 } from 'ddingdong-design-system';
 
-import { PAIR_GAME_PATH } from '../../_utils/gameImages';
+import { PAIR_GAME_PATH } from '../../_constants/gameImages';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 
 type Props = {
@@ -116,7 +116,7 @@ export function IntroStepMobile({
             >
               5개 단계를 모두 클리어하면{' '}
               <span className="text-game-primary">
-                특별한 결말과 상품 응모 기회
+                특별한 결말과 상품 응모 기회까지!🎁
               </span>
             </Caption1>
             <Caption1
