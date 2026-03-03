@@ -3,6 +3,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 
 import { useCreateResultEmail } from '@/app/_api/mutations/apply';
+import { EmailSendAPIResponse } from '@/app/_api/types/email';
 import {
   APPLICANT_PLACEHOLDER,
   EMAIL_STATUS,
@@ -37,12 +38,13 @@ export const useEmailSubmit = () => {
         message,
       },
       {
-        onSuccess: () => {
-          toast.success('이메일 전송에 성공했어요.');
-          router.push(`/apply/${id}`);
+        onSuccess: (data: EmailSendAPIResponse) => {
+          router.push(
+            `/apply/${id}/email/deliveries?status=in-progress&historyId=${data?.formEmailSendHistoryId}`,
+          );
         },
         onError: () => {
-          toast.error('이메일 전송에 실패했어요.');
+          toast.error('다시 시도해주세요.');
         },
       },
     );

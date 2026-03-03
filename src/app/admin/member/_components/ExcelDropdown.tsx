@@ -69,7 +69,7 @@ export function ExcelDropdown() {
             Excel
             <Icon
               name="arrowDown"
-              size={18}
+              size={15}
               color="primary"
               className={cn(
                 'transition-transform duration-200',

@@ -19,6 +19,7 @@ type RoleDashboard = {
     feed?: NavBox;
     banner?: NavBox;
     apply?: NavBox;
+    ranking?: NavBox;
   };
 };
 
@@ -52,6 +53,11 @@ export const ROLE_DASHBOARD: RoleDashboard = {
       title: 'FAQ 관리',
       subtitle: '총동아리연합회 및 동아리에게 자주 물어보는 질문을 관리해요.',
       route: '/faq',
+    },
+    ranking: {
+      title: '이달의 피드 랭킹',
+      subtitle: '이달의 피드 동아리 순위를 확인해요.',
+      route: '/ranking',
     },
     banner: {
       title: '배너 관리',

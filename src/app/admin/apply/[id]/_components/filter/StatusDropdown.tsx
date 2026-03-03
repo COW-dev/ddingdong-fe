@@ -45,7 +45,7 @@ export function StatusDropdown({
           합격여부변경
           <Icon
             name="arrowDown"
-            size={18}
+            size={15}
             color="gray"
             className={cn(
               'transition-transform duration-200',

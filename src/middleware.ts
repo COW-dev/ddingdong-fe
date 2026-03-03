@@ -12,7 +12,10 @@ export function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/login', req.nextUrl.origin));
     }
     return NextResponse.rewrite(
-      new URL(`/admin${req.nextUrl.pathname}`, req.nextUrl.origin),
+      new URL(
+        `/admin${req.nextUrl.pathname}${req.nextUrl.search}`,
+        req.nextUrl.origin,
+      ),
     );
   } else {
     if (req.nextUrl.pathname === '/login')

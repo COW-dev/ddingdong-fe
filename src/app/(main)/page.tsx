@@ -33,22 +33,28 @@ async function getClubsData() {
 }
 
 async function getBannersData() {
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
-  };
+  try {
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    };
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}banners`, {
-    headers,
-    next: {
-      tags: [CACHE_TAGS.BANNERS],
-    },
-  });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}banners`, {
+      headers,
+      next: {
+        tags: [CACHE_TAGS.BANNERS],
+      },
+    });
 
-  if (!res.ok) {
-    throw new Error(`Failed to fetch banners: ${res.status} ${res.statusText}`);
+    if (!res.ok) {
+      console.error(`Failed to fetch banners: ${res.status}`);
+      return { data: [] };
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error('Failed to fetch banners:', error);
+    return { data: [] };
   }
-
-  return res.json();
 }
 
 async function BannerSection() {

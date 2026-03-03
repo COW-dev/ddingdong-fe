@@ -1,5 +1,3 @@
-import Link from 'next/link';
-
 import {
   Body2,
   Button,
@@ -13,6 +11,8 @@ import { FORM_STATUS } from '@/app/admin/apply/[id]/_constants/apply';
 
 import { formatDate } from '../../_utils/formatDate';
 import { MemberIntegrationModal } from '../MemberIntergrationModal';
+
+import { EmailSendDropdown } from './EmailSendDropdown';
 
 type FormStatusInfoProps = {
   formStatus: FormStatus;
@@ -59,24 +59,13 @@ export function FormStatusInfo({
         <Flex dir="row" alignItems="center" gap={3}>
           <Button
             size="sm"
-            variant="primary"
-            color="blue"
+            variant="tertiary"
             onClick={openModal}
             className="hidden md:block"
           >
-            명단 연동하기
+            합격자 명단 연동
           </Button>
-          <Link href={`/apply/${formId}/email`} className="hidden md:block">
-            <Button
-              type="button"
-              size="sm"
-              variant="secondary"
-              color="blue"
-              className="hidden md:block"
-            >
-              이메일 전송하기
-            </Button>
-          </Link>
+          <EmailSendDropdown formId={formId} />
         </Flex>
       </Flex>
       <MemberIntegrationModal

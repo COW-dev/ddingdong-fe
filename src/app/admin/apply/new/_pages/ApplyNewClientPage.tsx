@@ -35,7 +35,6 @@ export const ApplyNewClientPage = () => {
       <FormHeaderSection
         basicInfo={basicInfo}
         onBasicInfoChange={updateBasicInfo}
-        allowDateEdit={true}
       />
       <SectionContent />
     </FormFieldContext.Provider>

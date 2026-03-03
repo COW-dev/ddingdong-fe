@@ -72,7 +72,7 @@ function QuestionTypeSelectComponent({
         <Body3 className="text-gray-700">{QUESTION_TYPE_LABELS[value]}</Body3>
         <Icon
           name="arrowDown"
-          size={18}
+          size={15}
           color="gray"
           className={cn(
             'transition-transform duration-200',
