@@ -45,10 +45,8 @@ export function PlayingStep({
   } = usePairGamePlaying();
 
   const cardSize = getCardSizeStyleForConfig(config);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    containerRef.current?.scrollIntoView({ block: 'start' });
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
 
@@ -94,7 +92,7 @@ export function PlayingStep({
       <Flex
         dir="col"
         justifyContent="between"
-        className="h-svh overflow-hidden px-4 pt-6"
+        className="h-svh overflow-hidden px-4 pt-8"
         style={{ touchAction: 'none' }}
       >
         <Flex dir="col" alignItems="center" className="shrink-0 py-4">
