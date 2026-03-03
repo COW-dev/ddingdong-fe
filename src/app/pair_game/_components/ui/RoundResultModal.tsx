@@ -9,11 +9,11 @@ import {
   Modal,
 } from 'ddingdong-design-system';
 
+import { GAME_IMAGES } from '../../_constants/gameImages';
 import {
-  useRoundResultModal,
+  getRoundResultModalContent,
   type RoundResultModalAction,
-} from '../../_hooks/useRoundResultModal';
-import { GAME_IMAGES } from '../../_utils/gameImages';
+} from '../../_utils/roundResultModal';
 
 export type { RoundResultModalAction };
 
@@ -37,7 +37,7 @@ export function RoundResultModal({ isOpen, onClose, result, onAction }: Props) {
     rightAction,
     stage,
     success,
-  } = useRoundResultModal(result);
+  } = getRoundResultModalContent(result);
 
   if (!content) return null;
 

@@ -7,7 +7,7 @@ import { Body1, Body3, Flex, NavBack, Caption1 } from 'ddingdong-design-system';
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
 import { BridgeMaruMari } from '../_components/ui/BridgeMaruMari';
-import { GAME_IMAGES } from '../_utils/gameImages';
+import { GAME_IMAGES } from '../_constants/gameImages';
 
 export default function GamePrizePage() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function GamePrizePage() {
       <Flex dir="col" className="mx-auto w-full max-w-md flex-1">
         <NavBack title="상품 안내" size="sm" onClick={() => router.back()} />
 
-        <Flex dir="col" gap={6} className="mt-6">
+        <Flex dir="col" gap={6} className="mt-6 px-3">
           <section>
             <Flex
               dir="col"
@@ -83,7 +83,7 @@ export default function GamePrizePage() {
           </section>
         </Flex>
 
-        <BridgeMaruMari className="relative bottom-0 left-1/2 mt-auto w-screen max-w-[100vw] -translate-x-1/2 pt-20" />
+        <BridgeMaruMari className="relative bottom-0 left-1/2 mt-auto w-screen max-w-[100vw] -translate-x-1/2 pt-30" />
       </Flex>
     </Flex>
   );

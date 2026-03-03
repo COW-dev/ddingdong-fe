@@ -11,7 +11,8 @@ import {
 
 import { OptimizedImage } from '@/components/common/OptimizedImage';
 
-import { GAME_IMAGES } from '../../_utils/gameImages';
+import { GAME_IMAGES } from '../../_constants/gameImages';
+import { FLOATING_HEARTS } from '../../_constants/heart';
 
 type Props = {
   onShareLink: () => void;
@@ -20,6 +21,28 @@ type Props = {
 export function IntroStepDesktop({ onShareLink }: Props) {
   return (
     <div className="relative min-h-screen w-full pt-5">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {FLOATING_HEARTS.map((heart, index) => (
+          <OptimizedImage
+            key={`floating-heart-${index}`}
+            src={GAME_IMAGES.background_heart}
+            alt=""
+            aria-hidden
+            width={40}
+            height={40}
+            className="floating-heart z-0"
+            style={
+              {
+                left: heart.left,
+                top: heart.top,
+                '--float-size': heart.size,
+                '--float-delay': heart.delay,
+                '--float-duration': heart.duration,
+              } as React.CSSProperties
+            }
+          />
+        ))}
+      </div>
       <Flex
         dir="col"
         alignItems="center"
@@ -28,13 +51,19 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         <Flex dir="col" alignItems="center" gap={1} className="w-full">
           <Title3
             weight="bold"
-            className="font-school-safety text-game-primary text-center text-2xl"
+            className="font-school-safety text-game-primary text-center"
           >
             마리의 마음을 쟁취하라!
           </Title3>
           <Body3 className="font-school-safety text-center text-gray-600">
             동아리 카드 짝 맞추기 게임
           </Body3>
+          <Caption1
+            weight="normal"
+            className="font-school-safety text-center text-gray-400"
+          >
+            * 게임은 모바일에서만 플레이 가능합니다.
+          </Caption1>
         </Flex>
 
         <Flex
@@ -116,7 +145,7 @@ export function IntroStepDesktop({ onShareLink }: Props) {
         </Flex>
 
         <div className="pointer-events-none relative mt-auto w-screen">
-          <div className="relative flex w-full flex-row pt-30">
+          <Flex dir="row" className="relative w-full pt-30">
             <OptimizedImage
               src={GAME_IMAGES.bridge}
               alt="bridge1"
@@ -129,21 +158,30 @@ export function IntroStepDesktop({ onShareLink }: Props) {
               className="w-1/2 min-w-0 flex-1 object-contain object-bottom"
               priority
             />
-            <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between px-[8%] pb-[5%]">
+            <Flex
+              justifyContent="between"
+              alignItems="end"
+              className="absolute right-0 bottom-0 left-0 px-[8%] pb-[5%]"
+            >
               <OptimizedImage
                 src={GAME_IMAGES.ride_maru}
                 alt="마루"
-                className="h-auto w-[28%] max-w-[140px] -scale-x-100 object-contain object-bottom"
+                className="maru-slow-drive h-auto w-[28%] max-w-[140px] object-contain object-bottom"
+                style={
+                  {
+                    '--maru-drive-distance': '70vw',
+                  } as React.CSSProperties
+                }
                 priority
               />
               <OptimizedImage
                 src={GAME_IMAGES.heart_mari}
                 alt="마리"
-                className="h-auto w-[14%] max-w-[70px] -scale-x-100 object-contain object-bottom"
+                className="h-auto w-[14%] max-w-[70px] -scale-x-100 object-contain object-bottom pb-3"
                 priority
               />
-            </div>
-          </div>
+            </Flex>
+          </Flex>
         </div>
       </Flex>
     </div>

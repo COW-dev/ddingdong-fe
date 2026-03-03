@@ -17,9 +17,9 @@ export default function GameLayout({ children }: GameLayoutProps) {
       dir="col"
       alignItems="center"
       justifyContent="center"
-      className="bg-game-tertiary min-h-screen w-full text-gray-800"
+      className="min-h-screen w-full bg-[var(--game-layout-bg)] text-gray-800"
     >
-      <Header className="bg-game-tertiary z-25 flex border-b-0">
+      <Header className="z-25 flex border-b-0 bg-[var(--game-layout-bg)]">
         <Flex
           dir="row"
           alignItems="center"

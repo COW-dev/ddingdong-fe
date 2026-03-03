@@ -17,7 +17,7 @@ export default function GameGuidePage() {
         onClick={() => router.back()}
       />
 
-      <Flex dir="col" gap={6} className="mt-6">
+      <Flex dir="col" gap={6} className="mt-6 px-3 pt-3">
         <section>
           <Caption1 weight="bold" className="mb-2 text-gray-600" as="h2">
             게임 이용 안내
@@ -99,7 +99,7 @@ export default function GameGuidePage() {
         </section>
       </Flex>
 
-      <BridgeMaruMari className="relative bottom-0 left-1/2 mt-auto w-screen max-w-[100vw] -translate-x-1/2 pt-20" />
+      <BridgeMaruMari className="relative bottom-0 left-1/2 mt-auto w-screen max-w-[100vw] -translate-x-1/2 pt-30" />
     </Flex>
   );
 }

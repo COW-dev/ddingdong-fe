@@ -4,15 +4,20 @@ import Link from 'next/link';
 
 import { Body3, Button, Caption1, Flex, Title3 } from 'ddingdong-design-system';
 
-import { PAIR_GAME_PATH } from '../../_utils/gameImages';
+import { PAIR_GAME_PATH } from '../../_constants/gameImages';
 import { BridgeMaruMari } from '../ui/BridgeMaruMari';
 
 type Props = {
   onGameStart: () => void;
   onShareLink: () => void;
+  animateMaru?: boolean;
 };
 
-export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
+export function IntroStepMobile({
+  onGameStart,
+  onShareLink,
+  animateMaru,
+}: Props) {
   return (
     <Flex
       dir="col"
@@ -111,7 +116,7 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
             >
               5개 단계를 모두 클리어하면{' '}
               <span className="text-game-primary">
-                특별한 결말과 상품 응모 기회
+                특별한 결말과 상품 응모 기회까지!🎁
               </span>
             </Caption1>
             <Caption1
@@ -152,7 +157,11 @@ export function IntroStepMobile({ onGameStart, onShareLink }: Props) {
         </button>
       </Flex>
 
-      <BridgeMaruMari className="relative bottom-0 mt-auto w-screen pt-5" />
+      <BridgeMaruMari
+        className="relative bottom-0 mt-auto w-screen pt-15"
+        animateMaru={animateMaru}
+        driveDistance="53vw"
+      />
     </Flex>
   );
 }
