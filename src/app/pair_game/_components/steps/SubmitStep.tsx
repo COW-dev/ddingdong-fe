@@ -137,6 +137,11 @@ export function SubmitStep() {
               <Caption1 weight="bold" className="text-gray-600">
                 학생회비 납부 내역 첨부
               </Caption1>
+              <Caption1 weight="normal" className="text-gray-500">
+                • MSI {'>'} 등록 {'>'} 등록금(교육비) 납입증명서에서 출력 후
+                학생회비 납부 내역을 캡쳐해 첨부해 주세요
+              </Caption1>
+
               <FileUpload
                 mode="single"
                 onChange={handleFileChange}
