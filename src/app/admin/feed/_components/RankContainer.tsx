@@ -1,7 +1,3 @@
-'use client';
-
-import { useState } from 'react';
-
 import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   Accordion,
@@ -11,7 +7,6 @@ import {
   Body2,
   Body3,
   Caption1,
-  Icon,
 } from 'ddingdong-design-system';
 
 import { rankingQueryOptions } from '@/app/_api/queries/ranking';
@@ -19,7 +14,6 @@ import { rankingQueryOptions } from '@/app/_api/queries/ranking';
 import { getRankingDate } from '../../ranking/utils/getRankingDate';
 
 export function RankContainer() {
-  const [isOpen, setIsOpen] = useState(false);
   const { currentYear, currentMonth } = getRankingDate();
   const { data: clubRanking } = useSuspenseQuery(
     rankingQueryOptions.clubList(currentYear, currentMonth),
@@ -46,19 +40,15 @@ export function RankContainer() {
 
   return (
     <Flex dir="col" gap={1} className="w-full">
-      <Flex
-        dir="col"
-        gap={1}
-        className="md:hidden"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <Flex dir="col" gap={1} className="md:hidden">
         <Accordion type="single">
           <AccordionItem
-            isArrow={false}
             value="rank-summary"
+            iconAlign="end"
+            iconClassName="my-1"
             trigger={
-              <Flex dir="col" gap={1} className="w-full text-left">
-                <Flex className="items-center gap-2">
+              <Flex dir="col" className="w-full text-left">
+                <Flex alignItems="center" gap={2}>
                   <Body2 as="h2" className="text-blue-500">
                     이달의 피드 점수 현황
                   </Body2>
@@ -66,8 +56,12 @@ export function RankContainer() {
                     지난달 순위 : {safeLastMonthRank}
                   </Caption1>
                 </Flex>
-                <Flex justifyContent="between" alignItems="center">
-                  <Flex gap={5} alignItems="center" className="mt-2">
+                <Flex
+                  justifyContent="between"
+                  alignItems="center"
+                  className="pt-2"
+                >
+                  <Flex gap={5} alignItems="center">
                     <Flex gap={2}>
                       <Body3 as="span" className="text-gray-400">
                         총점
@@ -76,7 +70,7 @@ export function RankContainer() {
                         {totalScore}점
                       </Body3>
                     </Flex>
-                    <Flex className="items-center gap-[1rem]">
+                    <Flex alignItems="center" gap={2}>
                       <Body3 as="span" className="text-gray-400">
                         순위
                       </Body3>
@@ -85,24 +79,19 @@ export function RankContainer() {
                       </Body3>
                     </Flex>
                   </Flex>
-                  <Icon
-                    name={isOpen ? 'arrowUp' : 'arrowDown'}
-                    className="mt-2"
-                    size={12}
-                  />
                 </Flex>
               </Flex>
             }
             btnClassName="rounded-t-xl bg-gray-50 p-6 pb-3"
             contentClassName="bg-gray-50 px-6 pb-3 pt-1"
           >
-            <Flex dir="col" gap={3}>
+            <Flex dir="col">
               <hr className="border-gray-300" />
-              <Flex wrap="wrap" gap={5}>
-                <ScoreItem label="좋아요" value={likeScore} />
-                <ScoreItem label="댓글" value={commentScore} />
-                <ScoreItem label="조회수" value={viewScore} />
-                <ScoreItem label="게시물" value={feedScore} />
+              <Flex gap={3} className="pt-3" wrap="nowrap">
+                <ScoreItem label="좋아요" value={likeScore} small />
+                <ScoreItem label="댓글" value={commentScore} small />
+                <ScoreItem label="조회수" value={viewScore} small />
+                <ScoreItem label="게시물" value={feedScore} small />
               </Flex>
             </Flex>
           </AccordionItem>
@@ -122,7 +111,7 @@ export function RankContainer() {
               <Body1 as="h2" weight="bold" className="text-blue-500">
                 이달의 피드 점수 현황
               </Body1>
-              <Body3 as="span" className="pt-1 text-gray-300">
+              <Body3 as="span" className="pt-0.5 text-gray-300">
                 지난달 순위 : {safeLastMonthRank}
               </Body3>
             </Flex>
@@ -168,17 +157,19 @@ export function RankContainer() {
 type ScoreItemProps = {
   label: string;
   value: number;
+  small?: boolean;
 };
 
-function ScoreItem({ label, value }: ScoreItemProps) {
+function ScoreItem({ label, value, small }: ScoreItemProps) {
+  const Text = small ? Caption1 : Body2;
   return (
-    <Flex alignItems="center" gap={3}>
-      <Body2 as="span" className="text-gray-400">
+    <Flex alignItems="center" gap={small ? 2 : 3}>
+      <Text as="span" className="text-gray-400">
         {label}
-      </Body2>
-      <Body2 as="span" className="text-gray-900">
+      </Text>
+      <Text as="span" className="text-gray-900">
         {value}점
-      </Body2>
+      </Text>
     </Flex>
   );
 }
