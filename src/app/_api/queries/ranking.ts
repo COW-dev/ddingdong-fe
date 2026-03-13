@@ -13,6 +13,8 @@ export const rankingQueryKeys = {
   club: () => [...rankingQueryKeys.all(), 'club'] as const,
   adminList: (year: number, month: number) =>
     [...rankingQueryKeys.admin(), year, month] as const,
+  adminSnapshotList: (year: number, month: number) =>
+    [...rankingQueryKeys.admin(), 'snapshot', year, month] as const,
   clubList: (year: number, month: number) =>
     [...rankingQueryKeys.club(), year, month] as const,
 };
@@ -24,6 +26,14 @@ export const rankingQueryOptions = {
       queryFn: () =>
         fetcher.get<AdminFeedRankingApiResponse[]>(
           `admin/feeds/ranking?year=${year}&month=${month}`,
+        ),
+    }),
+  adminSnapshotList: (year: number, month: number) =>
+    queryOptions({
+      queryKey: rankingQueryKeys.adminSnapshotList(year, month),
+      queryFn: () =>
+        fetcher.get<AdminFeedRankingApiResponse[]>(
+          `admin/feeds/ranking/snapshot?year=${year}&month=${month}`,
         ),
     }),
   clubList: (year: number, month: number) =>
