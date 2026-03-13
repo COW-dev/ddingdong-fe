@@ -104,7 +104,7 @@ export function RankContainer() {
         </Flex>
       </Flex>
       {/* pc 버전 */}
-      <Flex className="hidden md:block">
+      <Flex className="hidden md:flex">
         <Flex dir="col" gap={3}>
           <Flex dir="col" gap={2} className="w-full rounded-xl bg-gray-50 p-6">
             <Flex gap={2} className="w-full">
