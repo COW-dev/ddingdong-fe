@@ -161,7 +161,7 @@ Route-level structure:
 - **Functions**: Arrow functions
 - **Components**: `function` keyword (not arrow functions)
 - **Types**: Use `type`, not `interface`
-- **Props**: Use `Props` for component props type
+- **Props**: Use `Props` for single-props components; use `{DomainName}Props` (e.g. `FeedCardProps`) when multiple props types exist in the same file or domain
 - **Import ordering**: Groups separated by newlines — external, builtin, internal, parent, sibling, index, object, type
 - **Naming**: PascalCase for types, camelCase for variables/functions
 
