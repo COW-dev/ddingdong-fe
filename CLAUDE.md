@@ -42,7 +42,7 @@ Tailwind CSS, ky (HTTP client)
 ### Page Structure
 
 - **Server pages**: `export default async function PageName()` — Server Components
-- **Client pages**: `export function PageName()` or `export default function PageName()` with `'use client'`
+- **Client pages**: `export function PageName()` with `'use client'` at the top — use named exports (not default exports)
 
 ### Component Pattern
 
