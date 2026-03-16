@@ -41,8 +41,12 @@ Tailwind CSS, ky (HTTP client)
 
 ### Page Structure
 
+All `app/**/page.tsx` route files use default exports:
+
 - **Server pages**: `export default async function PageName()` — Server Components
-- **Client pages**: `export function PageName()` with `'use client'` at the top — use named exports (not default exports)
+- **Client pages**: Add `'use client'` at the top, then `export default function PageName()`
+
+**Client components used inside a page** (e.g. files in `_components/`, `_pages/`, `_containers/`) use named exports: `export function ComponentName()` with `'use client'` at the top when needed.
 
 ### Component Pattern
 
