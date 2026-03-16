@@ -151,7 +151,7 @@ Route-level structure:
 ├── _pages/          # Client page components
 ├── _utils/
 ├── _constants/
-└── page.tsx         # Server page
+└── page.tsx
 ```
 
 ## Code Conventions
@@ -188,7 +188,8 @@ test/
 **Mock data rules:**
 
 - Declare mock data inside `it` by default
-- Extract to `[page]Mock.ts` only when shared across 2+ test files
+- Extract to `test/페이지명/페이지명.data.ts` for page-specific shared mocks
+- Extract to `test/shared/[domain]Mock.ts` only when shared across multiple pages
 - Page-specific mocks only in that file
 
 **Mocking and rendering rules:**
