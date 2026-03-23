@@ -1,0 +1,8 @@
+{
+  "root": true,
+  "extends": ["@ddingdong/eslint-config/next"],
+  "ignorePatterns": ["next.config.*", "postcss.config.*", "tailwind.config.*"],
+  "parserOptions": {
+    "project": true
+  }
+}

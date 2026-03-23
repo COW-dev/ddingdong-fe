@@ -1,37 +1,14 @@
 {
+  "extends": "@ddingdong/typescript-config/base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "Bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "baseUrl": "."
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "next-env.d.ts",
-    "next.config.js",
-    "public/**/*.js",
-    "postcss.config.js",
-    "tailwind.config.*",
-    ".next/types/**/*.ts"
+  "references": [
+    { "path": "apps/web" },
+    { "path": "packages/shared" },
+    { "path": "packages/eslint-config" },
+    { "path": "packages/tailwind-config" },
+    { "path": "packages/typescript-config" }
   ],
-  "exclude": ["node_modules"]
+  "files": []
 }

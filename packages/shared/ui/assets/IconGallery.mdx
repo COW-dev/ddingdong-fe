@@ -1,0 +1,20 @@
+import { Meta, IconGallery, IconItem } from '@storybook/blocks';
+
+import { iconNames } from './index.tsx';
+import { Icon } from '../Icon';
+
+<Meta title="foundations/Iconography" />
+
+# Icon Gallery
+
+A complete set of icons used across the application.
+
+## All Icons
+
+<IconGallery>
+  {iconNames.map((icon) => (
+    <IconItem key={icon} name={icon}>
+      <Icon name={icon} />
+    </IconItem>
+  ))}
+</IconGallery>

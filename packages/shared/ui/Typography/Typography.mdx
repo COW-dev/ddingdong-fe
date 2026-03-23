@@ -1,0 +1,77 @@
+import { Meta, Typeset } from '@storybook/blocks';
+ 
+<Meta title="foundations/Typography" />
+ 
+export const typography = {
+  type: {
+    primary: 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+  },
+  weight: {
+    normal: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+  },
+  size: {
+    pc: {
+      title1: 36,      
+      title2: 30,      
+      title3: 24,        
+      body1: 20,       
+      body2: 18,       
+      body3: 16,       
+      caption1: 14,    
+    },
+    mobile: {
+      title1: 24,      
+      title2: 20,      
+      title3: 20,          
+      body1: 18,       
+      body2: 16,       
+      body3: 16,       
+      caption1: 14,    
+    },
+  },
+};
+ 
+export const SampleText = '명지대학교의 모든 동아리, 띵동에서 확인해 보세요!';
+ 
+# Typography
+ 
+**Font:** System fonts (system-ui, sans-serif fallback)
+ 
+**Weights:** 400(normal), 500(medium), 600(semibold), 700(bold)
+ 
+## PC Typography (Desktop)
+<Typeset
+  fontSizes={[
+    Number(typography.size.pc.title1),
+    Number(typography.size.pc.title2),
+    Number(typography.size.pc.title3),
+    Number(typography.size.pc.body1),
+    Number(typography.size.pc.body2),
+    Number(typography.size.pc.body3),
+    Number(typography.size.pc.caption1),
+
+]}
+fontWeight={typography.weight.medium}
+sampleText={`${SampleText}`}
+fontFamily={typography.type.primary}
+/>
+
+## Mobile Typography
+
+<Typeset
+  fontSizes={[
+    Number(typography.size.mobile.title1),
+    Number(typography.size.mobile.title2),
+    Number(typography.size.mobile.title3),
+    Number(typography.size.mobile.body1),
+    Number(typography.size.mobile.body2),
+    Number(typography.size.mobile.body3),
+    Number(typography.size.mobile.caption1),
+  ]}
+  fontWeight={typography.weight.medium}
+  sampleText={`${SampleText}`}
+  fontFamily={typography.type.primary}
+/>

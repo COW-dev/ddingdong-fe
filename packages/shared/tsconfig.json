@@ -1,0 +1,11 @@
+{
+  "extends": "@ddingdong/typescript-config/base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "paths": {
+      "@/shared/*": ["./*"]
+    }
+  },
+  "include": [".", ".storybook", "vite-env.d.ts"],
+  "exclude": ["node_modules", "dist", "storybook-static", "**/*.stories.tsx"]
+}

@@ -1,0 +1,55 @@
+packages:
+  - 'apps/*'
+  - 'packages/*'
+
+catalog:
+  # react
+  'react': '^19.2.1'
+  '@types/react': '^19.1.11'
+  'react-dom': '^19.2.1'
+  '@types/react-dom': '^19.1.7'
+
+  # tailwindcss
+  'autoprefixer': '^10.4.20'
+  'postcss': '^8.5.1'
+  'tailwindcss': '^4.1.12'
+  '@tailwindcss/postcss': '^4.1.12'
+  'class-variance-authority': '^0.7.0'
+  'clsx': '^2.1.0'
+  'tailwind-merge': '^2.2.1'
+
+  # typescript
+  'typescript': '^5.7.2'
+  '@types/node': '18.15.5'
+
+  # next
+  'next': '^15.5.9'
+  '@next/eslint-plugin-next': '^15.5.0'
+  '@next/third-parties': '^15.5.0'
+
+  # react-query
+  '@tanstack/react-query': '^5.71.1'
+  '@tanstack/react-query-devtools': '^5.71.1'
+
+  # eslint
+  'eslint': '^8.39.0'
+  'eslint-config-next': '^15.5.0'
+  'eslint-config-prettier': '^9.1.0'
+  'eslint-plugin-import': '^2.31.0'
+  'eslint-plugin-prettier': '^5.2.1'
+  'eslint-plugin-react': '^7.37.0'
+  '@typescript-eslint/eslint-plugin': '^8.17.0'
+  '@typescript-eslint/parser': '^8.17.0'
+
+  # vite
+  'vite': '^6.3.5'
+  '@vitejs/plugin-react': '^4.3.0'
+  'vite-plugin-dts': '^4.5.0'
+  'vite-plugin-svgr': '^4.3.0'
+
+  # state & validation
+  'zustand': '^5.0.2'
+  'zod': '^3.24.2'
+
+  # animation
+  'framer-motion': '^11.16.4'

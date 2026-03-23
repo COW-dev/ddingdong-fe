@@ -1,0 +1,45 @@
+name: Deploy Storybook
+on:
+  pull_request:
+    types:
+      - closed
+    paths:
+      - 'packages/shared/**'
+
+jobs:
+  deploy-storybook:
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install packages
+        run: pnpm install
+
+      - name: deploy with chromatic
+        id: chromatic
+        uses: chromaui/action@v1
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          workingDir: packages/shared
+
+      - name: storybook deploy alert webhook
+        uses: tsickert/discord-webhook@v5.3.0
+        with:
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: '" ${{ github.event.pull_request.title}} " 의 변경 사항이 Storybook에 배포되었어요! 👉🏻 ${{ steps.chromatic.outputs.storybookUrl }}'
