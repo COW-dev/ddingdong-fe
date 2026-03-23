@@ -1,5 +1,5 @@
 ---
-to: src/shared/ui/<%= components %>/<%= components %>.tsx
+to: ui/<%= components %>/<%= components %>.tsx
 ---
 
 type <%= components %>Props = {};

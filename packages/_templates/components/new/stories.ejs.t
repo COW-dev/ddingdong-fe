@@ -1,5 +1,5 @@
 ---
-to: src/shared/ui/<%= h.changeCase.pascal(components) %>/<%= h.changeCase.pascal(components) %>.stories.tsx
+to: ui/<%= h.changeCase.pascal(components) %>/<%= h.changeCase.pascal(components) %>.stories.tsx
 ---
 import type { Meta, StoryObj } from '@storybook/react';
 
