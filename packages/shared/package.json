@@ -12,8 +12,7 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./index.css": "./dist/index.css"
+    }
   },
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
