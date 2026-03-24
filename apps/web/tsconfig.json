@@ -1,0 +1,28 @@
+{
+  "extends": "@ddingdong/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./app/*"],
+      "@/_components/*": ["./app/_components/*"],
+      "@/_utils/*": ["./app/_utils/*"],
+      "@/_store/*": ["./app/_store/*"],
+      "@/_hooks/*": ["./app/_hooks/*"],
+      "@/_constants/*": ["./app/_constants/*"],
+      "@/_types": ["./app/_types"],
+      "@/_types/*": ["./app/_types/*"],
+      "@/_lib/*": ["./app/_lib/*"],
+      "@/_public/*": ["./public/*"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.js",
+    "public/**/*.js",
+    "postcss.config.js",
+    "tailwind.config.*",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,7 @@
+{
+  "extends": ["@ddingdong/eslint-config/base"],
+  "ignorePatterns": ["dist", "node_modules", "*.config.*", "**/*.stories.tsx"],
+  "parserOptions": {
+    "project": true
+  }
+}

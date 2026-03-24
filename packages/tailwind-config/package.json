@@ -1,0 +1,13 @@
+{
+  "name": "@ddingdong/tailwind-config",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": {
+    ".": "./tailwind.config.ts",
+    "./postcss": "./postcss.config.cjs"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.1.12"
+  }
+}

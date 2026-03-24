@@ -4,7 +4,7 @@ This file provides guidance to Claude when working with code in this repository.
 
 ## Project Overview
 
-ddingdong-fe is Wanted Lab's Ddingdong frontend project. It's a Next.js 15 App Router application using React Query, Zustand, and ddingdong-design-system.
+ddingdong-fe is Wanted Lab's Ddingdong frontend project. It's a Next.js 15 App Router application using React Query, Zustand, and @dds.
 
 ## Common Commands
 
@@ -32,7 +32,7 @@ Next.js 15 (App Router)
     ↓
 React 19, React Query, Zustand
     ↓
-ddingdong-design-system (UI components)
+@dds (UI components)
     ↓
 Tailwind CSS, ky (HTTP client)
 ```
@@ -50,14 +50,14 @@ All `app/**/page.tsx` route files use default exports:
 
 ### Component Pattern
 
-- Use `ddingdong-design-system` for UI primitives (Flex, Button, Input, Body1/2/3, Icon, etc.)
+- Use `@dds` for UI primitives (Flex, Button, Input, Body1/2/3, Icon, etc.)
 - Use Tailwind CSS via `className`; use `cn()` for conditional classes
 - Props type: use `Props`
 
 ```tsx
 'use client';
 
-import { Flex, Body2, Body3, Icon } from 'ddingdong-design-system';
+import { Flex, Body2, Body3, Icon } from '@dds/shared';
 
 import { cn } from '@/utils/cn';
 

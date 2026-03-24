@@ -1,0 +1,92 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+import { colors } from '@/shared/lib/colors.ts';
+
+<Meta title="foundations/Colors" />
+
+# Colors
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="Primary"
+    colors={{
+      50: colors.primary[50],
+      100: colors.primary[100],
+      200: colors.primary[200],
+      300: colors.primary[300],
+      400: colors.primary[400],
+    }}
+  />
+  <ColorItem
+    title="Gray"
+    subtitle="gray"
+    colors={{
+      gray50: colors.gray[50],
+      gray100: colors.gray[100],
+      gray200: colors.gray[200],
+      gray300: colors.gray[300],
+      gray400: colors.gray[400],
+      gray500: colors.gray[500],
+      gray600: colors.gray[600],
+    }}
+  />
+  <ColorItem
+    title="Red"
+    subtitle="red"
+    colors={{
+      50: colors.red[50],
+      100: colors.red[100],
+      200: colors.red[200],
+      300: colors.red[300],
+    }}
+  />
+  <ColorItem
+    title="Green"
+    subtitle="green"
+    colors={{
+      50: colors.green[50],
+      100: colors.green[100],
+      200: colors.green[200],
+      300: colors.green[300],
+    }}
+  />
+
+{' '}
+
+<ColorItem
+  title="Orange"
+  subtitle="orange"
+  colors={{
+    orange: colors.orange,
+  }}
+/>
+<ColorItem
+  title="Yellow"
+  subtitle="yellow"
+  colors={{
+    yellow: colors.yellow,
+  }}
+/>
+<ColorItem
+  title="Purple"
+  subtitle="purple"
+  colors={{
+    purple: colors.purple,
+  }}
+/>
+
+  <ColorItem
+    title="White"
+    subtitle="white"
+    colors={{
+      white: colors.white,
+    }}
+  />
+  <ColorItem
+    title="Black"
+    subtitle="black"
+    colors={{
+      black: colors.black,
+    }}
+  />
+</ColorPalette>
