@@ -8,7 +8,6 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'plugin:react/recommended',
     'next/core-web-vitals',
     'prettier',
@@ -18,7 +17,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint', 'prettier', 'react'],
+  plugins: ['@typescript-eslint', 'react'],
   settings: {
     react: { version: 'detect' },
   },
