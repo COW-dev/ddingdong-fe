@@ -35,13 +35,13 @@ export function ReportForm({ setValue, report, setIsEditing }: Props) {
   return (
     <>
       <ReportFormContiner>
-        <Flex dir="col" gap={6} className="md:min-w-1/2 w-full grow">
+        <Flex dir="col" gap={6} className="w-full grow">
           <ReportFormContentContainer>
             <ReportFormContentWapper>
               <Datepicker
                 value={date}
                 onChange={handleDateChange}
-                popupClassName="md:max-w-[308px] md:w-[308px] w-full transition-all ease-out duration-300 absolute z-10 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden customDatePickerWidth"
+                popupClassName="md:max-w-[308px] md:w-[308px] w-full transition-all ease-out duration-300 absolute z-50 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden overflow-y-auto max-h-72 customDatePickerWidth"
                 useRange={false}
                 asSingle
                 minDate={new Date(new Date().getFullYear(), 0, 1)}
@@ -107,7 +107,7 @@ export function ReportForm({ setValue, report, setIsEditing }: Props) {
             previewUrls={mediaPreviewUrls}
             previewFiles={mediaPreviewFiles}
             onFileChange={handleFileChange}
-            className="md:h-118 flex items-center justify-center"
+            className="items-center justify-center md:h-118"
           />
         )}
       </ReportFormContiner>
