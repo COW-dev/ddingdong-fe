@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
 import { Portal } from '../Portal';
+
+import { cn } from '@/shared/lib/core';
 
 type Props = {
   /**

@@ -1,12 +1,12 @@
 import { ComponentProps, useId } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 import { Body1, Caption1 } from '../Typography';
 
 import { MediaPreview } from './MediaUploadPreview';
+
+import { cn } from '@/shared/lib/core';
 
 export type Props = {
   /**

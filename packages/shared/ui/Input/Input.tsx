@@ -1,9 +1,9 @@
 import { ComponentProps } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
+
+import { cn } from '@/shared/lib/core';
 
 type InputProps = {
   /**

@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Icon } from '../Icon';
 
 import { CarouselContext, useCarousel } from './CarouselContext';
 import { useCarouselController } from './useCarouselController';
+
+import { cn } from '@/shared/lib/core';
 
 type CarouselProps = {
   /**

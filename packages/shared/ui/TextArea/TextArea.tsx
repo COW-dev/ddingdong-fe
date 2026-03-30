@@ -1,9 +1,9 @@
 import { ComponentProps } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
 import { Caption1 } from '../Typography';
+
+import { cn } from '@/shared/lib/core';
 
 type TextAreaProps = {
   /**
