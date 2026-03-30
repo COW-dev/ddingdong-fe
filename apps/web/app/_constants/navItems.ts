@@ -4,7 +4,7 @@ export const navItems: {
   [key: string]: {
     id: number;
     href: string;
-    image?: string;
+    image?: string | { src: string; height: number; width: number };
     content?: string;
   }[];
 } = {
