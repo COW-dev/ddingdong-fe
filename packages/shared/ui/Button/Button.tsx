@@ -1,8 +1,8 @@
 import { cva } from 'class-variance-authority';
 
-import { cn } from '@/shared/lib/core';
-
 import { Icon } from '../Icon';
+
+import { cn } from '@/shared/lib/core';
 
 type VariantColorMap = {
   primary: 'red' | 'blue';

@@ -2,13 +2,13 @@
 
 import { ReactNode } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { IconName } from '../assets';
 import { Icon } from '../Icon';
 import { Body3 } from '../Typography';
 
 import { useMenuCtx } from './useMenuCtx';
+
+import { cn } from '@/shared/lib/core';
 
 export type Props = {
   children: ReactNode;

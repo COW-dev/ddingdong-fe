@@ -1,6 +1,6 @@
-import { cn } from '@/shared/lib/core';
-
 import { Icon } from '../Icon';
+
+import { cn } from '@/shared/lib/core';
 
 type WrapperProps = {
   /**

@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/shared/lib/core';
-
 import { useSelectContext } from './Select.context';
+
+import { cn } from '@/shared/lib/core';
 
 const optionVariants = cva(
   'font-semibold text- cursor-pointer first:rounded-t-md last:rounded-b-md hover:bg-gray-100',

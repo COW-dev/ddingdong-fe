@@ -1,8 +1,8 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { cn } from '@/shared/lib/core';
-
 import { useSelectContext } from './Select.context';
+
+import { cn } from '@/shared/lib/core';
 
 const optionListVariants = cva(
   'absolute z-50 mt-1 max-h-60 w-full overflow-y-auto rounded-md border border-gray-200 bg-white font-semibold text-gray-400 shadow-lg',

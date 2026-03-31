@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
+
+import { cn } from '@/shared/lib/core';
 
 export type Props = {
   /**

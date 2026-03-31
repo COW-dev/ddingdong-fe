@@ -1,9 +1,9 @@
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
 
 import { ImageGalleryProvider, useImageGallery } from './ImageGalleryContext';
+
+import { cn } from '@/shared/lib/core';
 
 export type ImageGalleryItem = { url: string; name?: string };
 type Props = {

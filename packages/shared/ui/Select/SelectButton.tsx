@@ -1,7 +1,7 @@
-import { cn } from '@/shared/lib/core';
-
 import { Flex } from '../Flex';
 import { Icon } from '../Icon';
+
+import { cn } from '@/shared/lib/core';
 
 type Props = {
   /**

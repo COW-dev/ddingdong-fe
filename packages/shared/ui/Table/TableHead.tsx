@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Body2 } from '../Typography';
+
+import { cn } from '@/shared/lib/core';
 
 export type Props = React.ThHTMLAttributes<HTMLTableCellElement> & {
   className?: string;

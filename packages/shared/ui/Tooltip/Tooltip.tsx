@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { useId } from 'react';
 
-import { cn } from '@/shared/lib/core';
-
 import { Portal } from '../Portal';
 import { Caption1 } from '../Typography';
 
 import { TOOLTIP_MOTION } from './motion';
 import { tooltipColorMap } from './tooltipColorMap';
 import { useTooltip } from './useTooltip';
+
+import { cn } from '@/shared/lib/core';
 
 type TooltipProps = {
   /**
