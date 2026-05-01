@@ -45,7 +45,7 @@ export function StatusDropdown({
           합격여부변경
           <Icon
             name="arrowDown"
-            size={15}
+            size={22}
             color="gray"
             className={cn(
               'transition-transform duration-200',
@@ -57,7 +57,7 @@ export function StatusDropdown({
 
       <div
         className={cn(
-          'absolute left-0 top-full z-20 mt-2 w-[120px] rounded-lg border border-gray-200 bg-white shadow-md transition-all duration-200 md:w-[140px]',
+          'absolute top-full left-0 z-20 mt-2 w-[120px] rounded-lg border border-gray-200 bg-white shadow-md transition-all duration-200 md:w-[140px]',
           isOpen
             ? 'visible translate-y-0 opacity-100'
             : 'invisible -translate-y-2 opacity-0',
