@@ -7,5 +7,5 @@
     }
   },
   "include": [".", ".storybook", "vite-env.d.ts"],
-  "exclude": ["node_modules", "dist", "storybook-static", "**/*.stories.tsx"]
+  "exclude": ["node_modules", "dist", "storybook-static"]
 }

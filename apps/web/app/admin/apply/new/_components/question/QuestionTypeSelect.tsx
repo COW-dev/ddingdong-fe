@@ -67,12 +67,12 @@ function QuestionTypeSelectComponent({
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
         disabled={disabled}
-        className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 text-left transition-colors hover:bg-gray-50 focus:border-blue-500 focus:outline-none focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:opacity-50"
+        className="flex w-full items-center justify-between rounded-xl border border-gray-200 bg-white px-4 py-3 text-left transition-colors hover:bg-gray-50 focus:border-blue-500 focus:ring-4 focus:ring-blue-200 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
       >
         <Body3 className="text-gray-700">{QUESTION_TYPE_LABELS[value]}</Body3>
         <Icon
           name="arrowDown"
-          size={15}
+          size={24}
           color="gray"
           className={cn(
             'transition-transform duration-200',

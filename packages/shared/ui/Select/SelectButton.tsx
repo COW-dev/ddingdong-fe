@@ -29,7 +29,7 @@ type Props = {
 
 const sizeVariants = {
   md: 'px-3 py-1 text-sm min-w-24 rounded-lg',
-  lg: 'px-4 py-3.5 min-w-64 min-h-[52px] rounded-xl',
+  lg: 'px-5 py-3.5 min-w-64 min-h-[52px] rounded-xl',
 } as const;
 
 export function SelectButton({
@@ -60,7 +60,7 @@ export function SelectButton({
       >
         {selected}
         <Icon
-          size={20}
+          size={24}
           name="arrowDown"
           className={cn(
             'transform transition-transform duration-300',
