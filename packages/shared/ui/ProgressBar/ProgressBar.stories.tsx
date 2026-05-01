@@ -22,7 +22,7 @@ export default meta;
 export const Basic: StoryObj<typeof ProgressBar> = {
   args: {
     percent: 60,
-    color: 'pink',
+    color: 'primary',
   },
   argTypes: {
     percent: { control: { type: 'range', min: 0, max: 100, step: 1 } },
