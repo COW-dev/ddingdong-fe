@@ -26,7 +26,7 @@ const navItems = {
   ],
 };
 
-const meta = {
+const meta: Meta<typeof Header> = {
   title: 'Components/Header',
   component: Header,
   tags: ['autodocs'],
@@ -45,7 +45,7 @@ const meta = {
       },
     },
   },
-} satisfies Meta<typeof Header>;
+};
 
 export default meta;
 type Story = StoryObj<typeof Header>;
