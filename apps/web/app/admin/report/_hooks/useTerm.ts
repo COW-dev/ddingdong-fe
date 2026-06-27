@@ -1,5 +1,11 @@
+import { useSuspenseQuery } from '@tanstack/react-query';
+
+import { reportQueryOptions } from '@/_api/queries/report';
+
 export const useTerm = (term: number) => {
-  const currentTerm = { term: 7 };
+  const { data: currentTerm } = useSuspenseQuery(
+    reportQueryOptions.currentTerm(),
+  );
 
   return {
     isClosed: term < currentTerm.term,
