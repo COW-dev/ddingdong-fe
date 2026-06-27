@@ -52,7 +52,7 @@ All `app/**/page.tsx` route files use default exports:
 
 - Use `@dds` for UI primitives (Flex, Button, Input, Body1/2/3, Icon, etc.)
 - Use Tailwind CSS via `className`; use `cn()` for conditional classes
-- Props type: use `Props`
+- Props type: use `Props` for single-props components; use `{DomainName}Props` (e.g. `FeedCardProps`) when multiple props types exist in the same file or domain
 
 ```tsx
 'use client';
