@@ -1,7 +1,6 @@
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
-
 import { FormAPIResponse, SectionFormField } from '@/_api/types/apply';
 import { FormBasicInfo } from '@/admin/apply/new/_hooks/useFormBasicInfo';
+import { parseLocalDate } from '@/admin/apply/new/_utils/format';
 
 export function transformFormDataToBasicInfo(
   formData: FormAPIResponse,
@@ -11,9 +10,9 @@ export function transformFormDataToBasicInfo(
     description: formData.description || '',
     hasInterview: formData.hasInterview,
     recruitPeriod: {
-      startDate: new Date(formData.startDate),
-      endDate: new Date(formData.endDate),
-    } as DateRangeType,
+      startDate: parseLocalDate(formData.startDate),
+      endDate: parseLocalDate(formData.endDate),
+    },
   };
 }
 
@@ -25,10 +24,14 @@ export function transformFormDataToSectionFormField(
   const formFields = formData.formFields;
   if (formFields && Array.isArray(formFields)) {
     formFields.forEach((field) => {
-      if (!sectionMap.has(field.section)) {
-        sectionMap.set(field.section, []);
+      const sectionFields = sectionMap.get(field.section);
+
+      if (sectionFields) {
+        sectionFields.push(field);
+        return;
       }
-      sectionMap.get(field.section)!.push(field);
+
+      sectionMap.set(field.section, [field]);
     });
   }
 
