@@ -8,7 +8,15 @@ import { useUpdateForm } from '@/_api/mutations/apply';
 import { applyQueryOptions } from '@/_api/queries/apply';
 import { useFormFieldReducer } from '@/admin/apply/new/_hooks/reducer/useFormFieldReducer';
 import { FormBasicInfo } from '@/admin/apply/new/_hooks/useFormBasicInfo';
-import { formatDate } from '@/admin/apply/new/_utils/format';
+import {
+  formatDate,
+  formatFormData,
+  parseLocalDate,
+} from '@/admin/apply/new/_utils/format';
+import {
+  validateBasicInfo,
+  validateQuestions,
+} from '@/admin/apply/new/_utils/validation';
 
 import {
   transformFormDataToBasicInfo,
@@ -19,20 +27,29 @@ export function useFormEdit(formId: number) {
   const { data: formData } = useSuspenseQuery(applyQueryOptions.form(formId));
   const { mutate: updateForm, isPending } = useUpdateForm();
 
-  // 현재 모집 중인지 확인
-  const isRecruiting = useMemo(() => {
-    if (!formData.startDate || !formData.endDate) return false;
+  const { canEditForm, canEditContent } = useMemo(() => {
+    if (!formData.startDate || !formData.endDate) {
+      return {
+        canEditForm: false,
+        canEditContent: false,
+      };
+    }
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const startDate = new Date(formData.startDate);
+    const startDate = parseLocalDate(formData.startDate);
     startDate.setHours(0, 0, 0, 0);
-    const endDate = new Date(formData.endDate);
+    const endDate = parseLocalDate(formData.endDate);
     endDate.setHours(0, 0, 0, 0);
 
-    return (
+    const isBeforeRecruiting = today.getTime() < startDate.getTime();
+    const isRecruiting =
       startDate.getTime() <= today.getTime() &&
-      today.getTime() <= endDate.getTime()
-    );
+      today.getTime() <= endDate.getTime();
+
+    return {
+      canEditForm: isBeforeRecruiting || isRecruiting,
+      canEditContent: isBeforeRecruiting,
+    };
   }, [formData.startDate, formData.endDate]);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -54,37 +71,67 @@ export function useFormEdit(formId: number) {
   const contextValue = useMemo(
     () => ({
       ...formFieldState,
-      formField: sectionFormField,
     }),
-    [formFieldState, sectionFormField],
+    [formFieldState],
   );
 
   const handleBasicInfoChange = (updates: Partial<FormBasicInfo>) => {
     if (isEditing) {
-      setBasicInfo((prev) => ({ ...prev, ...updates }));
+      setBasicInfo((prev) => ({
+        title:
+          canEditContent && updates.title !== undefined
+            ? updates.title
+            : prev.title,
+        description:
+          canEditContent && updates.description !== undefined
+            ? updates.description
+            : prev.description,
+        hasInterview:
+          canEditContent && updates.hasInterview !== undefined
+            ? updates.hasInterview
+            : prev.hasInterview,
+        recruitPeriod: updates.recruitPeriod ?? prev.recruitPeriod,
+      }));
     }
   };
 
   const handleSave = () => {
+    if (canEditContent && !validateBasicInfo(basicInfo)) {
+      return;
+    }
+
     if (
-      !basicInfo.recruitPeriod.startDate ||
-      !basicInfo.recruitPeriod.endDate
+      !canEditContent &&
+      (!basicInfo.recruitPeriod.startDate || !basicInfo.recruitPeriod.endDate)
     ) {
       toast.error('모집 기간을 입력해주세요.');
       return;
     }
+
+    if (canEditContent && !validateQuestions(formFieldState.formField)) {
+      return;
+    }
+
+    const updatedFormData = canEditContent
+      ? formatFormData(
+          basicInfo,
+          formFieldState.sections,
+          formFieldState.formField,
+        )
+      : {
+          title: formData.title,
+          description: formData.description ?? null,
+          startDate: formatDate(basicInfo.recruitPeriod.startDate),
+          endDate: formatDate(basicInfo.recruitPeriod.endDate),
+          hasInterview: formData.hasInterview,
+          sections: formData.sections || [],
+          formFields: formData.formFields || [],
+        };
+
     updateForm(
       {
         formId,
-        formData: {
-          title: basicInfo.title,
-          description: basicInfo.description,
-          startDate: formatDate(basicInfo.recruitPeriod.startDate),
-          endDate: formatDate(basicInfo.recruitPeriod.endDate),
-          hasInterview: basicInfo.hasInterview,
-          sections: formData.sections || [],
-          formFields: formData.formFields || [],
-        },
+        formData: updatedFormData,
       },
       {
         onSuccess: async () => {
@@ -117,6 +164,7 @@ export function useFormEdit(formId: number) {
     handleCancel,
     isPending,
     contextValue,
-    isRecruiting,
+    canEditForm,
+    canEditContent,
   };
 }
