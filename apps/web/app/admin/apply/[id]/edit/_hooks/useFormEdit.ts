@@ -6,13 +6,10 @@ import { toast } from 'react-hot-toast';
 import { ApiError } from '@/_api/fetcher';
 import { useUpdateForm } from '@/_api/mutations/apply';
 import { applyQueryOptions } from '@/_api/queries/apply';
+import { formatDate, parseLocalDate } from '@/admin/apply/_utils/dateFormat';
 import { useFormFieldReducer } from '@/admin/apply/new/_hooks/reducer/useFormFieldReducer';
 import { FormBasicInfo } from '@/admin/apply/new/_hooks/useFormBasicInfo';
-import {
-  formatDate,
-  formatFormData,
-  parseLocalDate,
-} from '@/admin/apply/new/_utils/format';
+import { formatFormData } from '@/admin/apply/new/_utils/format';
 import {
   validateBasicInfo,
   validateQuestions,
@@ -96,23 +93,48 @@ export function useFormEdit(formId: number) {
   };
 
   const handleSave = () => {
-    if (canEditContent && !validateBasicInfo(basicInfo)) {
+    if (!formData.startDate || !formData.endDate) {
+      toast.error('지원서를 수정할 수 있는 기간이 아닙니다.');
+      return;
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const startDate = parseLocalDate(formData.startDate);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = parseLocalDate(formData.endDate);
+    endDate.setHours(0, 0, 0, 0);
+
+    const currentIsBeforeRecruiting = today.getTime() < startDate.getTime();
+    const currentIsRecruiting =
+      startDate.getTime() <= today.getTime() &&
+      today.getTime() <= endDate.getTime();
+
+    if (!currentIsBeforeRecruiting && !currentIsRecruiting) {
+      toast.error('지원서를 수정할 수 있는 기간이 아닙니다.');
+      return;
+    }
+
+    if (currentIsBeforeRecruiting && !validateBasicInfo(basicInfo)) {
       return;
     }
 
     if (
-      !canEditContent &&
+      !currentIsBeforeRecruiting &&
       (!basicInfo.recruitPeriod.startDate || !basicInfo.recruitPeriod.endDate)
     ) {
       toast.error('모집 기간을 입력해주세요.');
       return;
     }
 
-    if (canEditContent && !validateQuestions(formFieldState.formField)) {
+    if (
+      currentIsBeforeRecruiting &&
+      !validateQuestions(formFieldState.formField)
+    ) {
       return;
     }
 
-    const updatedFormData = canEditContent
+    const updatedFormData = currentIsBeforeRecruiting
       ? formatFormData(
           basicInfo,
           formFieldState.sections,

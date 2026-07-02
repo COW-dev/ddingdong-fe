@@ -1,6 +1,6 @@
 import { FormAPIResponse, SectionFormField } from '@/_api/types/apply';
+import { parseLocalDate } from '@/admin/apply/_utils/dateFormat';
 import { FormBasicInfo } from '@/admin/apply/new/_hooks/useFormBasicInfo';
-import { parseLocalDate } from '@/admin/apply/new/_utils/format';
 
 export function transformFormDataToBasicInfo(
   formData: FormAPIResponse,
