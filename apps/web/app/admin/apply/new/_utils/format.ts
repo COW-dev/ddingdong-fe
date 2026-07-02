@@ -4,14 +4,9 @@ import {
   QuestionType,
   SectionFormField,
 } from '@/_api/types/apply';
+import { formatDate } from '@/admin/apply/_utils/dateFormat';
 
 import { FormBasicInfo } from '../_hooks/useFormBasicInfo';
-
-export function formatDate(date: Date | string | null): string {
-  if (!date) return '';
-  if (date instanceof Date) return date.toISOString().split('T')[0];
-  return new Date(date).toISOString().split('T')[0];
-}
 
 export function formatFormData(
   basicInfo: FormBasicInfo,

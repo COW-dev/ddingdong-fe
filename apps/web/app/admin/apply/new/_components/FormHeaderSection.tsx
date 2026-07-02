@@ -9,12 +9,14 @@ type FormHeaderSectionProps = {
   basicInfo: FormBasicInfo;
   onBasicInfoChange: (updates: Partial<FormBasicInfo>) => void;
   readOnly?: boolean;
+  recruitPeriodReadOnly?: boolean;
 };
 
 export function FormHeaderSection({
   basicInfo,
   onBasicInfoChange,
   readOnly = false,
+  recruitPeriodReadOnly = readOnly,
 }: FormHeaderSectionProps) {
   const { title, description, recruitPeriod, hasInterview } = basicInfo;
   return (
@@ -66,7 +68,7 @@ export function FormHeaderSection({
               minDate={new Date(new Date().getFullYear(), 0, 1)}
               maxDate={new Date(new Date().getFullYear(), 11, 31)}
               inputClassName="w-full rounded-xl bg-white px-4 py-3.5 border border-gray-200 focus:ring-4 focus:ring-blue-200 focus:border-blue-500 focus:outline-none"
-              disabled={readOnly}
+              disabled={recruitPeriodReadOnly}
             />
           </div>
         </Flex>
