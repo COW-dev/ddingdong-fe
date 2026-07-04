@@ -139,6 +139,12 @@ importers:
 
   apps/web:
     dependencies:
+      '@astryxdesign/core':
+        specifier: ^0.1.2
+        version: 0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@astryxdesign/theme-neutral':
+        specifier: ^0.1.2
+        version: 0.1.2(@astryxdesign/core@0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@channel.io/channel-web-sdk-loader':
         specifier: ^2.0.0
         version: 2.0.2
@@ -421,6 +427,24 @@ packages:
         integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==,
       }
     engines: { node: '>=10' }
+
+  '@astryxdesign/core@0.1.2':
+    resolution:
+      {
+        integrity: sha512-SJOEXUaRvcVgGbdPwV5UL5aYMbwIl09H2yQb3hPh4NNGWqmLTHE05IFTNRi37Mk9ywoo01+UM2ZrewmJe39f0A==,
+      }
+    peerDependencies:
+      react: '>=19.0.0'
+      react-dom: '>=19.0.0'
+
+  '@astryxdesign/theme-neutral@0.1.2':
+    resolution:
+      {
+        integrity: sha512-kEBBJ7O5H+27IACsGEqZSEVFy2r4VlBu4Vzfm/LOJ/Ez6C/RBTCXq9Iu8CoZS4Qt/WkYUvqLPDiJlgXuALy9uQ==,
+      }
+    peerDependencies:
+      '@astryxdesign/core': 0.1.2
+      react: '>=19'
 
   '@babel/code-frame@7.29.0':
     resolution:
@@ -3444,6 +3468,12 @@ packages:
     peerDependencies:
       storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
 
+  '@stylexjs/stylex@0.18.3':
+    resolution:
+      {
+        integrity: sha512-15gDzAJAorOE0yzxaWLNxldW2aqdmCiLG5QcPD8nmVCVqvrWp0Asgv45zk7LtN86WJb/4Ym9eQ6qT5MJW59tWQ==,
+      }
+
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0':
     resolution:
       {
@@ -5252,6 +5282,12 @@ packages:
       }
     engines: { node: '>= 8' }
 
+  css-mediaquery@0.1.2:
+    resolution:
+      {
+        integrity: sha512-COtn4EROW5dBGlE/4PiKnh6rZpAPxDeFLaEEwt4i10jpDMFt2EhQGS79QmmrO+iKCHv0PU/HrOWEhijFd1x99Q==,
+      }
+
   css-select@5.2.2:
     resolution:
       {
@@ -6550,6 +6586,12 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
+  invariant@2.2.4:
+    resolution:
+      {
+        integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==,
+      }
+
   is-arguments@1.2.0:
     resolution:
       {
@@ -7311,6 +7353,14 @@ packages:
         integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==,
       }
     engines: { node: '>=10' }
+
+  lucide-react@1.23.0:
+    resolution:
+      {
+        integrity: sha512-38BpJcD0JhFosxHApP/BYsBetLpQFRoTRzEzstM/XCc3jsAG7wqaY1lgVwxiUe3xqYE+lNxo2PkCmYwXWrwwIw==,
+      }
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   lz-string@1.5.0:
     resolution:
@@ -8799,6 +8849,12 @@ packages:
       babel-plugin-macros:
         optional: true
 
+  styleq@0.2.1:
+    resolution:
+      {
+        integrity: sha512-L0TR0NQb+X4/ktDEKmjWyp27gla+LUYi/by5k5SjKXf6/pvZP7wbwEB5J+tqxdFVPgzbsuz+d4RTScO/QZquBw==,
+      }
+
   supports-color@7.2.0:
     resolution:
       {
@@ -9540,6 +9596,18 @@ snapshots:
   '@adobe/css-tools@4.4.4': {}
 
   '@alloc/quick-lru@5.2.0': {}
+
+  '@astryxdesign/core@0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@stylexjs/stylex': 0.18.3
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
+  '@astryxdesign/theme-neutral@0.1.2(@astryxdesign/core@0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@astryxdesign/core': 0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      lucide-react: 1.23.0(react@19.2.4)
+      react: 19.2.4
 
   '@babel/code-frame@7.29.0':
     dependencies:
@@ -11752,6 +11820,12 @@ snapshots:
     dependencies:
       storybook: 8.6.18(prettier@3.8.1)
 
+  '@stylexjs/stylex@0.18.3':
+    dependencies:
+      css-mediaquery: 0.1.2
+      invariant: 2.2.4
+      styleq: 0.2.1
+
   '@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.29.0)':
     dependencies:
       '@babel/core': 7.29.0
@@ -12880,6 +12954,8 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
+  css-mediaquery@0.1.2: {}
+
   css-select@5.2.2:
     dependencies:
       boolbase: 1.0.0
@@ -13841,6 +13917,10 @@ snapshots:
       hasown: 2.0.2
       side-channel: 1.1.0
 
+  invariant@2.2.4:
+    dependencies:
+      loose-envify: 1.4.0
+
   is-arguments@1.2.0:
     dependencies:
       call-bound: 1.0.4
@@ -14245,6 +14325,10 @@ snapshots:
   lru-cache@6.0.0:
     dependencies:
       yallist: 4.0.0
+
+  lucide-react@1.23.0(react@19.2.4):
+    dependencies:
+      react: 19.2.4
 
   lz-string@1.5.0: {}
 
@@ -15172,6 +15256,8 @@ snapshots:
       react: 19.2.4
     optionalDependencies:
       '@babel/core': 7.29.0
+
+  styleq@0.2.1: {}
 
   supports-color@7.2.0:
     dependencies:

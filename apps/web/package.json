@@ -13,6 +13,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@astryxdesign/core": "^0.1.2",
+    "@astryxdesign/theme-neutral": "^0.1.2",
     "@channel.io/channel-web-sdk-loader": "^2.0.0",
     "@dds/shared": "workspace:*",
     "@next/third-parties": "catalog:",
