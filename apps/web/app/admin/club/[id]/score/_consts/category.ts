@@ -16,7 +16,7 @@ export const CATEGORY: Record<string, { name: string; icon: IconName }> = {
   },
   ADDITIONAL: {
     name: '가산점/감점',
-    icon: 'plusMinus',
+    icon: 'plusminus',
   },
   CARRYOVER_SCORE: {
     name: '점수 이월',
