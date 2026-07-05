@@ -40,7 +40,6 @@
 }
 
 html {
-  background-color: var(--color-white);
   font-family: Pretendard;
   word-break: keep-all;
   -webkit-font-smoothing: antialiased;

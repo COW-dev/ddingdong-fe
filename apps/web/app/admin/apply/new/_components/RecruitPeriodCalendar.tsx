@@ -7,7 +7,6 @@ import {
   type DateRange,
   type ISODateString,
 } from '@astryxdesign/core/Calendar';
-import { Theme, defineTheme } from '@astryxdesign/core/theme';
 import { z } from 'zod';
 
 import './RecruitPeriodCalendar.css';
@@ -17,8 +16,6 @@ import type { RecruitPeriod } from '../_hooks/useFormBasicInfo';
 const isoDateSchema = z.custom<ISODateString>(
   (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value),
 );
-
-const calendarTheme = defineTheme({ name: 'neutral' });
 
 type RecruitPeriodCalendarProps = {
   value: RecruitPeriod;
@@ -116,16 +113,14 @@ export function RecruitPeriodCalendar({
 
       {isOpen && (
         <div className="absolute right-0 z-30 mt-2 rounded-xl border border-gray-200 bg-white p-3 shadow-xl">
-          <Theme theme={calendarTheme} mode="light">
-            <Calendar
-              mode="range"
-              value={rangeValue}
-              onChange={handleRangeChange}
-              min={toIsoDate(minDate)}
-              max={toIsoDate(maxDate)}
-              weekStartsOn={0}
-            />
-          </Theme>
+          <Calendar
+            mode="range"
+            value={rangeValue}
+            onChange={handleRangeChange}
+            min={toIsoDate(minDate)}
+            max={toIsoDate(maxDate)}
+            weekStartsOn={0}
+          />
         </div>
       )}
     </div>
