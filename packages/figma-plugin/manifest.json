@@ -1,0 +1,8 @@
+{
+  "name": "ddingdong Icon Sync",
+  "id": "ddingdong-icon-sync",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html",
+  "editorType": ["figma"]
+}

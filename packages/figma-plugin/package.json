@@ -1,0 +1,14 @@
+{
+  "name": "@ddingdong/figma-plugin",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "esbuild src/code.ts --bundle --outfile=dist/code.js --platform=browser && cp src/ui.html dist/ui.html",
+    "dev": "esbuild src/code.ts --bundle --outfile=dist/code.js --platform=browser --watch"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "^1.106.0",
+    "esbuild": "^0.24.0",
+    "typescript": "^5.7.2"
+  }
+}
