@@ -104,6 +104,8 @@ export function RecruitPeriodCalendar({
     >
       <button
         type="button"
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
         className="w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left text-base text-gray-600 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300"
         onClick={() => setIsOpen((current) => !current)}
         disabled={disabled}
