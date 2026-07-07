@@ -1,10 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
-import {
-  DateValueType,
-  DateRangeType,
-} from 'react-tailwindcss-datepicker/dist/types';
-
 import { Report } from '@/_api/types/report';
 
 type Props = {
@@ -21,10 +16,13 @@ export const useReportInput = ({ setValue }: Props) => {
     }));
   };
 
-  const handleDateChange = (date: DateValueType) => {
+  const handleDateChange = (date: Date) => {
     setValue((prev) => ({
       ...prev,
-      date: date as DateRangeType,
+      date: {
+        startDate: date,
+        endDate: date,
+      },
     }));
   };
 

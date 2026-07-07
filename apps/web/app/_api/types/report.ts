@@ -1,5 +1,3 @@
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
-
 import { UrlType } from './file';
 import { Member } from './member';
 
@@ -53,9 +51,14 @@ export type ReportAPIRequest = {
   participants: ReportMember[];
 };
 
+export type ReportDateRange = {
+  readonly startDate: Date | null;
+  readonly endDate: Date | null;
+};
+
 export type Report = {
   term?: number;
-  date: DateRangeType;
+  date: ReportDateRange;
   place?: string;
   startTime?: string;
   endTime?: string;
