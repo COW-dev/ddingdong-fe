@@ -40,6 +40,7 @@ type AdminRangeCalendarFieldProps = AdminCalendarFieldBaseProps & {
   readonly mode: 'range';
   readonly value: CalendarDateRange;
   readonly onChange: (value: CalendarDateRange) => void;
+  readonly lockedStartDate?: Date | null;
 };
 
 type AdminCalendarFieldProps =
@@ -156,12 +157,18 @@ export function AdminCalendarField({
               value={toCalendarRange(selection.value)}
               onChange={(selectedValue) => {
                 selection.onChange({
-                  startDate: fromIsoDate(selectedValue.start),
+                  startDate: selection.lockedStartDate
+                    ? selection.lockedStartDate
+                    : fromIsoDate(selectedValue.start),
                   endDate: fromIsoDate(selectedValue.end),
                 });
                 setIsOpen(false);
               }}
-              min={min}
+              min={
+                selection.lockedStartDate
+                  ? toIsoDate(selection.lockedStartDate)
+                  : min
+              }
               max={max}
               weekStartsOn={0}
             />

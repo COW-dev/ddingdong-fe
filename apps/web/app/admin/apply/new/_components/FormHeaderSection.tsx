@@ -13,6 +13,7 @@ type FormHeaderSectionProps = {
   onBasicInfoChange: (updates: Partial<FormBasicInfo>) => void;
   readOnly?: boolean;
   recruitPeriodReadOnly?: boolean;
+  lockedRecruitStartDate?: Date | null;
 };
 
 export function FormHeaderSection({
@@ -20,6 +21,7 @@ export function FormHeaderSection({
   onBasicInfoChange,
   readOnly = false,
   recruitPeriodReadOnly = readOnly,
+  lockedRecruitStartDate = null,
 }: FormHeaderSectionProps) {
   const { title, description, recruitPeriod, hasInterview } = basicInfo;
   return (
@@ -72,8 +74,11 @@ export function FormHeaderSection({
             minDate={new Date(new Date().getFullYear(), 0, 1)}
             maxDate={new Date(new Date().getFullYear(), 11, 31)}
             placeholder="모집 기간을 선택해주세요"
-            ariaLabel="모집 기간 선택"
+            ariaLabel={
+              lockedRecruitStartDate ? '모집 마감 날짜 선택' : '모집 기간 선택'
+            }
             disabled={recruitPeriodReadOnly}
+            lockedStartDate={lockedRecruitStartDate}
           />
         </Flex>
 
