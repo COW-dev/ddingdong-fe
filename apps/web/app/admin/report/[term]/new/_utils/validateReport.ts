@@ -4,5 +4,5 @@ export const validateDate = (report: Report) => {
   const { endTime, startTime, date } = report;
 
   if (!endTime && !startTime && !date.startDate) return true;
-  return endTime && startTime && date.startDate;
+  return Boolean(endTime && startTime && date.startDate);
 };

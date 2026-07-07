@@ -4,7 +4,7 @@ import type { ChangeEvent } from 'react';
 
 import { Body2, Checkbox, Flex, Input, TextArea } from '@dds/shared';
 
-import { RecruitPeriodCalendar } from './RecruitPeriodCalendar';
+import { AdminCalendarField } from '@/admin/_components/AdminCalendarField';
 
 import type { FormBasicInfo } from '../_hooks/useFormBasicInfo';
 
@@ -61,7 +61,8 @@ export function FormHeaderSection({
             className="flex-1"
             disabled={readOnly}
           />
-          <RecruitPeriodCalendar
+          <AdminCalendarField
+            mode="range"
             value={recruitPeriod}
             onChange={(value) =>
               onBasicInfoChange({
@@ -70,6 +71,8 @@ export function FormHeaderSection({
             }
             minDate={new Date(new Date().getFullYear(), 0, 1)}
             maxDate={new Date(new Date().getFullYear(), 11, 31)}
+            placeholder="모집 기간을 선택해주세요"
+            ariaLabel="모집 기간 선택"
             disabled={recruitPeriodReadOnly}
           />
         </Flex>
