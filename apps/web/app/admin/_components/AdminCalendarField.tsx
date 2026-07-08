@@ -9,16 +9,15 @@ import {
 } from '@astryxdesign/core/Calendar';
 import { z } from 'zod';
 
+import type { NullableDateRange } from '@/_api/types/calanderDate';
+
 import './AdminCalendarField.css';
 
 const isoDateSchema = z.custom<ISODateString>(
   (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value),
 );
 
-export type CalendarDateRange = {
-  readonly startDate: Date | null;
-  readonly endDate: Date | null;
-};
+export type CalendarDateRange = NullableDateRange;
 
 type AdminCalendarFieldBaseProps = {
   readonly minDate: Date;

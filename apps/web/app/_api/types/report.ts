@@ -1,3 +1,5 @@
+import type { NullableDateRange } from '@/_api/types/calanderDate';
+
 import { UrlType } from './file';
 import { Member } from './member';
 
@@ -51,10 +53,7 @@ export type ReportAPIRequest = {
   participants: ReportMember[];
 };
 
-export type ReportDateRange = {
-  readonly startDate: Date | null;
-  readonly endDate: Date | null;
-};
+export type ReportDateRange = NullableDateRange;
 
 export type Report = {
   term?: number;
