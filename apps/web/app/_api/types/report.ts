@@ -1,4 +1,4 @@
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+import type { NullableDateRange } from '@/_api/types/calanderDate';
 
 import { UrlType } from './file';
 import { Member } from './member';
@@ -53,9 +53,11 @@ export type ReportAPIRequest = {
   participants: ReportMember[];
 };
 
+export type ReportDateRange = NullableDateRange;
+
 export type Report = {
   term?: number;
-  date: DateRangeType;
+  date: ReportDateRange;
   place?: string;
   startTime?: string;
   endTime?: string;

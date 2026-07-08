@@ -69,6 +69,9 @@ export function FormEditPage({ formId }: FormEditPageProps) {
         onBasicInfoChange={handleBasicInfoChange}
         readOnly={!isEditing || !canEditContent}
         recruitPeriodReadOnly={!isEditing}
+        lockedRecruitStartDate={
+          canEditContent ? null : basicInfo.recruitPeriod.startDate
+        }
       />
       <SectionContent readOnly={!isEditing || !canEditContent} />
     </FormFieldContext.Provider>

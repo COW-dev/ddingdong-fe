@@ -13,6 +13,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@astryxdesign/core": "^0.1.2",
+    "@astryxdesign/theme-neutral": "^0.1.2",
     "@channel.io/channel-web-sdk-loader": "^2.0.0",
     "@dds/shared": "workspace:*",
     "@next/third-parties": "catalog:",
@@ -37,7 +39,6 @@
     "react-dom": "catalog:",
     "react-hot-toast": "^2.4.1",
     "react-lottie-player": "^2.1.0",
-    "react-tailwindcss-datepicker": "^2.0.0",
     "react-textarea-autosize": "^8.4.1",
     "tailwind-merge": "catalog:",
     "tailwindcss-animate": "^1.0.7",

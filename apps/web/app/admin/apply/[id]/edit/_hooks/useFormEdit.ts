@@ -8,7 +8,7 @@ import { useUpdateForm } from '@/_api/mutations/apply';
 import { applyQueryOptions } from '@/_api/queries/apply';
 import { formatDate, parseLocalDate } from '@/admin/apply/_utils/dateFormat';
 import { useFormFieldReducer } from '@/admin/apply/new/_hooks/reducer/useFormFieldReducer';
-import { FormBasicInfo } from '@/admin/apply/new/_hooks/useFormBasicInfo';
+import type { FormBasicInfo } from '@/admin/apply/new/_hooks/useFormBasicInfo';
 import { formatFormData } from '@/admin/apply/new/_utils/format';
 import {
   validateBasicInfo,
@@ -87,7 +87,14 @@ export function useFormEdit(formId: number) {
           canEditContent && updates.hasInterview !== undefined
             ? updates.hasInterview
             : prev.hasInterview,
-        recruitPeriod: updates.recruitPeriod ?? prev.recruitPeriod,
+        recruitPeriod: updates.recruitPeriod
+          ? {
+              startDate: canEditContent
+                ? updates.recruitPeriod.startDate
+                : prev.recruitPeriod.startDate,
+              endDate: updates.recruitPeriod.endDate,
+            }
+          : prev.recruitPeriod,
       }));
     }
   };
@@ -143,7 +150,7 @@ export function useFormEdit(formId: number) {
       : {
           title: formData.title,
           description: formData.description ?? null,
-          startDate: formatDate(basicInfo.recruitPeriod.startDate),
+          startDate: formData.startDate,
           endDate: formatDate(basicInfo.recruitPeriod.endDate),
           hasInterview: formData.hasInterview,
           sections: formData.sections || [],

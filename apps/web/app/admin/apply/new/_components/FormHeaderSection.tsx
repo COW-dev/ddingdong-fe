@@ -1,15 +1,19 @@
 'use client';
 
-import { Body2, Checkbox, Flex, Input, TextArea } from '@dds/shared';
-import Datepicker, { DateValueType } from 'react-tailwindcss-datepicker';
+import type { ChangeEvent } from 'react';
 
-import { FormBasicInfo } from '../_hooks/useFormBasicInfo';
+import { Body2, Checkbox, Flex, Input, TextArea } from '@dds/shared';
+
+import { AdminCalendarField } from '@/admin/_components/AdminCalendarField';
+
+import type { FormBasicInfo } from '../_hooks/useFormBasicInfo';
 
 type FormHeaderSectionProps = {
   basicInfo: FormBasicInfo;
   onBasicInfoChange: (updates: Partial<FormBasicInfo>) => void;
   readOnly?: boolean;
   recruitPeriodReadOnly?: boolean;
+  lockedRecruitStartDate?: Date | null;
 };
 
 export function FormHeaderSection({
@@ -17,6 +21,7 @@ export function FormHeaderSection({
   onBasicInfoChange,
   readOnly = false,
   recruitPeriodReadOnly = readOnly,
+  lockedRecruitStartDate = null,
 }: FormHeaderSectionProps) {
   const { title, description, recruitPeriod, hasInterview } = basicInfo;
   return (
@@ -51,32 +56,38 @@ export function FormHeaderSection({
           <Input
             value={title}
             placeholder="지원서 제목을 입력해주세요"
-            onChange={(e) => onBasicInfoChange({ title: e.target.value })}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onBasicInfoChange({ title: e.target.value })
+            }
             onClickReset={() => onBasicInfoChange({ title: '' })}
             className="flex-1"
             disabled={readOnly}
           />
-          <div className="relative w-full min-w-[250px] shrink">
-            <Datepicker
-              value={recruitPeriod}
-              onChange={(value: DateValueType) =>
-                onBasicInfoChange({
-                  recruitPeriod: value ?? { startDate: null, endDate: null },
-                })
-              }
-              useRange={true}
-              minDate={new Date(new Date().getFullYear(), 0, 1)}
-              maxDate={new Date(new Date().getFullYear(), 11, 31)}
-              inputClassName="w-full rounded-xl bg-white px-4 py-3.5 border border-gray-200 focus:ring-4 focus:ring-blue-200 focus:border-blue-500 focus:outline-none"
-              disabled={recruitPeriodReadOnly}
-            />
-          </div>
+          <AdminCalendarField
+            mode="range"
+            value={recruitPeriod}
+            onChange={(value) =>
+              onBasicInfoChange({
+                recruitPeriod: value,
+              })
+            }
+            minDate={new Date(new Date().getFullYear(), 0, 1)}
+            maxDate={new Date(new Date().getFullYear(), 11, 31)}
+            placeholder="모집 기간을 선택해주세요"
+            ariaLabel={
+              lockedRecruitStartDate ? '모집 마감 날짜 선택' : '모집 기간 선택'
+            }
+            disabled={recruitPeriodReadOnly}
+            lockedStartDate={lockedRecruitStartDate}
+          />
         </Flex>
 
         <TextArea
           value={description}
           placeholder="지원서 설명을 입력해 주세요 (최대 255자 이내)"
-          onChange={(e) => onBasicInfoChange({ description: e.target.value })}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+            onBasicInfoChange({ description: e.target.value })
+          }
           disabled={readOnly}
         />
       </Flex>

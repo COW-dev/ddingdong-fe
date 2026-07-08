@@ -1,12 +1,15 @@
 import { useState } from 'react';
 
-import { DateRangeType } from 'react-tailwindcss-datepicker/dist/types';
+export type RecruitPeriod = {
+  startDate: Date | null;
+  endDate: Date | null;
+};
 
 export type FormBasicInfo = {
   title: string;
   description: string;
   hasInterview: boolean;
-  recruitPeriod: DateRangeType;
+  recruitPeriod: RecruitPeriod;
 };
 
 export function useFormBasicInfo() {
