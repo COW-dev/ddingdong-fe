@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
   Calendar,
@@ -107,12 +107,21 @@ export function AdminCalendarField({
 }: AdminCalendarFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const min = useMemo(() => toIsoDate(minDate), [minDate]);
   const max = useMemo(() => toIsoDate(maxDate), [maxDate]);
   const hasValue =
     selection.mode === 'range'
       ? Boolean(selection.value.startDate && selection.value.endDate)
       : Boolean(selection.value);
+
+  const closePopover = useCallback((shouldReturnFocus: boolean) => {
+    setIsOpen(false);
+
+    if (shouldReturnFocus) {
+      window.requestAnimationFrame(() => triggerRef.current?.focus());
+    }
+  }, []);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -122,13 +131,25 @@ export function AdminCalendarField({
         event.target instanceof Node &&
         !containerRef.current?.contains(event.target)
       ) {
-        setIsOpen(false);
+        closePopover(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.stopPropagation();
+        closePopover(true);
       }
     };
 
     document.addEventListener('pointerdown', handlePointerDown);
-    return () => document.removeEventListener('pointerdown', handlePointerDown);
-  }, [isOpen]);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [closePopover, isOpen]);
 
   return (
     <div
@@ -136,12 +157,20 @@ export function AdminCalendarField({
       className={`admin-calendar-field relative w-full min-w-[250px] shrink ${className}`}
     >
       <button
+        ref={triggerRef}
         type="button"
         aria-label={ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={isOpen}
         className={`w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left text-base outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300 ${hasValue ? 'text-gray-600' : 'text-gray-400'}`}
-        onClick={() => setIsOpen((current) => !current)}
+        onClick={() => {
+          if (isOpen) {
+            closePopover(false);
+            return;
+          }
+
+          setIsOpen(true);
+        }}
         disabled={disabled}
       >
         {getDisplayValue(selection.value, placeholder)}
@@ -149,6 +178,8 @@ export function AdminCalendarField({
 
       {isOpen && (
         <div
+          role="dialog"
+          aria-label={ariaLabel}
           className={`absolute right-0 z-30 mt-2 rounded-xl border border-gray-200 bg-white p-3 shadow-xl ${popoverClassName}`}
         >
           {selection.mode === 'range' ? (
@@ -162,7 +193,7 @@ export function AdminCalendarField({
                     : fromIsoDate(selectedValue.start),
                   endDate: fromIsoDate(selectedValue.end),
                 });
-                setIsOpen(false);
+                closePopover(true);
               }}
               min={
                 selection.lockedStartDate
@@ -178,7 +209,7 @@ export function AdminCalendarField({
               value={selection.value ? toIsoDate(selection.value) : undefined}
               onChange={(selectedValue) => {
                 selection.onChange(fromIsoDate(selectedValue));
-                setIsOpen(false);
+                closePopover(true);
               }}
               min={min}
               max={max}
