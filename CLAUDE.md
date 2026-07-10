@@ -8,21 +8,26 @@ ddingdong-fe is Wanted Lab's Ddingdong frontend project. It's a Next.js 15 App R
 
 ## Common Commands
 
+This is a pnpm/Turbo monorepo (`pnpm@9.15.4`) — use `pnpm`, not `npm`. Root scripts fan out through Turbo to all packages; use `pnpm --filter @ddingdong/web <script>` to target only the app.
+
 ```bash
 # Dev server
-npm run dev
+pnpm dev
 
 # Production build
-npm run build
+pnpm build
 
-# Production server
-npm start
+# Production server (app package only, no root script)
+pnpm --filter @ddingdong/web start
 
 # Lint
-npm run lint
+pnpm lint
+
+# Type check
+pnpm check-types
 
 # Test
-npm run test
+pnpm test
 ```
 
 ## Tech Stack
@@ -59,7 +64,7 @@ All `app/**/page.tsx` route files use default exports:
 
 import { Flex, Body2, Body3, Icon } from '@dds/shared';
 
-import { cn } from '@/utils/cn';
+import { cn } from '@/_utils/cn';
 
 type Props = {
   likeCount: number;
@@ -106,43 +111,39 @@ export function FeedStats({
 
 ### Folder Structure
 
+No top-level `src/` — the app package's source root is `apps/web/app`. There is no separate top-level `components/`, `hooks/`, `constants/`, `types/`, or `utils/` outside routes; shared, non-route-specific code lives in the underscore-prefixed folders directly under `app/` (e.g. `app/_components/common`, `app/_components/layout`).
+
 ```text
-src/
-├── app/
-│   ├── (main)/
-│   │   ├── _components/
-│   │   ├── _containers/
+ddingdong-fe/
+├── apps/web/
+│   ├── app/
+│   │   ├── (main)/
+│   │   │   ├── _components/
+│   │   │   ├── _containers/
+│   │   │   ├── _hooks/
+│   │   │   ├── _pages/
+│   │   │   └── page.tsx
+│   │   ├── admin/
+│   │   │   ├── (home)/ apply/ banner/ club/ documents/ faq/ feed/
+│   │   │   ├── fix/ login/ member/ my-club/ notice/ ranking/ report/
+│   │   │   └── _components/
+│   │   ├── apply/ club/ documents/ feeds/ notice/ faq/
+│   │   ├── _api/          # fetcher.ts, queries/, mutations/, types/
+│   │   ├── _actions/
+│   │   ├── _components/   # common/, layout/ — shared across routes
+│   │   ├── _constants/
 │   │   ├── _hooks/
-│   │   ├── _pages/
-│   │   └── page.tsx
-│   ├── admin/
-│   │   ├── apply/
-│   │   ├── banner/
-│   │   ├── club/
-│   │   ├── documents/
-│   │   ├── feed/
-│   │   ├── fix/
-│   │   ├── member/
-│   │   ├── notice/
-│   │   ├── ranking/
-│   │   └── report/
-│   ├── apply/
-│   ├── club/
-│   ├── documents/
-│   ├── feeds/
-│   ├── notice/
-│   ├── faq/
-│   ├── _api/
-│   ├── _actions/
-│   ├── providers.tsx
-│   └── layout.tsx
-├── components/
-│   ├── layout/
-│   └── common/
-├── hooks/
-├── constants/
-├── types/
-└── utils/
+│   │   ├── _store/
+│   │   ├── _lib/
+│   │   ├── _utils/
+│   │   ├── _styles/
+│   │   ├── providers.tsx
+│   │   └── layout.tsx
+│   └── test/               # Vitest tests (mirrors app/ route structure)
+├── packages/shared/         # @dds/shared design system (ui/, lib/)
+├── packages/eslint-config/
+├── packages/tailwind-config/
+└── packages/typescript-config/
 ```
 
 Route-level structure:
@@ -150,17 +151,20 @@ Route-level structure:
 ```text
 [route]/
 ├── _components/     # Route-specific components
-├── _containers/
+├── _containers/     # Layout wrapper components (children-only, no data/logic)
 ├── _hooks/
 ├── _pages/          # Client page components
 ├── _utils/
 ├── _constants/
+├── _schemas/
+├── _contexts/
+├── _types/
 └── page.tsx
 ```
 
 ## Code Conventions
 
-- **Conventional Commits**: `<type>(<scope>): <description>` — enforced by commitlint
+- **Conventional Commits**: `<type>: <description>` (no scope — not used in this repo) — type enum enforced by commitlint (`.commitlintrc.json`): `build`, `chore`, `ci`, `docs`, `feat`, `fix`, `hotfix`, `refactor`, `revert`, `style`, `test`
 - **Variables**: camelCase
 - **Functions**: Arrow functions
 - **Components**: `function` keyword (not arrow functions)
@@ -177,10 +181,10 @@ Route-level structure:
 - Test scenarios should only cover the behavior under test
 - Avoid type assertions
 
-**Test folder structure:**
+**Test folder structure** (root is `apps/web/test/`, runner is Vitest — see `apps/web/vitest.config.ts`):
 
 ```text
-test/
+apps/web/test/
 └── 페이지명/
     ├── 페이지명.test.tsx
     ├── 훅이름.test.tsx
@@ -192,8 +196,8 @@ test/
 **Mock data rules:**
 
 - Declare mock data inside `it` by default
-- Extract to `test/페이지명/페이지명.data.ts` for page-specific shared mocks
-- Extract to `test/shared/[domain]Mock.ts` only when shared across multiple pages
+- Extract to `apps/web/test/페이지명/페이지명.data.ts` for page-specific shared mocks
+- Extract to `apps/web/test/shared/[domain]Mock.ts` only when shared across multiple pages
 - Page-specific mocks only in that file
 
 **Mocking and rendering rules:**
@@ -204,4 +208,4 @@ test/
 
 ## CI Checks on PRs
 
-Lint, build, and commitlint checks run on pull requests.
+`.github/workflows/ci.yml` runs three jobs on pull requests: ESLint (`pnpm lint`), TypeScript (`pnpm check-types`), and build (`pnpm build`). Commit message format (commitlint) is enforced locally by the `.husky/commit-msg` hook, not in CI.
