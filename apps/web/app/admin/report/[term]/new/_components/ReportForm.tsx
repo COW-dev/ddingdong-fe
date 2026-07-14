@@ -2,10 +2,10 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { Flex, Input, MediaUpload, TextArea, usePortal } from '@dds/shared';
-import Datepicker from 'react-tailwindcss-datepicker';
 
 import { Report } from '@/_api/types/report';
 import { Loading } from '@/_components/loading/Loading';
+import { AdminCalendarField } from '@/admin/_components/AdminCalendarField';
 
 import {
   ReportFormContentContainer,
@@ -38,15 +38,13 @@ export function ReportForm({ setValue, report, setIsEditing }: Props) {
         <Flex dir="col" gap={6} className="w-full grow">
           <ReportFormContentContainer>
             <ReportFormContentWapper>
-              <Datepicker
-                value={date}
+              <AdminCalendarField
+                value={date.startDate}
                 onChange={handleDateChange}
-                popupClassName="md:max-w-[308px] md:w-[308px] w-full transition-all ease-out duration-300 absolute z-50 mt-[1px] text-sm lg:text-xs 2xl:text-sm translate-y-4 opacity-0 hidden overflow-y-auto max-h-72 customDatePickerWidth"
-                useRange={false}
-                asSingle
                 minDate={new Date(new Date().getFullYear(), 0, 1)}
                 maxDate={new Date(new Date().getFullYear(), 11, 31)}
-                inputClassName="w-full rounded-xl border-none bg-white px-4 py-3.5 outline-1 outline-gray-200 focus:ring-4 focus:ring-blue-200 focus:outline-blue-500"
+                placeholder="활동날짜"
+                ariaLabel="활동 날짜 선택"
               />
               <Input
                 name="place"

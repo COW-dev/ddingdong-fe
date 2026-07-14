@@ -60,7 +60,3 @@ html {
 .customHideClock::-webkit-calendar-picker-indicator {
   display: none;
 }
-
-.customDatePickerWidth > div:nth-child(2) > div {
-  flex-direction: column;
-}

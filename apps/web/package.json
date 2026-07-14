@@ -10,9 +10,13 @@
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "check-types": "tsc --noEmit"
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
+    "@astryxdesign/core": "^0.1.2",
+    "@astryxdesign/theme-neutral": "^0.1.2",
     "@channel.io/channel-web-sdk-loader": "^2.0.0",
     "@dds/shared": "workspace:*",
     "@next/third-parties": "catalog:",
@@ -37,7 +41,6 @@
     "react-dom": "catalog:",
     "react-hot-toast": "^2.4.1",
     "react-lottie-player": "^2.1.0",
-    "react-tailwindcss-datepicker": "^2.0.0",
     "react-textarea-autosize": "^8.4.1",
     "tailwind-merge": "catalog:",
     "tailwindcss-animate": "^1.0.7",
@@ -51,15 +54,23 @@
     "@ddingdong/typescript-config": "workspace:*",
     "@svgr/webpack": "^8.1.0",
     "@tailwindcss/postcss": "catalog:",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/event-source-polyfill": "^1.0.5",
     "@types/gtag.js": "^0.0.20",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
     "autoprefixer": "catalog:",
     "eslint-config-next": "catalog:",
+    "jsdom": "^29.1.1",
     "postcss": "catalog:",
     "tailwindcss": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.7"
   }
 }
