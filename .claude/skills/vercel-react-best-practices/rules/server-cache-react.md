@@ -7,7 +7,7 @@ tags: server, cache, react-cache, deduplication
 
 ## Per-Request Deduplication with React.cache()
 
-Use `React.cache()` for server-side request deduplication. Authentication and database queries benefit most.
+Use `React.cache()` for request deduplication **within a single React Server Component render tree**. Authentication and database queries benefit most. This guarantee is specific to RSC rendering — `React.cache()` does not deduplicate calls made from a Route Handler, Server Action invoked outside of rendering, or other plain server functions that sit outside a component render.
 
 **Usage:**
 

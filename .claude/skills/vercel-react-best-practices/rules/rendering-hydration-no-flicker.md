@@ -48,7 +48,12 @@ Component first renders with default value (`light`), then updates after hydrati
 function ThemeWrapper({ children }: { children: ReactNode }) {
   return (
     <>
-      <div id="theme-wrapper">{children}</div>
+      {/* suppressHydrationWarning tells React this element's attributes are
+          intentionally mutated by the inline script below before hydration,
+          so it shouldn't warn about the className React didn't render. */}
+      <div id="theme-wrapper" suppressHydrationWarning>
+        {children}
+      </div>
       <script
         dangerouslySetInnerHTML={{
           __html: `

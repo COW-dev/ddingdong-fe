@@ -43,4 +43,4 @@ function FlagsProvider({ children, flags }: Props) {
 }
 ```
 
-The `typeof window !== 'undefined'` check prevents bundling preloaded modules for SSR, optimizing server bundle size and build speed.
+The `typeof window !== 'undefined'` check only prevents the dynamic `import()` from executing during SSR. It doesn't remove the resulting chunk from the client bundle, nor does it meaningfully change server bundle size or build speed — it just avoids running browser-only preload code on the server.

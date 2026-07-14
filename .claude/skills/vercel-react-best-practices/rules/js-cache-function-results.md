@@ -77,4 +77,6 @@ function onAuthChange() {
 
 Use a Map (not a hook) so it works everywhere: utilities, event handlers, not just React components.
 
+**Bound the cache:** a plain module-level `Map` never evicts entries. If the set of inputs grows without limit (e.g. caching per-request or per-user-input values on a long-lived server process), the cache holds memory for the lifetime of the process. Use a bounded LRU/TTL cache (or a request/render-scoped cache) when the input space isn't small and fixed.
+
 Reference: [How we made the Vercel Dashboard twice as fast](https://vercel.com/blog/how-we-made-the-vercel-dashboard-twice-as-fast)

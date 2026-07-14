@@ -62,7 +62,10 @@ export default function Page() {
         src="https://example.com/analytics.js"
         strategy="afterInteractive"
       />
-      <Script src="/scripts/utils.js" strategy="beforeInteractive" />
+      {/* beforeInteractive is for critical scripts that must run before
+          hydration — DOM-dependent scripts like this one should use
+          afterInteractive (or explicitly wait for the DOM to be ready). */}
+      <Script src="/scripts/utils.js" strategy="afterInteractive" />
     </>
   );
 }

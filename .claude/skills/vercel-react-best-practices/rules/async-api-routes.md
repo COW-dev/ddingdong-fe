@@ -26,11 +26,10 @@ export async function GET(request: Request) {
 export async function GET(request: Request) {
   const sessionPromise = auth();
   const configPromise = fetchConfig();
-  const session = await sessionPromise;
-  const [config, data] = await Promise.all([
-    configPromise,
-    fetchData(session.user.id),
-  ]);
+  // Await both together so a configPromise rejection isn't left unhandled
+  // while we wait on sessionPromise.
+  const [session, config] = await Promise.all([sessionPromise, configPromise]);
+  const data = await fetchData(session.user.id);
   return Response.json({ data, config });
 }
 ```

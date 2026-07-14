@@ -45,7 +45,9 @@ export default function RootLayout({ children }) {
   });
 
   // Fetch and apply critical stylesheet immediately
-  preinit('/styles/critical.css', { as: 'style' });
+  // `precedence` is required for `as: 'style'` — it tells React DOM how to
+  // order this stylesheet relative to others it inserts.
+  preinit('/styles/critical.css', { as: 'style', precedence: 'high' });
 
   return (
     <html>

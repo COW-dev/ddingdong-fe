@@ -14,6 +14,8 @@ Apply `content-visibility: auto` to defer off-screen rendering.
 ```css
 .message-item {
   content-visibility: auto;
+  /* Use your actual average item height here — a size that doesn't match
+     real content causes layout shift as items scroll into view. */
   contain-intrinsic-size: 0 80px;
 }
 ```
@@ -35,4 +37,4 @@ function MessageList({ messages }: { messages: Message[] }) {
 }
 ```
 
-For 1000 messages, browser skips layout/paint for ~990 off-screen items (10× faster initial render).
+The browser skips layout/paint work for off-screen items, which can meaningfully speed up initial render for long lists — the exact number of items skipped and the resulting speedup depend on viewport size, item count, and content, so treat "10× faster" as anecdotal rather than a guaranteed result. Measure on your actual list before relying on a specific number.

@@ -21,7 +21,7 @@ function LoadingSpinner() {
 }
 ```
 
-**Correct (animating wrapper div - hardware accelerated):**
+**Correct (animating wrapper div - more likely to be hardware accelerated):**
 
 ```tsx
 function LoadingSpinner() {
@@ -35,4 +35,4 @@ function LoadingSpinner() {
 }
 ```
 
-This applies to all CSS transforms and transitions (`transform`, `opacity`, `translate`, `scale`, `rotate`). The wrapper div allows browsers to use GPU acceleration for smoother animations.
+This applies to all CSS transforms and transitions (`transform`, `opacity`, `translate`, `scale`, `rotate`). Whether an element gets promoted to its own GPU layer depends on the browser and the specific animated properties, so the wrapper div doesn't guarantee hardware acceleration — but it tends to be the more reliable target for it than animating the SVG element directly.

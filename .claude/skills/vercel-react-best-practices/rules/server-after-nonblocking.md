@@ -46,7 +46,10 @@ export async function POST(request: Request) {
     const sessionCookie =
       (await cookies()).get('session-id')?.value || 'anonymous';
 
-    logUserAction({ sessionCookie, userAgent });
+    // logUserAction is async — await it, otherwise the after() callback
+    // can finish (and the runtime may tear it down) before the log write
+    // completes.
+    await logUserAction({ sessionCookie, userAgent });
   });
 
   return new Response(JSON.stringify({ status: 'success' }), {

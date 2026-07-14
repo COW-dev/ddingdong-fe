@@ -9,6 +9,8 @@ tags: async, suspense, streaming, layout-shift
 
 Instead of awaiting data in async components before returning JSX, use Suspense boundaries to show the wrapper UI faster while data loads.
 
+> These examples assume Next.js App Router Server Components. The "Alternative" example additionally uses `use()`, which requires React 19+.
+
 **Incorrect (wrapper blocked by data fetching):**
 
 ```tsx
@@ -33,6 +35,8 @@ The entire layout waits for data even though only the middle section needs it.
 **Correct (wrapper shows immediately, data streams in):**
 
 ```tsx
+import { Suspense } from 'react';
+
 function Page() {
   return (
     <div>
@@ -59,6 +63,8 @@ Sidebar, Header, and Footer render immediately. Only DataDisplay waits for data.
 **Alternative (share promise across components):**
 
 ```tsx
+import { Suspense, use } from 'react';
+
 function Page() {
   // Start fetch immediately, but don't await
   const dataPromise = fetchData();

@@ -70,6 +70,7 @@ function SearchResults() {
 - **Automatic pending state**: No need to manually manage `setIsLoading(true/false)`
 - **Error resilience**: Pending state correctly resets even if the transition throws
 - **Better responsiveness**: Keeps the UI responsive during updates
-- **Interrupt handling**: New transitions automatically cancel pending ones
+
+**Caveat — this doesn't cancel or sequence requests:** `startTransition` only marks the _render_ caused by `setResults` as non-urgent; it doesn't cancel the in-flight `fetchResults` call or guarantee responses resolve in order. For fast, repeated searches, a slower earlier request can resolve after a newer one and overwrite `results` with stale data. Guard against this with a request id check or `AbortController` if search results can arrive out of order.
 
 Reference: [useTransition](https://react.dev/reference/react/useTransition)
