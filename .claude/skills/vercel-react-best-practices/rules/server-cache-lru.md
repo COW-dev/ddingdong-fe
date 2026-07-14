@@ -21,7 +21,10 @@ const cache = new LRUCache<string, any>({
 
 export async function getUser(id: string) {
   const cached = cache.get(id);
-  if (cached) return cached;
+  // Use `!== undefined` (not truthiness) so a cached `null` — meaning
+  // "we already looked this up and it doesn't exist" — counts as a hit
+  // instead of re-querying the database on every request for a missing id.
+  if (cached !== undefined) return cached;
 
   const user = await db.user.findUnique({ where: { id } });
   cache.set(id, user);

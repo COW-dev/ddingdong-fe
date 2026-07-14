@@ -22,8 +22,12 @@ const userNames = users
 **Correct (1 iteration, no intermediate array):**
 
 ```typescript
-const userNames = users.flatMap((user) => (user.isActive ? [user.name] : []));
+const userNames = users.flatMap((user) =>
+  user.isActive && user.name ? [user.name] : [],
+);
 ```
+
+Note the `user.name` check: `.filter(Boolean)` in the "Incorrect" example also drops active users whose `name` is falsy (e.g. `''`), so the `flatMap` version has to check for that explicitly to match — `.flatMap` alone doesn't filter falsy results the way `.filter(Boolean)` does.
 
 **More examples:**
 

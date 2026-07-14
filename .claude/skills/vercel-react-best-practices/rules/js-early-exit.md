@@ -17,11 +17,11 @@ function validateUsers(users: User[]) {
   let errorMessage = '';
 
   for (const user of users) {
-    if (!user.email) {
+    if (!hasError && !user.email) {
       hasError = true;
       errorMessage = 'Email required';
     }
-    if (!user.name) {
+    if (!hasError && !user.name) {
       hasError = true;
       errorMessage = 'Name required';
     }

@@ -39,7 +39,11 @@ const PAGE_MODULES = {
   settings: () => import('./pages/settings'),
 } as const;
 
-const Page = await PAGE_MODULES[pageName]();
+if (!(pageName in PAGE_MODULES)) {
+  throw new Error(`Unknown page: ${pageName}`);
+}
+
+const { default: Page } = await PAGE_MODULES[pageName]();
 ```
 
 ### File-System Paths

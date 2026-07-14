@@ -28,7 +28,12 @@ export default function RootLayout({ children }) {
 
 **Correct (loads after hydration):**
 
+`RootLayout` is a Server Component, and `next/dynamic(..., { ssr: false })` is only valid in Client Components — using it directly here throws. Move the deferred import into its own Client Component wrapper, and render just that wrapper from `RootLayout`:
+
 ```tsx
+// deferred-analytics.tsx
+'use client';
+
 import dynamic from 'next/dynamic';
 
 const Analytics = dynamic(
@@ -36,12 +41,21 @@ const Analytics = dynamic(
   { ssr: false },
 );
 
+export function DeferredAnalytics() {
+  return <Analytics />;
+}
+```
+
+```tsx
+// layout.tsx
+import { DeferredAnalytics } from './deferred-analytics';
+
 export default function RootLayout({ children }) {
   return (
     <html>
       <body>
         {children}
-        <Analytics />
+        <DeferredAnalytics />
       </body>
     </html>
   );

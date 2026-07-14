@@ -22,11 +22,19 @@ RSC→client serialization deduplicates by object reference, not value. Same ref
 
 ```tsx
 // RSC: send once
-<ClientList usernames={usernames} />;
+<ClientList usernames={usernames} />
+```
 
-// Client: transform there
-('use client');
-const sorted = useMemo(() => [...usernames].sort(), [usernames]);
+```tsx
+// client-list.tsx — transform there, inside the component
+'use client';
+
+import { useMemo } from 'react';
+
+function ClientList({ usernames }: { usernames: string[] }) {
+  const sorted = useMemo(() => [...usernames].sort(), [usernames]);
+  // ...
+}
 ```
 
 **Nested deduplication behavior:**

@@ -46,16 +46,21 @@ let cookieCache: Record<string, string> | null = null;
 function getCookie(name: string) {
   if (!cookieCache) {
     cookieCache = Object.fromEntries(
-      document.cookie.split('; ').map((c) => c.split('=')),
+      document.cookie.split('; ').map((c) => {
+        const idx = c.indexOf('=');
+        return [c.slice(0, idx), decodeURIComponent(c.slice(idx + 1))];
+      }),
     );
   }
   return cookieCache[name];
 }
 ```
 
+Splitting on every `=` (e.g. `c.split('=')`) truncates cookie values that themselves contain `=` (common in base64/JWT values). Split only on the first `=`.
+
 **Important (invalidate on external changes):**
 
-If storage can change externally (another tab, server-set cookies), invalidate cache:
+If storage can change externally (another tab, server-set cookies), invalidate the cache — including `cookieCache`, not just `storageCache`, since server-set or cross-tab cookie changes are otherwise silently missed and can lead to stale auth/session state:
 
 ```typescript
 window.addEventListener('storage', (e) => {
@@ -65,6 +70,7 @@ window.addEventListener('storage', (e) => {
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible') {
     storageCache.clear();
+    cookieCache = null;
   }
 });
 ```

@@ -58,6 +58,10 @@ export async function GET(request: Request) {
 
   return new ImageResponse(
     <div style={{ fontFamily: 'Inter' }}>
+      {/* next/og's runtime accepts an ArrayBuffer for <img src>, but the
+          JSX/TS types only declare `src` as `string` — add a ts-expect-error
+          (or convert to a `data:` URI) so this compiles under TypeScript. */}
+      {/* @ts-expect-error next/og accepts ArrayBuffer for src at runtime */}
       <img src={logo} />
       Hello World
     </div>,
@@ -86,6 +90,7 @@ const logoData = readFileSync(
 export async function GET(request: Request) {
   return new ImageResponse(
     <div style={{ fontFamily: 'Inter' }}>
+      {/* @ts-expect-error next/og accepts ArrayBuffer-like Buffer for src at runtime */}
       <img src={logoData} />
       Hello World
     </div>,
@@ -140,6 +145,6 @@ When not to use this pattern:
 - Large files that would consume too much memory if kept loaded
 - Sensitive data that shouldn't persist in memory
 
-With Vercel's [Fluid Compute](https://vercel.com/docs/fluid-compute), module-level caching is especially effective because multiple concurrent requests share the same function instance. The static assets stay loaded in memory across requests without cold start penalties.
+With Vercel's [Fluid Compute](https://vercel.com/docs/fluid-compute), module-level caching is especially effective because multiple concurrent requests share the same function instance, so the static assets stay loaded in memory and don't get re-fetched on every request. This doesn't eliminate cold start cost — the first import into a fresh instance still pays for the module-level I/O — it only avoids repeating that I/O on every subsequent warm request.
 
-In traditional serverless, each cold start re-executes module-level code, but subsequent warm invocations reuse the loaded assets until the instance is recycled.
+In traditional serverless, each cold start re-executes module-level code (paying the initialization cost again), but subsequent warm invocations reuse the loaded assets until the instance is recycled.
