@@ -7,6 +7,10 @@ on:
     paths:
       - 'packages/shared/ui/assets/*.svg'
 
+concurrency:
+  group: generate-icon-index-${{ github.ref_name }}
+  cancel-in-progress: true
+
 jobs:
   generate:
     name: Regenerate icon index.tsx
@@ -33,6 +37,7 @@ jobs:
       - name: Commit if changed
         id: commit
         run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add packages/shared/ui/assets/index.tsx
@@ -48,10 +53,11 @@ jobs:
         if: steps.commit.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_REF: ${{ github.ref_name }}
         run: |
           gh pr create \
             --title "chore: sync icons from Figma" \
             --body "Figma에서 아이콘이 동기화되었습니다. \`index.tsx\`가 자동으로 재생성되었습니다." \
             --base main \
-            --head "${{ github.ref_name }}" \
+            --head "$HEAD_REF" \
             || true
