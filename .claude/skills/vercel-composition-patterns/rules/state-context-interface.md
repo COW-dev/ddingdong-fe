@@ -24,27 +24,27 @@ function ComposerInput() {
 **Correct (generic interface enables dependency injection):**
 
 ```tsx
-// Define a GENERIC interface that any provider can implement
-interface ComposerState {
+// Define a GENERIC type that any provider can implement
+type ComposerState = {
   input: string;
   attachments: Attachment[];
   isSubmitting: boolean;
-}
+};
 
-interface ComposerActions {
+type ComposerActions = {
   update: (updater: (state: ComposerState) => ComposerState) => void;
   submit: () => void;
-}
+};
 
-interface ComposerMeta {
+type ComposerMeta = {
   inputRef: React.RefObject<TextInput>;
-}
+};
 
-interface ComposerContextValue {
+type ComposerContextValue = {
   state: ComposerState;
   actions: ComposerActions;
   meta: ComposerMeta;
-}
+};
 
 const ComposerContext = createContext<ComposerContextValue | null>(null);
 ```

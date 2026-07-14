@@ -76,6 +76,8 @@ function ForwardMessageDialog() {
 
 **Correct (state lifted to provider):**
 
+`Composer.Provider` is the component that renders `Composer.Context`'s provider under the hood; components elsewhere read the same context via `use(Composer.Context)`. Keep this one name (`Composer.Context`) for the underlying context object throughout the example instead of introducing a separate `ComposerContext` identifier.
+
 ```tsx
 function ForwardMessageProvider({ children }: { children: React.ReactNode }) {
   const [state, setState] = useState(initialState);
