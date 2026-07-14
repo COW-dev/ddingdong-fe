@@ -13,6 +13,9 @@ node_modules
 # production
 /build
 dist/
+# Figma 플러그인은 로컬 빌드 없이 바로 manifest 임포트할 수 있도록 dist를 커밋함
+!packages/figma-plugin/dist/
+!packages/figma-plugin/dist/**
 
 # misc
 .DS_Store

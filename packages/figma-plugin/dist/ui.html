@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 12px;
+      color: #1e1e1e;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .section {
+      padding: 12px 16px;
+      border-bottom: 1px solid #e5e5e5;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 11px;
+      color: #555;
+      margin-bottom: 3px;
+      margin-top: 8px;
+    }
+    label:first-of-type { margin-top: 0; }
+
+    input {
+      width: 100%;
+      height: 28px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 0 8px;
+      font-size: 12px;
+      color: #1e1e1e;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus { border-color: #18a0fb; }
+    input[type="password"] { letter-spacing: 2px; }
+
+    .row { display: flex; gap: 8px; }
+    .row input { flex: 1; }
+
+    .btn {
+      width: 100%;
+      height: 32px;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s, background 0.15s;
+    }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-secondary {
+      background: #f0f0f0;
+      color: #333;
+    }
+    .btn-secondary:not(:disabled):hover { background: #e5e5e5; }
+    .btn-primary {
+      background: #18a0fb;
+      color: #fff;
+    }
+    .btn-primary:not(:disabled):hover { background: #0d8de8; }
+
+    .icon-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 16px;
+    }
+
+    .icon-list-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 80px;
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .icon-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 12px;
+    }
+    .icon-item:last-child { border-bottom: none; }
+
+    .icon-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      flex-shrink: 0;
+    }
+
+    .icon-name {
+      flex: 1;
+      font-family: 'SF Mono', monospace;
+      font-size: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+    .icon-filename { color: #1e1e1e; font-weight: 500; }
+    .icon-original { color: #aaa; font-size: 10px; }
+
+    .status-bar {
+      padding: 8px 16px;
+      font-size: 11px;
+      color: #888;
+      border-top: 1px solid #e5e5e5;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+    }
+    .status-bar.error { color: #ef4444; }
+    .status-bar.success { color: #16a34a; }
+
+    .footer {
+      padding: 10px 16px;
+      border-top: 1px solid #e5e5e5;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #f0f0f0;
+      color: #555;
+      border-radius: 10px;
+      padding: 1px 7px;
+      font-size: 11px;
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="section">
+    <div class="section-title">GitHub 설정</div>
+    <label>Personal Access Token</label>
+    <input id="token" type="password" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+    <div class="row">
+      <div style="flex:1">
+        <label>Owner</label>
+        <input id="owner" type="text" placeholder="COW-dev" />
+      </div>
+      <div style="flex:1">
+        <label>Repo</label>
+        <input id="repo" type="text" placeholder="ddingdong-fe" />
+      </div>
+    </div>
+    <label>에셋 경로</label>
+    <input id="assetsPath" type="text" placeholder="packages/shared/ui/assets" />
+    <label>브랜치</label>
+    <input id="branch" type="text" placeholder="feat/icon-sync" />
+  </div>
+
+  <div class="section" style="padding-bottom: 8px;">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <span class="section-title" style="margin-bottom:0">
+        감지된 아이콘<span class="badge" id="icon-count">0</span>
+      </span>
+      <button class="btn btn-secondary" id="btn-scan" style="width:auto; padding: 0 12px;">스캔</button>
+    </div>
+  </div>
+
+  <div class="icon-list" id="icon-list">
+    <div class="icon-list-empty">아이콘 프레임을 선택 후 스캔하세요</div>
+  </div>
+
+  <div class="status-bar" id="status"></div>
+
+  <div class="footer">
+    <button class="btn btn-primary" id="btn-commit" disabled>GitHub에 커밋</button>
+  </div>
+
+  <script>
+    function toKebabCase(name) {
+      return name
+        .trim()
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/[\s_]+/g, '-')
+        .replace(/[^a-z0-9-]/gi, '')
+        .toLowerCase();
+    }
+
+    let scannedIcons = [];
+
+    const FIELDS = ['token', 'owner', 'repo', 'assetsPath', 'branch'];
+
+    function loadSettings() {
+      FIELDS.forEach(id => {
+        const saved = localStorage.getItem(`icon-sync:${id}`);
+        if (saved) document.getElementById(id).value = saved;
+      });
+      if (!document.getElementById('owner').value) document.getElementById('owner').value = 'COW-dev';
+      if (!document.getElementById('repo').value) document.getElementById('repo').value = 'ddingdong-fe';
+      if (!document.getElementById('assetsPath').value) document.getElementById('assetsPath').value = 'packages/shared/ui/assets';
+      if (!document.getElementById('branch').value) {
+        const today = new Date().toISOString().slice(0, 10);
+        document.getElementById('branch').value = `feat/icon-sync-${today}`;
+      }
+    }
+
+    function saveSettings() {
+      FIELDS.forEach(id => {
+        localStorage.setItem(`icon-sync:${id}`, document.getElementById(id).value);
+      });
+    }
+
+    FIELDS.forEach(id => {
+      document.getElementById(id).addEventListener('change', saveSettings);
+    });
+
+    function setStatus(msg, type = '') {
+      const el = document.getElementById('status');
+      el.textContent = msg;
+      el.className = 'status-bar' + (type ? ` ${type}` : '');
+    }
+
+    function renderIcons(icons) {
+      const list = document.getElementById('icon-list');
+      document.getElementById('icon-count').textContent = icons.length;
+
+      if (icons.length === 0) {
+        list.innerHTML = '<div class="icon-list-empty">내보낼 아이콘이 없습니다</div>';
+        document.getElementById('btn-commit').disabled = true;
+        return;
+      }
+
+      list.innerHTML = icons
+        .map(i => `
+          <div class="icon-item">
+            <div class="icon-dot"></div>
+            <div class="icon-name">
+              <span class="icon-filename">${i.name}.svg</span>
+              ${i.originalName !== i.name
+                ? `<span class="icon-original">Figma: "${i.originalName}"</span>`
+                : ''}
+            </div>
+          </div>
+        `)
+        .join('');
+
+      document.getElementById('btn-commit').disabled = false;
+    }
+
+    document.getElementById('btn-scan').addEventListener('click', () => {
+      setStatus('스캔 중...');
+      parent.postMessage({ pluginMessage: { type: 'scan' } }, '*');
+    });
+
+    window.onmessage = (event) => {
+      const msg = event.data.pluginMessage;
+      if (!msg) return;
+
+      if (msg.type === 'scan-done') {
+        scannedIcons = msg.icons.map(({ name, svg }) => ({
+          originalName: name,
+          name: toKebabCase(name),
+          svg: transformSvg(svg),
+        }));
+        renderIcons(scannedIcons);
+        setStatus(`${scannedIcons.length}개 아이콘을 감지했습니다.`);
+      }
+
+      if (msg.type === 'scan-error') {
+        setStatus(msg.message, 'error');
+      }
+    };
+
+    function transformSvg(svgString) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(svgString, 'image/svg+xml');
+      const svg = doc.documentElement;
+
+      svg.setAttribute('width', 'current');
+      svg.setAttribute('height', 'current');
+
+      doc.querySelectorAll('rect').forEach(rect => {
+        const fill = rect.getAttribute('fill') || '';
+        const isWhite = /^(white|#fff|#ffffff)$/i.test(fill);
+        const noPos = !rect.getAttribute('x') && !rect.getAttribute('y');
+        if (isWhite && noPos) rect.remove();
+      });
+
+      doc.querySelectorAll('*').forEach(el => {
+        ['fill', 'stroke'].forEach(attr => {
+          const val = el.getAttribute(attr);
+          if (val && val !== 'none' && val !== 'currentColor' && !val.startsWith('url(')) {
+            el.setAttribute(attr, 'currentColor');
+          }
+        });
+      });
+
+      return new XMLSerializer().serializeToString(svg);
+    }
+
+    function svgToBase64(svg) {
+      const bytes = new TextEncoder().encode(svg);
+      let binary = '';
+      bytes.forEach(b => (binary += String.fromCharCode(b)));
+      return btoa(binary);
+    }
+
+    async function commitToGitHub() {
+      const token = document.getElementById('token').value.trim();
+      const owner = document.getElementById('owner').value.trim();
+      const repo = document.getElementById('repo').value.trim();
+      const assetsPath = document.getElementById('assetsPath').value.trim();
+      const branch = document.getElementById('branch').value.trim();
+
+      if (!token || !owner || !repo || !branch) {
+        setStatus('GitHub 설정을 모두 입력해 주세요.', 'error');
+        return;
+      }
+      if (scannedIcons.length === 0) {
+        setStatus('먼저 아이콘을 스캔해 주세요.', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('btn-commit');
+      btn.disabled = true;
+      btn.textContent = '커밋 중...';
+
+      const api = `https://api.github.com/repos/${owner}/${repo}`;
+      const h = {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28',
+      };
+
+      try {
+        setStatus('main 브랜치 확인 중...');
+        const mainRes = await fetch(`${api}/git/ref/heads/main`, { headers: h });
+        if (!mainRes.ok) throw new Error('main 브랜치를 찾을 수 없습니다. Owner/Repo를 확인해 주세요.');
+        const { object: { sha: mainSha } } = await mainRes.json();
+
+        setStatus(`브랜치 확인 중: ${branch}`);
+        let headSha = mainSha;
+        const branchRes = await fetch(`${api}/git/ref/heads/${encodeURIComponent(branch)}`, { headers: h });
+        if (branchRes.ok) {
+          headSha = (await branchRes.json()).object.sha;
+        } else {
+          const createRes = await fetch(`${api}/git/refs`, {
+            method: 'POST',
+            headers: h,
+            body: JSON.stringify({ ref: `refs/heads/${branch}`, sha: mainSha }),
+          });
+          if (!createRes.ok) throw new Error(`브랜치 생성 실패: ${branch}`);
+        }
+
+        const commitData = await fetch(`${api}/git/commits/${headSha}`, { headers: h }).then(r => r.json());
+        const treeSha = commitData.tree.sha;
+
+        setStatus(`blob 생성 중... (${scannedIcons.length}개)`);
+        const blobs = await Promise.all(
+          scannedIcons.map(async ({ name, svg }) => {
+            const res = await fetch(`${api}/git/blobs`, {
+              method: 'POST',
+              headers: h,
+              body: JSON.stringify({ content: svgToBase64(svg), encoding: 'base64' }),
+            });
+            if (!res.ok) throw new Error(`blob 생성 실패: ${name}.svg`);
+            const { sha } = await res.json();
+            return { path: `${assetsPath}/${name}.svg`, mode: '100644', type: 'blob', sha };
+          }),
+        );
+
+        setStatus('트리 생성 중...');
+        const newTreeRes = await fetch(`${api}/git/trees`, {
+          method: 'POST',
+          headers: h,
+          body: JSON.stringify({ base_tree: treeSha, tree: blobs }),
+        });
+        if (!newTreeRes.ok) throw new Error('트리 생성 실패');
+        const { sha: newTreeSha } = await newTreeRes.json();
+
+        setStatus('커밋 생성 중...');
+        const iconList = scannedIcons.map(i => `- ${i.name}.svg`).join('\n');
+        const newCommitRes = await fetch(`${api}/git/commits`, {
+          method: 'POST',
+          headers: h,
+          body: JSON.stringify({
+            message: `chore: sync icons from Figma\n\n${iconList}`,
+            tree: newTreeSha,
+            parents: [headSha],
+          }),
+        });
+        if (!newCommitRes.ok) throw new Error('커밋 생성 실패');
+        const { sha: newCommitSha } = await newCommitRes.json();
+
+        const updateRes = await fetch(`${api}/git/refs/heads/${encodeURIComponent(branch)}`, {
+          method: 'PATCH',
+          headers: h,
+          body: JSON.stringify({ sha: newCommitSha }),
+        });
+        if (!updateRes.ok) throw new Error('브랜치 업데이트 실패');
+
+        setStatus(`✓ ${scannedIcons.length}개 아이콘이 "${branch}"에 커밋됐습니다.`, 'success');
+        parent.postMessage(
+          { pluginMessage: { type: 'notify', message: `✓ ${scannedIcons.length}개 아이콘 커밋 완료!` } },
+          '*',
+        );
+      } catch (err) {
+        setStatus(`오류: ${err.message}`, 'error');
+        parent.postMessage(
+          { pluginMessage: { type: 'notify', message: `커밋 실패: ${err.message}`, isError: true } },
+          '*',
+        );
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'GitHub에 커밋';
+      }
+    }
+
+    document.getElementById('btn-commit').addEventListener('click', commitToGitHub);
+
+    loadSettings();
+  </script>
+</body>
+</html>
