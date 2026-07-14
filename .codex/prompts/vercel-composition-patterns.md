@@ -51,7 +51,7 @@ Reference these guidelines when:
 
 Read individual rule files for detailed explanations and code examples:
 
-```
+```text
 .claude/skills/vercel-composition-patterns/rules/architecture-avoid-boolean-props.md
 .claude/skills/vercel-composition-patterns/rules/state-context-interface.md
 ```

@@ -11,7 +11,7 @@ disable-model-invocation: true
 
 대괄호 태그로 시작한다 (커밋 type과 다른 별도 목록):
 
-```
+```text
 [FEAT]     새로운 기능 추가
 [FIX]      버그 수정
 [HOTFIX]   긴급 버그 수정

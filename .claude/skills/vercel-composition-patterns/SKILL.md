@@ -58,7 +58,7 @@ Reference these guidelines when:
 
 Read individual rule files for detailed explanations and code examples:
 
-```
+```text
 rules/architecture-avoid-boolean-props.md
 rules/state-context-interface.md
 ```

@@ -127,7 +127,7 @@ Reference these guidelines when:
 
 Read individual rule files for detailed explanations and code examples:
 
-```
+```text
 .claude/skills/vercel-react-best-practices/rules/async-parallel.md
 .claude/skills/vercel-react-best-practices/rules/bundle-barrel-imports.md
 ```

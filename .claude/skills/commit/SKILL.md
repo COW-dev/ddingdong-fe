@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 ## 형식
 
-```
+```text
 {type}: {한국어 설명}
 ```
 
@@ -24,7 +24,7 @@ disable-model-invocation: true
 
 ## 예시 (실제 이 저장소 커밋 로그)
 
-```
+```text
 refactor: NullableDateRange 타입 추가 및 관련 코드 수정
 fix: 지원서 편집 안됨 문제 수정
 feat: lazycodex 통한 init 설정
