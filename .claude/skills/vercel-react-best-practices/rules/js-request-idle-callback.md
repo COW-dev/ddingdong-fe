@@ -83,8 +83,12 @@ function processLargeDataset(items: Item[]) {
 **With fallback for unsupported browsers:**
 
 ```typescript
+// Guard with `typeof window !== 'undefined'` — reading `window.requestIdleCallback`
+// at module scope throws a ReferenceError during SSR, since `window` doesn't exist there.
 const scheduleIdleWork =
-  window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 1));
+  typeof window !== 'undefined' && window.requestIdleCallback
+    ? window.requestIdleCallback
+    : (cb: () => void) => setTimeout(cb, 1);
 
 scheduleIdleWork(() => {
   // Non-critical work

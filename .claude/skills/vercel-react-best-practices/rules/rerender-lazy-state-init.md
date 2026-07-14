@@ -43,16 +43,21 @@ function FilteredList({ items }: { items: Item[] }) {
 }
 
 function UserProfile() {
-  // JSON.parse runs only on initial render
-  const [settings, setSettings] = useState(() => {
+  // Client Components can still be prerendered on the server, where
+  // `localStorage` doesn't exist — reading it inside the initializer
+  // would throw a ReferenceError. Start with a shared default and load
+  // the stored value in an effect, which only runs in the browser.
+  const [settings, setSettings] = useState({});
+
+  useEffect(() => {
     const stored = localStorage.getItem('settings');
-    return stored ? JSON.parse(stored) : {};
-  });
+    if (stored) setSettings(JSON.parse(stored));
+  }, []);
 
   return <SettingsForm settings={settings} onChange={setSettings} />;
 }
 ```
 
-Use lazy initialization when computing initial values from localStorage/sessionStorage, building data structures (indexes, maps), reading from the DOM, or performing heavy transformations.
+Use lazy initialization when computing initial values by building data structures (indexes, maps) or performing heavy transformations from props/arguments already available during render. For `localStorage`/`sessionStorage`/DOM reads, initialize with a server/client-safe default and read the stored value in `useEffect` instead, since those APIs aren't available during server rendering.
 
 For simple primitives (`useState(0)`), direct references (`useState(props.value)`), or cheap literals (`useState({})`), the function form is unnecessary.
