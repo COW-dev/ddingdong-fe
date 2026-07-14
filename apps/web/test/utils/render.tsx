@@ -1,7 +1,11 @@
 import { ReactElement, ReactNode } from 'react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render as rtlRender, RenderOptions } from '@testing-library/react';
+import {
+  render as rtlRender,
+  RenderOptions,
+  RenderResult,
+} from '@testing-library/react';
 import { CookiesProvider } from 'react-cookie';
 
 const createTestQueryClient = () =>
@@ -25,6 +29,6 @@ function Providers({ children }: { children: ReactNode }) {
 export const render = (
   ui: ReactElement,
   options?: Omit<RenderOptions, 'wrapper'>,
-) => rtlRender(ui, { wrapper: Providers, ...options });
+): RenderResult => rtlRender(ui, { wrapper: Providers, ...options });
 
 export * from '@testing-library/react';
