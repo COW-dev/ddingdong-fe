@@ -206,7 +206,7 @@
 
     let scannedIcons = [];
 
-    const FIELDS = ['token', 'owner', 'repo', 'assetsPath', 'branch'];
+    const FIELDS = ['owner', 'repo', 'assetsPath', 'branch'];
 
     function loadSettings() {
       FIELDS.forEach(id => {
@@ -238,6 +238,12 @@
       el.className = 'status-bar' + (type ? ` ${type}` : '');
     }
 
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+      }[c]));
+    }
+
     function renderIcons(icons) {
       const list = document.getElementById('icon-list');
       document.getElementById('icon-count').textContent = icons.length;
@@ -253,9 +259,9 @@
           <div class="icon-item">
             <div class="icon-dot"></div>
             <div class="icon-name">
-              <span class="icon-filename">${i.name}.svg</span>
+              <span class="icon-filename">${escapeHtml(i.name)}.svg</span>
               ${i.originalName !== i.name
-                ? `<span class="icon-original">Figma: "${i.originalName}"</span>`
+                ? `<span class="icon-original">Figma: "${escapeHtml(i.originalName)}"</span>`
                 : ''}
             </div>
           </div>
@@ -275,10 +281,10 @@
       if (!msg) return;
 
       if (msg.type === 'scan-done') {
-        scannedIcons = msg.icons.map(({ name, svg }) => ({
+        scannedIcons = msg.icons.map(({ name, svgBytes }) => ({
           originalName: name,
           name: toKebabCase(name),
-          svg: transformSvg(svg),
+          svg: transformSvg(new TextDecoder().decode(new Uint8Array(svgBytes))),
         }));
         renderIcons(scannedIcons);
         setStatus(`${scannedIcons.length}개 아이콘을 감지했습니다.`);

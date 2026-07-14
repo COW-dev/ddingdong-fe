@@ -65,17 +65,13 @@ async function handleScan() {
     const resolved = selected.map(findFrameAncestor);
     const unique = [...new Map(resolved.map((n) => [n.id, n])).values()];
 
-    const icons: { name: string; svg: string }[] = [];
+    const icons: { name: string; svgBytes: number[] }[] = [];
     const failed: string[] = [];
 
     for (const node of unique) {
       try {
         const bytes = await node.exportAsync({ format: 'SVG' });
-        let svg = '';
-        bytes.forEach((b) => {
-          svg += String.fromCharCode(b);
-        });
-        icons.push({ name: node.name, svg });
+        icons.push({ name: node.name, svgBytes: Array.from(bytes) });
       } catch (e) {
         const reason = e instanceof Error ? e.message : String(e);
         failed.push(`${node.name} (${node.type}): ${reason}`);

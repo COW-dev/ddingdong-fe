@@ -49,11 +49,7 @@
       for (const node of unique) {
         try {
           const bytes = await node.exportAsync({ format: "SVG" });
-          let svg = "";
-          bytes.forEach((b) => {
-            svg += String.fromCharCode(b);
-          });
-          icons.push({ name: node.name, svg });
+          icons.push({ name: node.name, svgBytes: Array.from(bytes) });
         } catch (e) {
           const reason = e instanceof Error ? e.message : String(e);
           failed.push(`${node.name} (${node.type}): ${reason}`);
