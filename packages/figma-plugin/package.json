@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "esbuild src/code.ts --bundle --outfile=dist/code.js --platform=browser && cp src/ui.html dist/ui.html",
-    "dev": "esbuild src/code.ts --bundle --outfile=dist/code.js --platform=browser --watch"
+    "dev": "esbuild src/code.ts --bundle --outfile=dist/code.js --platform=browser --watch",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.106.0",

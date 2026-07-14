@@ -6,7 +6,7 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "noEmit": true,
-    "typeRoots": ["./node_modules/@figma/plugin-typings"]
+    "typeRoots": ["./node_modules/@figma"]
   },
   "include": ["src/code.ts"]
 }
