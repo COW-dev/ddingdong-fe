@@ -155,7 +155,6 @@
 </head>
 <body>
 
-  <!-- 설정 -->
   <div class="section">
     <div class="section-title">GitHub 설정</div>
     <label>Personal Access Token</label>
@@ -176,7 +175,6 @@
     <input id="branch" type="text" placeholder="feat/icon-sync" />
   </div>
 
-  <!-- 아이콘 목록 -->
   <div class="section" style="padding-bottom: 8px;">
     <div style="display:flex; align-items:center; justify-content:space-between;">
       <span class="section-title" style="margin-bottom:0">
@@ -192,27 +190,22 @@
 
   <div class="status-bar" id="status"></div>
 
-  <!-- 커밋 -->
   <div class="footer">
     <button class="btn btn-primary" id="btn-commit" disabled>GitHub에 커밋</button>
   </div>
 
   <script>
-    // ────── 이름 정규화 ──────
-    // "Arrow Down" / "arrowDown" / "arrow_down" → "arrow-down"
     function toKebabCase(name) {
       return name
         .trim()
-        .replace(/([a-z])([A-Z])/g, '$1-$2')   // camelCase 분리
-        .replace(/[\s_]+/g, '-')                 // 공백·언더스코어 → 하이픈
-        .replace(/[^a-z0-9-]/gi, '')             // 특수문자 제거
+        .replace(/([a-z])([A-Z])/g, '$1-$2')
+        .replace(/[\s_]+/g, '-')
+        .replace(/[^a-z0-9-]/gi, '')
         .toLowerCase();
     }
 
-    // ────── 상태 ──────
     let scannedIcons = [];
 
-    // ────── 설정 로드/저장 ──────
     const FIELDS = ['token', 'owner', 'repo', 'assetsPath', 'branch'];
 
     function loadSettings() {
@@ -239,7 +232,6 @@
       document.getElementById(id).addEventListener('change', saveSettings);
     });
 
-    // ────── UI 헬퍼 ──────
     function setStatus(msg, type = '') {
       const el = document.getElementById('status');
       el.textContent = msg;
@@ -273,7 +265,6 @@
       document.getElementById('btn-commit').disabled = false;
     }
 
-    // ────── Figma 플러그인 통신 ──────
     document.getElementById('btn-scan').addEventListener('click', () => {
       setStatus('스캔 중...');
       parent.postMessage({ pluginMessage: { type: 'scan' } }, '*');
@@ -298,17 +289,14 @@
       }
     };
 
-    // ────── SVG 변환 ──────
     function transformSvg(svgString) {
       const parser = new DOMParser();
       const doc = parser.parseFromString(svgString, 'image/svg+xml');
       const svg = doc.documentElement;
 
-      // 1. width/height → "current"
       svg.setAttribute('width', 'current');
       svg.setAttribute('height', 'current');
 
-      // 2. 흰 배경 rect 먼저 제거 (색상 변환 전에 해야 "white" 검사가 유효함)
       doc.querySelectorAll('rect').forEach(rect => {
         const fill = rect.getAttribute('fill') || '';
         const isWhite = /^(white|#fff|#ffffff)$/i.test(fill);
@@ -316,7 +304,6 @@
         if (isWhite && noPos) rect.remove();
       });
 
-      // 3. fill/stroke 색상값 → currentColor (none, currentColor, url() 참조 제외)
       doc.querySelectorAll('*').forEach(el => {
         ['fill', 'stroke'].forEach(attr => {
           const val = el.getAttribute(attr);
@@ -329,7 +316,6 @@
       return new XMLSerializer().serializeToString(svg);
     }
 
-    // ────── GitHub API ──────
     function svgToBase64(svg) {
       const bytes = new TextEncoder().encode(svg);
       let binary = '';
@@ -366,13 +352,11 @@
       };
 
       try {
-        // 1. main 브랜치 SHA
         setStatus('main 브랜치 확인 중...');
         const mainRes = await fetch(`${api}/git/ref/heads/main`, { headers: h });
         if (!mainRes.ok) throw new Error('main 브랜치를 찾을 수 없습니다. Owner/Repo를 확인해 주세요.');
         const { object: { sha: mainSha } } = await mainRes.json();
 
-        // 2. 타겟 브랜치 확인 or 생성
         setStatus(`브랜치 확인 중: ${branch}`);
         let headSha = mainSha;
         const branchRes = await fetch(`${api}/git/ref/heads/${encodeURIComponent(branch)}`, { headers: h });
@@ -387,11 +371,9 @@
           if (!createRes.ok) throw new Error(`브랜치 생성 실패: ${branch}`);
         }
 
-        // 3. HEAD 커밋의 트리 SHA
         const commitData = await fetch(`${api}/git/commits/${headSha}`, { headers: h }).then(r => r.json());
         const treeSha = commitData.tree.sha;
 
-        // 4. 각 SVG를 blob으로 생성
         setStatus(`blob 생성 중... (${scannedIcons.length}개)`);
         const blobs = await Promise.all(
           scannedIcons.map(async ({ name, svg }) => {
@@ -406,7 +388,6 @@
           }),
         );
 
-        // 5. 새 트리 생성
         setStatus('트리 생성 중...');
         const newTreeRes = await fetch(`${api}/git/trees`, {
           method: 'POST',
@@ -416,7 +397,6 @@
         if (!newTreeRes.ok) throw new Error('트리 생성 실패');
         const { sha: newTreeSha } = await newTreeRes.json();
 
-        // 6. 커밋 생성
         setStatus('커밋 생성 중...');
         const iconList = scannedIcons.map(i => `- ${i.name}.svg`).join('\n');
         const newCommitRes = await fetch(`${api}/git/commits`, {
@@ -431,7 +411,6 @@
         if (!newCommitRes.ok) throw new Error('커밋 생성 실패');
         const { sha: newCommitSha } = await newCommitRes.json();
 
-        // 7. 브랜치 ref 업데이트
         const updateRes = await fetch(`${api}/git/refs/heads/${encodeURIComponent(branch)}`, {
           method: 'PATCH',
           headers: h,
@@ -458,7 +437,6 @@
 
     document.getElementById('btn-commit').addEventListener('click', commitToGitHub);
 
-    // ────── 초기화 ──────
     loadSettings();
   </script>
 </body>
