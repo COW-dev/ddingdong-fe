@@ -1,9 +1,9 @@
 import { Body2, Button, Flex, Title3, usePortal } from '@dds/shared';
 
 import { FormStatus } from '@/_api/types/apply';
+import { formatShortDate } from '@/_utils/date';
 import { FORM_STATUS } from '@/admin/apply/[id]/_constants/apply';
 
-import { formatDate } from '../../_utils/formatDate';
 import { MemberIntegrationModal } from '../MemberIntergrationModal';
 
 import { EmailSendDropdown } from './EmailSendDropdown';
@@ -47,7 +47,7 @@ export function FormStatusInfo({
             지원서입니다.
           </Title3>
           <Body2 weight="semibold" className="text-gray-500">
-            {formatDate(startDate)} ~ {formatDate(endDate)}
+            {formatShortDate(startDate)} ~ {formatShortDate(endDate)}
           </Body2>
         </Flex>
         <Flex dir="row" alignItems="center" gap={3}>

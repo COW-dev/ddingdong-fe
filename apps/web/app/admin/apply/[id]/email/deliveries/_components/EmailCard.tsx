@@ -5,9 +5,9 @@ import { Body1, Body2, Body3, Card, Flex, Title2 } from '@dds/shared';
 
 import { EmailStatus } from '@/_api/types/email';
 import { cn } from '@/_utils/cn';
+import { formatDateTime } from '@/_utils/date';
 
 import { EMAIL_STATUS } from '../../../_constants/apply';
-import { formatDate } from '../_utils/formatDate';
 
 type EmailCardProps = EmailStatus & {
   formId: number;
@@ -48,7 +48,9 @@ export function EmailCard({
             {EMAIL_STATUS[formApplicationStatus as keyof typeof EMAIL_STATUS]}
           </Title2>
           <Body3 className="text-gray-400">
-            {hasSentHistory ? formatDate(lastSentAt) : '전송 내역이 없습니다.'}
+            {hasSentHistory
+              ? formatDateTime(lastSentAt)
+              : '전송 내역이 없습니다.'}
           </Body3>
         </Flex>
         <Flex

@@ -4,7 +4,7 @@ import {
   QuestionType,
   SectionFormField,
 } from '@/_api/types/apply';
-import { formatDate } from '@/admin/apply/_utils/dateFormat';
+import { formatDateOnly } from '@/_utils/date';
 
 import { FormBasicInfo } from '../_hooks/useFormBasicInfo';
 
@@ -16,8 +16,8 @@ export function formatFormData(
   return {
     title: basicInfo.title.trim(),
     description: basicInfo.description.trim() || null,
-    startDate: formatDate(basicInfo.recruitPeriod.startDate),
-    endDate: formatDate(basicInfo.recruitPeriod.endDate),
+    startDate: formatDateOnly(basicInfo.recruitPeriod.startDate),
+    endDate: formatDateOnly(basicInfo.recruitPeriod.endDate),
     hasInterview: basicInfo.hasInterview,
     sections: sections,
     formFields: formField.flatMap((section) =>

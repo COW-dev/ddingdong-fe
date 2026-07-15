@@ -18,7 +18,7 @@ import Admin from '@/_public/assets/admin.webp';
 import { getAnonymousUuid } from '../../_actions/anonymousUuid';
 import { useDeleteFeedComment } from '../../_api/mutations/feed';
 import { Comment } from '../../_api/types/feed';
-import { formatRelativeTime } from '../../_utils/formatRelativeTime';
+import { formatRelativeTime } from '../../_utils/date';
 import { DeleteModal } from '../../admin/feed/_components/DeleteModal';
 
 type CommentListProps = {
