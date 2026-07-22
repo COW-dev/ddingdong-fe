@@ -1,3 +1,5 @@
+import { Caption1 } from '../Typography';
+
 import type { CalendarEventData } from './Calendar.types';
 import type { CSSProperties } from 'react';
 
@@ -28,7 +30,7 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
   style,
 }: CalendarEventProps<TEvent>) {
   const eventClassName = cn(
-    'z-10 my-0.5 flex h-5 min-w-0 items-center truncate bg-primary-100 px-3 text-left text-xs font-medium text-primary-400',
+    'z-10 my-0.5 flex h-5 min-w-0 items-center truncate bg-primary-100 px-3 text-left text-primary-300',
     SEGMENT_CLASS_NAMES[kind],
     className
   );
@@ -41,7 +43,9 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
         style={style}
         title={accessibleLabel}
       >
-        <span className="truncate">{event.title}</span>
+        <Caption1 as="span" className="truncate" weight="medium">
+          {event.title}
+        </Caption1>
       </div>
     );
   }
@@ -58,7 +62,9 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
       style={style}
       title={accessibleLabel}
     >
-      <span className="truncate">{event.title}</span>
+      <Caption1 as="span" className="truncate" weight="medium">
+        {event.title}
+      </Caption1>
     </button>
   );
 }

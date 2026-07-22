@@ -12,6 +12,8 @@ export type {
   CalendarMonth,
   CalendarProps,
 } from './ui/Calendar';
+export { CalendarWidget } from './ui/CalendarWidget';
+export type { CalendarWidgetProps, CalendarWidgetRange } from './ui/CalendarWidget';
 export { Checkbox } from './ui/Checkbox/Checkbox';
 export { DoubleButton } from './ui/DoubleButton';
 export { Drawer } from './ui/Drawer';
