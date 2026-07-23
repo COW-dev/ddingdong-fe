@@ -161,7 +161,7 @@ export function AdminCalendarField({
         aria-label={ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={isOpen}
-        className={`w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left text-base outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300 ${hasValue ? 'text-gray-600' : 'text-gray-400'}`}
+        className={`w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left text-base transition outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300 ${hasValue ? 'text-gray-600' : 'text-gray-400'}`}
         onClick={() => {
           if (isOpen) {
             closePopover(false);

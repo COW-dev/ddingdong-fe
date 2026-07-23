@@ -15,7 +15,7 @@ import Comment from './comment.svg';
 import Contacts from './contacts.svg';
 import Cube from './cube.svg';
 import Dots from './dots.svg';
-import DownLoad from './download.svg';
+import Download from './download.svg';
 import Drag from './drag.svg';
 import Dustpan from './dustpan.svg';
 import Error from './error.svg';
@@ -23,6 +23,7 @@ import Etc from './etc.svg';
 import Eye from './eye.svg';
 import Feed from './feed.svg';
 import File from './file.svg';
+import Form from './form.svg';
 import Heart from './heart.svg';
 import Information from './information.svg';
 import Like from './like.svg';
@@ -34,7 +35,7 @@ import New from './new.svg';
 import OpenBook from './openBook.svg';
 import Peoples from './peoples.svg';
 import Pin from './pin.svg';
-import PlusMinus from './plusminus.svg';
+import Plusminus from './plusminus.svg';
 import QuestionMark from './questionMark.svg';
 import Refresh from './refresh.svg';
 import Repair from './repair.svg';
@@ -65,17 +66,19 @@ export const Icons = {
   checkBold: CheckBold,
   cleaning: Cleaning,
   close: Close,
-  contacts: Contacts,
   comment: Comment,
-  download: DownLoad,
-  drag: Drag,
+  contacts: Contacts,
+  cube: Cube,
   dots: Dots,
+  download: Download,
+  drag: Drag,
   dustpan: Dustpan,
   error: Error,
   etc: Etc,
   eye: Eye,
   feed: Feed,
   file: File,
+  form: Form,
   heart: Heart,
   information: Information,
   like: Like,
@@ -83,12 +86,11 @@ export const Icons = {
   list: List,
   loading: Loading,
   locate: Locate,
-  cube: Cube,
   new: New,
   openBook: OpenBook,
   peoples: Peoples,
   pin: Pin,
-  plusMinus: PlusMinus,
+  plusminus: Plusminus,
   questionMark: QuestionMark,
   refresh: Refresh,
   repair: Repair,

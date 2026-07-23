@@ -1,0 +1,63 @@
+name: Generate Icon Index
+
+on:
+  push:
+    branches-ignore:
+      - main
+    paths:
+      - 'packages/shared/ui/assets/*.svg'
+
+concurrency:
+  group: generate-icon-index-${{ github.ref_name }}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    name: Regenerate icon index.tsx
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Generate icon index
+        run: node packages/shared/scripts/generate-icon-index.mjs
+
+      - name: Commit if changed
+        id: commit
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add packages/shared/ui/assets/index.tsx
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "chore: regenerate icon index"
+            git push
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create PR
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_REF: ${{ github.ref_name }}
+        run: |
+          gh pr create \
+            --title "chore: sync icons from Figma" \
+            --body "Figma에서 아이콘이 동기화되었습니다. \`index.tsx\`가 자동으로 재생성되었습니다." \
+            --base main \
+            --head "$HEAD_REF" \
+            || true

@@ -105,7 +105,7 @@ export function ReportForm({ setValue, report, setIsEditing }: Props) {
             previewUrls={mediaPreviewUrls}
             previewFiles={mediaPreviewFiles}
             onFileChange={handleFileChange}
-            className="md:h-118 items-center justify-center"
+            className="items-center justify-center md:h-118"
           />
         )}
       </ReportFormContiner>
