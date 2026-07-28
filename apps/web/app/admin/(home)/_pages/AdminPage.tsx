@@ -10,8 +10,9 @@ import { bannerQueryOptions } from '@/_api/queries/banner';
 import { clubQueryOptions } from '@/_api/queries/club';
 import { documentQueryOptions } from '@/_api/queries/document';
 import { noticeQueryOptions } from '@/_api/queries/notice';
-import { ROLE_TYPE } from '@/_constants/role';
+import { ROLE_TYPE, type Role } from '@/_constants/role';
 import { useClubStore } from '@/_store/club';
+import { CalendarSection } from '@/admin/calendar/_components/CalendarSection';
 
 import { AdminGreeting } from '../_component/AdminGreeting';
 import { DashboardGrid } from '../_component/DashboardGrid';
@@ -19,7 +20,7 @@ import { DocumentCard } from '../_component/DocumentCard';
 import { NoticeCard } from '../_component/NoticeCard';
 import { ROLE_DASHBOARD } from '../_constants/dashboard';
 
-export default function AdminPage({ role }: { role: string }) {
+export default function AdminPage({ role }: { readonly role: Role }) {
   const { data: myClubData } = useQuery({
     ...clubQueryOptions.my(),
     enabled: Boolean(role) && role === ROLE_TYPE.ROLE_CLUB,
@@ -55,6 +56,7 @@ export default function AdminPage({ role }: { role: string }) {
         <ClubCarousel bannerData={bannerData} />
       </div>
       <DashboardGrid role={role} />
+      <CalendarSection role={role} />
       <NoticeCard role={role} noticeData={noticeData?.notices} />
       <DocumentCard role={role} documentData={documentData?.documents} />
     </Flex>
