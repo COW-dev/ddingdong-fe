@@ -24,7 +24,7 @@ const MIN_MONTH = parseCalendarMonth('0001-01').value;
 const MAX_MONTH = parseCalendarMonth('9999-12').value;
 
 const NAVIGATION_ICON_BUTTON_CLASS_NAME =
-  'h-9 w-9 border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-white';
+  'inline-flex h-9 w-9 items-center justify-center border border-gray-200 bg-white p-0 text-gray-500 hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-white';
 const TODAY_BUTTON_CLASS_NAME =
   'inline-flex h-9 items-center justify-center gap-1 rounded-md border border-gray-200 bg-white px-3 text-gray-500 transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-white';
 
