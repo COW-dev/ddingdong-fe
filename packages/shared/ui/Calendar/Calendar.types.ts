@@ -33,6 +33,7 @@ export type CalendarEventData = {
   readonly title: string;
   readonly startDate: CalendarDate;
   readonly endDate?: CalendarDate;
+  readonly color?: string;
 };
 
 export type CalendarProps<TEvent extends CalendarEventData> = {

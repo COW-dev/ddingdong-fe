@@ -31,16 +31,18 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
 }: CalendarEventProps<TEvent>) {
   const eventClassName = cn(
     'z-10 my-0.5 flex h-5 min-w-0 items-center truncate bg-primary-100 px-3 text-left text-primary-300',
+    event.color === undefined ? '' : 'border-l-4',
     SEGMENT_CLASS_NAMES[kind],
     className
   );
+  const eventStyle = event.color === undefined ? style : { ...style, borderLeftColor: event.color };
 
   if (onEventClick === undefined) {
     return (
       <div
         aria-label={accessibleLabel}
         className={eventClassName}
-        style={style}
+        style={eventStyle}
         title={accessibleLabel}
       >
         <Caption1 as="span" className="truncate" weight="medium">
@@ -59,7 +61,7 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
         'hover:bg-primary-200 focus-visible:outline-primary-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1'
       )}
       onClick={() => onEventClick(event)}
-      style={style}
+      style={eventStyle}
       title={accessibleLabel}
     >
       <Caption1 as="span" className="truncate" weight="medium">
