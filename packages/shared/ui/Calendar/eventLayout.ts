@@ -167,14 +167,11 @@ export function createCalendarEventLayout<TEvent extends CalendarEventData>(
   const firstCell = grid[0];
   const lastCell = grid[grid.length - 1];
   if (firstCell === undefined || lastCell === undefined) {
-    return Array.from({ length: 6 }, (_, weekIndex) => ({
-      weekIndex,
-      laneCount: 0,
-      segments: [],
-    }));
+    return [];
   }
 
-  const weeks: UnplacedSegment<TEvent>[][] = Array.from({ length: 6 }, () => []);
+  const weekCount = Math.ceil(grid.length / 7);
+  const weeks: UnplacedSegment<TEvent>[][] = Array.from({ length: weekCount }, () => []);
   for (const event of validatedEvents) {
     const clippedStart = Math.max(event.startOrdinal, firstCell.ordinal);
     const clippedEnd = Math.min(event.endOrdinal, lastCell.ordinal);

@@ -15,32 +15,41 @@ import {
 } from './calendarModel';
 import { createCalendarEventLayout, type CalendarWeekLayout } from './eventLayout';
 
-import type { CalendarEventData, CalendarProps } from './Calendar.types';
+import type { CalendarDate, CalendarEventData, CalendarProps } from './Calendar.types';
 
 import { cn } from '@/shared/lib/core';
 
-const WEEKDAY_LABELS = ['일', '월', '화', '수', '목', '금', '토'] as const;
+const WEEKDAYS = [
+  { label: 'Sun', className: 'justify-end pr-2' },
+  { label: 'Mon', className: 'justify-end pr-4' },
+  { label: 'Tue', className: 'justify-end pr-6' },
+  { label: 'Wed', className: 'justify-center' },
+  { label: 'Thu', className: 'justify-start pl-6' },
+  { label: 'Fri', className: 'justify-start pl-4' },
+  { label: 'Sat', className: 'justify-start pl-2' },
+] as const;
 const MIN_MONTH = parseCalendarMonth('0001-01').value;
 const MAX_MONTH = parseCalendarMonth('9999-12').value;
 
 const NAVIGATION_ICON_BUTTON_CLASS_NAME =
-  'inline-flex h-9 w-9 items-center justify-center border border-gray-200 bg-white p-0 text-gray-500 hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-white';
+  'inline-flex h-9 w-9 items-center justify-center rounded-full border-0 bg-gray-50 p-0 text-gray-500 hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-gray-50';
 const TODAY_BUTTON_CLASS_NAME =
-  'inline-flex h-9 items-center justify-center gap-1 rounded-md border border-gray-200 bg-white px-3 text-gray-500 transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-white';
+  'inline-flex h-9 items-center justify-center gap-1 rounded-md border-0 bg-white px-3 text-gray-600 transition-colors hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-300 disabled:cursor-not-allowed disabled:text-gray-300 disabled:hover:bg-white';
 
 type CalendarDayProps = {
   readonly cell: CalendarGridCell;
   readonly rowSpan: number;
   readonly today: string;
+  readonly onDateCreate?: (date: CalendarDate) => void;
 };
 
-function CalendarDay({ cell, rowSpan, today }: CalendarDayProps) {
+function CalendarDay({ cell, rowSpan, today, onDateCreate }: CalendarDayProps) {
   const isToday = cell.value === today;
+  const date = cell.value;
   const dateClassName = cn(
-    'inline-flex size-6 items-center justify-center rounded-full',
+    'inline-flex size-6 items-center justify-center',
     cell.isCurrentMonth ? 'text-gray-600' : 'text-gray-300',
-    cell.weekdayIndex === 0 && cell.isCurrentMonth ? 'text-red-300' : '',
-    isToday ? 'bg-primary-100 text-primary-300' : ''
+    isToday ? 'rounded-md bg-primary-300 text-white' : ''
   );
   const style = {
     gridColumnStart: cell.weekdayIndex + 1,
@@ -51,11 +60,23 @@ function CalendarDay({ cell, rowSpan, today }: CalendarDayProps) {
   return (
     <div
       className={cn(
-        'relative z-0 border-r border-b border-gray-200 p-2 first:border-l',
-        cell.weekdayIndex === 0 || cell.weekdayIndex === 6 ? 'bg-gray-50' : 'bg-white'
+        'relative z-0 flex justify-end border-r border-b border-gray-200 p-2 first:border-l',
+        cell.weekIndex === 0 ? 'border-t' : '',
+        cell.weekdayIndex === 0 || cell.weekdayIndex === 6 ? 'bg-gray-50' : 'bg-white',
+        onDateCreate ? 'group' : ''
       )}
       style={style}
     >
+      {date !== null && cell.isCurrentMonth && onDateCreate !== undefined && (
+        <IconButton
+          aria-label={`${cell.year}년 ${cell.month}월 ${cell.day}일 일정 추가`}
+          className="focus-visible:outline-primary-300 absolute top-1 left-1 z-20 size-6 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1"
+          color="gray"
+          iconName="add"
+          size={14}
+          onClick={() => onDateCreate(date)}
+        />
+      )}
       {cell.value === null ? (
         <span className={dateClassName}>
           <Caption1 as="span" weight="medium">
@@ -81,6 +102,7 @@ type CalendarWeekProps<TEvent extends CalendarEventData> = {
   readonly cells: readonly CalendarGridCell[];
   readonly layout: CalendarWeekLayout<TEvent>;
   readonly onEventClick?: (event: TEvent) => void;
+  readonly onDateCreate?: (date: CalendarDate) => void;
   readonly today: string;
 };
 
@@ -88,6 +110,7 @@ function CalendarWeek<TEvent extends CalendarEventData>({
   cells,
   layout,
   onEventClick,
+  onDateCreate,
   today,
 }: CalendarWeekProps<TEvent>) {
   const rowSpan = Math.max(5, layout.laneCount + 2);
@@ -102,6 +125,7 @@ function CalendarWeek<TEvent extends CalendarEventData>({
           key={`${cell.ordinal}:${cell.weekdayIndex}`}
           cell={cell}
           rowSpan={rowSpan}
+          onDateCreate={onDateCreate}
           today={today}
         />
       ))}
@@ -128,6 +152,7 @@ export function Calendar<TEvent extends CalendarEventData = CalendarEventData>({
   events,
   onVisibleMonthChange,
   onEventClick,
+  onDateCreate,
   className,
 }: CalendarProps<TEvent>) {
   const parsedMonth = parseCalendarMonth(visibleMonth);
@@ -192,16 +217,13 @@ export function Calendar<TEvent extends CalendarEventData = CalendarEventData>({
           </Flex>
         </Flex>
 
-        <div className="grid h-10 grid-cols-7 border-b border-gray-200 bg-gray-50">
-          {WEEKDAY_LABELS.map((label, index) => (
+        <div className="grid h-10 grid-cols-7 bg-white">
+          {WEEKDAYS.map(({ label, className: alignmentClassName }) => (
             <Caption1
               as="div"
               key={label}
               weight="semibold"
-              className={cn(
-                'flex items-center justify-center text-gray-400',
-                index === 0 ? 'text-red-300' : ''
-              )}
+              className={cn('flex items-center text-gray-400', alignmentClassName)}
             >
               {label}
             </Caption1>
@@ -214,6 +236,7 @@ export function Calendar<TEvent extends CalendarEventData = CalendarEventData>({
             cells={grid.filter(({ weekIndex }) => weekIndex === layout.weekIndex)}
             layout={layout}
             onEventClick={onEventClick}
+            onDateCreate={onDateCreate}
             today={today}
           />
         ))}

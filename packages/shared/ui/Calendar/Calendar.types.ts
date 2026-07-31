@@ -41,5 +41,6 @@ export type CalendarProps<TEvent extends CalendarEventData> = {
   readonly events: readonly TEvent[];
   readonly onVisibleMonthChange: (month: CalendarMonth) => void;
   readonly onEventClick?: (event: TEvent) => void;
+  readonly onDateCreate?: (date: CalendarDate) => void;
   readonly className?: string;
 };

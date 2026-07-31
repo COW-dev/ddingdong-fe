@@ -43,7 +43,7 @@ export class CalendarModelError extends Error {
 const MIN_YEAR = 1;
 const MAX_YEAR = 9999;
 const MONTHS_PER_YEAR = 12;
-const GRID_CELL_COUNT = 42;
+const DAYS_PER_WEEK = 7;
 
 function isLeapYear(year: number): boolean {
   return year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0);
@@ -224,16 +224,18 @@ function getDateFromOrdinal(
 export function createMonthGrid(visibleMonth: CalendarMonth): readonly CalendarGridCell[] {
   const { year, month } = parseCalendarMonth(visibleMonth);
   const firstOrdinal = getOrdinal(year, month, 1);
-  const firstWeekday = firstOrdinal % 7;
+  const firstWeekday = firstOrdinal % DAYS_PER_WEEK;
   const gridStartOrdinal = firstOrdinal - firstWeekday;
+  const weekCount = Math.ceil((firstWeekday + getDaysInMonth(year, month)) / DAYS_PER_WEEK);
+  const gridCellCount = weekCount * DAYS_PER_WEEK;
 
-  return Array.from({ length: GRID_CELL_COUNT }, (_, index) => {
+  return Array.from({ length: gridCellCount }, (_, index) => {
     const date = getDateFromOrdinal(gridStartOrdinal + index);
     return {
       ...date,
       isCurrentMonth: date.year === year && date.month === month,
-      weekIndex: Math.floor(index / 7),
-      weekdayIndex: index % 7,
+      weekIndex: Math.floor(index / DAYS_PER_WEEK),
+      weekdayIndex: index % DAYS_PER_WEEK,
     };
   });
 }

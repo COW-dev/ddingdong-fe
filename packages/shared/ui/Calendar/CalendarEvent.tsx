@@ -30,12 +30,12 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
   style,
 }: CalendarEventProps<TEvent>) {
   const eventClassName = cn(
-    'z-10 my-0.5 flex h-5 min-w-0 items-center truncate bg-primary-100 px-3 text-left text-primary-300',
-    event.color === undefined ? '' : 'border-l-4',
+    'z-10 my-0.5 flex h-5 min-w-0 items-center truncate bg-primary-200 px-3 text-left text-gray-600',
     SEGMENT_CLASS_NAMES[kind],
     className
   );
-  const eventStyle = event.color === undefined ? style : { ...style, borderLeftColor: event.color };
+  const eventStyle =
+    event.color === undefined ? style : { ...style, boxShadow: `inset 4px 0 0 ${event.color}` };
 
   if (onEventClick === undefined) {
     return (
@@ -58,7 +58,7 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
       aria-label={accessibleLabel}
       className={cn(
         eventClassName,
-        'hover:bg-primary-200 focus-visible:outline-primary-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1'
+        'hover:bg-primary-100 focus-visible:outline-primary-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1'
       )}
       onClick={() => onEventClick(event)}
       style={eventStyle}
