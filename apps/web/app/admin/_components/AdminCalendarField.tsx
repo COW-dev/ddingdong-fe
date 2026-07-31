@@ -23,6 +23,7 @@ type AdminCalendarFieldBaseProps = {
   readonly disabled?: boolean;
   readonly className?: string;
   readonly popoverClassName?: string;
+  readonly onOpenChange?: (isOpen: boolean) => void;
 };
 
 type AdminSingleCalendarFieldProps = AdminCalendarFieldBaseProps & {
@@ -106,6 +107,7 @@ export function AdminCalendarField({
   disabled = false,
   className = '',
   popoverClassName = '',
+  onOpenChange,
   ...selection
 }: AdminCalendarFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -130,13 +132,17 @@ export function AdminCalendarField({
     selection.mode === 'range'
       ? Boolean(selection.value.startDate && selection.value.endDate)
       : Boolean(selection.value);
-  const closePopover = useCallback((shouldReturnFocus: boolean) => {
-    setIsOpen(false);
+  const closePopover = useCallback(
+    (shouldReturnFocus: boolean) => {
+      setIsOpen(false);
+      onOpenChange?.(false);
 
-    if (shouldReturnFocus) {
-      window.requestAnimationFrame(() => triggerRef.current?.focus());
-    }
-  }, []);
+      if (shouldReturnFocus) {
+        window.requestAnimationFrame(() => triggerRef.current?.focus());
+      }
+    },
+    [onOpenChange],
+  );
 
   useEffect(() => {
     if (!isOpen) return;
@@ -186,6 +192,7 @@ export function AdminCalendarField({
 
           setVisibleMonth(getVisibleMonth(selectedDate ?? minDate));
           setIsOpen(true);
+          onOpenChange?.(true);
         }}
         disabled={disabled}
       >
@@ -196,7 +203,7 @@ export function AdminCalendarField({
         <div
           role="dialog"
           aria-label={ariaLabel}
-          className={`absolute right-0 z-30 mt-2 w-[min(444px,calc(100vw-2rem))] rounded-xl border border-gray-200 bg-white p-3 shadow-xl ${popoverClassName}`}
+          className={`absolute left-1/2 z-30 mt-2 w-[min(444px,calc(100vw-2rem))] -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-3 shadow-xl ${popoverClassName}`}
         >
           {selection.mode === 'range' ? (
             <CalendarWidget

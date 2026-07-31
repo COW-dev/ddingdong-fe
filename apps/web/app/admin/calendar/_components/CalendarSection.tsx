@@ -9,6 +9,7 @@ import {
   Flex,
   parseCalendarMonth,
   Title2,
+  type CalendarDate,
 } from '@dds/shared';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
@@ -34,7 +35,7 @@ export function CalendarSection({ role }: CalendarSectionProps) {
     parseCalendarMonth(getCurrentCalendarDate().slice(0, 7)).value,
   );
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [createDate, setCreateDate] = useState<CalendarDate | null>(null);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const { year, month } = parseCalendarMonth(visibleMonth);
   const queryScope = isAdmin ? 'admin' : 'club';
@@ -68,32 +69,19 @@ export function CalendarSection({ role }: CalendarSectionProps) {
           일정 캘린더
         </Title2>
         {isAdmin && (
-          <>
-            <Flex wrap="wrap" className="gap-2">
-              <Button
-                variant="secondary"
-                color="blue"
-                size="md"
-                onClick={() => setIsCategoryOpen(true)}
-              >
-                <Body3 weight="semibold">카테고리 관리</Body3>
-              </Button>
-              <Button
-                variant="primary"
-                color="blue"
-                size="md"
-                disabled={isCategoryError}
-                onClick={() => setIsCreateOpen(true)}
-              >
-                <Body3 weight="semibold">일정 등록</Body3>
-              </Button>
-            </Flex>
-            {isCategoryError && (
-              <Body3 role="alert" className="mt-2 text-red-300">
-                카테고리를 불러오지 못해 일정을 등록할 수 없어요.
-              </Body3>
-            )}
-          </>
+          <Button
+            variant="secondary"
+            color="blue"
+            size="md"
+            onClick={() => setIsCategoryOpen(true)}
+          >
+            <Body3 weight="semibold">카테고리 관리</Body3>
+          </Button>
+        )}
+        {isAdmin && isCategoryError && (
+          <Body3 role="alert" className="mt-2 text-red-300">
+            카테고리를 불러오지 못해 일정을 등록할 수 없어요.
+          </Body3>
         )}
       </Flex>
 
@@ -114,6 +102,7 @@ export function CalendarSection({ role }: CalendarSectionProps) {
         events={events}
         onVisibleMonthChange={setVisibleMonth}
         onEventClick={isAdmin ? handleEventClick : undefined}
+        onDateCreate={isAdmin && !isCategoryError ? setCreateDate : undefined}
         className="border-x border-b border-gray-200"
       />
 
@@ -122,8 +111,9 @@ export function CalendarSection({ role }: CalendarSectionProps) {
           <CalendarEventModal
             mode="create"
             categories={categories}
-            isOpen={isCreateOpen}
-            closeModal={() => setIsCreateOpen(false)}
+            initialDate={createDate ?? getCurrentCalendarDate()}
+            isOpen={createDate !== null}
+            closeModal={() => setCreateDate(null)}
           />
           {selectedEventId !== null && (
             <CalendarEventModal
