@@ -26,7 +26,7 @@ export function toCalendarPageEvents(
   events: readonly CalendarEventResponse[],
 ): readonly CalendarPageEvent[] {
   return events.map((event) => ({
-    id: String(event.id),
+    id: `${event.id}:${event.startDate}:${event.endDate}`,
     eventId: event.id,
     title: event.title,
     startDate: parseCalendarDate(event.startDate).value,
