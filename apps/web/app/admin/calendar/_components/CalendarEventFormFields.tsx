@@ -43,7 +43,7 @@ type CalendarEventFormFieldsProps = {
   readonly createdCategory?: CalendarCategoryRequest;
   readonly onCreateCategory: () => void;
   readonly onRepeatTypeChange: (repeatType: CalendarRepeatType) => void;
-  readonly onCalendarOpenChange?: (isOpen: boolean) => void;
+  readonly onOverlayOpenChange?: (isOpen: boolean) => void;
 };
 
 export function CalendarEventFormFields({
@@ -54,7 +54,7 @@ export function CalendarEventFormFields({
   createdCategory,
   onCreateCategory,
   onRepeatTypeChange,
-  onCalendarOpenChange,
+  onOverlayOpenChange,
 }: CalendarEventFormFieldsProps) {
   const initialCategory =
     categories.find(({ name }) => name === event?.category) ?? categories.at(0);
@@ -141,7 +141,7 @@ export function CalendarEventFormFields({
           maxDate={MAX_EVENT_DATE}
           placeholder="시작일과 종료일을 선택해 주세요."
           ariaLabel="이벤트 기간 선택"
-          onOpenChange={onCalendarOpenChange}
+          onOpenChange={onOverlayOpenChange}
         />
         <input
           type="hidden"
@@ -159,6 +159,7 @@ export function CalendarEventFormFields({
           value={selectedRepeatOption?.label ?? ''}
           defaultValue="반복 안 함"
           aria-label="이벤트 반복 주기"
+          onOpenChange={onOverlayOpenChange}
           onChange={(optionLabel) => {
             const option = REPEAT_OPTIONS.find(
               ({ label }) => label === optionLabel,
@@ -181,7 +182,7 @@ export function CalendarEventFormFields({
             maxDate={MAX_EVENT_DATE}
             placeholder="반복 종료일을 선택해 주세요."
             ariaLabel="반복 종료일 선택"
-            onOpenChange={onCalendarOpenChange}
+            onOpenChange={onOverlayOpenChange}
           />
           <input
             type="hidden"

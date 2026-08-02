@@ -52,7 +52,7 @@ export function CalendarEventModal({
   const deleteEvent = useDeleteCalendarEvent();
   const [repeatType, setRepeatType] = useState<CalendarRepeatType>('NONE');
   const [isDeleteConfirming, setIsDeleteConfirming] = useState(false);
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isFormOverlayOpen, setIsFormOverlayOpen] = useState(false);
   const [isCategoryCreateOpen, setIsCategoryCreateOpen] = useState(false);
   const [createdCategory, setCreatedCategory] =
     useState<CalendarCategoryRequest>();
@@ -67,7 +67,7 @@ export function CalendarEventModal({
 
   function closeModal() {
     setIsDeleteConfirming(false);
-    setIsCalendarOpen(false);
+    setIsFormOverlayOpen(false);
     setIsCategoryCreateOpen(false);
     setCreatedCategory(undefined);
     closeParentModal();
@@ -156,8 +156,8 @@ export function CalendarEventModal({
           dir="col"
           aria-hidden={isCategoryCreateOpen || isDeleteConfirming}
           inert={isCategoryCreateOpen || isDeleteConfirming}
-          className={`w-[88vw] max-w-lg gap-6 overflow-y-auto ${
-            isCalendarOpen ? 'h-[85vh]' : 'max-h-[85vh]'
+          className={`max-h-dvh w-[88vw] max-w-lg gap-6 overflow-y-auto ${
+            isFormOverlayOpen ? 'h-160' : ''
           }`}
         >
           <Title2 as="h2">
@@ -186,7 +186,7 @@ export function CalendarEventModal({
                 createdCategory={createdCategory}
                 onCreateCategory={() => setIsCategoryCreateOpen(true)}
                 onRepeatTypeChange={setRepeatType}
-                onCalendarOpenChange={setIsCalendarOpen}
+                onOverlayOpenChange={setIsFormOverlayOpen}
               />
               {mode === 'edit' && isDeleteConfirming && (
                 <CalendarEventDeleteConfirm

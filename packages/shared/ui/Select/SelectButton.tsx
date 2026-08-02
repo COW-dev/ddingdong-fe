@@ -29,7 +29,7 @@ type Props = {
 
 const sizeVariants = {
   md: 'px-3 py-1 text-sm min-w-24 rounded-lg',
-  lg: 'px-5 py-3.5 min-w-64 min-h-[52px] rounded-xl',
+  lg: 'px-5 py-3.5 text-base md:text-lg min-w-64 min-h-13 rounded-xl',
 } as const;
 
 export function SelectButton({
