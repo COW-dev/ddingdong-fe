@@ -1,4 +1,4 @@
-import { Body3, Button, Flex } from '@dds/shared';
+import { Body3, Button, DoubleButton, Flex, Modal, Title3 } from '@dds/shared';
 
 type CalendarEventDeleteConfirmProps = {
   readonly isPending: boolean;
@@ -12,23 +12,49 @@ export function CalendarEventDeleteConfirm({
   onConfirm,
 }: CalendarEventDeleteConfirmProps) {
   return (
-    <Flex justifyContent="between" className="rounded-xl bg-red-50 p-4">
-      <Body3 className="text-red-300">이 일정을 삭제할까요?</Body3>
-      <Flex className="gap-2">
-        <Button type="button" variant="tertiary" size="sm" onClick={onCancel}>
-          취소
-        </Button>
-        <Button
-          type="button"
-          variant="primary"
-          color="red"
-          size="sm"
-          isLoading={isPending}
-          onClick={onConfirm}
-        >
-          삭제
-        </Button>
+    <Modal
+      isOpen
+      closeModal={onCancel}
+      closeOnOutsideClick={!isPending}
+      contentClassName="rounded-2xl p-6 md:p-10"
+    >
+      <Flex
+        dir="col"
+        alignItems="center"
+        className="w-[80vw] max-w-sm gap-6 text-center"
+      >
+        <Flex dir="col" className="gap-2">
+          <Title3 as="h2">이벤트를 삭제하시겠습니까?</Title3>
+          <Body3 className="text-gray-400">
+            삭제 후엔 다시 복구할 수 없습니다.
+          </Body3>
+        </Flex>
+        <DoubleButton
+          left={
+            <Button
+              type="button"
+              variant="tertiary"
+              size="full"
+              disabled={isPending}
+              onClick={onCancel}
+            >
+              취소하기
+            </Button>
+          }
+          right={
+            <Button
+              type="button"
+              variant="primary"
+              color="red"
+              size="full"
+              isLoading={isPending}
+              onClick={onConfirm}
+            >
+              삭제하기
+            </Button>
+          }
+        />
       </Flex>
-    </Flex>
+    </Modal>
   );
 }

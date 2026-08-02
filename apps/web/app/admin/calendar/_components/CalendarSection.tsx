@@ -4,11 +4,9 @@ import { useMemo, useState } from 'react';
 
 import {
   Body3,
-  Button,
   Calendar,
   Flex,
   parseCalendarMonth,
-  Title2,
   type CalendarDate,
 } from '@dds/shared';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
@@ -22,7 +20,6 @@ import {
   type CalendarPageEvent,
 } from '../_utils/calendarViewModel';
 
-import { CalendarCategoryModal } from './CalendarCategoryModal';
 import { CalendarEventModal } from './CalendarEventModal';
 
 type CalendarSectionProps = {
@@ -36,7 +33,6 @@ export function CalendarSection({ role }: CalendarSectionProps) {
   );
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const [createDate, setCreateDate] = useState<CalendarDate | null>(null);
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const { year, month } = parseCalendarMonth(visibleMonth);
   const queryScope = isAdmin ? 'admin' : 'club';
   const { data, isError } = useQuery({
@@ -59,31 +55,11 @@ export function CalendarSection({ role }: CalendarSectionProps) {
 
   return (
     <Flex as="section" dir="col" className="mt-8 w-full">
-      <Flex
-        alignItems="center"
-        justifyContent="between"
-        wrap="wrap"
-        className="gap-4 py-5"
-      >
-        <Title2 as="h2" weight="bold">
-          일정 캘린더
-        </Title2>
-        {isAdmin && (
-          <Button
-            variant="secondary"
-            color="blue"
-            size="md"
-            onClick={() => setIsCategoryOpen(true)}
-          >
-            <Body3 weight="semibold">카테고리 관리</Body3>
-          </Button>
-        )}
-        {isAdmin && isCategoryError && (
-          <Body3 role="alert" className="mt-2 text-red-300">
-            카테고리를 불러오지 못해 일정을 등록할 수 없어요.
-          </Body3>
-        )}
-      </Flex>
+      {isAdmin && isCategoryError && (
+        <Body3 role="alert" className="mb-4 text-red-300">
+          카테고리를 불러오지 못해 일정을 등록할 수 없어요.
+        </Body3>
+      )}
 
       {isError && (
         <Flex
@@ -103,7 +79,6 @@ export function CalendarSection({ role }: CalendarSectionProps) {
         onVisibleMonthChange={setVisibleMonth}
         onEventClick={isAdmin ? handleEventClick : undefined}
         onDateCreate={isAdmin && !isCategoryError ? setCreateDate : undefined}
-        className="border-x border-b border-gray-200"
       />
 
       {isAdmin && (
@@ -124,11 +99,6 @@ export function CalendarSection({ role }: CalendarSectionProps) {
               closeModal={() => setSelectedEventId(null)}
             />
           )}
-          <CalendarCategoryModal
-            categories={categories}
-            isOpen={isCategoryOpen}
-            closeModal={() => setIsCategoryOpen(false)}
-          />
         </>
       )}
     </Flex>

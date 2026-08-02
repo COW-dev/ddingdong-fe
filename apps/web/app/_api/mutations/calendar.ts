@@ -20,13 +20,13 @@ type UpdateCalendarCategoryVariables = {
 
 function useCalendarMutation<TVariables>(
   mutationFn: (variables: TVariables) => Promise<void>,
+  queryKey: readonly unknown[] = calendarQueryKeys.admin(),
 ) {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn,
-    onSuccess: () =>
-      queryClient.invalidateQueries({ queryKey: calendarQueryKeys.admin() }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey }),
   });
 }
 
@@ -52,10 +52,12 @@ export function useDeleteCalendarEvent() {
 }
 
 export function useCreateCalendarCategory() {
-  return useCalendarMutation((request: CalendarCategoryRequest) =>
-    fetcher.postWithoutResponse('admin/calendar/category', {
-      json: request,
-    }),
+  return useCalendarMutation(
+    (request: CalendarCategoryRequest) =>
+      fetcher.postWithoutResponse('admin/calendar/category', {
+        json: request,
+      }),
+    calendarQueryKeys.categories(),
   );
 }
 

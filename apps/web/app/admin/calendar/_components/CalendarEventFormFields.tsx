@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 
 import {
   Body2,
-  Caption1,
-  Flex,
   parseCalendarDate,
+  Select,
   type CalendarDate,
 } from '@dds/shared';
 
 import {
-  calendarRepeatTypeSchema,
+  type CalendarCategoryRequest,
   type CalendarCategoryResponse,
   type CalendarEventResponse,
   type CalendarRepeatType,
@@ -20,6 +19,8 @@ import {
   toIsoDate,
   type CalendarDateRange,
 } from '@/admin/_components/AdminCalendarField';
+
+import { CalendarCategorySelect } from './CalendarCategorySelect';
 
 const REPEAT_OPTIONS = [
   { value: 'NONE', label: '반복 안 함' },
@@ -34,12 +35,13 @@ const REPEAT_OPTIONS = [
 
 const MIN_EVENT_DATE = new Date(1900, 0, 1);
 const MAX_EVENT_DATE = new Date(9999, 11, 31);
-
 type CalendarEventFormFieldsProps = {
   readonly categories: readonly CalendarCategoryResponse[];
   readonly event?: CalendarEventResponse;
   readonly initialDate: CalendarDate;
   readonly repeatType: CalendarRepeatType;
+  readonly createdCategory?: CalendarCategoryRequest;
+  readonly onCreateCategory: () => void;
   readonly onRepeatTypeChange: (repeatType: CalendarRepeatType) => void;
   readonly onCalendarOpenChange?: (isOpen: boolean) => void;
 };
@@ -49,6 +51,8 @@ export function CalendarEventFormFields({
   event,
   initialDate,
   repeatType,
+  createdCategory,
+  onCreateCategory,
   onRepeatTypeChange,
   onCalendarOpenChange,
 }: CalendarEventFormFieldsProps) {
@@ -56,9 +60,6 @@ export function CalendarEventFormFields({
     categories.find(({ name }) => name === event?.category) ?? categories.at(0);
   const [categoryId, setCategoryId] = useState<number | ''>(
     initialCategory?.id ?? '',
-  );
-  const [categoryColor, setCategoryColor] = useState(
-    initialCategory?.color ?? '#3b82f6',
   );
   const [dateRange, setDateRange] = useState<CalendarDateRange>(() => ({
     startDate: fromIsoDate(
@@ -74,26 +75,59 @@ export function CalendarEventFormFields({
         .value,
     ),
   );
+  const matchingCreatedCategories = createdCategory
+    ? categories.filter(
+        ({ name, color }) =>
+          name === createdCategory.categoryName &&
+          color === createdCategory.color,
+      )
+    : [];
+  const selectedCreatedCategory =
+    matchingCreatedCategories.length === 1
+      ? matchingCreatedCategories.at(0)
+      : undefined;
+  const selectedCreatedCategoryId = selectedCreatedCategory?.id;
+  const selectedRepeatOption = REPEAT_OPTIONS.find(
+    ({ value }) => value === repeatType,
+  );
 
   useEffect(() => {
     if (categoryId !== '' || !initialCategory) return;
 
     setCategoryId(initialCategory.id);
-    setCategoryColor(initialCategory.color);
   }, [categoryId, initialCategory]);
+
+  useEffect(() => {
+    if (!selectedCreatedCategoryId) return;
+
+    setCategoryId(selectedCreatedCategoryId);
+  }, [selectedCreatedCategoryId]);
 
   return (
     <>
-      <Field label="일정 제목">
-        <input
-          name="title"
-          defaultValue={event?.title ?? ''}
-          placeholder="일정 제목을 입력해 주세요."
-          className="min-h-13 rounded-xl border border-gray-200 bg-white px-4 text-gray-600"
-        />
-      </Field>
       <div className="flex flex-1 flex-col gap-2">
-        <Body2>일정 기간</Body2>
+        <Body2 as="label" htmlFor="calendar-event-title">
+          이벤트명
+        </Body2>
+        <div className="flex min-h-14 items-center rounded-xl border border-gray-200 bg-white focus-within:border-blue-500 focus-within:ring-4 focus-within:ring-blue-100">
+          <input
+            id="calendar-event-title"
+            name="title"
+            defaultValue={event?.title ?? ''}
+            placeholder="새로운 이벤트"
+            className="min-w-0 flex-1 bg-transparent px-4 text-gray-600 outline-none"
+          />
+          <CalendarCategorySelect
+            categories={categories}
+            value={categoryId}
+            onChange={setCategoryId}
+            onCreate={onCreateCategory}
+          />
+          <input type="hidden" name="categoryId" value={categoryId} />
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col gap-2">
+        <Body2>기간 선택</Body2>
         <AdminCalendarField
           mode="range"
           value={dateRange}
@@ -106,7 +140,7 @@ export function CalendarEventFormFields({
           minDate={MIN_EVENT_DATE}
           maxDate={MAX_EVENT_DATE}
           placeholder="시작일과 종료일을 선택해 주세요."
-          ariaLabel="일정 기간 선택"
+          ariaLabel="이벤트 기간 선택"
           onOpenChange={onCalendarOpenChange}
         />
         <input
@@ -120,78 +154,26 @@ export function CalendarEventFormFields({
           value={dateRange.endDate ? toIsoDate(dateRange.endDate) : ''}
         />
       </div>
-      <fieldset className="flex flex-col gap-2">
-        <legend>
-          <Body2 as="span">카테고리</Body2>
-        </legend>
-        <Flex alignItems="center" className="gap-3">
-          <input
-            aria-label="카테고리 색상"
-            name="categoryColor"
-            type="color"
-            value={categoryColor}
-            onChange={(changeEvent) =>
-              setCategoryColor(changeEvent.target.value)
-            }
-            className="h-13 w-14 shrink-0 cursor-pointer rounded-xl border border-gray-200 bg-white p-1"
-          />
-          {categories.length === 0 ? (
-            <input
-              aria-label="카테고리 이름"
-              name="categoryName"
-              placeholder="카테고리 이름을 입력해 주세요."
-              className="min-h-13 flex-1 rounded-xl border border-gray-200 bg-white px-4 text-gray-600"
-            />
-          ) : (
-            <select
-              aria-label="카테고리"
-              name="categoryId"
-              value={categoryId}
-              onChange={(changeEvent) => {
-                const category = categories.find(
-                  ({ id }) => id === Number(changeEvent.target.value),
-                );
-                if (!category) return;
-
-                setCategoryId(category.id);
-                setCategoryColor(category.color);
-              }}
-              className="min-h-13 flex-1 rounded-xl border border-gray-200 bg-white px-4 text-gray-600"
-            >
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          )}
-        </Flex>
-        <Caption1 className="text-gray-400">
-          {categories.length === 0
-            ? '먼저 일정에 사용할 카테고리를 등록해 주세요.'
-            : '색상을 변경하면 이 카테고리를 사용하는 모든 일정에 적용됩니다.'}
-        </Caption1>
-      </fieldset>
       <Field label="반복">
-        <select
-          value={repeatType}
-          onChange={(changeEvent) =>
-            onRepeatTypeChange(
-              calendarRepeatTypeSchema.parse(changeEvent.target.value),
-            )
-          }
-          className="min-h-13 rounded-xl border border-gray-200 bg-white px-4 text-gray-600"
+        <Select
+          value={selectedRepeatOption?.label ?? ''}
+          defaultValue="반복 안 함"
+          aria-label="이벤트 반복 주기"
+          onChange={(optionLabel) => {
+            const option = REPEAT_OPTIONS.find(
+              ({ label }) => label === optionLabel,
+            );
+            if (option) onRepeatTypeChange(option.value);
+          }}
         >
           {REPEAT_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
+            <Select.Option key={option.value} name={option.label} />
           ))}
-        </select>
+        </Select>
       </Field>
       {repeatType !== 'NONE' && (
         <div className="flex flex-1 flex-col gap-2">
-          <Body2>반복 종료일</Body2>
+          <Body2>반복 종료</Body2>
           <AdminCalendarField
             value={repeatEndDate}
             onChange={setRepeatEndDate}
