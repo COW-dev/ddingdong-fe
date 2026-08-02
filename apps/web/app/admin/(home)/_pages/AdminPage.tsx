@@ -52,11 +52,11 @@ export default function AdminPage({ role }: { readonly role: Role }) {
           name={role === ROLE_TYPE.ROLE_ADMIN ? 'SO:ONE' : myClubData?.name}
         />
       </Flex>
+      <CalendarSection role={role} />
       <div className="mt-7">
         <ClubCarousel bannerData={bannerData} />
       </div>
       <DashboardGrid role={role} />
-      <CalendarSection role={role} />
       <NoticeCard role={role} noticeData={noticeData?.notices} />
       <DocumentCard role={role} documentData={documentData?.documents} />
     </Flex>

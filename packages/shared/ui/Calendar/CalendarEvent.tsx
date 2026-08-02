@@ -12,6 +12,17 @@ const SEGMENT_CLASS_NAMES = {
   end: 'mr-1 rounded-r-md',
 } as const;
 
+function isDarkHexColor(color: string) {
+  const hex = /^#([0-9a-f]{6})$/i.exec(color)?.[1];
+  if (hex === undefined) return false;
+
+  const red = Number.parseInt(hex.slice(0, 2), 16);
+  const green = Number.parseInt(hex.slice(2, 4), 16);
+  const blue = Number.parseInt(hex.slice(4, 6), 16);
+
+  return (red * 299 + green * 587 + blue * 114) / 1000 < 150;
+}
+
 export type CalendarEventProps<TEvent extends CalendarEventData> = {
   readonly event: TEvent;
   readonly kind?: keyof typeof SEGMENT_CLASS_NAMES;
@@ -35,7 +46,14 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
     className
   );
   const eventStyle =
-    event.color === undefined ? style : { ...style, boxShadow: `inset 4px 0 0 ${event.color}` };
+    event.color === undefined
+      ? style
+      : {
+          ...style,
+          backgroundColor: event.color,
+          color: isDarkHexColor(event.color) ? 'white' : undefined,
+          outlineColor: event.color,
+        };
 
   if (onEventClick === undefined) {
     return (
@@ -58,7 +76,7 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
       aria-label={accessibleLabel}
       className={cn(
         eventClassName,
-        'hover:bg-primary-100 focus-visible:outline-primary-300 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-1'
+        'cursor-pointer hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-1'
       )}
       onClick={() => onEventClick(event)}
       style={eventStyle}

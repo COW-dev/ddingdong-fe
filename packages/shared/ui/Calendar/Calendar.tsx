@@ -3,7 +3,7 @@
 import { Button } from '../Button';
 import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
-import { Body1, Caption1 } from '../Typography';
+import { Body1, Body3, Caption1 } from '../Typography';
 
 import { CalendarEvent } from './CalendarEvent';
 import {
@@ -47,7 +47,7 @@ function CalendarDay({ cell, rowSpan, today, onDateCreate }: CalendarDayProps) {
   const isToday = cell.value === today;
   const date = cell.value;
   const dateClassName = cn(
-    'inline-flex size-6 items-center justify-center',
+    'inline-flex size-9 items-center justify-center',
     cell.isCurrentMonth ? 'text-gray-600' : 'text-gray-300',
     isToday ? 'rounded-md bg-primary-300 text-white' : ''
   );
@@ -70,18 +70,18 @@ function CalendarDay({ cell, rowSpan, today, onDateCreate }: CalendarDayProps) {
       {date !== null && cell.isCurrentMonth && onDateCreate !== undefined && (
         <IconButton
           aria-label={`${cell.year}년 ${cell.month}월 ${cell.day}일 일정 추가`}
-          className="focus-visible:outline-primary-300 absolute top-1 left-1 z-20 size-6 opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1"
+          className="focus-visible:outline-primary-300 absolute top-2 left-2 z-20 size-9 opacity-0 transition-opacity group-hover:opacity-100 hover:bg-transparent focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-1"
           color="gray"
           iconName="add"
-          size={14}
+          size={16}
           onClick={() => onDateCreate(date)}
         />
       )}
       {cell.value === null ? (
         <span className={dateClassName}>
-          <Caption1 as="span" weight="medium">
+          <Body3 as="span" weight="semibold">
             {cell.day}
-          </Caption1>
+          </Body3>
         </span>
       ) : (
         <time
@@ -89,9 +89,9 @@ function CalendarDay({ cell, rowSpan, today, onDateCreate }: CalendarDayProps) {
           className={dateClassName}
           dateTime={cell.value}
         >
-          <Caption1 as="span" weight="medium">
+          <Body3 as="span" weight="semibold">
             {cell.day}
-          </Caption1>
+          </Body3>
         </time>
       )}
     </div>
@@ -115,7 +115,7 @@ function CalendarWeek<TEvent extends CalendarEventData>({
 }: CalendarWeekProps<TEvent>) {
   const rowSpan = Math.max(5, layout.laneCount + 2);
   const style = {
-    gridTemplateRows: `36px repeat(${rowSpan - 1}, 24px)`,
+    gridTemplateRows: `44px repeat(${rowSpan - 1}, 24px)`,
   };
 
   return (
