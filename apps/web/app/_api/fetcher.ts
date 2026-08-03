@@ -106,7 +106,12 @@ export async function parseResponse<T>(
 }
 
 async function discardResponse(response: ResponsePromise): Promise<void> {
-  await response;
+  try {
+    await response;
+  } catch (error) {
+    Sentry.captureException(error);
+    throw error;
+  }
 }
 
 export const fetcher = {
