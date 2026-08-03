@@ -7,4 +7,10 @@ export type {
   CalendarMonth,
   CalendarProps,
 } from './Calendar.types';
-export { parseCalendarDate, parseCalendarMonth } from './calendarModel';
+export {
+  createMonthGrid,
+  getLocalCalendarDate,
+  parseCalendarDate,
+  parseCalendarMonth,
+  shiftCalendarMonth,
+} from './calendarModel';
