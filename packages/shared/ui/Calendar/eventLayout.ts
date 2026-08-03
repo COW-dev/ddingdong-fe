@@ -39,8 +39,6 @@ type ValidatedEvent<TEvent extends CalendarEventData> = {
   readonly inputIndex: number;
   readonly startOrdinal: number;
   readonly endOrdinal: number;
-  readonly startDate: string;
-  readonly endDate: string;
 };
 
 type UnplacedSegment<TEvent extends CalendarEventData> = {
@@ -57,34 +55,44 @@ function validateEvents<TEvent extends CalendarEventData>(
 ): readonly ValidatedEvent<TEvent>[] {
   const seenIds = new Set<string>();
 
-  return events.map((event, inputIndex) => {
+  return events.flatMap((event, inputIndex) => {
     if (seenIds.has(event.id)) {
-      throw new CalendarEventLayoutError(
-        'DUPLICATE_EVENT_ID',
-        event.id,
-        `Duplicate calendar event id "${event.id}"`
-      );
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(
+          new CalendarEventLayoutError(
+            'DUPLICATE_EVENT_ID',
+            event.id,
+            `Duplicate calendar event id "${event.id}"`
+          )
+        );
+      }
+      return [];
     }
-    seenIds.add(event.id);
 
     const start = parseCalendarDate(event.startDate);
     const end = parseCalendarDate(event.endDate ?? event.startDate);
     if (end.ordinal < start.ordinal) {
-      throw new CalendarEventLayoutError(
-        'EVENT_END_BEFORE_START',
-        event.id,
-        `Calendar event "${event.id}" ends before it starts`
-      );
+      if (process.env.NODE_ENV === 'development') {
+        console.warn(
+          new CalendarEventLayoutError(
+            'EVENT_END_BEFORE_START',
+            event.id,
+            `Calendar event "${event.id}" ends before it starts`
+          )
+        );
+      }
+      return [];
     }
+    seenIds.add(event.id);
 
-    return {
-      event,
-      inputIndex,
-      startOrdinal: start.ordinal,
-      endOrdinal: end.ordinal,
-      startDate: start.value,
-      endDate: end.value,
-    };
+    return [
+      {
+        event,
+        inputIndex,
+        startOrdinal: start.ordinal,
+        endOrdinal: end.ordinal,
+      },
+    ];
   });
 }
 
