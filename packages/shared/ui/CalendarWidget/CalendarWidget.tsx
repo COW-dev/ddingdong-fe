@@ -7,7 +7,8 @@ import {
   getLocalCalendarDate,
   parseCalendarMonth,
   shiftCalendarMonth,
-} from '../Calendar/calendarModel';
+  type CalendarDate,
+} from '../Calendar';
 import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
 import { Body1, Body3, Caption1 } from '../Typography';
@@ -22,7 +23,6 @@ import {
   shiftCalendarDate,
 } from './calendarWidgetModel';
 
-import type { CalendarDate } from '../Calendar';
 import type { CalendarWidgetProps } from './CalendarWidget.types';
 
 const WEEKDAYS = ['일', '월', '화', '수', '목', '금', '토'] as const;
@@ -55,14 +55,18 @@ export function CalendarWidget(props: CalendarWidgetProps) {
   useEffect(() => {
     if (!shouldMoveFocus.current) return;
     const element = document.getElementById(`calendar-widget-${focusedDate}`);
-    if (element instanceof HTMLButtonElement) element.focus();
-    shouldMoveFocus.current = false;
+    if (element instanceof HTMLButtonElement) {
+      element.focus();
+      shouldMoveFocus.current = false;
+    }
   }, [focusedDate, props.visibleMonth]);
 
   function selectDate(date: CalendarDate) {
     if (props.disabled || !isDateEnabled(date, props.minDate, props.maxDate)) {
       return;
     }
+
+    setFocusedDate(date);
 
     if (props.mode === 'single') {
       props.onChange(date);
@@ -170,39 +174,48 @@ export function CalendarWidget(props: CalendarWidgetProps) {
         </Flex>
 
         <div role="grid" aria-label={heading} className="grid grid-cols-7 py-1.5">
-          {WEEKDAYS.map((weekday) => (
-            <Caption1
-              as="div"
-              key={weekday}
-              role="columnheader"
-              className="flex aspect-square min-h-9 items-center justify-center text-gray-500"
-              weight="semibold"
-            >
-              {weekday}
-            </Caption1>
-          ))}
-          {grid.map((cell) => {
-            const value = cell.value;
+          <div role="row" className="contents">
+            {WEEKDAYS.map((weekday) => (
+              <Caption1
+                as="div"
+                key={weekday}
+                role="columnheader"
+                className="flex aspect-square min-h-9 items-center justify-center text-gray-500"
+                weight="semibold"
+              >
+                {weekday}
+              </Caption1>
+            ))}
+          </div>
+          {Array.from({ length: grid.length / WEEKDAYS.length }, (_, weekIndex) => (
+            <div key={weekIndex} role="row" className="contents">
+              {grid
+                .slice(weekIndex * WEEKDAYS.length, (weekIndex + 1) * WEEKDAYS.length)
+                .map((cell) => {
+                  const value = cell.value;
 
-            return value && cell.isCurrentMonth ? (
-              <CalendarWidgetDay
-                key={value}
-                date={value}
-                day={cell.day}
-                disabled={
-                  Boolean(props.disabled) || !isDateEnabled(value, props.minDate, props.maxDate)
-                }
-                selected={value === range.startDate || value === range.endDate}
-                today={value === today}
-                rangePosition={getRangePosition(value, range.startDate, range.endDate)}
-                tabIndex={value === focusedDate ? 0 : -1}
-                onClick={() => selectDate(value)}
-                onKeyDown={(event) => handleDayKeyDown(event, value, cell.weekdayIndex)}
-              />
-            ) : (
-              <div key={`${cell.ordinal}:${cell.weekdayIndex}`} role="gridcell" />
-            );
-          })}
+                  return value && cell.isCurrentMonth ? (
+                    <CalendarWidgetDay
+                      key={value}
+                      date={value}
+                      day={cell.day}
+                      disabled={
+                        Boolean(props.disabled) ||
+                        !isDateEnabled(value, props.minDate, props.maxDate)
+                      }
+                      selected={value === range.startDate || value === range.endDate}
+                      today={value === today}
+                      rangePosition={getRangePosition(value, range.startDate, range.endDate)}
+                      tabIndex={value === focusedDate ? 0 : -1}
+                      onClick={() => selectDate(value)}
+                      onKeyDown={(event) => handleDayKeyDown(event, value, cell.weekdayIndex)}
+                    />
+                  ) : (
+                    <div key={`${cell.ordinal}:${cell.weekdayIndex}`} role="gridcell" />
+                  );
+                })}
+            </div>
+          ))}
         </div>
       </div>
 

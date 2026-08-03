@@ -2,9 +2,10 @@ import {
   getLocalCalendarDate,
   parseCalendarDate,
   parseCalendarMonth,
-} from '../Calendar/calendarModel';
+  type CalendarDate,
+  type CalendarMonth,
+} from '../Calendar';
 
-import type { CalendarDate, CalendarMonth } from '../Calendar';
 import type { CalendarWidgetRange } from './CalendarWidget.types';
 
 export function getCalendarMonth(date: CalendarDate): CalendarMonth {
