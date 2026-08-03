@@ -1,6 +1,15 @@
 import { parseCalendarDate, type CalendarGridCell } from './calendarModel';
 
-import type { CalendarEventData } from './Calendar.types';
+import type { CalendarDate, CalendarEventData } from './Calendar.types';
+
+export function formatCalendarEventDateRange(
+  startDate: CalendarDate,
+  endDate?: CalendarDate
+): string {
+  return endDate === undefined || startDate === endDate
+    ? startDate
+    : `${startDate}부터 ${endDate}까지`;
+}
 
 export type CalendarEventSegmentKind = 'single' | 'start' | 'middle' | 'end';
 
@@ -149,10 +158,10 @@ function assignLanes<TEvent extends CalendarEventData>(
       }
       laneEnds[lane] = segment.endColumn;
 
-      const range =
-        segment.event.startDate === segment.event.endDate
-          ? segment.event.startDate
-          : `${segment.event.startDate}–${segment.event.endDate}`;
+      const range = formatCalendarEventDateRange(
+        segment.event.event.startDate,
+        segment.event.event.endDate
+      );
       return {
         event: segment.event.event,
         kind: getSegmentKind(segment),

@@ -1,5 +1,7 @@
 import { Caption1 } from '../Typography';
 
+import { formatCalendarEventDateRange } from './eventLayout';
+
 import type { CalendarEventData } from './Calendar.types';
 import type { CSSProperties } from 'react';
 
@@ -35,7 +37,7 @@ export type CalendarEventProps<TEvent extends CalendarEventData> = {
 export function CalendarEvent<TEvent extends CalendarEventData>({
   event,
   kind = 'single',
-  accessibleLabel = `${event.title}, ${event.startDate}${event.endDate === undefined ? '' : `–${event.endDate}`}`,
+  accessibleLabel = `${event.title}, ${formatCalendarEventDateRange(event.startDate, event.endDate)}`,
   onEventClick,
   className,
   style,
