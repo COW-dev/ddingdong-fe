@@ -61,6 +61,7 @@ export function CalendarEvent<TEvent extends CalendarEventData>({
     return (
       <div
         aria-label={accessibleLabel}
+        role="img"
         className={eventClassName}
         style={eventStyle}
         title={accessibleLabel}

@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { Button } from '../Button';
 import { Flex } from '../Flex';
 import { IconButton } from '../IconButton';
@@ -15,7 +17,12 @@ import {
 } from './calendarModel';
 import { createCalendarEventLayout, type CalendarWeekLayout } from './eventLayout';
 
-import type { CalendarDate, CalendarEventData, CalendarProps } from './Calendar.types';
+import type {
+  CalendarDate,
+  CalendarEventData,
+  CalendarMonth,
+  CalendarProps,
+} from './Calendar.types';
 
 import { cn } from '@/shared/lib/core';
 
@@ -39,7 +46,7 @@ const TODAY_BUTTON_CLASS_NAME =
 type CalendarDayProps = {
   readonly cell: CalendarGridCell;
   readonly rowSpan: number;
-  readonly today: string;
+  readonly today: CalendarDate | null;
   readonly onDateCreate?: (date: CalendarDate) => void;
 };
 
@@ -103,7 +110,7 @@ type CalendarWeekProps<TEvent extends CalendarEventData> = {
   readonly layout: CalendarWeekLayout<TEvent>;
   readonly onEventClick?: (event: TEvent) => void;
   readonly onDateCreate?: (date: CalendarDate) => void;
-  readonly today: string;
+  readonly today: CalendarDate | null;
 };
 
 function CalendarWeek<TEvent extends CalendarEventData>({
@@ -155,13 +162,21 @@ export function Calendar<TEvent extends CalendarEventData = CalendarEventData>({
   onDateCreate,
   className,
 }: CalendarProps<TEvent>) {
+  const [today, setToday] = useState<{
+    readonly date: CalendarDate;
+    readonly month: CalendarMonth;
+  } | null>(null);
   const parsedMonth = parseCalendarMonth(visibleMonth);
   const grid = createMonthGrid(visibleMonth);
   const eventLayout = createCalendarEventLayout(events, grid);
-  const today = getLocalCalendarDate(new Date());
   const heading = `${parsedMonth.year}년 ${parsedMonth.month}월`;
   const canGoPrevious = visibleMonth !== MIN_MONTH;
   const canGoNext = visibleMonth !== MAX_MONTH;
+
+  useEffect(() => {
+    const date = getLocalCalendarDate(new Date());
+    setToday({ date, month: parseCalendarMonth(date.slice(0, 7)).value });
+  }, []);
 
   function goToPreviousMonth() {
     if (canGoPrevious) {
@@ -170,8 +185,9 @@ export function Calendar<TEvent extends CalendarEventData = CalendarEventData>({
   }
 
   function goToToday() {
-    const localToday = getLocalCalendarDate(new Date());
-    onVisibleMonthChange(parseCalendarMonth(localToday.slice(0, 7)).value);
+    if (today !== null) {
+      onVisibleMonthChange(today.month);
+    }
   }
 
   function goToNextMonth() {
@@ -237,7 +253,7 @@ export function Calendar<TEvent extends CalendarEventData = CalendarEventData>({
             layout={layout}
             onEventClick={onEventClick}
             onDateCreate={onDateCreate}
-            today={today}
+            today={today?.date ?? null}
           />
         ))}
       </section>

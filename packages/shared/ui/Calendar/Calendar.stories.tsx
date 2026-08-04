@@ -29,20 +29,18 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof Calendar>;
 
-export const Basic: Story = {
-  render: () => {
-    const [visibleMonth, setVisibleMonth] = useState<CalendarMonth>(
-      parseCalendarMonth('2026-06').value
-    );
+function BasicCalendar() {
+  const [visibleMonth, setVisibleMonth] = useState<CalendarMonth>(
+    parseCalendarMonth('2026-06').value
+  );
 
-    return (
-      <Calendar
-        visibleMonth={visibleMonth}
-        events={events}
-        onVisibleMonthChange={setVisibleMonth}
-      />
-    );
-  },
+  return (
+    <Calendar visibleMonth={visibleMonth} events={events} onVisibleMonthChange={setVisibleMonth} />
+  );
+}
+
+export const Basic: Story = {
+  render: () => <BasicCalendar />,
 };
 
 export const Event: Story = {
@@ -53,25 +51,27 @@ export const Event: Story = {
   ),
 };
 
-export const DateCreation: Story = {
-  render: () => {
-    const [selectedDate, setSelectedDate] = useState<CalendarDate | null>(null);
-    const [visibleMonth, setVisibleMonth] = useState<CalendarMonth>(
-      parseCalendarMonth('2026-06').value
-    );
+function DateCreationCalendar() {
+  const [selectedDate, setSelectedDate] = useState<CalendarDate | null>(null);
+  const [visibleMonth, setVisibleMonth] = useState<CalendarMonth>(
+    parseCalendarMonth('2026-06').value
+  );
 
-    return (
-      <div>
-        <Calendar
-          visibleMonth={visibleMonth}
-          events={events}
-          onDateCreate={setSelectedDate}
-          onVisibleMonthChange={setVisibleMonth}
-        />
-        <p role="status" className="mt-4 text-gray-600">
-          {selectedDate ?? '날짜를 선택해 주세요.'}
-        </p>
-      </div>
-    );
-  },
+  return (
+    <div>
+      <Calendar
+        visibleMonth={visibleMonth}
+        events={events}
+        onDateCreate={setSelectedDate}
+        onVisibleMonthChange={setVisibleMonth}
+      />
+      <p role="status" className="mt-4 text-gray-600">
+        {selectedDate ?? '날짜를 선택해 주세요.'}
+      </p>
+    </div>
+  );
+}
+
+export const DateCreation: Story = {
+  render: () => <DateCreationCalendar />,
 };
