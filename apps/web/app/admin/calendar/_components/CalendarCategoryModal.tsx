@@ -25,7 +25,7 @@ import {
   type CalendarCategoryResponse,
 } from '@/_api/types/calendar';
 
-import { CalendarCategoryColorPresets } from './CalendarCategoryColorPresets';
+import { CalendarCategoryColorPicker } from './CalendarCategoryColorPicker';
 
 const DEFAULT_CATEGORY_COLOR = '#3b82f6';
 
@@ -142,23 +142,17 @@ export function CalendarCategoryModal({
             <Body2 as="label" htmlFor="calendar-category-name">
               카테고리 이름
             </Body2>
-            <Flex alignItems="center" className="gap-3">
-              <input
-                aria-label="카테고리 색상"
-                type="color"
-                value={color}
-                onChange={(event) => setColor(event.target.value)}
-                className="h-13 w-14 shrink-0 cursor-pointer rounded-xl border border-gray-200 bg-white p-1"
-              />
-              <Input
-                id="calendar-category-name"
-                value={categoryName}
-                placeholder="카테고리 이름을 입력해 주세요."
-                onChange={(event) => setCategoryName(event.target.value)}
-                onClickReset={() => setCategoryName('')}
-              />
+            <Input
+              id="calendar-category-name"
+              value={categoryName}
+              placeholder="카테고리 이름을 입력해 주세요."
+              onChange={(event) => setCategoryName(event.target.value)}
+              onClickReset={() => setCategoryName('')}
+            />
+            <Flex dir="col" className="gap-3">
+              <Body2>카테고리 색상</Body2>
+              <CalendarCategoryColorPicker color={color} onChange={setColor} />
             </Flex>
-            <CalendarCategoryColorPresets color={color} onChange={setColor} />
             <Flex justifyContent="end" className="gap-2">
               {editCategoryId !== null && (
                 <Button variant="tertiary" size="sm" onClick={resetForm}>

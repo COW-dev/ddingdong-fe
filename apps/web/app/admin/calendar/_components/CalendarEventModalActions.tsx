@@ -37,7 +37,7 @@ export function CalendarEventModalActions({
           variant="primary"
           color="blue"
           size="full"
-          disabled={!canSave}
+          disabled={!canSave || isSaving || isPending}
           isLoading={isSaving}
         >
           <Body2 weight="semibold">

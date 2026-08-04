@@ -154,7 +154,8 @@ export function CalendarEventFormFields({
           value={dateRange.endDate ? toIsoDate(dateRange.endDate) : ''}
         />
       </div>
-      <Field label="반복">
+      <div className="flex flex-1 flex-col gap-2">
+        <Body2>반복</Body2>
         <Select
           value={selectedRepeatOption?.label ?? ''}
           defaultValue="반복 안 함"
@@ -171,7 +172,7 @@ export function CalendarEventFormFields({
             <Select.Option key={option.value} name={option.label} />
           ))}
         </Select>
-      </Field>
+      </div>
       {repeatType !== 'NONE' && (
         <div className="flex flex-1 flex-col gap-2">
           <Body2>반복 종료</Body2>
@@ -192,20 +193,5 @@ export function CalendarEventFormFields({
         </div>
       )}
     </>
-  );
-}
-
-function Field({
-  label,
-  children,
-}: {
-  readonly label: string;
-  readonly children: React.ReactNode;
-}) {
-  return (
-    <label className="flex flex-1 flex-col gap-2">
-      <Body2>{label}</Body2>
-      {children}
-    </label>
   );
 }
