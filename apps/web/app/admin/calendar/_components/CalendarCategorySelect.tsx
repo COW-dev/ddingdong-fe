@@ -28,7 +28,8 @@ export function CalendarCategorySelect({
       />
       <Select
         size="md"
-        value={selectedCategory?.name ?? ''}
+        value={String(value)}
+        displayValue={selectedCategory?.name}
         defaultValue="카테고리"
         aria-label="이벤트 카테고리 선택"
         onChange={(option) => {
@@ -37,12 +38,15 @@ export function CalendarCategorySelect({
             return;
           }
 
-          const category = categories.find(({ name }) => name === option);
-          if (category) onChange(category.id);
+          onChange(Number(option));
         }}
       >
         {categories.map((category) => (
-          <Select.Option key={category.id} name={category.name} />
+          <Select.Option
+            key={category.id}
+            name={category.name}
+            value={String(category.id)}
+          />
         ))}
         <Select.Option
           name={CREATE_CATEGORY_LABEL}

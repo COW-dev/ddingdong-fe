@@ -24,25 +24,26 @@ type Props = {
    * The display name for the option.
    */
   name: string;
+  value?: string;
   /**
    * Additional classes to apply to the option.
    */
   className?: string;
 } & VariantProps<typeof optionVariants>;
 
-export function Option({ name, size, className }: Props) {
+export function Option({ name, value = name, size, className }: Props) {
   const { onSelect, size: contextSize, selected } = useSelectContext();
 
   return (
     <div
       role="option"
       tabIndex={0}
-      aria-selected={selected === name}
-      onClick={() => onSelect(name)}
+      aria-selected={selected === value}
+      onClick={() => onSelect(value)}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onSelect(name);
+          onSelect(value);
         }
       }}
       className={cn(optionVariants({ size: size || contextSize }), className)}

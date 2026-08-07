@@ -23,6 +23,7 @@ type Props = {
    * The default value of the select component.
    */
   defaultValue: string;
+  displayValue?: string;
   /**
    * The content to be displayed inside the select component.
    */
@@ -35,6 +36,7 @@ export function SelectMain({
   onOpenChange,
   size = 'lg',
   defaultValue,
+  displayValue,
   children,
 }: Props) {
   const [isOpen, setIsOpen] = useState(false);
@@ -71,7 +73,7 @@ export function SelectMain({
     >
       <div ref={ref} className="relative w-full">
         <SelectButton
-          selected={value || defaultValue}
+          selected={displayValue ?? (value || defaultValue)}
           onClick={() => {
             const nextIsOpen = !isOpen;
             setIsOpen(nextIsOpen);
