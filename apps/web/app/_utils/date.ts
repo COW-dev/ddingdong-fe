@@ -77,6 +77,8 @@ export function formatDateTime(value: DateInput): string {
 
 export function formatRelativeTime(dateString: string): string {
   const date = new Date(dateString);
+  if (Number.isNaN(date.getTime())) return '';
+
   const now = new Date();
 
   const diffMs = now.getTime() - date.getTime();
