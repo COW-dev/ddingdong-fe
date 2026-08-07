@@ -119,8 +119,11 @@ export function AdminCalendarField({
         selection.value.startDate ??
         selection.lockedStartDate)
       : selection.value;
+  const today = new Date();
+  const fallbackDate =
+    today < minDate ? minDate : today > maxDate ? maxDate : today;
   const [visibleMonth, setVisibleMonth] = useState(() =>
-    getVisibleMonth(selectedDate ?? minDate),
+    getVisibleMonth(selectedDate ?? fallbackDate),
   );
   const min = toIsoDate(
     selection.mode === 'range' && selection.lockedStartDate
@@ -190,7 +193,7 @@ export function AdminCalendarField({
             return;
           }
 
-          setVisibleMonth(getVisibleMonth(selectedDate ?? minDate));
+          setVisibleMonth(getVisibleMonth(selectedDate ?? fallbackDate));
           setIsOpen(true);
           onOpenChange?.(true);
         }}
