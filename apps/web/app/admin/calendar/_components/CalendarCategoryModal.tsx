@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import {
   Body2,
@@ -52,6 +52,12 @@ export function CalendarCategoryModal({
     updateCategory.isPending ||
     deleteCategory.isPending;
   const categoryToDelete = categories.find(({ id }) => id === deleteCategoryId);
+
+  useEffect(() => {
+    if (deleteCategoryId !== null && categoryToDelete === undefined) {
+      setDeleteCategoryId(null);
+    }
+  }, [categoryToDelete, deleteCategoryId]);
 
   function resetForm() {
     setCategoryName('');
