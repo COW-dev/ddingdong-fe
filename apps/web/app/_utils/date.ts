@@ -25,6 +25,16 @@ function parseDate(value: DateInput): Date | null {
   }
 
   const dateOnlyMatch = DATE_ONLY_PATTERN.exec(value);
+  const dateTimeMatch = DATE_TIME_PATTERN.exec(value);
+  if (
+    dateTimeMatch &&
+    (!parseDateMatch(dateTimeMatch) ||
+      Number(dateTimeMatch[4]) > 23 ||
+      Number(dateTimeMatch[5]) > 59 ||
+      Number(dateTimeMatch[6]) > 59)
+  ) {
+    return null;
+  }
   const date = dateOnlyMatch ? parseDateMatch(dateOnlyMatch) : new Date(value);
 
   return !date || Number.isNaN(date.getTime()) ? null : date;
