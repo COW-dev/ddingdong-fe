@@ -85,16 +85,19 @@ describe('date utilities', () => {
     it('preserves the existing minute boundary behavior', () => {
       // Given
       vi.useFakeTimers();
-      vi.setSystemTime(new Date(2026, 6, 15, 14, 30));
+      try {
+        vi.setSystemTime(new Date(2026, 6, 15, 14, 30));
 
-      // When
-      const result = formatRelativeTime(
-        new Date(2026, 6, 15, 14, 29).toISOString(),
-      );
+        // When
+        const result = formatRelativeTime(
+          new Date(2026, 6, 15, 14, 29).toISOString(),
+        );
 
-      // Then
-      expect(result).toBe('1분 전');
-      vi.useRealTimers();
+        // Then
+        expect(result).toBe('1분 전');
+      } finally {
+        vi.useRealTimers();
+      }
     });
   });
 });
