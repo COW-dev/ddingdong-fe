@@ -54,7 +54,7 @@ export function CalendarSection({ role }: CalendarSectionProps) {
   }
 
   return (
-    <Flex as="section" dir="col" className="mt-8 w-full">
+    <Flex as="section" dir="col" className="mt-8 hidden w-full md:flex">
       {isAdmin && isCategoryError && (
         <Body3 role="alert" className="mb-4 text-red-300">
           카테고리를 불러오지 못해 일정을 등록할 수 없어요.
