@@ -6,7 +6,6 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 
-import { bannerQueryOptions } from '@/_api/queries/banner';
 import { clubQueryOptions } from '@/_api/queries/club';
 import { documentQueryOptions } from '@/_api/queries/document';
 import { noticeQueryOptions } from '@/_api/queries/notice';
@@ -23,7 +22,6 @@ export default async function AdminHomePage() {
   await Promise.all([
     queryClient.prefetchQuery(documentQueryOptions.all(1)),
     queryClient.prefetchQuery(noticeQueryOptions.all(1)),
-    queryClient.prefetchQuery(bannerQueryOptions.all()),
     ...(role === ROLE_TYPE.ROLE_CLUB
       ? [queryClient.prefetchQuery(clubQueryOptions.my())]
       : []),

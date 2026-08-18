@@ -5,8 +5,6 @@ import { useEffect } from 'react';
 import { Flex } from '@dds/shared';
 import { useQuery, useSuspenseQueries } from '@tanstack/react-query';
 
-import { ClubCarousel } from '@/(main)/_components/ClubCarousel';
-import { bannerQueryOptions } from '@/_api/queries/banner';
 import { clubQueryOptions } from '@/_api/queries/club';
 import { documentQueryOptions } from '@/_api/queries/document';
 import { noticeQueryOptions } from '@/_api/queries/notice';
@@ -26,14 +24,9 @@ export default function AdminPage({ role }: { readonly role: Role }) {
     enabled: Boolean(role) && role === ROLE_TYPE.ROLE_CLUB,
   });
 
-  const [{ data: documentData }, { data: noticeData }, { data: bannerData }] =
-    useSuspenseQueries({
-      queries: [
-        documentQueryOptions.all(1),
-        noticeQueryOptions.all(1),
-        bannerQueryOptions.all(),
-      ],
-    });
+  const [{ data: documentData }, { data: noticeData }] = useSuspenseQueries({
+    queries: [documentQueryOptions.all(1), noticeQueryOptions.all(1)],
+  });
 
   const setClub = useClubStore((state) => state.setClub);
 
@@ -53,9 +46,6 @@ export default function AdminPage({ role }: { readonly role: Role }) {
         />
       </Flex>
       <CalendarSection role={role} />
-      <div className="mt-7">
-        <ClubCarousel bannerData={bannerData} />
-      </div>
       <DashboardGrid role={role} />
       <NoticeCard role={role} noticeData={noticeData?.notices} />
       <DocumentCard role={role} documentData={documentData?.documents} />
