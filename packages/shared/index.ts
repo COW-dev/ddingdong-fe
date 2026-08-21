@@ -4,6 +4,16 @@ export { Badge } from './ui/Badge';
 export { Button } from './ui/Button';
 export { Carousel, CarouselContent, CarouselItem } from './ui/Carousel';
 export { Card } from './ui/Card';
+export { Calendar, CalendarEvent, parseCalendarDate, parseCalendarMonth } from './ui/Calendar';
+export type {
+  CalendarDate,
+  CalendarEventData,
+  CalendarEventProps,
+  CalendarMonth,
+  CalendarProps,
+} from './ui/Calendar';
+export { CalendarWidget } from './ui/CalendarWidget';
+export type { CalendarWidgetProps, CalendarWidgetRange } from './ui/CalendarWidget';
 export { Checkbox } from './ui/Checkbox/Checkbox';
 export { DoubleButton } from './ui/DoubleButton';
 export { Drawer } from './ui/Drawer';

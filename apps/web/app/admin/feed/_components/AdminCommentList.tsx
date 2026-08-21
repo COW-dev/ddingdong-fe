@@ -14,7 +14,7 @@ import { useAdminDeleteFeedComment } from '@/_api/mutations/feed';
 import { Comment } from '@/_api/types/feed';
 import { OptimizedImage } from '@/_components/common/OptimizedImage';
 import Admin from '@/_public/assets/admin.webp';
-import { formatRelativeTime } from '@/_utils/formatRelativeTime';
+import { formatRelativeTime } from '@/_utils/date';
 
 import { DeleteModal } from './DeleteModal';
 

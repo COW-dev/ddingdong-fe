@@ -1,21 +1,17 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
-  Calendar,
-  type DateRange,
-  type ISODateString,
-} from '@astryxdesign/core/Calendar';
-import { z } from 'zod';
+  CalendarWidget,
+  parseCalendarDate,
+  parseCalendarMonth,
+  type CalendarDate,
+  type CalendarMonth,
+  type CalendarWidgetRange,
+} from '@dds/shared';
 
 import type { NullableDateRange } from '@/_api/types/calanderDate';
-
-import './AdminCalendarField.css';
-
-const isoDateSchema = z.custom<ISODateString>(
-  (value) => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value),
-);
 
 export type CalendarDateRange = NullableDateRange;
 
@@ -27,6 +23,7 @@ type AdminCalendarFieldBaseProps = {
   readonly disabled?: boolean;
   readonly className?: string;
   readonly popoverClassName?: string;
+  readonly onOpenChange?: (isOpen: boolean) => void;
 };
 
 type AdminSingleCalendarFieldProps = AdminCalendarFieldBaseProps & {
@@ -46,29 +43,37 @@ type AdminCalendarFieldProps =
   | AdminSingleCalendarFieldProps
   | AdminRangeCalendarFieldProps;
 
-export function toIsoDate(date: Date): ISODateString {
+export function toIsoDate(date: Date): CalendarDate {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const day = String(date.getDate()).padStart(2, '0');
-  return isoDateSchema.parse(`${year}-${month}-${day}`);
+  return parseCalendarDate(`${year}-${month}-${day}`).value;
 }
 
-export function fromIsoDate(value: ISODateString): Date {
+export function fromIsoDate(value: CalendarDate): Date {
   const year = Number.parseInt(value.slice(0, 4), 10);
   const month = Number.parseInt(value.slice(5, 7), 10);
   const day = Number.parseInt(value.slice(8, 10), 10);
   return new Date(year, month - 1, day);
 }
 
-function toCalendarRange(value: CalendarDateRange): DateRange | undefined {
-  if (!value.startDate || !value.endDate) {
-    return undefined;
-  }
-
+function toCalendarRange(
+  value: CalendarDateRange,
+  lockedStartDate?: Date | null,
+): CalendarWidgetRange {
   return {
-    start: toIsoDate(value.startDate),
-    end: toIsoDate(value.endDate),
+    startDate: lockedStartDate
+      ? toIsoDate(lockedStartDate)
+      : value.startDate
+        ? toIsoDate(value.startDate)
+        : null,
+    endDate:
+      lockedStartDate || !value.endDate ? null : toIsoDate(value.endDate),
   };
+}
+
+function getVisibleMonth(date: Date): CalendarMonth {
+  return parseCalendarMonth(toIsoDate(date).slice(0, 7)).value;
 }
 
 function formatDisplayDate(date: Date | null): string {
@@ -102,25 +107,45 @@ export function AdminCalendarField({
   disabled = false,
   className = '',
   popoverClassName = '',
+  onOpenChange,
   ...selection
 }: AdminCalendarFieldProps) {
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
-  const min = useMemo(() => toIsoDate(minDate), [minDate]);
-  const max = useMemo(() => toIsoDate(maxDate), [maxDate]);
+  const selectedDate =
+    selection.mode === 'range'
+      ? (selection.value.endDate ??
+        selection.value.startDate ??
+        selection.lockedStartDate)
+      : selection.value;
+  const today = new Date();
+  const fallbackDate =
+    today < minDate ? minDate : today > maxDate ? maxDate : today;
+  const [visibleMonth, setVisibleMonth] = useState(() =>
+    getVisibleMonth(selectedDate ?? fallbackDate),
+  );
+  const min = toIsoDate(
+    selection.mode === 'range' && selection.lockedStartDate
+      ? selection.lockedStartDate
+      : minDate,
+  );
+  const max = toIsoDate(maxDate);
   const hasValue =
     selection.mode === 'range'
       ? Boolean(selection.value.startDate && selection.value.endDate)
       : Boolean(selection.value);
+  const closePopover = useCallback(
+    (shouldReturnFocus: boolean) => {
+      setIsOpen(false);
+      onOpenChange?.(false);
 
-  const closePopover = useCallback((shouldReturnFocus: boolean) => {
-    setIsOpen(false);
-
-    if (shouldReturnFocus) {
-      window.requestAnimationFrame(() => triggerRef.current?.focus());
-    }
-  }, []);
+      if (shouldReturnFocus) {
+        window.requestAnimationFrame(() => triggerRef.current?.focus());
+      }
+    },
+    [onOpenChange],
+  );
 
   useEffect(() => {
     if (!isOpen) return;
@@ -168,7 +193,9 @@ export function AdminCalendarField({
             return;
           }
 
+          setVisibleMonth(getVisibleMonth(selectedDate ?? fallbackDate));
           setIsOpen(true);
+          onOpenChange?.(true);
         }}
         disabled={disabled}
       >
@@ -179,40 +206,46 @@ export function AdminCalendarField({
         <div
           role="dialog"
           aria-label={ariaLabel}
-          className={`absolute right-0 z-30 mt-2 rounded-xl border border-gray-200 bg-white p-3 shadow-xl ${popoverClassName}`}
+          className={`absolute left-1/2 z-30 mt-2 w-[min(444px,calc(100vw-2rem))] -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-3 shadow-xl ${popoverClassName}`}
         >
           {selection.mode === 'range' ? (
-            <Calendar
+            <CalendarWidget
               mode="range"
-              value={toCalendarRange(selection.value)}
+              visibleMonth={visibleMonth}
+              onVisibleMonthChange={setVisibleMonth}
+              value={toCalendarRange(
+                selection.value,
+                selection.lockedStartDate,
+              )}
               onChange={(selectedValue) => {
                 selection.onChange({
                   startDate: selection.lockedStartDate
                     ? selection.lockedStartDate
-                    : fromIsoDate(selectedValue.start),
-                  endDate: fromIsoDate(selectedValue.end),
+                    : selectedValue.startDate
+                      ? fromIsoDate(selectedValue.startDate)
+                      : null,
+                  endDate: selectedValue.endDate
+                    ? fromIsoDate(selectedValue.endDate)
+                    : null,
                 });
-                closePopover(true);
+
+                if (selectedValue.endDate) closePopover(true);
               }}
-              min={
-                selection.lockedStartDate
-                  ? toIsoDate(selection.lockedStartDate)
-                  : min
-              }
-              max={max}
-              weekStartsOn={0}
+              minDate={min}
+              maxDate={max}
             />
           ) : (
-            <Calendar
+            <CalendarWidget
               mode="single"
-              value={selection.value ? toIsoDate(selection.value) : undefined}
+              visibleMonth={visibleMonth}
+              onVisibleMonthChange={setVisibleMonth}
+              value={selection.value ? toIsoDate(selection.value) : null}
               onChange={(selectedValue) => {
                 selection.onChange(fromIsoDate(selectedValue));
                 closePopover(true);
               }}
-              min={min}
-              max={max}
-              weekStartsOn={0}
+              minDate={min}
+              maxDate={max}
             />
           )}
         </div>

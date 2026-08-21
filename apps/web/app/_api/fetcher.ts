@@ -105,6 +105,15 @@ export async function parseResponse<T>(
   }
 }
 
+async function discardResponse(response: ResponsePromise): Promise<void> {
+  try {
+    await response;
+  } catch (error) {
+    Sentry.captureException(error);
+    throw error;
+  }
+}
+
 export const fetcher = {
   get: <T>(pathname: string, options?: Options) =>
     parseResponse<T>(instance.get(pathname, options)),
@@ -118,4 +127,10 @@ export const fetcher = {
     parseResponse<T>(instance.delete(pathname, options)),
   patch: <T>(pathname: string, options?: Options) =>
     parseResponse<T>(instance.patch(pathname, options)),
+  postWithoutResponse: (pathname: string, options?: Options) =>
+    discardResponse(instance.post(pathname, options)),
+  putWithoutResponse: (pathname: string, options?: Options) =>
+    discardResponse(instance.put(pathname, options)),
+  deleteWithoutResponse: (pathname: string, options?: Options) =>
+    discardResponse(instance.delete(pathname, options)),
 };

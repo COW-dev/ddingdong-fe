@@ -18,22 +18,33 @@ type Props = {
    * Callback function called when the selected option changes.
    */
   onChange?: (option: string) => void;
+  onOpenChange?: (isOpen: boolean) => void;
   /**
    * The default value of the select component.
    */
   defaultValue: string;
+  displayValue?: string;
   /**
    * The content to be displayed inside the select component.
    */
   children: ReactNode;
 } & Omit<ComponentProps<'select'>, 'value' | 'onChange' | 'size'>;
 
-export function SelectMain({ value, onChange, size = 'lg', defaultValue, children }: Props) {
+export function SelectMain({
+  value,
+  onChange,
+  onOpenChange,
+  size = 'lg',
+  defaultValue,
+  displayValue,
+  children,
+}: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const handleSelect = (option: string) => {
     setIsOpen(false);
+    onOpenChange?.(false);
     onChange?.(option);
   };
 
@@ -41,6 +52,7 @@ export function SelectMain({ value, onChange, size = 'lg', defaultValue, childre
     const handleClickOutside = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         setIsOpen(false);
+        onOpenChange?.(false);
       }
     };
     if (isOpen) {
@@ -49,7 +61,7 @@ export function SelectMain({ value, onChange, size = 'lg', defaultValue, childre
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [isOpen]);
+  }, [isOpen, onOpenChange]);
 
   return (
     <SelectContext.Provider
@@ -61,8 +73,12 @@ export function SelectMain({ value, onChange, size = 'lg', defaultValue, childre
     >
       <div ref={ref} className="relative w-full">
         <SelectButton
-          selected={value || defaultValue}
-          onClick={() => setIsOpen(!isOpen)}
+          selected={displayValue ?? (value || defaultValue)}
+          onClick={() => {
+            const nextIsOpen = !isOpen;
+            setIsOpen(nextIsOpen);
+            onOpenChange?.(nextIsOpen);
+          }}
           size={size}
           isOpen={isOpen}
         />

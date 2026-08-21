@@ -1,8 +1,7 @@
 import { Badge, Body2, Caption1, Card, Flex, Tooltip } from '@dds/shared';
 
 import { EmailDeliveryStatus } from '@/_api/types/email';
-
-import { formatDate } from '../../_utils/formatDate';
+import { formatDateTime } from '@/_utils/date';
 
 export function ApplicantCard({
   name,
@@ -23,7 +22,7 @@ export function ApplicantCard({
             </Flex>
           </Flex>
           <Caption1 className="text-gray-300">
-            {sendAt && formatDate(sendAt)}
+            {sendAt && formatDateTime(sendAt)}
           </Caption1>
         </Flex>
         {isPermanentFailure && (

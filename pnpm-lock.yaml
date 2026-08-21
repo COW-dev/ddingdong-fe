@@ -139,12 +139,6 @@ importers:
 
   apps/web:
     dependencies:
-      '@astryxdesign/core':
-        specifier: ^0.1.2
-        version: 0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@astryxdesign/theme-neutral':
-        specifier: ^0.1.2
-        version: 0.1.2(@astryxdesign/core@0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)
       '@channel.io/channel-web-sdk-loader':
         specifier: ^2.0.0
         version: 2.0.2
@@ -487,24 +481,6 @@ packages:
       {
         integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==,
       }
-
-  '@astryxdesign/core@0.1.2':
-    resolution:
-      {
-        integrity: sha512-SJOEXUaRvcVgGbdPwV5UL5aYMbwIl09H2yQb3hPh4NNGWqmLTHE05IFTNRi37Mk9ywoo01+UM2ZrewmJe39f0A==,
-      }
-    peerDependencies:
-      react: '>=19.0.0'
-      react-dom: '>=19.0.0'
-
-  '@astryxdesign/theme-neutral@0.1.2':
-    resolution:
-      {
-        integrity: sha512-kEBBJ7O5H+27IACsGEqZSEVFy2r4VlBu4Vzfm/LOJ/Ez6C/RBTCXq9Iu8CoZS4Qt/WkYUvqLPDiJlgXuALy9uQ==,
-      }
-    peerDependencies:
-      '@astryxdesign/core': 0.1.2
-      react: '>=19'
 
   '@babel/code-frame@7.29.0':
     resolution:
@@ -10403,18 +10379,6 @@ snapshots:
   '@asamuzakjp/generational-cache@1.0.1': {}
 
   '@asamuzakjp/nwsapi@2.3.9': {}
-
-  '@astryxdesign/core@0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@stylexjs/stylex': 0.18.3
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-
-  '@astryxdesign/theme-neutral@0.1.2(@astryxdesign/core@0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@astryxdesign/core': 0.1.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      lucide-react: 1.23.0(react@19.2.4)
-      react: 19.2.4
 
   '@babel/code-frame@7.29.0':
     dependencies:

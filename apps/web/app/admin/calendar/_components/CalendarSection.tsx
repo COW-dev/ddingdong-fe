@@ -1,0 +1,109 @@
+'use client';
+
+import { useMemo, useState } from 'react';
+
+import {
+  Body3,
+  Calendar,
+  Flex,
+  parseCalendarMonth,
+  type CalendarDate,
+} from '@dds/shared';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useMediaQuery } from 'usehooks-ts';
+
+import { calendarQueryOptions } from '@/_api/queries/calendar';
+import { ROLE_TYPE, type Role } from '@/_constants/role';
+
+import {
+  getCurrentCalendarDate,
+  toCalendarPageEvents,
+  type CalendarPageEvent,
+} from '../_utils/calendarViewModel';
+
+import { CalendarEventModal } from './CalendarEventModal';
+
+type CalendarSectionProps = {
+  readonly role: Role;
+};
+
+export function CalendarSection({ role }: CalendarSectionProps) {
+  const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
+  const isDesktopViewport = useMediaQuery('(min-width: 768px)');
+  const [visibleMonth, setVisibleMonth] = useState(
+    parseCalendarMonth(getCurrentCalendarDate().slice(0, 7)).value,
+  );
+  const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const [createDate, setCreateDate] = useState<CalendarDate | null>(null);
+  const { year, month } = parseCalendarMonth(visibleMonth);
+  const queryScope = isAdmin ? 'admin' : 'club';
+  const { data, isError } = useQuery({
+    ...calendarQueryOptions.month(queryScope, year, month),
+    enabled: isDesktopViewport,
+    placeholderData: keepPreviousData,
+  });
+  const { data: categoryData, isError: isCategoryError } = useQuery({
+    ...calendarQueryOptions.categories(),
+    enabled: isAdmin && isDesktopViewport,
+  });
+  const categories = categoryData?.categories ?? [];
+  const events = useMemo(
+    () => toCalendarPageEvents(data?.events ?? []),
+    [data?.events],
+  );
+
+  function handleEventClick(event: CalendarPageEvent) {
+    setSelectedEventId(event.eventId);
+  }
+
+  return (
+    <Flex as="section" dir="col" className="mt-8 hidden w-full md:flex">
+      {isAdmin && isCategoryError && (
+        <Body3 role="alert" className="mb-4 text-red-300">
+          카테고리를 불러오지 못해 일정을 등록할 수 없어요.
+        </Body3>
+      )}
+
+      {isError && (
+        <Flex
+          alignItems="center"
+          justifyContent="end"
+          className="min-h-10 border-y border-gray-200 bg-gray-50 px-4 py-3"
+        >
+          <span role="alert" className="text-sm font-medium text-red-300">
+            일정을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.
+          </span>
+        </Flex>
+      )}
+
+      <Calendar
+        visibleMonth={visibleMonth}
+        events={events}
+        onVisibleMonthChange={setVisibleMonth}
+        onEventClick={isAdmin ? handleEventClick : undefined}
+        onDateCreate={isAdmin && !isCategoryError ? setCreateDate : undefined}
+      />
+
+      {isAdmin && (
+        <>
+          <CalendarEventModal
+            mode="create"
+            categories={categories}
+            initialDate={createDate ?? getCurrentCalendarDate()}
+            isOpen={createDate !== null}
+            closeModal={() => setCreateDate(null)}
+          />
+          {selectedEventId !== null && (
+            <CalendarEventModal
+              mode="edit"
+              eventId={selectedEventId}
+              categories={categories}
+              isOpen
+              closeModal={() => setSelectedEventId(null)}
+            />
+          )}
+        </>
+      )}
+    </Flex>
+  );
+}
