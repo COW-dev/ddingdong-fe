@@ -10,6 +10,7 @@ import {
   type CalendarDate,
 } from '@dds/shared';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useMediaQuery } from 'usehooks-ts';
 
 import { calendarQueryOptions } from '@/_api/queries/calendar';
 import { ROLE_TYPE, type Role } from '@/_constants/role';
@@ -28,6 +29,7 @@ type CalendarSectionProps = {
 
 export function CalendarSection({ role }: CalendarSectionProps) {
   const isAdmin = role === ROLE_TYPE.ROLE_ADMIN;
+  const isDesktopViewport = useMediaQuery('(min-width: 768px)');
   const [visibleMonth, setVisibleMonth] = useState(
     parseCalendarMonth(getCurrentCalendarDate().slice(0, 7)).value,
   );
@@ -37,11 +39,12 @@ export function CalendarSection({ role }: CalendarSectionProps) {
   const queryScope = isAdmin ? 'admin' : 'club';
   const { data, isError } = useQuery({
     ...calendarQueryOptions.month(queryScope, year, month),
+    enabled: isDesktopViewport,
     placeholderData: keepPreviousData,
   });
   const { data: categoryData, isError: isCategoryError } = useQuery({
     ...calendarQueryOptions.categories(),
-    enabled: isAdmin,
+    enabled: isAdmin && isDesktopViewport,
   });
   const categories = categoryData?.categories ?? [];
   const events = useMemo(
