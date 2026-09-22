@@ -36,12 +36,12 @@ export function ApplicantInfo({ ...props }: Props) {
             justifyContent="start"
             alignItems="start"
             gap={5}
-            className="md:mr-6 md:flex-col md:gap-3"
+            className="min-w-0 max-w-full lg:mr-6 lg:flex-col lg:gap-3"
           >
-            <Body1 weight="bold" className="text-blue-500">
+            <Body1 weight="bold" className="shrink-0 text-blue-500">
               {label}
             </Body1>
-            <Body2 weight="medium" className="text-gray-600">
+            <Body2 weight="medium" className="min-w-0 break-all text-gray-600">
               {value}
             </Body2>
           </Flex>
@@ -56,7 +56,7 @@ export function ApplyContentContainer({ children }: PropsWithChildren) {
     <Flex
       justifyContent="start"
       alignItems="start"
-      className="box-border h-full w-full flex-col rounded-[10px] bg-blue-50 px-5 py-8 md:flex-row md:px-16"
+      className="box-border h-full w-full flex-col rounded-[10px] bg-blue-50 px-5 py-8 lg:flex-row lg:px-16"
     >
       {children}
     </Flex>
