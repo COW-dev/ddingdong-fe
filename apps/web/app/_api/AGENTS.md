@@ -11,7 +11,6 @@ _api/
 |-- fetcher.ts              # ky instance, auth cookies, error normalization
 |-- ClientQueryProvider.tsx # React Query provider/client
 |-- useCookie.ts            # Cookie helpers
-|-- revalidate.ts           # Revalidation helper
 |-- queries/                # Domain query functions
 |-- mutations/              # Domain mutation functions
 |-- services/               # Non-CRUD service helpers

@@ -1,17 +1,15 @@
 import { Suspense } from 'react';
 
+import { CACHE_TAG } from '@/_constants/cacheTag';
+
+import { Banner } from '../_api/types/banner';
 import { Club } from '../_api/types/club';
 
 import { ClubCarousel } from './_components/ClubCarousel';
 import { OverviewClientPage } from './_pages/OverviewClientPage';
 
-export const revalidate = 3600;
+export const revalidate = 300;
 export const dynamic = 'force-static';
-
-const CACHE_TAGS = {
-  CLUBS: 'clubs',
-  BANNERS: 'banners',
-} as const;
 
 async function getClubsData() {
   const headers: HeadersInit = {
@@ -21,7 +19,7 @@ async function getClubsData() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}clubs`, {
     headers,
     next: {
-      tags: [CACHE_TAGS.CLUBS],
+      tags: [CACHE_TAG.CLUBS],
     },
   });
 
@@ -32,7 +30,7 @@ async function getClubsData() {
   return res.json();
 }
 
-async function getBannersData() {
+async function getBannersData(): Promise<Banner[]> {
   try {
     const headers: HeadersInit = {
       'Content-Type': 'application/json',
@@ -41,19 +39,19 @@ async function getBannersData() {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}banners`, {
       headers,
       next: {
-        tags: [CACHE_TAGS.BANNERS],
+        tags: [CACHE_TAG.BANNERS],
       },
     });
 
     if (!res.ok) {
       console.error(`Failed to fetch banners: ${res.status}`);
-      return { data: [] };
+      return [];
     }
 
     return res.json();
   } catch (error) {
     console.error('Failed to fetch banners:', error);
-    return { data: [] };
+    return [];
   }
 }
 
