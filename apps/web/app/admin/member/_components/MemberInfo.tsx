@@ -77,12 +77,12 @@ export default function MemberInfo({ member }: MemberInfoProps) {
         as="li"
         alignItems="center"
         justifyContent="between"
-        className="w-full border-t border-gray-200 p-1"
+        className="w-full min-w-0 border-t border-gray-200 p-1"
       >
         <Flex
           dir="col"
           justifyContent="center"
-          className={`mt-3 w-full rounded-xl p-3 ${isEditing && `bg-gray-100`}`}
+          className={`mt-3 w-full min-w-0 rounded-xl p-3 ${isEditing && `bg-gray-100`}`}
         >
           <Flex alignItems="center" justifyContent="between" gap={2}>
             <input
@@ -90,11 +90,11 @@ export default function MemberInfo({ member }: MemberInfoProps) {
               value={memberInfo.name}
               name="name"
               placeholder="이름 입력"
-              className="text-md bg-inherit font-semibold outline-none"
+              className="text-md min-w-0 flex-1 bg-inherit font-semibold outline-none"
               onChange={(e) => handleMemberInfoChange(e)}
               disabled={!isEditing}
             />
-            <Flex gap={1}>
+            <Flex gap={1} className="shrink-0">
               {isEditing ? (
                 <>
                   <IconButton
@@ -128,7 +128,7 @@ export default function MemberInfo({ member }: MemberInfoProps) {
                 name="studentNumber"
                 placeholder="학번"
                 value={memberInfo.studentNumber}
-                className="text-md w-18 bg-inherit font-semibold outline-none"
+                className="text-md w-18 shrink-0 bg-inherit font-semibold outline-none"
                 onChange={(e) => handleMemberInfoChange(e)}
                 disabled={!isEditing}
               />
@@ -138,13 +138,13 @@ export default function MemberInfo({ member }: MemberInfoProps) {
                 name="department"
                 placeholder="학과"
                 value={memberInfo.department}
-                className="text-md ml-1 bg-inherit font-semibold outline-none"
+                className="text-md ml-1 min-w-0 flex-1 bg-inherit font-semibold outline-none"
                 onChange={(e) => handleMemberInfoChange(e)}
                 disabled={!isEditing}
               />
             </Flex>
             <Flex>
-              <Flex alignItems="center" className="pr-1">
+              <Flex alignItems="center" className="shrink-0 pr-1">
                 <Caption1
                   weight="bold"
                   className={`bg-inherit ${isEditing ? `w-14` : `mr-1 w-16`}`}
@@ -164,7 +164,7 @@ export default function MemberInfo({ member }: MemberInfoProps) {
                 name="phoneNumber"
                 placeholder="전화번호"
                 value={memberInfo.phoneNumber}
-                className="text-md ml-1 bg-inherit font-semibold outline-none"
+                className="text-md ml-1 min-w-0 flex-1 bg-inherit font-semibold outline-none"
                 onChange={(e) => handleMemberInfoChange(e)}
                 disabled={!isEditing}
               />
