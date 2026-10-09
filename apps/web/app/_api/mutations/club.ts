@@ -1,8 +1,10 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
+import { revalidateCache } from '@/_actions/revalidate';
+import { CACHE_TAG } from '@/_constants/cacheTag';
+
 import { fetcher } from '../fetcher';
 import { clubQueryKeys } from '../queries/club';
-import { revalidateCache } from '../revalidate';
 import { UpdateClubDetailAPIRequest } from '../types/club';
 import { UrlType } from '../types/file';
 
@@ -58,7 +60,7 @@ export const useAddClub = () => {
         queryKey: [...clubQueryKeys.admin()],
         exact: false,
       });
-      await revalidateCache('clubs');
+      await revalidateCache(CACHE_TAG.CLUBS);
     },
   });
 };
@@ -79,7 +81,7 @@ export const useDeleteClub = () => {
         queryKey: [...clubQueryKeys.admin()],
         exact: false,
       });
-      await revalidateCache('clubs');
+      await revalidateCache(CACHE_TAG.CLUBS);
     },
   });
 };
