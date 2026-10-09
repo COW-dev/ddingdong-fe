@@ -1,15 +1,23 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import {
   CalendarWidget,
+  cn,
   parseCalendarDate,
   parseCalendarMonth,
   type CalendarDate,
   type CalendarMonth,
   type CalendarWidgetRange,
 } from '@dds/shared';
+import { createPortal } from 'react-dom';
 
 import type { NullableDateRange } from '@/_api/types/calanderDate';
 
@@ -113,6 +121,12 @@ export function AdminCalendarField({
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const [popoverPosition, setPopoverPosition] = useState<{
+    top: number;
+    left: number;
+    maxHeight?: number;
+  }>({ top: 0, left: 0 });
   const selectedDate =
     selection.mode === 'range'
       ? (selection.value.endDate ??
@@ -153,7 +167,8 @@ export function AdminCalendarField({
     const handlePointerDown = (event: PointerEvent) => {
       if (
         event.target instanceof Node &&
-        !containerRef.current?.contains(event.target)
+        !containerRef.current?.contains(event.target) &&
+        !popoverRef.current?.contains(event.target)
       ) {
         closePopover(false);
       }
@@ -175,6 +190,46 @@ export function AdminCalendarField({
     };
   }, [closePopover, isOpen]);
 
+  useLayoutEffect(() => {
+    if (!isOpen) return;
+
+    const updatePosition = () => {
+      const trigger = triggerRef.current?.getBoundingClientRect();
+      const popover = popoverRef.current?.getBoundingClientRect();
+      if (!trigger || !popover) return;
+
+      const headerBottom =
+        document.querySelector('.admin-header')?.getBoundingClientRect()
+          .bottom ?? 0;
+      const minTop = Math.max(16, headerBottom + 8);
+      const below = Math.max(minTop, trigger.bottom + 8);
+      const above = trigger.top - popover.height - 8;
+      const top =
+        below + popover.height <= window.innerHeight - 16
+          ? below
+          : above >= minTop
+            ? above
+            : minTop;
+      const left = Math.max(
+        16,
+        Math.min(trigger.left, window.innerWidth - popover.width - 16),
+      );
+      setPopoverPosition({
+        top,
+        left,
+        maxHeight: Math.max(0, window.innerHeight - top - 16),
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [isOpen, visibleMonth]);
+
   return (
     <div
       ref={containerRef}
@@ -186,7 +241,7 @@ export function AdminCalendarField({
         aria-label={ariaLabel}
         aria-haspopup="dialog"
         aria-expanded={isOpen}
-        className={`w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left text-base transition outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300 ${hasValue ? 'text-gray-600' : 'text-gray-400'}`}
+        className={`w-full rounded-xl border border-gray-200 bg-white px-4 py-3.5 text-left text-base outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-200 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-300 ${hasValue ? 'text-gray-600' : 'text-gray-400'}`}
         onClick={() => {
           if (isOpen) {
             closePopover(false);
@@ -202,54 +257,61 @@ export function AdminCalendarField({
         {getDisplayValue(selection.value, placeholder)}
       </button>
 
-      {isOpen && (
-        <div
-          role="dialog"
-          aria-label={ariaLabel}
-          className={`absolute left-1/2 z-30 mt-2 w-[min(444px,calc(100vw-2rem))] -translate-x-1/2 rounded-xl border border-gray-200 bg-white p-3 shadow-xl ${popoverClassName}`}
-        >
-          {selection.mode === 'range' ? (
-            <CalendarWidget
-              mode="range"
-              visibleMonth={visibleMonth}
-              onVisibleMonthChange={setVisibleMonth}
-              value={toCalendarRange(
-                selection.value,
-                selection.lockedStartDate,
-              )}
-              onChange={(selectedValue) => {
-                selection.onChange({
-                  startDate: selection.lockedStartDate
-                    ? selection.lockedStartDate
-                    : selectedValue.startDate
-                      ? fromIsoDate(selectedValue.startDate)
+      {isOpen &&
+        createPortal(
+          <div
+            ref={popoverRef}
+            role="dialog"
+            aria-label={ariaLabel}
+            className={cn(
+              'fixed z-[60] max-h-[calc(100dvh-2rem)] w-[min(320px,calc(100vw-2rem))] overflow-y-auto rounded-xl border border-gray-200 bg-white p-2 shadow-xl md:w-[min(444px,calc(100vw-2rem))] md:p-3',
+              popoverClassName,
+            )}
+            style={popoverPosition}
+          >
+            {selection.mode === 'range' ? (
+              <CalendarWidget
+                mode="range"
+                visibleMonth={visibleMonth}
+                onVisibleMonthChange={setVisibleMonth}
+                value={toCalendarRange(
+                  selection.value,
+                  selection.lockedStartDate,
+                )}
+                onChange={(selectedValue) => {
+                  selection.onChange({
+                    startDate: selection.lockedStartDate
+                      ? selection.lockedStartDate
+                      : selectedValue.startDate
+                        ? fromIsoDate(selectedValue.startDate)
+                        : null,
+                    endDate: selectedValue.endDate
+                      ? fromIsoDate(selectedValue.endDate)
                       : null,
-                  endDate: selectedValue.endDate
-                    ? fromIsoDate(selectedValue.endDate)
-                    : null,
-                });
+                  });
 
-                if (selectedValue.endDate) closePopover(true);
-              }}
-              minDate={min}
-              maxDate={max}
-            />
-          ) : (
-            <CalendarWidget
-              mode="single"
-              visibleMonth={visibleMonth}
-              onVisibleMonthChange={setVisibleMonth}
-              value={selection.value ? toIsoDate(selection.value) : null}
-              onChange={(selectedValue) => {
-                selection.onChange(fromIsoDate(selectedValue));
-                closePopover(true);
-              }}
-              minDate={min}
-              maxDate={max}
-            />
-          )}
-        </div>
-      )}
+                  if (selectedValue.endDate) closePopover(true);
+                }}
+                minDate={min}
+                maxDate={max}
+              />
+            ) : (
+              <CalendarWidget
+                mode="single"
+                visibleMonth={visibleMonth}
+                onVisibleMonthChange={setVisibleMonth}
+                value={selection.value ? toIsoDate(selection.value) : null}
+                onChange={(selectedValue) => {
+                  selection.onChange(fromIsoDate(selectedValue));
+                  closePopover(true);
+                }}
+                minDate={min}
+                maxDate={max}
+              />
+            )}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

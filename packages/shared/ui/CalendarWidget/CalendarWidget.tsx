@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 
+import { cn } from '../../lib/core';
 import {
   createMonthGrid,
   getLocalCalendarDate,
@@ -148,14 +149,14 @@ export function CalendarWidget(props: CalendarWidgetProps) {
   return (
     <section
       aria-label={`${heading} 날짜 선택`}
-      className={`w-full overflow-hidden rounded-lg bg-white text-gray-600 ${props.className ?? ''}`}
+      className={cn('w-full overflow-hidden rounded-lg bg-white text-gray-600', props.className)}
     >
       <div className="px-4 py-3">
         <Flex as="header" alignItems="center" justifyContent="between" className="h-11">
           <IconButton
             aria-label="이전 달"
             disabled={props.disabled || !canGoPrevious}
-            className="focus-visible:ring-primary-400 flex size-8 items-center justify-center rounded-full bg-gray-50 text-gray-400 outline-none hover:bg-gray-100 focus-visible:ring-2 disabled:opacity-40"
+            className="focus-visible:ring-primary-400 flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-50 text-gray-400 outline-none hover:bg-gray-100 focus-visible:ring-2 disabled:opacity-40"
             iconName="arrowLeft"
             onClick={() => changeMonth(-1)}
             size={20}
@@ -166,7 +167,7 @@ export function CalendarWidget(props: CalendarWidgetProps) {
           <IconButton
             aria-label="다음 달"
             disabled={props.disabled || !canGoNext}
-            className="focus-visible:ring-primary-400 flex size-8 items-center justify-center rounded-full bg-gray-50 text-gray-400 outline-none hover:bg-gray-100 focus-visible:ring-2 disabled:opacity-40"
+            className="focus-visible:ring-primary-400 flex size-8 shrink-0 items-center justify-center rounded-full bg-gray-50 text-gray-400 outline-none hover:bg-gray-100 focus-visible:ring-2 disabled:opacity-40"
             iconName="arrowRight"
             onClick={() => changeMonth(1)}
             size={20}
