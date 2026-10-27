@@ -1,8 +1,10 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 
+import { revalidateCache } from '@/_actions/revalidate';
+import { CACHE_TAG } from '@/_constants/cacheTag';
+
 import { fetcher } from '../fetcher';
 import { bannerQueryKeys } from '../queries/banner';
-import { revalidateCache } from '../revalidate';
 import { BannerAPIRequest } from '../types/banner';
 
 const createBanner = (banner: BannerAPIRequest) =>
@@ -19,7 +21,7 @@ export const useCreateBanner = () => {
       queryClient.invalidateQueries({
         queryKey: [...bannerQueryKeys.all()],
       });
-      await revalidateCache('banners');
+      await revalidateCache(CACHE_TAG.BANNERS);
     },
   });
 };
@@ -35,7 +37,7 @@ export const useDeleteBanner = () => {
       queryClient.invalidateQueries({
         queryKey: [...bannerQueryKeys.all()],
       });
-      await revalidateCache('banners');
+      await revalidateCache(CACHE_TAG.BANNERS);
     },
   });
 };
