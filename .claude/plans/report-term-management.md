@@ -54,14 +54,16 @@
 - 400 → "제출된 활동보고서가 있어 삭제할 수 없어요" toast, 404 → 목록 새로고침
 - 선택 목록: 일단 모든 회차 표시 (서버가 보고서 유무로 막음). 총동연이 원하면 `UPCOMING`만 표시로 좁힘
 
-### 4. 총동연 보고서 수정·삭제 — `admin/report/admin/[term]/[name]/`
+### 4. 총동연 보고서 삭제 — `admin/report/admin/[term]/[name]/`
 
-- `_pages/ReportDetailClientPage.tsx` 하단에 수정/삭제 버튼 (기간 조건 없음)
-  - 삭제: 확인 모달 → `useAdminDeleteReport(clubId, term)` → `/report/admin/${term}`로 이동
-  - 수정: `/report/admin/${term}/${name}/fix`로 이동
-- `fix/page.tsx`, `fix/_pages/ReportFixClientPage.tsx` (신규): `reportQueryOptions.report(term, clubId)`로 불러와 기존 `parseReport` + `ReportFormBundle` 재사용
-- `ReportFormBundle` / `useReport`에 `clubId?: number` 하나만 추가: 있으면 `useAdminUpdateReports` 사용 후 `/report/admin/${term}/${name}`로 이동, 없으면 기존 동작
-- PATCH 400 대응: 제출된 보고서 수만큼만 보냄 (빈 두 번째 보고서는 제외)
+> 수정은 보류: 총동연에 마감 후 수정이 실제로 필요한지 확인 중. 답이 오기 전까지 `fix` 페이지, `ReportFormBundle`/`useReport` 변경은 하지 않음. `useAdminUpdateReports`는 이미 있으니 그대로 둠.
+
+- `_pages/ReportDetailClientPage.tsx` 하단에 "삭제" 버튼 하나 (회차 상태와 관계없이 노출)
+  - 배치는 동아리 상세 `admin/report/[term]/[name]/_components/EditButton.tsx`의 하단 버튼 위치(`m-auto mt-10 w-fit`)를 따름. `Button variant="primary" color="red"` + `<Body2 weight="bold">삭제</Body2>`
+  - 확인 모달은 기존 `admin/report/[term]/[name]/_components/DeleteModal.tsx` 재사용 (`isOpen`, `closeModal`, `onDeleteReport`)
+  - 확인 → `useAdminDeleteReport`로 `clubId`, `term` 전달 → 성공 시 toast "활동보고서를 삭제했어요." + `/report/admin/${term}`로 이동
+  - 404 → "이미 삭제된 활동보고서예요." toast 후 `/report/admin/${term}`로 이동
+  - `clubId`는 이 페이지에 이미 있는 `getClubId(termreports, name)` 결과 사용. 0이면(못 찾음) 버튼을 렌더링하지 않음
 
 ### 5. 동아리 화면 — 거의 변경 없음
 
@@ -72,7 +74,8 @@
 
 - `components/CreateTermModal.test.tsx`: 201 → 모달 닫힘·목록 갱신 / 400 → toast / 회차 수 0 → 제출 불가 / 해 넘김 미리보기 경고
 - `components/DeleteTermModal.test.tsx`: 삭제 204 → 목록에서 회차 사라짐 / 400 → 거부 toast
-- `ReportDetail.test.tsx`(총동연): 마감된 회차에서도 수정·삭제 버튼 노출, 삭제 204 → 회차 목록으로 이동, 404 처리
+- `ReportDetail.test.tsx`(총동연): 마감된(`CLOSED`) 회차에서도 삭제 버튼 노출 / 수정 버튼은 없음 / 삭제 204 → `/report/admin/{term}` 이동 / 404 → 안내 toast 후 이동
+- 5단계: 동아리 등록·수정·삭제 mutation 400 → 안내 toast (기존 테스트 파일이 있으면 거기에, 없으면 생략 가능)
 
 ### 7. 검증
 
@@ -93,19 +96,21 @@ pnpm --filter @ddingdong/web exec vitest run test/admin/report
 - 간격(n주) 입력, 회차 날짜 수정, 회차 일괄 삭제, 보관함 — 스펙에 없음
 - FE에서 겹침·해 넘김 재검증 — 서버 400 메시지에 맡김 (미리보기 경고만)
 - 학기 구분 UI — 위 확인 결과가 나오기 전까지 보류
+- 총동연 보고서 수정 화면 — 총동연 확인 전까지 보류
 
 ## 커밋 분리 (제안)
 
 1. `feat: 총동연 활동보고서 회차 생성·삭제 기능 추가` (1~3)
-2. `feat: 총동연 마감 후 활동보고서 수정·삭제 기능 추가` (4)
+2. `feat: 총동연 활동보고서 삭제 기능 추가` (4)
 3. `fix: 회차 기간 외 활동보고서 요청 실패 시 안내 추가` (5)
 
-## 구현 담당에게 (이번 범위: 1~3단계)
+## 구현 담당에게 (이번 범위: 4단계 삭제 + 5단계)
 
-- 선행: `report-term-status.md` 변경분이 working tree에 커밋 전 상태로 있음. 되돌리지 말 것
-- 이번에 할 것: 1단계 전체(4개 mutation 모두) + 2·3단계 + 6단계 중 `CreateTermModal`·`DeleteTermModal` 테스트 + 7단계 검증
-- 4·5단계는 하지 않음
-- 서버 에러 메시지 읽기는 `apps/web/app/_api/ApiError` 등 기존 에러 처리 방식을 먼저 찾아서 따름
+- 1~3단계는 `refactor/#421` 브랜치에 커밋 완료. 건드리지 말 것
+- 이번에 할 것: 4단계(삭제만) + 5단계 + 6단계 중 해당 테스트 + 7단계 검증
+- 하지 않을 것: 총동연 보고서 수정(`fix` 페이지, `ReportFormBundle`/`useReport` 변경), 학기 구분
+- 5단계: `apps/web/app/_api/mutations/report.ts`의 `useCreateReportMutation`·`useUpdateReportsMutation`·`useDeleteReport`가 400을 받으면 "회차 기간이 아니라 처리할 수 없어요." toast. 에러 판별은 1~3단계에서 쓴 방식(`ApiError` 등)을 그대로 따름
+  - `admin/report/[term]/[name]/_components/EditButton.tsx`의 `handleClickDelete`는 지금 결과를 기다리지 않고 성공 toast와 `router.back()`을 먼저 실행함. 성공 toast·이동을 `onSuccess`로 옮겨 400일 때 성공 toast가 뜨지 않게 할 것
 - CLAUDE.md 컨벤션: 컴포넌트는 `function`, 그 외 화살표 함수, `type`만, import 그룹 순서, `@dds/shared` 컴포넌트 우선
-- 커밋·푸시·브랜치 변경 금지. 끝나면 변경 파일 목록과 각 검증 명령 출력을 보고
-- 커밋 메시지(나중에): `feat: 총동연 활동보고서 회차 생성·삭제 기능 추가`
+- 커밋·푸시 금지(브랜치는 `refactor/#421` 유지). 끝나면 변경 파일 목록과 각 검증 명령 출력을 보고
+- 커밋 메시지(나중에): `feat: 총동연 활동보고서 삭제 기능 추가`, `fix: 회차 기간 외 활동보고서 요청 실패 시 안내 추가`
