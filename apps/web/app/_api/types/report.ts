@@ -11,10 +11,13 @@ export type CurrentTerm = {
   term: number;
 };
 
+export type TermStatus = 'UPCOMING' | 'ONGOING' | 'CLOSED';
+
 export type Term = {
   term: number;
   startDate: string;
   endDate: string;
+  status: TermStatus;
 };
 
 export type ReportKey = {

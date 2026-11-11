@@ -6,8 +6,6 @@ import { clubQueryOptions } from '@/_api/queries/club';
 import { reportQueryOptions } from '@/_api/queries/report';
 import { Term } from '@/_api/types/report';
 
-import { useTerm } from '../_hooks/useTerm';
-
 import { ReportTermCard } from './Card';
 
 export function ReportCard({ termInfo }: { termInfo: Term }) {
@@ -15,10 +13,9 @@ export function ReportCard({ termInfo }: { termInfo: Term }) {
     queries: [reportQueryOptions.myReports(), clubQueryOptions.my()],
   });
 
-  const { term } = termInfo;
+  const { term, status } = termInfo;
 
   const isSubmitted = myReports.map((report) => Number(report.term));
-  const { isClosed, isFuture } = useTerm(term);
 
   if (isSubmitted.includes(term)) {
     return (
@@ -29,7 +26,7 @@ export function ReportCard({ termInfo }: { termInfo: Term }) {
       />
     );
   }
-  if (isClosed) {
+  if (status === 'CLOSED') {
     return (
       <ReportTermCard
         termInfo={termInfo}
@@ -43,7 +40,7 @@ export function ReportCard({ termInfo }: { termInfo: Term }) {
       termInfo={termInfo}
       badge={<Badge text="제출하기" variant="neutral" />}
       href={`/report/${term}/new`}
-      disabled={isFuture}
+      disabled={status === 'UPCOMING'}
     />
   );
 }
