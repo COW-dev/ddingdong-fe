@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation';
 
 import { Body2, Body3, Button, Flex, Title1, usePortal } from '@dds/shared';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 
 import { ApiError } from '@/_api/fetcher';
 import { useAdminDeleteReport } from '@/_api/mutations/report';
-import { reportQueryOptions } from '@/_api/queries/report';
+import { reportQueryKeys, reportQueryOptions } from '@/_api/queries/report';
 import { TermReport } from '@/_api/types/report';
 import { DeleteModal } from '@/admin/report/[term]/[name]/_components/DeleteModal';
 import { ReportBundle } from '@/admin/report/[term]/[name]/_components/ReportBundle';
@@ -35,6 +35,7 @@ export function ReportDetailClientPage({
     reportQueryOptions.report(term, clubId),
   );
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { isOpen, openModal, closeModal } = usePortal();
   const { mutate: deleteReport } = useAdminDeleteReport();
 
@@ -49,6 +50,11 @@ export function ReportDetailClientPage({
         },
         onError: (error: Error) => {
           if (error instanceof ApiError && error.status === 404) {
+            queryClient.invalidateQueries({
+              queryKey: reportQueryKeys.termReports(term),
+              exact: true,
+              refetchType: 'none',
+            });
             toast.error('이미 삭제된 활동보고서예요.');
             return router.push(listPath);
           }

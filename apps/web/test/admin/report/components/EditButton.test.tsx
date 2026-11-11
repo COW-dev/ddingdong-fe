@@ -81,4 +81,18 @@ describe('동아리 활동보고서 EditButton 삭제', () => {
     expect(push).not.toHaveBeenCalled();
     expect(back).not.toHaveBeenCalled();
   });
+
+  it('서버 오류로 삭제에 실패하면 안내하고 이동하지 않는다', async () => {
+    mockFetch();
+    vi.spyOn(fetcher, 'delete').mockRejectedValue(new Error('network error'));
+    const user = userEvent.setup();
+    renderButton();
+
+    await confirmDelete(user);
+
+    expect(
+      await screen.findByText('활동보고서 삭제에 실패했어요.'),
+    ).toBeInTheDocument();
+    expect(push).not.toHaveBeenCalled();
+  });
 });

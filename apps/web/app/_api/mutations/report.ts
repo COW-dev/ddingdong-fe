@@ -25,6 +25,8 @@ export const useDeleteReport = () => {
     onError: (error: Error) => {
       if (error instanceof ApiError && error.status === 400) {
         toast.error('회차 기간이 아니라 처리할 수 없어요.');
+      } else {
+        toast.error('활동보고서 삭제에 실패했어요.');
       }
     },
   });

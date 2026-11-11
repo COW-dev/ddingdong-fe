@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
 
+import { QueryClient, useQueryClient } from '@tanstack/react-query';
 import userEvent from '@testing-library/user-event';
 import { Toaster, toast } from 'react-hot-toast';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { ApiError, fetcher } from '@/_api/fetcher';
+import { reportQueryKeys } from '@/_api/queries/report';
 import { ReportAPIResponse, TermReport } from '@/_api/types/report';
 import { ReportDetailClientPage } from '@/admin/report/admin/[term]/[name]/_pages/ReportDetailClientPage';
 
@@ -110,6 +112,11 @@ describe('총동연 활동보고서 상세', () => {
 
   it('이미 삭제되어 404면 안내 toast를 보여주고 회차 목록으로 이동한다', async () => {
     mockFetch();
+    let queryClient: QueryClient;
+    function CaptureQueryClient() {
+      queryClient = useQueryClient();
+      return null;
+    }
     vi.spyOn(fetcher, 'deleteWithoutResponse').mockRejectedValue(
       new ApiError(
         404,
@@ -118,7 +125,15 @@ describe('총동연 활동보고서 상세', () => {
       ),
     );
     const user = userEvent.setup();
-    renderPage();
+    render(
+      <>
+        <Toaster />
+        <CaptureQueryClient />
+        <Suspense fallback={null}>
+          <ReportDetailClientPage term={3} name="띵동" />
+        </Suspense>
+      </>,
+    );
 
     await confirmDelete(user);
 
@@ -126,6 +141,9 @@ describe('총동연 활동보고서 상세', () => {
       await screen.findByText('이미 삭제된 활동보고서예요.'),
     ).toBeInTheDocument();
     expect(push).toHaveBeenCalledWith('/report/admin/3');
+    expect(
+      queryClient!.getQueryState(reportQueryKeys.termReports(3))?.isInvalidated,
+    ).toBe(true);
   });
 
   it('그 외 에러면 서버 메시지를 toast로 보여주고 이동하지 않는다', async () => {

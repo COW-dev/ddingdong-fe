@@ -34,11 +34,11 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   const [count, setCount] = useState('1');
 
   const totalTermCount = Number(count);
-  const isCountValid = Number.isInteger(totalTermCount) && totalTermCount >= 1;
-  const canSubmit = Boolean(startDate) && isCountValid && !isPending;
+  const isCountValid =
+    Number.isSafeInteger(totalTermCount) && totalTermCount >= 1;
 
   // 마감일 = 시작일 + 2주 × N − 1일
-  const endDate =
+  const calculatedEndDate =
     startDate && isCountValid
       ? new Date(
           startDate.getFullYear(),
@@ -46,6 +46,13 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
           startDate.getDate() + TERM_DAYS * totalTermCount - 1,
         )
       : null;
+  const endDate =
+    calculatedEndDate &&
+    Number.isFinite(calculatedEndDate.getTime()) &&
+    calculatedEndDate.getFullYear() <= 9999
+      ? calculatedEndDate
+      : null;
+  const canSubmit = Boolean(startDate && endDate) && !isPending;
   const crossesYear =
     startDate && endDate && startDate.getFullYear() !== endDate.getFullYear();
 
@@ -58,7 +65,7 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   }
 
   function handleSubmit() {
-    if (!startDate || !isCountValid) return;
+    if (!startDate || !endDate || !isCountValid || isPending) return;
 
     mutate(
       { startDate: toIsoDate(startDate), totalTermCount },
@@ -122,6 +129,11 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
               </Caption1>
             )}
           </Flex>
+        )}
+        {startDate && count && !endDate && (
+          <Caption1 className="text-red-200">
+            유효한 회차 수를 입력해주세요.
+          </Caption1>
         )}
         <DoubleButton
           left={

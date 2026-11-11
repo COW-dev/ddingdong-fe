@@ -87,6 +87,19 @@ describe('CreateTermModal', () => {
     expect(screen.getByRole('button', { name: '생성하기' })).toBeDisabled();
   });
 
+  it('계산할 수 없는 큰 회차 수는 안내하고 생성을 막는다', async () => {
+    const user = userEvent.setup();
+    render(<CreateTermModal isOpen closeModal={vi.fn()} />);
+
+    await pickStartDate(user, '2026년 7월 1일');
+    await setCount(user, '1000000000');
+
+    expect(
+      screen.getByText('유효한 회차 수를 입력해주세요.'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: '생성하기' })).toBeDisabled();
+  });
+
   it('생성하면 시작일과 회차 수를 보내고 모달을 닫는다', async () => {
     const post = vi
       .spyOn(fetcher, 'postWithoutResponse')
