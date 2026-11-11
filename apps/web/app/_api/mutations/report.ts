@@ -101,3 +101,47 @@ export const useDeleteTerm = () => {
     },
   });
 };
+const adminUpdateReports = (
+  clubId: number,
+  term: number,
+  activityReportRequests: [ReportAPIRequest, ReportAPIRequest],
+) =>
+  fetcher.patch(`admin/activity-reports/clubs/${clubId}?term=${term}`, {
+    json: { activityReportRequests },
+  });
+
+export const useAdminUpdateReports = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['adminUpdateReports'],
+    mutationFn: ({
+      clubId,
+      term,
+      activityReportRequests,
+    }: {
+      clubId: number;
+      term: number;
+      activityReportRequests: [ReportAPIRequest, ReportAPIRequest];
+    }) => adminUpdateReports(clubId, term, activityReportRequests),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.all()] });
+    },
+  });
+};
+
+const adminDeleteReport = (clubId: number, term: number) =>
+  fetcher.deleteWithoutResponse(
+    `admin/activity-reports/clubs/${clubId}?term=${term}`,
+  );
+
+export const useAdminDeleteReport = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['adminDeleteReport'],
+    mutationFn: ({ clubId, term }: { clubId: number; term: number }) =>
+      adminDeleteReport(clubId, term),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.all()] });
+    },
+  });
+};
