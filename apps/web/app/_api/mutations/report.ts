@@ -4,9 +4,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 
 import { CreateTermRequest, ReportAPIRequest } from '@/_api/types/report';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
 
 import { ApiError, fetcher } from '../fetcher';
 import { reportQueryKeys } from '../queries/report';
+
+const isTermPeriodError = (error: Error) =>
+  error instanceof ApiError && error.status === 400;
 
 const deleteReport = (term: number) =>
   fetcher.delete(`central/my/activity-reports?term=${term}`);
@@ -23,10 +27,10 @@ export const useDeleteReport = () => {
       });
     },
     onError: (error: Error) => {
-      if (error instanceof ApiError && error.status === 400) {
-        toast.error('회차 기간이 아니라 처리할 수 없어요.');
+      if (isTermPeriodError(error)) {
+        toast.error(REPORT_MESSAGE.termPeriodError);
       } else {
-        toast.error('활동보고서 삭제에 실패했어요.');
+        toast.error(REPORT_MESSAGE.deleteFail);
       }
     },
   });
@@ -48,6 +52,10 @@ export const useCreateReportMutation = () => {
     ) => createReports(activityReportRequests),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.my()] });
+    },
+    // 400 토스트는 여기서 처리하므로 호출부 onError에서는 400을 토스트하지 않는다
+    onError: (error: Error) => {
+      if (isTermPeriodError(error)) toast.error(REPORT_MESSAGE.termPeriodError);
     },
   });
 };
@@ -75,6 +83,9 @@ export const useUpdateReportsMutation = () => {
       queryClient.invalidateQueries({
         queryKey: [...reportQueryKeys.all()],
       });
+    },
+    onError: (error: Error) => {
+      if (isTermPeriodError(error)) toast.error(REPORT_MESSAGE.termPeriodError);
     },
   });
 };
