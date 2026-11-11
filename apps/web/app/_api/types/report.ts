@@ -20,6 +20,11 @@ export type Term = {
   status: TermStatus;
 };
 
+export type CreateTermRequest = {
+  startDate: string;
+  totalTermCount: number;
+};
+
 export type ReportKey = {
   name: string;
   term: string;

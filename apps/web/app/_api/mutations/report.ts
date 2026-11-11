@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { ReportAPIRequest } from '@/_api/types/report';
+import { CreateTermRequest, ReportAPIRequest } from '@/_api/types/report';
 
 import { fetcher } from '../fetcher';
 import { reportQueryKeys } from '../queries/report';
@@ -67,6 +67,37 @@ export const useUpdateReportsMutation = () => {
       queryClient.invalidateQueries({
         queryKey: [...reportQueryKeys.all()],
       });
+    },
+  });
+};
+
+const createTerms = (request: CreateTermRequest) =>
+  fetcher.postWithoutResponse('admin/activity-reports/term', {
+    json: request,
+  });
+
+export const useCreateTerms = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['createTerms'],
+    mutationFn: (request: CreateTermRequest) => createTerms(request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.terms()] });
+    },
+  });
+};
+
+const deleteTerm = (term: number) =>
+  fetcher.deleteWithoutResponse(`admin/activity-reports/term?term=${term}`);
+
+export const useDeleteTerm = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ['deleteTerm'],
+    mutationFn: (term: number) => deleteTerm(term),
+    // 404(이미 삭제된 회차)일 때도 목록을 다시 불러와야 해서 onSuccess가 아닌 onSettled
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.terms()] });
     },
   });
 };
