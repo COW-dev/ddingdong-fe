@@ -10,6 +10,7 @@ import {
   useUpdateReportsMutation,
 } from '@/_api/mutations/report';
 import { Report, ReportAPIRequest } from '@/_api/types/report';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
 
 import { parseRequest } from '../_utils/parse';
 import { validateDate } from '../_utils/validateReport';
@@ -36,17 +37,18 @@ export const useReport = (term: number, reports?: [Report, Report]) => {
     event.preventDefault();
 
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간은 일부만 저장할 수 없어요.');
+      return toast.error(REPORT_MESSAGE.partialDateTime);
 
     setIsEditing(true);
     const payload = createPairReport(term);
     await createMutation(payload, {
       onSuccess: () => {
-        toast.success('활동보고서가 생성되었습니다.');
+        toast.success(REPORT_MESSAGE.createSuccess);
         router.push('/report');
       },
       onError: (error: Error) => {
-        if (error instanceof ApiError) {
+        // 400(회차 기간 오류)은 mutation의 onError가 이미 토스트함
+        if (error instanceof ApiError && error.status !== 400) {
           toast.error(error.message);
         }
       },
@@ -57,7 +59,7 @@ export const useReport = (term: number, reports?: [Report, Report]) => {
   const submitUpdate = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!validateDate(reportOne) || !validateDate(reportTwo))
-      return toast.error('날짜와 시간은 일부만 저장할 수 없어요.');
+      return toast.error(REPORT_MESSAGE.partialDateTime);
 
     setIsEditing(true);
     const payload = createPairReport(term);
@@ -68,11 +70,12 @@ export const useReport = (term: number, reports?: [Report, Report]) => {
       },
       {
         onSuccess: () => {
-          toast.success('활동보고서를 수정했어요.');
+          toast.success(REPORT_MESSAGE.updateSuccess);
           router.push('/report');
         },
         onError: (error: Error) => {
-          if (error instanceof ApiError) {
+          // 400(회차 기간 오류)은 mutation의 onError가 이미 토스트함
+          if (error instanceof ApiError && error.status !== 400) {
             toast.error(error.message);
           }
         },

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   Body2,
@@ -16,6 +16,7 @@ import { toast } from 'react-hot-toast';
 
 import { ApiError } from '@/_api/fetcher';
 import { useCreateTerms } from '@/_api/mutations/report';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
 import {
   AdminCalendarField,
   toIsoDate,
@@ -32,6 +33,8 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   const { mutate, isPending } = useCreateTerms();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [count, setCount] = useState('1');
+  // 닫을 때마다 증가시켜, 이전 모달 세션의 요청 콜백이 새로 열린 모달을 닫지 않게 한다
+  const sessionRef = useRef(0);
 
   const totalTermCount = Number(count);
   const isCountValid =
@@ -59,6 +62,7 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   const year = new Date().getFullYear();
 
   function handleClose() {
+    sessionRef.current += 1;
     setStartDate(null);
     setCount('1');
     closeModal();
@@ -67,19 +71,20 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   function handleSubmit() {
     if (!startDate || !endDate || !isCountValid || isPending) return;
 
+    const session = sessionRef.current;
     mutate(
       { startDate: toIsoDate(startDate), totalTermCount },
       {
         onSuccess: () => {
-          toast.success('회차가 생성되었어요.');
-          handleClose();
+          toast.success(REPORT_MESSAGE.termCreateSuccess);
+          if (session === sessionRef.current) handleClose();
         },
         onError: (error: Error) => {
           // 겹침·해 넘김 등 사유가 여러 개라 서버 메시지를 그대로 보여줌
           toast.error(
             error instanceof ApiError
               ? error.message
-              : '회차 생성에 실패했어요.',
+              : REPORT_MESSAGE.termCreateFail,
           );
         },
       },

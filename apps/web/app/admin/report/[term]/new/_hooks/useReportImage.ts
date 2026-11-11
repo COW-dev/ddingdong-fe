@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import { Report } from '@/_api/types/report';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
 import { usePresignedUrl } from '@/_hooks/usePresignedUrl';
 
 type Props = {
@@ -37,7 +38,7 @@ export const useReportImage = ({ report, setValue, setIsEditing }: Props) => {
         }));
       }
     } catch {
-      toast.error('이미지 업로드에 실패했어요.');
+      toast.error(REPORT_MESSAGE.imageUploadFail);
     }
   };
 

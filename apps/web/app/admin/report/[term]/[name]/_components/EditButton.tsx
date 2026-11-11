@@ -10,8 +10,8 @@ import { toast } from 'react-hot-toast';
 import { useDeleteReport } from '@/_api/mutations/report';
 import { clubQueryOptions } from '@/_api/queries/club';
 import { reportQueryOptions } from '@/_api/queries/report';
-
-import { DeleteModal } from './DeleteModal';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
+import { DeleteModal } from '@/admin/report/_components/DeleteModal';
 
 export function EditButton({ term }: { term: number }) {
   const [{ data: currentTerm }, { data: myClubData }] = useSuspenseQueries({
@@ -23,8 +23,9 @@ export function EditButton({ term }: { term: number }) {
   const deleteMutation = useDeleteReport();
   // 삭제 후 /report 이동은 useDeleteReport의 onSuccess가 처리
   const handleClickDelete = () => {
+    if (deleteMutation.isPending) return;
     deleteMutation.mutate(term, {
-      onSuccess: () => toast.success('활동보고서를 삭제했어요.'),
+      onSuccess: () => toast.success(REPORT_MESSAGE.deleteSuccess),
       onSettled: closeModal,
     });
   };
@@ -60,6 +61,7 @@ export function EditButton({ term }: { term: number }) {
         isOpen={isOpen}
         closeModal={closeModal}
         onDeleteReport={handleClickDelete}
+        isPending={deleteMutation.isPending}
       />
     </>
   );

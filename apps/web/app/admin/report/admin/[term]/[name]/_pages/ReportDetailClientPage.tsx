@@ -10,9 +10,10 @@ import { ApiError } from '@/_api/fetcher';
 import { useAdminDeleteReport } from '@/_api/mutations/report';
 import { reportQueryKeys, reportQueryOptions } from '@/_api/queries/report';
 import { TermReport } from '@/_api/types/report';
-import { DeleteModal } from '@/admin/report/[term]/[name]/_components/DeleteModal';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
 import { ReportBundle } from '@/admin/report/[term]/[name]/_components/ReportBundle';
 import { BackHeader } from '@/admin/report/_components/BackHeader';
+import { DeleteModal } from '@/admin/report/_components/DeleteModal';
 
 export function getClubId(reports: TermReport[], name: string) {
   const club = reports.find((item) => item.club.name === name);
@@ -37,15 +38,16 @@ export function ReportDetailClientPage({
   const router = useRouter();
   const queryClient = useQueryClient();
   const { isOpen, openModal, closeModal } = usePortal();
-  const { mutate: deleteReport } = useAdminDeleteReport();
+  const { mutate: deleteReport, isPending } = useAdminDeleteReport();
 
   const listPath = `/report/admin/${term}`;
   const handleDeleteReport = () => {
+    if (isPending) return;
     deleteReport(
       { clubId, term },
       {
         onSuccess: () => {
-          toast.success('활동보고서를 삭제했어요.');
+          toast.success(REPORT_MESSAGE.deleteSuccess);
           router.push(listPath);
         },
         onError: (error: Error) => {
@@ -55,13 +57,13 @@ export function ReportDetailClientPage({
               exact: true,
               refetchType: 'none',
             });
-            toast.error('이미 삭제된 활동보고서예요.');
+            toast.error(REPORT_MESSAGE.alreadyDeleted);
             return router.push(listPath);
           }
           toast.error(
             error instanceof ApiError
               ? error.message
-              : '활동보고서 삭제에 실패했어요.',
+              : REPORT_MESSAGE.deleteFail,
           );
         },
         onSettled: closeModal,
@@ -104,6 +106,7 @@ export function ReportDetailClientPage({
             isOpen={isOpen}
             closeModal={closeModal}
             onDeleteReport={handleDeleteReport}
+            isPending={isPending}
           />
         </>
       )}

@@ -20,6 +20,7 @@ import { toast } from 'react-hot-toast';
 import { ApiError } from '@/_api/fetcher';
 import { useDeleteTerm } from '@/_api/mutations/report';
 import { reportQueryOptions } from '@/_api/queries/report';
+import { REPORT_MESSAGE } from '@/_constants/reportMessage';
 import { parseDate } from '@/_utils/parse';
 
 type Props = {
@@ -42,19 +43,19 @@ export function DeleteTermModal({ isOpen, closeModal }: Props) {
 
     mutate(selectedTerm, {
       onSuccess: () => {
-        toast.success('회차가 삭제되었어요.');
+        toast.success(REPORT_MESSAGE.termDeleteSuccess);
         handleClose();
       },
       onError: (error: Error) => {
         if (!(error instanceof ApiError)) {
-          return toast.error('회차 삭제에 실패했어요.');
+          return toast.error(REPORT_MESSAGE.termDeleteFail);
         }
         if (error.status === 400) {
-          return toast.error('제출된 활동보고서가 있어 삭제할 수 없어요');
+          return toast.error(REPORT_MESSAGE.termHasReports);
         }
         if (error.status === 404) {
           setSelectedTerm(null);
-          return toast.error('이미 삭제되었거나 존재하지 않는 회차예요.');
+          return toast.error(REPORT_MESSAGE.termNotFound);
         }
         toast.error(error.message);
       },
