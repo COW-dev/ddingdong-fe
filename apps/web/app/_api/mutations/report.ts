@@ -1,10 +1,11 @@
 import { useRouter } from 'next/navigation';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
 
 import { CreateTermRequest, ReportAPIRequest } from '@/_api/types/report';
 
-import { fetcher } from '../fetcher';
+import { ApiError, fetcher } from '../fetcher';
 import { reportQueryKeys } from '../queries/report';
 
 const deleteReport = (term: number) =>
@@ -20,6 +21,11 @@ export const useDeleteReport = () => {
       queryClient.invalidateQueries({
         queryKey: [...reportQueryKeys.all()],
       });
+    },
+    onError: (error: Error) => {
+      if (error instanceof ApiError && error.status === 400) {
+        toast.error('회차 기간이 아니라 처리할 수 없어요.');
+      }
     },
   });
 };

@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 import React, { PropsWithChildren } from 'react';
 
@@ -22,11 +21,12 @@ export function EditButton({ term }: { term: number }) {
   const { isOpen, openModal, closeModal } = usePortal();
 
   const deleteMutation = useDeleteReport();
-  const router = useRouter();
+  // 삭제 후 /report 이동은 useDeleteReport의 onSuccess가 처리
   const handleClickDelete = () => {
-    deleteMutation.mutate(term);
-    router.back();
-    toast.success('활동보고서를 삭제했어요.');
+    deleteMutation.mutate(term, {
+      onSuccess: () => toast.success('활동보고서를 삭제했어요.'),
+      onSettled: closeModal,
+    });
   };
 
   return (
