@@ -141,7 +141,11 @@ export const useAdminDeleteReport = () => {
     mutationFn: ({ clubId, term }: { clubId: number; term: number }) =>
       adminDeleteReport(clubId, term),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [...reportQueryKeys.all()] });
+      // 화면에 떠 있는 삭제된 보고서를 다시 조회하면 404가 나므로 비활성 쿼리만 즉시 갱신
+      queryClient.invalidateQueries({
+        queryKey: [...reportQueryKeys.all()],
+        refetchType: 'inactive',
+      });
     },
   });
 };

@@ -1,10 +1,16 @@
 'use client';
 
-import { Flex, Title1, Body3 } from '@dds/shared';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
+import { Body2, Body3, Button, Flex, Title1, usePortal } from '@dds/shared';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { toast } from 'react-hot-toast';
+
+import { ApiError } from '@/_api/fetcher';
+import { useAdminDeleteReport } from '@/_api/mutations/report';
 import { reportQueryOptions } from '@/_api/queries/report';
 import { TermReport } from '@/_api/types/report';
+import { DeleteModal } from '@/admin/report/[term]/[name]/_components/DeleteModal';
 import { ReportBundle } from '@/admin/report/[term]/[name]/_components/ReportBundle';
 import { BackHeader } from '@/admin/report/_components/BackHeader';
 
@@ -28,6 +34,34 @@ export function ReportDetailClientPage({
   const { data: reports } = useSuspenseQuery(
     reportQueryOptions.report(term, clubId),
   );
+  const router = useRouter();
+  const { isOpen, openModal, closeModal } = usePortal();
+  const { mutate: deleteReport } = useAdminDeleteReport();
+
+  const listPath = `/report/admin/${term}`;
+  const handleDeleteReport = () => {
+    deleteReport(
+      { clubId, term },
+      {
+        onSuccess: () => {
+          toast.success('활동보고서를 삭제했어요.');
+          router.push(listPath);
+        },
+        onError: (error: Error) => {
+          if (error instanceof ApiError && error.status === 404) {
+            toast.error('이미 삭제된 활동보고서예요.');
+            return router.push(listPath);
+          }
+          toast.error(
+            error instanceof ApiError
+              ? error.message
+              : '활동보고서 삭제에 실패했어요.',
+          );
+        },
+        onSettled: closeModal,
+      },
+    );
+  };
 
   return (
     <>
@@ -53,6 +87,20 @@ export function ReportDetailClientPage({
         </Body3>
       </Flex>
       <ReportBundle reports={reports} />
+      {clubId !== 0 && (
+        <>
+          <Flex className="m-auto mt-10 w-fit">
+            <Button variant="primary" color="red" onClick={openModal}>
+              <Body2 weight="bold">삭제</Body2>
+            </Button>
+          </Flex>
+          <DeleteModal
+            isOpen={isOpen}
+            closeModal={closeModal}
+            onDeleteReport={handleDeleteReport}
+          />
+        </>
+      )}
     </>
   );
 }
