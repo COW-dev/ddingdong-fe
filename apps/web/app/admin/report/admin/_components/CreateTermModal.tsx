@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 
 import {
   Body2,
@@ -33,8 +33,6 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   const { mutate, isPending } = useCreateTerms();
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [count, setCount] = useState('1');
-  // 닫을 때마다 증가시켜, 이전 모달 세션의 요청 콜백이 새로 열린 모달을 닫지 않게 한다
-  const sessionRef = useRef(0);
 
   const totalTermCount = Number(count);
   const isCountValid =
@@ -62,7 +60,8 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   const year = new Date().getFullYear();
 
   function handleClose() {
-    sessionRef.current += 1;
+    // 요청 중엔 닫지 않아, 이전 요청 콜백이 새로 연 모달을 닫는 일을 막는다
+    if (isPending) return;
     setStartDate(null);
     setCount('1');
     closeModal();
@@ -71,13 +70,12 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
   function handleSubmit() {
     if (!startDate || !endDate || !isCountValid || isPending) return;
 
-    const session = sessionRef.current;
     mutate(
       { startDate: toIsoDate(startDate), totalTermCount },
       {
         onSuccess: () => {
           toast.success(REPORT_MESSAGE.termCreateSuccess);
-          if (session === sessionRef.current) handleClose();
+          handleClose();
         },
         onError: (error: Error) => {
           // 겹침·해 넘김 등 사유가 여러 개라 서버 메시지를 그대로 보여줌
@@ -143,7 +141,12 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
         )}
         <DoubleButton
           left={
-            <Button variant="tertiary" size="full" onClick={handleClose}>
+            <Button
+              variant="tertiary"
+              size="full"
+              disabled={isPending}
+              onClick={handleClose}
+            >
               <Body2 weight="bold">닫기</Body2>
             </Button>
           }
