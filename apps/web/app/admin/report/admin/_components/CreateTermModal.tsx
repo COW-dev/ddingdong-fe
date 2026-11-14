@@ -114,7 +114,8 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
           <Input
             id="totalTermCount"
             name="totalTermCount"
-            type="number"
+            type="text"
+            inputMode="numeric"
             min={1}
             placeholder="생성할 회차 수를 입력해주세요."
             value={count}
