@@ -93,9 +93,9 @@ export function CreateTermModal({ isOpen, closeModal }: Props) {
 
   return (
     <Modal isOpen={isOpen} closeModal={handleClose}>
-      <Flex dir="col" gap={4} className="w-[80vw] md:w-[480px]">
+      <Flex dir="col" gap={4} className="md:w-120 w-[80vw]">
         <Title3>회차 생성</Title3>
-        <div className="h-[1.5px] bg-gray-200" />
+        <div className="h-0.5 bg-gray-200" />
         <Flex dir="col" gap={2}>
           <Body2>시작일</Body2>
           <AdminCalendarField

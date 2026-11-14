@@ -55,7 +55,7 @@ export function AddSectionModal({
     <Modal isOpen={isOpen} closeModal={handleClose}>
       <Flex dir="col" gap={4} className="w-[80vw] md:w-[450px]">
         <Title3>섹션 추가</Title3>
-        <div className="h-[1.5px] bg-gray-200" />
+        <div className="h-0.5 bg-gray-200" />
         <Input
           value={sectionName}
           onChange={(e) => setSectionName(e.target.value)}
