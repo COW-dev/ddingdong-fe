@@ -4,13 +4,11 @@ import { Badge } from '@dds/shared';
 import { Term } from '@/_api/types/report';
 
 import { ReportTermCard } from '../../_components/Card';
-import { useTerm } from '../../_hooks/useTerm';
 
 export function ReportCard({ termInfo }: { termInfo: Term }) {
-  const { term } = termInfo;
-  const { isClosed, isFuture } = useTerm(term);
+  const { term, status } = termInfo;
 
-  if (isClosed) {
+  if (status === 'CLOSED') {
     return (
       <ReportTermCard
         termInfo={termInfo}
@@ -19,7 +17,7 @@ export function ReportCard({ termInfo }: { termInfo: Term }) {
       />
     );
   }
-  if (isFuture) {
+  if (status === 'UPCOMING') {
     return (
       <ReportTermCard
         termInfo={termInfo}

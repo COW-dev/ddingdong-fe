@@ -45,9 +45,9 @@ export function UploadModal({ isOpen, onClose }: UploadModalProps) {
 
   return (
     <Modal isOpen={isOpen} closeModal={onClose}>
-      <Flex dir="col" gap={4} className="w-[80vw] md:w-[480px]">
+      <Flex dir="col" gap={4} className="md:w-120 w-[80vw]">
         <Title3>동아리원 엑셀 업로드</Title3>
-        <div className="h-[1.5px] bg-gray-200" />
+        <div className="h-0.5 bg-gray-200" />
         <Body3 className="text-center text-gray-500">
           {`동아리원 양식이 변경됨에 따라 \n[동아리원 다운받기] 후 해당 양식으로 업로드해주세요.`}
         </Body3>

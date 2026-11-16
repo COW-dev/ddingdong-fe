@@ -5,9 +5,15 @@ type Props = {
   isOpen: boolean;
   closeModal: VoidFunction;
   onDeleteReport: VoidFunction;
+  isPending?: boolean;
 };
 
-export function DeleteModal({ isOpen, closeModal, onDeleteReport }: Props) {
+export function DeleteModal({
+  isOpen,
+  closeModal,
+  onDeleteReport,
+  isPending = false,
+}: Props) {
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Flex
@@ -28,6 +34,7 @@ export function DeleteModal({ isOpen, closeModal, onDeleteReport }: Props) {
               variant="primary"
               color="red"
               size="full"
+              disabled={isPending}
               onClick={onDeleteReport}
             >
               <Body2 weight="bold">삭제하기</Body2>

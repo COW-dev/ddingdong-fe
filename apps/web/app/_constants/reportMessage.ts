@@ -1,0 +1,16 @@
+export const REPORT_MESSAGE = {
+  termPeriodError: '회차 기간이 아니라 처리할 수 없어요.',
+  deleteFail: '활동보고서 삭제에 실패했어요.',
+  deleteSuccess: '활동보고서를 삭제했어요.',
+  alreadyDeleted: '이미 삭제된 활동보고서예요.',
+  createSuccess: '활동보고서가 생성되었습니다.',
+  updateSuccess: '활동보고서를 수정했어요.',
+  partialDateTime: '날짜와 시간은 일부만 저장할 수 없어요.',
+  imageUploadFail: '이미지 업로드에 실패했어요.',
+  termCreateSuccess: '회차가 생성되었어요.',
+  termCreateFail: '회차 생성에 실패했어요.',
+  termDeleteSuccess: '회차가 삭제되었어요.',
+  termDeleteFail: '회차 삭제에 실패했어요.',
+  termHasReports: '제출된 활동보고서가 있어 삭제할 수 없어요',
+  termNotFound: '이미 삭제되었거나 존재하지 않는 회차예요.',
+} as const;

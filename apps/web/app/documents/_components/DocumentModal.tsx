@@ -26,7 +26,7 @@ export function DocumentModal({ id, isOpen, closeModal }: DocumentModalProps) {
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <Flex dir="col" gap={4} className="w-[80vw] md:w-[450px]">
         <Title3>자료실 다운로드</Title3>
-        <div className="h-[1.5px] bg-gray-200" />
+        <div className="h-0.5 bg-gray-200" />
         <Flex dir="col" gap={2} className="py-2">
           {document.files.map((item) => (
             <Flex

@@ -66,9 +66,9 @@ export function EditSectionModal({
 
   return (
     <Modal isOpen={isOpen} closeModal={handleClose}>
-      <Flex dir="col" gap={4} className="w-[80vw] md:w-[480px]">
+      <Flex dir="col" gap={4} className="md:w-120 w-[80vw]">
         <Title3>섹션 이름 변경</Title3>
-        <div className="h-[1.5px] bg-gray-200" />
+        <div className="h-0.5 bg-gray-200" />
         <Input
           value={sectionName}
           onChange={(e) => setSectionName(e.target.value)}
